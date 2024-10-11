@@ -8,7 +8,7 @@ title: "무미건조하고 담백했던, 룩백"
 
 categories: [에세이, 영화]
 tags: [에세이, 영화, 룩백]
-start_with_ads: false
+start_with_ads: true
 
 toc: false
 toc_sticky: true
