@@ -8,7 +8,7 @@ start_with_ads: false
 image:
     path: /drawing/200000-생존사람.webp
     lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAgAAgA0JaQAD4WwKYuRsAAA/v58LC1cLESP9ztg6FTwgeVVOIMR19dwzrRkt/f6yWyrN/pF2btgTAAAAA==
-    alt: 포스트아포칼립스 후웁 후웁
+    alt: 포스트아포칼립스
 
 toc: false
 toc_sticky: true
