@@ -108,7 +108,7 @@ public void ChangeSourceObject(GameObject discoveredObject)
 해당 기능을 구현하려면 `Multi Aim Constraint` 컴포넌트의 `sourceObject` 속성을 씬 내의 오브젝트로 교환해야 하는데, 이 과정이 난관이 많아 힘들었습니다. 혹시라도 절차적 애니메이션의 `sourceObject`를 코드로 변경하고 싶은 분이 계신다면 다음을 참고하시면 도움이 될 것 같습니다.
 
 - `sourceObjects`의 속성은 읽기 전용(read-only)입니다. 다른 지역 변수에 데이터 정의 후 `data.sourceObjects`에 새 값을 지정해야 합니다.
-- 지정이 완료된 후에는 해당 오브젝트의 애니메이터를 비활성화한 후 `rigBuilder`를 빌드하시고, 이후 애니메이션을 재활성화해야 정상적으로 적용됩니다.
+- 지정이 완료된 후에는 해당 오브젝트의 애니메이터를 비활성화한 후 `rigBuilder`를 빌드한 뒤 애니메이션을 재활성화해야 정상적으로 적용됩니다.
 - 어떤 오브젝트가 다른 오브젝트의 `sourceObject`로 등록되었다면, 해당 오브젝트가 삭제될 때 자신이 등록된 `sourceObject` 속성을 `None`으로 변경해주어야 합니다.
 
 [공식 문서](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.0/api/UnityEngine.Animations.Rigging.html)를 찾아봐도 해결법을 찾기 힘든 동작이나 오류가 있어서 난감한 상황이 많이 있었지만 결과적으로 잘 만들어낸 것 같습니다. 구현하고 나니 확실히 게임 분위기를 유연하게 만들어주는 효과가 있는 것 같네요. 나중에 3D 토이프로젝트라도 만들게 되면 꼭 더 잘 활용해보고 싶습니다.

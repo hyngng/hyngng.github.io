@@ -22,12 +22,14 @@
   class="readtime"
   data-bs-toggle="tooltip"
   data-bs-placement="bottom"
-  title="{{ words }} {{ site.data.locales[include.lang].post.words }}"
+  {% comment %} region 수정됨 {% endcomment %}
+  title="{{ words }}{{ site.data.locales[include.lang].post.words }}"
+  {% comment %} endregion 수정됨 {% endcomment %}
 >
   <em>
-    {{- read_time -}}
-    {{ ' ' }}
-    {{- site.data.locales[include.lang].post.read_time.unit -}}
+    {% comment %} region 수정됨 {% endcomment %}
+    {{- read_time -}}{{- site.data.locales[include.lang].post.read_time.unit -}}
+    {% comment %} endregion 수정됨 {% endcomment %}
   </em>
   {%- if include.prompt -%}
     {%- assign _prompt_words = read_prompt | number_of_words: 'auto' -%}
