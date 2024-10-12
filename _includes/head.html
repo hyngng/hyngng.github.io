@@ -12,6 +12,22 @@
 
   {% comment %} 핀터레스트 {% endcomment %}
   <meta name="p:domain_verify" content="150084dfff2fed3d81028aea5d976b18"/>
+  
+  {% comment %} 구조화된 데이터 {% endcomment %}
+  {% if page.layout == 'home' %}
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "hyngng",
+      "url": "https://hyngng.github.io/",
+      "sameAs": [
+        "https://github.com/hyngng/",
+        "https://www.instagram.com/hyngng_1/"
+      ]
+    }
+    </script>
+  {% endif %}
 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
