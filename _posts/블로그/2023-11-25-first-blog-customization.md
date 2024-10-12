@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2023-11-25 23:24:00 +0900
-last_modified_at: 2024-05-26 18:04:00 +0900
+last_modified_at: 2024-10-12 12:04:00 +0900
 
 # redirect_from:
 #   - /posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%83%88%EB%8B%A8%EC%9E%A5/
@@ -47,7 +47,7 @@ p:not(blockquote p) {
 ```
 {: file="assets/css/jekyll-theme-chirpy.scss" }
 
-### **Footer 제거**
+### **사이트 하단 Footer 제거**
 
 ![footer-remove-light](/2023-11-25-first-blog-customization/footer-remove-light.webp){: .light .border }
 ![footer-remove-dark](/2023-11-25-first-blog-customization/footer-remove-dark.webp){: .dark }
@@ -127,9 +127,9 @@ tail_includes:
 ```
 {: file="_sass/colors/typography-dark.scss" }
 
-### **TOC 수정**
+### **TOC 생성방식 변경**
 
-Chirpy 테마는 기본적으로 포스트 페이지창 우측에 TOC(Table Of Contents)를 지원합니다. 게시글의 읽고 있는 지점을 확인하거나 원하는 지점으로 바로 이동할 수 있는 등 유용한 기능이기는 하지만, 문제는 테마를 업데이트하니 동작 방식이 불편하게 바뀌었습니다.
+Chirpy 테마는 기본적으로 포스트 페이지 우측에 TOC(Table Of Contents)을 생성합니다. 게시글의 읽고 있는 지점을 확인하거나 원하는 지점으로 바로 이동할 수 있는 등 유용한 기능을 제공하기는 하지만, 문제는 테마를 업데이트하니 동작 방식이 불편하게 바뀌었습니다.
 
 정확히 어느 버전부터 이렇게 변경되었는지는 모르겠지만 이전에는 h1 부터 목차를 생성해주던 것이 이제는 h2 이하의 태그가 있어야 목차를 생성해줍니다. 아마 나름의 이유가 있겠지만, 개인적으로 별로라고 생각해서 원래대로 수정해 주었습니다. 코드가 길어 변경한 부분만 작성했습니다.
 
@@ -167,7 +167,7 @@ export function toc() {
 > **2024/04/16 수정!**
 {: .prompt-info }
 
-블로그를 웹에 등록하던 도중 네이버 서치어드바이저와 빙 웹마스터에서 "h1 태그가 여러 개 발견됨"이라는 경고를 받고 왜 이런 유형의 경고가 있는지 찾다가 [웹 콘텐츠 접근성 지침(WCAG)](https://www.w3.org/TR/WCAG21/)이라는 것을 알게 되었습니다. h2 이하 태그부터 TOC를 생성하도록 변경된 이유는 이 지침에 따라 h1 태그를 한 개만 사용하도록 유도하기 위해서인 것 같더라구요. 실제로 [위키백과](https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD)와 같은 문서를 개발자 도구로 확인해보면 글 제목을 h1 태그로, 글 목차부터는 h2로 구분하여 처리하고 있었습니다.
+블로그를 웹에 등록하던 도중 네이버 서치어드바이저와 빙 웹마스터에서 "h1 태그가 여러 개 발견됨"이라는 경고를 받고 왜 이런 유형의 경고가 있는지 찾다가 [웹 콘텐츠 접근성 지침(WCAG)](https://www.w3.org/TR/WCAG21/)이라는 것을 알게 되었습니다. h2 이하 태그부터 TOC를 생성하도록 변경된 이유는 이 지침에 따라 h1 태그를 한 개만 사용하도록 유도하기 위해서인 것 같더라구요. 실제로 [위키백과](https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD)와 같은 문서를 개발자 도구로 확인해보니 글 제목을 h1 태그로, 글 목차부터는 h2로 구분하여 처리하고 있었습니다.
 
 정말 WCAG 때문인 것인지는 조금 긴가민가하지만, 권장사항은 준수해주어야겠다는 생각이 들어 블로그 포스팅에 사용한 모든 헤더의 단위를 한 단계 낮춰주는 쪽으로 바꾸어 주었습니다. 다만 목차의 글씨 크기는 그대로 유지되었으면 해서 `jekyll-theme-chirpy.scss`{: .filepath }에서 아래와 같이 `font-size` 속성만 별도로 설정해주었어요.
 
@@ -185,6 +185,16 @@ h4 {
 }
 ```
 {: file="assets/css/jekyll-theme-chirpy.scss" }
+
+### **특정 태그 폰트 변경**
+
+```scss
+$font-family-base: 'IBM Plex Sans KR', 'Source Sans Pro', 'Microsoft Yahei', sans-serif;
+$font-family-heading: 'IBM Plex Sans KR', Lato, 'Microsoft Yahei', sans-serif;
+```
+{: file="_sass/variables-hook.scss" }
+
+글 밀도가 조금 더 높았으면 해서 [구글 폰트](https://fonts.google.com)에서 자간이 좁은 폰트를 찾아 변경해주었습니다. 폰트를 정의하는 코드를 직접 수정하기보다 템플릿에 `variables-hook.scss`{: .filepath }가 있어서 이곳에 코드를 따로 작성했어요. 적용된 화면을 보니 훨씬훨씬 낫습니다.
 
 ## **마치며**
 
