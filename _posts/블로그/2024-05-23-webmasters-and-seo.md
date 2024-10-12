@@ -31,7 +31,7 @@ _대표적인 웹마스터도구, 구글 서치 콘솔_
 
 ### **구글 서치 콘솔**
 
-- 깃허브 블로그에서 HTML 태그를 통한 사이트 소유권 인증은 `_includes/head.html`{: .filepath }에 작성해도 문제는 없지만, `jekyll-seo-tags` 플러그인에서 관련 기능을 지원하고 있기 때문에 `_config.yml`{: .filepath }의 `webmaster_verifications`란을 이용하는 것이 편할 수 있습니다.
+- 깃허브 블로그에서 HTML 태그를 통한 사이트 소유권 인증은 `_includes/head.html`{: .filepath }에 작성해도 문제는 없지만, `jekyll-seo-tags` 플러그인에서 관련 기능을 지원하고 있기 때문에 `_config.yml`{: .filepath }의 `webmaster_verifications` 값을 수정하는 것이 편할 수 있습니다.
 
 ### **네이버 서치어드바이저**
 
