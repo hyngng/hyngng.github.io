@@ -53,8 +53,8 @@ notification:
 
 post:
   written_by: By
-  posted: 게시
-  updated: 업데이트
+  posted: "게시 날짜:"
+  updated: "최종 업데이트:"
   words: 자
   pageview_measure: 조회
   read_time:

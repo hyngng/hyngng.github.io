@@ -30,3 +30,31 @@ last_modified_at: 2024-10-12 09:38:00 +0900
 
 결말까지의 흐름도 좋았지만, 실은 욕심내서 아쉽게 느끼는 점이 있다. 갑작스럽게 등장하는 쿄모토가 죽지 않은 평행세계와의 소통은 중요한 장면임에도 결국 구체화되지 않은 메타포로 남아 룩백을 단편으로서, 진지하게 대할 수 없는 이유가 됐다. 물론, "그냥 이런 이야기도 있습니다"에 주안점을 두는 가벼운 단편으로서는 문제가 아니긴 하지만 말이다.  
 어찌됐건. 룩백은 단편 영화로서 또래에 대한 경쟁심리, 동반자이자 경쟁자인 동료, 갑작스럽게 찾아오는 인생의 분기점과 변질된 초심, 쓸쓸함 등을 잘 담아낸 영화다. 57분의 짧은 분량에도 불구하고 포착할 것이 많은 정성어린 작품이었고, 영화를 보는 잠시 인생을 환기할 수 있어서 좋았다.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Movie",
+  "name": "룩백",
+  "actor": [
+    {
+      "@type": "Person",
+      "name": "카와이 유미"
+    },
+    {
+      "@type": "Person",
+      "name": "요시다 미즈키"
+    }
+  ],
+  "director": {
+    "@type": "Person",
+    "name": "오시야마 키요타카"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master/2024-10-09-look-back-review/main-poster.webp",
+     "width": "700",
+    "height": "500"
+  }
+}
+</script>
