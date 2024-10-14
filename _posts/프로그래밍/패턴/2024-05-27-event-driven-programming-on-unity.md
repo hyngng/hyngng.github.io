@@ -157,11 +157,6 @@ public class EventManager : MonoBehaviour
 - `RemoveRedundancies()`: 일종의 무결성 검사입니다. 특정 이벤트에 대해 실행하는 것이 아무것도 없는 경우 해당 이벤트를 제거합니다.
 - `RemoveListener()`: 리스너 오브젝트를 파괴할 때 `NullReferenceException` 오류를 방지하기 위해 `Listeners` 딕셔너리에서 해당 오브젝트를 제거합니다.
 
-<!--
-`AddListener(Event.FirstExampleEvent, OnEvent)`와 같은 형태로 사용합니다.
-`PostNotification(Event.FirstExampleEvent, this)`와 같은 형태로 사용합니다.
--->
-
 ### **이벤트 리스너**
 
 ```cs

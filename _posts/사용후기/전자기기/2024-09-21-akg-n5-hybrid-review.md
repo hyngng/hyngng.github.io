@@ -75,6 +75,22 @@ _음질 관련 각종 기능들_
 
 나쁘지는 않지만 가격대와 출시시기를 고려할 때 노이즈캔슬링 강도를 최대로 설정하고 자동 보정 기능을 사용하더라도 이전에 사용하던 버즈 2 프로와 큰 차이가 없다는 인상을 받아 개인적으로는 아쉬웠습니다.
 
+{% comment %}
+## **전체적인 인상**
+
+```mermaid
+journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 5: Me
+```
+{% endcomment %}
+
 ## **우선은 사용해보기로**
 
 {% comment %}
