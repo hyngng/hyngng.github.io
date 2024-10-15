@@ -14,7 +14,7 @@ last_modified_at: 2024-10-14 00:00:00 +0900
 mermaid: true
 ---
 
-- 다른 언어나 환경에서 프로젝트를 하다보면 헷갈리고 까먹는게 생김. 그래서 대방주를 만들 겸 원활한 개발을 위해 알 필요가 있는 기본 사항을 핵심 위주로 정리함. 그래서 예를 들어 if문, for문 등 절때 까먹을 것 같지 않을 기초적인 부분은 배제했음.
+다른 언어나 환경에서 프로젝트를 하다보면 헷갈리고 까먹는게 생김. 그래서 나만의 대방주를 만들 겸 원활한 개발을 위해 알 필요가 있는 기본 사항을 핵심 위주로 정리함. 그래서 예를 들어 if문, for문 등 절때 까먹을 것 같지 않을 기초적인 부분은 배제했음.
 
 ## **기본 네임스페이스**
 
@@ -51,7 +51,7 @@ classDiagram
     SystemCollectionsGeneric <|-- StackT
 ```
 
-`System.Collections`와 `System.Collections.Generic`는 둘 다 자료구조 클래스를 정의하는 네임스페이스입니다. 각각 `ArrayList`, `Hashtable`, `Stack`, `Queue` 또는 `List<T>`, `Dictionary<T>`, `Queue<T>`, `Stack<T>` 등의 클래스가 정의되어 있으며, `System.Collections.Generic` 네임스페이스가 기존 `System.Collections`의 성능 문제를 개선한 네임스페이스이기 때문에 대부분은 이쪽을 사용하게 됩니다.
+`System.Collections`와 `System.Collections.Generic`는 둘 다 자료구조 클래스를 정의하는 네임스페이스입니다. 각각 `ArrayList`, `Hashtable`, `Stack`, `Queue` 또는 `List<T>`, `Dictionary<T>`, `Queue<T>`, `Stack<T>` 등의 클래스가 정의되어 있습니다. `System.Collections.Generic` 네임스페이스가 기존 `System.Collections`의 성능 문제를 개선한 네임스페이스이기 때문에 대부분은 이쪽을 사용하게 됩니다.
 
 ### **UnityEngine**
 
@@ -80,6 +80,10 @@ classDiagram
     UnityEngine <|-- MonoBehaviour
 ```
 
+### **이외의 기타 네임스페이스**
+
+- `TMPro`: TextMeshPro 및 TextMeshProUGUI를 관리합니다.
+
 `GameObject`, `Vector3`, `Physics`, `AudioSource` 등 유니티에서 사용하는 개념이 정의되는 네임스페이스입니다. 비슷한 이름의 `UnityEditor` 네임스페이스가 있기 때문에 헷갈리지 않도록 주의할 필요가 있습니다.
 
 ## **클래스 선언 및 사용**
@@ -95,7 +99,7 @@ public class Player : MonoBehaviour
 
 MonoBehaviour는
 
-### **상속**
+### **클래스 상속**
 
 - 상속 유형 여러가지.
     - static
@@ -186,12 +190,22 @@ public string Name
 }
 ```
 
-변수를 `private`로 선언해놓고 값을 외부 조건에 따라 변경하는 구조가 이상하게 느껴질 수 있지만, get set 프로퍼티를 사용하는 이유는 외부 클래스
+변수 은닉화는 물론, 변수의 수정과 특정 함수의 실행을 간략히 연결시킬 수 있어 유용한 프로퍼티입니다.
+
+변수를 `private`로 선언해놓고 값을 외부 조건에 따라 변경하는 구조가 이상하게 느껴질 수 있지만, get set 프로퍼티를 사용하는 이유는 근본적으로 외부 클래스가 직접 수정하지 못하게 하기 위함입니다.
 
 ## **함수 선언 및 사용**
 
 ```cs
+void Function()
+{
+    Debug.Log("Hello, world!")!
+}
 
+string Function()
+{
+    return "Hello, world!";
+}
 ```
 
 ### **람다 함수**
@@ -202,9 +216,22 @@ var specificNumbers = Array.FindAll(numbers, n => n % 2 == 0);
 
 ### **코루틴**
 
+```cs
+private IEnumerator MyCoroutine()
+{
+    Debug.Log("Hello, world!");
+
+    yield return new WaitForSeconds(1);
+}
+```
+
 ### **델리게이트**
 
-## **조건문**
+```cs
+public delegate void MyDelegate(string message);
+```
+
+## **코드 작성 관련**
 
 ### **삼항 연산자**
 
@@ -212,7 +239,7 @@ var specificNumbers = Array.FindAll(numbers, n => n % 2 == 0);
 condition ? value_if_true : value_if_false;
 ```
 
-`if-else` 대신 사용하기 좋은 형식으로 압축성이 좋고 익숙해지고 나면 코드를 읽고 쓰는 속도도 빨라질 수 있으나, 삼항 연산자를 중첩해서 사용하는 경우 대개 가독성이 나빠지는 문제가 있으므로 그런 경우 코드 압축성을 포기하고 `switch`문을 사용하는 편이 나을 수 있습니다.
+`if-else` 대신 사용하기 좋은 형식으로 압축성이 좋고 익숙해지고 나면 코드를 읽고 쓰는 속도도 빨라진다는 장점이 있지만, 삼항 연산자를 중첩해서 사용하는 경우 대개 가독성이 나빠지는 문제가 있으므로 그런 경우 코드 압축성을 포기하고 `switch`문을 사용하는 편이 나을 수 있습니다.
 
 ### **NULL 관련 연산자**
 
@@ -228,8 +255,6 @@ string? data = Database?.data;
 
 - Null 조건부 연산자
 
-## **반복문**
-
 `for`, `while`문은 다른 언어와 비슷한 형태를 갖고 있어 헷갈릴 여지가 적지만 `foreach`는 존재감을 잊을 수 있음.
 
 ```cs
@@ -241,6 +266,20 @@ foreach (string item in itemList)
 
 파이썬의 `for`문과 매우 비슷하고 편하게 사용할 수 있습니다.
 
+### **전처리기**
+
+```cs
+#if UNITY_EDITOR
+    /* ... */
+#else
+    /* ... */
+#endif
+```
+
 ## **PlasticSCM**
 
 - 에디터에서 접근할 수 있는게 가장 큰 장점
+
+## **기타**
+
+- [모바일 또는 콘솔 프로젝트에서 진동 설정하기]
