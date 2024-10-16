@@ -6,7 +6,7 @@ image:
     
 title: "[2023] 계묘년을 보내며"
 
-categories: [마일스톤, 사진]
+categories: [사진]
 tags: [마일스톤, 사진, 불멍, 지하철, 개수대, 구름, 감자튀김, 바닷가, 낙엽]
 start_with_ads: false
 

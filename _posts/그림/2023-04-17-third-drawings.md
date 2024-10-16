@@ -1,7 +1,7 @@
 ---
 title: "디지털 드로잉 모음 #3"
 
-categories: [마일스톤, 그림]
+categories: [그림]
 tags: [마일스톤, 그림, 드로잉, 기지개, 어안렌즈, 폰카]
 start_with_ads: false
 

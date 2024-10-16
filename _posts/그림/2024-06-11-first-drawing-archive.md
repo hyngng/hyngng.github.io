@@ -1,7 +1,7 @@
 ---
 title: "잼민이 시절 그림 발굴하기"
 
-categories: [마일스톤, 그림]
+categories: [그림]
 tags: [마일스톤, 그림]
 start_with_ads: false
 
