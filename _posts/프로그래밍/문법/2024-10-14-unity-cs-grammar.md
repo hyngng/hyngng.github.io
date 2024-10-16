@@ -223,6 +223,10 @@ private IEnumerator MyCoroutine()
 
     yield return new WaitForSeconds(1);
 }
+
+/* 시작과 끝 */
+StartCoroutine(myCoroutine);
+StopCoroutine(myCoroutine);
 ```
 
 ### **델리게이트**
