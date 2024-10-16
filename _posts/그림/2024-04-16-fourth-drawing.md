@@ -1,7 +1,7 @@
 ---
 title: "디지털 드로잉 모음 #4"
 
-categories: [마일스톤, 그림]
+categories: [그림]
 tags: [마일스톤, 그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]
 start_with_ads: false
 

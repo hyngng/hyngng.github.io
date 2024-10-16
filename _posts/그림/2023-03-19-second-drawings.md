@@ -6,7 +6,7 @@ image:
 
 title: "디지털 드로잉 모음 #2"
 
-categories: [마일스톤, 그림]
+categories: [그림]
 tags: [마일스톤, 그림, 드로잉, 비니, 광각, 총, 양뿔, 망토, 트래픽 콘]
 start_with_ads: false
 

@@ -6,7 +6,7 @@ image:
     
 title: "[2022] 열심히 담은 일상"
 
-categories: [마일스톤, 사진]
+categories: [사진]
 tags: [마일스톤, 사진, 감자튀김, 복도, 친구, 눈, 벚꽃, 구름, 크레인]
 start_with_ads: false
 
