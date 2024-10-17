@@ -51,7 +51,7 @@ classDiagram
     SystemCollectionsGeneric <|-- StackT
 ```
 
-`System.Collections`와 `System.Collections.Generic`는 둘 다 자료구조 클래스를 정의하는 네임스페이스입니다. 각각 `ArrayList`, `Hashtable`, `Stack`, `Queue` 또는 `List<T>`, `Dictionary<T>`, `Queue<T>`, `Stack<T>` 등의 클래스가 정의되어 있습니다. `System.Collections.Generic` 네임스페이스가 기존 `System.Collections`의 성능 문제를 개선한 네임스페이스이기 때문에 대부분은 이쪽을 사용하게 됩니다.
+`System.Collections`와 `System.Collections.Generic`는 둘 다 자료구조 클래스를 정의하는 네임스페이스입니다. 각각 `ArrayList`, `Hashtable`, `Stack`, `Queue` 또는 `List<T>`, `Dictionary<T>`, `Queue<T>`, `Stack<T>` 등의 클래스가 정의되어 있으며, 대부분은 `System.Collections.Generic` 네임스페이스를 사용합니다.
 
 ### **UnityEngine**
 
@@ -80,26 +80,49 @@ classDiagram
     UnityEngine <|-- MonoBehaviour
 ```
 
-### **이외의 기타 네임스페이스**
+`GameObject`, `Vector3`, `Physics`, `AudioSource` 등 유니티에서 사용하는 개념이 정의되는 네임스페이스입니다.
 
-- `TMPro`: TextMeshPro 및 TextMeshProUGUI를 관리합니다.
+## **클래스 상속**
 
-`GameObject`, `Vector3`, `Physics`, `AudioSource` 등 유니티에서 사용하는 개념이 정의되는 네임스페이스입니다. 비슷한 이름의 `UnityEditor` 네임스페이스가 있기 때문에 헷갈리지 않도록 주의할 필요가 있습니다.
-
-## **클래스 선언 및 사용**
-
-### **MonoBehaviour**
+### **기본 상속 구조**
 
 ```cs
-public class Player : MonoBehaviour
+public class Animal
 {
-    /* ... */
+    public void Eat() => Debug.Log("Eating");
+}
+
+public class Dog : Animal
+{
+    public void Bark() => Debug.Log("Barking");
 }
 ```
 
-MonoBehaviour는
+### **추상클래스와 인터페이스**
 
-### **클래스 상속**
+```cs
+public interface IAnimal
+{
+    void Speak();
+}
+
+public class Cat : IAnimal
+{
+    public void Speak() => Debug.Log("Meow");
+}
+```
+
+### **인스턴스화**
+
+```cs
+/* C#에서 인스턴스화하는 기본적인 방법 */
+Dog dog = new Dog;
+
+/* 유니티에서 사용하는 경우 */
+Instantiate(GameObject Dog, Vector3 position, Quaternion rotation);
+```
+
+- MonoBehaviour
 
 - 상속 유형 여러가지.
     - static
@@ -136,42 +159,31 @@ private float speed;
 | TextArea | 폭에 맞춰 자동으로 줄바꿈과 슬라이드바 표시한다 |
 | Tooltip | 변수에 대한 설명을 표시한다 |
 
-### **접근 제한자**
-
-변수에는 아래의 3가지 접근 제한자를 부여할 수 있습니다.
-
-- `public`
-- `private`
-- `protected`
-
-### **배열과 리스트 선언**
-
-```cs
-/* 1차원 배열 */
-private int[] intArray = new int[];
-
-/* 2차원 배열 */
-private int[,] matrix = {
-    { 1, 2, 3 },
-    { 4, 5, 6 }
-};
-```
-
-- 배열의 크기는 `Array.Length()`로 가져옴
-
-```cs
-private List<int> = new List<int>();
-```
-
-- 리스트의 크기는 `List.Count()`로 가져옴
-
-배열과 리스트의 선언방식이 다른 이유는 서로 다른 네임스페이스를 참조하기 때문입니다. 예를 들어 리스트는 `System.Collections.Generic`에서 가져오기 때문에 제네릭을 사용합니다.
-
 ### **Nullable 변수**
 
 ```cs
 private int? number = null;
 ```
+
+### **배열과 리스트 선언**
+
+```cs
+/* 배열 선언 */
+private int[] intArray = new int[];
+
+/* 배열의 크기 구하기 */
+Array.Length();
+```
+
+```cs
+/* 리스트 선언 */
+private List<int> = new List<int>();
+
+/* 리스트의 크기 구하기 */
+List.Count();
+```
+
+배열과 리스트는 서로 다른 네임스페이스를 참조하기 때문에 선언방식에 차이가 있습니다. 예를 들어 리스트는 `System.Collections.Generic`에서 가져오기 때문에 제네릭을 사용합니다.
 
 ### **딕셔너리**
 
@@ -195,18 +207,6 @@ public string Name
 변수를 `private`로 선언해놓고 값을 외부 조건에 따라 변경하는 구조가 이상하게 느껴질 수 있지만, get set 프로퍼티를 사용하는 이유는 근본적으로 외부 클래스가 직접 수정하지 못하게 하기 위함입니다.
 
 ## **함수 선언 및 사용**
-
-```cs
-void Function()
-{
-    Debug.Log("Hello, world!")!
-}
-
-string Function()
-{
-    return "Hello, world!";
-}
-```
 
 ### **람다 함수**
 
@@ -243,7 +243,7 @@ public delegate void MyDelegate(string message);
 condition ? value_if_true : value_if_false;
 ```
 
-`if-else` 대신 사용하기 좋은 형식으로 압축성이 좋고 익숙해지고 나면 코드를 읽고 쓰는 속도도 빨라진다는 장점이 있지만, 삼항 연산자를 중첩해서 사용하는 경우 대개 가독성이 나빠지는 문제가 있으므로 그런 경우 코드 압축성을 포기하고 `switch`문을 사용하는 편이 나을 수 있습니다.
+`if-else` 대신 사용하기 좋은 형식으로 코드 압축성이 좋고, 코드를 읽고 쓰는 속도가 빨라진다는 장점이 있습니다. 단 삼항 연산자를 중첩해서 사용하는 경우 대개 가독성이 나빠지는 문제가 있으므로 그런 경우 코드 압축성을 포기하고 `switch`문을 사용하는 편이 좋을 수 있습니다.
 
 ### **NULL 관련 연산자**
 
@@ -280,10 +280,4 @@ foreach (string item in itemList)
 #endif
 ```
 
-## **PlasticSCM**
-
-- 에디터에서 접근할 수 있는게 가장 큰 장점
-
-## **기타**
-
-- [모바일 또는 콘솔 프로젝트에서 진동 설정하기]
+컴파일하기 전에 미리 처리하는 도구입니다. 주로 조건부 컴파일, 코드 매크로 정의, 파일 포함 등의 작업에 사용됩니다.
