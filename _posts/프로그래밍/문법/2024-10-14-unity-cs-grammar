@@ -8,13 +8,13 @@ start_with_ads: true
 toc: true
 toc_sticky: true
 
-date: 2024-10-14 00:00:00 +0900
-last_modified_at: 2024-10-14 00:00:00 +0900
+date: 2024-10-28 00:00:00 +0900
+last_modified_at: 2024-10-28 00:00:00 +0900
 
 mermaid: true
 ---
 
-원활한 유니티 사용을 위한 저만의 문서화된 대방주입니다. 알 필요가 있는 기본 사항을 핵심 위주로 작성했고, 따라서 예를 들어 if문이나 for문 등 절때 까먹을 것 같지 않을 기초적인 부분은 정리하지 않았습니다.
+원활한 유니티 사용을 위한 저만의 문서화된 대방주입니다. if문이나 for문 등 절때 까먹을 것 같지 않을 기초적인 부분을 배제하고 원활한 개발을 위해 필요한 기본 사항 위주로 정리했습니다.
 
 ## **기본 네임스페이스**
 
@@ -87,21 +87,19 @@ classDiagram
 ### **기본 상속 구조**
 
 ```cs
-public class Dog : Animal
+public class Enemy : MonoBehaviour
 {
-    public void Bark() => Debug.Log("Barking");
+    public void Move => Debug.Log("Moving");
 }
 ```
-
-클래스를 상속하는 기본적인 구조입니다. 이 구조에서는 함수 재정의가 불가하기 때문에 유연성이 다소 떨어지며, 대신 주로 아래의 추상클래스와 인터페이스 등을 사용합니다.
 
 ### **추상클래스와 인터페이스**
 
 ```cs
 public virtual class Enemy : MonoBehaviour
 {
-    public void Move() => Debug.Log("Move");
-    public void Attack() => Debug.Log("Attack");
+    public void Move() => Debug.Log("Moving");
+    public void Attack() => Debug.Log("Attacking");
 }
 
 public interface Enemy
@@ -114,7 +112,7 @@ public interface Enemy
 }
 ```
 
-추상클래스와 인터페이스는 둘 다 클래스 상속을 염두해두고 작성하는 형태입니다. 두 유형은 많은 차이점이 있지만, 추상클래스는 함수의 일부분 구현이 가능한 반면 인터페이스는 프로퍼티를 사용하지 않는 변수 선언과 함수 구현을 하지 않는다는 점이 대표적인 차이입니다.
+추상클래스와 인터페이스는 둘 다 클래스 상속을 염두해두고 작성하는 부모 클래스의 작성 방식입니다. 두 유형은 많은 차이점이 있지만, 추상클래스는 함수의 일부분 구현이 가능한 반면 인터페이스는 프로퍼티를 사용하지 않는 변수 선언과 함수 구현을 하지 않는다는 차이점이 있습니다.
 
 ## **변수 선언 및 사용**
 
@@ -127,6 +125,7 @@ public interface Enemy
 private float speed;
 ```
 
+{% comment %}
 | 속성(Attribute) | 설명 |
 |---|---|
 | SerializeField | `private`, `protected` 등 은닉된 변수를 인스펙터창에 표시한다 |
@@ -144,6 +143,7 @@ private float speed;
 | Multiline | 여러 줄의 `string` 변수를 입력받을 수 있도록 변경한다 |
 | TextArea | 폭에 맞춰 자동으로 줄바꿈과 슬라이드바 표시한다 |
 | Tooltip | 변수에 대한 설명을 표시한다 |
+{% endcomment %}
 
 ### **Nullable 변수**
 
