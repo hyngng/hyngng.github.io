@@ -163,7 +163,7 @@ private List<int> = new List<int>();
 List.Count();
 ```
 
-배열과 리스트는 서로 다른 네임스페이스를 참조하기 때문에 선언방식에 차이가 있습니다. 예를 들어 리스트는 `System.Collections.Generic`에 정의되어 있고, 제네릭을 사용합니다.
+배열과 리스트는 서로 다른 네임스페이스에 정의되어 있기 때문에 선언방식에 차이가 있다고 기억하면 좋습니다. 예를 들어 리스트는 `System.Collections.Generic`에 정의되어 있고, 제네릭을 사용합니다.
 
 ### **딕셔너리**
 
@@ -182,9 +182,29 @@ public string Name
 }
 ```
 
-변수 은닉화는 물론, 변수의 수정과 함수 실행을 매우 간단히 연결시킬 수 있어 유용합니다.
+변수 은닉화는 물론, 변수의 수정과 특정 코드의 실행, 혹은 함수 동작을 간단한 구조로 연결시킬 수 있어 유용합니다. 예를 들어 다음과 같이 사용할 수 있습니다.
 
+```cs
+private int hp
+public int HP
+{
+    get { return hp; }
+    set
+    {
+        HpDecreased(value);
+        hp = value;
+    }
+}
+
+void HPDecreased(int HP)
+{
+    /* ... */
+}
+```
+
+{% comment %}
 변수를 `private`로 선언해놓고 값을 외부 조건에 따라 변경하는 구조가 이상하게 느껴질 수 있지만, get set 프로퍼티를 사용하는 이유는 근본적으로 외부 클래스가 직접 수정하지 못하게 하기 위함입니다.
+{% endcomment %}
 
 ## **함수 선언 및 사용**
 
@@ -193,8 +213,6 @@ public string Name
 ```cs
 var specificNumbers = Array.FindAll(numbers, n => n % 2 == 0);
 ```
-
-간단한 함수를 간소한 형태로 정의할 수 있습니다.
 
 ### **코루틴**
 
@@ -221,11 +239,6 @@ del += Method();
 
 여러개 함수를 연결하여 델리게이트 체인을 구성해 함수를 연쇄적으로 호출할 수 있습니다. 여러개 함수를 하나의 변수 형태로 사용할 수 있는 것도 장점입니다.
 
-```cs
-foreach (var method in del.GetInvocationList())
-    Debug.Log("method.Method.Name");
-```
-
 ## **코드 작성 관련**
 
 ### **삼항 연산자**
@@ -246,4 +259,4 @@ condition ? value_if_true : value_if_false;
 #endif
 ```
 
-컴파일하기 전에 미리 처리하는 도구입니다. 주로 조건부 컴파일, 코드 매크로 정의, 파일 포함 등의 작업에 사용됩니다.
+컴파일 전에 미리 특정 동작을 처리하는 도구입니다. 주로 조건부 컴파일, 코드 매크로 정의, 파일 포함 등의 작업에 사용됩니다.
