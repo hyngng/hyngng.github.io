@@ -1,19 +1,15 @@
 ---
-title: "자료구조 - 선형 구조"
+title: "선형 자료구조 정리"
 
-categories: []
-tags: []
+categories: [컴퓨터과학, 자료구조]
+tags: [컴퓨터과학, 자료구조, 선형구조]
 start_with_ads: true
 
 toc: true
 toc_sticky: true
 
-date: 2024- 00:00:00 +0900
-last_modified_at: 2024- 00:00:00 +0900
+date: 2024-10-30 00:00:00 +0900
+last_modified_at: 2024-10-30 00:00:00 +0900
 ---
 
-- LQIP는 16 x 8로 맞추기 (https://www.base64-image.de/)
-- 여행 또는 특정 장소와 관련된 글이면 구조화된 데이터 삽입하기
-- 구조화된 데이터 이미지: https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master/
-
-## **들어가며**
+## **선형 자료구조**
