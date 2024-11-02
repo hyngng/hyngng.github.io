@@ -27,7 +27,7 @@ mermaid: true
 > [전 글](https://hyngng.github.io/posts/armonia-planning/)에서 이어집니다.
 {: .prompt-info }
 
-재밌어서 다시 도전하는 제 [네 번째 마일스톤](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) 개발기입니다. 만들면서 메모를 정리할 겸 중간 점검이 필요하기도 해서 약 한 달 동안 만든 결과물을 간단히 정리했습니다. 이 개발 단계에서 만든 것은 다음과 같습니다.
+재밌어서 다시 도전하는 제 [네 번째 마일스톤](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) 개발기입니다. 만들면서 메모를 정리할 겸 중간 점검이 필요하기도 해서 약 한 달 동안 만든 결과물을 간단히 정리했습니다. 이 개발 단계에서 만든 것은 정리하면 이렇습니다.
 
 게임 시스템
 : - [x] 터치 입력에 따른 부드러운 카메라 이동

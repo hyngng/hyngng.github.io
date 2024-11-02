@@ -24,7 +24,7 @@ mermaid: true
 > [전 글](https://hyngng.github.io/posts/armonia-developing-first/)에서 이어집니다.
 {: .prompt-info }
 
-제 [네 번째 마일스톤](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) 개발기입니다. 또다른 한 달 동안 만든 결과물을 정리했습니다. 이번 한 달은 주로 게임의 시스템과 컨텐츠 확장 작업이 주가 되었으며, 세부적으로 이번 단계에서 만든 것은 다음과 같습니다.
+제 [네 번째 마일스톤](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) 개발기입니다. 또다른 한 달 동안 만든 결과물을 정리했습니다. 이번 한 달은 주로 게임의 시스템과 컨텐츠 확장 작업이 주가 되었으며, 세부적으로 이번 단계에서 만든 것은 이렇습니다.
 
 게임 시스템
 : - [x] 배경 오브젝트 계층화
