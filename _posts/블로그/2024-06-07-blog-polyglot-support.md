@@ -48,7 +48,7 @@ parallel_localizaion: true
 
 ### **정규 표현식 버그 수정하기**
 
-플러그인을 설치하고 빌드를 해보면 _"'relative_url_regex': target of repeat operator is not specified:"_라는 에러를 만나게 됩니다. 이 에러는 플러그인의 `site.rb`{: .filepath } 파일에서 일부 정규 표현식이 Chirpy 테마의 `_config.yml`{: .filepath }에서 `exlude: *.gem *.gemspec *.config.js` 등의 와일드카드(*)를 처리하지 못하기 때문에 발생하는데, 이 문제를 플러그인 제작자에게 [문의해봤으나](https://github.com/untra/polyglot/issues/204) [이 문서를 근거로](https://jekyllrb.com/docs/configuration/options/#global-configuration) Chirpy 테마가 `_config.yml`{: .filepath }에서 글로벌 패턴을 잘못 사용한 것이라는 답을 받았습니다.
+플러그인을 설치하고 빌드를 해보면 "'relative_url_regex': target of repeat operator is not specified:"라는 에러를 만나게 됩니다. 이 에러는 플러그인의 `site.rb`{: .filepath } 파일에서 일부 정규 표현식이 Chirpy 테마의 `_config.yml`{: .filepath }에서 `exlude: *.gem *.gemspec *.config.js` 등의 와일드카드(*)를 처리하지 못하기 때문에 발생하는데, 이 문제를 플러그인 제작자에게 문의해봤으나 [이 문서를 근거로](https://jekyllrb.com/docs/configuration/options/#global-configuration) Chirpy 테마가 `_config.yml`{: .filepath }에서 글로벌 패턴을 잘못 사용한 것이라는 답변을 받았습니다.
 
 다만 Minimal-Mistakes 등의 다른 지킬 테마도 [글로벌 패턴을 사용중인 것](https://github.com/mmistakes/minimal-mistakes/blob/master/_config.yml#L168-L169)을 보면 플러그인 코드 자체를 수정할 필요가 있어 보입니다. 이 경우 저는 플러그인을 자체 수정해서 사용해야 하므로 제 경우 프로젝트를 [개인 리포지토리로 fork한 뒤](https://github.com/kurtsson/jekyll-multiple-languages-plugin/fork) `Gemfile`에 다음과 같이 불러와 사용했습니다.
 
