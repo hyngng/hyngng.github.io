@@ -6,7 +6,7 @@ tags: [마일스톤, 그림]
 start_with_ads: false
 
 image:
-    path: /drawing/legacy/20240611_105601.webp
+    path: /2024-06-11-first-drawing-archive/preview-image.webp
     lqip: data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoQAAgAAUAmJaQAAxeeWOcXmAAA/v40sMcuA/xORxchHG8Nwik+NPbpaQX0k4AA
     alt: fighter jet를 쓰고 싶었던 듯
 

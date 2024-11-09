@@ -1,6 +1,6 @@
 ---
 image:
-    path: /drawing/230319-남자옆면.webp
+    path: /2023-03-09-second-drawings/preview-image.webp
     lqip: data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAQCdASoQAAgAAgA0JQBOgBh2EShgAP79L/Zddr8IocHoi5zSrcrofTZs+tnZKRzvYrsVlw6ZY7BgVwil9C9Gboi+zO+NlKxGpgAA
     alt: 비니비니
 

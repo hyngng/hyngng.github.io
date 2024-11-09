@@ -1,6 +1,6 @@
 ---
 image:
-    path: /photo/webp/20231222_222403.webp
+    path: /2023-12-25-photos-of-gyemyo/preview-image.webp
     lqip: data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAABwAQCdASoKAAUAAgA0JYwCdAFAAAD++vfd7pSFrqXz6iij8hsZxGAA
     alt: 한겨울 밤 하늘 | 23mm ISO400 F1.8 8s
     

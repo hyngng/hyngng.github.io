@@ -6,7 +6,7 @@ tags: [마일스톤, 그림, 드로잉, 사람, 총, 우비, 상자]
 start_with_ads: false
 
 image:
-    path: /drawing/200000-생존사람.webp
+    path: /2022-08-25-first-drawing/preview-image.webp
     lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAgAAgA0JaQAD4WwKYuRsAAA/v58LC1cLESP9ztg6FTwgeVVOIMR19dwzrRkt/f6yWyrN/pF2btgTAAAAA==
     alt: 포스트아포칼립스
 

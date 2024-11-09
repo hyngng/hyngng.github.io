@@ -1,6 +1,6 @@
 ---
 image:
-    path: /photo/webp/20220605_121958.webp
+    path: /2022-12-31-photos-of-imin/preview-image.webp
     lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAgAAgA0JZQCdAD0tNvXgAD++yUU4/HtnDOizij1uz6dfZTsypE5KvKr20uztM+CbrkMAgjCLe9cNkIAAA==
     alt: 쇼핑몰에서 기다릴 때 잠깐 | 230mm ISO250 F4.9 1/40s
     

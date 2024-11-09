@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2024-03-22-armonia-planning/concept-art-simple.webp
+    path: /2024-03-22-armonia-planning/preview-image.webp
     lqip: data:image/webp;base64,UklGRoAAAABXRUJQVlA4THMAAAAvD8ABAJUwiiRJkZtjZmbGF9s5Kyd1ScY8FbRt5MYA/F79RFEjSWpSxn2Zbw+m+z8BjqBzPlDmvL+4+00yVxL5ht9jZKHMSM22JRAbkUChuDviWIX4O+VnNh9jixzr0LjyndMjOUfNsQQDkKGXf/yfCzAGAA==
     alt: 요런 느낌으로
     
