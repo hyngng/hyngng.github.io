@@ -248,7 +248,7 @@ _크리티컬 효과음_
 
 결과물이 나쁘지 않게 만들어지긴 했지만, 소리와 관련된 부분은 꽤 당혹스럽게 남아서 만약 다음에 게임을 만들게 된다면 효과음이나 배경음을 먼저 구하고 만들어야 할 것 같다는 생각이 들었습니다.
 
-### **IAA (인앱 광고)**
+### **인앱 광고**
 
 ![iaa](/2023-12-24-palette-developing/iaa.webp){: w="960" }
 ```cs
@@ -263,7 +263,7 @@ void PlayerDied()
 
 [구글 애드몹 공식 문서](https://developers.google.com/admob/unity/banner?hl=ko)를 참고하면서 만들었는데 공식 가이드를 천천히 따라가니 제 예상보다 너무 쉽게 만들 수 있었습니다. 결과물도 깔끔하게 작동해서 신기했어요.
 
-### **IAP (인앱 결제)**
+### **인앱 결제**
 
 ![iap](/2023-12-24-palette-developing/iap.webp){: .light .border }
 ![iap](/2023-12-24-palette-developing/iap.webp){: .dark w="960" }

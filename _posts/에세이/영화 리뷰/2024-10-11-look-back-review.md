@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAADwAQCdASoQAAgAAUAmJZwAEPPLcsnwBKAA/vUHMN7+ymf6WN3fCPx/j/up/+gtlp/LLEatVYXW/9/r2JteAvrcGTzad6O7yyRlOuzMzpLjDzXBFP/jZVDhBvDLt0sJX96i4pv6rFRusn5O9MnWVgOAAAA=
     alt: "영화의 한 장면"
 
-title: "무미건조함과 담백함, 영화 룩백"
+title: "생각했던 것보다 더 담백했던 영화 룩백"
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 룩백]
