@@ -10,6 +10,8 @@ toc_sticky: true
 
 date: 2024-11-03 00:00:00 +0900
 last_modified_at: 2024-11-03 00:00:00 +0900
+
+mermaid: true
 ---
 
 {% comment %} 개인적인 통찰을 쓰자 {% endcomment %}
@@ -46,6 +48,20 @@ last_modified_at: 2024-11-03 00:00:00 +0900
 - 북한 어쩌구
 - 독일 어쩌구
 - 러시아 어쩌구
+
+```mermaid
+timeline
+        title 고려
+        section Stone Age
+          7600 BC : Britain's oldest known house was built in Orkney, Scotland
+          6000 BC : Sea levels rise and Britain becomes an island.<br> The people who live here are hunter-gatherers.
+        section Bronze Age
+          2300 BC : People arrive from Europe and settle in Britain. They bring farming and metalworking.
+                  : New styles of pottery and ways of burying the dead appear.
+          2200 BC : The last major building works are completed at Stonehenge.<br> People now bury their dead in stone circles.
+                  : The first metal objects are made in Britain.Some other nice things happen. it is a good time to be alive.
+
+```
 
 {% comment %}
 앞으로 세상을 보는 관점을 적어도 한반도 바깥의 세계로 확장해보고자 관심을 가지게 된 분야입니다.
