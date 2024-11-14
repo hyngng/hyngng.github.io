@@ -15,7 +15,8 @@ resource_hints:
       - rel: dns-prefetch
 
 # Web Fonts
-webfonts: https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap # IBM Plex Sans KR
+webfonts: https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff #pretendard
+        # https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap # IBM Plex Sans KR
 
 # Libraries
 
