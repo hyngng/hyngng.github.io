@@ -60,6 +60,17 @@ jobs:
       - name: IndexNow Setup
         run: |
             echo ${{ secrets.INDEXNOW_KEY }} > _site/${{ secrets.INDEXNOW_KEY }}.txt
+
+      - name: Set site URL environment variable
+        id: set_url
+        run: |
+          URL=$(sed -n '/url:/s/url: *//p' _config.yml)
+          echo "::set-output name=url::$URL"
+
+      - name: Submit Sitemap to Google
+        uses: google-github-actions/sitemaps@v1
+        with:
+          url: ${{ steps.set_url.outputs.url }}/sitemap.xml
       # endregion 수정됨
 
       - name: Upload site artifact
