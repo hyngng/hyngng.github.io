@@ -64,8 +64,8 @@ jobs:
       - name: Run Ping Google Script
         run: |
             echo "running shell script"
-            curl "https://google.com/ping?sitemap=https://hyngng.github.io/feed"
-            curl "https://google.com/ping?sitemap=https://hyngng.github.io/sitemap"
+            curl "https://google.com/ping?sitemap=https://hyngng.github.io/feed.xml"
+            curl "https://google.com/ping?sitemap=https://hyngng.github.io/sitemap.xml"
             echo "request sent to google"
       # endregion 수정됨
 
