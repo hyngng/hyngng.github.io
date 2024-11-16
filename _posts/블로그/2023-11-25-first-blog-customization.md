@@ -49,11 +49,13 @@ p:not(blockquote p) {
 
 ### **사이트 하단 Footer 제거**
 
+{% comment %}
 ![footer-remove-light](/2023-11-25-first-blog-customization/footer-remove-light.webp){: .light .border }
 ![footer-remove-dark](/2023-11-25-first-blog-customization/footer-remove-dark.webp){: .dark }
 _적용 전후 비교_
+{% endcomment %}
 
-순정 Chirpy 테마는 블로그 하단에 왼쪽의 "ⓒ {년도} {이름} 일부 권리 보유'와 오른쪽의 'Powered by Jekyll with Chirpy theme"라는 Footer를 생성하는데, 후자는 크게 중요한 정보가 아니므로 삭제해 주었습니다. Footer를 생성하는 코드를 찾아 주석처리했어요.
+순정 Chirpy 테마는 블로그 하단에 왼쪽의 "ⓒ {년도} {이름} 일부 권리 보유'와 오른쪽의 'Powered by Jekyll with Chirpy theme"라는 Footer를 생성합니다. 그중 후자는 크게 중요한 정보가 아니므로 좀 더 깔끔히 보일 수 있도록 Footer 생성과 관련된 코드를 찾아 주석처리해주었습니다.
 
 {% raw %}
 ```liquid
@@ -93,7 +95,7 @@ _적용 전후 비교_
 
 ![post-nav-light](/2023-11-25-first-blog-customization/post-nav-light.webp){: .light .border }
 ![post-nav-dark](/2023-11-25-first-blog-customization/post-nav-dark.webp){: .dark }
-_포스트 네비게이션. "이전 글"과 "다음 글"로 유저를 안내하고 있다._
+_포스트 네비게이션. 현재 포스트 기준 이전 글 또는 다음 글로 유저를 안내합니다._
 
 포스트 네비게이션은 게시글의 가장 아래에서 현재 글이 작성되기 바로 이전의 글과 다음의 글로 연결하는 기능인데 개인적으로는 왜 있는지 의문입니다. 같은 카테고리의 글을 보여주는 것도 아니고, 단순히 시간선상에서 가장 연관성이 있다고 노출을 시키기에는 글 주제가 연관이 전혀 없기 때문이죠.
 
