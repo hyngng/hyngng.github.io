@@ -1,8 +1,8 @@
 ---
 image:
     path: /2024-11-16-fifth-drawings/preview-image.webp
-    lqip: data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAQCdASoQAAgAAUAmJYwAAv+/8OsuAAD+/xM/7Sq+LkyGnTkU29x/vy/D6FYmTGl52h8nvE6sE3eZj2i75ISOoKQ0dI564NvISPmoACCWuoqM3c/HwOD+3LpAAA==
-    alt: "등교하는 중"
+    lqip: data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAQCdASoQAAgAAUAmJYwAAv+/8Oq2oAD+/xM/7Sq+LkyGnTkU29x/vy/D6FYmTGl52h8nvE6sE3eZj2hbsAjc4Udm0jnrg28g71YUAAWkxv0R6vl3wM5L2t70AAAA
+    alt: "등교중"
 
 title: "디지털 드로잉 모음 #5"
 
@@ -17,10 +17,20 @@ date: 2024-11-16 00:00:00 +0900
 last_modified_at: 2024-11-16 00:00:00 +0900
 ---
 
-- 미리보기 이미지 해상도는 1200 x 630
-    - GIF는 600 x 315?
-- LQIP는 16 x 8로 맞추기 (https://www.base64-image.de/)
-- 여행 또는 특정 장소와 관련된 글이면 구조화된 데이터 삽입하기
-- 구조화된 데이터 이미지: https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master/
+![241013-신문형식](/drawing/241013-신문형식.webp){: .light .border}
+![241013-신문형식](/drawing/241013-신문형식.webp){: .dark }
+_이거 되게 재밌게 그렸음_
 
-## **들어가며**
+![241006-바렛쏘기](/drawing/241006-바렛쏘기.webp)
+_이동흐리기 넣어봤는데 재밌네_
+
+![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .light .border}
+![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .dark }
+_약간 이런거 로망 있음_
+
+![241116-영수증](/drawing/241116-영수증.webp)
+_말 그대로 영수증_
+
+![241001-일상그림](/drawing/241001-일상그림.webp){: .light .border}
+![241001-일상그림](/drawing/241001-일상그림.webp){: .dark }
+_일상 캐주얼_
