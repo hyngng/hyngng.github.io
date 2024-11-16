@@ -1,14 +1,14 @@
 ---
+image:
+    path: /2024-04-16-fourth-drawings/preview-image.webp
+    lqip: data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABQAgCdASoQAAgAAgA0JbACdLoAAw99mbC/OgAA/vnFT4pLmuNFoQjBo6mMbdQjhxXXeNsH3/zPWe22e+TocAAA
+    alt: 불편함
+
 title: "디지털 드로잉 모음 #4"
 
 categories: [그림]
-tags: [마일스톤, 그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]
+tags: [그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]
 start_with_ads: false
-
-image:
-    path: /2024-04-16-fourth-drawing/preview-image.webp
-    lqip: data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABQAgCdASoQAAgAAgA0JbACdLoAAw99mbC/OgAA/vnFT4pLmuNFoQjBo6mMbdQjhxXXeNsH3/zPWe22e+TocAAA
-    alt: 불편함
 
 toc: false
 toc_sticky: true

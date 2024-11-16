@@ -1,14 +1,14 @@
 ---
+image:
+    path: /2022-08-25-first-drawings/preview-image.webp
+    lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAgAAgA0JaQAD4WwKYuRsAAA/v58LC1cLESP9ztg6FTwgeVVOIMR19dwzrRkt/f6yWyrN/pF2btgTAAAAA==
+    alt: 포스트 아포칼립스
+
 title: "디지털 드로잉 모음 #1"
 
 categories: [그림]
-tags: [마일스톤, 그림, 드로잉, 사람, 총, 우비, 상자]
+tags: [그림, 드로잉, 사람, 총, 우비, 상자]
 start_with_ads: false
-
-image:
-    path: /2022-08-25-first-drawing/preview-image.webp
-    lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAgAAgA0JaQAD4WwKYuRsAAA/v58LC1cLESP9ztg6FTwgeVVOIMR19dwzrRkt/f6yWyrN/pF2btgTAAAAA==
-    alt: 포스트아포칼립스
 
 toc: false
 toc_sticky: true

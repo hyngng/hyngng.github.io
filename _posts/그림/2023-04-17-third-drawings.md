@@ -1,14 +1,14 @@
 ---
-title: "디지털 드로잉 모음 #3"
-
-categories: [그림]
-tags: [마일스톤, 그림, 드로잉, 기지개, 어안렌즈, 폰카]
-start_with_ads: false
-
 image:
     path: /2023-04-17-third-drawings/preview-image.webp
     lqip: data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACwAQCdASoQAAgAAgA0JaQAAtz+deMAAP7+fCmBZZn3+/ZORq9T+vedgOywrM/PuK61PMAYYBLZKgAA
     alt: 사람 거꾸로 매달기
+
+title: "디지털 드로잉 모음 #3"
+
+categories: [그림]
+tags: [그림, 드로잉, 기지개, 어안렌즈, 폰카]
+start_with_ads: false
 
 toc: false
 toc_sticky: true

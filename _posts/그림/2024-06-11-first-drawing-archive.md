@@ -1,14 +1,14 @@
 ---
-title: "잼민이 시절 그림 발굴하기"
-
-categories: [그림]
-tags: [마일스톤, 그림]
-start_with_ads: false
-
 image:
     path: /2024-06-11-first-drawing-archive/preview-image.webp
     lqip: data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoQAAgAAUAmJaQAAxeeWOcXmAAA/v40sMcuA/xORxchHG8Nwik+NPbpaQX0k4AA
     alt: fighter jet를 쓰고 싶었던 듯
+
+title: "잼민이 시절 그림 발굴하기"
+
+categories: [그림]
+tags: [그림, 전투기, 우주선, 메카닉, 낙서]
+start_with_ads: false
 
 toc: false
 toc_sticky: true
