@@ -7,7 +7,7 @@ image:
 title: "'큐빅 서바이벌': 개발 및 출시과정"
 
 categories: [마일스톤, 게임 개발]
-tags: [마일스톤, 게임 개발, 유니티, C#, URP, PALETTE, 개발, 개발일지]
+tags: [마일스톤, 게임 개발, 유니티, C#, URP, 큐빅 서바이벌, 개발, 개발일지]
 start_with_ads: true
 
 toc: true
@@ -223,7 +223,7 @@ _갤럭시 탭으로 그림_
 
 ### **카메라**
 
-저는 평소의 [사진 취미](https://hyngng.github.io/posts/photos-of-imin/)를 통해 화각으로 많은 것을 표현할 수 있음을 발견했고, 이를 제 게임에 적용해보고 싶었습니다. 유니티의 2D환경은 정사영(Orthographic) 방식으로 씬을 보여주므로 개념에는 차이가 있지만 얼마나 더 넓게 담을지에 대한 추상적인 관점에서는 2D에서도 고민할 부분이 있다고 생각했어요.
+저는 제 [사진 취미](https://hyngng.github.io/posts/photos-of-imin/)를 통해 화각으로 많은 것을 표현할 수 있음을 발견했고, 이를 제 게임에 적용해보고 싶었습니다. 유니티의 2D환경은 정사영(Orthographic) 방식으로 씬을 보여주므로 개념에는 차이가 있지만 얼마나 더 넓게 담을지에 대한 추상적인 관점에서는 2D에서도 고민할 부분이 있다고 생각했어요.
 
 <div class="row">
     <div class="col-md-6">

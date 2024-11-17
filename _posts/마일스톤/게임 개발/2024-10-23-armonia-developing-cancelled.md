@@ -2,7 +2,7 @@
 title: "'행선지', 개발은 여기까지로"
 
 categories: [마일스톤, 게임 개발]
-tags: [마일스톤, 게임 개발, 유니티, C#, ARMONIA, 개발, 개발일지]
+tags: [마일스톤, 게임 개발, 유니티, C#, 행선지, 개발, 개발일지]
 start_with_ads: true
 
 toc: true
