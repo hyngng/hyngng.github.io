@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2024-11-16-fifth-drawings/preview-image.webp
+    path: /2024-11-18-fifth-drawings/preview-image.webp
     lqip: data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAQCdASoQAAgAAUAmJYwAAv+/8OsuAAD+/xM/7Sq+LkyGnTkU29x/vy/D6FYmTGl52h8nvE6sE3eZj2hbsAjc4Uho6KsHwQkTsCfwAEEthUGm2LT3wM5L2t70AAAA
     alt: "등교중"
 
