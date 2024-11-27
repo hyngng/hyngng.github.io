@@ -214,11 +214,7 @@ Chirpy 템플릿은 `_includes/lang.html`{: .filepath }라는 별도의 파일�
   class="readtime"
   data-bs-toggle="tooltip"
   data-bs-placement="bottom"
-  title="{% if site.active_lang == 'ko-KR' %}
-           {{ words }}{{ site.data.locales[include.lang].post.words }}
-         {% else %}
-           {{ words }} {{ site.data.locales[include.lang].post.words }}
-         {% endif %}"
+  title="{{ words }}{% if site.active_lang != 'ko-KR' %}{{ ' ' }}{% endif %}{{ site.data.locales[include.lang].post.words }}
 >
 ```
 {: file="_includes/read-time.html" }
