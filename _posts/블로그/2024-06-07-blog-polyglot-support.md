@@ -233,7 +233,7 @@ Chirpy 템플릿은 `_includes/lang.html`{: .filepath }라는 별도의 파일�
 {: file="_includes/head.html" }
 {% endraw %}
 
-[구글 검색 센터 문서의 국제 및 다국어 가이드](https://developers.google.com/search/docs/specialty/international/localized-versions?hl=ko)에서 안내하고 있는 사항입니다. 필수사항은 아니지만 검색엔진 최적화(SEO)를 신경쓰고 있다면 헤더에 위의 코드를 추가하여 페이지의 언어를 명시해주는 것이 좋습니다. 코드는 빌드를 거쳐 이렇게 변환됩니다.
+[구글 검색 센터 문서의 국제 및 다국어 가이드](https://developers.google.com/search/docs/specialty/international/localized-versions?hl=ko)에서 안내하고 있는 사항입니다. 필수사항은 아니지만 검색엔진 최적화(SEO)를 신경쓰고 있다면 헤더에 위의 코드를 추가하여 페이지의 언어를 명시해주는 것이 좋습니다. 코드는 빌드를 거쳐 다음과 같이 변환됩니다.
 
 ```liquid
 <meta http-equiv="Content-Language" content="ko-KR">
