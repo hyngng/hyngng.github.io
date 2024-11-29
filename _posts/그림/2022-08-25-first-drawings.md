@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAgAAgA0JaQAD4WwKYuRsAAA/v58LC1cLESP9ztg6FTwgeVVOIMR19dwzrRkt/f6yWyrN/pF2btgTAAAAA==
     alt: 포스트 아포칼립스
 
-title: "디지털 드로잉 모음 #1"
+title: "디지털 드로잉 #1 - 고등학생 때 낙서들"
 
 categories: [그림]
 tags: [그림, 드로잉, 사람, 총, 우비, 상자]
