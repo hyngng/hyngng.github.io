@@ -6,7 +6,7 @@ image:
 
 title: "생각했던 것보다 더 담백했던 영화 〈룩 백〉"
 
-categories: [에세이, 영화 리뷰]
+categories: [에세이, 영화리뷰]
 tags: [에세이, 영화 리뷰, 룩 백]
 start_with_ads: true
 
