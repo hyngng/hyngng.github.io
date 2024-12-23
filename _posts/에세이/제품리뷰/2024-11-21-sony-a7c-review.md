@@ -1,8 +1,8 @@
 ---
 title: "폰카 유저의 소니 A7C 사용기"
 
-categories: [에세이, 제품리뷰]
-tags: [에세이, 제품리뷰]
+categories: [에세이, 제품 리뷰]
+tags: [에세이, 제품 리뷰]
 start_with_ads: true
 
 toc: true
