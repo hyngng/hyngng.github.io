@@ -284,3 +284,8 @@ condition ? value_if_true : value_if_false;
 {% comment %}
 - 120 주사율 설정하기
 {% endcomment %}
+
++ https://psw-tony.tistory.com/15
+- 자동 컴파일 (Auto Refresh) 끄기
+    - Ctrl + R로 수동 컴파일 가능
+개꿀팁임
