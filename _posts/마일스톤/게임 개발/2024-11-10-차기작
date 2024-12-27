@@ -33,3 +33,30 @@ last_modified_at: 2024-12-01 00:00:00 +0900
 
 - 스크립터블 오브젝트 사용해봄. 데이터 저장이면 당연히 JSON인줄 알았는데 훨씬 간단하고 직관적이었음. 클래스 하나 만들면 데이터 인스턴스 여러개 만들 수 있는 느낌이라 편했음.
 - TurnToLightMode에서 LightModeOn 등 고민하다가 그냥 해리포터? 빌려 Lumos, Nox 개념 사용하니 편했음.
+
+## 2. 컴포넌트를 사용하는 방법
+
+나는 각 컴포넌트에 본인들이 판단해서 본인들이 보고하고 소통하는 체계를 만들고 싶었다. 자율성을 부여하되 중앙집권형 권력을 만들어 최고위 클래스가 하위 클래스를 통제할 수 있도록 만드려 했다.
+
+```cs
+public GameObject Theme;
+private Theme theme;
+
+void Awake()
+{
+    theme = Theme.GetComponent<Theme>();
+}
+```
+
+그래서 이런 구조가 만들어졌다. 게임오브젝트는 실제로 존재하며, 매니저 클래스를 맡는다.
+
+```cs
+[Header("Opened")]
+public GameObject Theme
+
+[Header("Closed")]
+public Palette Light;
+public Palette Dark;
+```
+
+public은 두 가지로 나뉜다. 타 클래스와의 소통을 위해 public으로 공개되는 변수, 인스펙터창에서 한 번의 입력을 받는 변수.
