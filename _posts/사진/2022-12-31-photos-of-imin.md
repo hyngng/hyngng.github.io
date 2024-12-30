@@ -2,7 +2,7 @@
 image:
     path: /2022-12-31-photos-of-imin/preview-image.webp
     lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAgAAgA0JZQCdAD0tNvXgAD++yUU4/HtnDOizij1uz6dfZTsypE5KvKr20uztM+CbrkMAgjCLe9cNkIAAA==
-    alt: 쇼핑몰에서 기다릴 때 잠깐
+    alt: 쇼핑몰에서 기다릴 때 잠깐 찍음음
     
 title: "[2022] 열심히 담은 일상"
 

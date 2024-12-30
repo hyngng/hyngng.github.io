@@ -60,3 +60,7 @@ public Palette Dark;
 ```
 
 public은 두 가지로 나뉜다. 타 클래스와의 소통을 위해 public으로 공개되는 변수, 인스펙터창에서 한 번의 입력을 받는 변수.
+
+## 3. 터치 처리
+
+- Input.GetMouseButton 대신 Ipointer Interface 사용함 (EventSystem 내장)
