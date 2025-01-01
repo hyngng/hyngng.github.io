@@ -47,8 +47,6 @@ last_modified_at: 2024-12-31 21:50:00 +0900
 
 ![20241127_132738](/photo/20241127_132738.webp){: .shadow }
 
-![20241224_132420](/photo/20241224_132420.webp){: .shadow }
-
 <br>
 
 > 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2024)**에서 확인할 수 있습니다!
