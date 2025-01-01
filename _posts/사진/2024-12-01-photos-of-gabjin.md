@@ -8,9 +8,9 @@ title: "[2024] 이제 슬슬 성숙기"
 
 categories: [사진]
 tags: [사진, 송도, 서울식물원, 아파트, 봄꽃, 덕수궁, 구름, 여름비, 카페, 맨드리아, 고드름]
-start_with_ads: true
+start_with_ads: false
 
-toc: true
+toc: false
 toc_sticky: true
 
 date: 2024-12-31 21:50:00 +0900
