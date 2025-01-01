@@ -4,7 +4,7 @@ image:
     lqip: data:image/jpeg;base64,UklGRogAAABXRUJQVlA4IHwAAABQAgCdASoQAAgAAUAmJZgCdLoAEJEXQXspxpAAzj9wQghm4b3bbMOeM5+uLV8L7uZTzl5EZq2BXD9cl2GiCcEXLsAKr4eYgp1dn+ft8Z3raNVewBX/iIuoBhL9jGqUYhS5L5T2X1GIKpNt6Qu+vrbTgQ9lMeGbwOlk4AAA
     alt: "올해 여름 진짜 더웠음"
 
-title: "[2024] 이젠 슬슬 성숙기"
+title: "[2024] 이제 슬슬 성숙기"
 
 categories: [사진]
 tags: [사진, 송도, 서울식물원, 아파트, 봄꽃, 덕수궁, 구름, 여름비, 카페, 맨드리아, 고드름]
