@@ -6,7 +6,7 @@ image:
 
 title: "[2024] 솔직히 좀 재밌음"
 
-categories: [사진]
+categories: [사진, 연말 정산]
 tags: [사진, 송도, 서울식물원, 아파트, 봄꽃, 덕수궁, 구름, 여름비, 카페, 맨드리아, 고드름]
 start_with_ads: false
 
