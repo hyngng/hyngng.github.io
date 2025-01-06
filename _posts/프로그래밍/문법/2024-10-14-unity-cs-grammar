@@ -96,7 +96,7 @@ public class Enemy : MonoBehaviour
 ### **추상클래스와 인터페이스**
 
 ```cs
-public virtual class Enemy : MonoBehaviour
+public anstract class Enemy : MonoBehaviour
 {
     public void Move() => Debug.Log("Moving");
     public void Attack() => Debug.Log("Attacking");
