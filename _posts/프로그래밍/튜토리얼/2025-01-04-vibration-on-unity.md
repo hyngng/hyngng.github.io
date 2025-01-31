@@ -8,15 +8,17 @@ start_with_ads: true
 toc: true
 toc_sticky: true
 
-date: 2025-01-04 00:00:00 +0900
-last_modified_at: 2025-01-04 00:00:00 +0900
+date: 2025-01-31 10:18:00 +0900
+last_modified_at: 2025-01-31 10:18:00 +0900
 ---
 
-(서론)
-자주 까먹는 일입니다.
+유니티에서 진동은 유용합니다. 진동 하나를 추가하는 것만으로도 플레이 경험을 꽤 개선할 수 있습니다. 유니티에서 진동은 기본적으로 `Handheld.Vibrate()`의 형태로 제공되지만 진동의 강도나 지속 시간이 고정된다는 단점이 있어 주로 다음의 방법을 이용합니다. 안드로이드 기준입니다.
 
-1. Edit > Project Settings > Player > Publishing Settings > Custom Main Manifest 체크하면 프로젝트의 `Assets/Plugins/Android`{: .filepath } 경로에 커스텀할 수 있는 `AndroidManifest.xml`{: .filepath } 파일이 생성됨
-2. 가장 하단에 `<uses-permission android:name="android.permission.VIBRATE" />` 코드 한 줄 추가.
+## **Manifest 파일 추가하기**
+
+1. 먼저 `Edit > Project Settings > Player > Publishing Settings`{: .filepath }에서  `Custom Main Manifest`{: .filepath } 항목을 체크해야 합니다.
+2. 프로젝트의 `Assets/Plugins/Android`{: .filepath } 경로에 수정 가능한 `AndroidManifest.xml`{: .filepath } 파일이 생성됩니다.
+3. 해당 파일의 `manifest` 태그 안에 `<uses-permission android:name="android.permission.VIBRATE" />` 코드 한 줄을 추가하면 됩니다.
 
 ```cs
 <?xml version="1.0" encoding="utf-8"?>
@@ -49,7 +51,11 @@ last_modified_at: 2025-01-04 00:00:00 +0900
 ```
 {: file="AndroidManifest.xml" }
 
-완성된 `AndroidManifest.xml`{: .filepath } 파일 코드는 위와 같습니다.
+완성된 `AndroidManifest.xml`{: .filepath } 파일은 위와 같이 나타납니다. 이 파일에 기반해 빌드된 어플은 진동 권한을 요구하게 되고, 플레이어가 허용하면 진동이 울릴 수 있는 환경이 만들어지게 됩니다.
+
+## **Vibration 클래스 추가하기**
+
+프로젝트 경로 아무곳에서 C# 파일을 추가한 다음, 아래의 클래스를 붙여넣고 저장합니다. 주로 `Assets/Scripts`{: .filepath } 경로 내에 작성합니다.
 
 ```cs
 using System.Collections;
@@ -100,8 +106,16 @@ public static class Vibration
 ```
 {: file="Vibration.cs"}
 
-정적 클래스이므로 프로젝트 어느 곳에 작성해도 상관없습니다.
+이 클래스는 진동이 울리는 시간을 `long` 자료형 매개변수로 받아 `AndroidVibrator.Call()`을 호출합니다. 정적 클래스로 제공되므로 프로젝트 어느 곳에 작성하더라도 잘 작동합니다. 예를 들어 `Vibration.Vibrate(long(1000));`와 같이 사용할 수 있습니다. 개인적으로는 `long(10)` 정도로 사용하는 것이 좋았습니다.
+
+## **사용 예시**
 
 ```cs
-Vibration.Vibrate(10);
+public void Vibrate()
+{
+    if (MainManager.ActivatedObject == gameObject)
+        Vibration.Vibrate((long)10);
+}
 ```
+
+위와 같이 사용한 적이 있습니다. 플레이어가 특정 오브젝트를 터치하면 해당 오브젝트가 활성화되며 `MainManager`의 `ActivatedObject` 자리에 등록되는 방식인데, 매 프레임마다 활성화된 오브젝트를 검사해야 하므로 좋은 방식은 아니었지만 그 점만 제외하면 만족스럽게 잘 작동했습니다.
