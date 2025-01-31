@@ -72,7 +72,9 @@ jobs:
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@main
         with:
+          name: site
           path: "_site${{ steps.pages.outputs.base_path }}"
+          retention-days: 1
 
   deploy:
     environment:
