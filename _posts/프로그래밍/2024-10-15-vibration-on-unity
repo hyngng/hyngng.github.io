@@ -1,0 +1,67 @@
+---
+title: "모바일 또는 콘솔 환경에서 진동 설정하기"
+
+categories: []
+tags: []
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2024-10-15 00:00:00 +0900
+last_modified_at: 2024-10-15 00:00:00 +0900
+---
+
+- LQIP는 16 x 8로 맞추기 (https://www.base64-image.de/)
+- 여행 또는 특정 장소와 관련된 글이면 구조화된 데이터 삽입하기
+- 구조화된 데이터 이미지: https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master/
+
+```cs
+using System.Collections;
+using UnityEngine;
+ 
+public static class Vibration
+{
+#if UNITY_ANDROID && !UNITY_EDITOR
+    public static AndroidJavaClass AndroidPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+    public static AndroidJavaObject AndroidcurrentActivity = AndroidPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+    public static AndroidJavaObject AndroidVibrator = AndroidcurrentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
+#endif
+    public static void Vibrate()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidVibrator.Call("vibrate");
+#else
+        Handheld.Vibrate();
+#endif
+    }
+ 
+    public static void Vibrate(long milliseconds)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidVibrator.Call("vibrate", milliseconds);
+#else
+        Handheld.Vibrate();
+#endif
+    }
+    public static void Vibrate(long[] pattern, int repeat)
+    {
+ 
+ 
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidVibrator.Call("vibrate", pattern, repeat);
+#else
+        Handheld.Vibrate();
+#endif
+    }
+ 
+    public static void Cancel()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            AndroidVibrator.Call("cancel");
+#endif
+    }
+}
+```
+
+- `AndroidManifest.xml` 수정하는 법 같이 기재
