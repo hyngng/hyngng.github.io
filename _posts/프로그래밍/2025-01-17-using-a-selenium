@@ -1,0 +1,42 @@
+---
+title: "파이썬 셀레니움 사용기"
+
+categories: [프로그래밍]
+tags: [프로그래밍]
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2025-01-17 00:00:00 +0900
+last_modified_at: 2025-2025-01-17 00:00:00 +0900
+---
+
+## **소제목1**
+
+이분저분 위탁주문처럼 프로그램 만들어주느라 파이썬을 다시 들여다보고있습니다. 그중에 가장 많이 사용하는 라이브러리가 셀레니움인데 슬슬 감상문을 남길 정도로 경험이 축적된 것 같습니다.
+
+셀레니움은 웹을 제어할 때 쓰는 라이브러리입니다. 아이디나 비밀번호를 입력하고 로그인 버튼을 누르거나 입력창에 제어하는 등 반복적인 작업을 할 때 유용합니다. 특히, 웹을 통해서만 가능한 업무가 있다면 이런 프로그램 하나쯤 만들어두면 정말 편리합니다.
+
+- 웹요소를 찾을 때에는 Xpath가 가장 쓰기 직관적인 것 같았습니다. 예를 들어 table 태그에 대해 table/tbody/tr[i]/td[j]처럼 활용하기 좋았습니다.
+- 하드코딩보다는 외부 YAML 파일에 웹요소를 정리해두고 코드에서 접근하는 편이 훨씬 직관적이었습니다.
+
+## **좋았던 점**
+
+```yaml
+page_element:
+  login:
+    id_input_field: /html/body/form/div/div[1]/div[2]/span[1]/input
+    pw_input_field: /html/body/form/div/div[1]/div[2]/span[2]/input
+    login_button: /html/body/form/div/div[1]/div[2]/input
+```
+{: file="config.yaml" }
+
+```python
+id_input_field = wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["login"]["id_input_field"])))
+pw_input_field = wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["login"]["pw_input_field"])))
+login_button   = wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["login"]["login_button"])))
+```
+{: file="main.py" }
+
+다만 좀 코드가 가로로 길어지는 문제가 있어 깔끔하진 않지만 ["page_element"]["login"]["id_input_field"]와 같이 사용할 수 있어서 어떤 웹요소에 접근하는지를 직관적으로 확인할 수 있어서 좋았습니다.
