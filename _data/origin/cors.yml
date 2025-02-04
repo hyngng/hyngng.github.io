@@ -15,23 +15,24 @@ resource_hints:
       - rel: dns-prefetch
 
 # Web Fonts
-webfonts: https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css #pretendard
+webfonts: https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap
         # https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap # IBM Plex Sans KR
+        # https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css #pretendard
 
 # Libraries
 
 toc:
-  css: https://cdn.jsdelivr.net/npm/tocbot@4.29.0/dist/tocbot.min.css
-  js: https://cdn.jsdelivr.net/npm/tocbot@4.29.0/dist/tocbot.min.js
+  css: https://cdn.jsdelivr.net/npm/tocbot@4.32.2/dist/tocbot.min.css
+  js: https://cdn.jsdelivr.net/npm/tocbot@4.32.2/dist/tocbot.min.js
 
 fontawesome:
-  css: https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css
+  css: https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.1/css/all.min.css
 
 search:
   js: https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js
 
 mermaid:
-  js: https://cdn.jsdelivr.net/npm/mermaid@11.0.2/dist/mermaid.min.js
+  js: https://cdn.jsdelivr.net/npm/mermaid@11.4.0/dist/mermaid.min.js
 
 dayjs:
   js:

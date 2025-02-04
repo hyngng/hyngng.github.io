@@ -54,7 +54,7 @@ last_modified_at: 2025-02-01 12:08:00 +0900
 ```
 {: file="AndroidManifest.xml" }
 
-완성된 `AndroidManifest.xml`{: .filepath } 파일은 위와 같이 나타납니다. 이 파일에 기반해 빌드된 어플은 진동 권한을 요구하게 되고, 플레이어가 허용하면 진동이 울릴 수 있는 환경이 만들어지게 됩니다.
+완성된 `AndroidManifest.xml`{: .filepath } 파일은 위와 같이 나타납니다. 이 파일에 기반해 빌드된 어플은 진동 권한을 요구하게 되고, 플레이어가 허용하면 진동이 울릴 수 있게 됩니다.
 
 ## **Vibration 클래스 추가하기**
 

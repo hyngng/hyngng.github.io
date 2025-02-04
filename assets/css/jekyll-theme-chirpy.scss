@@ -1,7 +1,11 @@
 ---
 ---
 
-@import 'main
+@use 'fonts/Pretendard-1.3.9/web/static/pretendard';
+
+/* append your custom style above */
+
+@use 'main
 {%- if jekyll.environment == 'production' -%}
   .bundle
 {%- endif -%}
@@ -33,7 +37,6 @@ ul:not(.list-unstyled, .toc-list, dd ul, .list-group) {
 /* endregion 줄간격 */
 
 /* region 텍스트 속성 */
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 .site-title {
   font-family: 'Pretendard', 'Source Sans Pro', 'Microsoft Yahei', sans-serif !important;
 }

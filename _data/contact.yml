@@ -13,7 +13,6 @@
 - type: rss
   icon: "fas fa-rss fa-lg"
   noblank: true
-  
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon

@@ -11,17 +11,7 @@
       {%- endif -%}
     </a>
 
-    {% comment %} region 수정됨 {% endcomment %}
-    {% if page.layout != 'home' %}
-      <h2 class="site-title">
-        <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
-      </h2>
-    {% else %}
-      <h1 class="site-title">
-        <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
-      </h1>
-    {% endif %}
-    {% comment %} endregion 수정됨 {% endcomment %}
+    <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
   </header>
   <!-- .profile-wrapper -->
@@ -53,9 +43,7 @@
   <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
     {% unless site.theme_mode %}
       <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
-        {% comment %} region 수정됨 {% endcomment %}
-        <i class="fas fa-adjust fa-lg"></i>
-        {% comment %} endregion 수정됨 {% endcomment %}
+        <i class="fas fa-adjust"></i>
       </button>
 
       {% if site.data.contact.size > 0 %}
@@ -86,10 +74,6 @@
         <a
           href="{{ url }}"
           aria-label="{{ entry.type }}"
-          {% comment %} region 수정됨 {% endcomment %}
-          class="url-button"
-          {% comment %} endregion 수정됨 {% endcomment %}
-
           {% assign link_types = '' %}
 
           {% unless entry.noblank %}
