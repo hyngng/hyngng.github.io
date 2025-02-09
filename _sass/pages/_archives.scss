@@ -52,7 +52,9 @@
       border-radius: 50%;
       width: 12px;
       height: 12px;
-      left: 21.5px;
+      /* region 수정됨: 폰트 변경에 따라 수정됨*/
+      left: 11.5px; /* 21.5px; */
+      /* endregion 수정됨 */
       border: 3px solid;
       background-color: var(--timeline-year-dot-color);
       border-color: var(--timeline-node-bg);

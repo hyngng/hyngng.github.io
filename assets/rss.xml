@@ -25,13 +25,11 @@ permalink: /rss.xml
           <description>{{ post.content | markdownify | remove_tag: 'h2', 'em', 'blockquote', 'pre' | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines | truncate: 250 -}}</description>
         {% endif %}
 
-        {% assign image_tag_start = post.content | split: '<img' %}
-        {% if image_tag_start.size > 1 %} {% comment %} <img> 태그가 있는 경우 {% endcomment %}
-          {% assign image_src_split = image_tag_start[1] | split: 'src="' %}
-          {% if image_src_split.size > 1 %}
-            {% assign image_src = image_src_split[1] | split: '"' | first %} {% comment %} src 값 추출 {% endcomment %}
-            <image>{{ site.cdn }}{{ image_src | xml_escape }}</image>
-          {% endif %}
+        {% assign parts = post.content | split: '<img ' %}
+        {% if parts.size > 1 %}
+          {% assign image_tag = parts[1] | split: '>' | first %}
+          {% assign image_src = image_tag | split: 'src="' | last | split: '"' | first %}
+          <image>{{ site.cdn }}{{ image_src | xml_escape }}</image>
         {% endif %}
 
         <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
