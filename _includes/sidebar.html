@@ -11,7 +11,13 @@
       {%- endif -%}
     </a>
 
-    <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    {% comment %} region 수정됨 {% endcomment %}
+    {% if page.layout == 'home' %}
+      <h1 class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</h1>
+    {% else %}
+      <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    {% endif %}
+    {% comment %} endregion 수정됨 {% endcomment %}
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
   </header>
   <!-- .profile-wrapper -->

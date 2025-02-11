@@ -70,18 +70,16 @@ _핀치 줌으로 설정창에 진입함_
 
 배터리나 시간의 경우 `SystemInfo.batteryLevel`나 `DateTime.Now`를 이용해 진짜 배터리 상태와 시간을 표시하도록 만들었고, 셔터스피드와 조리개값은 아직 기능이 구현된 것은 없지만 포스트 프로세싱의 모션 블러나 심도 효과 등을 조절할 수 있도록 만들려고 합니다.
 
-텍스트가 기본 폰트로 표시되는 등 아직 완성해야할 부분이 남아있지만 지금까지 만들어진 것만으로도 경험이 유기적이고 독특하다는 느낌이 들어 우선은 만족스럽습니다. 다만 이게 다른 사람에게도 매력적으로 보일지가 걱정이네요.
-
-<!--하단 스와이프창 만들거임.-->
+텍스트가 기본 폰트로 표시되는 등 아직 완성해야할 부분이 남아있지만 지금까지 만들어진 것만으로도 경험이 유기적이고 독특하다는 느낌이 들어 우선은 만족스럽습니다. 다만 이게 다른 사람에게도 매력적으로 보일지가 걱정입니다.
 
 ### **절차적 애니메이션 적용**
 
 ![people-staring-pigeons](/2024-05-31-armonia-developing-second/people-staring-pigeons.webp){: .w-75 }
 _근처에 비둘기 있으면 한 번씩 쳐다봄_
 
-[이전 마일스톤](https://hyngng.github.io/posts/palette-developing/)을 만들면서 절차적 애니메이션을 이용해 환경과 상호작용하는 유기적인 애니메이션을 만드는 것을 보고 정말 멋지다고 생각한 적이 있어서 잘 기억해두고 있다가 이번에 시도해봤습니다. 기술적으로 정교한 조건을 두어 구현하는 것인 줄 알았는데 유니티 패키지로 제공되기 때문에 생각보다 쉬웠고, 다만 코드로 제어하는 것이 생각보다 복잡했네요.
+[이전 마일스톤](https://hyngng.github.io/posts/palette-developing/)을 만들면서 절차적 애니메이션을 이용해 환경과 상호작용하는 유기적인 애니메이션을 만드는 것을 보고 정말 멋지다고 생각한 적이 있어서 잘 기억해두고 있다가 이번에 시도해봤습니다. 기술적으로 정교한 조건을 두어 구현하는 것인 줄 알았는데 유니티 패키지로 제공되기 때문에 생각보다 쉬웠고, 다만 코드로 제어하는 것이 생각보다 복잡했습니다.
 
-비둘기와 달리 사람은 머리, 몸, 다리 등이 개별 오브젝트로 독립적으로 나뉘어져 있어 [Animation Rigging 패키지](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/index.html)의 `Multiple Aim Constraint` 컴포넌트를 이용해 사람의 머리 오브젝트가 일정 거리 내에서 비둘기를 향해   쳐다보는 기능을 시도삼아 구현했습니다.
+비둘기와 달리 사람은 머리, 몸, 다리 등이 개별 오브젝트로 독립적으로 나뉘어져 있어 [Animation Rigging 패키지](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/index.html)의 `Multiple Aim Constraint` 컴포넌트를 이용해 사람의 머리 오브젝트가 일정 거리 내에서 비둘기를 향해 쳐다보는 기능을 시도삼아 구현했습니다.
 
 ```cs
 public void ChangeSourceObject(GameObject discoveredObject)
@@ -111,7 +109,7 @@ public void ChangeSourceObject(GameObject discoveredObject)
 - 지정이 완료된 후에는 해당 오브젝트의 애니메이터를 비활성화한 후 `rigBuilder`를 빌드한 뒤 애니메이션을 재활성화해야 정상적으로 적용됩니다.
 - 어떤 오브젝트가 다른 오브젝트의 `sourceObject`로 등록되었다면, 해당 오브젝트가 삭제될 때 자신이 등록된 `sourceObject` 속성을 `None`으로 변경해주어야 합니다.
 
-[공식 문서](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.0/api/UnityEngine.Animations.Rigging.html)를 찾아봐도 해결법을 찾기 힘든 동작이나 오류가 있어서 난감한 상황이 많이 있었지만 결과적으로 잘 만들어낸 것 같습니다. 구현하고 나니 확실히 게임 분위기를 유연하게 만들어주는 효과가 있는 것 같네요. 나중에 3D 토이프로젝트라도 만들게 되면 꼭 더 잘 활용해보고 싶습니다.
+[공식 문서](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.0/api/UnityEngine.Animations.Rigging.html)를 찾아봐도 해결법을 찾기 힘든 동작이나 오류가 있어서 난감한 상황이 많이 있었지만 결과적으로 잘 만들어낸 것 같습니다. 구현하고 나니 확실히 게임 분위기를 유연하게 만들어주는 효과가 있는 것 같습니다. 나중에 3D 토이프로젝트라도 만들게 되면 꼭 더 잘 활용해보고 싶습니다.
 
 ### **프로파일러를 이용한 최적화**
 
