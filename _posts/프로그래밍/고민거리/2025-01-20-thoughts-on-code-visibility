@@ -35,3 +35,23 @@ datepicker_month_select = Select(wait.until(EC.presence_of_element_located((By.X
 datepicker_month_select.select_by_visible_text(f"{int(date.month)}월")
 wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["form"]["date_form"].replace("row", f"{date_row}").replace("column", f"{date_column}")))).click()
 ```
+
+## **모듈 작성할 때**
+
+유니티에서는 클래스명과 파일명이 같아야 한다는 규칙이 있다. 한 개의 파일에 메인 클래스 외 다른 클래스를 함께 정의하는 것이 가능하긴 하지만, 그럴 일이 잘 없어서 보통 한 개 파일에 동명 클래스 한 개를 작성하게 된다.
+
+파이썬에서도 비슷하게 작업을 하고 있었는데 점점 이런 상황이 신경쓰였다.
+
+```python
+from module.class import Class
+
+class = Class()
+```
+
+같은 개념이 벌써 4번이나 등장한다. class와 Class는 구분도 잘 되지 않는다. 이런 동어반복을 피하기 위해 다음과 같이 작성하기 시작했다.
+
+```python
+from module.classes import class_type_a
+
+instance = class_type_a()
+```
