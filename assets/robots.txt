@@ -7,6 +7,8 @@ User-agent: *
 Disallow: /norobots/
 Disallow: /categories/
 Disallow: /tags/
+Disallow: /a16a2aa5866c424eb3024294dc0cffd8.txt
+Disallow: /naver5d186017ee7fae694a1951ff34461a02
 
 Sitemap: {{ '/sitemap.xml' | absolute_url }}
 

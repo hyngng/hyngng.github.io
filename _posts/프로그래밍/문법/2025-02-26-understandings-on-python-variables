@@ -1,0 +1,38 @@
+---
+title: "파이썬에서 클래스간 공유 가능한 변수 선언하기"
+
+categories: [프로그래밍, 문법]
+tags: [프로그래밍, 문법]
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2025-02-26 00:00:00 +0900
+last_modified_at: 2025-02-26 00:00:00 +0900
+---
+
+파이썬에서 클래스 내부 변수를 사용하고 싶을 때 기본적으로는 `self`를 통해 다음과 같이 작성하는 방법이 있습니다.
+
+```python
+class Person:
+    def __init__(self):
+        self.name = name
+        self.age  = age
+        # ...
+```
+
+`self` 키워드를 통해 접근하느 경우, 이 변수는 정확히는 인스턴스 내부 변수가 됩니다.
+
+인스턴스가 공유하는 선언하고 싶은 경우 `__init__` 외부에 선언할 수 있습니다.
+
+```python
+class Person:
+    
+    def __init__(self):
+        self.name = name
+        self.age  = age
+        # ...
+```
+
+- 클래스 변수와 인스턴스 변수의 구분, `static` 키워드와의 연관성

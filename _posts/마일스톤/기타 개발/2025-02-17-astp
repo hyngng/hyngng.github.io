@@ -14,7 +14,7 @@ last_modified_at: 2025-02-17 00:00:00 +0900
 
 ## **한국투자증권 API 재발급**
 
-[KIS Developers](https://apiportal.koreainvestment.com/intro)에서 로그인 후 API 신청 누르면 [한국투자증권 홈페이지](https://securities.koreainvestment.com/main/Main.jsp)로 연결되어 로그인을 요구함.
+[KIS Developers](https://apiportal.koreainvestment.com/intro)에서 로그인 후 <button>API 신청</button> 누르면 [한국투자증권 홈페이지](https://securities.koreainvestment.com/main/Main.jsp)로 연결되어 로그인을 요구함.
 
 준비사항
 : - 1원 입금된 계좌
