@@ -58,7 +58,7 @@ last_modified_at: 2025-02-01 12:08:00 +0900
 
 ## **Vibration 클래스 추가하기**
 
-프로젝트 경로 아무곳에서 C# 파일을 추가한 다음, 아래의 클래스를 붙여넣고 저장합니다. 주로 `Assets/Scripts`{: .filepath } 경로 내에 작성합니다.
+프로젝트 경로 아무곳에서 C# 파일을 추가한 다음, 아래의 코드를 붙여넣고 저장합니다. 주로 `Assets/Scripts`{: .filepath } 경로 내에 작성합니다.
 
 ```cs
 using System.Collections;
@@ -109,7 +109,7 @@ public static class Vibration
 ```
 {: file="Vibration.cs"}
 
-이 클래스는 진동이 울리는 시간을 `long` 자료형 매개변수로 받아 `AndroidVibrator.Call()`을 호출합니다. 정적 클래스로 제공되므로 프로젝트 어느 곳에 작성하더라도 잘 작동합니다. 예를 들어 `Vibration.Vibrate(long(1000));`와 같이 사용할 수 있습니다. 개인적으로는 `long(10)` 정도로 사용하는 것이 좋았습니다.
+이 클래스는 정적으로 제공되므로 프로젝트 어느 곳에 작성하더라도 잘 작동합니다. 진동이 울리는 시간을 `long` 자료형 매개변수로 받아 `AndroidVibrator.Call()`을 호출하며, 예를 들어 `Vibration.Vibrate(long(1000));`와 같이 사용할 수 있습니다. 개인적으로는 `long(10)` 정도로 사용하는 것이 좋았습니다.
 
 ## **사용 예시**
 
@@ -121,4 +121,4 @@ public void Vibrate()
 }
 ```
 
-위와 같이 사용한 적이 있습니다. 플레이어가 특정 오브젝트를 터치하면 해당 오브젝트가 활성화되며 `MainManager`의 `ActivatedObject` 자리에 등록되는 방식인데, 좋은 코드는 아니지만 그 점을 제외하면 만족스럽게 잘 작동했습니다.
+[이전 프로젝트](https://hyngng.github.io/posts/armonia-developing-second/)에서 위와 같이 사용한 적이 있습니다. 플레이어가 특정 오브젝트를 터치하면 해당 오브젝트가 활성화되며 `MainManager`의 `ActivatedObject` 자리에 등록되는 방식인데, 좋은 코드는 아니지만 그 점을 제외하면 만족스럽게 잘 작동했습니다.
