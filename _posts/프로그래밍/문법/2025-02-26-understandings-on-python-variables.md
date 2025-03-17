@@ -18,7 +18,7 @@ last_modified_at: 2025-03-17 16:50:00 +0900
 
 ```python
 class Person:
-    ''' 다음과 같이 선언할 수 있습니다.
+    ''' 아래과 같이 선언할 수 있습니다.
     '''
     type = "person"
     
