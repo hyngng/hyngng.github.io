@@ -58,7 +58,7 @@ myproject/
 
 ```python
 def main():
-    ''' 보석 세공 장인을 주제로
+    ''' 보석 세공 장인을 주제로 하면 이런식
     '''
     self.mining()  
     self.cutting() 
@@ -66,7 +66,7 @@ def main():
     self.selling()
 
 def main()
-    ''' 파인다이닝 셰프를 주제로
+    ''' 파인다이닝 셰프를 주제로 하면 이런식
     '''
     self.washing()
     self.cutting()
