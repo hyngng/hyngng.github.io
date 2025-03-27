@@ -17,8 +17,8 @@ last_modified_at: 2025-02-17 00:00:00 +0900
 [KIS Developers](https://apiportal.koreainvestment.com/intro)에서 로그인 후 <button>API 신청</button> 누르면 [한국투자증권 홈페이지](https://securities.koreainvestment.com/main/Main.jsp)로 연결되어 로그인을 요구함.
 
 준비사항
-: - 1원 입금된 계좌
-- 범용 또는 증권거래용 공동인증서
+: - 한국투자증권 가입 도중 1원 입금된 계좌
+- 범용 또는 증권거래 용도의 공동인증서
 
 두 개 준비해가면 로그인되고, API 신청해서 Key와 Secret 발급받을 수 있음.
 
