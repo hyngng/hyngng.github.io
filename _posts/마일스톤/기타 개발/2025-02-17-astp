@@ -12,6 +12,9 @@ date: 2025-02-17 00:00:00 +0900
 last_modified_at: 2025-02-17 00:00:00 +0900
 ---
 
+> 3년만에 다시 만드는 자동주식거래기
+{: .prompt-info }
+
 ## **한국투자증권 API 재발급**
 
 [KIS Developers](https://apiportal.koreainvestment.com/intro)에서 로그인 후 <button>API 신청</button> 누르면 [한국투자증권 홈페이지](https://securities.koreainvestment.com/main/Main.jsp)로 연결되어 로그인을 요구함.
@@ -20,9 +23,10 @@ last_modified_at: 2025-02-17 00:00:00 +0900
 : - 한국투자증권 가입 도중 1원 입금된 계좌
 - 범용 또는 증권거래 용도의 공동인증서
 
-두 개 준비해가면 로그인되고, API 신청해서 Key와 Secret 발급받을 수 있음.
+두 개 준비해가면 로그인되고, API 신청해서 `Key`와 `Secret` 발급받을 수 있음.
 
-## **코드 작성**
+## **새로 시도한 것**
 
-파이썬에서 새로 시도하는 것
-: - 모듈명을 복수형으로 만들고 한 개 모듈에 여러개 클래스 작성할거임.
+-[x] 클래스화 및 모듈화
+-[x] 매직 메서드와 독스트링 작성
+-[x] `logging` 라이브러리 사용
