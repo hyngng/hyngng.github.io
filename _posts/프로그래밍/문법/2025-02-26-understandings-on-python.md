@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-03-17 15:25:00 +0900
-last_modified_at: 2025-03-18 23:16:00 +0900
+last_modified_at: 2025-03-30 23:16:00 +0900
 ---
 
 ## **클래스간 공유 가능한 변수 선언하기**
