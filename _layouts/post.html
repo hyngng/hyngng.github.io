@@ -6,6 +6,7 @@ panel_includes:
 tail_includes:
   - related-posts
   - post-nav
+  - adsense
 script_includes:
   - comment
 ---
@@ -120,6 +121,12 @@ script_includes:
       </div>
       <div id="toc-popup-content" class="px-4 py-3 pb-4"></div>
     </dialog>
+    {% comment %} region 수정됨 {% endcomment %}
+    {% if page.start_with_ads %}
+      <br><br>
+      {% include adsense.html %}
+    {% endif %}
+    {% comment %} endregion 수정됨 {% endcomment %}
   {% endif %}
 
   <div class="content">
