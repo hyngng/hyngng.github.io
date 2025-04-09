@@ -83,7 +83,7 @@ def main():
     ''' 그냥 일반적인 경우
     '''
     download_data()
-    process_data()
+    basic_process()
     save_results()
 ```
 
