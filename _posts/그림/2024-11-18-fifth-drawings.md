@@ -1,8 +1,8 @@
 ---
 image:
     path: /2024-11-18-fifth-drawings/preview-image.webp
-    lqip: data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAAAwAQCdASoQAAgAAgA0JaQAA3AA/vpUK06//LE/2h2s+Kf38nyi/cA9XN0xZwmkEq4qSPpsiggEQf8gAAA=
-    alt: "이거 되게 재밌게 그렸음"
+    lqip: data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAQCdASoQAAgAAUAmJYwAAv+/8OsuAAD+/xM/7Sq+LkyGnTkU29x/vy/D6FYmTGl52h8nvE6sE3eZj2hbsAjc4Uho6KsHwQkTsCfwAEEthUGm2LT3wM5L2t70AAAA
+    alt: "등교중"
 
 title: "디지털 드로잉 #5 - 캐주얼 판타지"
 
@@ -17,6 +17,10 @@ date: 2024-11-18 20:12:00 +0900
 last_modified_at: 2024-11-29 22:31:00 +0900
 ---
 
+![241013-신문형식](/drawing/241013-신문형식.webp){: .light .border}
+![241013-신문형식](/drawing/241013-신문형식.webp){: .dark }
+_이거 되게 재밌게 그렸음_
+
 ![241006-바렛쏘기](/drawing/241006-바렛쏘기.webp)
 _이동 흐리기_
 
@@ -30,10 +34,6 @@ _영수증 그 자체_
 ![241001-일상그림](/drawing/241001-일상그림.webp){: .light .border}
 ![241001-일상그림](/drawing/241001-일상그림.webp){: .dark }
 _일상 캐주얼_
-
-![241110-등교](/drawing/241110-등교.webp){: .light .border}
-![241110-등교](/drawing/241110-등교.webp){: .dark }
-_보통 이런게 그려짐_
 
 ## **항상 뭐 그릴지가 제일 고민임**
 
