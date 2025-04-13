@@ -1,0 +1,302 @@
+---
+title: "C#에서 자주 사용하는 문법 총정리"
+
+categories: [프로그래밍, 문법]
+tags: [프로그래밍, 문법, 유니티, C#]
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2024-10-28 00:00:00 +0900
+last_modified_at: 2024-10-28 00:00:00 +0900
+
+mermaid: true
+---
+
+원활한 유니티 사용을 위한 저만의 대방주입니다. if문이나 for문 등 잊어버리지 않을 것 같은 기초적인 부분은 배제하고 기본 사항 위주로 정리했습니다. 필요에 따라 설명이 추가되거나, 삭제될 수 있습니다.
+
+## **기본 네임스페이스**
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+```
+
+### **System.Collections**
+
+```mermaid
+classDiagram
+    class SystemCollections
+    class SystemCollectionsGeneric
+
+    class ArrayList
+    class Hashtable
+    class Stack
+    class Queue
+    class ListT
+    class DictionaryT
+    class QueueT
+    class StackT
+
+    SystemCollections <|-- ArrayList
+    SystemCollections <|-- Hashtable
+    SystemCollections <|-- Stack
+    SystemCollections <|-- Queue
+
+    SystemCollectionsGeneric <|-- ListT
+    SystemCollectionsGeneric <|-- DictionaryT
+    SystemCollectionsGeneric <|-- QueueT
+    SystemCollectionsGeneric <|-- StackT
+```
+
+두 네임스페이스 모두 자료구조 클래스를 정의합니다. 각각 `ArrayList`, `Hashtable`, `Stack`, `Queue` 또는 `List<T>`, `Dictionary<T>`, `Queue<T>`, `Stack<T>` 등의 클래스가 정의되어 있으며, 대부분은 `System.Collections.Generic` 네임스페이스를 사용합니다.
+
+### **UnityEngine**
+
+```mermaid
+classDiagram
+    class UnityEngine {
+        <<namespace>>
+    }
+
+    class GameObject
+    class Vector3
+    class Physics
+    class Material
+    class AudioSource
+    class Canvas
+    class Animator
+    class MonoBehaviour
+
+    UnityEngine <|-- GameObject
+    UnityEngine <|-- Vector3
+    UnityEngine <|-- Physics
+    UnityEngine <|-- Material
+    UnityEngine <|-- AudioSource
+    UnityEngine <|-- Canvas
+    UnityEngine <|-- Animator
+    UnityEngine <|-- MonoBehaviour
+```
+
+`GameObject`, `Transform`, `Vector3`, `Physics`, `AudioSource` 등 유니티에서 사용하는 개념이 정의되는 네임스페이스입니다.
+
+## **클래스 상속**
+
+### **기본 상속 구조**
+
+```cs
+public class Enemy : MonoBehaviour
+{
+    public void Move => Debug.Log("Moving");
+}
+```
+
+### **추상클래스와 인터페이스**
+
+```cs
+public anstract class Enemy : MonoBehaviour
+{
+    public void Move() => Debug.Log("Moving");
+    public void Attack() => Debug.Log("Attacking");
+}
+
+public interface Enemy
+{
+    string name { get; }
+    int hp { get; set; }
+    
+    void Move();
+    void Attack();
+}
+```
+
+추상클래스와 인터페이스는 둘 다 클래스 상속을 염두해두고 작성하는 부모 클래스의 작성 방식입니다. 두 유형은 많은 차이점이 있지만, 추상클래스는 함수의 일부분 구현이 가능한 반면 인터페이스는 프로퍼티를 사용하지 않는 변수 선언과 함수 구현을 하지 않는다는 차이점이 있습니다.
+
+## **변수 선언 및 사용**
+
+### **애트리뷰트**
+
+```cs
+[SerializeField]
+[Header("this is a header")]
+[Range(0, 1)]
+private float speed;
+```
+
+애트리뷰트를 이용해 유니티 인스펙터 창에 변수 값 또는 일부 설명문 등을 표시할 수 있습니다.
+
+{% comment %}
+| 속성(Attribute) | 설명 |
+|---|---|
+| SerializeField | `private`, `protected` 등 은닉된 변수를 인스펙터 창에 표시한다 |
+| Serializable | 별도의 클래스를 인스펙터 창에 표시한다 |
+| Header | 변수에 대한 간략한 설명으로 분류군을 표시한다 |
+| HideInInspector | `public` 변수를 인스펙터에서 숨긴다 |
+| RequireComponent | 해당 컴포넌트가 추가될 때 다른 컴포넌트도 함께 추가된다 |
+| Range | `int`, `float` 변수를 특정 범위 내에서 인스펙터 창으로 조절 가능하도록 변경한다 |
+| Space | 한 줄의 간격을 추가한다 |
+| CreateAssetMenu | `ScriptableObject` Asset을 생성할 때 메뉴 추가한다 |
+| MenuItem | 해당 `static` 함수를 메뉴 항목에서 실행할 수 있도록 변경한다 |
+| ContextMenu | 해당 `non-static` 함수 실행을 컴포넌트 톱니 메뉴에 추가한다 |
+| AddComponentMenu | 인스펙터의 `AddComponent` 메뉴 항목으로 컴포넌트 추가 |
+| ExecuteInEditMode| 플레이중이플레이 모드가 아니더라도 스크립트가 실행되도록 변경한다 |
+| Multiline | 여러 줄의 `string` 변수를 입력받을 수 있도록 변경한다 |
+| TextArea | 폭에 맞춰 자동으로 줄바꿈과 슬라이드바 표시한다 |
+| Tooltip | 변수에 대한 설명을 표시한다 |
+{% endcomment %}
+
+### **Nullable 변수**
+
+```cs
+private int? number = null;
+```
+
+### **배열과 리스트 선언**
+
+```cs
+private int[] intArray = new int[];
+Array.Length();
+```
+
+```cs
+private List<int> = new List<int>();
+List.Count();
+```
+
+배열과 리스트는 서로 다른 네임스페이스에 정의되어 있기 때문에 선언방식에 차이가 있다고 기억하면 좋습니다. 예를 들어 리스트는 `System.Collections.Generic`에 정의되어 있고, 제네릭을 사용합니다.
+
+### **딕셔너리**
+
+```cs
+Dictionary<string, int> dictionary = new Dictionary<string, int>();
+```
+
+### **get set 프로퍼티**
+
+```cs
+private string name;
+public string Name
+{
+    get { return name; }
+    set { name = value; }
+}
+```
+
+변수 은닉화는 물론, 변수의 수정과 특정 코드의 실행, 혹은 함수 동작을 간단한 구조로 연결시킬 수 있습니다. 예를 들어 다음과 같이 사용할 수 있습니다.
+
+```cs
+private int hp
+public int HP
+{
+    get { return hp; }
+    set
+    {
+        HpDecreased(value);
+        hp = value;
+    }
+}
+
+void HPDecreased(int HP)
+{
+    /* ... */
+}
+```
+
+{% comment %}
+변수를 `private`로 선언해놓고 값을 외부 조건에 따라 변경하는 구조가 이상하게 느껴질 수 있지만, get set 프로퍼티를 사용하는 이유는 근본적으로 외부 클래스가 직접 수정하지 못하게 하기 위함입니다.
+{% endcomment %}
+
+## **함수 선언 및 사용**
+
+### **람다 함수**
+
+```cs
+var specificNumbers = Array.FindAll(numbers, n => n % 2 == 0);
+```
+
+### **코루틴**
+
+```cs
+private IEnumerator MyCoroutine()
+{
+    Debug.Log("Hello, world!");
+    yield return new WaitForSeconds(1);
+}
+
+StartCoroutine(myCoroutine);
+StopCoroutine(myCoroutine);
+```
+
+> 코루틴은 자동으로 종료되지 않음에 주의해야 합니다. 특히 오브젝트가 비활성화되거나 삭제되는 경우 코루틴을 명시적으로 종료할 필요가 있습니다.
+{: .prompt-warning}
+
+코루틴은 시간 지연이나 비동기 작업을 처리하기 위해 특정 지점에서 실행을 일시 중지하고 나중에 다시 이어서 실행할 수 있는 함수입니다. 주로 위와 같이 `WaitForSeconds()`를 사용해 일정한 실행 주기를 갖는 함수를 작성할 때 많이 사용되나, `AsyncOperation` 타입의 객체를 사용해 비동기 작업 처리를 구현할 수도 있습니다. 예를 들어 다음과 같은 식으로 작성할 수 있습니다.
+
+```cs
+private IEnumerator LoadSceneAsync(string sceneName)
+    {
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!asyncOperation.isDone)
+        {
+            Debug.Log("Loading progress: " + asyncOperation.progress * 100 + "%");
+            yield return null;
+        }
+
+        Debug.Log("Scene loaded successfully!");
+    }
+```
+
+### **델리게이트**
+
+```cs
+public delegate void MyDelegate(string message);
+MyDelegate del = (message) => { Debug.Log(message); };
+del += Method();
+```
+
+여러개 함수를 연결하여 델리게이트 체인을 구성해 함수를 연쇄적으로 호출할 수 있습니다. 여러개 함수를 하나의 변수 형태로 사용할 수 있다는 것도 장점입니다.
+
+## **코드 작성 관련**
+
+### **삼항 연산자**
+
+```cs
+condition ? value_if_true : value_if_false;
+```
+
+`if-else` 대신 사용하기 좋은 형식으로 코드 압축성이 좋고 코드를 읽고 쓰는 속도가 빨라진다는 장점이 있습니다. 단 삼항 연산자를 중첩해서 사용하는 경우 대개 가독성이 나빠지는 문제가 있으므로 그런 경우 코드 압축성을 포기하더라도 `switch`문을 사용하는 편이 나을 수 있습니다.
+
+### **전처리기**
+
+```cs
+#if UNITY_EDITOR
+    Debug.Log("Running in the Editor");
+#else
+    Debug.Log("Running in the Build");
+#endif
+```
+
+### **Transform와 RectTransform**
+
+```cs
+RectTransform.anchoredPosition = new Vector2(X, Y);
+RectTransform.sizeDelta = new Vector2(X, Y);
+```
+
+컴파일 전에 미리 특정 동작을 처리하는 도구입니다. 주로 조건부 컴파일, 코드 매크로 정의, 파일 포함 등의 작업에 사용됩니다.
+
+{% comment %}
+- 120 주사율 설정하기
+{% endcomment %}
+
++ https://psw-tony.tistory.com/15
+- 자동 컴파일 (Auto Refresh) 끄기
+    - Ctrl + R로 수동 컴파일 가능
+개꿀팁임
+
+### **유니티 관련 꿀팁**
+
+- 텍스트 입력창에 <color=yellow>text</color>와 같이 입력하면 텍스트 바뀜

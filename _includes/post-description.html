@@ -1,0 +1,27 @@
+{%- comment -%}
+  Get post description or generate it from the post content.
+{%- endcomment -%}
+
+{%- assign max_length = include.max_length | default: 200 -%}
+
+{%- capture description -%}
+{%- if post.description -%}
+  {{- post.description -}}
+{%- else -%}
+  {% comment %}
+    Remove the line number of the code snippet.
+  {% endcomment %}
+  {% assign content = post.content %}
+
+  {% if content contains '<td class="rouge-gutter gl"><pre class="lineno">' %}
+    {% assign content = content | replace: '<td class="rouge-gutter gl"><pre class="lineno">', '<!-- <td class="rouge-gutter gl"><pre class="lineno">'%}
+    {% assign content = content | replace: '</td><td class="rouge-code">', '</td> --><td class="rouge-code">' %}
+  {% endif %}
+
+  {% comment %} region 수정됨 {% endcomment %}
+  {{- content | markdownify | remove_tag: 'h2', 'em', 'blockquote', 'pre' | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines -}}
+  {% comment %} endregion 수정됨 {% endcomment %}
+{%- endif -%}
+{%- endcapture -%}
+
+{{- description | strip | truncate: max_length | escape -}}

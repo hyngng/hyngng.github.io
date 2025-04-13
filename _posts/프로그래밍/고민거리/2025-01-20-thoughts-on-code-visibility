@@ -1,0 +1,57 @@
+---
+title: "코드 가시성에 대한 고민"
+
+categories: [프로그래밍, 고민거리]
+tags: [프로그래밍, 고민거리]
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2025-01-20 00:00:00 +0900
+last_modified_at: 2025-01-20 00:00:00 +0900
+---
+
+- 코드를 작성하는데 가시성에 대한 부분이 고민이 됨.
+- 가독성 좋은 글과 잘 안 읽히는 글이 있듯 좋은 코드와 나쁜 코드가 있다는 것은 알고 있음.
+- 남들이 읽어도, 다른 날의 내가 읽어도 한 눈에 잘 들어오는 코드를 작성하고 싶음.
+
+## **예시**
+
+```python
+date_row, date_column   = get_date_position(int(date.year), int(date.month), int(member.start_date))
+datepicker_year_select  = Select(wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["form"]["datepicker_year_select"]))))
+datepicker_year_select.select_by_visible_text(f"{int(date.year)}")
+datepicker_month_select = Select(wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["form"]["datepicker_month_select"]))))
+datepicker_month_select.select_by_visible_text(f"{int(date.month)}월")
+wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["form"]["date_form"].replace("row", f"{date_row}").replace("column", f"{date_column}")))).click()
+
+wait_until_page_is_loaded()
+wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["form"]["datepicker_end"]))).click()
+date_row, date_column = get_date_position(int(date.year), int(date.month), int(member.end_date))
+datepicker_year_select = Select(wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["form"]["datepicker_year_select"]))))
+datepicker_year_select.select_by_visible_text(f"{int(date.year)}")
+datepicker_month_select = Select(wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["form"]["datepicker_month_select"]))))
+datepicker_month_select.select_by_visible_text(f"{int(date.month)}월")
+wait.until(EC.presence_of_element_located((By.XPATH, config_yaml["page_element"]["form"]["date_form"].replace("row", f"{date_row}").replace("column", f"{date_column}")))).click()
+```
+
+## **모듈 작성할 때**
+
+유니티에서는 클래스명과 파일명이 같아야 한다는 규칙이 있다. 한 개의 파일에 메인 클래스 외 다른 클래스를 함께 정의하는 것이 가능하긴 하지만, 그럴 일이 잘 없어서 보통 한 개 파일에 동명 클래스 한 개를 작성하게 된다.
+
+파이썬에서도 비슷하게 작업을 하고 있었는데 점점 이런 상황이 신경쓰였다.
+
+```python
+from module.class import Class
+
+class = Class()
+```
+
+같은 개념이 벌써 4번이나 등장한다. class와 Class는 구분도 잘 되지 않는다. 이런 동어반복을 피하기 위해 다음과 같이 작성하기 시작했다.
+
+```python
+from module.classes import class_type_a
+
+instance = class_type_a()
+```
