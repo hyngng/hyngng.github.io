@@ -2,7 +2,7 @@
 title: "잠깐의 생각 정리: 아비투스 활용법"
 
 categories: [에세이, 일상]
-tags: [에세이, 일상]
+tags: [에세이, 일상, 다원주의, 일원주의, 아비투스]
 start_with_ads: false
 
 toc: true
