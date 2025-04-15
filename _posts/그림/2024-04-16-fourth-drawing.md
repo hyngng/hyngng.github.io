@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABQAgCdASoQAAgAAgA0JbACdLoAAw99mbC/OgAA/vnFT4pLmuNFoQjBo6mMbdQjhxXXeNsH3/zPWe22e+TocAAA
     alt: 불편함
 
-title: "디지털 드로잉 #4 - 일상 랜덤 스케치 8장"
+title: "디지털 드로잉 #4 - 일상적인 스케치 8장"
 
 categories: [그림]
 tags: [그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]
