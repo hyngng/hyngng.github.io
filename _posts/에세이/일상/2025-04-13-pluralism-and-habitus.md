@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-04-13 19:49:00 +0900
-last_modified_at: 2025-04-15 19:04:00 +0900
+last_modified_at: 2025-04-16 10:56:00 +0900
 ---
 
 ## **다원주의와 일원주의**
