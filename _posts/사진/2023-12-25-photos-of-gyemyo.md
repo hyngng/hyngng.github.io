@@ -14,7 +14,7 @@ toc: false
 toc_sticky: true
  
 date: 2023-12-25 21:35:00 +0900
-last_modified_at: 2023-12-25 21:35:00 +0900
+last_modified_at: 2025-04-16 14:57:00 +0900
 ---
 
 ![어두운 배경 속에서 붉고 노랗게 타오르는 장작과 불꽃](/photo/20230117_205758.webp){: .shadow }
