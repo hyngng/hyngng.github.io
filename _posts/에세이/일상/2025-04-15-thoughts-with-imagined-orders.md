@@ -8,8 +8,8 @@ start_with_ads: false
 toc: true
 toc_sticky: true
 
-date: 2025-04-15 15:34:00 +0900
-last_modified_at: 2025-04-15 15:34:00 +0900
+date: 2025-04-17 22:32:00 +0900
+last_modified_at: 2025-04-17 22:32:00 +0900
 ---
 
 ## **발해사 귀속논쟁**
