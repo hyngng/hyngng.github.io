@@ -51,7 +51,7 @@ journey
 > **자세한 사항은 [깃허브](https://github.com/hyngng/unity-armonia)에서 확인할 수 있습니다!**
 {: .prompt-tip }
 
-[기획 단계에서 작성한](https://hyngng.github.io/posts/armonia-planning/) 간이 GDD와 실제로 개발된 것을 비교하면 이렇습니다.
+[기획 단계에서 작성한](https://hyngng.github.io/posts/armonia-planning/) 간이 GDD와 실제로 개발된 것을 비교하면 이렇습니다. 구현되지 않은 사항은 취소선 처리되었습니다.
 
 기본 설명
 : - [X] 이름: 행선지 (영어: waybound)
