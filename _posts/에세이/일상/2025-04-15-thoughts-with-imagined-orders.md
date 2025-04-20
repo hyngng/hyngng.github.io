@@ -2,7 +2,7 @@
 title: "잠깐의 생각 정리: 상상 속의 질서"
 
 categories: [일상, 에세이]
-tags: [일상, 에세이]
+tags: [일상, 에세이, 역사, 사피엔스]
 start_with_ads: false
 
 toc: true
