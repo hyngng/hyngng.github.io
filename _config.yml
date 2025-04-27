@@ -90,7 +90,7 @@ comments:
     mapping: pathname
     strict: 0
     input_position: top
-    lang: en # ko
+    lang: ko # en
     reactions_enabled: 1
 
 assets:
