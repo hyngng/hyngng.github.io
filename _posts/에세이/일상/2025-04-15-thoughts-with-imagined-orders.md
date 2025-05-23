@@ -1,5 +1,5 @@
 ---
-title: "잠깐의 생각 정리: 상상 속의 질서"
+title: "잠깐의 생각 정리: 나는 역사적 논쟁에 별로 끼고 싶지 않다."
 
 categories: [에세이, 일상]
 tags: [에세이, 일상, 역사, 사피엔스]
@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-04-17 22:32:00 +0900
-last_modified_at: 2025-04-30 14:29:00 +0900
+last_modified_at: 2025-05-23 11:23:00 +0900
 ---
 
 {% comment %}
