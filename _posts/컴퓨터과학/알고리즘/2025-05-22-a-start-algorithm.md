@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-05-28 10:50:00 +0900
-last_modified_at: 2025-05-28 10:50:00 +0900
+last_modified_at: 2025-05-28 19:55:00 +0900
 
 mermaid: true
 math: true
@@ -133,7 +133,7 @@ def astar(grid, start, end):
 
 ## **알고리즘 실행 예시**
 
-해당 알고리즘은 주어진 노드의 값이 0이면 길, 1이면 장애물로 판단합니다. 예를 들어 다음과 같은 맵을 가정해 보겠습니다.
+해당 알고리즘은 주어진 노드의 값이 $0$이면 길, $1$이면 장애물로 판단합니다. 예를 들어 다음과 같은 맵을 가정해 보겠습니다.
 
 ```mermaid
 block-beta
