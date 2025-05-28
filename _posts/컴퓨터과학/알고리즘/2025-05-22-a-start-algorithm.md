@@ -1,5 +1,5 @@
 ---
-title: "A* 알고리즘"
+title: "최단경로 탐색을 위한 A* 알고리즘 정리"
 
 categories: [컴퓨터과학, 알고리즘]
 tags: [컴퓨터과학, 알고리즘]
@@ -8,14 +8,14 @@ start_with_ads: true
 toc: true
 toc_sticky: true
 
-date: 2025-05-22 00:00:00 +0900
-last_modified_at: 2025-05-22 00:00:00 +0900
+date: 2025-05-28 10:50:00 +0900
+last_modified_at: 2025-05-28 10:50:00 +0900
 
 mermaid: true
 math: true
 ---
 
-A* 알고리즘은 특정 두 지점을 연결하는 최단 경로를 찾기 위한 그래프 탐색 알고리즘입니다. 이 알고리즘 특성은 다음의 한 개 식으로 요약 가능합니다.
+A* 알고리즘은 특정 두 지점을 연결하는 최단 경로를 찾기 위한 그래프 탐색 알고리즘입니다. 이 알고리즘 특성은 $n$이 노드라고 할 때 다음의 한 개 식으로 요약 가능합니다.
 
 $$
 f(n) = g(n) + h(n)
@@ -34,6 +34,8 @@ closed_set = set()
 
 ## **$g(n)$: 한 칸 이동 비용**
 
+$g(n)$은 열린목록에 등록된 후보 노드로 이동했을 때의 비용을 측정하는 함수입니다. 만약 맵이 격자로 주어졌다면 상하좌우 이동비용은 $1$, 대각선 이동이 가능할 경우 대각선 이동 비용은 $\sqrt{2} \approx 1.4$로 계산할 수 있습니다.
+
 ```python
 # 노드가 아래와 같이 정의되어 있다고 한다면
 class Node:
@@ -47,19 +49,16 @@ neighbor.g = current_node.g + 1
 
 ## **$h(n)$: 도착지까지의 거리**
 
-$h(n)$은 목적지까지의 비용을 대략적으로 측정하는 함수입니다. 해외제품을 구매할 때 환율을 어림잡아 1200~1400원으로 계산하는 것을 일반적으로 어림짐작, 또는 보다 명확한 용어로 휴리스틱이라고 부르는데, 그래서 휴리스틱 측정값이라고도 합니다.
+$h(n)$은 열린목록에 등록된 후보 노드로부터 목적지 노드까지의 이동 비용을 대략적으로 추정하는 함수입니다. 식당 선택할 때 손님 많은 곳으로 가거나 해외제품을 구매할 때 환율을 1200~1400원으로 어림잡아 계산하는 것 등을 휴리스틱이라고 부르는데, 그래서 휴리스틱 측정값이라고도 합니다. 문제 상황에 맞게 휴리스틱 측정값을 알맞게 결정하는 것이 알고리즘의 성능 향상에 도움을 주는 것으로 알려져 있으며, 일반적으로 다음과 같은 방법으로 구할 수 있습니다.
 
-- 맨해튼 거리 $h(n) = \|x_1 - x_2\| + \|y_1 - y_2\|$ 로는 다음과 같이 구할 수 있습니다.
-
+- 맨해튼 거리 $h(n) = \|x_1 - x_2\| + \|y_1 - y_2\|$
 ```python
 def heuristic(start_node, end_node):
     return abs(
         end_node[x] - start_node[x]) + abs(end_node[y] - start_node[y]
     )
 ```
-
-- 유클리드 거리 $h(n) = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$ 로는 다음과 같이 구할 수 있습니다.
-
+- 유클리드 거리 $h(n) = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$
 ```python
 def heuristic(start_node, end_node):
     return math.sqrt(
@@ -67,7 +66,7 @@ def heuristic(start_node, end_node):
     )
 ```
 
-## **파이썬으로 구현한 전체 알고리즘**
+## **파이썬으로 구현한 알고리즘**
 
 ```python
 import heapq
@@ -132,7 +131,9 @@ def astar(grid, start, end):
     return None
 ```
 
-해당 알고리즘은 주어진 노드의 값이 0이면 길, 1이면 장애물로 판단합니다. 예를 들어 다음과 같은 예시 맵을 작성할 수 있습니다.
+## **알고리즘 실행 예시**
+
+해당 알고리즘은 주어진 노드의 값이 0이면 길, 1이면 장애물로 판단합니다. 예를 들어 다음과 같은 맵을 가정해 보겠습니다.
 
 ```mermaid
 block-beta
@@ -171,7 +172,36 @@ end = (4, 4)
 path = astar(grid, start, end)
 ```
 
-다음과 같이 $5 \times 5$ 크기의 맵에, 출발지를 `(0, 0)`, 목적지를 `(4, 4)`로 설정하고 중간중간 적절히 장애물을 배치할 경우 최단경로 `path`는 다음과 같이 출력됩니다.
+다음과 같이 $5 \times 5$ 크기의 맵에 출발지를 `(0, 0)`, 목적지를 `(4, 4)`로 설정하고 중간중간 적절히 벽을 배치할 경우 최단경로 `path`는 다음과 같이 출력됩니다.
+
+```mermaid
+block-beta
+    columns 5
+    00["요약도"]:5
+    0a 1b 0c 0d 0e
+    0f 1g 0h 1i 0j
+    0k 0l 0m 1n 0o
+    1p 1q 0r 0s 0t
+    0u 0v 0w 1x 0y
+
+    style 1b fill:#969,stroke:#333;
+    style 1g fill:#969,stroke:#333;
+    style 1i fill:#969,stroke:#333;
+    style 1n fill:#969,stroke:#333;
+    style 1p fill:#969,stroke:#333;
+    style 1q fill:#969,stroke:#333;
+    style 1x fill:#969,stroke:#333;
+
+    style 0a fill:#fffa8b,stroke:#666;
+    style 0f fill:#fffa8b,stroke:#666;
+    style 0k fill:#fffa8b,stroke:#666;
+    style 0l fill:#fffa8b,stroke:#666;
+    style 0m fill:#fffa8b,stroke:#666;
+    style 0r fill:#fffa8b,stroke:#666;
+    style 0s fill:#fffa8b,stroke:#666;
+    style 0t fill:#fffa8b,stroke:#666;
+    style 0y fill:#fffa8b,stroke:#666;
+```
 
 ```bash
 [(0, 0), (1, 0), (2, 0), (2, 1), (2, 2), (3, 2), (3, 3), (3, 4), (4, 4)]

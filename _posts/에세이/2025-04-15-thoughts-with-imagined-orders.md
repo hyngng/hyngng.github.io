@@ -1,7 +1,7 @@
 ---
-title: "잠깐의 생각 정리: 나는 역사적 논쟁에 끼고 싶지 않다"
+title: "역사적 논쟁은 피곤하고 소모적이다"
 
-categories: [에세이, 일상]
+categories: [에세이]
 tags: [에세이, 일상, 역사, 사피엔스]
 start_with_ads: false
 
@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-04-17 22:32:00 +0900
-last_modified_at: 2025-05-23 11:23:00 +0900
+last_modified_at: 2025-05-28 10:48:00 +0900
 ---
 
 {% comment %}

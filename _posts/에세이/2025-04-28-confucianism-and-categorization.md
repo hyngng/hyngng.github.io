@@ -1,7 +1,7 @@
 ---
-title: "잠깐의 생각 정리: 더이상 실리적이지 않은 유교적 질서"
+title: "옛날의 실리주의와 오늘날 유교적 질서"
 
-categories: [에세이, 일상]
+categories: [에세이]
 tags: [에세이, 일상, 유교, 물고기는 존재하지 않는다]
 start_with_ads: false
 
@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-04-28 19:02:00 +0900
-last_modified_at: 2025-05-23 11:23:00 +0900
+last_modified_at: 2025-05-28 10:49:00 +0900
 ---
 
 {% comment %}
