@@ -14,4 +14,5 @@ end
 gem "wdm", "~> 0.2.0", :platforms => [:mingw, :x64_mingw, :mswin]
 
 # 커스텀
+gem 'jekyll-redirect-from'
 gem 'jekyll-seo-tag', git: 'https://github.com/hynrng/jekyll-seo-tag.git', branch: 'master'
