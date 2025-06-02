@@ -38,19 +38,19 @@ class MainFunctions
 
 int MainFunctions::AddFiftyWon(int Money)
 {
-  Money += 500;
+  Money += 50;
   return Money;
 }
 
 int MainFunctions::AddOneHundreadWon(int Money)
 {
-  Money += 1000;
+  Money += 100;
   return Money;
 }
 
 int MainFunctions::AddFiveHundreadWon(int Money)
 {
-  Money += 2000;
+  Money += 500;
   return Money;
 }
 ```
@@ -59,7 +59,7 @@ int MainFunctions::AddFiveHundreadWon(int Money)
 ```cpp
 void setup()
 {
-    ...
+    /* ... */
 }
 
 void loop()

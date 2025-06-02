@@ -19,14 +19,11 @@ last_modified_at: 2024-11-29 22:31:00 +0900
 
 ![241013-신문형식](/drawing/241013-신문형식.webp){: .light .border}
 ![241013-신문형식](/drawing/241013-신문형식.webp){: .dark }
-_이거 되게 재밌게 그렸음_
 
 ![241006-바렛쏘기](/drawing/241006-바렛쏘기.webp)
 
 ![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .light .border}
 ![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .dark }
-_이런거 로망 있음_
-
 ![241116-영수증](/drawing/241116-영수증.webp)
 
 ![241001-일상그림](/drawing/241001-일상그림.webp){: .light .border}
