@@ -64,9 +64,11 @@ void setup()
 
 void loop()
 {
+    /* ... */
     Money = MainFunctions.AddFiveHundreadWon(Money);
     Money = MainFunctions.AddOneHundreadWon(Money);
     Money = MainFunctions.AddFiftyWon(Money);
+    /* ... */
 }
 ```
 {: file="Arduino_OOP.ino" }
