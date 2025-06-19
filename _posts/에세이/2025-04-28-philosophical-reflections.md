@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-04-28 19:02:00 +0900
-last_modified_at: 2025-06-19 09:31:00 +0900
+last_modified_at: 2025-06-19 14:54:00 +0900
 
 redirect_from:
   - /posts/pluralism-and-habitus/
