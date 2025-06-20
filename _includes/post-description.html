@@ -19,7 +19,7 @@
   {% endif %}
 
   {% comment %} region 수정됨 {% endcomment %}
-  {{- content | markdownify | remove_tag: 'h2', 'em', 'blockquote', 'pre' | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines -}}
+  {{- content | markdownify | remove_tag: 'h2', 'em', 'blockquote', 'pre', 'mjx-container' | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines -}}
   {% comment %} endregion 수정됨 {% endcomment %}
 {%- endif -%}
 {%- endcapture -%}
