@@ -12,12 +12,18 @@
     </a>
 
     {% comment %} region 수정됨 {% endcomment %}
+    {% comment %}
     {% if page.layout == 'home' %}
-      <h1 class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</h1>
+      <h1>
+        <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      </h1>
     {% else %}
       <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     {% endif %}
+    {% endcomment %}
     {% comment %} endregion 수정됨 {% endcomment %}
+    
+    <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
   </header>
   <!-- .profile-wrapper -->

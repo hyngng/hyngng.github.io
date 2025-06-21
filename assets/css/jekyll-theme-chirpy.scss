@@ -57,7 +57,7 @@ h4 {
 /* endregion 텍스트 */
 
 /* region 정적인 모드 전환 */
-a:not(.site-title a, .post-tag, a.btn, a.nav-link, .url-button, .page-link, .tag), div.btn, .post-preview {
+a:not(.site-title, .post-tag, a.btn, a.nav-link, .url-button, .page-link, .tag, .fab), div.btn, .post-preview, #toc-bar {
   transition: none !important;
 }
 
