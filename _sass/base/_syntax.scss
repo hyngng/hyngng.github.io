@@ -23,6 +23,9 @@
   pre {
     margin-bottom: 0;
     font-size: v.$code-font-size;
+    /* region 수정됨 */
+    font-family: v.$code-font-family;
+    /* endregion 수정됨 */
     line-height: 1.4rem;
     word-wrap: normal; /* Fixed Safari overflow-x */
   }
@@ -61,6 +64,9 @@ code {
   -webkit-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
+  /* region 수정됨 */
+  font-family: v.$code-font-family;
+  /* endregion 수정됨 */
   color: var(--code-color);
 
   &.highlighter-rouge {
