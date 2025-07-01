@@ -51,11 +51,10 @@ last_modified_at: 2025-07-01 20:36:00 +0900
 이외에 듣는 다른 곡이 있다면 [라라랜드의 City Of Stars](https://www.youtube.com/watch?v=q9TQFZJ2biM), [비긴 어게인의 Lost Stars](https://www.youtube.com/watch?v=cL4uhaQ58Rk), [미 비포 유의 Photograph](https://www.youtube.com/watch?v=nSDgHBxUbVQ) 정도가 있을 것 같습니다. 영화를 떠나서 그 자체로도 찾아서 듣기 즐거운 음악들입니다.
 
 {% comment %}
-
-{% include embed/youtube.html id='' %}
-
 ## **게임 음악 메들리**
-
+{% include embed/youtube.html id='' %}
 {% include embed/youtube.html id='uivFFnCI8tM' %}
 {% include embed/youtube.html id='rTlEuxoRA3k' %}
+
+6월 안에 겨우겨우 글 하나 또 올림.
 {% endcomment %}
