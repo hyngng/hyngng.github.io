@@ -48,7 +48,7 @@ last_modified_at: 2025-07-01 20:36:00 +0900
 
 지브리 애니메이션 음악으로 유명한 조 히사이시의 노래도 무난하게 듣기 좋습니다. 많이 유명하지만 뻔하다고 느껴지기보다는 클래식하다는 느낌을 주고, 카라반과 마찬가지로 가사가 없는 곡이 대부분이라 영화를 볼 때의 느긋한 마음으로 작업에 임할 수 있습니다.
 
-이외에 듣는 다른 곡이 있다면 [라라랜드의 City Of Stars](https://www.youtube.com/watch?v=q9TQFZJ2biM), [비긴 어게인의 Lost Stars](https://www.youtube.com/watch?v=cL4uhaQ58Rk), [미 비포 유의 Photograph](https://www.youtube.com/watch?v=nSDgHBxUbVQ) 정도가 있을 것 같습니다. 영화를 떠나서 그 자체로도 찾아서 듣기 좋은 음악들입니다.
+이외에 듣는 다른 곡이 있다면 [라라랜드의 City Of Stars](https://www.youtube.com/watch?v=q9TQFZJ2biM), [비긴 어게인의 Lost Stars](https://www.youtube.com/watch?v=cL4uhaQ58Rk), [미 비포 유의 Photograph](https://www.youtube.com/watch?v=nSDgHBxUbVQ) 정도가 있을 것 같습니다. 영화를 떠나서 그 자체로도 찾아서 듣기 즐거운 음악들입니다.
 
 {% comment %}
 
