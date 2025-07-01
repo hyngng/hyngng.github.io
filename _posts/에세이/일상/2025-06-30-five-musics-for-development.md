@@ -20,7 +20,7 @@ last_modified_at: 2025-07-01 20:36:00 +0900
 
 코로나 팬데믹 때 크게 성장하면서 저도 같이 접하게 된 장르입니다. 로우파이는 뚜렷한 기승전결 없이 단순한 멜로디가 반복되는 것이 특징이고, 그 특성상 집중력을 별로 요구하지 않아 안정감 있는 백색소음 정도의 역할을 해주는 것이 장점입니다. 그러면서도 완전한 무음 상태의 적막함은 채워주기 때문에 배경음악으로 틀어놓기 부담이 없습니다.
 
-저는 유명한 로우파이 유튜브 채널로 Lofi Girl을 찾아가기도 하지만, 라이브 스트리밍에서 틀어주는 노래를 따라 [Kulpa](https://www.youtube.com/@Kupla/featured), [l'Outlander](https://www.youtube.com/@loutlander/featured), [Sleepy Fish](https://www.youtube.com/channel/UCNR1Pzl2T9biZWAbOXZPUwQ) 등 몇몇 아티스트의 노래를 찾아 플레이리스트를 만들어서 듣는 편입니다. 특히 그중에서도 [The Past, The Present](https://www.youtube.com/watch?v=wTKYPDjirxo), [Valentine](https://www.youtube.com/watch?v=wjCM71c0-Ok) 등이 좋았던 것 같습니다.
+저는 유명한 로우파이 유튜브 채널로 Lofi Girl을 찾아가기도 하지만, 라이브 스트리밍에서 틀어주는 노래를 따라 [Kulpa](https://www.youtube.com/@Kupla/featured), [l'Outlander](https://www.youtube.com/@loutlander/featured), [Sleepy Fish](https://www.youtube.com/channel/UCNR1Pzl2T9biZWAbOXZPUwQ) 등 몇몇 아티스트의 노래를 찾아 플레이리스트를 만들어서 듣는 편입니다. 특히 그중에서도 [The Past, The Present](https://www.youtube.com/watch?v=wTKYPDjirxo), [Valentine](https://www.youtube.com/watch?v=wjCM71c0-Ok) 등이 좋았습니다.
 
 ## **누자베스**
 
