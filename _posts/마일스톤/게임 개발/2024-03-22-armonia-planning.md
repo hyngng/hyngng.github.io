@@ -7,7 +7,7 @@ image:
 title: "'행선지', 게임 기획하기"
 
 categories: [마일스톤, 게임 개발]
-tags: [마일스톤, 게임 개발, 유니티, C#, 행선지, 기획, 개발일지]
+tags: [마일스톤, 게임 개발, 유니티, 행선지, 기획, 개발일지]
 start_with_ads: true
 
 toc: true
