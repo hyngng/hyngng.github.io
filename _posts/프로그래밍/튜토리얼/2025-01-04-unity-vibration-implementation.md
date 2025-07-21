@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-01-31 10:18:00 +0900
-last_modified_at: 2025-02-01 12:08:00 +0900
+last_modified_at: 2025-07-21 09:04:00 +0900
 ---
 
 > **안드로이드 기준입니다!**
@@ -121,4 +121,4 @@ public void Vibrate()
 }
 ```
 
-[이전 프로젝트](https://hyngng.github.io/posts/armonia-developing-second/)에서 위와 같이 사용한 적이 있습니다. 플레이어가 특정 오브젝트를 터치하면 해당 오브젝트가 활성화되며 `MainManager`의 `ActivatedObject` 자리에 등록되는 방식인데, 좋은 코드는 아니지만 그 점을 제외하면 만족스럽게 잘 작동했습니다.
+[이전 프로젝트](https://hyngng.github.io/posts/armonia-developing-second/)에서 위와 같이 사용한 적이 있습니다. 플레이어가 특정 오브젝트를 터치하면 해당 오브젝트가 활성화되며 `MainManager`의 `ActivatedObject` 자리에 등록되는 방식인데, 만족스럽게 잘 작동했습니다.
