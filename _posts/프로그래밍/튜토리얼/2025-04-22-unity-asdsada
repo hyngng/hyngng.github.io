@@ -14,7 +14,7 @@ last_modified_at: 2025-04-22 00:00:00 +0900
 
 ## **자동 빌드 비활성화**
 
-- Edit > Preferences > General > Auto Refresh 체크 해제
+- Edit > Preferences > Asset Pipeline > Auto Refresh => Disabled
 
 ## **구현 방법**
 
