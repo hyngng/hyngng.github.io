@@ -122,3 +122,19 @@ public void Vibrate()
 ```
 
 [이전 프로젝트](https://hyngng.github.io/posts/armonia-developing-second/)에서 위와 같이 사용한 적이 있습니다. 플레이어가 특정 오브젝트를 터치하면 해당 오브젝트가 활성화되며 `MainManager`의 `ActivatedObject` 자리에 등록되는 방식인데, 만족스럽게 잘 작동했습니다.
+
+```cs
+public static void Vibrate()
+{
+    if (PlayerPrefs.GetInt("VibrationEnabled", 1) == 1)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidVibrator.Call("vibrate");
+#else
+        Handheld.Vibrate();
+#endif
+    }
+}
+```
+
+혹은, `Vibration()`에 간단한 한 줄 코드를 위와 같이 추가해서 진동이 허용되어 있는 경우에만 울리도록 만들 수도 있습니다. 사실 직접 사용해보니 위와 같이 조건 확인 절차를 한 번 거치는 것이 더 나은 것 같습니다.
