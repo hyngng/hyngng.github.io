@@ -76,7 +76,7 @@ _적용 전후 비교_
 {: file="_includes/Footer.html" }
 {% endraw %}
 
-> **2024/05/26 수정!**  
+> **2024-05-26 수정!**  
 블로그를 관리하던 도중 Chirpy 템플릿이 [MIT 라이센스](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/LICENSE)를 고지하고 있어 Footer 제거가 원칙적으로 허용되지 않는다는 것을 알게 되었습니다. 저는 주석처리를 원상복구하여 라이센스를 준수하기로 했습니다.
 {: .prompt-info }
 
@@ -116,7 +116,7 @@ tail_includes:
 {: file="_layouts/post.html" }
 {% endraw %}
 
-> **2024/04/16 수정!**  
+> **2024-04-16 수정!**  
 블로그를 계속 운영하다보니 제가 생각보다 다양한 주제로 글을 작성하고 있더라구요. 네비게이션을 유지하면 제가 작성하는 다양한 주제로 연결할 수 있을 것 같아 `- post-nav` 부분도 원상 복구했습니다 😭
 {: .prompt-info }
 
@@ -166,7 +166,7 @@ export function toc() {
 {: file="_includes/js-selector.html" }
 {% endraw %}
 
-> **2024/04/16 수정!**
+> **2024-04-16 수정!**
 {: .prompt-info }
 
 블로그를 웹에 등록하던 도중 네이버 서치어드바이저와 빙 웹마스터에서 "h1 태그가 여러 개 발견됨"이라는 경고를 받고 왜 이런 유형의 경고가 있는지 찾다가 [웹 콘텐츠 접근성 지침(WCAG)](https://www.w3.org/TR/WCAG21/)이라는 것을 알게 되었습니다. h2 이하 태그부터 TOC를 생성하도록 변경된 이유는 이 지침에 따라 h1 태그를 한 개만 사용하도록 유도하기 위해서인 것 같더라구요. 실제로 [위키백과](https://ko.wikipedia.org/wiki/%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD)와 같은 문서를 개발자 도구로 확인해보니 글 제목을 h1 태그로, 글 목차부터는 h2로 구분하여 처리하고 있었습니다.
