@@ -12,11 +12,14 @@ date: 2024-10-23 21:32:00 +0900
 last_modified_at: 2024-11-02 20:41:00 +0900
 
 mermaid: true
+
+redirect_from:
+  - /posts/armonia-developing-cancelled/
 ---
 
 ## **무슨 일이 일어났는가**
 
-![gameplay](/2024-10-23-armonia-developing-cancelled/gameplay.webp)
+![gameplay](/2024-10-23-armonia-devlog-cancelled/gameplay.webp)
 _최신 버전 게임플레이_
 
 조금 더 일찍 정리했으면 좋았을 텐데, 확신이 들어서 지금 작성하게 됐습니다. 행선지는 새로운 프로그래밍 패턴과 약간의 신선한 연출을 새로 시도해보고 싶은 욕심에 시작한 프로젝트로 [세 번에 걸친 개발기](https://hyngng.github.io/tags/armonia/)를 작성할 정도로 애착이 있었고, 약간의 개발 성과도 어느정도 있었지만 결과적으로는 개발을 중지하게 되었습니다.

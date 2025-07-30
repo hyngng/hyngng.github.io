@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2022-08-24-lavad-developing/lavad-working.webp
+    path: /2022-08-24-lavad-devlog/lavad-working.webp
     lqip: data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoQAAgAAgA0JYgCdAEO+BZG1HAA/tzAa4xcrJ5qbUA7/Dd9Xb9cYHKGznTwKrBlf85fCc9Us5QdbaLIxPYj/pyvwcdu60isAAA=
     alt: 예시 게임플레이
     
@@ -18,6 +18,7 @@ last_modified_at: 2023-11-22 19:36:00 +0900
 
 redirect_from:
   - /posts/lavad/
+  - /posts/lavad-developing/
 ---
 
 ## **들어가며**
@@ -28,7 +29,7 @@ redirect_from:
 
 ## **블렌더**
 
-![lavad-modeling](/2022-08-24-lavad-developing/lavad-modeling.webp){: .w-50 .left }
+![lavad-modeling](/2022-08-24-lavad-devlog/lavad-modeling.webp){: .w-50 .left }
 
 처음에 무엇을 만들까 하다가 주제를 LAV-AD라는 장갑차로 정했습니다. 단순히 이 차량이 멋있어 보이기도 했고, 차체가 기하학적인 모습을 하고 있어 직접 모델링을 하더라도 어렵지 않겠다는 생각이 들었거든요.  
 
@@ -40,7 +41,7 @@ redirect_from:
 
 ## **유니티**
 
-![lavad-coding](/2022-08-24-lavad-developing/lavad-coding.webp){: .w-50 .right }
+![lavad-coding](/2022-08-24-lavad-devlog/lavad-coding.webp){: .w-50 .right }
 
 다음은 코딩이었는데, 이 역시도 평소 배워보고 싶었던 유니티를 이용했습니다. 돌이켜보면 유니티는 특히 뭘 어떻게 써야 하는지 몰라서 돌다리를 두들기는 심정으로 겨우겨우 만들었던 것 같네요.
 
@@ -54,18 +55,18 @@ redirect_from:
 
 <div class="row">
     <div class="col-md-6">
-        <img src="/2022-08-24-lavad-developing/lavad-bug1.webp" alt="lavad-bug1">
+        <img src="/2022-08-24-lavad-devlog/lavad-bug1.webp" alt="lavad-bug1">
     </div>
     <div class="col-md-6">
-        <img src="/2022-08-24-lavad-developing/lavad-bug2.webp" alt="lavad-bug2">
+        <img src="/2022-08-24-lavad-devlog/lavad-bug2.webp" alt="lavad-bug2">
     </div>
 </div>
 <div class="row">
     <div class="col-md-6">
-        <img src="/2022-08-24-lavad-developing/lavad-bug3.webp" alt="lavad-bug3">
+        <img src="/2022-08-24-lavad-devlog/lavad-bug3.webp" alt="lavad-bug3">
     </div>
     <div class="col-md-6">
-        <img src="/2022-08-24-lavad-developing/lavad-bug4.webp" alt="lavad-bug4">
+        <img src="/2022-08-24-lavad-devlog/lavad-bug4.webp" alt="lavad-bug4">
     </div>
 </div>
 
@@ -73,15 +74,15 @@ redirect_from:
 
 이외에도 많은 버그와 함께 세미콜론이나 괄호의 누락 등 기본적인 문법 오류도 자주 일어나면서 생각보다 자잘한 어려움이 많아 당황하기도 했습니다. 특히 휠 콜라이더를 적용할 때 즈음부터는 너무 힘들었네요.
 
-![lavad-main](/2022-08-24-lavad-developing/lavad-main.webp)
+![lavad-main](/2022-08-24-lavad-devlog/lavad-main.webp)
 
-![lavad-main2](/2022-08-24-lavad-developing/lavad-main2.webp)
+![lavad-main2](/2022-08-24-lavad-devlog/lavad-main2.webp)
 
 그래도 총 9차례 빌드를 거쳐 자가만족할만한 수준까지 만들었습니다. 여러가지 개인적인 기호나 바램도 들어가서, 카메라 포스트 프로세싱을 적용해 심도 효과를 구현하고 전진이나 후진시 뒷바퀴에서 방향에 맞게 흙먼지가 날리고 특히 후진시에는 후미등이 강하게 점등되는 등 세부 디테일을 구현하면서 재밌게 마무리했어요.
 
 ## **마치며**
 
-![lavad-working2](/2022-08-24-lavad-developing/lavad-working2.webp)
+![lavad-working2](/2022-08-24-lavad-devlog/lavad-working2.webp)
 
 > **[깃허브](https://github.com/hyngng/LAV-AD)**에서 다운받아 플레이해볼 수 있습니다.
 {: .prompt-tip }

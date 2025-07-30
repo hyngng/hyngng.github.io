@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2024-03-22-armonia-planning/preview-image.webp
+    path: /2024-03-22-armonia-devlog-planning/preview-image.webp
     lqip: data:image/webp;base64,UklGRoAAAABXRUJQVlA4THMAAAAvD8ABAJUwiiRJkZtjZmbGF9s5Kyd1ScY8FbRt5MYA/F79RFEjSWpSxn2Zbw+m+z8BjqBzPlDmvL+4+00yVxL5ht9jZKHMSM22JRAbkUChuDviWIX4O+VnNh9jixzr0LjyndMjOUfNsQQDkKGXf/yfCzAGAA==
     alt: 요런 느낌으로
     
@@ -17,13 +17,16 @@ date: 2024-03-22 19:24:00 +0900
 last_modified_at: 2024-04-30 18:58:00 +0900
 
 mermaid: true
+
+redirect_from:
+  - /posts/armonia-planning/
 ---
 
 ## **들어가며**
 
 [직전의 경험](https://hyngng.github.io/posts/palette-developing/)을 마무리하고 새 유니티 프로젝트를 시작하려던 참에 10년 전에 보았던 잔잔한 영화를 다시 보고 경험이 가지는 영향력에 대해 생각을 하게 되었습니다. 생각이 어느정도 정리된 후, 좋은 영화가 좋은 경험으로 남는 것처럼 저도 그런 것을 만들어보고 싶다는 생각을 하게 되었죠. 평소 이것저것 만들고 표현하고 싶은 마음이 있기도 했구요.
 
-![concept-art](/2024-03-22-armonia-planning/concept-art.webp){: .w-50 }
+![concept-art](/2024-03-22-armonia-devlog-planning/concept-art.webp){: .w-50 }
 _친구와 떠들면서 그린 간이 컨셉아트 겸 기획_
 
 경험에 초점을 맞추어, 단순히 플레이어가 아무 조작을 하지 않아도 씬 내의 오브젝트들이 알아서 서로 상호작용하는 환경을 구상했습니다. 점수나 게임 종료 조건 없이 단순히 구경하며 돌아다니기만 하는 게임이죠.  

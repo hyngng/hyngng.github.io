@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2024-05-31-armonia-developing-second/gameplay.webp
+    path: /2024-05-31-armonia-second-devlog/gameplay.webp
     lqip: data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoQAAgAAUAmJQBOgB8xi/GXoBAA/vuITP1jzd5vh9i82itNyxKJOlCBXvOebik8444+JnSUJik6FdPY8GR+D5jZO/WAAA==
     alt: 개발중인 프로토타입
     
@@ -17,11 +17,14 @@ date: 2024-05-31 22:53:00 +0900
 last_modified_at: 2025-03-04 21:53:00 +0900
 
 mermaid: true
+
+redirect_from:
+  - /posts/armonia-developing-second/
 ---
 
 ## **들어가며**
 
-> [전 글](https://hyngng.github.io/posts/armonia-developing-first/)에서 이어집니다.
+> [전 글](https://hyngng.github.io/posts/armonia-first-devlog/)에서 이어집니다.
 {: .prompt-info }
 
 제 [네 번째 마일스톤](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) 개발기입니다. 또다른 한 달 동안 만든 결과물을 정리했습니다. 이번 한 달은 주로 게임의 시스템과 컨텐츠 확장 작업이 주가 되었으며, 세부적으로 이번 단계에서 만든 것은 이렇습니다.
@@ -37,19 +40,19 @@ mermaid: true
 
 ## **아카이브**
 
-![settings-test](/2024-05-31-armonia-developing-second/settings-test.webp){: .w-75 }
+![settings-test](/2024-05-31-armonia-second-devlog/settings-test.webp){: .w-75 }
 _설정창 진입 테스트중 녹화함_
 
 {% comment %}
-![unexpected](/2024-05-31-armonia-developing-second/unexpected.webp){: .w-75 }
+![unexpected](/2024-05-31-armonia-second-devlog/unexpected.webp){: .w-75 }
 {% endcomment %}
 
 ## **애셋 제작**
 
 ### **이미지 에셋**
 
-![pigeon-digging](/2024-05-31-armonia-developing-second/pigeon-digging.webp){: .light .w-25 .border }
-![pigeon-digging](/2024-05-31-armonia-developing-second/pigeon-digging.webp){: .dark .w-25 }
+![pigeon-digging](/2024-05-31-armonia-second-devlog/pigeon-digging.webp){: .light .w-25 .border }
+![pigeon-digging](/2024-05-31-armonia-second-devlog/pigeon-digging.webp){: .dark .w-25 }
 _땅 쪼는 비둘기_
 
 키프레임 형식의 애니메이션은 계속 추가해나갈 예정입니다. 이번의 경우, 비둘기에 대해 땅 쪼는 동작 구현을 위해 애니메이션을 만들어주었습니다. 애니메이션 분량도 짧고 무엇보다 [이전에 만들어둔 애셋](https://hyngng.github.io/posts/armonia-developing-first/#%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EC%97%90%EC%85%8B)이 있어서 전처럼 다른 비둘기 영상을 찾아보며 특징을 찾아 흉내낸다거나 하는 부담은 없었습니다.
@@ -64,7 +67,7 @@ _땅 쪼는 비둘기_
 
 ### **카메라 스타일의 설정창 구현**
 
-![settings-activated](/2024-05-31-armonia-developing-second/settings-activated.webp){: .w-75 }
+![settings-activated](/2024-05-31-armonia-second-devlog/settings-activated.webp){: .w-75 }
 _핀치 줌으로 설정창에 진입함, 아직 프로토타입임._
 
 설정창은 UI가 없는 깔끔한 화면을 최대한 보존하고 조금 재밌는 연출이 될 수 있도록 별도의 UI 표시 없이 핀치 줌으로 접근하도록 만들었습니다. 핀치 줌은 단계적으로 작동하며, 일정 범위 이내에서는 평범한 카메라 줌인아웃으로 동작되지만 일정 범위를 넘어서면 진동 피드백과 함께 설정창으로 진입하게 됩니다. 한 번 접근한 설정창은 핀치 줌인으로 나갈 수 있습니다.
@@ -77,7 +80,7 @@ _핀치 줌으로 설정창에 진입함, 아직 프로토타입임._
 
 ### **절차적 애니메이션 적용**
 
-![people-staring-pigeons](/2024-05-31-armonia-developing-second/people-staring-pigeons.webp){: .w-75 }
+![people-staring-pigeons](/2024-05-31-armonia-second-devlog/people-staring-pigeons.webp){: .w-75 }
 _근처에 비둘기 있으면 한 번씩 쳐다봄_
 
 [이전 마일스톤](https://hyngng.github.io/posts/palette-developing/)을 만들면서 절차적 애니메이션을 이용해 환경과 상호작용하는 유기적인 애니메이션을 만드는 것을 보고 정말 멋지다고 생각한 적이 있어서 잘 기억해두고 있다가 이번에 시도해봤습니다. 기술적으로 정교한 조건을 두어 구현하는 것인 줄 알았는데 유니티 패키지로 제공되기 때문에 생각보다 쉬웠고, 다만 코드로 제어하는 것이 생각보다 복잡했습니다.
@@ -116,7 +119,7 @@ public void ChangeSourceObject(GameObject discoveredObject)
 
 ### **프로파일러를 이용한 최적화 시도**
 
-![profiler](/2024-05-31-armonia-developing-second/profiler.webp){: .w-75 }
+![profiler](/2024-05-31-armonia-second-devlog/profiler.webp){: .w-75 }
 _유니티 프로파일러로 측정되는 예시 데이터_
 
 제 게임은 이상하게도 빌드 후 40FPS 수준의 프레임 유지가 안 될 정도로 발열이 심했습니다. 제 코드가 완벽하지는 않더라도 `GetComponent()`, `Find()` 등 무거운 함수를 피하고 `for`, `foreach`, 코루틴 등의 반복 동작이 있는 코드는 무리하게 실행되지 않도록 신경써서 작성하는 등 기본적인 부분을 잘 지키고 있다고 생각했는데, 분명 가벼워야 할 2.5D 프로젝트임에도 프레임이 떨어지는 것이 이해가 가지 않았습니다.

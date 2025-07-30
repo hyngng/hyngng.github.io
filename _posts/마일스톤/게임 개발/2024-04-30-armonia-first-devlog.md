@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2024-04-30-armonia-developing-first/gameplay.webp
+    path: /2024-04-30-armonia-first-devlog/gameplay.webp
     lqip: data:image/webp;base64,UklGRiQBAABXRUJQVlA4TBgBAAAvD8ABAM1kRP9jE+UpQv/D4CCSJEXqOXpmBhts/1W8BGZa6B0bG44kyW2bnQUUHM7+//t8zQmA2wiMHEXSexc+ENN/QdRAxJC9WSlicZYaCiHEiBEEBULCMMoQhMMi0bv93TqZbAMSDEWRd+s75TKrKm4VicC+vLm9fnxs++PKnIq5yl2/HI/H7Znt/PFTbA+vP6RcraP+/u4u769YybUSgygQFMaTzCmCmruS9R8Wur+T874jmH1RRSUTIWlnwwMxK3/FTqFkkIRu7it/NDlMKxKqKhJtqW+MXnKWekjlKoNGylt4ripQbry6Ou5Me5Ctq6J0E8qGQe2+v3Tlrj/5bLz7VimPuFYRKZDFKkBIEQUROUhNEJEA
     alt: 개발중인 프로토타입
     
@@ -18,13 +18,13 @@ last_modified_at: 2024-05-23 23:11:00 +0900
 
 mermaid: true
 
-# redirect_from:
-#   - posts/armonia-developing/
+redirect_from:
+  - posts/armonia-developing-first/
 ---
 
 ## **들어가며**
 
-> [전 글](https://hyngng.github.io/posts/armonia-planning/)에서 이어집니다.
+> [전 글](https://hyngng.github.io/posts/armonia-devlog-planning/)에서 이어집니다.
 {: .prompt-info }
 
 재밌어서 다시 도전하는 제 [네 번째 마일스톤](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) 개발기입니다. 만들면서 메모를 정리할 겸 중간 점검이 필요하기도 해서 약 한 달 동안 만든 결과물을 간단히 정리했습니다. 이 개발 단계에서 만든 것은 정리하면 이렇습니다.
@@ -43,15 +43,15 @@ mermaid: true
 
 ## **아카이브**
 
-![people-accessed](/2024-04-30-armonia-developing-first/people-accessed.webp){: .w-75 }
+![people-accessed](/2024-04-30-armonia-first-devlog/people-accessed.webp){: .w-75 }
 _사람을 구현했을 때. 플레이어는 아무 오브젝트가 되어 주변환경과 상호작용할 수 있다._
 
 ## **에셋 제작**
 
 ### **이미지 에셋**
 
-<!--![subway](/2024-04-30-armonia-developing-first/subway.webp)-->
-![buildings](/2024-04-30-armonia-developing-first/buildings.webp)
+<!--![subway](/2024-04-30-armonia-first-devlog/subway.webp)-->
+![buildings](/2024-04-30-armonia-first-devlog/buildings.webp)
 _그린 배경 이미지_
 
 교외지에 있을 법한 배경을 만들고자 도시 일러스트, 동네 건물 사진이나 로드뷰 등을 찾아 참조하며 배경 이미지 에셋을 만들었습니다. 언어 번역과 같은 현지화 가능성을 열어두고 싶어서 광고지나 신문지, 캘리그라피가 들어간 간판 등 텍스트가 있는 요소를 넣지 않았고, 사람이 직접 그린 느낌이 났으면 좋겠어서 거친 질감의 선을 쓰면서 직선 도구도 일부러 사용하지 않았는데 결과적으로 약간 삐뚤빼뚤하면서도 깔끔하게 그려진 것 같아서 만족스럽습니다.
@@ -61,7 +61,7 @@ _그린 배경 이미지_
 ### **스프라이트 셰이더**
 
 <!--
-![unity-shader-graph](/2024-04-30-armonia-developing-first/unity-shader-graph.webp){: .w-75 }
+![unity-shader-graph](/2024-04-30-armonia-first-devlog/unity-shader-graph.webp){: .w-75 }
 _유니티 셰이더 그래프_
 -->
 
@@ -71,8 +71,8 @@ _유니티 셰이더 그래프_
 
 ### **애니메이션 에셋**
 
-![pigeon-flying](/2024-04-30-armonia-developing-first/pigeon-flying.webp){: .light .w-25 .border }
-![pigeon-flying](/2024-04-30-armonia-developing-first/pigeon-flying.webp){: .dark .w-25 }
+![pigeon-flying](/2024-04-30-armonia-first-devlog/pigeon-flying.webp){: .light .w-25 .border }
+![pigeon-flying](/2024-04-30-armonia-first-devlog/pigeon-flying.webp){: .dark .w-25 }
 _하늘 나는 비둘기_
 
 애니메이션은 직접 그려서 사용하기도 했습니다. 예를 들어 비둘기 움직임의 경우 유니티 애니메이션 컴포넌트로 해결하기가 힘들어 전통적인 애니메이션 만들듯이 한 프레임씩 그림을 그려서 이어붙였어요. 이전에 동물의 움직임을 애니메이션으로 그려본 적은 없어서 비둘기 걷는 영상, 나는 영상을 찾아 관찰하며 그렸습니다.
@@ -81,7 +81,7 @@ _하늘 나는 비둘기_
 
 만들면서는 단순한 단일 애니메이션을 만들어 사용하기보다 애니메이션의 흐름을 세분화해서 페이즈를 나누었습니다. 예를 들어 비둘기가 날아가는 모습의 경우 하늘로 날아오르는 EnterFly 애니메이션, 공중에 체공중인 BeingFly 애니메이션, 땅에 착지하는 EndFly 애니메이션 세 가지의 별개 묶음으로 나누어 출력했고, 이를 상태 패턴과 연동해서 사용했어요. 덕분에 결과물은 위 [아카이브](#아카이브)에서 볼 수 있듯이 꽤 그럴듯하게 보입니다.
 
-![people-walking](/2024-04-30-armonia-developing-first/people-walking.webp)
+![people-walking](/2024-04-30-armonia-first-devlog/people-walking.webp)
 _걸어다니는 사람과 감성 반딧불이_
 
 다만 기본적으로는 이렇게 유니티의 애니메이션 컴포넌트를 이용했습니다. 위 예시는 사람의 위치변화에 따라 걷는 애니메이션의 좌우반전 여부나 재생속도가 자동으로 조절되도록 만든 장면인데요, 미리 자료를 남기지 못해 잘 나타나지는 않지만 컷 애니메이션 없이 머리와 몸통, 팔다리를 조각조각 조립해 위치가 각각 따로 조절되는 모습입니다.
@@ -133,7 +133,7 @@ classDiagram
 
 ### **맵 생성과 관리**
 
-![street-and-utility-pole](/2024-04-30-armonia-developing-first/street-and-utility-pole.webp){: .w-75 }
+![street-and-utility-pole](/2024-04-30-armonia-first-devlog/street-and-utility-pole.webp){: .w-75 }
 
 ```mermaid
 ---
@@ -186,7 +186,7 @@ void GenerateObjects(List<GameObject> instantiated, List<GameObject> instantiabl
 ### **오브젝트 생성**
 
 <!--
-![object-manager](/2024-04-30-armonia-developing-first/object-manager.webp){: .w-75 }
+![object-manager](/2024-04-30-armonia-first-devlog/object-manager.webp){: .w-75 }
 _배경 조정 예시_
 -->
 

@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2023-12-22-palette-planning/gameplay.webp
+    path: /2023-12-22-palette-second-devlog/gameplay.webp
     lqip: data:image/webp;base64,UklGRrYAAABXRUJQVlA4TKoAAAAvD8ABAHW4jWxbbfp4JJmZmSml0LH7L0Mq4pgVtG3DuOOPdQge4zaSFHVVH9P78o+T+j8BbhLNGhMUUL7GTwDFP6j3DTiLqMug0k4+RlwpOQFUC2jKxL/yzX0tKUApmm8sxu7n4LvlOeUbSBnGjBjAWUR/xmX1IQt/X/KSXVS1BnsLKLMeGqGJGl7KM5cUhbtrZyZYxL+CgfcTwNUUcJMaRE0DKQrAqa8oAA==
     alt: 예시 게임플레이
     
@@ -17,6 +17,9 @@ date: 2023-12-20 19:18:00 +0900
 last_modified_at: 2023-12-22 20:42:00 +0900
 
 mermaid: true
+
+redirect_from:
+  - /posts/palette-planning/
 ---
 
 ## **게임을 만들다**
@@ -51,7 +54,7 @@ gantt
 
 ## **초기 개발 과정**
 
-![beta-play](/2023-12-22-palette-planning/beta-play.webp){: w="960" }
+![beta-play](/2023-12-22-palette-second-devlog/beta-play.webp){: w="960" }
 _처음엔 적을 몇 마리 처치할 때마다 어떤 이벤트가 발생하면 좋겠다고 생각했다_
 
 처음에는 클론코딩으로 시작했습니다. 우선 소단계에서 다른 유명한 게임 중에 따라만들 수 있는 것을 따라만들어보자는 식으로 접근하게 되었습니다.
@@ -60,7 +63,7 @@ _처음엔 적을 몇 마리 처치할 때마다 어떤 이벤트가 발생하�
 
 ### **조이스틱**
 
-![joystick](/2023-12-22-palette-planning/joystick.webp){: w="960" }
+![joystick](/2023-12-22-palette-second-devlog/joystick.webp){: w="960" }
 
 일반적인 2D 모바일 게임에 등장할 만한 조이스틱을 구현하고자 했습니다. 왼쪽에 플레이어 이동을 위한 조이스틱 하나와 오른쪽에 조준용 조이스틱 하나를 만들기로 했죠.
 
@@ -70,7 +73,7 @@ _처음엔 적을 몇 마리 처치할 때마다 어떤 이벤트가 발생하�
 
 ### **적 스폰 및 동작**
 
-![enemycoming](/2023-12-22-palette-planning/enemycoming.webp){: w="960" }
+![enemycoming](/2023-12-22-palette-second-devlog/enemycoming.webp){: w="960" }
 ```cs
 void spawnEnemy(GameObject Enemy, float east, float west, float south, float north)
 {
@@ -129,7 +132,7 @@ void OnCollisionEnter2D(Collision2D collider)
 
 저는 인벤토리가 여러 개 아이템을 담을 수 있으면서도 그 UI가 플레이 경험을 해치지 않았으면 했습니다. 그래서 오른쪽 조이스틱에 할당되어있던 수동 조준 기능은 오토에임으로 대체하고, 새로운 인벤토리 액세스 기능을 할당했어요. 오른쪽 조이스틱을 꾹 누르면 인벤토리가 열리고, 손가락을 떼면 인벤토리가 닫히는 식으로요.
 
-![inventory](/2023-12-22-palette-planning/inventory.webp){: w="960" }
+![inventory](/2023-12-22-palette-second-devlog/inventory.webp){: w="960" }
 ```cs
 public struct InventoryData
 {
@@ -162,7 +165,7 @@ for (int i = 0; i < InventoryData.InventoryUI.Length; i++)
 
 ### **무기 발사**
 
-![shooting](/2023-12-22-palette-planning/shooting.webp){: w="960" }
+![shooting](/2023-12-22-palette-second-devlog/shooting.webp){: w="960" }
 ```cs
 if (shotTimer > fireThreshold)
 {
@@ -212,7 +215,7 @@ void hasHitEnemy()
 
 ### **카메라**
 
-![camera](/2023-12-22-palette-planning/camera.webp){: w="960" }
+![camera](/2023-12-22-palette-second-devlog/camera.webp){: w="960" }
 ```cs
 void Move()
 {
@@ -242,7 +245,7 @@ void Vignette()
 
 ### **URP**
 
-![urp](/2023-12-22-palette-planning/urp.webp){: w="960" }
+![urp](/2023-12-22-palette-second-devlog/urp.webp){: w="960" }
 _무기가 발사될 때마다 적 뒤로 그림자가 비친다._
 
 처음에는 Unity2D 환경의 기본 빛 효과를 어찌저찌 사용하다가, 여러군데 아쉬움이 있어 대안으로 [URP(Universal Render Pipeline)](https://unity.com/srp/universal-render-pipeline)를 적용하고 나니까 비주얼이 아주 좋아졌습니다. 기본적으로도 부드럽게 떨어지는 예쁜 빛 효과를 제공하면서도, 예를 들어 Falloff Strength 옵션을 조절해 더 은은하거나 화려한 빛을 만든다던가, Shadows 옵션으로 위처럼 빛과 그림자 효과를 연출하거나 할 수 있어서 정말 유용하게 사용했어요.

@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2025-07-12-canon-planning/preview-image.webp
+    path: /2025-07-12-canon-devlog-planning/preview-image.webp
     lqip: data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACwAQCdASoQAAgAAUAmJaQAAtrhz8SAAP7+iKQXo5XPAFYHsGXQIf86Ki+SWy2NwKTSw4qdpXZuAAAA
     alt: "정말 오랜만이다!"
 
@@ -15,11 +15,14 @@ toc_sticky: true
 
 date: 2025-07-28 21:56:00 +0900
 last_modified_at: 2025-07-28 21:56:00 +0900
+
+redirect_from:
+  - /posts/canon-planning/
 ---
 
 ## **들어가며**
 
-![hangsunji-gameplay](/2025-07-12-canon-planning/hangsunji-gameplay.webp)
+![hangsunji-gameplay](/2025-07-12-canon-devlog-planning/hangsunji-gameplay.webp)
 _끝내 완성되지 못한 게임 '행선지'_
 
 [직전 프로젝트의 경험](https://hyngng.github.io/posts/armonia-developing-cancelled/)으로부터 배운 것 중에 하나는 무언가를 장기간 시간을 두고 개발하는 것은 한편으로는 제가 어떤 거대한 맥락에 연루된다는 겁니다. 자칫하면 개발하는 과정이 피곤하고 고통스러운 경험으로 남을 수도 있고, 따라서 주제는 심사숙고해서 신중히 정할 필요가 있습니다.
@@ -40,7 +43,7 @@ _끝내 완성되지 못한 게임 '행선지'_
 
 제 디자인에는 크게 보았을 때 최소주의와 실용주의라는 두 가지 원칙이 있습니다. 디자인 코드의 통일과 개발 비용 절감 때문에 미니멀리즘을 우선시하고 있기는 하지만, 그렇다고 실용주의를 무시하는 것은 아닙니다. 그런데 이 둘이 충돌하는 경우가 굉장히 잦습니다. 대개 기능을 절감하면 실용적이지 않고, 역으로 여러가지 정보를 함께 표시하면 보기가 난잡해집니다.
 
-![info-panel-design-process](/2025-07-12-canon-planning/info-panel-design-process.webp)
+![info-panel-design-process](/2025-07-12-canon-devlog-planning/info-panel-design-process.webp)
 _가장 큰 고생을 겪었던 타워 정보 패널 디자인 과정. 다 문제가 있다._
 
 주로 위와 같은 식입니다. 포탑의 스펙을 전달하는 창을 디자인할 때 수치를 상세히 표시하면 영수증처럼 정보 밀도가 과도하게 높아집니다. 반대로 간략하게 제시하면 직관성이 크게 떨어집니다. 이 문제는 제가 생각하기로 포탑 데이터 자체가 복잡하기 때문에 표시할 정보가 많을 수밖에 없는 것이 근본적인 원인인데, 다른 수많은 UI를 디자인할 때에도 비슷한 문제가 있었습니다. 예쁜 정보 표시를 위해 게임시스템을 덜어낼 순 없으므로 대신 다음의 자체적인 원칙을 따라 최선책을 세웠습니다.
@@ -49,7 +52,7 @@ _가장 큰 고생을 겪었던 타워 정보 패널 디자인 과정. 다 문�
 - 플레이어의 선택이 직관적으로 체감될 수 있어야 합니다. 작은 행동에도 여러 겹의 애니메이션과 효과 등으로 UI는 동적으로 반응해야 합니다.
 - 흥미 유도와 함께 지루함은 방지될 수 있어야 합니다. 모든 것을 동적으로 구성할 순 없지만, 지루함을 유발하는 정적인 상황을 최대한 피하기 위해 맵이나 게임 시스템이 허용된 범위 내에서 유동적으로 기능해야 합니다.
 
-![design-examples](/2025-07-12-canon-planning/design-examples.webp){: .w-50 }
+![design-examples](/2025-07-12-canon-devlog-planning/design-examples.webp){: .w-50 }
 _피그마로 완성된 디자인 예시. 아이콘은 Fontawesome에서 가져왔습니다._
 
 대부분의 UI 기능과 화면상의 배치를 이러한 흐름을 따라 결정했습니다. 게임 분위기 자체가 흑백 계열의 모노톤이라거나 UI 디자인 대부분이 아무런 시각적 효과도 없고, 정적으로 배치되어있다는 점이 앞으로 개선이 필요한 부분입니다.
@@ -58,8 +61,8 @@ _피그마로 완성된 디자인 예시. 아이콘은 Fontawesome에서 가져�
 
 ## **다른 준비는 상대적으로 수월합니다**
 
-![notion-dark](/2025-07-12-canon-planning/notion-dark.webp){: .dark }
-![notion-light](/2025-07-12-canon-planning/notion-light.webp){: .light .border }
+![notion-dark](/2025-07-12-canon-devlog-planning/notion-dark.webp){: .dark }
+![notion-light](/2025-07-12-canon-devlog-planning/notion-light.webp){: .light .border }
 _어느정도 정리되면 아예 공개해버릴까도 고민중인 노션 페이지._
 
 반면에, 이번의 기술적 목표는 거창하지 않습니다. 이제 명명 규칙이나 SOLID 원칙 등 원활한 프로젝트 관리를 위한 전략, 싱글톤이나 이벤트 주도적 프로그래밍과 같은 디자인 패턴, [안드로이드 앱 핵심 품질](https://developer.android.com/docs/quality-guidelines/core-app-quality?hl=ko) 기준 등 낯설지 않은 개념은 다듬어서 구현하고, 여유가 될 때마다 다음중 하나를 새로 사용해보는 것이 목적입니다.
