@@ -14,7 +14,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-07-28 21:56:00 +0900
-last_modified_at: 2025-07-28 21:56:00 +0900
+last_modified_at: 2025-07-31 09:13:00 +0900
 
 redirect_from:
   - /posts/canon-planning/
