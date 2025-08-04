@@ -10,19 +10,105 @@ toc_sticky: true
 
 date: 2025-08-04 00:00:00 +0900
 last_modified_at: 2025-08-04 00:00:00 +0900
+
+mermaid: true
 ---
 
 ## **SOLID 원칙**
 
 SOLID 원칙은 단일 책임 원칙(SRP), 개방 폐쇄 원칙(OCP), 리스코프 치환 원칙(LSP), 인터페이스 분리 원칙(ISP), 의존성 역전 원칙(DIP) 등 다섯 가지 원칙을 모두 포함하는 용어입니다.
 
-SOLID 원칙 자체는 접하고 적용해본지 2년정도가 다 되어가는데, 원칙의 개념은 이제 익숙하지만 그 적용은 아직 꽤 어렵다는 느낌이 듭니다. 그래도 정리해보니 SOLID한 개발철학은 다음의 두 가지 개념으로 정리되는 것 같습니다.
+SOLID 원칙 자체는 접하고 적용해본지 2년정도가 다 되어가는데, 원칙의 개념은 이제 익숙하지만 그 적용은 아직 꽤 어렵다는 느낌이 듭니다. 그래도 정리해보니 SOLID한 개발철학은 추상적으로는 클래스간 의존도를 풀어헤치는 것, 그리고 좀 더 세부적으로는 다음의 두 가지 지향성으로 정리되는 것 같습니다.
 
 ## **분류를 명확히 해라**
 
-단일 책임 원칙의 제안은 클래스의 역할을 명확히 정의하라는 것으로 꽤 명확합니다. 그 개념에 대한 이해는 어렵지 않지만, 실제로 클래스를 작성하다보면 어디까지가 단일책임이라고 할 수 있을지에 대한 고민이 생깁니다. 그런 상황을 잘 성찰해보고 지혜롭게 해결하라는 것 자체가 SOLID 원칙이 제시하는 또 하나의 맥락이겠지만, 원칙 자체는 이런 상황에 침묵합니다.
+단일 책임 원칙의 제안은 클래스의 역할을 명확히 정의하라는 것으로 꽤 명확합니다. 그 개념에 대한 이해는 어렵지 않지만, 실제로 클래스를 작성하다보면 어디까지가 단일책임이라고 할 수 있을지에 대한 고민이 생깁니다. 그런 상황을 잘 성찰해보고 지혜롭게 해결하라는 것 자체가 SOLID 원칙이 유도하고자 하는 맥락이겠지만, 원칙 자체는 이런 상황에 침묵합니다.
 
-객체지향 구현을 위한 핵심개념 class가 '분류하다'라는 뜻의 classify의 명사형이라는 것을 고려하자면, 굳이 '단일 책임 원칙'이라고 부르지 않더라도 객체지향적인 설계 자체가 분류와 정리에 대해 엄격할 필요가 있습니다.
+객체지향 구현을 위한 핵심개념 class가 '분류하다'라는 뜻의 classify의 명사형이라는 것을 고려하자면, 굳이 '단일 책임 원칙'이라고 부르지 않더라도 객체지향적인 설계 자체가 꽤 엄격한 분류와 정리를 요구합니다. 개인적 경험을 인용하자면, 이전에 [게임을 만들어 보면서](https://hyngng.github.io/posts/palette-second-devlog/) 플레이어 객체에 부착되는 한 개 클래스 `Player.cs`에 일부러 모든 책임을 부여하는 차력쇼를 해본 적이 있습니다. 의도는 명확했습니다. 하나는 "하나의 클래스에서 조금이라도 연관된 기능을 모두 모아 관리하면 코드를 여러 곳에 분산해서 작성할 필요가 없을 것이다."였고, 또 하나는 "최대한 긴 코드를 짜보고 싶다"였습니다.
+
+`Player.cs` 하나에 처음에는 1000줄 넘게 작성했었고, 나중에 정리해보니 720줄 정도였습니다. 지금 글을 쓰면서 살펴보니 이 하나 클래스가 짊어지고 있는 책임은 이렇게 정리가 됩니다.
+
+```mermaid
+classDiagram
+    class Player {
+        -CubeData CubeData
+        -GameObject WeaponObject
+        -Vector3 PlayerVelocity
+        -float MaxHP, HP
+        -float PVATKR_Rate
+        -int PlayerLevel
+        -bool HasSpecialWeapon
+        -bool isAlive
+        -GameObject player, weaponPosition
+        -Animator playerAnimator
+        -Vector3 prePos, newPos
+        -bool ifWeaponHeadsRight
+        -bool isLoadingWeapon
+        -float ratePVMSPD, ratePVHPRG
+        -float playerMoveSpeed, defaultPlayerMoveSpeed
+        -Animator RoundsAnimator
+        -Animator HPAnimator
+        -bool isOnProcessGettingCube
+        -Vector3[] pointerDownPosition
+        -Vector3 pointerUpPosition
+        -Color startColor, targetColor
+        -string initWeaponName
+        -bool curntWeaponIsEmpty
+        -GameObject _initWeapon
+        -string cubeNameText, cubeInfoText
+        -TextMeshPro cubeNameTextMeshPro
+        -GameObject cubeInventory2, cubeName
+        -SpriteRenderer backgroundImage
+        -Coroutine currentOnPointCoroutineDefault
+        -Vector3 targetSmallScale, targetBigScale
+        -float fadeSpeed
+        -Vector3 lastPosition
+        -GameObject playerDiedParticleObject
+        -ParticleSystem playerDiedParticle
+        -int? cubeStat, cubeTempStat
+        -int cubeBeingTriggeredCount
+        -int cubeDataOrder
+        -string cubeNameToGet
+        -bool hasInstantiated
+        -bool replaceWeaponToNew
+        -bool hasSpawnedInitWeapon
+        -AnimatorStateInfo weaponAnimationInfo
+        -GameObject tempCubeUI, cubeToChange
+        -List~GameObject~ targetCubeList
+
+        +Awake() void
+        +Start() void
+        +Update() void
+        +OnTriggerEnter2D(Collider2D) void
+        +OnTriggerStay2D(Collider2D) void
+        +OnTriggerExit2D(Collider2D) void
+        -ifDied() void
+        -playerMove() void
+        -setPlayerProperty() void
+        -getWeapon() void
+        -getPVCubeEffect() void
+        -getWPCubeEffect() void
+        -setCubeInfo() void
+        -getWeaponInfo() void
+        -JoystickStatCoroutine() void
+        -backgroundGlowByCoin() void
+        -HpRegenerate() IEnumerator
+        -OnPointerEffectDefault(float) IEnumerator
+        -OnPointerEffectCube(float) IEnumerator
+        -OnPointerEffect(float, float) void
+        -StringInStrArray(string[], string) bool
+        -FindIndexInStringArray(string[], string) int
+        -FindIndexInGameObjectArray(GameObject[], string) int
+    }
+```
+
+1. 입력에 따른 이동, 애니메이션, 효과음 제어
+2. HP의 표시, 회복 및 사망 처리
+3. 무기 교체, 무기별 특수효과
+4. 8개 슬롯의 인벤토리 관리
+5. 조이스틱 등의 UI
+
+지금 살펴보니 좀 끔찍하네요. 굉장히 무겁고 불필요합니다. 특히 조이스틱 UI가 그렇습니다. 만약 지금 다시 같은 책임을 구현한다면, 이렇게 만들 것 같습니다.
 
 그런데 개발을 주로 혼자 하다 보니, 
 
