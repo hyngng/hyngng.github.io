@@ -1,6 +1,6 @@
 ---
 image:
-    path: /2024-10-11-look-back-review/preview-image.webp
+    path: /2024-10-11-look-back-movie-review/preview-image.webp
     lqip: data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAwAgCdASoQAAgAAUAmJaQAEPP8QEPXTNu5AAD+9Qcw3v7KZ/pY3acT8f4/7qf/oLZO/jvuLEs8lt/9/r2JteAvrcFbM0DMSuwaKUzXwCs+LUCQWZ/8bKmn0xqX2c0Bcfh0miQL4cAAAA==
     alt: "영화의 한 장면"
 
@@ -15,13 +15,16 @@ toc_sticky: true
 
 date: 2024-10-11 21:05:00 +0900
 last_modified_at: 2025-08-10 10:01:00 +0900
+
+redirect_from:
+  - /look-back-review/
 ---
 
 > **스포일러가 있습니다!**
 {: .prompt-warning }
 
-![logo-light](/2024-10-11-look-back-review/logo-light.webp){: .light .w-50 }
-![logo-dark](/2024-10-11-look-back-review/logo-dark.webp){: .dark .w-50 }
+![logo-light](/2024-10-11-look-back-movie-review/logo-light.webp){: .light .w-50 }
+![logo-dark](/2024-10-11-look-back-movie-review/logo-dark.webp){: .dark .w-50 }
 _〈룩 백〉_
 
 솔직하게 나는 이 영화가 그림을 소재로 하는 소소한 이야기라서, 그것도 눈에 띄게 좋은 작화로 그려져 있어서 좋았다. 창작을 하는 사람이라면 누구나 느낀 적 있을 재능있는 또래를 향한 동경심이나 질투심, 훼손된 자부심, 그리고 제 노력으로 성취한 성장기의 성공담이 세밀하게 담겨져 있었고, 그런 상황을 보는 것만으로도 창작욕구와 경쟁심리를 힘껏 자극했다.
