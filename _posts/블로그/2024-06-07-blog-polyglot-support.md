@@ -117,7 +117,7 @@ _posts/2010-03-01-salad-recipes-fr.md
 ```
 {: file="_posts" .nolineno }
 
-프론트매터의 `permalink`로 포스트 언어를 구분하는 것이 마음에 들지 않는다면 대신 파일명을 위와 같이 변경하는 식으로도 구분할 수 있으나, 이 경우 포스트 URL이 `example.github.io/en/2010-03-01-salad-recipes-en`와 같이 언어 구분이 불필요하게 중복될 수 있습니다.
+프론트매터의 `permalink`로 포스트 언어를 구분하는 것이 마음에 들지 않는다면 대신 파일명을 위와 같이 변경하는 식으로도 구분할 수 있지만, 이 경우에는 페이지 URL이 `example.github.io/en/2010-03-01-salad-recipes-en`와 같이 동어반복을 포함할 수 있습니다.
 
 ## **템플릿 수정**
 
