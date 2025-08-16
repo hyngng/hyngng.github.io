@@ -1,0 +1,62 @@
+---
+title: "유니티에서 상태 패턴 구현하고 활용하기"
+
+categories: [프로그래밍, 패턴]
+tags: [프로그래밍, 패턴]
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2025-08-16 00:00:00 +0900
+last_modified_at: 2025-08-16 00:00:00 +0900
+
+mermaid: true
+---
+
+## **상태에 대한 관리**
+
+유니티로 게임을 만드는 것과 같은 환경에서는 상태(State)라는 개념에 자연스럽게 접근하게 됩니다. 생성, 소멸, 씬 전환, 상태이상과 같은 구별되는 상황은 인위적으로 구별된 환경에서 관리하도록 두는 것이 개념적으로 자연스럽기 때문인 것 같습니다.
+
+상태 패턴은 그 이름 그대로 상태와 상태에 대한 전환을 보다 자연스럽게 구현할 수 있도록 도와줍니다. 대략적인 개념은 그런데, 보다 세부적으로는 설명을 읽기 보다 코드를 살펴보는 것이 빠를 것 같습니다. 유니티의 C# 환경에서 상태 패턴은 상태라는 개념 자체에 대한 `IState.cs`와 상태 변경 동작을 관리하는 `StateMachine.cs`으로 구현됩니다.
+
+```cs
+public interface IState
+{
+    public void Enter();
+
+    public void Update();
+
+    public void Exit();
+}
+```
+
+```cs
+[Serializable]
+public class StateMachine
+{
+    public IState CurrentState { get; private set; }
+    public event Action<IState> stateChanged;
+
+    // public ExampleState exampleState; 와 같이 상태 불러오기
+
+    public void Initialize(IState startingState)
+    {
+        CurrentState = startingState;
+        startingState.Enter();
+    }
+
+    public void TransitionTo(IState nextState)
+    {
+        CurrentState.Exit();
+        CurrentState = nextState;
+        nextState.Enter();
+    }
+
+    public void Update()
+    {
+        if (CurrentState != null)
+            CurrentState.Update();
+    }
+}
+```
