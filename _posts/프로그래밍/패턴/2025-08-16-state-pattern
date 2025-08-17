@@ -18,7 +18,31 @@ mermaid: true
 
 유니티로 게임을 만드는 것과 같은 환경에서는 상태(State)라는 개념에 자연스럽게 접근하게 됩니다. 생성, 소멸, 씬 전환, 상태이상과 같은 구별되는 상황은 인위적으로 구별된 환경에서 관리하도록 두는 것이 개념적으로 자연스럽기 때문인 것 같습니다.
 
-상태 패턴은 그 이름 그대로 상태와 상태에 대한 전환을 보다 자연스럽게 구현할 수 있도록 도와줍니다. 대략적인 개념은 그런데, 보다 세부적으로는 설명을 읽기 보다 코드를 살펴보는 것이 빠를 것 같습니다. 유니티의 C# 환경에서 상태 패턴은 상태라는 개념 자체에 대한 `IState.cs`와 상태 변경 동작을 관리하는 `StateMachine.cs`으로 구현됩니다.
+상태 패턴은 그 이름 그대로 상태와 상태에 대한 전환을 보다 자연스럽게 구현할 수 있도록 도와줍니다. 대략적인 개념은 그런데, 보다 세부적으로는 설명을 읽기 보다 코드를 살펴보는 것이 빠를 것 같습니다. 유니티의 C# 환경에서 상태 패턴은 상태라는 개념 자체에 대한 `IState`와 상태 변경 동작을 관리하는 `StateMachine`으로 구현합니다.
+
+## **구조 시각화**
+
+```mermaid
+stateDiagram-v2
+    [*] --> StateA
+    note right of [*]
+        <b>StateMachine:</b>
+        Initialize(StateA)
+        calls StateA.Enter()
+    end note
+
+    StateA: Inside Update(),<br/>if condition is met,<br/>call StateMachine.TransitionTo(StateB)
+
+    StateA --> StateB
+    note on link
+        <b>StateMachine handles transition:</b>
+        1. Calls StateA.Exit()
+        2. Sets CurrentState = StateB
+        3. Calls StateB.Enter()
+    end note
+```
+
+## **예시 코드**
 
 ```cs
 public interface IState
@@ -58,5 +82,17 @@ public class StateMachine
         if (CurrentState != null)
             CurrentState.Update();
     }
+}
+```
+
+제가 생각하기로 상태 패턴은 동작을 독립적으로 정의할 수 있는 좋은 제안입니다. 코드의 역할이 개념적으로 잘 분리되고, `switch`나 `if`의 사용 없이 용도를 가볍게 관리할 수 있습니다. 사용하기도 어렵지 않습니다.
+
+다만 `IState`가 `MonoBehaviour`를 따르지 않으므로 인터페이스를 따르는 자식클래스의 의존성만 다음과 같이 생성자로 정의할 필요가 있습니다.
+
+```cs
+// 생성자는 파이썬의 __init__()와 비슷한 역할
+public ExampleState(ClassType className)
+{
+    this.className = className;
 }
 ```
