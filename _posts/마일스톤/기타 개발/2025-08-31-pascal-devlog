@@ -1,0 +1,30 @@
+---
+title: "사무실 보조 프로그램 만들기"
+
+categories: [마일스톤, 기타 개발]
+tags: [마일스톤, 기타 개발]
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2025-08-31 00:00:00 +0900
+last_modified_at: 2025-08-31 00:00:00 +0900
+---
+
+## **사회복무요원 졸업작품**
+
+- 다사다난한 프레임워크 선택과정. 난민이었음.
+
+1. ASP.NET & Electron
+2. Electron.NET
+3. WPFUI
+4. ModernWPF
+5. WinUI 3
+6. DevWinUI
+
+WinUI 3은 다 좋은데 WPF에 비하면, 페이지 뷰가 없다는게 별로임.
+
+## **아카이브**
+
+- 깃허브 페이지
