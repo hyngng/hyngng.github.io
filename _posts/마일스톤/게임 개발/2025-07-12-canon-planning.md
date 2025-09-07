@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACwAQCdASoQAAgAAUAmJaQAAtrhz8SAAP7+iKQXo5XPAFYHsGXQIf86Ki+SWy2NwKTSw4qdpXZuAAAA
     alt: "정말 오랜만이다!"
 
-title: "모바일 타워디펜스 기획안 만들기: 디자인과 준비 과정"
+title: "준비 경험 위주로 정리한 모바일 타워디펜스 기획안"
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 기획, 개발일지]
