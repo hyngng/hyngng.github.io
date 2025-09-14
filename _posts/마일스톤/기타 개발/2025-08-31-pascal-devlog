@@ -2,7 +2,7 @@
 title: "WinUI 3 환경으로 사무실 보조 프로그램 만들기"
 
 categories: [마일스톤, 기타 개발]
-tags: [마일스톤, 기타 개발]
+tags: [마일스톤, 기타 개발, Fluent 2]
 start_with_ads: true
 
 toc: true
@@ -12,10 +12,10 @@ date: 2025-08-31 00:00:00 +0900
 last_modified_at: 2025-08-31 00:00:00 +0900
 ---
 
-## **사회복무요원 졸업작품**
+<!-- ## **사회복무요원 졸업작품**
 
 ![피그마로 정성스럽게 만든 사진](사진)
-_이미지 설명 캡션_
+_이미지 설명 캡션_ -->
 
 ## **아카이브**
 
@@ -27,13 +27,6 @@ _이미지 설명 캡션_
 
 ## **개발 관련 이야기**
 
-### **C#과 XAML, 그리고 MVVM**
-
-- .NET 환경 처음이었음
-- MVVM 패턴 처음이었음
-
-XAML에 x:Name="TagName" 선언해두면 코드비하인드에서 따로 private variable tagName = GetTag("TagName") 안 해도 되는게 인상깊었음.
-
 ### **다사다난한 프레임워크 선택과정. 난민이었음**
 
 1. ASP.NET & Electron
@@ -43,6 +36,26 @@ XAML에 x:Name="TagName" 선언해두면 코드비하인드에서 따로 private
 5. WinUI 3
 6. DevWinUI
 
-WinUI 3은 다 좋은데 WPF에 비하면, 페이지 뷰가 없다는게 별로임.
+- WinUI 3은 다 좋은데 WPF에 비하면, 페이지 뷰가 없다는게 별로임.
+- 그리고, 참조할만한 앱도 정말 별로 없음. DevToys, WinToys, Powertoys, Files 정도. 그나마도 작업을 위한 앱은 아닌 것 같음.
 
+윈도우 프로그램을 만들려면 어떤 조건이 갖추어져야 하는지, 실제 개발 과정은 어떤지를 하나도 몰랐고 진짜 처음부터 시작하다보니 프레임워크를 선택하는 것부터 어려움이 있었습니다. 그나마 가장 친숙한 웹개발 프레임워크와 접점이 있는 환경을 찾아보다가 [Electron.NET](https://github.com/ElectronNET/Electron.NET)라는 것을 발견했는데, 대문에서부터 "Wait - you host a .NET Core app inside Electron? Why?"라며 물음을 넌지시 던지고 있는 어색한 환경이었습니다.
 
+방향을 잡을 수 있었던 첫 번째 키워드는 [Fluent 2](https://fluent2.microsoft.design/)였습니다. 플루언트는 마이크로소프트에서 제시하는 디자인 문법으로, 특히 윈도우 11에 들어서 대대적으로 접목된 UI/UX의 밑기둥입니다.
+
+![]()
+_설정, 작업 관리자 등등_
+
+흔히 윈도우 11에서 설정이나 작업 관리자, 사진 앱 등을 보면
+
+처음에는 WPFUI로 개발을 시작했고, 간단한 창 전환 과정을 구현해보다가 레거시 알람창 등을 발견하고 개발환경을 다시 WinUI 3으로 옮겼습니다. 이건 결과적으로 정말 잘 내린 결정이 되었는데, 결과적으로 [Windows Community Toolkit](https://github.com/CommunityToolkit/WindowsCommunityToolkit)과 [DevWinUI](https://github.com/ghost1372/DevWinUI)라는 훌륭한 컨트롤 라이브러리를 발견하게 되면서 많은 기능을 수월하게 구현할 수 있게 되었습니다.
+
+### **C#과 XAML, 그리고 MVVM**
+
+- .NET 환경 처음이었음
+- MVVM 패턴 처음이었음
+- XAML에 x:Name="TagName" 선언해두면 코드비하인드에서 따로 private variable tagName = GetTag("TagName") 안 해도 되는게 인상깊었음.
+
+개인적인 소감을 적어보자면 WinUI 3 개발경험은 기초적인 단계의 웹개발과 크게 다르지 않았고, 그래서 처음에 좀 놀랐습니다. 웹개발에서 HTML 태그에 클래스나 아이디를 
+
+### **MVVM**
