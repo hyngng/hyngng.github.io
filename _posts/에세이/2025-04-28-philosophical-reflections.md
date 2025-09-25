@@ -1,4 +1,9 @@
 ---
+image:
+    path: /2025-04-28-philosophical-reflections/preview-image.webp
+    lqip: data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAQCdASoQAAgAAUAmJaQAAjdfuqGhAAD+9kw9E5ZdKwj7jZoTetsvOziCBXfP1QSGBrls/o2oPhnebuNNTWp8D4b8o864igRK5e0uPcSxWnRiUwAAAA==
+    alt: "2차 세계대전 종식의 상징"
+
 title: "최근 만들어나가고 있는 인문학적 관점 몇 가지"
 
 categories: [에세이]
@@ -9,7 +14,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-04-28 19:02:00 +0900
-last_modified_at: 2025-09-17 09:29:00 +0900
+last_modified_at: 2025-09-25 18:25:00 +0900
 
 redirect_from:
   - /posts/pluralism-and-habitus/
