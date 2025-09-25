@@ -2,7 +2,7 @@
 image:
     path: /2025-09-25-finding-camus-in-goryeo-history/preview-image.webp
     lqip: data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAQCdASoQAAgAAUAmJaQAD4APqXZfe8gA/vnuHyePotTeHd7ozjQUTReIqYKnV9aET/a2cdNr9ze7wcqo/0tsT8ACEvu4Tf316rtF+00X9HmGfG0bWacphR/lb3KMirEAAAAA
-    alt: "1944년 프랑스 파리의 알베르 카뮈"
+    alt: "1944년, 프랑스 파리의 알베르 카뮈"
 
 title: "카뮈의 시선으로 바라본 12세기 고려의 외교노선"
 
