@@ -1,4 +1,9 @@
 ---
+image:
+    path: /2025-09-25-finding-camus-in-goryeo-history/preview-image.webp
+    lqip: data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAQCdASoQAAgAAUAmJaQAD4APqXZfe8gA/vnuHyePotTeHd7ozjQUTReIqYKnV9aET/a2cdNr9ze7wcqo/0tsT8ACEvu4Tf316rtF+00X9HmGfG0bWacphR/lb3KMirEAAAAA
+    alt: "알베르 카뮈"
+
 title: "카뮈의 시선으로 바라본 12세기 고려의 외교노선"
 
 categories: [에세이]
@@ -9,18 +14,15 @@ toc: true
 toc_sticky: true
 
 date: 2025-09-25 15:08:00 +0900
-last_modified_at: 2025-09-25 16:25:00 +0900
-
-mermaid: true
+last_modified_at: 2025-09-25 18:08:00 +0900
 ---
 
 ## **알베르 카뮈의 부조리 철학**
 
 {% comment %}
-Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-même n’est pas raisonnable, c’est tout ce qu’on peut en dire. Mais ce qui est absurde, c’est la confrontation de cet irrationnel et de ce désir éperdu de clarté dont l’appel résonne au plus profond de l’homme. L’absurde dépend autant de l’homme que du monde. Il est pour le moment leur seul lien.  
-{% endcomment %}
-
+Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-même n’est pas raisonnable, c’est tout ce qu’on peut en dire. Mais ce qui est absurde, c’est la confrontation de cet irrationnel et de ce désir éperdu de clarté dont l’appel résonne au plus profond de l’homme. L’absurde dépend autant de l’homme que du monde. Il est pour le moment leur seul lien.
 > 앞에서 나는 이 세계가 부조리한 것이라고 말했는데 그것은 지나치게 성급한 말이었다. 그 자체로 놓고 볼 때 이 세계는 합리적인 것이 아니다. 이것이 우리가 말할 수 있는 전부다. 그러나 부조리한 것은 바로 이 비합리와, 명확함에 이르려는 필사적인 열망과의 맞대면인 것이다.
+{% endcomment %}
 
 20세기 프랑스를 대표하는 작가이자 사상가인 알베르 카뮈는 "삶이 살 만한 가치가 있는가"라는 근원적인 질문에서부터 그의 철학을 시작한다. 그가 발견한 것은, 의미를 찾으려는 인간의 열망과 그에 침묵하는 비합리적인 세계 사이의 피할 수 없는 대립이다. 근본적으로 불안정한 관계 속에서 인간은 명료한 인식관을 위해 어떤 사실은 받아들이고 어떤 사실은 애써 외면한다. 이런 심리작용은 본능적인 것으로 자연스러운 것이지만, 언젠가 외면했던 것들을 직면하는 순간 큰 혼란과 충격을 경험하게 되는데 이것이 부조리다.
 
@@ -59,7 +61,7 @@ Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-mêm
 
 이런 상황에서 서경파가 서경 천도와 칭제건원 등 현상 타파를 통한 급진적 진취주의 노선을 제시함에 따라, 현상 유지를 통한 실리적 현실주의의 입장을 견지하던 개경파와는 대립하기 시작했다. 단순히 정치 노선의 차이를 넘어 서경파는 풍수지리와 불교적 신비주의를, 개경파는 합리주의적 유교 사상을 앞세웠고 이 상황은 국풍파와 한학파, 불교와 유교간의 이념적 대립양상으로까지 비화된다.
 
-이 긴장 상황은 서경파의 이름으로 계획되지 않은 반란이 일어나고, 진압당하면서 끝났다. 결과적으로 고려의 주도권은 개경의 정치세력이 가져가게 되었고, 서경의 지위는 격하되었다. 우리가 오늘날 알고 있는 실리적 사대주의와 유교적 보수주의, 삼한 계승 의식과 같은 사상 또한 이 때 경쟁자의 탈락으로 공고화된 것이다.
+이 긴장 상황은 서경파의 이름으로 계획되지 않은 반란이 일어나고, 진압당하면서 종료됐다. 결과적으로 고려의 주도권은 개경의 정치세력이 가져가게 되었고, 권력균형이 붕괴됨에 따라 서경의 지위 또한 격하되었다. 우리가 오늘날 알고 있는 실리적 사대주의와 유교적 보수주의, 삼한 계승 의식과 같은 사상 또한 이 때 경쟁자의 탈락으로 공고화된 것이다.
 
 ## **두 사상에 대한 개인적인 평가**
 
