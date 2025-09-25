@@ -8,6 +8,9 @@ class Theme {
   static #modeAttr = 'data-mode';
   static #darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
   static switchable = !document.documentElement.hasAttribute(this.#modeAttr);
+  /* region 수정됨 */
+  static #transitionTimer;
+  /* endregion 수정됨 */
 
   static get DARK() {
     return 'dark';
@@ -102,13 +105,29 @@ class Theme {
    * Flips the current theme mode
    */
   static flip() {
+    /* region 수정됨 */
+    this.#suspendTransitions();
+    /* endregion 수정됨 */
+
     if (this.#hasMode) {
       this.#clearMode();
     } else {
       this.#sysDark ? this.#setLight() : this.#setDark();
     }
+
     this.#notify();
   }
+
+  /* region 수정됨 */
+  static #suspendTransitions() {
+    document.documentElement.classList.add('mode-transition-off');
+
+    clearTimeout(this.#transitionTimer);
+    this.#transitionTimer = setTimeout(() => {
+      document.documentElement.classList.remove('mode-transition-off');
+    }, 350);
+  }
+  /* endregion 수정됨 */
 
   static #setDark() {
     document.documentElement.setAttribute(this.#modeAttr, this.DARK);

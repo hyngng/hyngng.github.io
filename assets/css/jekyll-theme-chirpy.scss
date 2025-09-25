@@ -71,45 +71,16 @@ h4 {
 /* endregion 텍스트 */
 
 /* region 정적인 모드 전환 */
+/*
+@media (hover: hover) {
+  .post-preview {
+    transition: none;
+  }
+}
+*/
+
 a:not(.site-title, .post-tag, a.btn, a.nav-link, .url-button, .page-link, .tag, .fab), div.btn, .post-preview, #toc-bar {
   transition: none !important;
-}
-
-.post-tag, %btn-post-nav {
-  transition-property: background-color;
-}
-
-#sidebar {
-  ul {
-    li.nav-item {
-      &.active {
-        .nav-link {
-          transition-property: none;
-        }
-      }
-    }
-  }
-  .sidebar-bottom {
-    %button {
-      transition-property: color;
-    }
-  }
-  /* 모드 토글 버튼 클릭시 애니메이션 비활성화 => 방법 찾는중
-  #mode-toggle {
-    &:active {
-      background-color: var(--sidebar-btn-bg);
-      transition: none !important;
-    }
-  }
-  */
-}
-
-.pagination {
-  .page-item {
-    .page-link {
-      transition-property: box-shadow;
-    }
-  }
 }
 /* endregion 정적인 모드 전환 */
 
