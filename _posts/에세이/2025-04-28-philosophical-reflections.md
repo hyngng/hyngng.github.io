@@ -2,7 +2,7 @@
 image:
     path: /2025-04-28-philosophical-reflections/preview-image.webp
     lqip: data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAQCdASoQAAgAAUAmJaQAAjdfuqGhAAD+9kw9E5ZdKwj7jZoTetsvOziCBXfP1QSGBrls/o2oPhnebuNNTWp8D4b8o864igRK5e0uPcSxWnRiUwAAAA==
-    alt: "2차 세계대전 종식의 상징"
+    alt: "1945년, 라이히스탁에 소련 국기를 꽂는 소련군"
 
 title: "최근 만들어나가고 있는 인문학적 관점 몇 가지"
 
