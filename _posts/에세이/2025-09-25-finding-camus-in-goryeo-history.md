@@ -37,7 +37,6 @@ Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-mêm
 {% comment %}
 | 1113년 | 여진 부족이 통합된다. |
 | 1123년 | 고려가 송의 책봉 제의를 거절한다. |
-| 1122년 | 고려 인종이 즉위한다. |
 | 1134년 | 인종이 황주첨의 칭제건원을 거절한다. |
 {% endcomment %}
 
@@ -46,6 +45,7 @@ Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-mêm
 | 1109년 | 고려의 여진 정벌이 실패한다. |
 | 1115년 | 여진으로부터 금나라가 건국된다. |
 | 1116년 | 고려가 요 연호 사용을 중지한다. |
+| 1122년 | 고려 인종이 즉위한다. |
 | 1125년 | 요나라가 북송과 금에 의해 멸망한다. |
 | 1126년 | 고려가 금나라에 칭신한다. |
 | 1126년 | 고려에서 이자겸의 난이 일어난다. |
