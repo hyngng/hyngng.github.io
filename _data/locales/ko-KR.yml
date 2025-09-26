@@ -23,7 +23,7 @@ search:
   no_results: 검색 결과가 없습니다.
 
 panel:
-  lastmod: 업데이트된 글
+  lastmod: 최근 업데이트된 글
   trending_tags: 주요 태그
   toc: 목차
 
