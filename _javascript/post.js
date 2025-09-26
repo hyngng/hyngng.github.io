@@ -18,3 +18,5 @@ initClipboard();
 initTopbar();
 loadMermaid();
 basic();
+
+console.log("post page");

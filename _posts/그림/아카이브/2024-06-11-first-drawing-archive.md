@@ -6,7 +6,7 @@ image:
 
 title: "잼민이 시절 그림 발굴하기"
 
-categories: [그림]
+categories: [그림, 아카이브]
 tags: [그림, 전투기, 우주선, 메카닉, 낙서]
 start_with_ads: false
 
