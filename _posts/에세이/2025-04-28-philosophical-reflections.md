@@ -7,14 +7,14 @@ image:
 title: "최근 만들어나가고 있는 인문학적 관점 몇 가지"
 
 categories: [에세이]
-tags: [에세이, 일상, 인문학, 다원주의, 일원주의, 아비투스, 역사, 사피엔스, 유교, 물고기는 존재하지 않는다]
+tags: [에세이, 일상, 인문학, 다원주의, 일원주의, 아비투스, 역사, 고려, 사피엔스, 유교, 물고기는 존재하지 않는다]
 start_with_ads: false
 
 toc: true
 toc_sticky: true
 
 date: 2025-04-28 19:02:00 +0900
-last_modified_at: 2025-09-25 18:25:00 +0900
+last_modified_at: 2025-09-26 17:52:00 +0900
 
 redirect_from:
   - /posts/pluralism-and-habitus/
