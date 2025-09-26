@@ -71,9 +71,42 @@ h4 {
 /* endregion 텍스트 */
 
 /* region 정적인 모드 전환 */
-a:not(.site-title, .post-tag, a.btn, .nav-link, .url-button, .tag, .fab, #toc-bar), .post-preview, .nav-item.active, .nav.page-item.active {
+// a:not(.site-title, .post-tag), a.post-preview {
+//   transition: none !important;
+// }
+
+// 모바일 환경의 목차
+div:not(#toc-bar) {
   transition: none !important;
 }
+
+div.sidebar-bottom a {
+  transition: none !important;
+}
+
+// 다크모드 전환 버튼
+button.btn.btn-link.nav-link {
+  transition: none !important;
+}
+
+// 사이드바의 활성 메뉴
+li.nav-item.active a {
+  transition: none !important;
+}
+
+// 페이지네이션 활성 메뉴
+li.page-item.active a {
+  transition: none !important;
+}
+
+// 홈페이지의 포스트 태그
+// a.post-tag {
+//   transition: none !important;
+// }
+
+// a:not(.site-title, .post-tag, a.btn, .nav-link, .url-button, .tag, .fab, #toc-bar), .post-preview, .nav-item.active, .nav.page-item.active {
+//   transition: none !important;
+// }
 
 // @media (hover: hover) {
 //   .post-preview {

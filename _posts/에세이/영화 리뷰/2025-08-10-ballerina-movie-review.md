@@ -2,7 +2,7 @@
 image:
     path: /2025-08-10-ballerina-movie-review/preview-image.webp
     lqip: data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoQAAgAAUAmJZQCdADw3CSWsIAA/vxw4w4rz7RwPAWcaYg3KW/2nH/7pxsQVxReuEvGbFfXKS3lajRMe5HXQhveg6Uq4e9Abh57h7+DB3wIAA==
-    alt: "영화의 한 장면"
+    alt: "영화 〈발레리나〉의 한 장면"
 
 title: "발레리나: 존 윅 시리즈의 완성형 스핀오프"
 
@@ -14,7 +14,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-08-10 10:36:00 +0900
-last_modified_at: 2025-09-12 14:59:00 +0900
+last_modified_at: 2025-09-26 16:00:00 +0900
 ---
 
 > **스포일러가 있습니다!**
