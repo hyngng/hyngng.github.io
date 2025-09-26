@@ -17,42 +17,42 @@ date: 2022-08-25 14:38:00 +0900
 last_modified_at: 2022-08-25 14:38:00 +0900
 ---
 
-![221025-반도체칩](/drawing/221025-반도체칩.webp){: .light .border }
-![221025-반도체칩](/drawing/221025-반도체칩.webp){: .dark }
+![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .light .border }
+![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .dark }
 _학교 과제 제출용_
 
-![210000-여자랑남자](/drawing/210000-여자랑남자.webp)
+![210000-여자랑남자](/drawing/210000-여자랑남자.webp){: .rounded-10 }
 _고등학생 때 낙서 1_
 
-![200000-세탁기](/drawing/200000-세탁기.webp){: .light .border }
-![200000-세탁기](/drawing/200000-세탁기.webp){: .dark }
+![200000-세탁기](/drawing/200000-세탁기.webp){: .rounded-10 .light .border }
+![200000-세탁기](/drawing/200000-세탁기.webp){: .rounded-10 .dark }
 _고등학생 때 낙서 2_
 
 ![231214-사자남자](/drawing/231214-사자남자.webp)
 _고등학생 때 낙서 3_
 
-![200000-헨젤과그레텔](/drawing/200000-헨젤과그레텔.webp){: .light .border }
-![200000-헨젤과그레텔](/drawing/200000-헨젤과그레텔.webp){: .dark }
+![200000-헨젤과그레텔](/drawing/200000-헨젤과그레텔.webp){: .rounded-10 .light .border }
+![200000-헨젤과그레텔](/drawing/200000-헨젤과그레텔.webp){: .rounded-10 .dark }
 _학교 과제 제출용_
 
-![220000-남자둘](/drawing/220000-남자둘.webp){: .light .border }
-![220000-남자둘](/drawing/220000-남자둘.webp){: .dark }
+![220000-남자둘](/drawing/220000-남자둘.webp){: .rounded-10 .light .border }
+![220000-남자둘](/drawing/220000-남자둘.webp){: .rounded-10 .dark }
 _인터넷 그림 모작_
 
-![220825-동물구닌](/drawing/220825-동물구닌.webp){: .light .border }
-![220825-동물구닌](/drawing/220825-동물구닌.webp){: .dark }
+![220825-동물구닌](/drawing/220825-동물구닌.webp){: .rounded-10 .light .border }
+![220825-동물구닌](/drawing/220825-동물구닌.webp){: .rounded-10 .dark }
 _모작 하면서 같이 그린 그림_
 
-![231214-셔츠여자](/drawing/231214-셔츠여자.webp){: .light .border }
-![231214-셔츠여자](/drawing/231214-셔츠여자.webp){: .dark }
+![231214-셔츠여자](/drawing/231214-셔츠여자.webp){: .rounded-10 .light .border }
+![231214-셔츠여자](/drawing/231214-셔츠여자.webp){: .rounded-10 .dark }
 _고등학생 때 낙서 4_
 
-![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .light .border }
-![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .dark }
+![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .rounded-10 .light .border }
+![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .rounded-10 .dark }
 _고등학생 때 낙서 5_
 
-![231214-상자여자](/drawing/231214-상자여자.webp){: .light .border }
-![231214-상자여자](/drawing/231214-상자여자.webp){: .dark }
+![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .light .border }
+![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .dark }
 _진짜 할 거 없을 때 그리는 그림_
 
 ## **그림도 올립니다**

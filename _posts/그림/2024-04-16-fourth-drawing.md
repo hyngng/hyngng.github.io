@@ -20,26 +20,26 @@ last_modified_at: 2024-05-16 13:53:00 +0900
 ![240128-로봇야자](/drawing/240128-로봇야자.webp)
 _야자 라이브_
 
-![240415-헤드폰목도리](/drawing/240415-헤드폰목도리.webp){: .light .border }
-![240415-헤드폰목도리](/drawing/240415-헤드폰목도리.webp){: .dark }
+![240415-헤드폰목도리](/drawing/240415-헤드폰목도리.webp){: .rounded-10 .light .border }
+![240415-헤드폰목도리](/drawing/240415-헤드폰목도리.webp){: .rounded-10 .dark }
 _그리고보니 무표정_
 
-![240129-검정마법약사](/drawing/240129-검정마법약사.webp){: .light .border }
-![240129-검정마법약사](/drawing/240129-검정마법약사.webp){: .dark }
+![240129-검정마법약사](/drawing/240129-검정마법약사.webp){: .rounded-10 .light .border }
+![240129-검정마법약사](/drawing/240129-검정마법약사.webp){: .rounded-10 .dark }
 _무표정 판타지아_
 
-![240515-알감자](/drawing/240515-알감자.webp){: .light .border}
-![240515-알감자](/drawing/240515-알감자.webp){: .dark }
+![240515-알감자](/drawing/240515-알감자.webp){: .rounded-10 .light .border}
+![240515-알감자](/drawing/240515-알감자.webp){: .rounded-10 .dark }
 _이것도 무표정_
 
-![240516-부시시](/drawing/240516-부시시.webp){: .light .border}
-![240516-부시시](/drawing/240516-부시시.webp){: .dark }
+![240516-부시시](/drawing/240516-부시시.webp){: .rounded-10 .light .border}
+![240516-부시시](/drawing/240516-부시시.webp){: .rounded-10 .dark }
 _부시시_
 
-![240416-가방짐](/drawing/240416-가방짐.webp)
+![240416-가방짐](/drawing/240416-가방짐.webp){: .rounded-10 }
 _낭만_
 
-![240504-방어지름](/drawing/240504-방어지름.webp)
+![240504-방어지름](/drawing/240504-방어지름.webp){: .rounded-10 }
 _정육면방_
 
 ## **그래도 꾸준히 그리고 있음**

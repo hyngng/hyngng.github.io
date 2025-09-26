@@ -17,22 +17,22 @@ date: 2024-11-18 20:12:00 +0900
 last_modified_at: 2024-11-29 22:31:00 +0900
 ---
 
-![241013-신문형식](/drawing/241013-신문형식.webp){: .light .border}
-![241013-신문형식](/drawing/241013-신문형식.webp){: .dark }
+![241013-신문형식](/drawing/241013-신문형식.webp){: .rounded-10 .light .border}
+![241013-신문형식](/drawing/241013-신문형식.webp){: .rounded-10 .dark }
 _이거 되게 재밌게 그렸음_
 
-![241006-바렛쏘기](/drawing/241006-바렛쏘기.webp)
+![241006-바렛쏘기](/drawing/241006-바렛쏘기.webp){: .rounded-10 }
 _이동 흐리기 처음 써봄_
 
-![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .light .border}
-![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .dark }
+![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .rounded-10 .light .border}
+![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .rounded-10 .dark }
 _약간 이런거 로망 있음_
 
-![241116-영수증](/drawing/241116-영수증.webp)
+![241116-영수증](/drawing/241116-영수증.webp){: .rounded-10 }
 _이게 그림이긴 할까_
 
-![241001-일상그림](/drawing/241001-일상그림.webp){: .light .border}
-![241001-일상그림](/drawing/241001-일상그림.webp){: .dark }
+![241001-일상그림](/drawing/241001-일상그림.webp){: .rounded-10 .light .border}
+![241001-일상그림](/drawing/241001-일상그림.webp){: .rounded-10 .dark }
 _일상 캐주얼_
 
 ## **항상 뭐 그릴지가 제일 고민임**
