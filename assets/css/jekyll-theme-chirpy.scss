@@ -71,17 +71,22 @@ h4 {
 /* endregion 텍스트 */
 
 /* region 정적인 모드 전환 */
-/*
-@media (hover: hover) {
-  .post-preview {
-    transition: none;
-  }
-}
-*/
-
-a:not(.site-title, .post-tag, a.btn, a.nav-link, .url-button, .page-link, .tag, .fab), div.btn, .post-preview, #toc-bar {
+a:not(.site-title, .post-tag, a.btn, a.nav-link, .url-button, .page-link, .tag, .fab, #toc-bar), div.btn, .post-preview {
   transition: none !important;
 }
+
+// html.mode-switching,
+// html.mode-switching *,
+// html.mode-switching *::before,
+// html.mode-switching *::after {
+//   transition: none !important;
+// }
+
+// @media (hover: hover) {
+//   .post-preview {
+//     transition: none;
+//   }
+// }
 /* endregion 정적인 모드 전환 */
 
 /* =============== */
