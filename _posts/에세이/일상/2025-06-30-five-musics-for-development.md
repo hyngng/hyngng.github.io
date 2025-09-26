@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-06-30 23:01:00 +0900
-last_modified_at: 2025-07-02 14:49:00 +0900
+last_modified_at: 2025-09-26 10:43:00 +0900
 
 mermaid: true
 ---
@@ -40,7 +40,7 @@ mermaid: true
 
 팝송 중에는 인지도가 높은 노래가 많고 멜로디와 비트가 명확해서인지 빠른 분위기 전환이 필요할 때 듣기 좋습니다. 각각 외국어를 어느정도씩은 알고 있지만 어디까지나 교양 수준이기 때문에 노래 가사를 알아들을 수 없다는 점도 팝송을 듣는 이유입니다. 단, 적지 않은 곡이 자극적이고 집중을 방해한다는 느낌은 있었습니다.
 
-더 소개할만한게 있다면, 의외로 JPOP도 팝송과 마찬가지로 멜로디 라인이 분명하고 임팩트가 있어 비슷한 용도로 활용하기 좋습니다. 특히 바운디의 [무희](https://www.youtube.com/watch?v=7HgJIAUtICU), [사랑 감기에 실려](https://www.youtube.com/watch?v=7HgJIAUtICU) 정도가 거부감 없이 듣기 좋았습니다.
+더 소개할만한게 있다면, 의외로 JPOP도 팝송과 마찬가지로 멜로디 라인이 분명하고 임팩트가 있어 비슷한 용도로 활용하기 좋습니다. 특히 바운디의 [무희(踊り子)](https://www.youtube.com/watch?v=7HgJIAUtICU), [사랑 감기에 실려(恋風邪にのせて)](https://www.youtube.com/watch?v=7HgJIAUtICU) 정도가 거부감 없이 듣기 좋았습니다.
 
 ## **영화 OST**
 
