@@ -106,7 +106,12 @@
   --inline-code-bg: rgb(255 255 255 / 5%);
   --code-color: #b0b0b0;
   --code-header-text-color: #6a6a6a;
-  --code-header-muted-color: #353535;
+  // region 수정됨
+  // --code-header-muted-color: #353535;
+  --code-header-muted-left-color: #EB6150;
+  --code-header-muted-middle-color: #F3B63B;
+  --code-header-muted-right-color: #54BB44;
+  // endregion 수정됨
   --code-header-icon-color: #565656;
   --clipboard-checked-color: #2bcc2b;
   --filepath-text-color: #cacaca;
