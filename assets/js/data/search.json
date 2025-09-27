@@ -15,10 +15,3 @@ swcache: true
   }{% unless forloop.last %},{% endunless %}
   {% endfor %}
 ]
-
-/*
-v7.3.0으로 넘어오면서 검색기능에 문제가 생겨서,
-
-- "content": "{{ description }}" 부분을
-- "content": {{ description | jsonify }} 이렇게 수정함.
-*/
