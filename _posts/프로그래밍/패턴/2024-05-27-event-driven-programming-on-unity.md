@@ -16,7 +16,7 @@ mermaid: true
 
 ## **들어가며**
 
-이벤트 주도적 프로그래밍(Event Driven Programming)은 프로그램의 흐름이 이벤트에 의해 결정되는 프로그래밍 패러다임으로, 이벤트의 발생, 관리, 실행을 주관하며 코드의 확장성을 높이고 가독성과 유지보수성을 관리하기 위해 사용합니다. [다른 게임 개발 과정](https://hyngng.github.io/posts/armonia-developing-first/)에서 많은 도움이 되어 앞으로도 유용하게 사용할 수 있을 것 같아 글로 정리합니다.
+이벤트 주도적 프로그래밍(Event Driven Programming)은 프로그램의 흐름이 이벤트에 의해 결정되는 프로그래밍 패러다임으로, 이벤트의 발생, 관리, 실행을 주관하며 코드의 확장성을 높이고 가독성과 유지보수성을 관리하기 위해 사용합니다. [다른 게임 개발 과정](https://hyngng.github.io/posts/armonia-first-devlog/)에서 많은 도움이 되어 앞으로도 유용하게 사용할 수 있을 것 같아 글로 정리합니다.
 
 ## **기본 개념**
 
@@ -193,4 +193,4 @@ public class ListenerObject : MonoBehaviour
 
 ![example](/2024-05-27-event-driven-programming/example.webp)
 
-[개발중인 게임](https://hyngng.github.io/posts/armonia-developing-first/)에 사용한 예시입니다. 특정 오브젝트를 선택하면 일부 상호작용 가능한 오브젝트가 노란색 계열로 표시되고, 해당 오브젝트를 선택 취소하면 다시 원래대로 돌아옵니다. 이벤트 주도적 프로그래밍을 통해 구현했습니다.
+[개발중인 게임](https://hyngng.github.io/posts/armonia-first-devlog/)에 사용한 예시입니다. 특정 오브젝트를 선택하면 일부 상호작용 가능한 오브젝트가 노란색 계열로 표시되고, 해당 오브젝트를 선택 취소하면 다시 원래대로 돌아옵니다. 이벤트 주도적 프로그래밍을 통해 구현했습니다.

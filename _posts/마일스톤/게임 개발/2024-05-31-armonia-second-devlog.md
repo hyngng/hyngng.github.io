@@ -83,7 +83,7 @@ _핀치 줌으로 설정창에 진입함, 아직 프로토타입임._
 ![people-staring-pigeons](/2024-05-31-armonia-second-devlog/people-staring-pigeons.webp){: .w-75 }
 _근처에 비둘기 있으면 한 번씩 쳐다봄_
 
-[이전 마일스톤](https://hyngng.github.io/posts/palette-developing/)을 만들면서 절차적 애니메이션을 이용해 환경과 상호작용하는 유기적인 애니메이션을 만드는 것을 보고 정말 멋지다고 생각한 적이 있어서 잘 기억해두고 있다가 이번에 시도해봤습니다. 기술적으로 정교한 조건을 두어 구현하는 것인 줄 알았는데 유니티 패키지로 제공되기 때문에 생각보다 쉬웠고, 다만 코드로 제어하는 것이 생각보다 복잡했습니다.
+[이전 마일스톤](https://hyngng.github.io/posts/palette-second-devlog/)을 만들면서 절차적 애니메이션을 이용해 환경과 상호작용하는 유기적인 애니메이션을 만드는 것을 보고 정말 멋지다고 생각한 적이 있어서 잘 기억해두고 있다가 이번에 시도해봤습니다. 기술적으로 정교한 조건을 두어 구현하는 것인 줄 알았는데 유니티 패키지로 제공되기 때문에 생각보다 쉬웠고, 다만 코드로 제어하는 것이 생각보다 복잡했습니다.
 
 비둘기와 달리 사람은 머리, 몸, 다리 등이 개별 오브젝트로 독립적으로 나뉘어져 있어 [Animation Rigging 패키지](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/index.html)의 `Multiple Aim Constraint` 컴포넌트를 이용해 사람의 머리 오브젝트가 일정 거리 내에서 비둘기를 향해 쳐다보는 기능을 시도삼아 구현했습니다.
 

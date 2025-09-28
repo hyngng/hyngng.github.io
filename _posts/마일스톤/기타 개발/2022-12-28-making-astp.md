@@ -128,7 +128,7 @@ UI 구성이 없는 단순 파이썬 프로그램이기 때문에 명령 프롬�
 - 한국투자증권이 제공하는 서비스를 이용하기 위해 프로그램 외적으로 사전작업이 두 가지 필요합니다.
     1. 한국투자증권 계좌를 개설하고 [OpenAPI](https://apiportal.koreainvestment.com/intro)를 신청해야 합니다. 신청 페이지에서 `key`와 `secret`을 발급받아 해당 값을 가상 계좌번호와 함께 프로젝트 내 `mock.key`{: .filepath }에 저장하여 사용하기 위함입니다.
     2. 주문 송수신이나 잔고조회 등을 처리하기 위해 한국투자증권이 제공하는 [eFriend Expert](https://www.truefriend.com/main/customer/systemdown/OpenAPI.jsp?cmd=TF04ea01200) 프로그램을 설치해야 합니다.
--  이외에 공동인증서 모듈이 64bit 환경을 미지원하는 이슈가 있기 때문에 불편하더라도 [32bit 가상환경](https://hyngng.github.io/posts/32bit/)을 임의적으로 구축하고, 구축된 가상환경 위에서 코드를 실행해야 합니다.
+-  이외에 공동인증서 모듈이 64bit 환경을 미지원하는 이슈가 있기 때문에 불편하더라도 [32bit 가상환경](https://hyngng.github.io/posts/virtual-32bit/)을 임의적으로 구축하고, 구축된 가상환경 위에서 코드를 실행해야 합니다.
 
 ## **마치며**
 

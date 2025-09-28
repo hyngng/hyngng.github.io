@@ -121,7 +121,7 @@ public void Vibrate()
 }
 ```
 
-[이전 프로젝트](https://hyngng.github.io/posts/armonia-developing-second/)에서 위와 같이 사용한 적이 있습니다. 플레이어가 특정 오브젝트를 터치하면 해당 오브젝트가 활성화되며 `MainManager`의 `ActivatedObject` 자리에 등록되는 방식인데, 만족스럽게 잘 작동했습니다.
+[이전 프로젝트](https://hyngng.github.io/posts/armonia-second-devlog/)에서 위와 같이 사용한 적이 있습니다. 플레이어가 특정 오브젝트를 터치하면 해당 오브젝트가 활성화되며 `MainManager`의 `ActivatedObject` 자리에 등록되는 방식인데, 만족스럽게 잘 작동했습니다.
 
 > **2025-07-28 추가됨!**
 {: .prompt-info }
