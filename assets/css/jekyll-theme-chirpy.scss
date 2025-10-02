@@ -75,6 +75,11 @@ h4 {
 //   transition: none !important;
 // }
 
+// 포스트 미리보기
+a.post-preview {
+  transition: none !important;
+}
+
 // 모바일 환경의 목차
 div:not(#toc-bar) {
   transition: none !important;
