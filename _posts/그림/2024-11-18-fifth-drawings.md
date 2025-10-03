@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAQCdASoQAAgAAUAmJYwAAv+/8OsuAAD+/xM/7Sq+LkyGnTkU29x/vy/D6FYmTGl52h8nvE6sE3eZj2hbsAjc4Uho6KsHwQkTsCfwAEEthUGm2LT3wM5L2t70AAAA
     alt: "등교중"
 
-title: "디지털 드로잉 #5 - 캐주얼 판타지"
+title: "디지털 드로잉 #5 - 캐주얼 판타지 등등"
 
 categories: [그림]
 tags: [그림, 신문, 총, 일상, 영수증]
