@@ -14,7 +14,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-09-25 15:08:00 +0900
-last_modified_at: 2025-10-01 13:45:00 +0900
+last_modified_at: 2025-10-03 15:54:00 +0900
 ---
 
 ## **알베르 카뮈의 부조리 철학**
@@ -67,7 +67,7 @@ Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-mêm
 
 이 긴장 상황은 서경파의 이름으로 계획되지 않은 반란이 일어나고 [진압당하면서](https://db.history.go.kr/goryeo/level.do?levelId=kr_016r_0080_0020_0030&types=r) 종료됐다. 결과적으로 고려의 주도권은 개경의 정치세력이 가져가게 되었고, 권력균형은 붕괴되었으며 서경의 지위 또한 격하되었다. 우리가 오늘날 잘 알고 있는 실리적 사대주의와 유교적 보수주의, 삼한 계승 의식과 같은 사상 또한 이 때 경쟁자가 소멸하며 공고화된 것이다.
 
-## **두 사상에 대한 개인적인 해석**
+## **두 사상에 대한 개인적 평가**
 
 {% comment %}
 깊이가 얕아서, 사례를 들어 내용을 보강하거나 해야 함.
