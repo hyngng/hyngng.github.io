@@ -81,9 +81,9 @@ a.post-preview {
 }
 
 // 모바일 환경의 목차
-div:not(#toc-bar) {
-  transition: none !important;
-}
+// div:not(#toc-bar, .main-wrapper) {
+//   transition: none !important;
+// }
 
 div.sidebar-bottom a {
   transition: none !important;
