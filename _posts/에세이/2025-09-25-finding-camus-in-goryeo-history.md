@@ -2,7 +2,7 @@
 image:
     path: /2025-09-25-finding-camus-in-goryeo-history/preview-image.webp
     lqip: data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAQCdASoQAAgAAUAmJaQAD4APqXZfe8gA/vnuHyePotTeHd7ozjQUTReIqYKnV9aET/a2cdNr9ze7wcqo/0tsT8ACEvu4Tf316rtF+00X9HmGfG0bWacphR/lb3KMirEAAAAA
-    alt: "1944년, 프랑스 파리의 알베르 카뮈"
+    alt: "1944년, 프랑스 파리. 카뮈를 소개할 땐 주로 이 사진이 인용된다."
 
 title: "카뮈의 시선으로 바라본 12세기 고려의 외교노선"
 
@@ -14,7 +14,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-09-25 15:08:00 +0900
-last_modified_at: 2025-10-09 15:45:00 +0900
+last_modified_at: 2025-10-10 16:18:00 +0900
 ---
 
 ## **알베르 카뮈의 부조리 철학**
