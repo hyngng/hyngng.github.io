@@ -19,16 +19,16 @@ last_modified_at: 2025-10-10 16:18:00 +0900
 
 ## **알베르 카뮈의 부조리 철학**
 
-{% comment %}
-Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-même n’est pas raisonnable, c’est tout ce qu’on peut en dire. Mais ce qui est absurde, c’est la confrontation de cet irrationnel et de ce désir éperdu de clarté dont l’appel résonne au plus profond de l’homme. L’absurde dépend autant de l’homme que du monde. Il est pour le moment leur seul lien.
-> 앞에서 나는 이 세계가 부조리한 것이라고 말했는데 그것은 지나치게 성급한 말이었다. 그 자체로 놓고 볼 때 이 세계는 합리적인 것이 아니다. 이것이 우리가 말할 수 있는 전부다. 그러나 부조리한 것은 바로 이 비합리와, 명확함에 이르려는 필사적인 열망과의 맞대면인 것이다.
-{% endcomment %}
-
 20세기 프랑스를 대표하는 작가이자 실존주의 사상가인 알베르 카뮈는 "삶이 살 만한 가치가 있는가"라는 근원적인 질문에서부터 그의 철학을 시작한다. 그가 발견한 것은, 의미를 찾으려는 인간의 열망과 그에 침묵하는 비합리적인 세계 사이의 피할 수 없는 대립이다. 근본적으로 불안정한 관계 속에서 인간은 명료한 인식관을 위해 어떤 사실은 받아들이고 어떤 사실은 애써 외면한다. 이런 심리작용은 본능적인 것으로 자연스러운 것이지만, 언젠가 외면했던 것들을 직면하는 순간 큰 혼란과 충격을 경험하게 되는데 이것이 부조리다.
 
 부조리함은 삶의 의미를 제시하기 위해 고안된 개념이지만 인간의 열망과 세계의 침묵의 대립은 결국 인식적 충격으로 마무리된다는 점을 발견할 수 있다. 그 덕에 생각보다 많은 상황에서 부조리함을 연상할 수 있는데, 예를 들어 인간 이성의 정수인 과학조차 언제든 뒤집힐 수 있는 가장 합리적인 가설의 집합체에 불과하다는 점을 깨닫고 나면 부조리하게 다가올 수 있다.
 
 그의 철학에 의하면 부조리를 마주한 인간이 선택할 수 있는 대응은 부정, 회피, 대면 세 가지 형태로 나타난다. 부조리를 부정하거나 회피하는 것은 도피적인 태도로 현실에 순응하는 것인데, 보다 직설적으로 말하면 종교에의 귀의나 육체적 자살이다. 반면 대면이란 그것을 삶의 일부로 인정하면서도 운명에 굴복하지 않고 맞서는 반항적 태도로서, 이것이야말로 카뮈가 바람직하다고 여기는 삶의 방식이다.
+
+{% comment %}
+Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-même n’est pas raisonnable, c’est tout ce qu’on peut en dire. Mais ce qui est absurde, c’est la confrontation de cet irrationnel et de ce désir éperdu de clarté dont l’appel résonne au plus profond de l’homme. L’absurde dépend autant de l’homme que du monde. Il est pour le moment leur seul lien.
+> 앞에서 나는 이 세계가 부조리한 것이라고 말했는데 그것은 지나치게 성급한 말이었다. 그 자체로 놓고 볼 때 이 세계는 합리적인 것이 아니다. 이것이 우리가 말할 수 있는 전부다. 그러나 부조리한 것은 바로 이 비합리와, 명확함에 이르려는 필사적인 열망과의 맞대면인 것이다.
+{% endcomment %}
 
 ## **금나라 건국과 고려의 동요**
 
