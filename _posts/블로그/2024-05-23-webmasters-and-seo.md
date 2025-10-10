@@ -36,7 +36,7 @@ _대표적인 웹마스터도구, 구글 서치 콘솔_
 ### **네이버 서치어드바이저**
 
 - 네이버 서치어드바이저의 경우 아톰(Atom) 유형의 피드를 제출할 수 없기 때문에 RSS 피드를 따로 만들어 등록해주어야 합니다. 작성된 파일 예시는 [제 깃허브](https://github.com/hyngng/hyngng.github.io/blob/main/assets/rss.xml)에서, 제 블로그에서의 예시 동작은 [이곳](https://hyngng.github.io/rss.xml)에서 확인해볼 수 있습니다.
-- 빙과 마찬가지로 [IndexNow](https://www.indexnow.org/ko_kr/index)를 지원합니다.
+- [IndexNow](https://www.indexnow.org/ko_kr/index)를 지원하기 때문에 크롤링 요청을 자동화할 수 있습니다.
 
 ### **다음 웹마스터도구**
 
