@@ -11,6 +11,8 @@
 
 /* append your custom style below */
 
+
+
 /* =============== */
 /*     덮어쓰기     */
 /* =============== */
@@ -71,19 +73,11 @@ h4 {
 /* endregion 텍스트 */
 
 /* region 정적인 모드 전환 */
-// a:not(.site-title, .post-tag), a.post-preview {
-//   transition: none !important;
-// }
 
 // 포스트 미리보기
 a.post-preview {
   transition: none !important;
 }
-
-// 모바일 환경의 목차
-// div:not(#toc-bar, .main-wrapper) {
-//   transition: none !important;
-// }
 
 div.sidebar-bottom a {
   transition: none !important;
@@ -104,21 +98,9 @@ li.page-item.active a {
   transition: none !important;
 }
 
-// 홈페이지의 포스트 태그
-// a.post-tag {
-//   transition: none !important;
-// }
-
-// a:not(.site-title, .post-tag, a.btn, .nav-link, .url-button, .tag, .fab, #toc-bar), .post-preview, .nav-item.active, .nav.page-item.active {
-//   transition: none !important;
-// }
-
-// @media (hover: hover) {
-//   .post-preview {
-//     transition: none;
-//   }
-// }
 /* endregion 정적인 모드 전환 */
+
+
 
 /* =============== */
 /* 새로 만들어 쓰기 */
@@ -127,3 +109,21 @@ li.page-item.active a {
 .post-title, .sidebar-title, .related-post-title {
   font-weight: bold;
 }
+
+/* =============== */
+/*     아카이브     */
+/* =============== */
+
+// a:not(.site-title, .post-tag), a.post-preview {
+//   transition: none !important;
+// }
+
+// 홈페이지의 포스트 태그
+// a.post-tag {
+//   transition: none !important;
+// }
+
+// 모바일 환경의 목차
+// div:not(#toc-bar, .main-wrapper) {
+//   transition: none !important;
+// }
