@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACwAQCdASoQAAgAAgA0JaQAAtz+deMAAP7+fCmBZZn3+/ZORq9T+vedgOywrM/PuK61PMAYYBLZKgAA
     alt: 사람 거꾸로 매달기
 
-title: "디지털 드로잉 #3 - 그림 형식을 바꿔보자"
+title: "디지털 드로잉 #3: 그림 형식을 바꿔보자"
 
 categories: [그림]
 tags: [그림, 드로잉, 기지개, 어안렌즈, 폰카]
