@@ -18,7 +18,7 @@ last_modified_at: 2025-10-13 17:43:00 +0900
 
 ## **2024년에 AKG**
 
-역사의 뒤안길로 사라진 줄로만 알았던 AKG가 신제품을 발표했습니다. 올초 [iF 디자인 어워드](https://ifdesign.com/en/winner-ranking/project/akg-n5-hybrid/634726)에서 출시되지도 않은 제품이 AKG N5 하이브리드라는 이름으로 디자인 상을 수상한 것을 시작으로 서서히 존재감을 알리더니 7월 초  AKG의 새 제품이 출시됐습니다.
+역사 속으로 사라진 줄로만 알았던 AKG가 신제품을 발표했습니다. 올초 [iF 디자인 어워드](https://ifdesign.com/en/winner-ranking/project/akg-n5-hybrid/634726)에서 출시되지도 않은 제품이 AKG N5 하이브리드라는 이름으로 디자인 상을 수상한 것을 시작으로 서서히 존재감을 알리더니 7월 초 헤드폰과 함께 AKG의 새 무선이어폰이 출시됐습니다.
 
 {% comment %}
 5월경에는 홍콩, 일본 등의 해외시장에, 한국 시장에
