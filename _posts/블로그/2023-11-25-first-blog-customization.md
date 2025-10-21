@@ -10,9 +10,6 @@ toc_sticky: true
 
 date: 2023-11-25 23:24:00 +0900
 last_modified_at: 2025-10-15 09:22:00 +0900
-
-# redirect_from:
-#   - /posts/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%83%88%EB%8B%A8%EC%9E%A5/
 ---
 
 ## **들어가며**

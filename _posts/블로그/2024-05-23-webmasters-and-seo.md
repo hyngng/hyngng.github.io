@@ -2,14 +2,14 @@
 title: 깃허브 블로그 웹마스터도구 등록하고 SEO 최적화하기
 
 categories: [블로그]
-tags: [블로그, 웹마스터도구, SEO 최적화]
+tags: [블로그, 웹마스터도구, SEO]
 start_with_ads: true
 
 toc: true
 toc_sticky: true
 
-date: '2024-05-23 11:53:00 +0900'
-last_modified_at: '2025-10-10 16:26:00 +0900'
+date: 2024-05-23 11:53:00 +0900
+last_modified_at: 2025-10-10 16:26:00 +0900
 
 mermaid: true
 ---
