@@ -1,5 +1,5 @@
 ---
-title: "3년차 블로그 중간 점검과 글쓰기 신념"
+title: "3년차 블로그 회고와 나의 글쓰기 원칙"
 
 categories: [블로그]
 tags: [블로그, 웹마스터도구, 글쓰기, SEO, Chirpy]
@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-10-21 11:06:00 +0900
-last_modified_at: 2025-10-21 14:05:00 +0900
+last_modified_at: 2025-10-21 17:06:00 +0900
 
 mermaid: true
 ---
