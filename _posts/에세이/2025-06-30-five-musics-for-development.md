@@ -1,7 +1,7 @@
 ---
 title: "생산성이 필요할 때 듣는 노래 유형 4선"
 
-categories: [에세이, 일상]
+categories: [에세이]
 tags: [프로그래밍, 개발, 노래]
 start_with_ads: true
 

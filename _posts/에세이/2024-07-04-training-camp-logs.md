@@ -1,7 +1,7 @@
 ---
 title: "2024년 논산훈련소 보충역 3주과정 수료일지"
 
-categories: [에세이, 일상]
+categories: [에세이]
 tags: [에세이, 일상, 훈련소 일지]
 start_with_ads: true
 
