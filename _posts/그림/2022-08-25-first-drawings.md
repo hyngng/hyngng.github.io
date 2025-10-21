@@ -28,7 +28,7 @@ _고등학생 때 낙서 1_
 ![200000-세탁기](/drawing/200000-세탁기.webp){: .rounded-10 .dark }
 _고등학생 때 낙서 2_
 
-![231214-사자남자](/drawing/231214-사자남자.webp)
+![231214-사자남자](/drawing/231214-사자남자.webp){: .rounded-10 }
 _고등학생 때 낙서 3_
 
 ![200000-헨젤과그레텔](/drawing/200000-헨젤과그레텔.webp){: .rounded-10 .light .border }
@@ -43,13 +43,29 @@ _인터넷 그림 모작_
 ![220825-동물구닌](/drawing/220825-동물구닌.webp){: .rounded-10 .dark }
 _모작 하면서 같이 그린 그림_
 
+![200000-돌다리](/drawing/200000-돌다리.webp){: .rounded-10 .light .border }
+![200000-돌다리](/drawing/200000-돌다리.webp){: .rounded-10 .dark }
+_고등학생 때 낙서 4_
+
 ![231214-셔츠여자](/drawing/231214-셔츠여자.webp){: .rounded-10 .light .border }
 ![231214-셔츠여자](/drawing/231214-셔츠여자.webp){: .rounded-10 .dark }
-_고등학생 때 낙서 4_
+_고등학생 때 낙서 5_
+
+![200000-신궁](/drawing/200000-신궁.webp){: .rounded-10 .light .border }
+![200000-신궁](/drawing/200000-신궁.webp){: .rounded-10 .dark }
+_고등학생 때 낙서 6_
 
 ![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .rounded-10 .light .border }
 ![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .rounded-10 .dark }
-_고등학생 때 낙서 5_
+_고등학생 때 낙서 7_
+
+![210000-물속남자](/drawing/210000-물속남자.webp){: .rounded-10 .light .border }
+![210000-물속남자](/drawing/210000-물속남자.webp){: .rounded-10 .dark }
+_고등학생 때 그리다 만거 1_
+
+![210000-드루이드](/drawing/210000-드루이드.webp){: .rounded-10 .light .border }
+![210000-드루이드](/drawing/210000-드루이드.webp){: .rounded-10 .dark }
+_고등학생 때 그리다 만거 2_
 
 ![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .light .border }
 ![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .dark }

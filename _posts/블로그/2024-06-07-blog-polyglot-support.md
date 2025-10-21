@@ -2,7 +2,7 @@
 title: "깃허브 블로그에 다국어 지원 추가하기"
 
 categories: [블로그]
-tags: [블로그, 다국어, jekyll, jekyll-polyglot]
+tags: [블로그, 다국어, jekyll-polyglot]
 start_with_ads: true
 
 toc: true
