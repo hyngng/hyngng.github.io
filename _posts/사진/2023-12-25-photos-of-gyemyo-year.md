@@ -15,6 +15,9 @@ toc_sticky: true
  
 date: 2023-12-25 21:35:00 +0900
 last_modified_at: 2025-04-16 14:57:00 +0900
+
+redirect_from:
+  - /posts/photos-of-gyemyo/
 ---
 
 ![20230117_205758](/photo/20230117_205758.webp){: .rounded-10 }

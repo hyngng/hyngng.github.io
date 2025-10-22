@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-10-21 11:06:00 +0900
-last_modified_at: 2025-10-22 14:50:00 +0900
+last_modified_at: 2025-10-22 21:28:00 +0900
 
 mermaid: true
 ---
@@ -69,7 +69,7 @@ _빙 웹마스터도구의 페이지뷰 사이트_
 
 이미 [한 차례 관련 글](https://hyngng.github.io/posts/webmasters-and-seo/)을 작성한 적이 있어서 후일담 정도로 읽어주시면 좋을 것 같습니다. 먼저, 웹마스터도구를 다룰 때에는 끈기를 가져야 했습니다. 정말, 큰 끈기를 가져야 했습니다. 특히 구글 서치 콘솔은 등록 후 정상적인 검색노출까지 반 년가량 걸릴 수 있으며, 충분한 시간이 지났다고 하더라도 페이지 권위가 낮다면 크롤러 동작이 꽤 저하될 수 있습니다. 제 인상이 정확하지 않을 수도 있지만 검색 엔진 최적화가 얼마나 수준높게 구현됐는지보다는 도메인 권위가 색인 생성에 있어 매우 중요하다는 느낌을 받았습니다.
 
-빙에서는 색인이 갑자기 취소되는 일이 있었습니다. 정확히는 빙에서 관리하는 사이트의 상태 분류는 빙의 번역어를 빌려 '인덱싱된', '오류', '경고', '제외'로 정리되는데, 모든 페이지가 '제외'로 옮겨졌고 제 블로그가 빙 검색결과에서 지워졌습니다. 사이트 호스팅이나 robots.txt 등 페이지 자체적인 문제가 없었기 때문에 8월 13일 [이곳에서 지원 팀에 문의를 넣었고](https://www.bing.com/webmasters/support) 8월 30일에 _"We have reviewed your site and sent it to our Product Review group for further assessment."_, 10월 3일에 _"I am happy to inform you that the issue related to your site has been resolved"_ 라고 답변 메일을 받았습니다. 한 달 반 정도가 걸렸지만 색인은 다시 거의 복구가 되었고, 지금은 검색노출이 잘 이루어지고 있습니다.
+빙에서는 색인이 갑자기 취소되는 일이 있었습니다. 정확히는 빙에서 관리하는 사이트의 상태 분류는 빙의 번역어를 빌려 '인덱싱된', '오류', '경고', '제외'로 정리되는데, 모든 페이지가 '제외'로 옮겨졌고 제 블로그가 빙 검색결과에서 지워졌습니다. 사이트 호스팅이나 robots.txt 등 페이지 자체적인 문제가 없었기 때문에 8월 13일 [빙 웹마스터도구 지원 팀에 문의를 넣었고](https://www.bing.com/webmasters/support) 8월 30일에 _"We have reviewed your site and sent it to our Product Review group for further assessment."_, 10월 3일에 _"I am happy to inform you that the issue related to your site has been resolved"_ 라고 답변 메일을 받았습니다. 한 달 반 정도가 걸렸지만 색인은 다시 거의 복구가 되었고, 지금은 검색노출이 잘 이루어지고 있습니다.
 
 ## **개인적인 글쓰기 원칙**
 

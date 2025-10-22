@@ -15,6 +15,9 @@ toc_sticky: true
  
 date: 2022-12-31 14:53:00 +0900
 last_modified_at: 2025-10-21 17:10:00 +0900
+
+redirect_from:
+  - /posts/photos-of-imin/
 ---
 
 ![20220412_122835](/photo/20220412_122835.webp){: .rounded-10 }
