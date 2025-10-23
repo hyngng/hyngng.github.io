@@ -47,12 +47,12 @@ not_found:
 
 notification:
   update_found: 새 버전의 콘텐츠를 사용할 수 있습니다.
-  update: 업데이트
+  update: 불러오기
 
 # ----- Posts related labels -----
 
 post:
-  written_by: "작성자: "
+  written_by: "글쓴이: "
   posted: "게시 날짜:"
   updated: "최종 업데이트:"
   words: 자
