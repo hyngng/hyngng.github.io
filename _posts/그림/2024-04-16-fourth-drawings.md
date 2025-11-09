@@ -15,6 +15,9 @@ toc_sticky: true
  
 date: 2024-05-16 13:53:00 +0900
 last_modified_at: 2024-05-16 13:53:00 +0900
+
+redirect_from:
+  - /posts/fourth-drawing/
 ---
 
 ![240128-로봇야자](/drawing/240128-로봇야자.webp){: .rounded-10 }
