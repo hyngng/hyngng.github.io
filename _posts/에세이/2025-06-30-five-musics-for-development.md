@@ -42,6 +42,12 @@ mermaid: true
 
 더 소개할만한게 있다면, 의외로 JPOP도 팝송과 마찬가지로 멜로디 라인이 분명하고 임팩트가 있어 비슷한 용도로 활용하기 좋습니다. 특히 바운디의 [무희(踊り子)](https://www.youtube.com/watch?v=7HgJIAUtICU), [사랑 감기에 실려(恋風邪にのせて)](https://www.youtube.com/watch?v=7HgJIAUtICU) 정도가 거부감 없이 듣기 좋았습니다.
 
+{% comment %}
+주로 다음을 듣습니다.
+
+- Until I Found You (Stephen Sanchez)
+{% endcomment %}
+
 ## **영화 OST**
 
 {% include embed/youtube.html id='litQNblifPg' %}
