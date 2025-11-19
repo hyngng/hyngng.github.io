@@ -70,7 +70,7 @@ Liquid::Template.register_filter(Jekyll::RemoveTagFilter)
   {{- post.description -}}
 {%- else -%}
   ...
-  {{- content | markdownify | remove_tag: 'h2', 'em', 'blockquote', 'pre' | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines -}}
+  {{- content | markdownify | remove_tag: 'h2', 'h3', 'em', 'blockquote', 'pre' | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines -}}
   ...
 {%- endif -%}
 ```
@@ -80,7 +80,7 @@ Liquid::Template.register_filter(Jekyll::RemoveTagFilter)
 > 검색 결과 텍스트를 담당하는 `assets/js/data/search.json`{: .filepath } 파일에도 비슷한 처리를 해줄 수 있습니다.
 {: .prompt-tip }
 
-Ruby나 Liquid에 대해서는 배경지식이 없어 방법을 알아내느라 조금 고생했습니다. `split` 또는 `join` 등 Liquid만으로 해결하려고 했는데 원하는 결과물을 만들기 힘들어 GPT의 도움을 받았고,`_plugins/remove-tags.rb`{: .filepath } 경로로 Ruby 파일을 만들어 이용하는 식으로 해결했습니다. Ruby 파일에는 태그 유형을 매개변수로 받아 내부 텍스트를 정규 표현식으로 제거하는 함수를 만들었습니다. `Nokogiri`라는 파싱 라이브러리를 이용했고, Liquid 파일에서 `remove_tag: 'h2', 'em', 'blockquote'`와 같이 사용합니다.
+Ruby나 Liquid에 대해서는 배경지식이 없어 방법을 알아내느라 조금 고생했습니다. `split` 또는 `join` 등 Liquid만으로 해결하려고 했는데 원하는 결과물을 만들기 힘들어 GPT의 도움을 받았고,`_plugins/remove-tags.rb`{: .filepath } 경로로 Ruby 파일을 만들어 이용하는 식으로 해결했습니다. Ruby 파일에는 태그 유형을 매개변수로 받아 내부 텍스트를 정규 표현식으로 제거하는 함수를 만들었습니다. `Nokogiri`라는 파싱 라이브러리를 이용했고, Liquid 파일에서 `remove_tag: 'h2', 'h3', 'em', 'blockquote'`와 같이 사용합니다.
 
 > 2025-10-20 수정!
 {: .prompt-info }
@@ -92,7 +92,7 @@ Chirpy 버전이 `v7.4.0`으로 업데이트되면서 `post-description.html`{: 
   ...
   {%- assign content = content
     | markdownify
-    | remove_tag: 'h2', 'em', 'blockquote', 'pre'
+    | remove_tag: 'h2', 'h3', 'em', 'blockquote', 'pre'
     | strip_html
     | newline_to_br
     | replace: '<br />', ' '

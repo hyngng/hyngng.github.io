@@ -24,7 +24,7 @@
   {% comment %} region 수정됨 {% endcomment %}
   {%- assign content = content
     | markdownify
-    | remove_tag: 'h2', 'em', 'blockquote', 'pre'
+    | remove_tag: 'h2', 'h3', 'em', 'blockquote', 'pre'
     | strip_html
     | newline_to_br
     | replace: '<br />', ' '
