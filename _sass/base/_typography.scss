@@ -227,13 +227,6 @@ main {
 
 /* it will be created by Liquid */
 .table-wrapper {
-  /* region 수정됨 */
-  display: block;
-  width: fit-content;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  /* endregion 수정됨 */
   overflow-x: auto;
   margin-bottom: 1.5rem;
 

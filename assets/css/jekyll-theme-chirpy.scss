@@ -127,3 +127,7 @@ li.page-item.active a {
 // div:not(#toc-bar, .main-wrapper) {
 //   transition: none !important;
 // }
+
+.table-wrapper > table {
+  margin: 0 auto;
+}
