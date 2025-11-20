@@ -66,16 +66,3 @@ mermaid: true
 
 6월 안에 겨우겨우 글 하나 또 올림.
 {% endcomment %}
-
-
-{
-    “title”: string
-    “description”: string
-    "property": {
-        “isDisposableEvent”: bool
-        “isPositiveEvent”: bool
-    }
-    “baseSuccessProbability”: int
-    “effectiveness”: int
-    "soundEffect": Audio
-}
