@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAgAAgA0JaQAD4WwKYuRsAAA/v58LC1cLESP9ztg6FTwgeVVOIMR19dwzrRkt/f6yWyrN/pF2btgTAAAAA==
     alt: 포스트 아포칼립스
 
-title: "디지털 드로잉 #1: 고등학생 때 낙서 위주 정리"
+title: "디지털 드로잉 #1: 고등학생 때 낙서 위주의 정리"
 
 categories: [그림]
 tags: [그림, 드로잉, 사람, 총, 우비, 상자]
@@ -59,13 +59,16 @@ last_modified_at: 2022-08-25 14:38:00 +0900
 ![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .rounded-10 .dark }
 *고등학생 때 낙서 7*
 
+![200000-겨울소년](/drawing/200000-겨울소년.webp){: .rounded-10 }
+*그때 그리다 만거 1*
+
 ![210000-물속남자](/drawing/210000-물속남자.webp){: .rounded-10 .light .border }
 ![210000-물속남자](/drawing/210000-물속남자.webp){: .rounded-10 .dark }
-*고등학생 때 그리다 만거 1*
+*그때 그리다 만거 2*
 
 ![210000-드루이드](/drawing/210000-드루이드.webp){: .rounded-10 .light .border }
 ![210000-드루이드](/drawing/210000-드루이드.webp){: .rounded-10 .dark }
-*고등학생 때 그리다 만거 2*
+*그때 그리다 만거 3*
 
 ![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .light .border }
 ![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .dark }

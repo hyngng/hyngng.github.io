@@ -23,7 +23,7 @@ last_modified_at: 2025-10-10 16:41:00 +0900
 
 부조리함은 삶의 의미를 제시하기 위해 고안된 개념이지만 인간의 열망과 세계의 침묵간의 대립은 결국 인식적 충격으로 마무리된다는 점을 발견할 수 있다. 그 덕에 생각보다 많은 상황에서 부조리함을 연상할 수 있는데, 예를 들어 인간 이성의 정수인 과학조차 언제든 뒤집힐 수 있는 가장 합리적인 가설의 집합체에 불과하다는 점을 깨닫고 나면 부조리하게 다가올 수 있다.
 
-그의 철학에 의하면 부조리를 마주한 인간이 선택할 수 있는 대응은 부정, 회피, 대면 세 가지 형태로 나타난다. 부조리를 부정하거나 회피하는 것은 도피적인 태도로 현실에 순응하는 것인데, 보다 직설적으로 말하면 종교에의 귀의나 육체적 자살이다. 반면 대면이란 그것을 삶의 일부로 인정하면서도 운명에 굴복하지 않고 맞서는 반항적 태도로서, 이것이야말로 카뮈가 바람직하다고 여기는 삶의 방식이다.
+그의 철학에 의하면 부조리를 마주한 인간이 선택할 수 있는 대응은 부정, 회피, 대면 세 가지 형태로 나타난다. 부조리를 부정하거나 회피하는 것은 도피적인 태도로 현실에 순응하는 것인데, 보다 직설적으로 말하면 종교에의 귀의나 육체적 자살이다. 반면 대면이란 그것을 삶의 일부러 인정하면서도 운명에 굴복하지 않고 맞서는 반항적 태도로서, 이것이야말로 카뮈가 바람직하다고 여기는 삶의 방식이다.
 
 {% comment %}
 Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-même n’est pas raisonnable, c’est tout ce qu’on peut en dire. Mais ce qui est absurde, c’est la confrontation de cet irrationnel et de ce désir éperdu de clarté dont l’appel résonne au plus profond de l’homme. L’absurde dépend autant de l’homme que du monde. Il est pour le moment leur seul lien.
