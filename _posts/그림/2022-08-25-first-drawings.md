@@ -14,7 +14,7 @@ toc: false
 toc_sticky: true
  
 date: 2022-08-25 14:38:00 +0900
-last_modified_at: 2022-08-25 14:38:00 +0900
+last_modified_at: 2025-11-26 12:21:00 +0900
 ---
 
 ![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .light .border }
@@ -60,15 +60,15 @@ last_modified_at: 2022-08-25 14:38:00 +0900
 *고등학생 때 낙서 7*
 
 ![200000-겨울소년](/drawing/200000-겨울소년.webp){: .rounded-10 }
-*그때 그리다 만거 1*
+*옛날에 그리다 만거 1*
 
 ![210000-물속남자](/drawing/210000-물속남자.webp){: .rounded-10 .light .border }
 ![210000-물속남자](/drawing/210000-물속남자.webp){: .rounded-10 .dark }
-*그때 그리다 만거 2*
+*옛날에 그리다 만거 2*
 
 ![210000-드루이드](/drawing/210000-드루이드.webp){: .rounded-10 .light .border }
 ![210000-드루이드](/drawing/210000-드루이드.webp){: .rounded-10 .dark }
-*그때 그리다 만거 3*
+*옛날에 그리다 만거 3*
 
 ![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .light .border }
 ![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .dark }
