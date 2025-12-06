@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-02-17 16:42:00 +0900
-last_modified_at: 2025-02-17 16:42:00 +0900
+last_modified_at: 2025-12-06 10:53:00 +0900
 ---
 
 ## **매직 메서드란**
@@ -98,3 +98,23 @@ class Example():
 ```
 
 이러한 특성 덕에 외부 라이브러리 등 외부 객체에 대해 `dir()`를 통해 객체가 지원하는 매직 메서드 종류를 파악하거나, `if '__add__' in dir(obj)`와 같은 식으로 객체가 특정 연산을 지원하는지에 따라 동작을 다르게 구분하는 식으로 활용할 수 있습니다.
+
+## **매직 메서드 활용 예시**
+
+간이 델리게이트를 만들 때 사용할 수 있습니다. 파이썬에서 델리게이트 체인 자체는 리스트에 함수를 추가하는 것이 더 간소하고 권장되기는 하지만, 개인적으로는 뭔지 모를 불편함이 계속 느껴집니다.
+
+```python
+class RaiseEvent():
+    def __init__(self):
+        self._handlers = []
+
+    def __iadd__(self, function):
+        self._handlers.append(function)
+        return self
+
+    def __call__(self, *args, **kwargs):
+        for function in self._handlers:
+            function(*args, **kwargs)
+```
+
+위와 같은 클래스를 작성해두는 것으로 `+=` 연산자로 함수를 추가할 수 있고, C#과 비슷하게 `raise_event += function`의 익숙한 형태로 사용할 수 있게 됩니다. 프로젝트 규모가 커질 경우 위와 같이 커스텀 클래스를 사전에 작성해두는 것이 장기적으로는 가독성에서 이점이 있는 것 같습니다.
