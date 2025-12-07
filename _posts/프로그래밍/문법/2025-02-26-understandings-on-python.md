@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-03-17 15:25:00 +0900
-last_modified_at: 2025-12-06 10:41:00 +0900
+last_modified_at: 2025-12-07 10:42:00 +0900
 ---
 
 ## **클래스 내외부 변수를 구분할 필요가 있다**
@@ -75,7 +75,7 @@ myproject/
 
 ```python
 def main():
-    ''' 보석 세공 장인을 주제로 하면 이런식
+    ''' 보석 세공 장인을 주제로 하면 이런 식
     '''
     self.mining()  
     self.cutting() 
@@ -83,7 +83,7 @@ def main():
     self.selling()
 
 def main()
-    ''' 파인다이닝 셰프를 주제로 하면 이런식
+    ''' 파인다이닝 셰프를 주제로 하면 이런 식
     '''
     self.washing()
     self.cutting()
