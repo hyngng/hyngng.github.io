@@ -14,7 +14,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-07-28 21:56:00 +0900
-last_modified_at: 2025-10-02 09:38:00 +0900
+last_modified_at: 2025-12-09 15:48:00 +0900
 
 redirect_from:
   - /posts/canon-devlog-planning/
@@ -58,10 +58,10 @@ _가장 고민이 많았던 타워 정보 패널 디자인. 각각 조금씩의 
 2. 플레이어의 선택이 직관적으로 체감될 수 있어야 합니다. 작은 행동에도 여러 겹의 애니메이션과 효과 등으로 UI는 동적으로 반응해야 합니다.
 3. 흥미 유도와 함께 지루함은 방지될 수 있어야 합니다. 모든 것을 동적으로 구성할 순 없지만 지루함을 유발하는 정적인 상황을 최대한 피하기 위해 맵이나 게임 시스템이 허용된 범위 내에서 유동적으로 기능해야 합니다.
 
-![notification-system](/2025-07-12-canon-planning/notification-system.webp){: .w-50 }
+![notification-system](/2025-07-12-canon-planning/notification-system.webp){: .w-75 }
 _게임 도중 호출되는 4가지 유형의 알람._
 
-![design-examples](/2025-07-12-canon-planning/design-examples.webp){: .w-50 }
+![design-examples](/2025-07-12-canon-planning/design-examples.webp){: .w-75 }
 _메인 메뉴와 설정창. 아이콘은 Fontawesome에서 가져왔습니다._
 
 대부분의 UI 기능과 화면상의 배치를 위와 같은 실용주의 원칙에 따라 결정했습니다. 게임 분위기 자체가 흑백 계열의 모노톤이라는 점, UI 디자인 대부분이 정적으로 배치되어있다는 점이 단점으로 애니메이션과 같은 시각적 효과를 통해 개선이 필요한 부분입니다.
