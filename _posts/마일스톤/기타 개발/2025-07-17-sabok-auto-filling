@@ -1,5 +1,5 @@
 ---
-title: "사회복무요원 업무 자동화: 지역 자동 채우기"
+title: "네이버 API와 pandas 이용해 지역 자동 채우기"
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발]
@@ -8,11 +8,225 @@ start_with_ads: true
 toc: true
 toc_sticky: true
 
-date: 2025-07-17 00:00:00 +0900
-last_modified_at: 2025-07-17 00:00:00 +0900
+date: 2025-12-11 00:00:00 +0900
+last_modified_at: 2025-12-11 00:00:00 +0900
 ---
 
+## **주소로 지역을 채워주렴**
+
+인천시청 택시운수과에서 요청했고, 부서 팀장님께서 받아들이면서 전달된 업무입니다. 여러가지 복잡한 맥락으로, 협력업체의 시스템으로 관리되는 고객 데이터중에는 주소는 있으나 지역이 누락되어 있는 고객이 상당수 있었는데 시청이 이를 참조할 수 있도록 채워넣어달라고 요청했습니다.
+
+다음과 같이 전통적인 방식으로 처리하라고 안내받았습니다.
+1. 고객 주소를 네이버지도 또는 카카오지도에서 검색
+2. 도로명주소 등으로 나오는 결과를 마우스로 긁어서 복사
+3. 엑셀의 해당 행에 붙여넣기
+
+그런데 처리가 필요한 건 수가 무려 7169건에 달했습니다. 업루량이 많으니 다른 사회복무요원과 나눠서 하라고는 했지만 그래도 인당 이천 개가 넘어가서, 이걸 손으로 모두 채우는 것은 정말 말도 안 되는 시간낭비라고 생각했고 제 방식대로 처리하기로 했습니다.
+
+
+
+
+
+
+
+
+## **해결1. NAVER API 이용**
+
+2025년 3월의 작업입니다.
+
+먼저 데이터 정제가 필요합니다. 주소 정보가 좀 더럽기 때문인데, 예시를 들자면 다음과 같습니다.
+
+|전동휠체어)XX구 XX동000 XXXA XX동 XXX호(XXX-XXXX)|
+|X구 XX로XX번길 XX-X(XX동)|
+|XX동)XX로XXX번길 X-X|
+|휠체어) XX동 XXX-X XXX XXX동 XXX호|
+|XX대로XXX번길 XX, X동 XXXX호 (XX동, XX아파트)|
+|X/X XX읍 XX리 XXX-X|
+|XX주공@XXX/XXX호 (거주지= XXX동 XXXX-X번지 XXX병원)|
+
+이것 외에도 다양한 형태가 있습니다. 예를 들어 단순 아파트명 이름도 "XXX아파트" 또는 "XXX@" 또는 "XXXA" 등 정해진 양식이 없어서 처리가 어려웠습니다. 이때는 한참 AI 에이전트와 MCP 개념이 나오기 시작할 때였어서 시험삼아 바이브 코딩으로 틀을 잡아봤는데, 전체 프로그램을 AI에 맡겨서 만들어보려고 해보니 결과물이 영 좋지 않아서 틀만 잡고 세부사항은 직접 만들었습니다. 
+
+```python
+def clean_address(address: str):
+    if not address:
+        return None
+    
+    address = address.strip()
+    address = ' '.join(address.split())
+
+    for ch in ["(", ")", "-", "*", "★", ","]:
+        address = address.replace(ch, " ")
+    for word in blacklist_words:
+        address = address.replace(word, "")
+
+    address = address.replace("@", "아파트")
+    address = re.sub(r'\d{2,3}-\d{3,4}-\d{4}', '', address)
+    address = re.sub(r'\d{1,2}/\d{1,2}(신규|등록)', '', address)
+    address = re.sub(r'\d{1,2}월\s+\d{1,2}일', '', address)
+    address = re.sub(r'(\d{2}\.\d{2}\.\d{2})|(\d{2}\.\d{2})', '', address)
+    address = re.sub(r'\b\d+(호|층)\b', '', address)
+
+    extracted_info_list = []
+
+    extracted_info_list.extend(re.findall(r'([가-힣\w]+시)', address))
+    extracted_info_list.extend(re.findall(r'([가-힣\w]+구)', address))
+    extracted_info_list.extend(re.findall(r'([가-힣\w]+동)', address))
+    extracted_info_list.extend(re.findall(r'([가-힣\w]+로\d+)', address))
+    extracted_info_list.extend(re.findall(r"([가-힣\d]+)(?:로|길)", address))
+    extracted_info_list.extend(re.findall(r'([가-힣\w]+아파트)', address))
+    extracted_info_list.extend(re.findall(r'(\d+단지)', address))
+    extracted_info_list.extend(re.findall(r'\b\d+동\b', address))
+    address = " ".join(extracted_info_list)
+
+    if not extracted_info_list:
+        return ' '.join(address.split())
+    
+    unique_items = list(dict.fromkeys(extracted_info_list))
+    final_list   = []
+    for item1 in unique_items:
+        is_substring = False
+        for item2 in unique_items:
+            if item1 != item2 and item1 in item2:
+                is_substring = True
+                break
+        if not is_substring:
+            final_list.append(item1)
+            
+    # --- 4. 최종 조립 ---
+    return " ".join(final_list)
+
+    return address
+```
+{: file="main.py" }
+
+## **해결2. 지오코딩과 역지오코딩 이용**
+
+```python
+def get_region_from_address(address: str):
+    url = f"{geocode_baseurl}?query={address}"
+    headers = {
+        "x-ncp-apigw-api-key-id": client_id,
+        "x-ncp-apigw-api-key": client_secret,
+        "Accept": "application/json"
+    }
+
+    try:
+        geocoding_response = requests.get(url, headers=headers, timeout=(5, 10))
+    except requests.exceptions.ConnectionError as e:
+        print(f"Geocode 연결 오류: {e}")
+        return None
+
+    if geocoding_response.status_code != 200:
+        return None
+
+    if geocoding_response:
+        data = geocoding_response.json()
+        if data and 'addresses' in data and data['addresses']:
+            first_address = data['addresses'][0]
+            coord_x = first_address.get('x')
+            coord_y = first_address.get('y')
+        else:
+            return None
+
+    if not coord_x or not coord_y:
+        return None
+
+    reverse_params = {
+        "coords": f"{coord_x},{coord_y}",
+        "output": "json",
+        "orders": "admcode"
+    }
+    try:
+        reverse_geocoding_response = requests.get(reversegeocode_baseurl, headers=headers, params=reverse_params, timeout=(5, 10))
+    except requests.exceptions.ConnectionError as e:
+        print(f"Reverse geocode 연결 오류: {e}")
+        return None
+
+    if reverse_geocoding_response.status_code != 200:
+        return None
+
+    if reverse_geocoding_response:
+        reverse_data = reverse_geocoding_response.json()
+        if reverse_data and 'results' in reverse_data and reverse_data['results']:
+            for result in reverse_data['results']:
+                if result.get('name') == 'admcode':
+                    region = result.get('region')
+                    if region:
+                        area1 = region.get('area1', {}).get('name', '')
+                        area2 = region.get('area2', {}).get('name', '')
+                        area3 = region.get('area3', {}).get('name', '')
+                        area4 = region.get('area4', {}).get('name', '') # area4는 보통 리/가/구 등 세부 동 정보
+                        full_name = f"{area1} {area2} {area3}"
+                        if area4:
+                            full_name += f" {area4}"
+                        return full_name.strip()
+    return None
+```
+{: file="main.py" }
+
+테스트는
+
+```bash
+curl --location --request GET "https://maps.apigw.ntruss.com/map-geocode/v2/geocode?query=%EB%85%BC%ED%98%84%EB%8F%99%20%EB%82%A8%EB%8F%99%EA%B5%AC%20%ED%98%B8%EA%B5%AC%ED%8F%AC%EB%A1%9C" ^
+    --header "x-ncp-apigw-api-key-id: xxxxxxxxxx" ^
+    --header "x-ncp-apigw-api-key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" ^
+    --header "Accept: application/json"
+```
+
+로 했습니다.
+
+`.xlsx`로 형식의 엑셀 파일 데이터를 `pandas` 데이터프레임 형태로 변환한 뒤
+
+
+![]()
+_네이버 지오코딩, 역지오코딩 문서 스크린샷_
+
+- 네이버 MAPS API 문서 인용
+- 행정동 형식으로 맞춰야 합니다.
+
+> 입력한 주소와 연관된 주소 정보를 검색합니다.
+> 입력한 좌표 값을 주소 정보(법정동, 행정동, 지번 주소, 도로명 주소)로 변환합니다.
+
+- [지오코딩](https://api.ncloud-docs.com/docs/ai-naver-mapsgeocoding-geocode)
+- [역지오코딩](https://api.ncloud-docs.com/docs/ai-naver-mapsreversegeocoding-gc)
+
+## **다시, 법정동이 아닌 행정동으로 채워라**
+
+> 보내주신 리스트를 기준으로 업데이트 하였으나 지역을 행정동이 아닌 법정동으로 주신 고객은 업데이트 되지 않았습니다.
+
+사전에 안내받지 않았는데 고객 주소는 법정동이 아닌 행정동 형식으로만 등록 가능하다고 회신받았습니다.
+
+결과값 검수용으로 [행정안전부 > 업무안내 > 자치혁신실 > 주민등록,인감 > 가장 최근 공고문](https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardList.do;jsessionid=Sts__z7tpvlYn3TZmotdQirIgfYhYb4aRcMViuf6.node40?bbsId=BBSMSTR_000000000052)에서 `jscode.zip` 파일을 다운로드 받았습니다. 해당 압축 파일에는 `KIKcd_B_yyyymmdd.xlsx`, `KIKcd_H_yyyymmdd.xlsx`, `KIKmix_yyyymmdd.xlsx` 세 개 파일이 들어 있으며 B가 법정동, H가 행정동입니다. 예를 들어 두 자료가 혼합된 `KIKmix` 파일을 열어보면 다음과 같이 작성되어 있습니다.
+
+|행정동코드|시도명|시군구명|읍면동명|법정동코드|동리명|생성일자|말소일자|
+|---|---|---|---|---|---|---|---|
+|1100000000|서울특별시|||1100000000|서울특별시|19880423||
+|1111000000|서울특별시|종로구||1111000000|종로구|19880423||
+|1111051500|서울특별시|종로구|청운효자동|1111010100|청운동|20081101||
+|1111051500|서울특별시|종로구|청운효자동|1111010200|신교동|20081101||
+|1111051500|서울특별시|종로구|청운효자동|1111010300|궁정동|20081101||
+|1111051500|서울특별시|종로구|청운효자동|1111010400|효자동|20081101||
+|1111051500|서울특별시|종로구|청운효자동|1111010500|창성동|20081101||
+
+법정동은 법률로 지정된 행정구역의 공식 명칭이고 행정동은 행정상의 편의를 위해 나눈 이름입니다. 서울 강남의 동을 예시로 들자면 "논현1동", "일원본동" 등이 행정동이고, "논현동", "일원동"이 법정동입니다. 법정동명과 행정동명은 일치하는 경우도 있고, 행정동명이 법정동명에서 "1동"과 "2동", 또는 "제1동"과 "제2동"으로 나뉘는 경우도 있으며, 행정동명과 법정동명이 완전히 따로 노는 경우도 있습니다.
+
+## **실수**
+
+50만원 에반데
+
+## **여담**
+
+다른 사회복무요원의 의견의 영향을 받아 일부로 클래스를 사용하지 않았고, 코드 정돈에도 큰 신경을 쓰지 않았습니다. 빠른 처리도 중요했고
+
+
+
+
+
+
+
 {% comment %}
+2025-07-17
+
 ## **사회복무요원**
 
 - 인천교통공사의 교통복지팀에 사회복무요원으로 있다보면 주로 반복적인 업무를 해결해드리지만 가끔은 이벤트성으로 특이한 업무도 발생합니다.
@@ -23,27 +237,15 @@ last_modified_at: 2025-07-17 00:00:00 +0900
 - AI NAVER API와 MAPS API, 지오코딩과 역지오코딩
 - 처음 바이브 코딩을 통한 업무 보조와, 나중의 법정동&행정동 문제 설명
 - 어쩔 수 없는 부분은 손으로 해결, 인계, 해결완료
-{% endcomment %}
 
-법정동이 아닌 행정동으로 지역 채우기.
+25년 3월, 처음에는 AI NAVER API의 지오코딩으로 채워넣을 수 있는 것은 채워넣고 프로그램으로 해결이 어려운 내용은 카카오지도와 네이버지도를 이용해 수기로 해결함. 그러나 전달도 잘 안 됐고 담당 직원이 관심을 놓으면서 흐지부지됨.
 
-## **주소로 지역을 채워라**
+25년 7월, 같은 업무가 재점화되었고 이전과 같은 방식으로 지역을 채웠으나 EKSYS에서 "법정동이 아닌 행정동만 추가 가능합니다"라고 답변을 주면서, 일이 복잡해짐. 네이버 API를 이용할 때 행정동 정보는 역지오코딩으로만 얻을 수 있었으므로, 지오코딩 => 역지오코딩 순의 과정을 통해 행정동 정보를 얻음.
 
-## **해결1. NAVER API 이용**
+안녕하세요. eKsys 사길수입니다.
 
-## **해결2. 지오코딩과 역지오코딩 이용**
-
-![]()
-_네이버 지오코딩, 역지오코딩 문서 스크린샷_
-
-- 네이버 MAPS API 문서 인용
-- 행정동 형식으로 맞춰야 합니다.
-
-
-```안녕하세요. eKsys 사길수입니다.
- 
 업데이트 완료되었습니다.
- 
+
 감사합니다.
 
 From: jcall@ictr.or.kr <jcall@ictr.or.kr>
@@ -136,4 +338,4 @@ Subject: 안녕하세요, 이동약자지원센터 사무실입니다. [고객�
 시의 요청이 있어 고객정보 중 지역정보가 누락되어 있는 6106개 가량의 건에 대해 지역을 새로 채우게 되었고, 고객 목록 통계 파일을 바탕으로 고객정보 중 누락이 되어 있는 건에 대해 사무실에서 지역을 작성했습니다.
 사무실에서는 고객정보를 하나하나 수정하기가 어려워, 지역과 타지역을 새로 업데이트해주시면 감사하겠습니다. 파일은 첨부해드렸습니다.
 감사합니다.
-```
+{% endcomment %}
