@@ -30,9 +30,48 @@ last_modified_at: 2025-12-11 00:00:00 +0900
 
 
 
-## **해결1. NAVER API 이용**
+## **NAVER API 이용**
 
-2025년 3월의 작업입니다.
+Naver가 제공하는
+
+![Group107-light](/2026-03-03-sabok-auto-filling/Group107-light.png){: .light }
+![Group107-dark](/2026-03-03-sabok-auto-filling/Group107-dark.png){: .dark }
+_네이버 API 문서 스크린샷_
+
+> 입력한 주소와 연관된 주소 정보를 검색합니다.
+
+> 입력한 좌표 값을 주소 정보(법정동, 행정동, 지번 주소, 도로명 주소)로 변환합니다.
+
+- [지오코딩](https://api.ncloud-docs.com/docs/ai-naver-mapsgeocoding-geocode)
+- [역지오코딩](https://api.ncloud-docs.com/docs/ai-naver-mapsreversegeocoding-gc)
+
+다만 해당 문서의 브레드크럼을 확인해보면 `홈 > AI·NAVER API > Maps (deprecated) > Maps 사용`으로 되어 있는 것을 볼 수 있습니다. 2025년 7월부로 네이버 API가 개편되어 현재는 해당 API가 사용이 불가능한 상태입니다. 이와 관련한 에피소드가 있는데, 후술하겠습니다.
+
+각각 를 입력값으로 받아
+
+입력값
+: - `query`
+- `coordinate`
+- `filter`
+- `language`
+- `page`
+- `count`
+
+문서에서 안내되고 있듯, 터미널에 다음과 같이 작성해보면
+
+```bash
+curl --location --request GET 'https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=분당구 불정로 6' \
+--header 'x-ncp-apigw-api-key-id: {API Key ID}' \
+--header 'x-ncp-apigw-api-key: {API Key}' \
+--header 'Accept: application/json'
+```
+
+결과가 전송됩니다.
+
+- [지오코딩](https://api.ncloud-docs.com/docs/ai-naver-mapsgeocoding-geocode)
+- [역지오코딩](https://api.ncloud-docs.com/docs/ai-naver-mapsreversegeocoding-gc)
+
+## **코드 작성**
 
 먼저 데이터 정제가 필요합니다. 주소 정보가 좀 더럽기 때문인데, 예시를 들자면 다음과 같습니다.
 
@@ -44,60 +83,116 @@ last_modified_at: 2025-12-11 00:00:00 +0900
 |X/X XX읍 XX리 XXX-X|
 |XX주공@XXX/XXX호 (거주지= XXX동 XXXX-X번지 XXX병원)|
 
-이것 외에도 다양한 형태가 있습니다. 예를 들어 단순 아파트명 이름도 "XXX아파트" 또는 "XXX@" 또는 "XXXA" 등 정해진 양식이 없어서 처리가 어려웠습니다. 이때는 한참 AI 에이전트와 MCP 개념이 나오기 시작할 때였어서 시험삼아 바이브 코딩으로 틀을 잡아봤는데, 전체 프로그램을 AI에 맡겨서 만들어보려고 해보니 결과물이 영 좋지 않아서 틀만 잡고 세부사항은 직접 만들었습니다. 
+이것 외에도 다양한 형태가 있습니다. 예를 들어 단순 아파트명 이름도 "XXX아파트" 또는 "XXX@" 또는 "XXXA" 등 정해진 양식이 없어서 처리가 어려웠습니다. 이때는 한참 AI 에이전트와 MCP, 그리고 그 등에 기반한 Cursor 등 다양한 서비스가 나오기 시작할 때였어서 경험삼아 바이브 코딩으로 만들었습니다. 이 때 완성된 코드는 여러가지 문제로 쓰지는 않았지만 파일은 남아 있습니다. Gemini Pro 2.5를 기준으로 다음과 같이 작성됩니다.
 
 ```python
-def clean_address(address: str):
-    if not address:
-        return None
+def search_address(self, address):
+    max_retries = 3  # 최대 재시도 횟수
+    retry_count = 0
+    retry_delay = 2  # 초기 재시도 대기 시간 (초)
     
-    address = address.strip()
-    address = ' '.join(address.split())
-
-    for ch in ["(", ")", "-", "*", "★", ","]:
-        address = address.replace(ch, " ")
-    for word in blacklist_words:
-        address = address.replace(word, "")
-
-    address = address.replace("@", "아파트")
-    address = re.sub(r'\d{2,3}-\d{3,4}-\d{4}', '', address)
-    address = re.sub(r'\d{1,2}/\d{1,2}(신규|등록)', '', address)
-    address = re.sub(r'\d{1,2}월\s+\d{1,2}일', '', address)
-    address = re.sub(r'(\d{2}\.\d{2}\.\d{2})|(\d{2}\.\d{2})', '', address)
-    address = re.sub(r'\b\d+(호|층)\b', '', address)
-
-    extracted_info_list = []
-
-    extracted_info_list.extend(re.findall(r'([가-힣\w]+시)', address))
-    extracted_info_list.extend(re.findall(r'([가-힣\w]+구)', address))
-    extracted_info_list.extend(re.findall(r'([가-힣\w]+동)', address))
-    extracted_info_list.extend(re.findall(r'([가-힣\w]+로\d+)', address))
-    extracted_info_list.extend(re.findall(r"([가-힣\d]+)(?:로|길)", address))
-    extracted_info_list.extend(re.findall(r'([가-힣\w]+아파트)', address))
-    extracted_info_list.extend(re.findall(r'(\d+단지)', address))
-    extracted_info_list.extend(re.findall(r'\b\d+동\b', address))
-    address = " ".join(extracted_info_list)
-
-    if not extracted_info_list:
-        return ' '.join(address.split())
-    
-    unique_items = list(dict.fromkeys(extracted_info_list))
-    final_list   = []
-    for item1 in unique_items:
-        is_substring = False
-        for item2 in unique_items:
-            if item1 != item2 and item1 in item2:
-                is_substring = True
-                break
-        if not is_substring:
-            final_list.append(item1)
+    while retry_count <= max_retries:
+        try:
+            # 주소 정제
+            cleaned_address = self.clean_address(address)
             
-    # --- 4. 최종 조립 ---
-    return " ".join(final_list)
+            # URL 인코딩
+            encoded_address = quote(cleaned_address)
+            url = f"{self.base_url}?query={encoded_address}"
+            
+            # API 요청 (제한 없음) - 타임아웃 설정 추가
+            response = requests.get(url, headers=self.headers, timeout=(5, 10))  # 연결 5초, 읽기 10초 타임아웃
+            
+            # 디버깅용 응답 정보 (경합 방지를 위해 락 사용)
+            with self.print_lock:
+                print(f"주소: {cleaned_address} - API 응답 코드: {response.status_code}")
+            
+            # 응답 상태 코드 확인
+            if response.status_code == 429:  # Rate limit 초과
+                # 잠시 대기 후 재시도
+                time.sleep(retry_delay)
+                retry_count += 1
+                retry_delay *= 2  # 지수 백오프 방식으로 대기 시간 증가
+                continue
+            elif response.status_code != 200:
+                with self.print_lock:
+                    print(f"API 오류 발생 (상태 코드: {response.status_code}): {response.text}")
+                return "API 오류"
+            
+            # 응답 처리
+            result = response.json()
+            
+            # 문서에 맞게 응답 검증 및 처리
+            if result.get("status") == "OK" and result.get("addresses") and len(result["addresses"]) > 0:
+                # 첫 번째 결과 사용
+                address_info = result["addresses"][0]
+                
+                # addressElements에서 시/도, 시군구, 동/면 추출
+                sido = None
+                sigugun = None
+                dongmyun = None
+                
+                for element in address_info.get("addressElements", []):
+                    if "SIDO" in element.get("types", []):
+                        sido = element.get("longName", "")
+                    elif "SIGUGUN" in element.get("types", []):
+                        sigugun = element.get("longName", "")
+                    elif "DONGMYUN" in element.get("types", []):
+                        dongmyun = element.get("longName", "")
+                
+                # addressElements에서 행정동(ADMNM) 추출
+                hdong = None
+                for element in address_info.get("addressElements", []):
+                    if "ADMNM" in element.get("types", []):
+                        hdong = element.get("longName", "")
+                        break  # 첫 번째 행정동만 사용
 
-    return address
+                # 결과 생성 (행정동 우선 반환)
+                if hdong:
+                    return hdong
+                # 기존 방식 유지 (시도, 시군구, 동/면)
+                if sido and sigugun and dongmyun:
+                    return f"{sido} {sigugun} {dongmyun}"
+                elif sido and sigugun:
+                    return f"{sido} {sigugun}"
+                elif sido:
+                    return sido
+            
+            # API에서 결과를 찾지 못함
+            with self.print_lock:
+                print(f"API에서 '{cleaned_address}'에 대한 결과를 찾지 못했습니다.")
+            return "매칭 실패"
+            
+        except requests.ConnectionError as e:
+            with self.print_lock:
+                print(f"연결 오류 발생: {str(e)}")
+            retry_count += 1
+            if retry_count <= max_retries:
+                with self.print_lock:
+                    print(f"재시도 중... ({retry_count}/{max_retries}) - {retry_delay}초 후 재시도")
+                time.sleep(retry_delay)
+                retry_delay *= 2  # 지수 백오프 방식으로 대기 시간 증가
+            else:
+                return "API 오류 (연결 실패)"
+        except requests.Timeout as e:
+            with self.print_lock:
+                print(f"타임아웃 오류 발생: {str(e)}")
+            retry_count += 1
+            if retry_count <= max_retries:
+                with self.print_lock:
+                    print(f"재시도 중... ({retry_count}/{max_retries}) - {retry_delay}초 후 재시도")
+                time.sleep(retry_delay)
+                retry_delay *= 2  # 지수 백오프 방식으로 대기 시간 증가
+            else:
+                return "API 오류 (타임아웃)"
+        except Exception as e:
+            with self.print_lock:
+                print(f"API 오류 발생: {str(e)}")
+            return "API 오류"
 ```
 {: file="main.py" }
+
+엄청 나쁘진 않은데, 개인적으로는 전체적으로 불안정하다는 느낌을 받았습니다. 설명을 위한 주석의 남발은 물론이고, 무엇보다 제가 이 코드를 소유하고 있다는 느낌이 잘 들지 않았습니다. 다만 흐름상의 참조는 되어서 다시 다음과 같이 작성되었습니다.
 
 ## **해결2. 지오코딩과 역지오코딩 이용**
 
@@ -177,26 +272,13 @@ curl --location --request GET "https://maps.apigw.ntruss.com/map-geocode/v2/geoc
 
 `.xlsx`로 형식의 엑셀 파일 데이터를 `pandas` 데이터프레임 형태로 변환한 뒤
 
-
-![]()
-_네이버 지오코딩, 역지오코딩 문서 스크린샷_
-
-- 네이버 MAPS API 문서 인용
-- 행정동 형식으로 맞춰야 합니다.
-
-> 입력한 주소와 연관된 주소 정보를 검색합니다.
-> 입력한 좌표 값을 주소 정보(법정동, 행정동, 지번 주소, 도로명 주소)로 변환합니다.
-
-- [지오코딩](https://api.ncloud-docs.com/docs/ai-naver-mapsgeocoding-geocode)
-- [역지오코딩](https://api.ncloud-docs.com/docs/ai-naver-mapsreversegeocoding-gc)
-
 ## **다시, 법정동이 아닌 행정동으로 채워라**
 
-> 보내주신 리스트를 기준으로 업데이트 하였으나 지역을 행정동이 아닌 법정동으로 주신 고객은 업데이트 되지 않았습니다.
+> "보내주신 리스트를 기준으로 업데이트 하였으나 지역을 행정동이 아닌 법정동으로 주신 고객은 업데이트 되지 않았습니다."
 
 사전에 안내받지 않았는데 고객 주소는 법정동이 아닌 행정동 형식으로만 등록 가능하다고 회신받았습니다.
 
-결과값 검수용으로 [행정안전부 > 업무안내 > 자치혁신실 > 주민등록,인감 > 가장 최근 공고문](https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardList.do;jsessionid=Sts__z7tpvlYn3TZmotdQirIgfYhYb4aRcMViuf6.node40?bbsId=BBSMSTR_000000000052)에서 `jscode.zip` 파일을 다운로드 받았습니다. 해당 압축 파일에는 `KIKcd_B_yyyymmdd.xlsx`, `KIKcd_H_yyyymmdd.xlsx`, `KIKmix_yyyymmdd.xlsx` 세 개 파일이 들어 있으며 B가 법정동, H가 행정동입니다. 예를 들어 두 자료가 혼합된 `KIKmix` 파일을 열어보면 다음과 같이 작성되어 있습니다.
+결과값 검수용으로 [행정안전부 > 업무안내 > 자치혁신실 > 주민등록,인감 > 가장 최근 공고문](https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardList.do;jsessionid=Sts__z7tpvlYn3TZmotdQirIgfYhYb4aRcMViuf6.node40?bbsId=BBSMSTR_000000000052)에서 `jscode.zip` 파일을 다운로드 받았습니다. 해당 압축 파일에는 `KIKcd_B_yyyymmdd.xlsx`, `KIKcd_H_yyyymmdd.xlsx`, `KIKmix_yyyymmdd.xlsx` 세 개 파일이 들어 있으며 B가 법정동, H가 행정동입니다. 예를 들어 두 자료가 혼합된 `KIKmix` 파일을 열어보면, 2025년 11월 3일자 자료를 기준으로 다음과 같이 작성되어 있습니다.
 
 |행정동코드|시도명|시군구명|읍면동명|법정동코드|동리명|생성일자|말소일자|
 |---|---|---|---|---|---|---|---|
@@ -208,7 +290,7 @@ _네이버 지오코딩, 역지오코딩 문서 스크린샷_
 |1111051500|서울특별시|종로구|청운효자동|1111010400|효자동|20081101||
 |1111051500|서울특별시|종로구|청운효자동|1111010500|창성동|20081101||
 
-법정동은 법률로 지정된 행정구역의 공식 명칭이고 행정동은 행정상의 편의를 위해 나눈 이름입니다. 서울 강남의 동을 예시로 들자면 "논현1동", "일원본동" 등이 행정동이고, "논현동", "일원동"이 법정동입니다. 법정동명과 행정동명은 일치하는 경우도 있고, 행정동명이 법정동명에서 "1동"과 "2동", 또는 "제1동"과 "제2동"으로 나뉘는 경우도 있으며, 행정동명과 법정동명이 완전히 따로 노는 경우도 있습니다.
+법정동은 법률로 지정된 행정구역의 공식 명칭이고 행정동은 행정상의 편의를 위해 나눈 이름입니다. 서울 강남의 동을 예시로 들자면 "논현1동", "일원본동" 등이 행정동이고, "논현동", "일원동"이 법정동입니다. 법정동명과 행정동명은 일치하는 경우도 있고, 행정동명이 법정동명에서 "1동"과 "2동", 또는 "제1동"과 "제2동"으로 나뉘는 경우도 있으며, 행정동명과 법정동명이 완전히 다른 경우도 있습니다.
 
 ## **실수**
 
