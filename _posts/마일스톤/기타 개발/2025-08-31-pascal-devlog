@@ -62,6 +62,12 @@ _설정, 작업 관리자 등등_
 
 WinUI 3 환경에 정착할 수 있었던 것은 [Windows Community Toolkit](https://github.com/CommunityToolkit/WindowsCommunityToolkit)과 [DevWinUI](https://github.com/ghost1372/DevWinUI)라는 훌륭한 컨트롤 라이브러리 덕입니다. UI를 다루는 .NET 개발환경에서는 UI 요소를 컨트롤이라고 부르는데, 순수 WinUI의 컨트롤에 더해 두 라이브러리의 컨트롤을 혼합한다면 웬만한 상황을 거의 해결할 수 있습니다.
 
+## **DevWinUI 프로젝트 생성과정**
+
+[참조](https://github.com/ghost1372/DevWinUI)
+
+`비주얼 스튜디오` > `확장` > `확장 관리` 경로에서 DevWinUI Templates for WinUI를 설치한 뒤 `비주얼 스튜디오` > `새 프로젝트 만들기` 경로에서
+
 ## **C#과 XAML**
 
 - .NET 환경 처음이었음
