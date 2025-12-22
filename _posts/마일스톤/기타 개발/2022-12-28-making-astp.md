@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
  
 date: 2022-12-28 22:15:00 +0900
-last_modified_at: 2025-06-26 09:42:00 +0900
+last_modified_at: 2025-12-22 12:54:00 +0900
 
 mermaid: true
 
@@ -90,7 +90,7 @@ def get_ndx():
         ndx_class = soup.find(class_ = 'Fw(b) Fz(36px) Mb(-4px) D(ib)')
         ndx = re.sub(r'[^0-9]', '', ndx_class.get_text())
 
-    else :
+    else:
         print(response.status_code)
     
     return ndx
