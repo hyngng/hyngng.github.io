@@ -2,7 +2,7 @@
 image:
     path: /2023-12-25-photos-of-gyemyo-year/preview-image.webp
     lqip: data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAABwAgCdASoQAAgAAUAmJbACdLoAFyBFsEZxSPEgAP76o6QPPMSU3/VPcb6p5GGe7kK2t/M2ffneH6NZ3v3B5wCS4k74Xri1ffrTdABFmi5HTqR+RGgq5zxzir8dG61g2UQPAQZWBy3T/8ir6n1/pKCy37XjO/vlpNwz3PsJL/xK/Pon8414gTPdpsAAAA==
-    alt: 올해 사진 한 장을 꼽는다면 이거.
+    alt: 올해의 사진은 이거
     
 title: "[2023] 계묘년을 보내며"
 

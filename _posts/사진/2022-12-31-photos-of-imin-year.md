@@ -2,7 +2,7 @@
 image:
     path: /2022-12-31-photos-of-imin-year/preview-image.webp
     lqip: data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAADwAQCdASoQAAgAAUAmJQBOhgl4IQBMD2AA/v7nzUAQn08fmq3rhT8MoNr+vs1jFmz6Z//7f+P0aXNzZOg9/O+EAb/QjEn3/x/tvX/BOULX/0r3bhsf464fV4q9gbEEJILr2xKmRBCLKkXR9G5UCCJ4ieiP4HuitTVDVAAA
-    alt: 올해 사진 한 장을 꼽는다면 이거.
+    alt: 올해의 사진은 이거
     
 title: "[2022] 열심히 담은 일상"
 
