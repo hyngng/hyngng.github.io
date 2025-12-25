@@ -1,8 +1,8 @@
 ---
 image:
-    path: /2024-12-31-photos-of-gabjin/preview-image.webp
-    lqip: data:image/jpeg;base64,UklGRogAAABXRUJQVlA4IHwAAABQAgCdASoQAAgAAUAmJZgCdLoAEJEXQXspxpAAzj9wQghm4b3bbMOeM5+uLV8L7uZTzl5EZq2BXD9cl2GiCcEXLsAKr4eYgp1dn+ft8Z3raNVewBX/iIuoBhL9jGqUYhS5L5T2X1GIKpNt6Qu+vrbTgQ9lMeGbwOlk4AAA
-    alt: "올해 여름 진짜 더웠음"
+    path: /2024-12-31-photos-of-gabjin-year/preview-image.webp
+    lqip: data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABQAgCdASoQAAgAAUAmJZQCdAacFnfav+P8tdAA/v48LgESHnOlE9Xmkbni3/iu9L+duAcPsLcrOwkvNC88IKN/vBxlKKAf1q3iezIZrMORZnnk0doPk+MGhYAAAA==
+    alt: 2024년의 MVP. 좀 놀랐음. 수직 수평도 맞고, 색감은 몽환적이면서도 사실적으로 구현됐음.
 
 title: "[2024] 솔직히 좀 재밌음"
 
@@ -19,9 +19,6 @@ last_modified_at: 2025-04-16 14:57:00 +0900
 redirect_from:
   - /posts/photos-of-gabjin/
 ---
-
-![20240126_153421](/photo/20240126_153421.webp){: .rounded-10 }
-*송도 센트럴파크 | 69mm ISO40 F2.4 1/1700s*
 
 ![20240301_133138](/photo/20240301_133138.webp){: .rounded-10 }
 *서울식물원 | 69mm ISO40 F2.4 1/310s*
@@ -70,7 +67,9 @@ redirect_from:
 > 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2024)**에서 확인할 수 있습니다!
 {: .prompt-tip }
 
-사실 사진을 연말에 따로 모아서 올리려고 하진 않고 있는데 어쩌다보니 벌써 세 번째 연말 사진정산입니다. 사진 찍는 일도 찍는 일이지만 사진을 보정하는 과정이 재밌어서 계속 이어지게 됩니다. 하나 만족스러운 것은 사진 보정 기조가 이제 어느정도 잡힌 느낌인데, 그냥 길거리에서 툭 찍고 버스나 지하철에서 1분간 작업을 거치면 이런 사진을 만들 수 있어서 즐겁습니다.
+사실 사진을 연말에 따로 모아서 올리려고 하진 않고 있는데 어쩌다보니 벌써 세 번째 연말 사진정산입니다. 사진 찍는 일도 찍는 일이지만 사진을 보정하는 과정이 재밌어서 계속 이어지게 되었습니다.
+
+작년이 성장기였다면 올해는 성숙기였던 것 같습니다. 올해에는 인상깊은 풍경이 지나가더라도 이것을 사진으로 남길 가치가 있는 것인지 고민하는 일에 익숙해졌고, 어떻게 하면 사진이 유치해지고 가벼워지는지 조금씩 알게 됐으며 어떤 시도를 피해야 하는지도 이해하게 되었습니다. 덕분에 사진 보정 기조가 이제 어느정도 잡힌 느낌인데, 그냥 길거리에서 툭 찍고 버스나 지하철에서 1분간 작업을 거치면 이런 사진을 만들 수 있어서 즐겁습니다.
 
 그보다 흐흐 이제는 그런 노력 덕에 [진짜 카메라가 생겼습니다.](https://hyngng.github.io/posts/sony-a7c-review/) 지금까지 써온 폰카와 달리 크고 무겁고 낯설지만 결과물 자체는 좋게 나오고, 특히 고통받았던 화각과 노이즈 부분에서 좀 자유롭네요. 내년에는 잠시 초심으로 돌아가서 새 카메라랑도 친해져봐야겠습니다.
 

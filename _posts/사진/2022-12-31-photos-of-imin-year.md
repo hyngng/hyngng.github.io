@@ -1,8 +1,8 @@
 ---
 image:
-    path: /2022-12-31-photos-of-imin/preview-image.webp
-    lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAgAAgA0JZQCdAD0tNvXgAD++yUU4/HtnDOizij1uz6dfZTsypE5KvKr20uztM+CbrkMAgjCLe9cNkIAAA==
-    alt: 쇼핑몰에서 기다릴 때 잠깐 찍은 사진
+    path: /2022-12-31-photos-of-imin-year/preview-image.webp
+    lqip: data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAADwAQCdASoQAAgAAUAmJQBOhgl4IQBMD2AA/v7nzUAQn08fmq3rhT8MoNr+vs1jFmz6Z//7f+P0aXNzZOg9/O+EAb/QjEn3/x/tvX/BOULX/0r3bhsf464fV4q9gbEEJILr2xKmRBCLKkXR9G5UCCJ4ieiP4HuitTVDVAAA
+    alt: 2022년의 MVP. 현장 분위기는 활발했는데 그 순간을 담은 사진은 차분하게 느껴지는 것이 재밌음.
     
 title: "[2022] 열심히 담은 일상"
 
@@ -79,7 +79,9 @@ redirect_from:
 > 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2022)**에서 확인할 수 있습니다!
 {: .prompt-tip }
 
-한 번 찍은 사진이 나중에 색다르게 느껴지는 것이 재미게 느껴져 평소 사진을 많이 찍어두는 편입니다. 그러다 올해 폰을 새로 바꾸게 되면서 "같은 사진도 남들보다 예쁘게 담을 수 있다면 좋지 않을까?" 하는 호기심이 생겼습니다. 요즘 나오는 기종은 카메라 성능이 워낙 좋아서, 이를 잘 활용해보고 싶은 마음에 사진을 찍기 시작했습니다.
+저는 원래 중고등학교에서도 그때그때 사진을 툭툭 찍으며 기록을 남기는 사람이었습니다. 사진을 찍는 행위 자체를 거부감 없이 좋아해온 사람이라는 말입니다. 그런데 코로나 시기에 IT 커뮤니티를 재밌게 보게 되면서 폰으로도 진짜 멋진 사진을 찍고 다니는 사람들이 있다는 것을 알게 되었습니다. 그런 사진을 보면서 저도 어차피 사진을 찍을 거라면 좀 더 특별하고, 깊고, 의미있게 남겨보고 싶었습니다.
+
+그러다 올해 폰을 갤럭시 A5 2017에서 갤럭시 S22 울트라로 바꾸게 되었고, 드라마틱한 변화를 겪었습니다. 4개로 불어난 카메라는 OIS도 지원하고, 센서도 많이 커지고, 심지어 RAW 출력도 지원하는 덕에 저는 새 카메라를 갖게 된 격이었습니다.
 
 그러면서 더 좋은 사진을 찍기 위해 이론도 찾고 다른 분들의 사진도 많이 구경하고 다녔는데 정말 새롭고 재밌었습니다. 보다보니 점점 욕심이 나서 저도 남기고 싶은 사진을 몇 장 만들게 되었습니다. JPG를 보정하다가 사진이 깨졌다는 둥 아쉬움은 있지만 우선은 저를 기술하는 방법을 새로 발견했다는 것이 더 좋습니다. 앞으로 멋진 사진을 많이 올릴 수 있으면 좋겠습니다.
 

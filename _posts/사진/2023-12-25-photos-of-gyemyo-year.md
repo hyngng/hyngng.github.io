@@ -1,8 +1,8 @@
 ---
 image:
-    path: /2023-12-25-photos-of-gyemyo/preview-image.webp
-    lqip: data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAABwAQCdASoKAAUAAgA0JYwCdAFAAAD++vfd7pSFrqXz6iij8hsZxGAA
-    alt: 한겨울 밤 하늘
+    path: /2023-12-25-photos-of-gyemyo-year/preview-image.webp
+    lqip: data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAABwAgCdASoQAAgAAUAmJbACdLoAFyBFsEZxSPEgAP76o6QPPMSU3/VPcb6p5GGe7kK2t/M2ffneH6NZ3v3B5wCS4k74Xri1ffrTdABFmi5HTqR+RGgq5zxzir8dG61g2UQPAQZWBy3T/8ir6n1/pKCy37XjO/vlpNwz3PsJL/xK/Pon8414gTPdpsAAAA==
+    alt: 2023년의 MVP. 구도, 심도, 색감, 그리고 사진이 담고 있는 의미 모두 가장 만족스러움.
     
 title: "[2023] 계묘년을 보내며"
 
@@ -94,7 +94,9 @@ redirect_from:
 > 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2023)**에서 확인할 수 있습니다!
 {: .prompt-tip }
 
-이번 한 해에는 제가 원하는 사진을 찍고, 남의 사진도 찍고, 사진마다 컨셉을 다르게 잡아 어떤 사진은 멀리서, 어떤 사진은 가까이서, 어떤 사진은 보색대비를 강조하여, 어떤 사진은 아예 흑백으로 남겨보는 등 다양한 시도를 했습니다. 사진이 제 손끝을 따라 변해가는 과정은 볼 때마다 신기했고, 특히 컬러 그레이딩이나 톤곡선을 건드리면서부터는 사진에 변화를 주는 과정 자체를 재밌게 즐겼습니다.
+작년이 입문기였다면 이번 이번 한 해는 성장기였던 것 같습니다. 제가 원하는 사진을 찍고, 남의 사진도 찍고, 사진마다 컨셉을 다르게 잡아 어떤 사진은 멀리서, 어떤 사진은 가까이서, 어떤 사진은 보색대비를 강조하여, 어떤 사진은 장노출로, 아니면 아예 흑백으로 남겨보는 등 다양한 시도를 했습니다. 사진이 제 손끝을 따라 변해가는 과정은 볼 때마다 신기했고, 특히 컬러 그레이딩이나 톤곡선을 건드리면서부터는 사진에 변화를 주는 과정 자체를 재밌게 즐겼습니다.
+
+올해는 다음의 변화가 있었습니다. 하나, [이 네이버 블로그](https://m.blog.naver.com/jdoh9911)에서 “사진은 결국 작가가 먼저 눈으로 본 풍경을 찍는 것이고, 사진은 작가가 인상깊게 본 풍경을 남긴 것이다”와 같은 글을 읽는 것을 기점으로 개인적인 사진 철학을 갖기 시작했습니다. 둘, 이미지센서라는 반도체 제품군에 매료되어 관련 지식을 논문이나 석박사 과정을 밟는 분들의 블로그, 테크인사이트 등에서 이 잡듯이 찾아보았습니다. 솔직히, 기반지식이 없어 완벽히 이해하지는 못했지만 많은 기술자들의 노고가 필요하다는 인상은 잘 전달받았습니다.
 
 사진 보정을 시작한 이유가 같은 추억도 더 예쁘게 남기고 싶기 때문이었음을 생각하면 처음의 목표는 어느정도 충족된 것 같습니다. 덕분에 같은 장소도 일부러 색다르게 느낄 수 있어서 좋았습니다. 다만, 모든 사진을 진지하게 대하는 태도가 좀 피곤하게 느껴지기 시작해서 앞으로는 집착을 좀 덜어내려고 합니다.
 
