@@ -2,7 +2,7 @@
 image:
     path: /2025-12-25-photos-of-eulsa-year/preview-image.webp
     lqip: data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwAgCdASoQAAgAAUAmJbACdAYoH8AKAxiSAAD+67IqvZt+JjEJiSH1aZwMIrGOK3nxVN9GBdMZpss1S/kuYtmvyRKuot58rnv/xLK/vw/0nzfF/cxv7+sCTAA=
-    alt: 2025년에서 사진 한 장을 꼽는다면 이거.
+    alt: 올해 사진 한 장을 꼽는다면 이거.
 
 title: "[2025] 색보정과 화면비"
 
