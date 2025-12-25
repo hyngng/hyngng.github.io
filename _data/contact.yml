@@ -6,6 +6,9 @@
 - type: instagram
   icon: "fa-brands fa-instagram fa-lg"
 
+- type: pinterest
+  icon: "fa-brands fa-pinterest fa-lg"
+
 - type: email
   icon: "fas fa-envelope fa-lg"
   noblank: true # open link in current tab

@@ -65,7 +65,7 @@
 
       {% case entry.type %}
         {% comment %} region 수정됨 {% endcomment %}
-        {% when 'github', 'twitter', 'instagram' %}
+        {% when 'github', 'twitter', 'pinterest' %}
         {% comment %} endregion 수정됨 {% endcomment %}
           {%- unless site[entry.type].username -%}
             {%- continue -%}
