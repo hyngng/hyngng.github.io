@@ -2,7 +2,7 @@
 image:
     path: /2025-12-25-photos-of-eulsa-year/preview-image.webp
     lqip: data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwAgCdASoQAAgAAUAmJbACdAYoH8AKAxiSAAD+67IqvZt+JjEJiSH1aZwMIrGOK3nxVN9GBdMZpss1S/kuYtmvyRKuot58rnv/xLK/vw/0nzfF/cxv7+sCTAA=
-    alt: 올해의 사진은 이거.
+    alt: 올해의 사진은 요거
 
 title: "[2025] 색보정과 화면비"
 
@@ -14,7 +14,7 @@ toc: false
 toc_sticky: true
 
 date: 2025-12-25 11:39:00 +0900
-last_modified_at: 2025-12-25 12:41:00 +0900
+last_modified_at: 2025-12-26 09:08:00 +0900
 ---
 
 ![20250123_123553](/photo/20250123_123553.webp){: .rounded-10 }

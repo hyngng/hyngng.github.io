@@ -2,7 +2,7 @@
 image:
     path: /2022-12-31-photos-of-imin-year/preview-image.webp
     lqip: data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAADwAQCdASoQAAgAAUAmJQBOhgl4IQBMD2AA/v7nzUAQn08fmq3rhT8MoNr+vs1jFmz6Z//7f+P0aXNzZOg9/O+EAb/QjEn3/x/tvX/BOULX/0r3bhsf464fV4q9gbEEJILr2xKmRBCLKkXR9G5UCCJ4ieiP4HuitTVDVAAA
-    alt: 올해의 사진은 이거
+    alt: 올해의 사진은 요거
     
 title: "[2022] 열심히 담은 일상"
 
@@ -51,7 +51,7 @@ redirect_from:
 *동네 주변을 산책하다가 | 230mm ISO40 F4.9 1/8000s*
 
 ![20221023_144744](/photo/20221023_144744.webp){: .rounded-10 }
-*군인 친구 면회하러 갔다가 | 69mm ISO40 F2.4 1/180s*
+*입대한 친구 면회하러 갔다가 | 69mm ISO40 F2.4 1/180s*
 
 ![20221105_085924](/photo/20221105_085924.webp){: .rounded-10 }
 *아무도 없는 복도에서 | 69mm ISO80 F2.4 1/60s*

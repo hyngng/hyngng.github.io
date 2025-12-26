@@ -2,7 +2,7 @@
 image:
     path: /2024-12-31-photos-of-gabjin-year/preview-image.webp
     lqip: data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABQAgCdASoQAAgAAUAmJZQCdAacFnfav+P8tdAA/v48LgESHnOlE9Xmkbni3/iu9L+duAcPsLcrOwkvNC88IKN/vBxlKKAf1q3iezIZrMORZnnk0doPk+MGhYAAAA==
-    alt: 올해의 사진은 이거
+    alt: 올해의 사진은 요거
 
 title: "[2024] 솔직히 좀 재밌음"
 
