@@ -2,7 +2,7 @@
 image:
     path: /2023-04-17-third-drawings/preview-image.webp
     lqip: data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACwAQCdASoQAAgAAgA0JaQAAtz+deMAAP7+fCmBZZn3+/ZORq9T+vedgOywrM/PuK61PMAYYBLZKgAA
-    alt: 사람 거꾸로 매달기
+    alt: 썸네일용
 
 title: "디지털 드로잉 #3: 그림 형식을 바꿔보자"
 
@@ -16,6 +16,14 @@ toc_sticky: true
 date: 2023-04-17 15:24:00 +0900
 last_modified_at: 2023-04-26 20:55:00 +0900
 ---
+
+![230426-거꾸로매달림](/drawing/230426-거꾸로매달림.webp){: .rounded-10 .light .border }
+![230426-거꾸로매달림](/drawing/230426-거꾸로매달림.webp){: .rounded-10 .dark }
+*거꾸로 매달기*
+
+![230329-스트레칭](/drawing/230329-스트레칭.webp){: .rounded-10 .light .border }
+![230329-스트레칭](/drawing/230329-스트레칭.webp){: .rounded-10 .dark }
+*어쨌든 기분 좋음*
 
 ![230329-스트레칭](/drawing/230329-스트레칭.webp){: .rounded-10 .light .border }
 ![230329-스트레칭](/drawing/230329-스트레칭.webp){: .rounded-10 .dark }

@@ -1,8 +1,8 @@
 ---
 image:
     path: /2025-10-20-sixth-drawings/preview-image.webp
-    lqip: data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoQAAgAAUAmJaQAAujYCohQAP7+76+DxEAOKQCT8iyJYy0S/C/v8PIbT0MnVETMKk+t43s6AAA=
-    alt: "손풀기 1"
+    lqip: data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAQAgCdASoQAAgAAUAmJbACdDXAASQtjScAAP79L+WciPcdAilW9u692D0zjClv/UGhYvj56cGIlM/tLZIHfM3XUaSJ/pYVE/o5D2RIG4Dsg/Pf/sg9IZp6gf/8/Hcbq+b8v/+0ISBav3jyzrQsb6GE1/oAAA==
+    alt: 썸네일용
 
 title: "디지털 드로잉 #6: 한 주 동안 그린 것들"
 
@@ -16,6 +16,10 @@ toc_sticky: true
 date: 2025-11-25 20:34:00 +0900
 last_modified_at: 2025-11-25 20:34:00 +0900
 ---
+
+![251012-손풀기1](/drawing/251012-손풀기1.webp){: .rounded-10 .light .border}
+![251012-손풀기1](/drawing/251012-손풀기1.webp){: .rounded-10 .dark }
+*손풀기 1*
 
 ![251010-손풀기2](/drawing/251010-손풀기2.webp){: .rounded-10 .light .border}
 ![251010-손풀기2](/drawing/251010-손풀기2.webp){: .rounded-10 .dark }

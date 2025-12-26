@@ -1,8 +1,8 @@
 ---
 image:
     path: /2024-11-18-fifth-drawings/preview-image.webp
-    lqip: data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADQAQCdASoQAAgAAUAmJYwAAv+/8OsuAAD+/xM/7Sq+LkyGnTkU29x/vy/D6FYmTGl52h8nvE6sE3eZj2hbsAjc4Uho6KsHwQkTsCfwAEEthUGm2LT3wM5L2t70AAAA
-    alt: "등교중"
+    lqip: data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoQAAgAAUAmJaQAAsfy2SaAAP7/BASNE56S25IgRkUyxDBP+l6D5x+0Xz2kb8xR2kTttMAAAAA=
+    alt: 썸네일용
 
 title: "디지털 드로잉 #5: 캐주얼 판타지 등등"
 
@@ -17,16 +17,20 @@ date: 2024-11-18 20:12:00 +0900
 last_modified_at: 2024-11-29 22:31:00 +0900
 ---
 
-![241013-신문형식](/drawing/241013-신문형식.webp){: .rounded-10 .light .border}
-![241013-신문형식](/drawing/241013-신문형식.webp){: .rounded-10 .dark }
-*이거 되게 재밌게 그렸음*
-
 ![241006-바렛쏘기](/drawing/241006-바렛쏘기.webp){: .rounded-10 }
 *이동 흐리기 처음 써봄*
 
 ![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .rounded-10 .light .border}
 ![241014-게으름피우기](/drawing/241014-게으름피우기.webp){: .rounded-10 .dark }
 *약간 이런거 로망 있음*
+
+![241013-신문형식](/drawing/241013-신문형식.webp){: .rounded-10 .light .border}
+![241013-신문형식](/drawing/241013-신문형식.webp){: .rounded-10 .dark }
+*이거 되게 재밌게 그렸음*
+
+![241110-등교](/drawing/241110-등교.webp){: .rounded-10 .light .border}
+![241110-등교](/drawing/241110-등교.webp){: .rounded-10 .dark }
+*등교중*
 
 ![241116-영수증](/drawing/241116-영수증.webp){: .rounded-10 }
 *이게 그림이긴 할까*

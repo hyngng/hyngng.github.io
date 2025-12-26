@@ -2,7 +2,7 @@
 image:
     path: /2024-04-16-fourth-drawings/preview-image.webp
     lqip: data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABQAgCdASoQAAgAAgA0JbACdLoAAw99mbC/OgAA/vnFT4pLmuNFoQjBo6mMbdQjhxXXeNsH3/zPWe22e+TocAAA
-    alt: 불편함
+    alt: 썸네일용
 
 title: "디지털 드로잉 #4: 일상적인 스케치 8장"
 
@@ -20,12 +20,9 @@ redirect_from:
   - /posts/fourth-drawing/
 ---
 
-![240128-로봇야자](/drawing/240128-로봇야자.webp){: .rounded-10 }
-*야자 라이브*
-
 ![240415-헤드폰목도리](/drawing/240415-헤드폰목도리.webp){: .rounded-10 .light .border }
 ![240415-헤드폰목도리](/drawing/240415-헤드폰목도리.webp){: .rounded-10 .dark }
-*그리고보니 무표정*
+*그리고 보니 무표정*
 
 ![240129-검정마법약사](/drawing/240129-검정마법약사.webp){: .rounded-10 .light .border }
 ![240129-검정마법약사](/drawing/240129-검정마법약사.webp){: .rounded-10 .dark }
@@ -38,6 +35,13 @@ redirect_from:
 ![240516-부시시](/drawing/240516-부시시.webp){: .rounded-10 .light .border}
 ![240516-부시시](/drawing/240516-부시시.webp){: .rounded-10 .dark }
 *부시시*
+
+![240128-로봇야자](/drawing/240128-로봇야자.webp){: .rounded-10 }
+*야자 라이브*
+
+![240504-의자위에사람](/drawing/240504-의자위에사람.webp){: .rounded-10 .light .border }
+![240504-의자위에사람](/drawing/240504-의자위에사람.webp){: .rounded-10 .dark }
+*이것도 그리고 보니 무표정*
 
 ![240416-가방짐](/drawing/240416-가방짐.webp){: .rounded-10 }
 *낭만*

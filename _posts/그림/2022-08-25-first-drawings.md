@@ -2,7 +2,7 @@
 image:
     path: /2022-08-25-first-drawings/preview-image.webp
     lqip: data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAgAAgA0JaQAD4WwKYuRsAAA/v58LC1cLESP9ztg6FTwgeVVOIMR19dwzrRkt/f6yWyrN/pF2btgTAAAAA==
-    alt: 포스트 아포칼립스
+    alt: 썸네일용
 
 title: "디지털 드로잉 #1: 고등학생 때 낙서 위주의 정리"
 
@@ -16,6 +16,10 @@ toc_sticky: true
 date: 2022-08-25 14:38:00 +0900
 last_modified_at: 2025-11-26 12:21:00 +0900
 ---
+
+![220000-생존사람](/drawing/221025-생존사람.webp){: .rounded-10 .light .border }
+![220000-생존사람](/drawing/221025-생존사람.webp){: .rounded-10 .dark }
+*포스트 아포칼립스*
 
 ![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .light .border }
 ![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .dark }

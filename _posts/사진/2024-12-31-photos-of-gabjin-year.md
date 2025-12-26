@@ -20,6 +20,9 @@ redirect_from:
   - /posts/photos-of-gabjin/
 ---
 
+![20240126_153421](/photo/20240126_153421.webp){: .rounded-10 }
+*송도 센트럴파크 | 69mm ISO40 F2.4 1/1700s*
+
 ![20240301_133138](/photo/20240301_133138.webp){: .rounded-10 }
 *서울식물원 | 69mm ISO40 F2.4 1/310s*
 
