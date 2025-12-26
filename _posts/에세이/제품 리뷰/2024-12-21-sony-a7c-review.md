@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2024-12-21 22:16:00 +0900
-last_modified_at: 2025-10-21 10:58:00 +0900
+last_modified_at: 2025-12-26 09:10:00 +0900
 ---
 
 {% comment %}
@@ -28,7 +28,7 @@ last_modified_at: 2025-10-21 10:58:00 +0900
 2. RAW 출력은 광각과 초광각은 12MP로, 두 개의 망원은 10MP로 제한되어 화소가 조금 낮습니다. 광각 108MP의 경우 RAW 출력을 할 수 없습니다.
 4. 두 개 망원의 센서와 렌즈 모두 아쉽습니다. 센서는 1/3.55"로 크기가 매우 작고, 렌즈는 F2.4, F4.9로 어두우며 품질은 10MP도 온전히 다 사용하지 못하고 흐릿합니다.
 
-그래서 점점 [1.스마트폰으로,](https://hyngng.github.io/posts/photos-of-gyemyo/) [2.사진을,](https://hyngng.github.io/posts/photos-of-gyemyo/) [3.찍으면 찍을 수록](https://hyngng.github.io/posts/photos-of-gabjin/) 아쉬움이 들기 시작했습니다. 그래서 제대로 된 카메라를 알아보기 시작했고, 소니 A7M4, ZV-E10, A6400, 루믹스 S5 등 여러가지 모델을 살펴보다 2025년 오늘날 가성비가 괜찮은 풀프레임 카메라로서 소니 A7C를 고르게 되었습니다.
+그래서 점점 [1.스마트폰으로,](https://hyngng.github.io/posts/photos-of-gyemyo/) [2.사진을,](https://hyngng.github.io/posts/photos-of-gyemyo/) [3.찍으면 찍을 수록](https://hyngng.github.io/posts/photos-of-gabjin/) 아쉬움이 들었습니다. 그래서 제대로 된 카메라를 알아보기 시작했고, 소니 A7M4, ZV-E10, A6400, 루믹스 S5 등 여러가지 모델을 살펴보다 2025년 오늘날 가성비가 괜찮은 풀프레임 카메라로서 소니 A7C를 고르게 되었습니다.
 
 ## **그렇게 일단 사기는 했는데**
 
