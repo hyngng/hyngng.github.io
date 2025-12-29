@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-05-28 10:50:00 +0900
-last_modified_at: 2025-11-20 13:19:00 +0900
+last_modified_at: 2025-12-29 07:29:00 +0900
 
 mermaid: true
 math: true
@@ -51,14 +51,14 @@ neighbor.g = current_node.g + 1
 
 $h(n)$은 열린목록에 등록된 후보 노드로부터 목적지 노드까지의 이동 비용을 대략적으로 추정하는 함수입니다. 식당 선택할 때 손님 많은 곳으로 가거나 해외제품을 구매할 때 환율을 1200~1400원으로 어림잡아 계산하는 것 등을 휴리스틱이라고 부르는데, 그래서 휴리스틱 측정값이라고도 합니다. 문제 상황에 맞게 해당 값을 알맞게 구하는 것이 알고리즘의 성능 향상에 도움을 주는 것으로 알려져 있으며, 일반적으로 다음과 같은 방법으로 얻을 수 있습니다.
 
-- 맨해튼 거리 $h(n) = \|x_1 - x_2\| + \|y_1 - y_2\|$
+- 예시 1: 맨해튼 거리 $h(n) = \|x_1 - x_2\| + \|y_1 - y_2\|$
 ```python
 def heuristic(start_node, end_node):
     return abs(
         end_node[x] - start_node[x]) + abs(end_node[y] - start_node[y]
     )
 ```
-- 유클리드 거리 $h(n) = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$
+- 예시 2: 유클리드 거리 $h(n) = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$
 ```python
 def heuristic(start_node, end_node):
     return math.sqrt(
