@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-01-31 10:18:00 +0900
-last_modified_at: 2025-07-28 17:38:00 +0900
+last_modified_at: 2026-01-02 08:36:00 +0900
 ---
 
 > **안드로이드 기준입니다!**
@@ -88,10 +88,9 @@ public static class Vibration
         Handheld.Vibrate();
 #endif
     }
+
     public static void Vibrate(long[] pattern, int repeat)
-    {
- 
- 
+    { 
 #if UNITY_ANDROID && !UNITY_EDITOR
         AndroidVibrator.Call("vibrate", pattern, repeat);
 #else
@@ -140,4 +139,4 @@ public static void Vibrate()
 }
 ```
 
-혹은, `Vibration()`에 간단한 한 줄 코드를 위와 같이 추가해서 진동이 허용되어 있는 경우에만 울리도록 만들 수도 있습니다. 사실 직접 사용해보니 위와 같이 조건 확인 절차를 한 번 거치는 것이 필수적인 것 같습니다.
+혹은, `Vibration()`에 간단한 한 줄 코드를 위와 같이 추가해서 진동이 허용되어 있는 경우에만 울리도록 만들 수도 있습니다. 직접 사용해보니 조건 확인 절차를 한 번 거치는 것이 개념적으로도, 실용적으로도 낫습니다.
