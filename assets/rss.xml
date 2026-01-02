@@ -20,9 +20,9 @@ permalink: /rss.xml
         {% if site.cdn %}
           {% assign cdn_src = 'src="' | append: site.cdn | append: '/' %}
           {% assign content_with_cdn = post.content | replace: 'src="/', cdn_src %}
-          <description>{{ content_with_cdn | markdownify | remove_tag: 'h2', 'h3', 'em', 'blockquote', 'pre' | strip_html | xml_escape | truncate: 250 }}</description>
+          <description>{{ content_with_cdn | markdownify | remove_tag: 'h2', 'h3', 'em', 'pre', 'table', 'blockquote', 'mjx-container' | strip_html | xml_escape | truncate: 250 }}</description>
         {% else %}
-          <description>{{ post.content | markdownify | remove_tag: 'h2', 'h3', 'em', 'blockquote', 'pre' | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines | truncate: 250 -}}</description>
+          <description>{{ post.content | markdownify | remove_tag: 'h2', 'h3', 'em', 'pre', 'table', 'blockquote', 'mjx-container' | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines | truncate: 250 -}}</description>
         {% endif %}
 
         {% assign parts = post.content | split: '<img ' %}
