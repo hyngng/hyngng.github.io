@@ -1,9 +1,4 @@
 ---
-image:
-    path: /2025-09-25-finding-camus-in-goryeo-history/preview-image.webp
-    lqip: data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAQCdASoQAAgAAUAmJaQAD4APqXZfe8gA/vnuHyePotTeHd7ozjQUTReIqYKnV9aET/a2cdNr9ze7wcqo/0tsT8ACEvu4Tf316rtF+00X9HmGfG0bWacphR/lb3KMirEAAAAA
-    alt: "1944년, 프랑스 파리. 카뮈를 소개할 땐 주로 이 사진이 인용된다."
-
 title: "카뮈의 시선으로 바라본 12세기 고려의 외교노선"
 
 categories: [에세이]
@@ -14,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-09-25 15:08:00 +0900
-last_modified_at: 2025-10-10 16:41:00 +0900
+last_modified_at: 2026-01-04 22:12:00 +0900
 ---
 
 ## **알베르 카뮈의 부조리 철학**
@@ -24,11 +19,6 @@ last_modified_at: 2025-10-10 16:41:00 +0900
 부조리함은 삶의 의미를 제시하기 위해 고안된 개념이지만 인간의 열망과 세계의 침묵간의 대립은 결국 인식적 충격으로 마무리된다는 점을 발견할 수 있다. 그 덕에 생각보다 많은 상황에서 부조리함을 연상할 수 있는데, 예를 들어 인간 이성의 정수인 과학조차 언제든 뒤집힐 수 있는 가장 합리적인 가설의 집합체에 불과하다는 점을 깨닫고 나면 부조리하게 다가올 수 있다.
 
 그의 철학에 의하면 부조리를 마주한 인간이 선택할 수 있는 대응은 부정, 회피, 대면 세 가지 형태로 나타난다. 부조리를 부정하거나 회피하는 것은 도피적인 태도로 현실에 순응하는 것인데, 보다 직설적으로 말하면 종교에의 귀의나 육체적 자살이다. 반면 대면이란 그것을 삶의 일부러 인정하면서도 운명에 굴복하지 않고 맞서는 반항적 태도로서, 이것이야말로 카뮈가 바람직하다고 여기는 삶의 방식이다.
-
-{% comment %}
-Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-même n’est pas raisonnable, c’est tout ce qu’on peut en dire. Mais ce qui est absurde, c’est la confrontation de cet irrationnel et de ce désir éperdu de clarté dont l’appel résonne au plus profond de l’homme. L’absurde dépend autant de l’homme que du monde. Il est pour le moment leur seul lien.
-앞에서 나는 이 세계가 부조리한 것이라고 말했는데 그것은 지나치게 성급한 말이었다. 그 자체로 놓고 볼 때 이 세계는 합리적인 것이 아니다. 이것이 우리가 말할 수 있는 전부다. 그러나 부조리한 것은 바로 이 비합리와, 명확함에 이르려는 필사적인 열망과의 맞대면인 것이다.
-{% endcomment %}
 
 ## **금나라 건국과 고려의 동요**
 
@@ -80,3 +70,13 @@ Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-mêm
 반면, 개경파의 주장은 금나라 정벌이라는 감정적 호소나 맹목적 믿음에 의존하는 대신, 굴욕적인 현실을 국가 존속을 위한 삶의 조건으로 받아들여 외교적 긴장 관계 해소와 같은 실리를 추구하는 형태를 띄고 있다. 이는 부조리를 부정하거나 도피하는 대신 그것을 인간의 조건으로 끌어안는 태도였으며, 부조리와 대면하며 자신의 길을 간다는 점에서 반항적 인간의 모습에 가깝다. 그것은 분명 기득권 유지를 위한 수단이기도 했지만, 500년 뒤 병자호란에서 유사한 딜레마가 재현되었을 때 척화파의 강경 성향이 주류가 된 결과가 어땠는지를 생각한다면, 개경파의 요지는 부조리에 맞서기 위한 인간의 유일한 무기인 이성을 붙잡으려는 시도로서 이해하더라도 큰 위화감은 없을 것 같다.
 
 개인적으로는 역사에 만약은 없으므로 어느 주장이 옳은지에 대해서는 말을 아끼고 싶다. 다만 이 일련의 사건이 있었던 직후 1170년 의종 대에 무신정변이 일어나기 때문에, 만약 국가 운영철학이 정상적으로 유지되었다면 고려가 금나라에 대해서 어떤 외교노선을 취했을지, 내부적으로 어떤 담론이 오갔을지에 대해 알 수 있는 가능성이 사라졌다는 것이 아쉬움으로 남는다.
+
+{% comment %}
+image:
+    path: /2025-09-25-finding-camus-in-goryeo-history/preview-image.webp
+    lqip: data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAQCdASoQAAgAAUAmJaQAD4APqXZfe8gA/vnuHyePotTeHd7ozjQUTReIqYKnV9aET/a2cdNr9ze7wcqo/0tsT8ACEvu4Tf316rtF+00X9HmGfG0bWacphR/lb3KMirEAAAAA
+    alt: "1944년, 프랑스 파리. 카뮈를 소개할 땐 주로 이 사진이 인용된다."
+
+Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-même n’est pas raisonnable, c’est tout ce qu’on peut en dire. Mais ce qui est absurde, c’est la confrontation de cet irrationnel et de ce désir éperdu de clarté dont l’appel résonne au plus profond de l’homme. L’absurde dépend autant de l’homme que du monde. Il est pour le moment leur seul lien.
+앞에서 나는 이 세계가 부조리한 것이라고 말했는데 그것은 지나치게 성급한 말이었다. 그 자체로 놓고 볼 때 이 세계는 합리적인 것이 아니다. 이것이 우리가 말할 수 있는 전부다. 그러나 부조리한 것은 바로 이 비합리와, 명확함에 이르려는 필사적인 열망과의 맞대면인 것이다.
+{% endcomment %}
