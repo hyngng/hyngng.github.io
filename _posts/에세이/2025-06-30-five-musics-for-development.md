@@ -1,5 +1,5 @@
 ---
-title: "생산성이 필요할 때 듣는 노래 유형 4선"
+title: "생산성이 필요할 때 듣는 노래 장르 4선"
 
 categories: [에세이]
 tags: [프로그래밍, 개발, 노래]
@@ -20,7 +20,7 @@ mermaid: true
 
 {% include embed/youtube.html id='2VV0o5pkNBY' %}
 
-코로나 팬데믹 때 크게 성장하면서 저도 같이 접하게 된 장르입니다. 로우파이는 뚜렷한 기승전결 없이 단순한 멜로디가 반복되는 것이 특징이고, 그 특성상 집중력을 별로 요구하지 않아 안정감 있는 백색소음 정도의 역할을 해주는 것이 장점입니다. 그러면서도 완전한 무음 상태의 적막함은 채워주기 때문에 배경음악으로 틀어놓기 부담이 없습니다.
+코로나 팬데믹 때 크게 성장하면서 저도 같이 접하게 된 장르입니다. 로우파이는 뚜렷한 기승전결 없이 단순한 멜로디가 반복되는 것이 특징이고, 그 특성상 집중력을 별로 요구하지 않아 안정감 있는 백색소음 정도의 역할을 해주는 것이 장점입니다. 그러면서도 완전한 무음 상태의 적막함은 채워주기 때문에 배경음악으로 틀어놓기에 부담이 없습니다.
 
 저는 유명한 로우파이 유튜브 채널로 Lofi Girl을 찾아가기도 하지만, 라이브 스트리밍에서 틀어주는 노래를 따라 [Kulpa](https://www.youtube.com/@Kupla/featured), [l'Outlander](https://www.youtube.com/@loutlander/featured), [Sleepy Fish](https://www.youtube.com/channel/UCNR1Pzl2T9biZWAbOXZPUwQ) 등 몇몇 아티스트의 노래를 찾아 플레이리스트를 만들어서 듣는 편입니다. 특히 그중에서도 [The Past, The Present](https://www.youtube.com/watch?v=wTKYPDjirxo), [Valentine](https://www.youtube.com/watch?v=wjCM71c0-Ok) 등이 좋았습니다.
 
@@ -31,6 +31,15 @@ mermaid: true
 로우파이로부터 파생된 맥락으로 알게 된 장르입니다. 서정적인 비트에 정갈한 피아노, 색소폰, 플루트 등 악기의 조합이 즐겁게 느껴지고 또 의외로 이 조합이 진정된 분위기를 만들어주기 때문에 자주 찾고 있습니다. 누자베스의 곡은 그 자체로도 좋고, 색다른 분위기가 필요하다면 다른 밴드가 플레이하는 커버 영상도 찾아서 듣기 좋습니다. 저는 그중에서도 [Counting Stars](https://www.youtube.com/watch?v=IXa0kLOKfwQ), [A Day By Atmosphere Supreme](https://www.youtube.com/watch?v=mnyUhXsWiX8), [Aruarian Dance](https://www.youtube.com/watch?v=qYcoJpqCha4) 정도를 기분좋게 듣고 있습니다.
 
 재밌게도 [yes24의 누자베스 플레이리스트](https://www.youtube.com/watch?v=9CSjtzOueFo)라는 것이 있는데, 실제로도 분위기가 잔잔하고 진정되는 느낌이 있어 책을 읽을 때 특히 잘 어울립니다. 30분~1시간 분량의 플레이리스트를 만들어놓고 루틴 한 번이 모두 돌면 잠시 쉬었다가 읽는 식으로 활용하기 좋습니다.
+
+{% comment %}
+이외에 다음을 추천합니다
+- [Nujabes - Luv(sic) feat.Shing02](https://www.youtube.com/watch?v=Y4HWvsGs0rY)
+- [Beat laments the world](https://www.youtube.com/watch?v=FWMe6S2CEpc)
+- [Other Side of Phase](https://www.youtube.com/watch?v=dZrhNmh3svA)
+- [The Final View](https://www.youtube.com/watch?v=mCsh6gUSW-k)
+- [Horizon](https://www.youtube.com/watch?v=4XMQ_IkErYg)
+{% endcomment %}
 
 ## **팝송**
 
