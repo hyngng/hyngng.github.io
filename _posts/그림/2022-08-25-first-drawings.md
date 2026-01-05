@@ -17,8 +17,8 @@ date: 2022-08-25 14:38:00 +0900
 last_modified_at: 2025-11-26 12:21:00 +0900
 ---
 
-![220000-생존사람](/drawing/221025-생존사람.webp){: .rounded-10 .light .border }
-![220000-생존사람](/drawing/221025-생존사람.webp){: .rounded-10 .dark }
+![220000-생존사람](/drawing/220000-생존사람.webp){: .rounded-10 .light .border }
+![220000-생존사람](/drawing/220000-생존사람.webp){: .rounded-10 .dark }
 *포스트 아포칼립스*
 
 ![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .light .border }
