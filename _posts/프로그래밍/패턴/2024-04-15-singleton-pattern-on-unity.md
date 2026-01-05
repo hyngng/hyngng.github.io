@@ -201,13 +201,13 @@ public class Player : MonoBehaviour
 외부에서 클래스 멤버에 직접 접근이 가능하기 때문에 번거로운 `GameManager`의 인스턴스 생성 과정 없이도 이러한 구성이 가능합니다. 해당 특징을 살려 `GameSystem.cs`{: .filepath } 등의 매니저 스크립트를 싱글톤으로 사용할 경우, 예를 들어 아래와 같은 필드나 메서드를 구성하여 활용할 수 있습니다.
 
 필드
-: - `Score`, `CurrentLevel`, `EnemyCount`: 레벨이나 점수, 남은 적 수 등의 주요 게임 상태를 저장
-- `isGamePaused`, `IsMusicEnabled`: 게임의 일시정지 여부 또는 배경음악의 활성화 여부 등을 저장
+: - `Score`, `CurrentLevel`, `EnemyCount`: 레벨이나 점수, 남은 적 수 등의 주요 게임 상태를 저장하기 위함
+- `isGamePaused`, `IsMusicEnabled`: 게임의 일시정지 여부 또는 배경음악의 활성화 여부 등을 저장하기 위함
 
 메서드
-: - `StartGame()`, `QuitGame()`: 게임이 시작되거나 종료될 때 사용
-- `PauseGame()`, `ResumeGame()`: 게임이 일시정지되거나 재개될 때 사용
-- `LoadScene()`, `LoadLevel()`: 특정 씬이나 레벨을 불러올 때 사용
+: - `StartGame()`, `QuitGame()`: 게임이 시작되거나 종료될 때 사용함
+- `PauseGame()`, `ResumeGame()`: 게임이 일시정지되거나 재개될 때 사용함
+- `LoadScene()`, `LoadLevel()`: 특정 씬이나 레벨을 불러올 때 사용함
 
 ## **주의사항**
 
