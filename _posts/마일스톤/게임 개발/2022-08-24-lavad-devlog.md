@@ -84,7 +84,7 @@ redirect_from:
 
 ![lavad-working2](/2022-08-24-lavad-devlog/lavad-working2.webp)
 
-> **[깃허브](https://github.com/hyngng/LAV-AD)**에서 다운받아 플레이해볼 수 있습니다.
+> **[깃허브](https://github.com/hyngng/unity-lavad)**에서 다운받아 플레이해볼 수 있습니다.
 {: .prompt-tip }
 
 7월 8일에 시작해 7월 25일에 마지막 빌드를 거쳤으니 17일동안 완성한 단기 프로젝트입니다. 개인적으로는 마지막 빌드를 만들면서 다음에는 보다 큰 규모의 프로젝트를 진행해보고 싶다는 생각을 했습니다. 특히 C#에 대한 이해가 부족한 상태로 목표달성에만 급급한 코드를 남발한 것 같다는 아쉬움이 있기도 합니다.
