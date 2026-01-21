@@ -1,7 +1,7 @@
 ---
 image:
     path: /2025-10-20-sixth-drawings/preview-image.webp
-    lqip: data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAQAgCdASoQAAgAAUAmJbACdDXAASQtjScAAP79L+WciPcdAilW9u692D0zjClv/UGhYvj56cGIlM/tLZIHfM3XUaSJ/pYVE/o5D2RIG4Dsg/Pf/sg9IZp6gf/8/Hcbq+b8v/+0ISBav3jyzrQsb6GE1/oAAA==
+    lqip: data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQAQCdASoQAAgAAUAmJYgC7ADREtJ1oAD+/wQnWDcossV5pK9JMlT3/nt7MM/pj8fRfpz/f/X08vhXf+9X9e3IY94Q64EySwLuCGuO/xdgveH9b/6qrT+X3q82ZZs6rh/r1NX/H9Q6yLXWP+v2dzxwPv8YgXyUUAA=
     alt: 썸네일용
 
 title: "디지털 드로잉 #6: 한 주 동안 그린 것들"
