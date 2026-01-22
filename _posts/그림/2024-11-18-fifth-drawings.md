@@ -1,7 +1,7 @@
 ---
 image:
     path: /2024-11-18-fifth-drawings/preview-image.webp
-    lqip: data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoQAAgAAUAmJaQAAsfy2SaAAP7/BASNE56S25IgRkUyxDBP+l6D5x+0Xz2kb8xR2kTttMAAAAA=
+    lqip: data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQAQCdASoQAAgAAUAmJYgC7ADREtJ1oAD+/wQnWDcossV5pK9JMlT3/nt7MM/pj8fRfpz/f/X08vhXf+9X9e3IY94Q64EySwLuCGuO/xdgveH9b/6qrT+X3q82ZZs6rh/r1NX/H9Q6yLXWP+v2dzxwPv8YgXyUUAA=
     alt: 썸네일용
 
 title: "디지털 드로잉 #5: 캐주얼 판타지 등등"
