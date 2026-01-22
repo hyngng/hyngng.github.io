@@ -1,5 +1,5 @@
 ---
-title: "풀프레임 대신 선택한 후지필름 X-E5 사용기"
+title: "풀프레임 대신 선택한 후지필름 X-E5 사용 후기"
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]
@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2026-01-21 09:58:00 +0900
-last_modified_at: 2026-01-21 22:15:00 +0900
+last_modified_at: 2026-01-22 09:04:00 +0900
 
 mermaid: true
 ---
