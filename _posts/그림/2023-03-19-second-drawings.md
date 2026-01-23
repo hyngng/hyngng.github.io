@@ -27,7 +27,7 @@ last_modified_at: 2023-03-26 15:24:00 +0900
 
 ![230302-토착민](/drawing/230302-토착민.webp){: .rounded-10 .light .border }
 ![230302-토착민](/drawing/230302-토착민.webp){: .rounded-10 .dark }
-*얕은 심도 효과*
+*종교스러운 거*
 
 ![230319-꼬깔구닌](/drawing/230319-꼬깔구닌.webp){: .rounded-10 .light .border }
 ![230319-꼬깔구닌](/drawing/230319-꼬깔구닌.webp){: .rounded-10 .dark }
