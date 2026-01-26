@@ -18,6 +18,7 @@ last_modified_at: 2026-01-23 09:05:00 +0900
 
 redirect_from:
   - /posts/canon-devlog-planning/
+  - /posts/canon-planning/
 ---
 
 ## **들어가며**
