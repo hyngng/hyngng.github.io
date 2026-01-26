@@ -42,8 +42,7 @@ _최근에 추가한 특정 태그 내용 삭제 기능과, 기능이 성공적�
 
 ## **글은 마크다운으로**
 
-![markdown-light](/2024-04-09-github-blog-thoughts/markdown-light.webp){: .light .border }
-![markdown-dark](/2024-04-09-github-blog-thoughts/markdown-dark.webp){: .dark }
+![markdown](/2024-04-09-github-blog-thoughts/markdown.webp)
 _지금 보고 있는 글 단락의 작성화면_
 
 이외에 깃허브 블로그의 가장 큰 특징 중 하나는 바로 글을 쓸 때 마크다운(Markdown)이라는 마크업 언어를 사용한다는 겁니다. 마크다운에는 여러 장단점이 있지만 개인적으로는 좋은 점이 더 많다고 생각합니다.
@@ -75,8 +74,7 @@ graph LR
 
 ## **유용한 테마 고유 기능**
 
-![config-light](/2024-04-09-github-blog-thoughts/config-light.webp){: .light .border }
-![config-dark](/2024-04-09-github-blog-thoughts/config-dark.webp){: .dark }
+![config](/2024-04-09-github-blog-thoughts/config.webp)
 _Chirpy 테마의 설정화면(_config.yml) 일부_
 
 지금 사용중인 이 템플릿은 처음에는 깔끔한 디자인과 다크모드 토글 지원, 관련 글 추천 기능이 마음에 들어 선택했는데 사용하다보니 테마 차원에서 지원하는 자잘한 기능들이 꽤 강력합니다. 만약 깃허브 블로그를 개설하면서 이 템플릿을 이용하실 생각이라면 아래 항목은 꼭 숙지하여 활용해보시길 바랍니다.
