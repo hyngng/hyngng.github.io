@@ -50,8 +50,7 @@ git merge remotes/upstream/master
 
 ### **수동 병합**
 
-![merge-light](/2024-05-12-blog-update/merge-light.webp){: .light .border }
-![merge-dark](/2024-05-12-blog-update/merge-dark.webp){: .dark }
+![merge](/2024-05-12-blog-update/merge.webp)
 _정보 페이지 작성화면. 위아래 둘 중 하나를 남겨 충돌을 해결함._
 
 저의 경우 이어서 VsCode로 수동 병합을 진행했습니다. 혹시나 이 방식으로의 병합이 처음이신 분들을 위해, 내 코드를 보존하고 싶다면 `Accept Current Change`를, 새 코드로 대체하고 싶다면 `Accept Incoming Change`를 선택하면 됩니다. 한 번 선택하면 시간이 지나고 되돌리기 어렵기 때문에 천천히 살펴보는게 좋습니다.
