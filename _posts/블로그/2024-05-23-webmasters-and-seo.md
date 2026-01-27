@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2024-05-23 11:53:00 +0900
-last_modified_at: 2025-10-10 16:26:00 +0900
+last_modified_at: 2026-01-27 14:32:00 +0900
 
 mermaid: true
 ---
@@ -158,7 +158,7 @@ Liquid::Template.register_filter(Jekyll::ContentFilter)
 > **24/09/25 수정!**
 {: .prompt-info }
 
-사실 위의 내용은 겉핥기식 해결책으로 새로 생성된 description이 {% raw %}`{{ seo_tags }}`{% endraw %}의 description과 중복되는 문제가 있습니다. 저는 보다 근본적인 해결책을 원했고, [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag/tree/master) 플러그인에서 meta description을 생성하는 부분 자체를 찾아 아래와 같이 수정했습니다.
+사실 위의 내용은 겉핥기식 해결책입니다. 새로 생성된 description이 {% raw %}`{{ seo_tags }}`{% endraw %}의 description과 중복되기 때문에, 페이지에 `<meta name="description" ... >` 태그가 2개 존재하게 되는 문제가 있었습니다. 저는 보다 근본적인 해결책을 원했고, [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag/tree/master) 플러그인에서 meta description을 생성하는 부분 자체를 찾아 아래와 같이 수정했습니다.
 
 {% raw %}
 ```liquid
@@ -179,6 +179,17 @@ Liquid::Template.register_filter(Jekyll::ContentFilter)
 ```
 {: file="jekyll-seo-tag/lib/template.html" }
 {% endraw %}
+
+```ruby
+GIT
+  remote: https://github.com/hyngng/jekyll-seo-tag.git
+  revision: 8584ad6bd6788036ad17a35659c87737b11d02c6
+  branch: master
+  specs:
+    jekyll-seo-tag (2.8.0)
+      jekyll (>= 3.8, < 5.0)
+```
+{: file="Gemfile.lock" }
 
 ```ruby
 gem 'jekyll-seo-tag', git: 'https://github.com/hyngng/jekyll-seo-tag.git', branch: 'master'
