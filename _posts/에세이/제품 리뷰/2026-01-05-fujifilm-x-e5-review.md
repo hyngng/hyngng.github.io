@@ -163,7 +163,7 @@ X-E5에서 도입된 새 뷰파인더 인터페이스 모드는 매우 만족스
 ## **앞으로**
 
 ![example-shot](/2026-01-05-fujifilm-x-e5-review/example-shot.webp)
-*X-E5로 찍은 느낌있는 흑백사진. 필름 시뮬레이션은 어크로스*
+*X-E5로 찍은 흑백사진. 필름 시뮬레이션은 어크로스*
 
 X-E5에 사용할만한 렌즈는 꽤 후한 조건으로 찾아봐도 거의 없습니다. 티티아티산 27mm F2.8이 그렇게 좋은 렌즈가 아닌데 다들 이 렌즈를 쓰는 이유를 알 수 있을 정도로 X-E5와 어울리는 APS-C 렌즈군이 굉장히 빈약합니다. 그나마 이전에 소니를 사용할 때 자주 참고했던 SonyAlphaBlog의 [Which Lenses are best for A6xxx – Part 1 : Introduction & Summary](https://sonyalpha.blog/2020/03/02/which-lenses-are-the-sharpest-for-a-a6xxx/)를 최대한 참고했고, 네이티브 렌즈에 대해서도 MTF차트와 각종 리뷰로 최대한 열심히 찾아보았는데 그나마 다음 정도가 눈에 띕니다.
 
