@@ -54,7 +54,7 @@ mermaid: true
 ## **후지필름 X-E5의 첫인상**
 
 ![camera-look](/2026-01-05-fujifilm-x-e5-review/camera-look.webp)
-_이번에도 카페에서 찍음_
+_이번에도 카페에서 찍음._
 
 색상을 제외하면 전체적으로 소니 A7C와 유사합니다. 컴팩트가 제품을 정의하는 주요 키워드고, 일반적인 DSLR형 대신 RF 카메라 형태를 지향하고 있으며, 세부적으로는 236만 화소의 작은 EVF가 달려있다는 것까지 닮았습니다. EVF 배율조차 0.62배로 0.59배인 A7C와 거의 비슷합니다.
 
@@ -163,7 +163,7 @@ X-E5에서 도입된 새 뷰파인더 인터페이스 모드는 매우 만족스
 ## **앞으로**
 
 ![example-shot](/2026-01-05-fujifilm-x-e5-review/example-shot.webp)
-*X-E5로 찍은 흑백사진. 필름 시뮬레이션은 어크로스*
+*X-E5로 찍은 흑백사진. 필름 시뮬레이션은 어크로스.*
 
 X-E5에 사용할만한 렌즈는 꽤 후한 조건으로 찾아봐도 거의 없습니다. 티티아티산 27mm F2.8이 그렇게 좋은 렌즈가 아닌데 다들 이 렌즈를 쓰는 이유를 알 수 있을 정도로 X-E5와 어울리는 APS-C 렌즈군이 굉장히 빈약합니다. 그나마 이전에 소니를 사용할 때 자주 참고했던 SonyAlphaBlog의 [Which Lenses are best for A6xxx – Part 1 : Introduction & Summary](https://sonyalpha.blog/2020/03/02/which-lenses-are-the-sharpest-for-a-a6xxx/)를 최대한 참고했고, 네이티브 렌즈에 대해서도 MTF차트와 각종 리뷰로 최대한 열심히 찾아보았는데 그나마 다음 정도가 눈에 띕니다.
 
