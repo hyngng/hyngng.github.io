@@ -1,0 +1,94 @@
+---
+title: "사회복무 보조 프로그램들"
+
+categories: [에세이]
+tags: [에세이]
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2026-01-29 00:00:00 +0900
+last_modified_at: 2026-01-29 00:00:00 +0900
+---
+
+## **음주측정 매크로 프로그램**
+
+### **무슨 프로그램인가**
+
+> [이곳의 글](https://hyngng.github.io/social-agent-logs)을 읽어보고 오시면 더 좋습니다!
+{: .prompt-info }
+
+2024년 7월 사회복무가 시작되고, 넘겨받은 음주측정부터 매크로 프로그램을 만들었습니다.
+
+인수인계받은 업무 순서
+: 1. 인천교통공사 웹메일에 접속하고, 음주측정 메일함으로 이동한다.
+2. 수신된 메일을 하나하나 열어보며, `홍길동 (example@mail.com)` 형식의 텍스트 또는 함께 첨부된 이미지로부터 성함을 찾아 메모장에 기록한다.
+3. '다음' 버튼을 누르며 모든 인원이 기록될 때까지 이 과정을 반복한다.
+4. 모두 기록했으면 지정된 엑셀 파일에 기록하고, 근무일인데 음주측정 메일 발송을 하지 않은 분들에 대해 문자를 발송한다.
+
+### **세부사항**
+
+파이썬과 `selenium` 라이브러리를 이용해 자동화 프로그램 `sabok-auto-umzu`를 만들었습니다. 회사 내 보안사항이 있어 코드를 공개하지는 못하지만, 필요한 부분만 간략히 설명하자면
+
+```text
+sabok-auto-umzu/
+├── assets/
+│   └── img/
+│       └── logo.png
+├── docs/
+│   └── CHANGELOG.md
+├── main
+│   ├── backend.py
+│   ├── frontend.py
+│   └── main.py
+├── LICENSE
+└── README.md
+```
+
+사실 이 정도로 파일 분리가 필요하지는 않았으므로 좋은 구조는 아니지만, 직전까지 객체지향과 SOLID 원칙, 그리고 제 블로그 테마 [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)의 파일 구조에 빠져 있던 덕에 파일 분리를 먼저 강행했습니다. 직전까지 `C#`만을 다뤄오고 있었기 때문에, 당시에 파이썬은 [주식 자동매매 프로그램](https://hyngng.github.io/posts/making-astp/) 이후로 정말 오랜만에 접하는 언어였습니다.
+
+```python
+import frontend
+import backend
+
+def main():
+    manager   = backend.Manager()
+    extractor = backend.Extractor()
+    interpter = backend.Interpter()
+    writer    = backend.Writer()
+
+    manager.initialize()
+    writer.get_todays_notepad()
+    extractor.load_page()
+
+    try:
+        while True:
+            able_to_go = extractor.check_date_validity()
+
+            if not able_to_go:
+                number = backend.len_of_people
+                print(f"프로그램이 정상적으로 종료되었습니다. {number}명 이름을 수집했습니다.")
+                break
+            else:
+                extractor.get_name_from_page()
+                writer.write_names_to_notepad()
+                extractor.go_to_next_page()
+    finally:
+        backend.driver.quit()
+
+if __name__ == "__main__":
+    main()
+```
+{: file="main.py" }
+
+이 때 당시의 목표는 '문장처럼 읽으면 읽어지는 코드'였습니다. 그래서 `manager.initialize()`, `writer.get_todays_notepad()`, `extractor.load_page()` 와 같이 작성했습니다.
+
+- `frontend.py`는 PyQt로의 변환을 염두해두고 만든 모듈이었지만, 한 달이 채 지나기도 전에 새 사회복무요원이 들어오게 되었고 유지보수의 필요가 없어졌다고 생각함에 따라 방치되었습니다.
+- `backend.py`는 모든 로직을 담당합니다.
+
+이 때의 설계는 제어권을 갖는 `main.py`가 있고, 이곳에서 필요에 따라 여러 모듈을 불러오면서 사용한다는 아키텍처를 목표로 하고 있었습니다.
+
+### **복기**
+
+- 아키텍처에 대한 반성

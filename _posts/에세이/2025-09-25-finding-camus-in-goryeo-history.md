@@ -77,7 +77,7 @@ last_modified_at: 2026-01-26 21:24:00 +0900
 image:
     path: /2025-09-25-finding-camus-in-goryeo-history/preview-image.webp
     lqip: data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAQCdASoQAAgAAUAmJaQAD4APqXZfe8gA/vnuHyePotTeHd7ozjQUTReIqYKnV9aET/a2cdNr9ze7wcqo/0tsT8ACEvu4Tf316rtF+00X9HmGfG0bWacphR/lb3KMirEAAAAA
-    alt: "1944년, 프랑스 파리. 카뮈를 소개할 땐 주로 이 사진이 인용된다."
+    alt: "1944년, 프랑스 파리. 카뮈를 소개할 땐 주로 이 사진이 인용된다"
 
 Je disais que le monde est absurde et j’allais trop vite. Ce monde en lui-même n’est pas raisonnable, c’est tout ce qu’on peut en dire. Mais ce qui est absurde, c’est la confrontation de cet irrationnel et de ce désir éperdu de clarté dont l’appel résonne au plus profond de l’homme. L’absurde dépend autant de l’homme que du monde. Il est pour le moment leur seul lien.
 앞에서 나는 이 세계가 부조리한 것이라고 말했는데 그것은 지나치게 성급한 말이었다. 그 자체로 놓고 볼 때 이 세계는 합리적인 것이 아니다. 이것이 우리가 말할 수 있는 전부다. 그러나 부조리한 것은 바로 이 비합리와, 명확함에 이르려는 필사적인 열망과의 맞대면인 것이다.
