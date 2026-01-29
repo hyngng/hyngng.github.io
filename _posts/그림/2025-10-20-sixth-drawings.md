@@ -14,7 +14,7 @@ toc: false
 toc_sticky: true
 
 date: 2025-11-25 20:34:00 +0900
-last_modified_at: 2025-11-25 20:34:00 +0900
+last_modified_at: 2026-01-29 22:32:00 +0900
 ---
 
 ![251012-손풀기1](/drawing/251012-손풀기1.webp){: .rounded-10 .light .border}
@@ -57,6 +57,16 @@ last_modified_at: 2025-11-25 20:34:00 +0900
 
 ## **번외**
 
-![](banner-beer-twitter.webp)
+그간 그려뒀던 그림들을 합쳐서 SNS 배너를 만들었습니다. 우선 깃허브와 핀터레스트에서 사용할 수 있는 이미지 두 개를 만들었고, 앞으로도 레딧이나 트위터 등지에서 사용할 수 있도록 이미지를 추가 제작했습니다.
 
-[세 번째](http://hyngng.github.io/posts/fourth-drawings/)와 [네 번째](http://hyngng.github.io/posts/fifth-drawings/) 디지털 드로잉
+![banner-noir-twitter](/2025-10-20-sixth-drawings/banner-noir-twitter.webp){: .rounded-10 .light .border }
+![banner-noir-twitter](/2025-10-20-sixth-drawings/banner-noir-twitter.webp){: .rounded-10 .dark }
+*SNS 배너 #1.*
+
+그리고,
+
+![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .light .border }
+![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .dark }
+*SNS 배너 #2.*
+
+특히 두 번째 그림의 경우 이전에 [디지털 드로잉 #4](http://hyngng.github.io/posts/fourth-drawings/), [디지털 드로잉 #5](http://hyngng.github.io/posts/fifth-drawings/) 때 올렸던 그림을 적절히 재사용하여 만들었습니다. 앞으로 SNS 활동이 활발히 있을지는 불투명하지만, 향후 레딧 등지에서 무언가 홍보해야 할 때 좋은 신호를 주기 위해서라도 준비해두려고 합니다.
