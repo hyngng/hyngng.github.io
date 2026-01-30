@@ -39,8 +39,7 @@ redirect_from:
 ![240128-로봇야자](/drawing/240128-로봇야자.webp){: .rounded-10 }
 *야자 라이브*
 
-![240504-의자위에사람](/drawing/240504-의자위에사람.webp){: .rounded-10 .light .border }
-![240504-의자위에사람](/drawing/240504-의자위에사람.webp){: .rounded-10 .dark }
+![240504-의자위에사람](/drawing/240504-의자위에사람.webp){: .rounded-10 }
 *이것도 그리고 보니 무표정*
 
 ![240416-가방짐](/drawing/240416-가방짐.webp){: .rounded-10 }
