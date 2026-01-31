@@ -57,7 +57,7 @@ last_modified_at: 2026-01-29 23:26:00 +0900
 
 ## **번외**
 
-그간 그려뒀던 그림들을 합쳐서 SNS 배너를 만들었습니다. 우선 깃허브와 핀터레스트에서 사용할 수 있는 이미지 두 개를 만들었고, 앞으로도 레딧이나 트위터 등지에서 사용할 수 있도록 이미지를 추가 제작했습니다.
+그간 그려온 그림들을 합쳐서 SNS 배너를 만들었습니다. 우선 깃허브와 핀터레스트에서 사용할 수 있는 이미지 두 개를 만들었고, 앞으로도 레딧이나 트위터 등지에서 사용할 수 있도록 이미지를 추가 제작했습니다.
 
 ![banner-noir-twitter](/2025-10-20-sixth-drawings/banner-noir-twitter.webp){: .rounded-10 .light .border }
 ![banner-noir-twitter](/2025-10-20-sixth-drawings/banner-noir-twitter.webp){: .rounded-10 .dark }
