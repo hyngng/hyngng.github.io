@@ -61,12 +61,12 @@ last_modified_at: 2026-01-29 23:26:00 +0900
 
 ![banner-noir-twitter](/2025-10-20-sixth-drawings/banner-noir-twitter.webp){: .rounded-10 .light .border }
 ![banner-noir-twitter](/2025-10-20-sixth-drawings/banner-noir-twitter.webp){: .rounded-10 .dark }
-*SNS 배너 #1.*
+*SNS 배너 #1*
 
 그리고,
 
 ![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .light .border }
 ![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .dark }
-*SNS 배너 #2.*
+*SNS 배너 #2*
 
 특히 첫 번째 배너의 경우 이전에 [디지털 드로잉 #4](https://hyngng.github.io/posts/fourth-drawings/), [디지털 드로잉 #5](https://hyngng.github.io/posts/fifth-drawings/) 때 올렸던 그림을 적절히 재사용하여 만들었습니다. 앞으로 SNS 활동이 활발히 있을지는 불투명하지만, 향후 레딧 등지에서 무언가 홍보해야 할 때 좋은 신호를 주기 위해서라도 준비해두려고 합니다.
