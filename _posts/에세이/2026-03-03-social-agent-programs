@@ -1,5 +1,5 @@
 ---
-title: "사회복무 보조 프로그램들"
+title: "사회복무 업무개선"
 
 categories: [에세이]
 tags: [에세이]
@@ -104,14 +104,75 @@ sabok-auto-umzu/
 
 ## **피그마 디자인도 가능**
 
-## **통행료 경우의 수 구하기**
-
 ## **확정운행실적 관련? 이건 되나?**
 
+## **APK QR코드**
 
+- 처음에는 피그마로 디자인해서 사용
+- 나중에는 워드로 양식 만들어서 사용
 
+## **번외**
 
+### **통행료 경우의 수 구하기**
 
+```python
+from itertools import product
+from dataclasses import dataclass
 
+#region variables
+# ⭐🔥💎 SUPER MEGA ULTRA DISCOUNT RATE 💎🔥⭐
+# 🚨🚨🚨 WARNING: EXPLOSIVE SAVINGS AHEAD 🚨🚨🚨
+# 🎉🎊🌟 CHANGE THIS VALUE TO CONTROL THE UNIVERSE 🌟🎊🎉
+sale_percentage = 60 # 🔥🔥🔥 THIS IS THE MAGIC NUMBER 🔥🔥🔥
 
+data_dic = {
+    "tunnel": 800,
+    "yeongjong_upward": 3200,
+    "yeongjong_downward": 1900,
+    "incheon": 5500,
+}
 
+possible_cases = set()
+#endregion vairiables
+
+@dataclass
+class TonghangRyo:
+    def __init__(self, name: str, price: int, is_for_electronic_cars: bool):
+        self.name  = name
+        self.price = int(price * sale_percentage / 100) if (self.name != "tunnel" and is_for_electronic_cars) else price
+
+    def __add__(self, other):
+        if other is None:
+            return self.price
+        
+        if self.name != "tunnel" and other.name != "tunnel":
+            return self.price
+
+        return self.price + other.price
+
+def get_tonghangryo():
+    all_thryos = [TonghangRyo(name, price, is_el) for name, price in data_dic.items()
+                  for is_el in ([False] if name == "tunnel" else [False, True])]
+    
+    # 단일 통행료 추가
+    for thryo in all_thryos:
+        possible_cases.add(thryo + None)
+    
+    # 조합 통행료 추가
+    for combo in product(all_thryos, repeat=2):
+        possible_cases.add(combo[0] + combo[1])
+        # print(f"{combo[0].name} + {combo[1].name} = {combo[0].price} + {combo[1].price} = {combo[0] + combo[1]}")
+
+def main():
+    get_tonghangryo()
+
+    for case in sorted(possible_cases):
+        print(f"{case}원")
+
+if __name__ == "__main__":
+    main()
+```
+
+- `.bat` 배치파일로 만들어서 사용함
+
+```
