@@ -60,7 +60,7 @@ analytics:
     id: # fill in your Fathom Site ID
 
 pageviews:
-  provider: goatcounter
+  provider: # goatcounter
 
 theme_mode: # [light | dark]
 
