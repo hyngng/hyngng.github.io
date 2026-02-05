@@ -14,16 +14,12 @@ toc: false
 toc_sticky: true
  
 date: 2022-08-25 14:38:00 +0900
-last_modified_at: 2025-11-26 12:21:00 +0900
+last_modified_at: 2026-02-05 18:48:00 +0900
 ---
 
 ![200000-생존사람](/drawing/200000-생존사람.webp){: .rounded-10 .light .border }
 ![200000-생존사람](/drawing/200000-생존사람.webp){: .rounded-10 .dark }
 *포스트 아포칼립스*
-
-![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .light .border }
-![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .dark }
-*학교 과제 제출용 1*
 
 ![210000-여자랑남자](/drawing/210000-여자랑남자.webp){: .rounded-10 }
 *고등학생 때 낙서 1*
@@ -34,18 +30,6 @@ last_modified_at: 2025-11-26 12:21:00 +0900
 
 ![231214-사자남자](/drawing/231214-사자남자.webp){: .rounded-10 }
 *고등학생 때 낙서 3*
-
-![200000-헨젤과그레텔](/drawing/200000-헨젤과그레텔.webp){: .rounded-10 .light .border }
-![200000-헨젤과그레텔](/drawing/200000-헨젤과그레텔.webp){: .rounded-10 .dark }
-*학교 과제 제출용 2*
-
-![220000-남자둘](/drawing/220000-남자둘.webp){: .rounded-10 .light .border }
-![220000-남자둘](/drawing/220000-남자둘.webp){: .rounded-10 .dark }
-*인터넷 그림 모작*
-
-![220825-동물구닌](/drawing/220825-동물구닌.webp){: .rounded-10 .light .border }
-![220825-동물구닌](/drawing/220825-동물구닌.webp){: .rounded-10 .dark }
-*모작 하면서 같이 그린 그림*
 
 ![200000-돌다리](/drawing/200000-돌다리.webp){: .rounded-10 .light .border }
 ![200000-돌다리](/drawing/200000-돌다리.webp){: .rounded-10 .dark }
@@ -74,8 +58,30 @@ last_modified_at: 2025-11-26 12:21:00 +0900
 ![210000-드루이드](/drawing/210000-드루이드.webp){: .rounded-10 .dark }
 *옛날에 그리다 만거 3*
 
-![210430-신라시대](/drawing/210430-신라시대.webp)
+![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .light .border }
+![221025-반도체칩](/drawing/221025-반도체칩.webp){: .rounded-10 .dark }
+*학교 과제 제출용 1*
+
+![220612-드래곤등장](/drawing/220612-드래곤등장.webp){: .rounded-10 }
+*학교 과제 제출용 2*
+
+![220522-길거리동물](/drawing/220522-길거리동물.webp){: .rounded-10 }
 *학교 과제 제출용 3*
+
+![210430-신라시대](/drawing/210430-신라시대.webp){: .rounded-10 }
+*학교 과제 제출용 4*
+
+![220514-헨젤과그레텔](/drawing/220514-헨젤과그레텔.webp){: .rounded-10 .light .border }
+![220514-헨젤과그레텔](/drawing/220514-헨젤과그레텔.webp){: .rounded-10 .dark }
+*학교 과제 제출용 5*
+
+![220000-남자둘](/drawing/220000-남자둘.webp){: .rounded-10 .light .border }
+![220000-남자둘](/drawing/220000-남자둘.webp){: .rounded-10 .dark }
+*인터넷 그림 모작*
+
+![220825-동물구닌](/drawing/220825-동물구닌.webp){: .rounded-10 .light .border }
+![220825-동물구닌](/drawing/220825-동물구닌.webp){: .rounded-10 .dark }
+*모작 하면서 같이 그린 그림*
 
 ![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .light .border }
 ![231214-상자여자](/drawing/231214-상자여자.webp){: .rounded-10 .dark }
