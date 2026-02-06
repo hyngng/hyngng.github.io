@@ -163,3 +163,7 @@ classDiagram
 {% comment %}
 직원은 지정된 업무분장을 실현하는 주체입니다.
 {% endcomment %}
+
+## **번외: KISS 원칙**
+
+> Keep It Simple, Stupid
