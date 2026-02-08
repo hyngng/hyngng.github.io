@@ -56,7 +56,7 @@ xychart-beta
 
 블로그 구성 파일 원본을 소유자가 갖고 있다는 것 특성상 자연스럽게 페이지 구조를 자주 들여다보게 됩니다. 이전에도 [몇 차례 수정한 적](https://hyngng.github.io/posts/first-blog-customization/)이 있었고 지금 시점에 와서도 꾸준히 취향에 맞춰 변경해주고 있습니다. 최근의 예시를 들자면 다크/라이트 모드 전환 애니메이션을 비활성화했습니다. 테마 차원에서 해제하는 옵션은 없는데 여간 거슬리는게 아니라서 `id="post-preview"`와 같이 테마 변경 효과가 정의된 속성을 찾아 `transition: none !important`로 오버라이드했습니다. 지금은 깔끔하게 전환됩니다.
 
-다음으로, 글이 작성되는 시점의 블로그 테마 최신 버전 `v7.3.1`을 기준으로 홈페이지의 미리보기 이미지가 LQIP에서 원본으로 전환될 때 블러 이펙트가 재생되지 않는 버그를 발견했고, 오랜 디버깅 끝에 해결해서, 공식 리포지토리에 [이슈를 발행했습니다.](https://github.com/cotes2020/jekyll-theme-chirpy/issues/2537) 2주 반 정도의 시간이 지나고 개발자분께서 문제를 확인하시면서 얼마 지나지 않아 [제 관점이 반영된 새 커밋](https://github.com/cotes2020/jekyll-theme-chirpy/pull/2551)이 만들어졌고 또 금세 새 버전 [v7.4.0](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/docs/CHANGELOG.md#740-2025-10-19)이 출시되면서 해당 버그가 정식적으로 수정되었습니다.
+다음으로, 블로그 테마 버전 `v7.3.1`을 기준으로 홈페이지의 미리보기 이미지가 LQIP에서 원본으로 전환될 때 블러 이펙트가 재생되지 않는 버그를 발견했고, 오랜 디버깅 끝에 해결해서, 공식 리포지토리에 [이슈를 발행했습니다.](https://github.com/cotes2020/jekyll-theme-chirpy/issues/2537) 2주 반 정도의 시간이 지나고 개발자분께서 문제를 확인하시면서 얼마 지나지 않아 [제 관점이 반영된 새 커밋](https://github.com/cotes2020/jekyll-theme-chirpy/pull/2551)이 만들어졌고 또 금세 새 버전 [v7.4.0](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/docs/CHANGELOG.md#740-2025-10-19)이 출시되면서 해당 버그가 정식적으로 수정되었습니다.
 
 ### **검색엔진에 대한 주저리**
 
