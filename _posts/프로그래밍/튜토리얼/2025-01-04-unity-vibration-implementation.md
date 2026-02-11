@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-01-31 10:18:00 +0900
-last_modified_at: 2026-01-02 20:39:00 +0900
+last_modified_at: 2026-02-11 17:36:00 +0900
 ---
 
 > **안드로이드 기준입니다!**
@@ -19,7 +19,7 @@ last_modified_at: 2026-01-02 20:39:00 +0900
 
 ## **Manifest 파일 추가하기**
 
-1. `Edit / Project Settings / Player / Publishing Settings`{: .filepath }에서  `Custom Main Manifest`{: .filepath } 항목을 체크합니다.
+1. `Edit/Project Settings/Player/Publishing Settings`{: .filepath }에서  `Custom Main Manifest`{: .filepath } 항목을 체크합니다.
 2. 프로젝트의 `Assets/Plugins/Android`{: .filepath } 경로에 수정 가능한 `AndroidManifest.xml`{: .filepath } 파일이 생성됩니다.
 3. 해당 파일의 `manifest` 태그 안에 `<uses-permission android:name="android.permission.VIBRATE" />` 코드 한 줄을 추가하면 됩니다.
 
