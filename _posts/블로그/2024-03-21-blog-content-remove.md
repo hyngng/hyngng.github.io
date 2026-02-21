@@ -82,7 +82,7 @@ Liquid::Template.register_filter(Jekyll::RemoveTagFilter)
 
 Ruby나 Liquid에 대해서는 배경지식이 없어 방법을 알아내느라 조금 고생했습니다. `split` 또는 `join` 등 Liquid만으로 해결하려고 했는데 원하는 결과물을 만들기 힘들어 GPT의 도움을 받았고,`_plugins/remove-tags.rb`{: .filepath } 경로로 Ruby 파일을 만들어 이용하는 식으로 해결했습니다. Ruby 파일에는 태그 유형을 매개변수로 받아 내부 텍스트를 정규 표현식으로 제거하는 함수를 만들었습니다. `Nokogiri`라는 파싱 라이브러리를 이용했고, Liquid 파일에서 `remove_tag: 'h2', 'h3', 'em', 'blockquote'`와 같이 사용합니다.
 
-> 2025-10-20 수정!
+> 2025-10-20 업데이트됨!
 {: .prompt-info }
 
 Chirpy 버전이 `v7.4.0`으로 업데이트되면서 `post-description.html`{: .filepath }이 `post-summary.html`{: .filepath }로 대체되었습니다. 다만 구조는 거의 비슷하기 때문에, 다음과 같이 작성할 수 있습니다.

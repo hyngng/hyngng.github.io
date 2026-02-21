@@ -23,7 +23,7 @@ _대표적인 웹마스터도구, 구글 서치 콘솔_
 
 한국 포털사이트 점유율 순으로 [구글 서치 콘솔](https://search.google.com/search-console/)과 [네이버 서치어드바이저](https://searchadvisor.naver.com/), [다음 웹마스터도구](https://webmaster.daum.net/), [빙 웹마스터도구](https://www.bing.com/webmasters?lang=ko) 총 4가지 플랫폼에 등록해주었습니다. 특이한 점은 사이트별로 도메인 등록 후 실제 검색결과에 노출되기까지의 시간이 천차만별이었다는 건데, 3월 20일 즈음에 도메인을 신청하고나서부터 다음은 약 하루, 구글은 약 2주, 네이버와 빙은 약 3주 정도의 시간이 지나고 나서야 노출이 되기 시작했습니다.
 
-> **2024-05-25 수정!**  
+> **2024-05-25 업데이트됨!**  
 추가적으로 [핀터레스트 비즈니스 허브](https://www.pinterest.co.kr/business/hub/)에도 등록해주었습니다. 사이트 소유권이 확인되면 RSS 기반으로 이미지를 수집하여 핀을 생성해줍니다.
 {: .prompt-info }
 
@@ -99,7 +99,7 @@ _용량 축소 과정을 거치기 이전과 이후의 이미지._
 
 ### **meta description 자동 생성**
 
-> **2024-05-28 수정!**  
+> **2024-05-28 업데이트됨!**  
 지금은 이 방법을 쓰고 있지 않습니다. 실질적인 해결책은 9월 25일자로 수정된 하단의 내용으로 이동해주세요!
 {: .prompt-info }
 
@@ -155,7 +155,7 @@ Liquid::Template.register_filter(Jekyll::ContentFilter)
 
 `content`는 `content_filer`라는 커스텀 루비 플러그인을 거치는데, 제목, 게시일, 글쓴이 및 "들어가며" 도입부 등 description으로서 필요 없는 정보를 어느정도 제거하기 위함입니다. 글 본문이 모두 `<div class="content"></div>` 태그에 하달되는 점을 이용했으며, [예전에 비슷한 코드를](https://hyngng.github.io/posts/blog-content-remove/) 구현해본 적이 있었지만 아직 익숙하지 않아서 이 부분은 GPT의 조언을 구했습니다.
 
-> **2024-09-25 수정!**
+> **2024-09-25 업데이트됨!**
 {: .prompt-info }
 
 사실 위의 내용은 겉핥기식 해결책입니다. 새로 생성된 description이 {% raw %}`{{ seo_tags }}`{% endraw %}의 description과 중복되기 때문에, 페이지에 `<meta name="description" ... >` 태그가 2개 존재하게 되는 문제가 있었습니다. 저는 보다 근본적인 해결책을 원했고, [jekyll-seo-tag](https://github.com/jekyll/jekyll-seo-tag/tree/master) 플러그인에서 meta description을 생성하는 부분 자체를 찾아 아래와 같이 수정했습니다.
