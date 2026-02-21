@@ -53,8 +53,6 @@ last_modified_at: 2026-02-08 14:08:00 +0900
 ![20251205_082348](/photo/20251205_082348.webp){: .rounded-10 }
 *겨울스러운 거 | 23mm ISO50 F4.9 1/30s*
 
-<br>
-
 > 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2024)**에서 확인할 수 있습니다!
 {: .prompt-tip }
 

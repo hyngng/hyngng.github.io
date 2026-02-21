@@ -89,8 +89,6 @@ redirect_from:
 ![20231222_171340](/photo/20231222_171340.webp){: .rounded-10 }
 *해 저물기 전에 빨리 찍어야 해 | 230mm ISO50 F2.9 1/1000s*
 
-<br>
-
 > 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2023)**에서 확인할 수 있습니다!
 {: .prompt-tip }
 

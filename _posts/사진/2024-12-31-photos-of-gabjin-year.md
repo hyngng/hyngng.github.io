@@ -65,8 +65,6 @@ redirect_from:
 ![20241127_132738](/photo/20241127_132738.webp){: .rounded-10 }
 *눈 내리는 겨울 분리수거장 앞 | 23mm ISO160 F1.8 1/60s*
 
-<br>
-
 > 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2024)**에서 확인할 수 있습니다!
 {: .prompt-tip }
 

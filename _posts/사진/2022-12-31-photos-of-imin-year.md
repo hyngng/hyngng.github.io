@@ -74,8 +74,6 @@ redirect_from:
 ![20221104_162612](/photo/20221104_162612.webp){: .rounded-10 }
 *강연이 너무 지루해서 몰래 | 230mm ISO50 F4.9 1/470s*
 
-<br>
-
 > 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2022)**에서 확인할 수 있습니다!
 {: .prompt-tip }
 
