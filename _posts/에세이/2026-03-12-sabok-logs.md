@@ -36,8 +36,8 @@ mermaid: true
 
 ## **성심껏, 그리고 성의껏**
 
-![qr-code-and-program-structure-light](/2026-03-12-sabok-logs/qr-code-and-program-structure-light.png){: .light .border }
-![qr-code-and-program-structure-dark](/2026-03-12-sabok-logs/qr-code-and-program-structure-dark.png){: .dark  }
+![qr-code-and-program-structure-light](/2026-03-12-sabok-logs/qr-code-and-program-structure-light.webp){: .light .border }
+![qr-code-and-program-structure-dark](/2026-03-12-sabok-logs/qr-code-and-program-structure-dark.webp){: .dark  }
 *이런 것들을 계속 만들었다. QR 코드, 매크로 프로그램 등*
 
 공직에는 공직 특유의 분위기가 있습니다. 업무분장에 열의를 다하려는 느낌이 부족하고 업무개선에도 관심이 많지 않습니다. 제 3자의 눈으로 보기로는, 사회적 편견만큼이나 '해왔던 대로' 안전하게 하려고 합니다. 제 개인적으로 대학교와 동아리에서 겪었던 경험, 그리고 많은 강연에서 들어왔던, '이 일을 왜 하는지, 왜 이렇게 하는지 의심해라', '당신이 하게 되는 일에는 분명 어떤 문제가 있으므로 찾아서 직접 개선해라' 등등의 생산적인 메시지와는 적나라하다고 생각될 정도로 다른 환경이었습니다.
@@ -138,11 +138,11 @@ mermaid: true
 
 ## **아카이브**
 
-![background-images](/2026-03-12-sabok-logs/background-images.png)
+![background-images](/2026-03-12-sabok-logs/background-images.webp)
 *처음으로 써본 듀얼 모니터 환경. 나는 왼쪽에 무료 이미지, 오른쪽에 내 그림을 배경으로 두고 각각 공과 사로 분리해 사용하기로 했다*
 
-![obsidian-notes-light](/2026-03-12-sabok-logs/obsidian-notes-light.png){: .light .border }
-![obsidian-notes-dark](/2026-03-12-sabok-logs/obsidian-notes-dark.png){: .dark  }
+![obsidian-notes-light](/2026-03-12-sabok-logs/obsidian-notes-light.webp){: .light .border }
+![obsidian-notes-dark](/2026-03-12-sabok-logs/obsidian-notes-dark.webp){: .dark  }
 *처음 인수인계 받을 때, 매크로 프로그램 기획을 할 때와 같은 상황에서 옵시디언을 계속 애용했다*
 
 본문에 반영되지 않은 것
