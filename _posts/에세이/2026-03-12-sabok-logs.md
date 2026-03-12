@@ -139,7 +139,7 @@ mermaid: true
 ## **아카이브**
 
 ![background-images](/2026-03-12-sabok-logs/background-images.webp)
-*처음으로 써본 듀얼 모니터 환경. 나는 왼쪽에 무료 이미지, 오른쪽에 내 그림을 배경으로 두고 각각 공과 사로 분리해 사용하기로 했다*
+*여기서 처음 써본 듀얼 모니터 환경. 나는 왼쪽에 무료 이미지, 오른쪽에 내 그림을 배경으로 두고 각각 공과 사로 분리해 사용하기로 했다*
 
 ![obsidian-notes-light](/2026-03-12-sabok-logs/obsidian-notes-light.webp){: .light .border }
 ![obsidian-notes-dark](/2026-03-12-sabok-logs/obsidian-notes-dark.webp){: .dark  }
