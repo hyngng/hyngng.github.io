@@ -143,7 +143,7 @@ mermaid: true
 
 ![obsidian-notes-light](/2026-03-12-sabok-logs/obsidian-notes-light.png){: .light .border }
 ![obsidian-notes-dark](/2026-03-12-sabok-logs/obsidian-notes-dark.png){: .dark  }
-*처음 인수인계 받을 때, 매크로 프로그램 기획을 할 때 등의 상황에서 옵시디언을 계속 애용했다*
+*처음 인수인계 받을 때, 매크로 프로그램 기획을 할 때와 같은 상황에서 옵시디언을 계속 애용했다*
 
 ## **마치며**
 
