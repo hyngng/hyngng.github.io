@@ -143,7 +143,7 @@ mermaid: true
 
 ![obsidian-notes-light](/2026-03-12-sabok-logs/obsidian-notes-light.webp){: .light .border }
 ![obsidian-notes-dark](/2026-03-12-sabok-logs/obsidian-notes-dark.webp){: .dark  }
-*처음 인수인계 받을 때, 매크로 프로그램 기획을 할 때와 같은 상황에서 개인적으로 옵시디언을 계속 애용했다*
+*처음 인수인계 받을 때, 매크로 프로그램 기획을 할 때와 같은 상황에서 옵시디언을 개인적으로 계속 애용했다*
 
 본문에 반영되지 않은 것
 : - 말라 비틀어진 거미 시체와 고인 커피 국물이 묻어나던, 불어터지기 직전의 일반쓰레기 봉지
