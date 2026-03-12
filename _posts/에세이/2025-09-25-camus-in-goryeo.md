@@ -10,6 +10,9 @@ toc_sticky: true
 
 date: 2025-09-25 15:08:00 +0900
 last_modified_at: 2026-01-26 21:24:00 +0900
+
+redirect_from:
+    - /posts/finding-camus-in-goryeo-history/
 ---
 
 ## **알베르 카뮈의 부조리 철학**

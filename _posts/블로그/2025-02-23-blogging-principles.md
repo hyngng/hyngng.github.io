@@ -11,10 +11,11 @@ toc_sticky: true
 date: 2025-10-21 11:06:00 +0900
 last_modified_at: 2026-03-07 15:55:00 +0900
 
+mermaid: true
+
 redirect_from:
     - /posts/blog-checkup-and-writing-credo/
-
-mermaid: true
+    - /posts/blog-checkup-and-writing-principles/
 ---
 
 ## **왜 블로그를 시작했더라**
