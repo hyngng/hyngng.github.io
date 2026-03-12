@@ -38,7 +38,7 @@ mermaid: true
 
 ![qr-code-and-program-structure-light](/2026-03-12-sabok-logs/qr-code-and-program-structure-light.png){: .light .border }
 ![qr-code-and-program-structure-dark](/2026-03-12-sabok-logs/qr-code-and-program-structure-dark.png){: .dark  }
-*이런 것들을 만들었음. QR 코드, 매크로 프로그램 등*
+*이런 것들을 계속 만들었다. QR 코드, 매크로 프로그램 등*
 
 공직에는 공직 특유의 분위기가 있습니다. 대부분이 자신의 업무분장에 열의를 다하려는 느낌이 없으며 업무개선도 관심이 많지 않습니다. 사회적 편견만큼이나 '해왔던 대로' 안전하게 합니다. 제 개인적으로 대학교와 동아리에서 겪었던 경험, 그리고 많은 강연에서 들어왔던, '이 일을 왜 하는지, 왜 이렇게 하는지 의심해라', '당신이 하게 되는 일에는 분명 어떤 문제가 있으므로 찾아서 직접 개선해라' 등등의 생산적인 메시지와는 적나라하다고 생각될 정도로 다른 환경이었습니다.
 
