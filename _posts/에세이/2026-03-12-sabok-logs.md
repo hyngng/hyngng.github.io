@@ -145,6 +145,14 @@ mermaid: true
 ![obsidian-notes-dark](/2026-03-12-sabok-logs/obsidian-notes-dark.png){: .dark  }
 *처음 인수인계 받을 때, 매크로 프로그램 기획을 할 때와 같은 상황에서 옵시디언을 계속 애용했다*
 
+본문에 반영되지 않은 것
+: - 말라 비틀어진 거미 시체와 고인 커피 국물이 묻어나던, 불어터지기 직전의 일반쓰레기 봉지
+- 다 먹은 컵라면, 배달도시락 용기, 다 비워지지도 않았는데 주인을 잃어버린 접대용 병 음료수
+- 먼지 가득한 책상, 10분마다 울리는 전화 벨소리, 욕설과 폭언과 고함, 특유의 퀴퀴한 냄새
+- 내 출퇴근 시간에 맞추어 열차시간을 조정해 달라는 수준의 무리한 요구를 하던 일반인들
+- 볼일 보고 안 씻은 손으로 악수를 청하던 5~60대 할아버지들
+- 각양각색 흡연자들이 풍기던 진한 담배 냄새
+
 ## **마치며**
 
 ![alarm](/2026-03-12-sabok-logs/alarm.webp){: .w-75 }
@@ -157,6 +165,8 @@ mermaid: true
 {% comment %}
 ![gundoli](/2026-03-12-sabok-logs/legacy/gundoli3.png)
 *2025년 4월 27일 오후 12시, 군돌이 어플에서 딱 50% 달성했을 때*
+
+그래도 으쌰으쌰 하면서 좋은 얘기로 분위기를 관리하려 노력하셨던 분들
 
 > the difference is epaulets’ — of course not in the case of the Pope, but if he was a general — it was always the uniform, the position, ‘but this man has the same human problems, he eats dinner like anybody else, he goes to the bathroom, he has the same kind of problems as everybody, he’s a human being. Why are they all bowing to him? Only because of his name and his position, because of his uniform, not because of something special he did, or his honor, or something like that.
 
