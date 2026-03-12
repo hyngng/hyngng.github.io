@@ -12,6 +12,9 @@ date: 2024-04-15 20:24:00 +0900
 last_modified_at: 2026-01-05 14:13:00 +0900
 
 mermaid: true
+
+redirect_from:
+    - /posts/singleton-pattern-on-unity/
 ---
 
 ## **들어가며**
