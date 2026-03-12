@@ -10,6 +10,9 @@ toc_sticky: true
 
 date: 2025-01-31 10:18:00 +0900
 last_modified_at: 2026-02-11 17:36:00 +0900
+
+refirect_from:
+    - /posts/unity-vibration-implementation/
 ---
 
 > **안드로이드 기준입니다!**

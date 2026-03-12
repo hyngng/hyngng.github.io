@@ -17,9 +17,6 @@ date: 2024-05-31 22:53:00 +0900
 last_modified_at: 2025-12-26 11:40:00 +0900
 
 mermaid: true
-
-redirect_from:
-  - /posts/armonia-developing-second/
 ---
 
 ## **들어가며**

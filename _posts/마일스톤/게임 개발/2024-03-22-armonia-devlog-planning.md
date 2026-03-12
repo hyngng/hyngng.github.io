@@ -17,9 +17,6 @@ date: 2024-03-22 19:24:00 +0900
 last_modified_at: 2024-04-30 18:58:00 +0900
 
 mermaid: true
-
-redirect_from:
-  - /posts/armonia-planning/
 ---
 
 ## **들어가며**

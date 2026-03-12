@@ -15,9 +15,6 @@ toc_sticky: true
  
 date: 2024-05-16 13:53:00 +0900
 last_modified_at: 2024-05-16 13:53:00 +0900
-
-redirect_from:
-  - /posts/fourth-drawing/
 ---
 
 ![240415-헤드폰목도리](/drawing/240415-헤드폰목도리.webp){: .rounded-10 .light .border }

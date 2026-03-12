@@ -12,9 +12,6 @@ date: 2024-10-23 21:32:00 +0900
 last_modified_at: 2024-11-02 20:41:00 +0900
 
 mermaid: true
-
-redirect_from:
-  - /posts/armonia-developing-cancelled/
 ---
 
 ## **무슨 일이 일어났는가**

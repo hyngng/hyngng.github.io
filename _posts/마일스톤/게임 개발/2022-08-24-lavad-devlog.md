@@ -15,10 +15,6 @@ toc_sticky: true
  
 date: 2022-08-24 16:14:00 +0900
 last_modified_at: 2023-11-22 19:36:00 +0900
-
-redirect_from:
-  - /posts/lavad/
-  - /posts/lavad-developing/
 ---
 
 ## **들어가며**

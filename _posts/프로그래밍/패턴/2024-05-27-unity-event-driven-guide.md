@@ -12,6 +12,9 @@ date: 2024-05-27 17:32:00 +0900
 last_modified_at: 2024-05-27 17:32:00 +0900
 
 mermaid: true
+
+redirect_from:
+    - /posts/event-driven-programming-on-unity/
 ---
 
 ## **들어가며**

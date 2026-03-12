@@ -17,9 +17,6 @@ date: 2023-12-20 19:18:00 +0900
 last_modified_at: 2023-12-22 20:42:00 +0900
 
 mermaid: true
-
-redirect_from:
-  - /posts/palette-planning/
 ---
 
 ## **게임을 만들다**

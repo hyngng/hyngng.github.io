@@ -10,11 +10,6 @@ toc_sticky: true
 
 date: 2025-04-28 19:02:00 +0900
 last_modified_at: 2026-02-01 15:26:00 +0900
-
-redirect_from:
-  - /posts/pluralism-and-habitus/
-  - /posts/thoughts-with-imagined-orders/
-  - /posts/confucianism-and-categorization/
 ---
 
 ## **스스로 제시하는 좋은 아비투스 활용법 <sup>04.13</sup>**

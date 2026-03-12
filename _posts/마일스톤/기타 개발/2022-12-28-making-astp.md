@@ -12,9 +12,6 @@ date: 2022-12-28 22:15:00 +0900
 last_modified_at: 2026-02-11 17:39:00 +0900
 
 mermaid: true
-
-redirect_from:
-  - /posts/astp/
 ---
 
 ## **자동주식거래기, ASTP**
