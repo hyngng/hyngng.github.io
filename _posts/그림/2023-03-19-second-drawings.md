@@ -17,24 +17,24 @@ date: 2023-03-19 15:24:00 +0900
 last_modified_at: 2023-03-26 15:24:00 +0900
 ---
 
-![20230314-고민남](/drawing/20230314-고민남.webp){: .rounded-10 .light .border }
-![20230314-고민남](/drawing/20230314-고민남.webp){: .rounded-10 .dark }
+![230314-고민남](/drawing/230314-고민남.webp){: .rounded-10 .light .border }
+![230314-고민남](/drawing/230314-고민남.webp){: .rounded-10 .dark }
 *고민남 스케치*
 
-![20230307-신남](/drawing/20230307-신남.webp){: .rounded-10 .light .border }
-![20230307-신남](/drawing/20230307-신남.webp){: .rounded-10 .dark }
+![230307-신남](/drawing/230307-신남.webp){: .rounded-10 .light .border }
+![230307-신남](/drawing/230307-신남.webp){: .rounded-10 .dark }
 *신난 애 스케치*
 
-![20230312-판타지소년](/drawing/20230312-판타지소년.webp){: .rounded-10 .light .border }
-![20230312-판타지소년](/drawing/20230312-판타지소년.webp){: .rounded-10 .dark }
+![230312-판타지소년](/drawing/230312-판타지소년.webp){: .rounded-10 .light .border }
+![230312-판타지소년](/drawing/230312-판타지소년.webp){: .rounded-10 .dark }
 *빠른 흑백 채색*
 
 ![230307-구닌](/drawing/230307-구닌.webp){: .rounded-10 .light .border }
 ![230307-구닌](/drawing/230307-구닌.webp){: .rounded-10 .dark }
 *그릴 게 없을 때 그리기 좋은 구닌 그림*
 
-![230329-흑백선화](/drawing/230329_흑백선화.webp){: .rounded-10 .light .border }
-![230329-흑백선화](/drawing/230329_흑백선화.webp){: .rounded-10 .dark }
+![230329-흑백선화](/drawing/230329-흑백선화.webp){: .rounded-10 .light .border }
+![230329-흑백선화](/drawing/230329-흑백선화.webp){: .rounded-10 .dark }
 *저 양뿔 질감이 좋음*
 
 ![230302-토착민](/drawing/230302-토착민.webp){: .rounded-10 .light .border }
