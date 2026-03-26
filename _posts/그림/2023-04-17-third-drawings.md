@@ -25,6 +25,10 @@ last_modified_at: 2023-04-26 20:55:00 +0900
 ![230329-스트레칭](/drawing/230329-스트레칭.webp){: .rounded-10 .dark }
 *어쨌든 기분 좋음*
 
+![230427-빤히](/drawing/230427-빤히.webp){: .rounded-10 .light .border }
+![230427-빤히](/drawing/230427-빤히.webp){: .rounded-10 .dark }
+*빤히 쳐다보기*
+
 ![200000-기쎈여자옆모습](/drawing/200000-기쎈여자옆모습.webp){: .rounded-10 }
 *인상이 강한 편*
 
