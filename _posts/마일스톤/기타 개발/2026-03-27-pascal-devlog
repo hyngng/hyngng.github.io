@@ -1,8 +1,8 @@
 ---
 image:
-    path: preview-image
-    lqip: 
-    alt: "메인 화면"
+    path: /2026-03-03-winui/preview-image.webp
+    lqip: data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAADQAQCdASoQAAgAAUAmJZwAAudmZgWuAAD+/q7upVngd5BsEtdoMTMTEQAAAA==
+    alt: "파스칼 메인 화면"
 
 title: "WinUI 3로 개발한 PDF 병합, 압축 프로그램"
 
@@ -19,77 +19,12 @@ date: 2026-03-26 00:00:00 +0900
 last_modified_at: 2026-02-28 00:00:00 +0900
 ---
 
-## **들어가며**
-
-> "고마운데, 우리 공사라 외부 프로그램 함부로 쓰면 안돼"
-
-2025년 겨울 사회복무요원 시절, 직원분께서 PDF 용량을 줄여달라는 부탁을 주셨습니다. 외부 온라인 서비스를 사용하면 파일 유출의 위험이 있어 로컬에서 처리해야 했는데, 기존 프로그램 사용이 불가능하자 신뢰의 문제로 직접 만들기로 결정했습니다.
-
-이 프로젝트를 통해 배우고자 한 것은 세 가지입니다:
-- 사무 환경의 실제 문제 해결 경험
-- 유니티에서 배운 C#의 새로운 활용처
-- 윈도우 데스크톱 프로그램 개발
-
-## **구현된 주요 기능**
-
-PNG 이미지 추가
-
-- PDF 병합
-- PDF 압축
-- PDF 분할
-- 기타 기능들
-
-## **프레임워크 선택의 여정**
-
-처음 시도한 기술들을 나열하면 ASP.NET, Electron, WPF, 그리고 최종적으로 WinUI 3입니다. 각 선택이 왜 실패했는가:
-
-- **웹 기술(Electron.NET)**: 파이썬으로 먼저 만든 경험 때문에 더 가볍게 시작하고 싶었으나, 프론트엔드 개발 경험과의 간극이 예상보다 컸음
-- **WPF**: 레거시 환경이 불편했고 최신 라이브러리 지원이 미흡
-- **WinUI 3**: 최종 선택. 페이지 네비게이션이 없다는 한계가 있지만, [DevWinUI](https://github.com/ghost1372/DevWinUI)와 [Windows Community Toolkit](https://github.com/CommunityToolkit/WindowsCommunityToolkit) 같은 우수한 라이브러리로 보완 가능
-
-## **개발 과정에서의 기술적 난제**
-
-### **MVVM 패턴 적용**
-
-구체적 사례와 코드 포함
-
-### **WinUI 3의 생태계 한계 극복**
-
-참고할 오픈소스가 부족한 상황에서 어떻게 해결했는가
-
-### **성능 최적화**
-
-구체적인 문제와 해결책
-
-## **배운 기술**
-
-### **XAML과 코드비하인드의 관계**
-
-### **MVVM 구조의 실제 구현**
-
-코드 스니펫 포함
-
-## **현재 상태 & 다음 목표**
-
-현재까지의 완성도:
-- 구현된 기능
-- 미완성된 기능
-
-향후 계획:
-- 출시 기준
-- 개선 방향
-
 {% comment %}
-사회복무요원 졸업작품.
+2025-08-31 사회복무요원 졸업작품.
 
 > "다 좋은데, 막 쓰면 안돼. 걸리면 ㅈ된다? 우리 공사야 공사. 무료 프로그램이면 라이센스같은거 잘 찾아봐야 해."
 {% endcomment %}
 
-{% comment %}
-2025-08-31
-{% endcomment %}
-
-{% comment %}
 ## **아카이브**
 
 - 깃허브 페이지
@@ -103,6 +38,54 @@ PNG 이미지 추가
 ![pdf2jpg](/2026-03-03-winui/Group 53 (1).png){: .light }
 ![pdf2jpg](/2026-03-03-winui/Group 53.png){: .dark }
 *작업물 스크린샷*
+
+## **PASCAL**
+
+PDF 병합&분할 작업을 수행해주는 프로그램입니다. 
+
+> "고마운데, 우리 공사라 외부 프로그램 함부로 쓰면 안돼"
+
+복무 도중에 만들었고, 블로그에 기록해둡니다.
+
+- 유니티로 알게 된 C#의 다른 활용처를 경험해보고 싶다.
+- 윈도우 프로그램도 한 번 다루어보고 싶다.
+
+## **WinUI 3**
+
+- .NET 환경 처음이었음
+- MVVM 패턴 처음이었음
+- XAML에 `x:Name="TagName"` 선언해두면 코드비하인드에서 따로 `private variable tagName = GetTag("TagName")`의 형태로 접근하지 않아도 되는게 인상깊었음.
+
+보통은 잘 사용하지 않는 .NET과 WinUI 3 프레임워크 환경을 선택한 이유는 유니티 개발 경험으로 어느정도 익숙한 C#을 보다 넓은 영역에서 활용해보기 위해서입니다.
+
+|프론트엔드 웹개발|WinUI|
+|---|---|
+|HTML|XAML|
+|CSS|XAML Style|
+|JavaScript|C#|
+
+WinUI 3 프레임워크가 가져다주는 개발 경험은 프론트엔드 웹 개발을 강하게 연상하게 하고 그래서 처음에 좀 놀랐습니다. XAML로 UI 구성 요소와 속성을 정의하고 C#으로 세부 로직을 작성하는 것이 HTML과 자바스크립트의 관계와 매우 닮았고, 덕분에 낯선 인상을 빠르게 지울 수 있었습니다.
+
+세부적으로는 `<control x:Name="TagName">`와 같이 선언하면
+
+웹 개발의 패러다임은 MVVM 같은 거시적인 패턴에서 컴포넌트 기반 아키텍처로 이동한지 오래지만 WinUI와 같은 전통적인 프로그램 SDK는 그렇지 않습니다.
+
+## **MVVM**
+
+가장 생소했던 부분입니다. WinUI를 다루는 일은 단순히 XAML이나 C# 문법을 안다고 되는 일이 아니었습니다.
+
+유니티의 경우 컴포넌트 시스템만 이해하면 코드 작성은 쉽기 때문에 문제가 없지만, .NET 환경 때문인지 WinUI라서인지 좀 힘들었습니다. 
+
+코드간 의존도를 낮춘다는 개념 자체는 익숙했지만 MVVM이 실제로 그것을 어떻게 달성하는지, 모델과 뷰, 뷰모델 세 가지 영역이 어디까지 할 수 있고, 어디부터 해서는 안 되는지, 둘의 차이를 어떻게 구분하는지에 대해서는 공부가 필요했습니다.
+
+[WinUI-Gallery](https://github.com/microsoft/WinUI-Gallery), [DevWinUI.Gallery](https://github.com/ghost1372/DevWinUI/tree/main/dev/DevWinUI.Gallery), [Files](https://github.com/files-community/files) 등 다른 오픈소스 프로젝트를 살펴보면 `Services`, `Helpers`, `Modules`와 같은 관습적인 구조를 따르는 것을 볼 수 있고, 유니티나 파이썬, 프론트엔드 프로젝트에서는 찾아보기 어려운 비직관적인 구조였습니다. 또, [MVVM Toolkit에 대한 개념](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/)은 거의 필수로 익힐 필요가 있습니다. 이 패키지는 뷰가 UI 마크업 파일이 코드비하인드를 거치지 않고 뷰모델과 통신할 수 있게 도와주는 역할을 하고 개발과정이 매우 편리해집니다. 뷰는 뷰모델의 프로퍼티와 컬렉션을 바인딩으로 참조하고, 뷰모델은 `INotifyPropertyChanged`, `INotifyCollectionChanged` 알림 등을 통해 상태 변경을 푸시합니다. 뷰에서 명령을 실행해 뷰모델에 동작이 요청되고, 뷰모델이 상태를 변경하면 자동으로 UI를 갱신합니다. 객체지향이라는 개념 자체도 그렇고, SOLID 원칙에 더해 MVVM도 마찬가지로 관심사의 분리에 초점을 맞춘 아키텍처입니다.
+
+
+
+
+
+
+
 
 ### **만들게 된 이유**
 
@@ -203,4 +186,3 @@ MVVM은 세 가지 구성요소만 잘 구분해도 될 것 같고 실제로 그
 ## **din-c**
 
 기대하겠습니다.
-{% endcomment %}
