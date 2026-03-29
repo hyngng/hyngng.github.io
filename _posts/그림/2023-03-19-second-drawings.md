@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAQCdASoQAAgAAgA0JQBOgBh2EShgAP79L/Zddr8IocHoi5zSrcrofTZs+tnZKRzvYrsVlw6ZY7BgVwil9C9Gboi+zO+NlKxGpgAA
     alt: 썸네일용
 
-title: "디지털 드로잉 #2: 화각 왜곡, 양뿔, 얕은 심도"
+title: "디지털 드로잉 #2: 밀리터리, 종교스러운 거"
 
 categories: [그림]
 tags: [그림, 드로잉, 비니, 광각, 총, 양뿔, 망토, 트래픽 콘]
