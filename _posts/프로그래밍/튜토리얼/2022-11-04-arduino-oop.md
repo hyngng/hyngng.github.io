@@ -29,10 +29,9 @@ class MainFunctions
     AddFiftyWon(int Money);
 };
 ```
-{: file="MainFunctions.cpp" }
+{: file="MainFunctions.h" }
 
 ```cpp
-
 #include "Arduino.h"
 #include "MainFunctions.h"
 
@@ -54,7 +53,7 @@ int MainFunctions::AddFiveHundreadWon(int Money)
   return Money;
 }
 ```
-{: file="MainFunctions.h" }
+{: file="MainFunctions.cpp" }
 
 ```cpp
 void setup()
@@ -73,6 +72,6 @@ void loop()
 ```
 {: file="Arduino_OOP.ino" }
 
-간단한 금액을 추가하는 기능의 코드를 낱개로 분할한 구현한 예시입니다. 클래스의 선언부인 `MainFunctions.h`에서 메서드를 선언하고, `MainFunctions.h`에서는 선언된 메서드를 정의하는 역할을, `Arduino_OOP.ino`에서는 정의된 메서드를 호출하는 역할을 맡도록 작성했습니다.
+간단한 금액을 추가하는 기능의 코드를 낱개로 분할한 구현한 예시입니다. 클래스의 선언부인 `MainFunctions.h`에서 메서드를 선언하고, `MainFunctions.cpp`에서는 선언된 메서드를 정의하는 역할을, `Arduino_OOP.ino`에서는 정의된 메서드를 호출하는 역할을 맡도록 작성했습니다.
 
-결과적으로 잘 작동합니다. 각각의 함수는 호출될 때마다 `AddFiveHundreadWon()`에서는 500원, `AddFiveHundreadWon()`에서는 100원, `AddFiftyWon()`에서는 50원이 더해집니다.
+결과적으로 잘 작동합니다. 각각의 함수는 호출될 때마다 `AddFiveHundreadWon()`에서는 500원, `AddOneHundreadWon()`에서는 100원, `AddFiftyWon()`에서는 50원이 더해집니다.

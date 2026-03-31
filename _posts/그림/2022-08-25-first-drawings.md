@@ -14,7 +14,7 @@ toc: false
 toc_sticky: true
  
 date: 2022-08-25 14:38:00 +0900
-last_modified_at: 2026-03-31 10:40:00 +0900
+last_modified_at: 2026-03-31 13:45:00 +0900
 ---
 
 ![200000-생존사람](/drawing/200000-생존사람.webp){: .rounded-10 .light .border }
@@ -89,7 +89,7 @@ last_modified_at: 2026-03-31 10:40:00 +0900
 {%
   include embed/video.html
   src='/drawing/animations/spinal-reflex-animation.mp4'
-  title='고등학교 1학년 척수반사를 주제로 한 UCC 수행평가'
+  title='고등학교 1학년 척수반사를 주제로 한 UCC 수행평가. 애니메이션으로 제출함'
 %}
 
 그림도 올립니다! 블로그를 시작하기 전부터 간간히 그린 그림들인데, 갤러리 앱 한구석에만 보관해두는 것이 아깝게 느껴지기도 하고 별개로 아카이브가 필요하기도 해서 블로그에 올리려고 합니다. 앞으로도 블로그에 그림도 간간히 올리면서 이야기도 조금씩 남기려고 하는데, 좋게 봐주셨으면 좋겠습니다.

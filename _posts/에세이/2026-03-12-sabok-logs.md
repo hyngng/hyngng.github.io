@@ -14,7 +14,7 @@ toc: true
 toc_sticky: true
 
 date: 2026-03-12 10:30:00 +0900
-last_modified_at: 2026-03-29 21:15:00 +0900
+last_modified_at: 2026-03-31 20:47:00 +0900
 
 mermaid: true
 ---
@@ -147,7 +147,7 @@ mermaid: true
 
 ```python
 # 단 한 줄의 코드로 여러 정수를 입력받아 그 합을 출력하는 프로그램 작성하기.
-# AI 없이 동료 사회복무요원과 함께 만들었던 최종본. 이런 사소함이 좋았음.
+# AI 없이 동료 사회복무요원과 함께 만들었던 최종본. 이런 소소함이 좋았음.
 
 print(sum(map(int, input().split())))
 ```

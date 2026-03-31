@@ -53,7 +53,7 @@ last_modified_at: 2026-02-08 14:08:00 +0900
 ![20251205_082348](/photo/20251205_082348.webp){: .rounded-10 }
 *겨울스러운 거 | 23mm ISO50 F4.9 1/30s*
 
-> 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2024)**에서 확인할 수 있습니다!
+> 사진 원본은 **[깃허브](https://github.com/hyngng/hyngng.github.io.resources/tree/master/photo/2025)**에서 확인할 수 있습니다!
 {: .prompt-tip }
 
 뭔가 귀찮아지고 있습니다. 사진을 찍고 보정하는 일이 특별하지 않고 조금씩 평범하게 느껴지고 있습니다. 좋은 점은 이것이 일상의 일부라는 것이고 나쁜 점은 재미가 없다는 겁니다. 이 영향인지 분명 카메라가 따로 있는데 주로 지인만 주구장창 찍어내느라 블로그 등에 공개적으로 올릴만한 사진은 많이 못 남기고, 폰카로 찍은 정물이나 풍경 위주로 정리가 되었습니다. 아쉽습니다.

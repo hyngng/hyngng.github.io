@@ -179,6 +179,7 @@ compress_html:
     envs: [development]
 
 exclude:
+  - .git # 내가 추가함
   - "*.gem"
   - "*.gemspec"
   - docs
