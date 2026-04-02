@@ -139,7 +139,7 @@ flowchart TB
     App -. "생성자 주입 설정" .-> Infrastructure
     App -. "인스턴스 제공" .-> Application
     
-    Views -- "x:Bind" --> VMs
+    Views -- "바인딩" --> VMs
     VMs -- "인터페이스 호출" --> FMS
     VMs -- "인터페이스 호출" --> Labs
     
