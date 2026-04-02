@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAgAAUAmJZwCdAEPCsH0AAD+/crO2PZZpBlehM1Ayx+W1neqMAAA
     alt: "임시로 사용한 프로그램명은 'Pascal'"
 
-title: "WinUI 기반 PDF 편집 프로그램 개발기"
+title: "WinUI 기반 PDF 편집 프로그램 개발 회고"
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발, WinUI 3, MVVM, XAML, C#]
