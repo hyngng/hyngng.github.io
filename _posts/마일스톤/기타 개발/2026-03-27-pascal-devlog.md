@@ -196,7 +196,7 @@ MVVM
 : - [고급 .NET 프로그래밍 설명서](https://learn.microsoft.com/ko-kr/dotnet/navigate/advanced-programming/)
 - [.NET 9용 WPF의 새로운 기능](https://learn.microsoft.com/ko-kr/dotnet/desktop/wpf/whats-new/net90)
 
-## **여담**
+## **마치며**
 
 > **[깃허브](https://github.com/hyngng/pascal.drill)**에서 더 자세히 둘러보실 수 있습니다!
 {: .prompt-tip }
@@ -205,7 +205,7 @@ MVVM
 
 위키피디아에 따르면 이 분이 거주하시는 Qeydar 시에서도 시위가 보고되었습니다. 그리고 며칠 뒤 이란 정부가 인터넷을 전국적으로 차단함에 따라 ghost1372의 커밋 기록 역시 그 시점에서 끊겨 앞으로의 행보 또한 불투명해졌습니다. DevWinUI가 WinUI 3 생태계에 기여하는 바가 적잖기 때문에 농담으로는 마이크로소프트가 헬기라도 보내서 이 분을 구해가야 한다는 말을 하기도 했지만, 당시에는 실제로 생사를 확인할 방법이 없어 걱정했던 기억이 있습니다. 다행히 지금은 다시 커밋이 올라오고 있어 무사한 것으로 보입니다.
 
-그 외
+그 외 여담
 : - 이 프로젝트를 다루는 도중 비주얼 스튜디오 2026이 출시<sup>2025년 11월 11일</sup>되었습니다.
 - DevWinUI는 버전이 `9.4.0`에서 `9.8.0`으로 올라갔습니다.
 
