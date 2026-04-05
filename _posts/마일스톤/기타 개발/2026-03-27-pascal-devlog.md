@@ -1,7 +1,7 @@
 ---
 image:
-    path: /2026-04-02-winui/preview-image.webp
-    lqip: data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAgAAUAmJZwCdAEPCsH0AAD+/crO2PZZpBlehM1Ayx+W1neqMAAA
+    path: /2026-04-02-pascal-devlog/preview-image.webp
+    lqip: data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoQAAgAAUAmJZwCdAEPDuQrCAD+/crO2PZZpBuP/xETb+8eyANti2KhVUAAAA==
     alt: "임시로 사용한 프로그램명은 'Pascal'"
 
 title: "WinUI 기반 PDF 편집 프로그램 개발 회고"
@@ -29,8 +29,8 @@ mermaid: true
 
 ## **프로그램 소개**
 
-![pages-light](/2026-04-02-winui/pages-light.webp){: .light }
-![pages-dark](/2026-04-02-winui/pages-dark.webp){: .dark }
+![pages-light](/2026-04-02-pascal-devlog/pages-light.webp){: .light }
+![pages-dark](/2026-04-02-pascal-devlog/pages-dark.webp){: .dark }
 *4개 페이지에 대한 스크린샷*
 
 Pascal은 PDF 병합, 분할 작업을 수행해주는 프로그램입니다. 사회복무 기간 중 2달가량에 걸쳐 개발되었으며, 정말 운 좋게도 [개발자를 지망하는 동료 사회복무요원](https://github.com/din-c)이 있어 근무 중 남는 시간에 전용 노션 페이지를 열고 작은 협업을 진행했습니다. 원래는 PDF 텍스트 추출, JPG 변환, 압축 등 여러 개 사무 관련 기능을 이 프로그램에 통합하여 사용할 계획이었으나, 진로상의 이유와 얼마 남지 않은 복무 기간을 고려해 기초적인 기능 몇 가지만 구현하고 마무리했습니다.
@@ -102,14 +102,14 @@ VSCode의 미니멀리즘한 디자인을 좋아하는 덕에 먼 친척 Visual 
 
 ### **각종 스크린샷**
 
-![pdf2jpg](/2026-04-02-winui/pdf2jpg.webp){: .w-75 }
+![pdf2jpg](/2026-04-02-pascal-devlog/pdf2jpg.webp){: .w-75 }
 *2025년 초, 동료 사회복무요원이 직접 파이썬으로 빌드해서 준 프로그램. 이걸 고급지게 대체하려는 목적도 있었음*
 
-![old-design](/2026-04-02-winui/old-design.webp){: .light .border }
-![old-design](/2026-04-02-winui/old-design.webp){: .dark }
+![old-design](/2026-04-02-pascal-devlog/old-design.webp){: .light .border }
+![old-design](/2026-04-02-pascal-devlog/old-design.webp){: .dark }
 *2024년 말, 거의 같은 기능을 수행하는 프로그램에 대한 원시 디자인 안*
 
-![use-example](/2026-04-02-winui/use-example.webp)
+![use-example](/2026-04-02-pascal-devlog/use-example.webp)
 *한참 이것저것 시도해보던 때. 기능이 구현된 시점에서 개발과 실사용을 병행했음*
 
 ### **프로그램 구조**
@@ -166,7 +166,7 @@ PDF 문서 처리
 - [FluentIcons.Wpf](https://www.nuget.org/packages/FluentIcons.WPF/)
 
 WinUI3
-: - [빠른 시작: 환경 설정 및 WinUI 3 project 만들기](https://learn.microsoft.com/ko-kr/windows/apps/winui/winui3/create-your-first-winui3-app?source=recommendations#unpackaged-create-a-new-project-for-an-unpackaged-c-or-c-winui-3-desktop-app): 다만 DevWinUI를 통해 프로젝트를 생성하는 쪽이 낫습니다.
+: - [빠른 시작: 환경 설정 및 WinUI 3 project 만들기](https://learn.microsoft.com/ko-kr/windows/apps/winui/winui3/create-your-first-pascal-devlog3-app?source=recommendations#unpackaged-create-a-new-project-for-an-unpackaged-c-or-c-pascal-devlog-3-desktop-app): 다만 DevWinUI를 통해 프로젝트를 생성하는 쪽이 낫습니다.
 - [네임스페이스 Windows App SDK](https://learn.microsoft.com/ko-kr/windows/windows-app-sdk/api/winrt/?view=windows-app-sdk-1.7)
 - [Teamplate Studio for WinUI](https://marketplace.visualstudio.com/items?itemName=TemplateStudio.TemplateStudioForWinUICs)
 
@@ -185,7 +185,7 @@ MVVM
 - [FluentIcons.Wpf](https://www.nuget.org/packages/FluentIcons.WPF/)
 
 WinUI3
-: - [빠른 시작: 환경 설정 및 WinUI 3 project 만들기](https://learn.microsoft.com/ko-kr/windows/apps/winui/winui3/create-your-first-winui3-app?source=recommendations#unpackaged-create-a-new-project-for-an-unpackaged-c-or-c-winui-3-desktop-app)
+: - [빠른 시작: 환경 설정 및 WinUI 3 project 만들기](https://learn.microsoft.com/ko-kr/windows/apps/winui/winui3/create-your-first-pascal-devlog3-app?source=recommendations#unpackaged-create-a-new-project-for-an-unpackaged-c-or-c-pascal-devlog-3-desktop-app)
 - [네임스페이스 Windows App SDK](https://learn.microsoft.com/ko-kr/windows/windows-app-sdk/api/winrt/?view=windows-app-sdk-1.7)
 - [Teamplate Studio for WinUI](https://marketplace.visualstudio.com/items?itemName=TemplateStudio.TemplateStudioForWinUICs)
 
@@ -240,8 +240,8 @@ ADR 형식
 {% endcomment %}
 
 {% comment %}
-![ghost1372-commit-log-light](/2026-04-02-winui/ghost1372-commit-log-light.png){: .light }
-![pdf2jpg](/2026-04-02-winui/ghost1372-commit-log.png){: .dark }
+![ghost1372-commit-log-light](/2026-04-02-pascal-devlog/ghost1372-commit-log-light.png){: .light }
+![pdf2jpg](/2026-04-02-pascal-devlog/ghost1372-commit-log.png){: .dark }
 *글을 퇴고하는 지금, 3월 29일 ghost1372의 커밋 기록*
 
 ### **링크**
