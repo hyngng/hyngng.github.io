@@ -98,6 +98,11 @@ li.page-item.active a {
   transition: none !important;
 }
 
+// 부트스트랩 btn-outline-primary의 테두리 애니메이션(0.15초) 제외 (1번 해결)
+.btn.btn-outline-primary {
+  transition-property: color, background-color, box-shadow !important;
+}
+
 /* endregion 정적인 모드 전환 */
 
 
