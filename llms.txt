@@ -6,43 +6,37 @@
 > 작성자: hyngng (개발자, 에세이스트)
 > 언어: 한국어 (ko-KR)
 
-## 대표 에세이
+**사이트 정보**
+- 플랫폼: Jekyll + Chirpy 테마, GitHub Pages
+- 연락처: hyngng.main@gmail.com
+- GitHub: https://github.com/hyngng
+- Pinterest: https://pinterest.com/hyngng_main
 
+## 대표 에세이
 - [카뮈의 시선으로 바라본 12세기 고려의 외교노선](https://hyngng.github.io/posts/camus-in-goryeo/): 카뮈의 부조리 철학을 고려-여진 관계에 적용한 역사-철학 교차 에세이
 - [3년차 블로그 소회와 나의 글쓰기 원칙](https://hyngng.github.io/posts/blogging-principles/): 글쓰기 철학, AI 입장, 표현 원칙에 대한 메타 선언
 - [최근 만들어나가고 있는 인문학적 관점들](https://hyngng.github.io/posts/philosophical-reflections/): 다원주의, 반권위주의에 대한 에세이
 - [손자병법: 세상의 모든 전략과 전술을 읽고](https://hyngng.github.io/posts/thoughts-on-art-of-war/): 손자병법 서평
 
 ## 프로젝트 개발 기록
-
 - [WinUI 기반 PDF 편집 프로그램 개발 회고](https://hyngng.github.io/posts/pascal-devlog/): WinUI 3 기반 데스크톱 앱 개발 회고 (프레임워크 선택, MVVM, 협업, 바이브 코딩)
 - [준비 경험 위주로 정리한 모바일 타워디펜스 컨셉 기획](https://hyngng.github.io/posts/cannon-planning/): Unity 기반 타워 디펜스 게임의 GDD 수준 기획 문서
 - ['행선지', 개발은 여기까지로](https://hyngng.github.io/posts/armonia-devlog-cancelled/): 프로젝트 취소에 대한 정직한 분석
 - [1년 8개월간의 사회복무요원 근무후기](https://hyngng.github.io/posts/sabok-logs/): 20개월 사회복무 경험 기록
 
 ## 기술 포스트
-
 - [유니티에서 싱글톤 패턴 구현하기, 활용하기](https://hyngng.github.io/posts/singleton-on-unity/): Unity에서의 싱글톤 패턴 구현 가이드
 - [최단경로 탐색을 위한 A* 알고리즘 간략 정리](https://hyngng.github.io/posts/a-star-algorithm/): A* 알고리즘 해설
 - [깃허브 블로그 템플릿 커스터마이징하기](https://hyngng.github.io/posts/first-blog-customization/): Jekyll Chirpy 테마 커스터마이징 기록
 - [깃허브 블로그 웹마스터도구 등록하고 SEO 최적화하기](https://hyngng.github.io/posts/webmasters-and-seo/): 블로그 SEO 최적화 실전 경험
 
 ## 제품 리뷰
-
 - [풀프레임 대체 용도의 후지필름 X-E5 사용기](https://hyngng.github.io/posts/fujifilm-x-e5-review/): 카메라 선택과 사용 경험
 - [폰카 유저의 시선으로 리뷰하는 소니 A7C](https://hyngng.github.io/posts/sony-a7c-review/): 풀프레임 미러리스 리뷰
 - [사진 없이 작성한 AKG N5 일주일 사용기](https://hyngng.github.io/posts/akg-n5-hybrid-review/): 이어폰 리뷰
 
 ## 사진 & 그림
-
 - [[2025] 색보정과 화면비](https://hyngng.github.io/posts/photos-of-eulsa-year/): 2025년 사진 모음
 - [[2024] 솔직히 좀 재밌음](https://hyngng.github.io/posts/photos-of-gabjin-year/): 2024년 사진 모음
 - [[2023] 계묘년을 보내며](https://hyngng.github.io/posts/photos-of-gyemyo-year/): 2023년 사진 모음
 - [디지털 드로잉 #6: 한 주 동안 그린 것들](https://hyngng.github.io/posts/sixth-drawings/): 디지털 드로잉 포트폴리오
-
-## 사이트 정보
-
-- 플랫폼: Jekyll + Chirpy 테마, GitHub Pages
-- 연락처: hyngng.main@gmail.com
-- GitHub: https://github.com/hyngng
-- Pinterest: https://pinterest.com/hyngng_main
