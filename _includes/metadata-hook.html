@@ -1,1 +1,52 @@
-<!-- A placeholder to allow defining custom metadata -->
+<!-- Identity Schema: Person + Article (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "{{ site.url }}/#person",
+      "name": "{{ site.social.name }}",
+      "url": "{{ site.url }}",
+      "email": "{{ site.social.email }}",
+      "image": "{{ site.url }}{{ site.avatar }}",
+      "sameAs": [
+        {% for link in site.social.links %}
+          "{{ link }}"{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }
+    {% if page.layout == 'post' %}
+    ,{
+      "@type": "Article",
+      "@id": "{{ page.url | absolute_url }}#article",
+      "headline": "{{ page.title | xml_escape }}",
+      "url": "{{ page.url | absolute_url }}",
+      "datePublished": "{{ page.date | date_to_xmlschema }}",
+      {% if page.last_modified_at %}
+      "dateModified": "{{ page.last_modified_at | date_to_xmlschema }}",
+      {% else %}
+      "dateModified": "{{ page.date | date_to_xmlschema }}",
+      {% endif %}
+      {% if page.description %}
+      "description": "{{ page.description | xml_escape }}",
+      {% endif %}
+      {% if page.image %}
+      "image": "{% include media-url.html src=page.image.path absolute=true %}",
+      {% endif %}
+      "author": {
+        "@id": "{{ site.url }}/#person"
+      },
+      "publisher": {
+        "@id": "{{ site.url }}/#person"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ page.url | absolute_url }}"
+      },
+      "inLanguage": "{{ site.lang | default: 'ko-KR' }}"
+    }
+    {% endif %}
+  ]
+}
+</script>
