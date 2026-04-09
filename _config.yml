@@ -71,7 +71,7 @@ cdn: "https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master"
 
 avatar: "/avatar/hyngng-white.webp"
 
-social_preview_image: /avatar/banner-noir-opengraph.webp # string, local or CORS resources
+social_preview_image: /avatar/hyngng-opengraph.webp # string, local or CORS resources
 
 toc: true
 
