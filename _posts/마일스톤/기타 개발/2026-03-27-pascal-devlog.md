@@ -14,7 +14,7 @@ toc: true
 toc_sticky: true
 
 date: 2026-04-02 11:14:00 +0900
-last_modified_at: 2026-04-06 12:50:00 +0900
+last_modified_at: 2026-04-09 15:12:00 +0900
 
 mermaid: true
 ---
@@ -70,7 +70,7 @@ VSCode의 미니멀리즘한 디자인을 좋아하는 덕에 먼 친척 Visual 
 
 그러나 WinUI 3 생태계는 마이크로소프트의 지속적인 지원에도 불구하고 여전히 빈약한 편입니다. 예컨대 [WinUI-3-Apps-List 프로젝트](https://github.com/DesignLipsx/WinUI-3-Apps-List?tab=readme-ov-file)를 둘러보면 양 자체는 어느 정도 있지만 질이 높지 않습니다. 특히 오픈소스로 코드가 공개된 경우는 더더욱 드물기 때문에 이 프레임워크를 다른 사람들이 실제로 어떻게 다루고 있는지 알아감에 있어 어려움이 있었습니다.
 
-그래서 WinUI 3 프로젝트를 어떻게 이끌어야 하는지에 대한 고민은 [마이크로소프트에서 제공하는 공식 문서](https://learn.microsoft.com/ko-kr/windows/apps/winui/WinUI 3/)를 참고해 연역적으로 풀어야 합니다. 다만 한국어 페이지는 완성도가 굉장히 낮아 참고하기가 쉽지 않았고, 같은 이유로 LLM 인공지능의 정확한 도움도 받기 어려웠습니다. 초기 학습 비용이 컸던 부분입니다.
+그래서 WinUI 3 프로젝트를 어떻게 이끌어야 하는지에 대한 고민은 [마이크로소프트에서 제공하는 공식 문서](https://learn.microsoft.com/ko-kr/windows/apps/winui/winui3)를 참고해 연역적으로 풀어야 합니다. 다만 한국어 페이지는 완성도가 굉장히 낮아 참고하기가 쉽지 않았고, 같은 이유로 LLM 인공지능의 정확한 도움도 받기 어려웠습니다. 초기 학습 비용이 컸던 부분입니다.
 
 ### **꽤 낯선 MVVM 패턴**
 
@@ -166,7 +166,7 @@ PDF 문서 처리
 - [FluentIcons.Wpf](https://www.nuget.org/packages/FluentIcons.WPF/)
 
 WinUI3
-: - [빠른 시작: 환경 설정 및 WinUI 3 project 만들기](https://learn.microsoft.com/ko-kr/windows/apps/winui/winui3/create-your-first-pascal-devlog3-app?source=recommendations#unpackaged-create-a-new-project-for-an-unpackaged-c-or-c-pascal-devlog-3-desktop-app): 다만 DevWinUI를 통해 프로젝트를 생성하는 쪽이 낫습니다.
+: - [빠른 시작: 환경 설정 및 WinUI 3 project 만들기](https://learn.microsoft.com/ko-kr/windows/apps/get-started/start-here): 다만 DevWinUI를 통해 프로젝트를 생성하는 쪽이 낫습니다.
 - [네임스페이스 Windows App SDK](https://learn.microsoft.com/ko-kr/windows/windows-app-sdk/api/winrt/?view=windows-app-sdk-1.7)
 - [Teamplate Studio for WinUI](https://marketplace.visualstudio.com/items?itemName=TemplateStudio.TemplateStudioForWinUICs)
 
