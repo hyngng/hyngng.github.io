@@ -1,4 +1,4 @@
-<!-- Identity Schema: Person + WebSite (JSON-LD) -->
+<!-- Identity Schema: Person + WebSite + BreadcrumbList (JSON-LD) -->
 <!-- Article/BlogPosting은 jekyll-seo-tag가 자동 생성하므로 여기서는 제외 -->
 <script type="application/ld+json">
 {
@@ -28,6 +28,46 @@
         "@id": "{{ site.url }}/#person"
       }
     }
+
+    {% if page.layout == 'home' %}
+    ,{
+      "@type": "CollectionPage",
+      "@id": "{{ site.url }}/#homepage",
+      "name": "{{ site.title }}",
+      "url": "{{ site.url }}",
+      "description": "{{ site.description | xml_escape }}",
+      "isPartOf": { "@id": "{{ site.url }}/#website" },
+      "about": { "@id": "{{ site.url }}/#person" },
+      "inLanguage": "{{ site.lang | default: 'ko-KR' }}"
+    }
+    {% endif %}
+
+    {% if page.layout == 'post' and page.categories.size > 0 %}
+    ,{
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "{{ site.title }}",
+          "item": "{{ site.url }}"
+        }
+        {% for category in page.categories %}
+        ,{
+          "@type": "ListItem",
+          "position": {{ forloop.index | plus: 1 }},
+          "name": "{{ category }}",
+          "item": "{{ site.url }}/categories/{{ category | slugify | url_encode }}/"
+        }
+        {% endfor %}
+        ,{
+          "@type": "ListItem",
+          "position": {{ page.categories.size | plus: 2 }},
+          "name": "{{ page.title | xml_escape }}"
+        }
+      ]
+    }
+    {% endif %}
   ]
 }
 </script>
