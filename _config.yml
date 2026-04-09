@@ -16,6 +16,10 @@ tagline: 반갑습니다 🔥
 
 description: 개발자를 꿈꾸는 학생으로, 프로그래밍부터 창작 활동, 국제정치와 언어학까지 다양한 관심 분야를 바탕으로 경험에 기반한 유용하고 재미있는 컨텐츠를 기록하고 있습니다. 이곳을 저를 잘 설명하는 공간으로 만드는 것이 목표입니다.
 
+author:
+  name: hyngng
+  url: "https://hyngng.github.io/about/"
+
 url: "https://hyngng.github.io"
 
 github:
