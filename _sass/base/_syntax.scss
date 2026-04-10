@@ -84,7 +84,7 @@ code {
   }
 
   a > &.highlighter-rouge {
-    padding-bottom: 0; /* show link's underlinke */
+    padding-bottom: 0; /* show link's underline */
     color: inherit;
   }
 
@@ -144,7 +144,8 @@ div[class^='language-'] {
         border-radius: 50%;
         // region 수정됨
         background-color: var(--code-header-muted-left-color);
-        box-shadow: (v.$code-dot-size + v.$code-dot-gap) 0 0
+        box-shadow:
+          (v.$code-dot-size + v.$code-dot-gap) 0 0
             var(--code-header-muted-middle-color),
           (v.$code-dot-size + v.$code-dot-gap) * 2 0 0
             var(--code-header-muted-right-color);
