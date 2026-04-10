@@ -29,7 +29,7 @@ social:
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: hyngng
   email: hyngng.main@gmail.com
-  fediverse_handle: # fill in your fediverse handle. E.g. "@username@domain.com"
+  fediverse_handle: "@hyngng.main@threads.net" # fill in your fediverse handle. E.g. "@username@domain.com"
   links:
     - https://github.com/hyngng
     - https://pinterest.com/hyngng_main
