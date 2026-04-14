@@ -14,6 +14,8 @@ order: 4
 - 재미있게 즐겨주셨으면 좋겠습니다! 🍸
 
 {% comment %}
+https://just-the-docs.com/docs/ui-components/code/
+https://getbootstrap.com/docs/5.3/components/buttons/ <- 이거임
 ## **URL**
 
 [이런게 되네](http://www.google.com){: .btn .btn-primary } [인스타그램(그림용)](https://www.instagram.com/hyngng.main/){: .btn .btn-dark } [인스타그램(사진용)](https://www.instagram.com/hyngng.sub/){: .btn .btn-dark } [핀터레스트](https://kr.pinterest.com/hyngng_main){: .btn .btn-danger }
