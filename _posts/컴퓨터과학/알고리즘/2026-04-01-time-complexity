@@ -1,5 +1,5 @@
 ---
-title: "알고리즘의 시간복잡도"
+title: "알고리즘의 기본개념들"
 
 categories: [컴퓨터과학, 알고리즘]
 tags: [컴퓨터과학, 알고리즘]
@@ -33,3 +33,9 @@ math: true
 |$\Theta$<sup>Big-Theta</sup>|
 |$o$<sup>Small-o</sup>|
 |$\omega$<sup>Small-omega</sup>|
+
+## **분할&정복**
+
+둘 다 "이걸 왜 배우지?"
+
+## **기억하며 풀기**
