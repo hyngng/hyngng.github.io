@@ -23,8 +23,10 @@
   pre {
     margin-bottom: 0;
     font-size: v.$code-font-size;
+
     /* region 수정됨 */
     font-family: v.$code-font-family;
+
     /* endregion 수정됨 */
     line-height: 1.4rem;
   }
@@ -63,8 +65,10 @@ code {
   -webkit-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
+
   /* region 수정됨 */
   font-family: v.$code-font-family;
+
   /* endregion 수정됨 */
   color: var(--code-color);
 
@@ -142,6 +146,7 @@ div[class^='language-'] {
         width: v.$code-dot-size;
         height: v.$code-dot-size;
         border-radius: 50%;
+
         // region 수정됨
         background-color: var(--code-header-muted-left-color);
         box-shadow:
@@ -149,6 +154,7 @@ div[class^='language-'] {
             var(--code-header-muted-middle-color),
           (v.$code-dot-size + v.$code-dot-gap) * 2 0 0
             var(--code-header-muted-right-color);
+
         // endregion 수정됨
       }
 
