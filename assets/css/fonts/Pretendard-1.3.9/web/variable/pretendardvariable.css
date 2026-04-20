@@ -14,3 +14,12 @@ http://scripts.sil.org/OFL
 	font-display: swap;
 	src: url('./woff2/PretendardVariable.woff2') format('woff2-variations');
 }
+
+/* 사이드바 타이틀 전용 (깜빡임 방지용 block 처리) */
+@font-face {
+        font-family: 'Pretendard Title';
+        font-weight: 900;
+        font-style: normal;
+        font-display: block;
+        src: url('./woff2/PretendardVariable.woff2') format('woff2-variations');
+}

@@ -45,6 +45,7 @@
     {% if page.layout == 'post' and page.categories.size > 0 %}
     ,{
       "@type": "BreadcrumbList",
+      "name": "Breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -63,7 +64,8 @@
         ,{
           "@type": "ListItem",
           "position": {{ page.categories.size | plus: 2 }},
-          "name": "{{ page.title | xml_escape }}"
+          "name": "{{ page.title | xml_escape }}",
+          "item": "{{ site.url }}{{ page.url }}"
         }
       ]
     }
