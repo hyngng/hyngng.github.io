@@ -8,8 +8,8 @@ start_with_ads: false
 toc: true
 toc_sticky: true
 
-date: 2026-05-15 11:37:00 +0900
-last_modified_at: 2026-05-15 11:37:00 +0900
+date: 2026-05-15 11:48:00 +0900
+last_modified_at: 2026-05-15 11:48:00 +0900
 ---
 
 {% comment %}
@@ -17,7 +17,7 @@ date: 2026-03-26 15:30:00 +0900
 last_modified_at: 2026-02-19 13:12:00 +0900
 {% endcomment %}
 
-## **도덕경**
+## **책 소개**
 
 |항목|내용|
 |---|---|
