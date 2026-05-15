@@ -55,7 +55,7 @@ xychart-beta
 
 빙에서는 색인이 갑자기 취소되는 일이 있었습니다. 정확히는 빙은 페이지를 빙의 번역어로 '인덱싱된', '오류', '경고', '제외' 중 하나로 분류하는데, 제 블로그의 모든 페이지가 '제외'로 옮겨졌고 빙 검색결과에서 지워졌습니다. 사이트 호스팅이나 `robots.txt` 등 페이지 자체적인 문제가 없었기 때문에 8월 13일 [빙 웹마스터도구 지원 팀에 문의를 넣었고](https://www.bing.com/webmasters/support) 8월 30일에 _"We have reviewed your site and sent it to our Product Review group for further assessment."_, 10월 3일에 _"I am happy to inform you that the issue related to your site has been resolved"_ 라고 답변 메일을 받았습니다. 한 달 반 정도의 시간을 필요로 했지만 색인이 거의 복구되었고, 지금은 검색노출이 잘 이루어지고 있습니다.
 
-## **개인적인 글쓰기 원칙**
+## **개인적인 글쓰기 원리**
 
 ### **중구난방한 블로그 성격**
 
