@@ -66,7 +66,7 @@ redirect_from:
 |---|---|
 |[Stayin' Alive](https://www.youtube.com/watch?v=fNFzfwLM72c)|2026||
 |[The Nights](https://www.youtube.com/watch?v=XmIgg9De9hY)|2026||
-|["As It Was"](https://www.youtube.com/watch?v=fn4JAuCfHQA)|2026|낮은 저점. 반복되는 멜로디 덕에 생각을 비우기 좋음|
+|[As It Was](https://www.youtube.com/watch?v=fn4JAuCfHQA)|2026|낮은 저점. 반복되는 멜로디 덕에 생각을 비우기 좋음|
 |[Until I Found You](https://www.youtube.com/watch?v=GxldQ9eX2wo)|2026||
 
 {% comment %}
