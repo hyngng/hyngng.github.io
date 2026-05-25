@@ -27,7 +27,7 @@ redirect_from:
 
 저는 유명한 로우파이 유튜브 채널로 Lofi Girl을 찾아가기도 하지만, 라이브 스트리밍에서 틀어주는 노래를 따라 [Kulpa](https://www.youtube.com/@Kupla/featured), [l'Outlander](https://www.youtube.com/@loutlander/featured), [Sleepy Fish](https://www.youtube.com/channel/UCNR1Pzl2T9biZWAbOXZPUwQ) 등 몇몇 아티스트의 노래를 찾아 플레이리스트를 만들어서 듣는 편입니다. 특히 그중에서도 [The Past, The Present](https://www.youtube.com/watch?v=wTKYPDjirxo), [Valentine](https://www.youtube.com/watch?v=wjCM71c0-Ok) 등이 좋았습니다.
 
-메모해둘만한 것
+메모할만한 것
 : |노래 이름|본문에 추가된 년도|비고|
 |---|---|
 |[Falling Star](https://www.youtube.com/watch?v=v3khRYNMCq0)|2026||
@@ -41,7 +41,7 @@ redirect_from:
 
 재밌게도 [yes24의 누자베스 플레이리스트](https://www.youtube.com/watch?v=9CSjtzOueFo)라는 것이 있는데, 실제로도 분위기가 잔잔하고 진정되는 느낌이 있어 책을 읽을 때 특히 잘 어울립니다. 30분~1시간 분량의 플레이리스트를 만들어놓고 루틴 한 번이 모두 돌면 잠시 쉬었다가 읽는 식으로 활용하기 좋습니다.
 
-메모해둘만한 것
+메모할만한 것
 : |노래 이름|본문에 추가된 년도|비고|
 |---|---|
 |[Far Fowls](https://youtu.be/GIX5de8tbaI?si=XEVuGJ1VEVGIx09t)|2026||
@@ -61,7 +61,7 @@ redirect_from:
 
 더 소개할만한게 있다면, 의외로 JPOP도 팝송과 마찬가지로 멜로디 라인이 분명하고 임팩트가 있어 비슷한 용도로 활용하기 좋습니다. 특히 바운디의 [무희(踊り子)](https://www.youtube.com/watch?v=7HgJIAUtICU), [사랑 감기에 실려(恋風邪にのせて)](https://www.youtube.com/watch?v=1FIhcdocT-k) 정도가 듣기 좋았습니다.
 
-메모해둘만한 것
+메모할만한 것
 : |노래 이름|본문에 추가된 년도|비고|
 |---|---|
 |[Stayin' Alive](https://www.youtube.com/watch?v=fNFzfwLM72c)|2026||
@@ -85,7 +85,7 @@ redirect_from:
 
 이외에 듣는 다른 곡이 있다면 [라라랜드의 City Of Stars](https://www.youtube.com/watch?v=q9TQFZJ2biM), [비긴 어게인의 Lost Stars](https://www.youtube.com/watch?v=cL4uhaQ58Rk), [미 비포 유의 Photograph](https://www.youtube.com/watch?v=nSDgHBxUbVQ) 정도가 있을 것 같습니다. 영화를 떠나서 그 자체로도 찾아서 듣기 좋은 선택지입니다.
 
-메모해둘만한 것
+메모할만한 것
 : |노래 이름|본문에 추가된 년도|비고|
 |---|---|
 |[테넷 OST](https://www.youtube.com/watch?v=ZE5zXLOyEOQ)|2026||
