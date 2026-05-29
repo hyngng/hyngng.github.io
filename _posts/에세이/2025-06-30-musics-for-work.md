@@ -69,12 +69,6 @@ redirect_from:
 |[As It Was](https://www.youtube.com/watch?v=fn4JAuCfHQA)|2026|낮은 저점. 반복되는 멜로디 덕에 생각을 비우기 좋음|
 |[Until I Found You](https://www.youtube.com/watch?v=GxldQ9eX2wo)|2026||
 
-{% comment %}
-주로 다음을 듣습니다.
-
-- Until I Found You (Stephen Sanchez)
-{% endcomment %}
-
 ## **영화 OST**
 
 {% include embed/youtube.html id='litQNblifPg' %}
