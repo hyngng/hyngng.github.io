@@ -44,11 +44,11 @@ redirect_from:
 메모할만한 것
 : |노래 이름|본문에 추가된 년도|비고|
 |---|---|
-|[Far Fowls](https://youtu.be/GIX5de8tbaI?si=XEVuGJ1VEVGIx09t)|2026||
 |[Luv(sic) feat.Shing02](https://www.youtube.com/watch?v=Y4HWvsGs0rY)|2025||
 |[Beat laments the world](https://www.youtube.com/watch?v=FWMe6S2CEpc)|2025||
 |[Other Side of Phase](https://www.youtube.com/watch?v=dZrhNmh3svA)|2025||
 |[The Final View](https://www.youtube.com/watch?v=mCsh6gUSW-k)|2025||
+|[Far Fowls](https://youtu.be/GIX5de8tbaI?si=XEVuGJ1VEVGIx09t)|2026||
 |[Horizon](https://www.youtube.com/watch?v=4XMQ_IkErYg)|2025|낮은 저점. 서정적인 분위기 덕에 언제 들어도 질리지 않음|
 |[Feather](https://www.youtube.com/watch?v=hQ5x8pHoIPA)|2026|마찬가지로 분위기가 서정적이고 약간은 몽환적인 덕에 저점이 낮음|
 
