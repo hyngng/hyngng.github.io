@@ -9,7 +9,7 @@ toc: true
 toc_sticky: true
 
 date: 2025-06-30 23:01:00 +0900
-last_modified_at: 2026-05-25 20:30:00 +0900
+last_modified_at: 2026-05-31 14:30:00 +0900
 
 mermaid: true
 
@@ -50,6 +50,7 @@ redirect_from:
 |[Other Side of Phase](https://www.youtube.com/watch?v=dZrhNmh3svA)|2025||
 |[The Final View](https://www.youtube.com/watch?v=mCsh6gUSW-k)|2025||
 |[Horizon](https://www.youtube.com/watch?v=4XMQ_IkErYg)|2025|낮은 저점. 서정적인 분위기 덕에 언제 들어도 질리지 않음|
+|[Feather](https://www.youtube.com/watch?v=hQ5x8pHoIPA)|2026|마찬가지로 분위기가 서정적이고 약간은 몽환적인 덕에 저점이 낮음|
 
 ## **팝송**
 
