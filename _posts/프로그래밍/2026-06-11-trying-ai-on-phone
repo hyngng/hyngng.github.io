@@ -1,0 +1,36 @@
+---
+image:
+    path: preview-image
+    lqip: 
+    alt: ""
+
+title: ""
+
+categories: []
+tags: []
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2026-06-11 00:00:00 +0900
+last_modified_at: 2026-06-11 00:00:00 +0900
+---
+
+## **온디바이스 AI**
+
+- 토큰 무제한
+    - 2026년 치킨게임이 끝나가고, 토큰 제한이 점점 빡세지고 있음.
+    - lmsys ai arena에서도 모델이 내려감
+    - github copilot 학생 플랜에서도 모델이 다수 내려가다 못해, 기준이 질문 횟수에서 토큰으로 옮겨가면서 질문 5번 하면 월 크레딧이 동나는 수준으로 변경
+- 보안
+    - 정보가 미국 캘리포니아 서버로 발송되지 않음. API 키, ID/PW 등등 혹시 모를 불상사를 예방 가능하거나, 그런걸 다루는 작업까지도 포함해서 맡길 수 있게 됨.
+
+- 성능은 떨어짐 (그러나 이제는 꽤 쓸만한 수준)
+
+## ****
+
+- Snapdragon 8 gen 1
+- 12GB RAM
+
+- linux
