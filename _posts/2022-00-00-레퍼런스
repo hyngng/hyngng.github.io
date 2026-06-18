@@ -1,7 +1,7 @@
 ---
 image:
     path: preview-image
-    lqip: 
+    lqip: data:image/webp;base64,
     alt: ""
 
 title: ""
