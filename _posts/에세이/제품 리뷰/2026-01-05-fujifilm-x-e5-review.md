@@ -168,7 +168,7 @@ X-E5에서 도입된 새 뷰파인더 인터페이스 모드는 매우 만족스
 
 그런데 사용해보니 가벼운 JPG 직출 기능로서도 좋았고, 결과물 자체도 예쁘게 잘 나오는 편이었습니다. 거기에 필름 롤 제조회사가 자사 제품의 색감을 직접 옮겼다는 상상을 더하니 꽤 재밌게 사용할 수 있었습니다. 특히 후지 레시피는 막연히 설정값을 커스텀할 수 있는 기능 정도로만 알고 있었는데 그레인, 화이트밸런스, 톤곡선, 선명도, 노이즈감소 등 커스텀 자유도가 좋은 편이라 필름시뮬레이션의 활용도를 무궁무진하게 만들어줍니다.
 
-이와 관련해서 [Fuji Weekly](https://fujixweekly.com/)에서 다른 사람들이 만들어 놓은 레시피를 찾아 적용해보는 재미가 있습니다. X-E5는 5세대 바디이므로 [X-Trans V Recipes](https://fujixweekly.com/fujifilm-x-trans-v-recipes/)를 이용했고, 시험삼아 California Summer나 Kodak T-Max 100 Soft Tone 등 마음에 드는 레시피를 적용해보고 있는데 "정말 필름같이 감쪽같다"까지는 아니더라도 꽤 독특하고 재밌습니다.
+이와 관련해서 [Fuji Weekly](https://fujixweekly.com/)에서 다른 사람들이 만들어 놓은 레시피를 찾아 적용해보는 재미가 있습니다. X-E5는 5세대 바디이므로 [X-Trans V Recipes](https://fujixweekly.com/fujifilm-x-trans-v-recipes/)를 이용했고, 시험삼아 California Summer나 Kodak T-Max 100 Soft Tone 등 마음에 드는 레시피를 적용해보고 있는데 '정말 필름같이 감쪽같다'까지는 아니더라도 꽤 독특하고 재밌습니다.
 
 ### **아쉬운 제품설계**
 
