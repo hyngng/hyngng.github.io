@@ -4,7 +4,7 @@ image:
     lqip: data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAAAQAgCdASoQAAgAAUAmJQBOgMWCurp2S40AAP40cqnHH3viH6b121abUEDvfkR211iqjaVqJ+Z1BmHGv+24T0oQXGcfzUKwSSbEO5ZWf0NyJbhKbNbqqnu/aAwH/s82QAA=
     alt: "짬짬이 찍어둔 점심식사 사진들"
 
-title: "1년 8개월간의 사회복무요원 근무후기"
+title: "1년 8개월간의 사회복무요원 근무 후기"
 
 categories: [에세이]
 tags: [에세이, 사회복무요원]
