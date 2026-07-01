@@ -2,7 +2,7 @@
 image:
     path: /2026-07-01-second-drawing-archive/preview-image.webp
     lqip: data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAgAAUAmJaQAAudlAwhuAAD+/xM9UkC8QMNEy7BMfwpd85rwAQAAAAA=
-    alt: "어이없는 거 발견함"
+    alt: "가장 마음에 드는 거"
 
 title: "중학생 시절 그림 아카이브와 간단 리뷰"
 
