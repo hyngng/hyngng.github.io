@@ -7,7 +7,7 @@ image:
 title: "초등학생 시절 그림 아카이브"
 
 categories: [그림, 아카이브]
-tags: [그림, 전투기, 우주선, 메카닉, 낙서]
+tags: [그림, 아카이브]
 start_with_ads: false
 
 toc: false
