@@ -35,17 +35,21 @@ last_modified_at: 2026-03-31 13:45:00 +0900
 ![200000-돌다리](/drawing/200000-돌다리.webp){: .rounded-10 .dark }
 *고등학생 때 낙서 4*
 
-![231214-셔츠여자](/drawing/231214-셔츠여자.webp){: .rounded-10 .light .border }
-![231214-셔츠여자](/drawing/231214-셔츠여자.webp){: .rounded-10 .dark }
+![200000-셔츠여자](/drawing/200000-셔츠여자.webp){: .rounded-10 .light .border }
+![200000-셔츠여자](/drawing/200000-셔츠여자.webp){: .rounded-10 .dark }
 *고등학생 때 낙서 5*
+
+![200000-여자스케치](){: .rounded-10 .light .border }
+![200000-여자스케치](){: .rounded-10 .dark }
+*고등학생 때 낙서 6*
 
 ![200000-신궁](/drawing/200000-신궁.webp){: .rounded-10 .light .border }
 ![200000-신궁](/drawing/200000-신궁.webp){: .rounded-10 .dark }
-*고등학생 때 낙서 6*
+*고등학생 때 낙서 7*
 
 ![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .rounded-10 .light .border }
 ![200000-우비쓴남자](/drawing/200000-우비쓴남자.webp){: .rounded-10 .dark }
-*고등학생 때 낙서 7*
+*고등학생 때 낙서 8*
 
 ![200000-겨울소년](/drawing/200000-겨울소년.webp){: .rounded-10 }
 *옛날에 그리다 만거 1*
