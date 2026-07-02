@@ -14,7 +14,7 @@ toc: false
 toc_sticky: true
  
 date: 2022-08-25 14:38:00 +0900
-last_modified_at: 2026-03-31 13:45:00 +0900
+last_modified_at: 2026-07-02 15:50:00 +0900
 ---
 
 ![200000-생존사람](/drawing/200000-생존사람.webp){: .rounded-10 .light .border }
@@ -39,8 +39,8 @@ last_modified_at: 2026-03-31 13:45:00 +0900
 ![200000-셔츠여자](/drawing/200000-셔츠여자.webp){: .rounded-10 .dark }
 *고등학생 때 낙서 5*
 
-![200000-여자스케치](){: .rounded-10 .light .border }
-![200000-여자스케치](){: .rounded-10 .dark }
+![200000-여자스케치](/drawing/200000-여자스케치.webp){: .rounded-10 .light .border }
+![200000-여자스케치](/drawing/200000-여자스케치.webp){: .rounded-10 .dark }
 *고등학생 때 낙서 6*
 
 ![200000-신궁](/drawing/200000-신궁.webp){: .rounded-10 .light .border }
@@ -69,12 +69,15 @@ last_modified_at: 2026-03-31 13:45:00 +0900
 ![220612-드래곤등장](/drawing/220612-드래곤등장.webp){: .rounded-10 }
 *학교 과제 제출용 2*
 
-![210430-신라시대](/drawing/210430-신라시대.webp){: .rounded-10 }
+![220612-과제만화](/drawing/220000-과제만화.webp){: .rounded-10 }
 *학교 과제 제출용 3*
+
+![210430-신라시대](/drawing/210430-신라시대.webp){: .rounded-10 }
+*학교 과제 제출용 4*
 
 ![220514-헨젤과그레텔](/drawing/220514-헨젤과그레텔.webp){: .rounded-10 .light .border }
 ![220514-헨젤과그레텔](/drawing/220514-헨젤과그레텔.webp){: .rounded-10 .dark }
-*학교 과제 제출용 4*
+*학교 과제 제출용 5*
 
 ![220000-남자둘](/drawing/220000-남자둘.webp){: .rounded-10 .light .border }
 ![220000-남자둘](/drawing/220000-남자둘.webp){: .rounded-10 .dark }
