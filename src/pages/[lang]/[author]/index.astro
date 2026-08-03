@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ALL_AUTHORS, getAuthor } from '../../../settings/authors.settings';
+import { getPublishedPosts } from '../../../utils/posts';
+import { getLocale, availableLocales, defaultLocale } from '../../../locales';
+import AuthorPageContent from '../../../components/AuthorPageContent.astro';
+
+export async function getStaticPaths() {
+  const locales = availableLocales.map(l => l.code).filter(lang => lang !== defaultLocale);
+  return ALL_AUTHORS.flatMap((author) =>
+    locales.map((lang) => ({
+      params: { lang, author: author.id },
+      props: { author: getAuthor(author.id, lang), lang },
+    }))
+  );
+}
+
+const { author, lang } = Astro.props;
+const locale = getLocale(lang);
+
+const sortedPosts = await getPublishedPosts({ lang, authorId: author.id });
+---
+
+<BaseLayout lang={lang} authorId={author.id}>
+  <AuthorPageContent author={author} locale={locale} currentLocale={lang} posts={sortedPosts} />
+</BaseLayout>

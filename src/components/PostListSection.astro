@@ -1,0 +1,160 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../locales';
+import PostCard from './PostCard.astro';
+import LoadMoreCard from './LoadMoreCard.astro';
+import { getPostPath } from '../utils/posts';
+import { SITE } from '../settings/site.settings';
+import { distributeByWeight, SSR_COL_WIDTH } from '../features/post-list/distribution';
+
+interface Props {
+  locale: Locale;
+  posts: CollectionEntry<'posts'>[];
+  currentLocale: string;
+  chunkBaseUrl: string;
+}
+
+const { locale, posts, currentLocale, chunkBaseUrl } = Astro.props;
+const chunkSize = SITE.postsPerPage;
+const totalChunks = Math.ceil(posts.length / chunkSize);
+const firstChunk = posts.slice(0, chunkSize);
+const hasMore = totalChunks > 1;
+const nextPreviewPost = hasMore ? posts[chunkSize] : undefined;
+const totalRemaining = hasMore ? posts.length - chunkSize : 0;
+const nextChunkCount = hasMore ? Math.min(chunkSize, totalRemaining) : 0;
+
+const indexed = firstChunk.map((post, i) => ({ post, index: i }));
+const { left: leftPosts, right: rightPosts, leftWeight, rightWeight } = distributeByWeight(
+  indexed,
+  SSR_COL_WIDTH,
+  item => !!item.post.data.image,
+);
+const loadMoreInLeft = leftWeight <= rightWeight;
+---
+
+<section class="posts-section">
+  <h2 class="section-title" data-i18n="posts.title">{locale.posts.title}</h2>
+  {posts.length === 0 ? (
+    <p class="post-preview-state" data-i18n="posts.empty">{locale.posts.empty}</p>
+  ) : (
+    <div
+      class="posts-grid"
+      data-total-posts={posts.length}
+      data-chunk-size={chunkSize}
+      data-total-chunks={totalChunks}
+      data-current-chunk="1"
+      data-chunk-base-url={chunkBaseUrl}
+      data-locale={currentLocale}
+      data-all-posts={JSON.stringify(posts.map(post => ({
+        path: getPostPath(post.id, post.data.authors, currentLocale),
+        title: post.data.title,
+        description: post.data.description || ''
+      })))}
+    >
+      <div class="posts-columns" data-layout="masonry">
+        <div class="posts-col posts-col-left">
+          {leftPosts.map(({ post, index }) => (
+            <PostCard post={post} href={getPostPath(post.id, post.data.authors, currentLocale)} index={index} />
+          ))}
+          {hasMore && nextPreviewPost && loadMoreInLeft && (
+            <LoadMoreCard
+              nextChunkUrl={`${chunkBaseUrl}/2`}
+              nextPreviewPost={nextPreviewPost}
+              nextChunkCount={nextChunkCount}
+              totalPosts={posts.length}
+              totalRemaining={totalRemaining}
+              loadMoreOrder={firstChunk.length}
+              locale={locale}
+            />
+          )}
+        </div>
+        <div class="posts-col posts-col-right">
+          {rightPosts.map(({ post, index }) => (
+            <PostCard post={post} href={getPostPath(post.id, post.data.authors, currentLocale)} index={index} />
+          ))}
+          {hasMore && nextPreviewPost && !loadMoreInLeft && (
+            <LoadMoreCard
+              nextChunkUrl={`${chunkBaseUrl}/2`}
+              nextPreviewPost={nextPreviewPost}
+              nextChunkCount={nextChunkCount}
+              totalPosts={posts.length}
+              totalRemaining={totalRemaining}
+              loadMoreOrder={firstChunk.length}
+              locale={locale}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  )}
+  <p class="search-empty post-preview-state" data-i18n="search.empty" role="status" aria-live="polite" hidden>
+    {locale.search.empty}
+  </p>
+</section>
+
+<script>
+  import { createPostListController, setController, needsRelayout } from '../features/post-list';
+  import { createChunkLoader } from '../features/post-list';
+
+  let abortController: AbortController | undefined;
+
+  function init() {
+    abortController?.abort();
+    abortController = new AbortController();
+    const { signal } = abortController;
+
+    const grid = document.querySelector('.posts-grid') as HTMLElement | null;
+    if (!grid) return;
+
+    const controller = createPostListController(grid);
+    setController(controller);
+
+    const columns = grid.querySelector('.posts-columns');
+    if (needsRelayout(columns as HTMLElement | null)) {
+      controller.relayout();
+    }
+
+    const mq = window.matchMedia('(max-width: 960px)');
+    mq.addEventListener('change', () => controller.relayout(), { signal });
+
+    createChunkLoader(grid, controller, signal);
+  }
+
+  init();
+</script>
+
+<style>
+  .posts-section {
+    margin-top: var(--posts-section-margin-top);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .section-title {
+    color: var(--color-heading);
+    font-size: var(--section-title-size);
+    font-weight: 700;
+    line-height: var(--section-title-line-height);
+    margin: 0 0 var(--space-section-title-content) 0;
+  }
+
+</style>
+
+<style is:global>
+  @keyframes card-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .post-card.is-new {
+    opacity: 0;
+    animation: card-fade-in 0.3s ease forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-card.is-new {
+      opacity: 1;
+      animation: none;
+    }
+  }
+</style>

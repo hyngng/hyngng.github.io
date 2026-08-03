@@ -1,0 +1,59 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  lang: string;
+  title: string;
+}
+
+const { lang, title } = Astro.props;
+---
+
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script is:inline>document.documentElement.dataset.js='true'</script>
+  <meta name="robots" content="noindex,follow" />
+  <title>{title}</title>
+  <script is:inline>
+    (function() {
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return 'light';
+      })();
+      const element = document.documentElement;
+      if (theme === 'dark') {
+        element.classList.add('dark');
+        element.classList.remove('light');
+      } else {
+        element.classList.remove('dark');
+        element.classList.add('light');
+      }
+    })();
+  </script>
+</head>
+<body class="chunk-page">
+  <main>
+    <div data-post-chunk>
+      <slot />
+    </div>
+  </main>
+</body>
+</html>
+
+<style>
+  main {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--layout-padding);
+  }
+
+  @media (max-width: 960px) {
+    main {
+      padding: var(--layout-padding-mobile);
+    }
+  }
+</style>

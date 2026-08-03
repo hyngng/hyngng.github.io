@@ -1,0 +1,59 @@
+---
+import { SITE } from '../settings/site.settings';
+import { defaultLocale } from '../locales';
+
+const currentLocale = Astro.currentLocale || defaultLocale;
+---
+
+<div id="giscus-container" class="giscus-wrapper"></div>
+
+<script is:inline define:vars={{ SITE, currentLocale }}>
+  let commentsAbortController;
+
+  function loadGiscus() {
+    commentsAbortController?.abort();
+    commentsAbortController = new AbortController();
+    const { signal } = commentsAbortController;
+
+    const container = document.getElementById('giscus-container');
+    if (!container || container.querySelector('script')) return;
+
+    const isDark = document.documentElement.classList.contains('dark');
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', SITE.giscus.repo);
+    script.setAttribute('data-repo-id', SITE.giscus.repoId);
+    script.setAttribute('data-category', SITE.giscus.category);
+    script.setAttribute('data-category-id', SITE.giscus.categoryId);
+    script.setAttribute('data-mapping', SITE.giscus.mapping);
+    script.setAttribute('data-strict', SITE.giscus.strict);
+    script.setAttribute('data-reactions-enabled', SITE.giscus.reactionsEnabled);
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', SITE.giscus.inputPosition);
+    script.setAttribute('data-theme', isDark ? 'dark_dimmed' : 'light');
+    script.setAttribute('data-lang', currentLocale);
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+
+    container.appendChild(script);
+
+    window.addEventListener('themeChange', () => {
+      const iframe = document.querySelector('iframe.giscus-frame');
+      if (!iframe) return;
+      const isDark = document.documentElement.classList.contains('dark');
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: isDark ? 'dark_dimmed' : 'light' } } },
+        'https://giscus.app'
+      );
+    }, { signal });
+  }
+
+  loadGiscus();
+</script>
+
+<style>
+  .giscus-wrapper {
+    margin-top: 4rem;
+  }
+</style>

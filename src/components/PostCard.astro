@@ -1,0 +1,201 @@
+---
+import Author from "./Author.astro";
+import { getAuthor } from "../settings/authors.settings";
+import { useLocale, defaultLocale } from "../locales";
+import { extractExcerpt } from "../utils/posts";
+import { getRelativeTime } from "../utils/relativeTime";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  href: string;
+  index?: number;
+}
+
+const { post, href, index = 0 } = Astro.props;
+const { title, date, authors: authorIds, image } = post.data;
+const locale = useLocale(Astro);
+const excerpt = extractExcerpt(post.data.description, post.body);
+const relativeDate = getRelativeTime(date, locale);
+
+const primaryAuthor = getAuthor(authorIds[0], Astro.currentLocale || defaultLocale);
+const authorSuffix = authorIds.length > 1
+  ? ` ${locale.authors.otherCount(authorIds.length - 1)}`
+  : undefined;
+---
+
+<article
+  class:list={["post-card", { "post-card--with-image": !!image }]}
+  data-path={href}
+  data-title={title}
+  data-index={index}
+  style={`--post-order: ${index}`}
+>
+  <a href={href} class="post-card-link">
+    {
+      image && (
+        <div
+          class="post-card-image"
+          style={image.lqip ? `--lqip-url:url("${image.lqip}")` : undefined}
+        >
+          <img
+            src={image.path}
+            alt={image.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      )
+    }
+    <div class="post-card-content">
+      <h3 class="post-card-title">{title}</h3>
+      <div class="post-card-meta">
+        <div class="post-card-author">
+          <Author
+            avatar={primaryAuthor.avatar}
+            name={primaryAuthor.name}
+            nameSuffix={authorSuffix}
+            info={relativeDate}
+            clickable={false}
+            truncate
+          />
+        </div>
+        {excerpt && <p class="post-card-excerpt">{excerpt}</p>}
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .post-card {
+    background-color: var(--color-post-card-bg);
+    border-radius: var(--post-card-radius);
+    overflow: hidden;
+    min-height: var(--post-card-height-no-image);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-card-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-card-content {
+    padding: var(--space-card-content-padding);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-card-title {
+    color: var(--color-heading);
+    font-size: var(--post-card-font-title);
+    font-weight: 700;
+    line-height: var(--post-card-line-title);
+    margin: 0 0 var(--space-card-title-gap) 0;
+  }
+
+  .post-card-meta {
+    position: relative;
+    overflow: hidden;
+    min-height: var(--avatar-size);
+  }
+
+  .post-card-author {
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .post-card-excerpt {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    transform: translateY(100%);
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    color: var(--color-text);
+    font-size: var(--author-info-size);
+    line-height: 1.5;
+  }
+
+  .post-card:hover .post-card-author,
+  .post-card:focus-within .post-card-author {
+    transform: translateY(-100%);
+  }
+
+  .post-card:hover .post-card-excerpt,
+  .post-card:focus-within .post-card-excerpt {
+    transform: translateY(0);
+  }
+
+  /* ── Image ── */
+
+  .post-card-image {
+    position: relative;
+    aspect-ratio: var(--post-card-image-aspect-ratio);
+    background-color: var(--color-border);
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--post-card-image-radius);
+    overflow: hidden;
+    transform: translateZ(0);
+  }
+
+  .post-card-image::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--lqip-url);
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+  }
+
+  .post-card-image:has(img.loaded)::before {
+    opacity: 0;
+  }
+
+  .post-card-image img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    border-radius: inherit;
+  }
+
+  .post-card-image img.loaded {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-card-author,
+    .post-card-excerpt {
+      transition: none;
+    }
+
+    .post-card-image img {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { initPostCardImages } from '../features/post-list/image-init';
+
+  initPostCardImages();
+  document.addEventListener("astro:page-load", initPostCardImages);
+</script>

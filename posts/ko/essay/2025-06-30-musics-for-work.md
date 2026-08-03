@@ -1,0 +1,101 @@
+---
+title: "생산성이 필요할 때 듣는 노래 장르 4선"
+authors: ["essay"]
+
+categories: [에세이]
+tags: [프로그래밍, 개발, 노래]
+start_with_ads: true
+
+toc: true
+toc_sticky: true
+
+date: 2025-06-30 23:01:00 +0900
+last_modified_at: 2026-05-31 14:30:00 +0900
+
+mermaid: true
+---
+
+어떤 일을 할 때 노래를 듣는 것은 온전한 몰입을 방해하기도 하므로 인지노동에 도움이 되는 일은 아닙니다. 그런데 그럼에도 많은 사람들이 작업 중에 노래를 듣는 이유는, 단순히 배경음을 채우기 위함이거나 그 노래가 주는 익숙함과 안정감 때문인 것 같습니다. 우선 저는 그런 이유로 노래를 찾아 듣습니다. 개발을 하거나 블로그 글을 쓰는 등 작업을 할 때, 정말로 효율이 필요할 땐 백색소음을 찾지만 여유가 있을 땐 다음의 장르를 찾고 있습니다.
+
+## **로우파이**
+
+::youtube{id="2VV0o5pkNBY"}
+
+코로나 팬데믹 때 크게 성장한 장르로서, 저도 이때 처음 접하고 그 매력에 빠지게 되었습니다. 로우파이는 뚜렷한 기승전결 없이 단순한 멜로디가 반복되는 것이 특징이고, 그 특성상 집중력을 별로 요구하지 않아 안정감 있는 백색소음 정도의 역할을 해주는 것이 장점입니다. 그러면서도 완전한 무음 상태의 적막함은 채워주기 때문에 배경음악으로 틀어놓기에 부담이 없습니다.
+
+저는 유명한 로우파이 유튜브 채널로 Lofi Girl을 찾아가기도 하지만, 라이브 스트리밍에서 틀어주는 노래를 따라 [Kulpa](https://www.youtube.com/@Kupla/featured), [l'Outlander](https://www.youtube.com/@loutlander/featured), [Sleepy Fish](https://www.youtube.com/channel/UCNR1Pzl2T9biZWAbOXZPUwQ) 등 몇몇 아티스트의 노래를 찾아 플레이리스트를 만들어서 듣는 편입니다. 특히 그중에서도 [The Past, The Present](https://www.youtube.com/watch?v=wTKYPDjirxo), [Valentine](https://www.youtube.com/watch?v=wjCM71c0-Ok) 등이 좋았습니다.
+
+**메모할만한 것**
+
+|노래 이름|본문에 추가된 년도|비고|
+|---|---|---|
+|[Falling Star](https://www.youtube.com/watch?v=v3khRYNMCq0)|2026||
+|[oyasumi](https://www.youtube.com/watch?v=SOe4c5Qgivc)|2026|높은 고점. 책 '초공간'을 읽을 때 내내 계속 들었음|
+
+## **누자베스**
+
+::youtube{id="Fwv2gnCFDOc"}
+
+로우파이로부터 파생된 맥락으로 알게 된 장르입니다. 서정적인 비트에 정갈한 피아노, 색소폰, 플루트 등 악기의 조합이 즐겁게 느껴지고 또 의외로 이 조합이 진정된 분위기를 만들어주기 때문에 자주 찾고 있습니다. 누자베스의 곡은 그 자체로도 좋고, 색다른 분위기가 필요하다면 다른 밴드가 플레이하는 커버 영상도 찾아서 듣기 좋습니다. 저는 그중에서도 [Counting Stars](https://www.youtube.com/watch?v=IXa0kLOKfwQ), [A Day By Atmosphere Supreme](https://www.youtube.com/watch?v=mnyUhXsWiX8), [Aruarian Dance](https://www.youtube.com/watch?v=qYcoJpqCha4) 정도를 기분좋게 듣고 있습니다.
+
+재밌게도 [yes24의 누자베스 플레이리스트](https://www.youtube.com/watch?v=9CSjtzOueFo)라는 것이 있는데, 실제로도 분위기가 잔잔하고 진정되는 느낌이 있어 책을 읽을 때 특히 잘 어울립니다. 30분~1시간 분량의 플레이리스트를 만들어놓고 루틴 한 번이 모두 돌면 잠시 쉬었다가 읽는 식으로 활용하기 좋습니다.
+
+**메모할만한 것**
+
+|노래 이름|본문에 추가된 년도|비고|
+|---|---|---|
+|[Luv(sic) feat.Shing02](https://www.youtube.com/watch?v=Y4HWvsGs0rY)|2025||
+|[Beat laments the world](https://www.youtube.com/watch?v=FWMe6S2CEpc)|2025||
+|[Other Side of Phase](https://www.youtube.com/watch?v=dZrhNmh3svA)|2025||
+|[The Final View](https://www.youtube.com/watch?v=mCsh6gUSW-k)|2025||
+|[Far Fowls](https://youtu.be/GIX5de8tbaI?si=XEVuGJ1VEVGIx09t)|2026||
+|[Horizon](https://www.youtube.com/watch?v=4XMQ_IkErYg)|2025|낮은 저점. 서정적인 분위기 덕에 언제 들어도 질리지 않음|
+|[Feather](https://www.youtube.com/watch?v=hQ5x8pHoIPA)|2026|마찬가지로 분위기가 서정적이고 약간은 몽환적인 덕에 저점이 낮음|
+
+## **팝송**
+
+::youtube{id="kafo5V1RRCs"}
+
+팝송은 제가 오래 즐겨왔던 장르입니다. 예시로 든 코니 탤벗의 노래부터 에드 시런, 마룬5, 콜드플레이, 아비치, 위켄드, 퍼렐 윌리엄스, 코난 그레이, 트로이 시반, 등 많은 가수들의 다양한 노래를 모두 좋아하고, 또 마이클 부블레, 비지스, 빌리 조엘, 비틀즈 등 아버지 세대의 전통적인 노래도 호불호 없이 자주 찾아 듣습니다.
+
+팝송 중에는 인지도가 높은 노래가 많고 멜로디와 비트가 명확해서인지 빠른 분위기 전환이 필요할 때 듣기 좋습니다. 각각 외국어를 어느정도씩은 알고 있지만 어디까지나 교양 수준이기 때문에 노래 가사를 알아들을 수 없다는 점도 팝송을 듣는 이유입니다. 단, 적지 않은 곡이 자극적이고 집중을 방해한다는 느낌은 있었습니다.
+
+더 소개할만한게 있다면, 의외로 JPOP도 팝송과 마찬가지로 멜로디 라인이 분명하고 임팩트가 있어 비슷한 용도로 활용하기 좋습니다. 특히 바운디의 [무희(踊り子)](https://www.youtube.com/watch?v=7HgJIAUtICU), [사랑 감기에 실려(恋風邪にのせて)](https://www.youtube.com/watch?v=1FIhcdocT-k) 정도가 듣기 좋았습니다.
+
+**메모할만한 것**
+
+|노래 이름|본문에 추가된 년도|비고|
+|---|---|---|
+|[Stayin' Alive](https://www.youtube.com/watch?v=fNFzfwLM72c)|2026||
+|[The Nights](https://www.youtube.com/watch?v=XmIgg9De9hY)|2026||
+|[As It Was](https://www.youtube.com/watch?v=fn4JAuCfHQA)|2026|낮은 저점. 반복되는 멜로디 덕에 생각을 비우기 좋음|
+|[Until I Found You](https://www.youtube.com/watch?v=GxldQ9eX2wo)|2026||
+
+## **영화 OST**
+
+::youtube{id="litQNblifPg"}
+
+어떤 특정 장면의 분위기를 빌려오고 싶을 때 자주 이용합니다. 예를 들어 위플래시의 카라반은 제가 자주 애용하는데, 카라반에는 서사에 대한 영화의 별난 결말이 함축되어있고 또 그런 결말의 분위기와 의미를 은유적으로 상기시켜주기 때문입니다. 드럼 소리가 고조에 달하면서 경건하게 마음을 다잡는 제 모습을 발견할 수 있습니다.
+
+지브리 애니메이션 음악으로 유명한 조 히사이시의 노래도 무난하게 듣기 좋습니다. 많이 유명하지만 뻔하다고 느껴지기보다는 클래식하다는 느낌을 주고, 카라반과 마찬가지로 가사가 없는 곡이 대부분이라 영화를 볼 때의 느긋한 마음으로 작업에 임할 수 있습니다.
+
+이외에 듣는 다른 곡이 있다면 [라라랜드의 City Of Stars](https://www.youtube.com/watch?v=q9TQFZJ2biM), [비긴 어게인의 Lost Stars](https://www.youtube.com/watch?v=cL4uhaQ58Rk), [미 비포 유의 Photograph](https://www.youtube.com/watch?v=nSDgHBxUbVQ) 정도가 있을 것 같습니다. 영화를 떠나서 그 자체로도 찾아서 듣기 좋은 선택지입니다.
+
+**메모할만한 것**
+
+|노래 이름|본문에 추가된 년도|비고|
+|---|---|---|
+|[테넷 OST](https://www.youtube.com/watch?v=ZE5zXLOyEOQ)|2026||
+|[California Dreamin'](https://www.youtube.com/watch?v=KOok1WzZbOY)|2026|중경삼림의 메인 OST|
+|[비행운(ひこうき雲)](https://www.youtube.com/watch?v=24g3l_IJuIE)|2026|바람이 분다 메인 OST|
+
+<!--
+
+## **게임 음악 메들리**
+::youtube{id=""}
+::youtube{id="uivFFnCI8tM"}
+::youtube{id="rTlEuxoRA3k"}
+
+6월 안에 겨우겨우 글 하나 또 올림.
+
+-->

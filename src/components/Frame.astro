@@ -1,0 +1,400 @@
+---
+import { getSiteMeta } from "../settings/site.settings";
+import Button from "./Button.astro";
+import { getLocale, availableLocales, defaultLocale } from "../locales";
+
+interface Props {
+  authorId?: string;
+}
+
+const { authorId } = Astro.props;
+
+const currentCode = Astro.currentLocale || defaultLocale;
+const locale = getLocale(currentCode);
+const siteMeta = getSiteMeta(currentCode);
+const otherLocales = availableLocales.filter((l) => l.code !== currentCode);
+
+const currentLangShort = currentCode.split("-")[0];
+const homeUrl =
+  currentLangShort === defaultLocale ? "/" : `/${currentLangShort}/`;
+const rssUrl = authorId
+  ? `/${currentLangShort}/${authorId}/rss.xml`
+  : currentLangShort === defaultLocale
+    ? "/rss.xml"
+    : `/${currentLangShort}/rss.xml`;
+---
+
+<div class="fixed-actions">
+  <div class="action-block left-action">
+    <Button as="a" href={homeUrl} variant="title">
+      <span class="home-text">{siteMeta.title}</span>
+      <i class="fa-solid fa-home home-icon"></i>
+    </Button>
+  </div>
+
+  <div class="action-block right-actions">
+    <div class="right-actions-inner" id="right-actions-inner">
+      <Button
+        variant="icon"
+        aria-label={locale.frame.themeAria}
+        id="theme-toggle"
+      >
+        <i class="fa-solid fa-sun" id="theme-icon-sun"></i>
+        <i class="fa-solid fa-moon" id="theme-icon-moon"></i>
+      </Button>
+      <Button
+        as="a"
+        href={rssUrl}
+        variant="icon"
+        aria-label={locale.frame.rssAria}
+      >
+        <i class="fa-solid fa-rss"></i>
+      </Button>
+      <Button
+        variant="text"
+        aria-label={locale.frame.langAria}
+        id="lang-toggle"
+      >
+        {locale.frame.lang}
+      </Button>
+      <div
+        class="lang-list"
+        id="lang-list"
+        aria-hidden="true"
+        data-locale-codes={availableLocales.map((l) => l.code).join(",")}
+        data-default-locale={defaultLocale}
+      >
+        {
+          otherLocales.map((l) => (
+            <button class="lang-item" data-lang={l.code}>
+              {l.label}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ── Container ── */
+  .fixed-actions {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  /* ── Action blocks ── */
+  .action-block {
+    position: absolute;
+    top: var(--frame-thickness);
+    height: var(--header-height);
+    background-color: var(--color-frame);
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .left-action {
+    left: var(--frame-thickness);
+    border-bottom-right-radius: var(--frame-radius);
+  }
+
+  .right-actions {
+    right: var(--frame-thickness);
+    border-bottom-left-radius: var(--frame-radius);
+  }
+
+  /* ── Right actions inner (buttons + lang-list) ── */
+  .right-actions-inner {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: calc(var(--button-size) * 3);
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .right-actions-inner.lang-open {
+    width: calc(var(--button-size) * 3 + var(--lang-list-width, 0px));
+  }
+
+  /* ── Language list ── */
+  .lang-list {
+    display: flex;
+    align-items: center;
+    width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: calc(
+      100vw - var(--button-size) * 3 - var(--frame-thickness) * 2
+    );
+    opacity: 0;
+    transition:
+      width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.25s ease;
+    pointer-events: none;
+    scrollbar-width: none;
+  }
+
+  .lang-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .right-actions-inner.lang-open .lang-list {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lang-item {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-size);
+    height: var(--button-size);
+    background: transparent;
+    color: var(--color-button-text);
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-action);
+    font-weight: 700;
+    border-radius: 50%;
+    transition:
+      background-color var(--transition-duration) var(--transition-easing),
+      color var(--transition-duration) var(--transition-easing);
+  }
+
+  .lang-item:disabled {
+    color: var(--color-muted);
+    cursor: not-allowed;
+  }
+
+  .lang-item:hover:not(:disabled) {
+    background-color: var(--color-accent);
+  }
+
+  /* ── Home icon (desktop hidden, mobile visible) ── */
+  .home-icon {
+    display: none;
+  }
+
+  /* ── Theme toggle icons ── */
+  #theme-icon-sun {
+    display: inline;
+  }
+
+  #theme-icon-moon {
+    display: none;
+  }
+
+  /* ── Concave corners (pseudo-elements) ── */
+  .left-action::before,
+  .left-action::after,
+  .right-actions::before,
+  .right-actions::after {
+    content: "";
+    position: absolute;
+    width: var(--frame-radius);
+    height: var(--frame-radius);
+    pointer-events: none;
+  }
+
+  .left-action::before,
+  .left-action::after {
+    background: radial-gradient(
+      circle at 100% 100%,
+      transparent var(--frame-radius),
+      var(--color-frame) var(--frame-radius)
+    );
+  }
+
+  .right-actions::before,
+  .right-actions::after {
+    background: radial-gradient(
+      circle at 0 100%,
+      transparent var(--frame-radius),
+      var(--color-frame) var(--frame-radius)
+    );
+  }
+
+  .left-action::before {
+    right: calc(var(--frame-radius) * -1);
+    top: 0;
+  }
+
+  .left-action::after {
+    left: 0;
+    bottom: calc(var(--frame-radius) * -1);
+  }
+
+  .right-actions::before {
+    left: calc(var(--frame-radius) * -1);
+    top: 0;
+  }
+
+  .right-actions::after {
+    right: 0;
+    bottom: calc(var(--frame-radius) * -1);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 960px) {
+    .fixed-actions {
+      background-color: var(--color-frame);
+      height: var(--header-height);
+      pointer-events: auto;
+      max-width: 100vw;
+    }
+
+    .home-text {
+      display: none;
+    }
+
+    .home-icon {
+      display: inline;
+    }
+
+    .right-actions-inner.lang-open {
+      width: calc(100vw + var(--button-size) * 2);
+    }
+
+    .lang-list {
+      max-width: calc(100vw - var(--button-size));
+      touch-action: pan-x;
+    }
+  }
+</style>
+
+<script>
+  let frameAbortController: AbortController | undefined;
+
+  function initFrame() {
+    frameAbortController?.abort();
+    frameAbortController = new AbortController();
+    const { signal } = frameAbortController;
+
+    const themeToggle = document.getElementById("theme-toggle");
+    const langToggle = document.getElementById("lang-toggle");
+    const langList = document.getElementById("lang-list");
+    const rightActionsInner = document.getElementById("right-actions-inner");
+
+    if (!langToggle || !langList || !rightActionsInner) return;
+
+    const langItems = langList.querySelectorAll(".lang-item");
+    const localeCodes = new Set(
+      langList.dataset.localeCodes?.split(",").filter(Boolean),
+    );
+    const defaultLocale = langList.dataset.defaultLocale;
+
+    const buttonSize =
+      parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue(
+          "--button-size",
+        ),
+      ) || 72;
+    rightActionsInner.style.setProperty(
+      "--lang-list-width",
+      `${langItems.length * buttonSize}px`,
+    );
+
+    let isOpen = false;
+
+    function getLocalizedPath(langCode: string) {
+      const pathSegments = window.location.pathname
+        .split("/")
+        .filter(Boolean);
+      const langCodeNormalized = langCode.split("-")[0];
+
+      if (localeCodes.has(pathSegments[0])) {
+        pathSegments.shift();
+      }
+
+      if (langCodeNormalized !== defaultLocale) {
+        pathSegments.unshift(langCodeNormalized);
+      }
+
+      return `/${pathSegments.join("/")}${window.location.search}${window.location.hash}`;
+    }
+
+    function openLangList() {
+      isOpen = true;
+      langList!.style.width = `${langItems.length * buttonSize}px`;
+      langList!.setAttribute("aria-hidden", "false");
+      rightActionsInner!.classList.add("lang-open");
+      langToggle!.classList.add("lang-active");
+    }
+
+    function closeLangList() {
+      isOpen = false;
+      langList!.style.width = "0";
+      langList!.setAttribute("aria-hidden", "true");
+      rightActionsInner!.classList.remove("lang-open");
+      langToggle!.classList.remove("lang-active");
+    }
+
+    langToggle.addEventListener(
+      "click",
+      (e) => {
+        e.stopPropagation();
+        isOpen ? closeLangList() : openLangList();
+      },
+      { signal },
+    );
+
+    document.addEventListener(
+      "click",
+      (e) => {
+        if (isOpen && !rightActionsInner.contains(e.target as Node | null)) {
+          closeLangList();
+        }
+      },
+      { signal },
+    );
+
+    const postEl = document.querySelector<HTMLElement>(".post");
+    const availableLocales = postEl?.dataset.availableLocales?.split(",") || [];
+
+    langItems.forEach((item) => {
+      const langCode = (item as HTMLElement).dataset.lang;
+
+      if (
+        langCode &&
+        availableLocales.length > 0 &&
+        !availableLocales.includes(langCode)
+      ) {
+        (item as HTMLButtonElement).disabled = true;
+      }
+
+      item.addEventListener(
+        "click",
+        () => {
+          if (!langCode) return;
+          window.location.href = getLocalizedPath(langCode);
+        },
+        { signal },
+      );
+    });
+
+    document.addEventListener(
+      "astro:before-preparation",
+      () => closeLangList(),
+      { signal },
+    );
+
+    if (themeToggle) {
+      themeToggle.addEventListener(
+        "click",
+        () => {
+          import("../utils/theme").then(({ toggleTheme }) => toggleTheme());
+        },
+        { signal },
+      );
+    }
+  }
+
+  initFrame();
+</script>

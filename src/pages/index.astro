@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../utils/posts';
+import { useLocale, defaultLocale } from '../locales';
+import HomePageContent from '../components/HomePageContent.astro';
+
+const locale = useLocale(Astro);
+const currentLocale = Astro.currentLocale || defaultLocale;
+const sortedPosts = await getPublishedPosts({ lang: currentLocale });
+---
+
+<BaseLayout lang={currentLocale}>
+  <HomePageContent locale={locale} currentLocale={currentLocale} posts={sortedPosts} />
+</BaseLayout>
+

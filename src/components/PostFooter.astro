@@ -1,0 +1,187 @@
+---
+import { getLocale } from '../locales';
+import QRCode from 'qrcode';
+
+interface Props {
+  publishDate: Date;
+  updateDate?: Date;
+  characterCount: number;
+  lang: string;
+}
+
+const { publishDate, updateDate, characterCount, lang } = Astro.props;
+const locale = getLocale(lang);
+
+const currentUrl = Astro.url.href;
+const qrSvg = (await QRCode.toString(currentUrl, {
+  type: 'svg',
+  margin: 0,
+  width: 80,
+  color: {
+    dark: '#000000',
+    light: '#00000000',
+  },
+})).replaceAll('#000000', 'currentColor');
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString(locale.postFooter.dateLocale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+---
+
+<div class="post-footer">
+  <div class="license" data-i18n="postFooter.license" set:html={locale.postFooter.license} />
+  <hr class="divider" />
+  <div class="meta-container">
+    <div class="meta-info">
+      <div class="meta-row">
+        <span class="meta-label"><span data-i18n="postFooter.publishDate">{locale.postFooter.publishDate}</span>:</span>
+        <span class="meta-value">{formatDate(publishDate)}</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label"><span data-i18n="postFooter.lastUpdate">{locale.postFooter.lastUpdate}</span>:</span>
+        <span class="meta-value">{updateDate ? formatDate(updateDate) : locale.posts.notUpdated}</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label"><span data-i18n="postFooter.characterCount">{locale.postFooter.characterCount}</span>:</span>
+        <span class="meta-value">{characterCount.toLocaleString()}<span data-i18n="postFooter.characterUnit">{locale.postFooter.characterUnit}</span></span>
+      </div>
+    </div>
+    <div
+      class="qr-code"
+      tabindex="0"
+      role="button"
+      data-url={currentUrl}
+      data-copied={locale.postFooter.copied}
+      data-copy-fail={locale.postFooter.copyFail}
+      aria-label={locale.postFooter.qrAria}
+      title={locale.postFooter.qrTitle}
+      set:html={qrSvg}
+    />
+  </div>
+</div>
+
+<script>
+  let footerController: AbortController | undefined;
+
+  function initPostFooter() {
+    footerController?.abort();
+    footerController = new AbortController();
+    const { signal } = footerController;
+
+    document.querySelectorAll('.qr-code').forEach((el) => {
+      el.addEventListener('keydown', (e) => {
+        const ke = e as KeyboardEvent;
+        if (ke.key === 'Enter' || ke.key === ' ') {
+          e.preventDefault();
+          (el as HTMLElement).click();
+        }
+      }, { signal });
+      el.addEventListener('click', async () => {
+        const url = (el as HTMLElement).dataset.url;
+        const copiedMsg = (el as HTMLElement).dataset.copied;
+        const failMsg = (el as HTMLElement).dataset.copyFail;
+        if (!url) return;
+        try {
+          await navigator.clipboard.writeText(url);
+          showToast(el as HTMLElement, copiedMsg ?? '');
+        } catch {
+          showToast(el as HTMLElement, failMsg ?? '');
+        }
+      }, { signal });
+    });
+  }
+
+  function showToast(anchor: HTMLElement, message: string) {
+    const existing = anchor.querySelector('.copy-toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('span');
+    toast.className = 'copy-toast';
+    toast.textContent = message;
+    anchor.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  }
+
+  initPostFooter();
+</script>
+
+<style>
+  .post-footer {
+    margin-top: var(--post-footer-margin-top);
+    margin-bottom: var(--post-footer-margin-bottom);
+    padding: 0;
+    color: var(--color-muted);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-base);
+    line-height: 1.5;
+  }
+
+  .license {
+    margin-bottom: var(--space-card-title-gap);
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--color-line);
+    opacity: 0.3;
+    margin: 0 0 var(--space-card-title-gap) 0;
+  }
+
+  .meta-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .meta-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-post-footer-meta-gap);
+    flex: 1;
+    margin-right: var(--space-card-title-gap);
+  }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    line-height: 1;
+  }
+
+  .qr-code {
+    width: var(--qr-code-size);
+    height: var(--qr-code-size);
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .qr-code :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .qr-code :global(.copy-toast) {
+    position: absolute;
+    top: calc(100% + var(--toast-offset));
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-toast-bg);
+    color: var(--color-bg);
+    font-size: var(--font-size-base);
+    padding: var(--toast-padding-y) var(--toast-padding-x);
+    border-radius: 9999px;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: toast-fade 2s ease-out forwards;
+    z-index: 10;
+  }
+
+  @keyframes toast-fade {
+    0%, 70% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+</style>

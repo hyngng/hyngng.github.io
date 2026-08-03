@@ -1,0 +1,79 @@
+﻿---
+const {
+  as: Element = 'button',
+  href,
+  variant = 'text',
+  class: className,
+  ...rest
+} = Astro.props;
+
+const Tag = (Element === 'a' || href) ? 'a' : Element;
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'custom-button',
+    `variant-${variant}`,
+    className
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>
+
+<style>
+  .custom-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: var(--color-text);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family-base);
+    transition: background-color var(--transition-duration) var(--transition-easing), color var(--transition-duration) var(--transition-easing);
+  }
+
+  .custom-button:hover {
+    background-color: var(--color-accent);
+  }
+
+  .variant-title {
+    height: var(--header-height);
+    padding: var(--button-padding-y) var(--button-padding-x);
+    font-size: var(--font-size-action);
+    font-weight: 700;
+    border-radius: var(--frame-radius);
+    color: var(--color-button-text);
+  }
+
+  @media (max-width: 960px) {
+    .variant-title {
+      width: var(--button-size);
+      padding: 0;
+      border-radius: 50%;
+    }
+  }
+
+  .variant-icon {
+    width: var(--button-size);
+    height: var(--button-size);
+    margin: 0;
+    border-radius: 50%;
+    font-size: var(--font-size-action);
+    color: var(--color-button-text);
+  }
+
+  .variant-text {
+    width: var(--button-size);
+    height: var(--button-size);
+    margin: 0;
+    border-radius: 50%;
+    font-size: var(--font-size-action);
+    font-weight: 700;
+    color: var(--color-button-text);
+  }
+</style>

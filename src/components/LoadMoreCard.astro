@@ -1,0 +1,247 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { Locale } from "../locales";
+import { defaultLocale } from "../locales";
+import Author from "./Author.astro";
+import { getRelativeTime } from "../utils/relativeTime";
+import { getAuthor } from "../settings/authors.settings";
+
+interface Props {
+  nextChunkUrl: string;
+  nextPreviewPost: CollectionEntry<"posts">;
+  nextChunkCount: number;
+  totalPosts: number;
+  totalRemaining: number;
+  loadMoreOrder: number;
+  locale: Locale;
+}
+
+const {
+  nextChunkUrl,
+  nextPreviewPost,
+  nextChunkCount,
+  totalPosts,
+  totalRemaining,
+  loadMoreOrder,
+  locale,
+} = Astro.props;
+const { image } = nextPreviewPost.data;
+const authorIds = nextPreviewPost.data.authors;
+const a = getAuthor(authorIds[0], Astro.currentLocale || defaultLocale);
+const suffix =
+  authorIds.length > 1
+    ? ` ${locale.authors.otherCount(authorIds.length - 1)}`
+    : undefined;
+---
+
+<a
+  href={nextChunkUrl}
+  class:list={["load-more-card", { "post-card--with-image": !!image }]}
+  role="button"
+  aria-label={locale.posts.loadMoreHover(
+    nextPreviewPost.data.title,
+    nextChunkCount,
+  )}
+  style={`--post-order: ${loadMoreOrder}`}
+>
+  {
+    image && (
+      <div
+        class="post-card-image"
+        style={image.lqip ? `--lqip-url:url("${image.lqip}")` : undefined}
+      >
+        <img src={image.path} alt={image.alt} loading="lazy" decoding="async" />
+      </div>
+    )
+  }
+  <div class="post-card-content">
+    <h3 class="post-card-title load-more-title">
+      {nextPreviewPost.data.title}
+    </h3>
+    <div class="post-card-meta">
+      <div class="load-more-default">
+        <span class="load-more-main"
+          >{locale.posts.loadMoreCount(nextChunkCount)}</span
+        >
+        <span class="load-more-sub"
+          >{locale.posts.loadMoreSub(totalPosts, totalRemaining)}</span
+        >
+      </div>
+      <div class="load-more-hover">
+        <Author
+          avatar={a.avatar}
+          name={a.name}
+          nameSuffix={suffix}
+          info={getRelativeTime(nextPreviewPost.data.date, locale)}
+          clickable={false}
+          truncate
+        />
+      </div>
+    </div>
+  </div>
+</a>
+
+<style is:global>
+  .load-more-card:not([hidden]) {
+    background-color: var(--color-post-card-bg);
+    border-radius: var(--post-card-radius);
+    overflow: hidden;
+    min-height: var(--post-card-height-no-image);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .load-more-card .post-card-content {
+    padding: var(--space-card-content-padding);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .load-more-title {
+    color: var(--color-muted);
+    font-size: var(--post-card-font-title);
+    font-weight: 700;
+    line-height: var(--post-card-line-title);
+    margin: 0 0 var(--space-card-title-gap) 0;
+    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .load-more-card:hover .load-more-title,
+  .load-more-card:focus-within .load-more-title {
+    color: var(--color-heading);
+  }
+
+  .load-more-card .post-card-meta {
+    position: relative;
+    overflow: hidden;
+    min-height: var(--avatar-size);
+  }
+
+  .load-more-default {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-load-more-gap);
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .load-more-main {
+    color: var(--color-muted);
+    font-size: var(--author-info-size);
+  }
+
+  .load-more-sub {
+    color: var(--color-muted);
+    font-size: var(--font-size-load-more-sub);
+    opacity: var(--opacity-load-more-sub);
+  }
+
+  .load-more-hover {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    transform: translateY(100%);
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+    color: var(--color-muted);
+    font-size: var(--author-info-size);
+    line-height: 1.5;
+  }
+
+  .load-more-card:hover .load-more-default,
+  .load-more-card:focus-within .load-more-default {
+    transform: translateY(-100%);
+  }
+
+  .load-more-card:hover .load-more-hover,
+  .load-more-card:focus-within .load-more-hover {
+    transform: translateY(0);
+  }
+
+  .load-more-card .load-more-hover span {
+    color: var(--color-muted);
+    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .load-more-card .load-more-hover p {
+    color: var(--color-muted);
+    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .load-more-card:hover .load-more-hover span,
+  .load-more-card:focus-within .load-more-hover span {
+    color: var(--color-text);
+  }
+
+  .load-more-card:hover .load-more-hover p,
+  .load-more-card:focus-within .load-more-hover p {
+    color: var(--color-heading);
+  }
+
+  /* ── LoadMoreCard Image ── */
+
+  .load-more-card .post-card-image {
+    position: relative;
+    aspect-ratio: var(--post-card-image-aspect-ratio);
+    background-color: var(--color-border);
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--post-card-image-radius);
+    overflow: hidden;
+    transform: translateZ(0);
+    filter: brightness(0.9) opacity(0.9);
+    transition: filter 0.35s ease;
+  }
+
+  .load-more-card:hover .post-card-image,
+  .load-more-card:focus-within .post-card-image {
+    filter: brightness(1) opacity(1);
+  }
+
+  .load-more-card .post-card-image::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--lqip-url);
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+  }
+
+  .load-more-card .post-card-image:has(img.loaded)::before {
+    opacity: 0;
+  }
+
+  .load-more-card .post-card-image img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    border-radius: inherit;
+  }
+
+  .load-more-card .post-card-image img.loaded {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .load-more-title,
+    .load-more-default,
+    .load-more-hover,
+    .load-more-card .load-more-hover span,
+    .load-more-card .load-more-hover p {
+      transition: none;
+    }
+
+    .load-more-card .post-card-image img {
+      transition: none;
+    }
+  }
+</style>

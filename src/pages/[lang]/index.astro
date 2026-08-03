@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../utils/posts';
+import { getLocale, availableLocales, defaultLocale } from '../../locales';
+import HomePageContent from '../../components/HomePageContent.astro';
+
+export async function getStaticPaths() {
+  const locales = availableLocales.map(l => l.code).filter(lang => lang !== defaultLocale);
+  return locales.map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params;
+const locale = getLocale(lang);
+const sortedPosts = await getPublishedPosts({ lang });
+---
+
+<BaseLayout lang={lang}>
+  <HomePageContent locale={locale} currentLocale={lang} posts={sortedPosts} />
+</BaseLayout>

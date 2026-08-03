@@ -1,0 +1,271 @@
+---
+import type { Locale } from '../locales';
+import { defaultLocale } from '../locales';
+
+interface Props {
+  locale: Locale;
+  currentLocale: string;
+}
+
+const { locale, currentLocale } = Astro.props;
+---
+
+<aside class="search-container" aria-label={locale.search.aria}>
+  <h2 class="search-title" data-i18n="search.title">{locale.search.title}</h2>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+    <input
+      type="search"
+      class="search-input"
+      placeholder={locale.search.placeholder}
+      aria-label={locale.search.aria}
+      data-locale={currentLocale}
+      data-default-locale={defaultLocale}
+      autocomplete="off"
+    />
+  </div>
+</aside>
+
+<script is:inline type="module">
+  if (!window.__pagefind__) {
+    try {
+      const mod = await import('/pagefind/pagefind.js');
+      await mod.init();
+      window.__pagefind__ = mod;
+    } catch {}
+  }
+  document.dispatchEvent(new Event('pagefind-ready'));
+</script>
+
+<script>
+  import { requireController, normalizePath, allPostsFromGrid } from '../features/post-list';
+
+  declare global {
+    interface Window {
+      __pagefind__?: {
+        search: (q: string, opts?: { filters?: Record<string, string> }) => Promise<{ results: Array<{ data: () => Promise<{ url: string }> }> }>;
+        init: () => Promise<void>;
+      };
+    }
+  }
+
+  let abortController: AbortController | undefined;
+
+  type PagefindModule = NonNullable<Window['__pagefind__']>;
+
+  let pagefind: PagefindModule | null = null;
+  let pagefindLoadPromise: Promise<boolean> | null = null;
+
+  async function ensurePagefind(): Promise<boolean> {
+    if (pagefind) return true;
+    if (pagefindLoadPromise) return pagefindLoadPromise;
+
+    pagefindLoadPromise = new Promise<boolean>((resolve) => {
+      if (window.__pagefind__) {
+        pagefind = window.__pagefind__;
+        resolve(true);
+        return;
+      }
+
+      const handler = () => {
+        if (window.__pagefind__) {
+          pagefind = window.__pagefind__;
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      };
+
+      document.addEventListener('pagefind-ready', handler, { once: true });
+      setTimeout(() => {
+        document.removeEventListener('pagefind-ready', handler);
+        resolve(false);
+      }, 10000);
+    });
+
+    return pagefindLoadPromise;
+  }
+
+  let debounceTimer: ReturnType<typeof setTimeout>;
+
+  function initSearch() {
+    abortController?.abort();
+    abortController = new AbortController();
+    const { signal } = abortController;
+
+    if (!document.querySelector('.search-container')) return;
+
+    const allInputs = document.querySelectorAll<HTMLInputElement>('.search-input');
+
+    async function ensureMatchingChunksLoaded(
+      controller: ReturnType<typeof requireController>,
+      matchedPaths?: Set<string>,
+      query?: string,
+    ) {
+      const grid = document.querySelector('.posts-grid') as HTMLElement | null;
+      if (!grid?.dataset.allPosts) return;
+
+      const allPosts = allPostsFromGrid(grid);
+      const chunkSize = parseInt(grid.dataset.chunkSize || '6', 10);
+      const currentChunk = parseInt(grid.dataset.currentChunk || '1', 10);
+
+      const chunksToLoad = new Set<number>();
+
+      allPosts.forEach((post, index) => {
+        const postChunk = Math.floor(index / chunkSize) + 1;
+        if (postChunk <= currentChunk) return;
+
+        let isMatch = false;
+        if (matchedPaths) {
+          isMatch = matchedPaths.has(normalizePath(post.path));
+        } else if (query) {
+          const q = query.toLowerCase();
+          isMatch = post.title.toLowerCase().includes(q) || ((post as any).description && (post as any).description.toLowerCase().includes(q));
+        }
+
+        if (isMatch) chunksToLoad.add(postChunk);
+      });
+
+      const sortedChunks = Array.from(chunksToLoad).sort((a, b) => a - b);
+      for (const chunkNum of sortedChunks) {
+        await controller.fetchSearchChunk(chunkNum);
+      }
+    }
+
+    async function handleSearch(query: string) {
+      allInputs.forEach(input => {
+        if (input.value !== query) input.value = query;
+      });
+
+      const controller = requireController();
+
+      if (!query) {
+        controller.clearSearch();
+        return;
+      }
+
+      if (pagefind) {
+        await searchWithPagefind(query, controller);
+      } else {
+        const loaded = await ensurePagefind();
+        if (loaded && pagefind) {
+          await searchWithPagefind(query, controller);
+        } else {
+          await searchWithDOM(query, controller);
+        }
+      }
+    }
+
+    async function searchWithPagefind(query: string, controller: ReturnType<typeof requireController>) {
+      const input = allInputs[0];
+      const rawLocale = input?.dataset.locale || input?.dataset.defaultLocale || 'ko';
+      const currentLocale = rawLocale.split('-')[0];
+      const result = await pagefind!.search(query, {
+        filters: { lang: currentLocale },
+      });
+
+      const matchedPaths = new Set<string>();
+      for (const item of result.results) {
+        const data = await item.data();
+        if (data.url) {
+          matchedPaths.add(normalizePath(data.url));
+        }
+      }
+
+      await ensureMatchingChunksLoaded(controller, matchedPaths);
+      controller.showSearchResults(Array.from(matchedPaths));
+    }
+
+    async function searchWithDOM(query: string, controller: ReturnType<typeof requireController>) {
+      const grid = document.querySelector('.posts-grid') as HTMLElement | null;
+      const allPosts = allPostsFromGrid(grid || document.createElement('div'));
+      const q = query.toLowerCase();
+      const matchedPaths = allPosts
+        .filter(p => p.title.toLowerCase().includes(q) || (p.description && p.description.toLowerCase().includes(q)))
+        .map(p => normalizePath(p.path));
+
+      await ensureMatchingChunksLoaded(controller, undefined, query);
+      controller.showSearchResults(matchedPaths);
+    }
+
+    allInputs.forEach(input => {
+      input.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          handleSearch(input.value.trim()).catch(err => {
+            console.error('[search]', err);
+          });
+        }, 300);
+      }, { signal });
+    });
+
+    signal.addEventListener('abort', () => {
+      clearTimeout(debounceTimer);
+    });
+  }
+
+  initSearch();
+</script>
+
+<style>
+  .search-container {
+    width: 100%;
+  }
+
+  .search-title {
+    margin: 0 0 var(--space-search-title-gap) 0;
+    font-size: var(--post-card-font-title);
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-search-bar-gap);
+    width: var(--search-bar-width);
+    height: var(--search-bar-height);
+    padding: 0 var(--search-bar-padding-x);
+    background-color: var(--color-post-card-bg);
+    border-radius: 25px;
+    box-sizing: border-box;
+  }
+
+  .search-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    font-size: var(--font-size-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    min-width: 0;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-muted);
+    opacity: 0.7;
+  }
+
+  .search-bar:focus-within {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+
+  .search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+</style>

@@ -1,0 +1,56 @@
+---
+import { useLocale } from '../locales';
+import Author from './Author.astro';
+
+interface AuthorItem {
+  avatar?: string;
+  name: string;
+  info: string;
+}
+
+interface Props {
+  title?: string;
+  authors: AuthorItem[];
+}
+
+const locale = useLocale(Astro);
+const { title = locale.authors.title, authors } = Astro.props;
+---
+
+<section class="content-shell authors" aria-labelledby="authors-title">
+  <h2 id="authors-title" data-i18n="authors.title">{title}</h2>
+  <button type="button" class="authors-toggle" aria-expanded="false" aria-controls="authors-list-container" aria-label={locale.authors.toggleAria}>
+    <svg class="chevron-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+  <div id="authors-list-container" class="authors-list">
+    {authors.map((author) => <Author {...author} />)}
+  </div>
+</section>
+
+<script>
+  let toggleController: AbortController | null = null;
+
+  function initAuthorsToggle() {
+    if (toggleController) {
+      toggleController.abort();
+    }
+    toggleController = new AbortController();
+
+    const toggleBtn = document.querySelector('.authors-toggle');
+    
+    if (!toggleBtn) return;
+    
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+    }, { signal: toggleController.signal });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAuthorsToggle, { once: true });
+  } else {
+    initAuthorsToggle();
+  }
+</script>

@@ -1,0 +1,32 @@
+---
+import { getChunkStaticPaths } from '../../../utils/chunkEndpoint';
+import { defaultLocale, getLocale } from '../../../locales';
+import { ALL_AUTHORS, type AuthorId } from '../../../settings/authors.settings';
+import ChunkPageLayout from '../../../layouts/ChunkPageLayout.astro';
+import ChunkPostListBody from '../../../components/ChunkPostListBody.astro';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const author of ALL_AUTHORS) {
+    const chunkPaths = await getChunkStaticPaths(defaultLocale, `/${author.id}/chunk`, author.id as AuthorId);
+    for (const p of chunkPaths) {
+      paths.push({
+        params: { author: author.id, n: p.params.n },
+        props: p.props,
+      });
+    }
+  }
+  return paths;
+}
+
+const { author } = Astro.params;
+const { posts, currentChunk, totalChunks, chunkBaseUrl, totalPosts } = Astro.props;
+const currentLocale = Astro.currentLocale || defaultLocale;
+const locale = getLocale(currentLocale);
+const nextChunk = currentChunk < totalChunks ? currentChunk + 1 : null;
+const homePath = `/${author}/`;
+---
+
+<ChunkPageLayout lang={currentLocale} title={`${locale.posts.title} - ${currentChunk}`}>
+  <ChunkPostListBody {posts} {currentChunk} {chunkBaseUrl} {totalPosts} {nextChunk} homePath={homePath} {locale} currentLocale={currentLocale} />
+</ChunkPageLayout>

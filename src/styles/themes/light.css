@@ -1,0 +1,48 @@
+:root,
+.light {
+  color-scheme: light;
+  /* ── 기본 컬러 ── */
+  --color-bg: #F7F7F7;
+  --color-text: #2E2E2E;
+  --color-heading: #2E2E2E;
+  --color-accent: #CA4519;
+  --color-muted: #877575;
+  --color-line: #877575;
+  --color-blockquote-bar: #ededed;
+  --color-blockquote-text: #757575;
+  --color-frame: #0a0a0a;
+
+  /* ── 코드 블록 & Shiki ── */
+  --color-post-inline-code-bg: #E8EDF3;
+  --color-post-code-block-bg: #E8ECF1;
+  --astro-code-background: #E8ECF1;
+  --astro-code-foreground: #2E2E2E;
+
+  /* GitHub Light 토큰 매핑 */
+  --astro-code-token-constant: #005cc5;
+  --astro-code-token-string: #032f62;
+  --astro-code-token-comment: #6a737d;
+  --astro-code-token-keyword: #d73a49;
+  --astro-code-token-parameter: #24292e;
+  --astro-code-token-function: #6f42c1;
+  --astro-code-token-string-expression: #032f62;
+  --astro-code-token-punctuation: #24292e;
+  --astro-code-token-link: #6f42c1;
+
+  /* ── 컴포넌트 ── */
+  --color-table-border: #e5e7eb;
+  --color-table-head-bg: #E8EDF3;
+  --color-post-card-bg: #E8EDF3;
+  --author-avatar-placeholder: #E8EDF3;
+  --color-toast-bg: #000000;
+  --color-shimmer: #d4d4d4;
+  --color-shimmer-highlight: #e8e8e8;
+  --color-button-text: var(--color-bg);
+
+  /* ── Border ── */
+  --color-border: #dee2e6;
+  --color-border-translucent: rgba(0, 0, 0, 0.175);
+
+  /* ── Admonitions ── */
+  --color-admonition-bg: #E8EDF3;
+}

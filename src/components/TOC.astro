@@ -1,0 +1,347 @@
+---
+import type { MarkdownHeading } from "astro";
+import { useLocale } from "../locales";
+
+interface Props {
+  headings: MarkdownHeading[];
+  title?: string;
+}
+
+const locale = useLocale(Astro);
+const { headings, title = locale.toc.title } = Astro.props;
+const filteredHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+
+interface TocSubgroup {
+  heading: MarkdownHeading;
+  children: MarkdownHeading[];
+}
+
+interface TocGroup {
+  heading: MarkdownHeading;
+  subgroups: TocSubgroup[];
+}
+
+const tocGroups: TocGroup[] = [];
+
+for (const heading of filteredHeadings) {
+  if (heading.depth === 2 || tocGroups.length === 0) {
+    tocGroups.push({ heading, subgroups: [] });
+    continue;
+  }
+
+  const lastGroup = tocGroups[tocGroups.length - 1];
+
+  if (heading.depth === 3) {
+    lastGroup.subgroups.push({ heading, children: [] });
+    continue;
+  }
+
+  if (heading.depth === 4 && lastGroup.subgroups.length > 0) {
+    lastGroup.subgroups[lastGroup.subgroups.length - 1].children.push(heading);
+  }
+}
+---
+
+{
+  tocGroups.length > 0 && (
+    <nav class="toc-container" aria-label={locale.toc.aria}>
+      <h2 class="toc-title" data-i18n="toc.title">
+        {title}
+      </h2>
+      <div class="toc-scroll">
+        <ul class="toc-list">
+          {tocGroups.map((group) => (
+            <li class="toc-group" data-slug={group.heading.slug}>
+              <a href={`#${group.heading.slug}`} class="toc-link toc-link-root" title={group.heading.text}>
+                {group.heading.text}
+              </a>
+              {group.subgroups.length > 0 && (
+                <ul class="toc-sublist">
+                  {group.subgroups.map((subgroup) => (
+                    <li class="toc-subgroup" data-slug={subgroup.heading.slug}>
+                      <a
+                        href={`#${subgroup.heading.slug}`}
+                        class="toc-link toc-link-sub"
+                        title={subgroup.heading.text}
+                      >
+                        {subgroup.heading.text}
+                      </a>
+                      {subgroup.children.length > 0 && (
+                        <ul class="toc-subsublist">
+                          {subgroup.children.map((heading) => (
+                            <li
+                              class="toc-item depth-4"
+                              data-slug={heading.slug}
+                            >
+                              <a href={`#${heading.slug}`} class="toc-link" title={heading.text}>
+                                {heading.text}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  )
+}
+
+<script>
+  let tocController: AbortController | undefined;
+
+  function initTOC() {
+    const headings = Array.from(
+      document.querySelectorAll(
+        ".post-content h2, .post-content h3, .post-content h4",
+      ),
+    );
+    const tocLinks = Array.from(document.querySelectorAll(".toc-link"));
+    const tocGroups = Array.from(document.querySelectorAll(".toc-group"));
+    const tocSubgroups = Array.from(document.querySelectorAll(".toc-subgroup"));
+
+    if (tocController) {
+      tocController.abort();
+      tocController = undefined;
+    }
+
+    const controller = new AbortController();
+    tocController = controller;
+    const { signal } = controller;
+
+    if (headings.length === 0) return;
+
+    const headingList = headings.map((h, index) => {
+      const slug = h.getAttribute("id") || "";
+
+      let parentH2 = "";
+      let parentH3 = "";
+
+      if (h.tagName === "H2") {
+        parentH2 = slug;
+      } else if (h.tagName === "H3") {
+        parentH3 = slug;
+        for (let i = index - 1; i >= 0; i--) {
+          if (headings[i].tagName === "H2") {
+            parentH2 = headings[i].getAttribute("id") || "";
+            break;
+          }
+        }
+      } else {
+        for (let i = index - 1; i >= 0; i--) {
+          if (!parentH3 && headings[i].tagName === "H3") {
+            parentH3 = headings[i].getAttribute("id") || "";
+          }
+          if (!parentH2 && headings[i].tagName === "H2") {
+            parentH2 = headings[i].getAttribute("id") || "";
+          }
+          if (parentH2 && parentH3) break;
+        }
+      }
+
+      return { slug, parentH2, parentH3 };
+    });
+
+    const getActivationLine = () => {
+      const scrollMarginTop = getComputedStyle(headings[0]).scrollMarginTop;
+      return parseFloat(scrollMarginTop) || 0;
+    };
+
+    const updateActiveHeading = () => {
+      const activationLine = getActivationLine();
+      let activeSlug = headingList[0].slug;
+
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top > activationLine + 1) break;
+        activeSlug = heading.getAttribute("id") || activeSlug;
+      }
+
+      const activeInfo = headingList.find(
+        (heading) => heading.slug === activeSlug,
+      );
+      const activeParentH2 = activeInfo?.parentH2;
+      const activeParentH3 = activeInfo?.parentH3;
+
+      tocLinks.forEach((link) => {
+        const href = link.getAttribute("href")?.substring(1);
+        link.classList.toggle("active", href === activeSlug);
+      });
+
+      const activeGroupEl = activeParentH2
+        ? document.querySelector(`.toc-group[data-slug="${activeParentH2}"]`)
+        : null;
+      tocGroups.forEach((group) => {
+        group.classList.toggle("expanded", group === activeGroupEl);
+      });
+
+      const activeSubgroupEl = activeParentH3
+        ? document.querySelector(
+            `.toc-subgroup[data-slug="${activeParentH3}"]`,
+          )
+        : null;
+      tocSubgroups.forEach((subgroup) => {
+        subgroup.classList.toggle("expanded", subgroup === activeSubgroupEl);
+      });
+    };
+
+    let animationFrame: number | undefined;
+    const scheduleActiveHeadingUpdate = () => {
+      if (animationFrame !== undefined) return;
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = undefined;
+        updateActiveHeading();
+      });
+    };
+
+    window.addEventListener("scroll", scheduleActiveHeadingUpdate, {
+      passive: true,
+      signal,
+    });
+    window.addEventListener("resize", scheduleActiveHeadingUpdate, { signal });
+    window.addEventListener("hashchange", scheduleActiveHeadingUpdate, {
+      signal,
+    });
+    signal.addEventListener("abort", () => {
+      if (animationFrame !== undefined)
+        window.cancelAnimationFrame(animationFrame);
+    });
+
+    updateActiveHeading();
+  }
+
+  initTOC();
+</script>
+
+<style>
+  .toc-container li {
+    margin: 0;
+  }
+
+  .toc-container {
+    width: 100%;
+  }
+
+  .toc-title {
+    margin: 0 0 var(--toc-title-list-gap) 0;
+    font-size: var(--post-card-font-title);
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--toc-item-gap);
+  }
+
+  .toc-group {
+    line-height: 1.4;
+  }
+
+  .toc-subgroup {
+    line-height: 1.4;
+  }
+
+  .toc-sublist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--toc-item-gap);
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-4px);
+    overflow: hidden;
+    pointer-events: none;
+    margin-top: 0;
+    transition:
+      max-height 180ms ease,
+      opacity 180ms ease,
+      transform 180ms ease,
+      margin-top 180ms ease;
+  }
+
+  .toc-group.expanded .toc-sublist {
+    max-height: 999px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    margin-top: var(--toc-item-gap);
+  }
+
+  .toc-subsublist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--toc-item-gap);
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-4px);
+    overflow: hidden;
+    pointer-events: none;
+    margin-top: 0;
+    transition:
+      max-height 180ms ease,
+      opacity 180ms ease,
+      transform 180ms ease,
+      margin-top 180ms ease;
+  }
+
+  .toc-subgroup.expanded .toc-subsublist {
+    max-height: 999px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    margin-top: var(--toc-item-gap);
+  }
+
+  .toc-link-sub {
+    padding-left: var(--space-toc-depth-3);
+  }
+
+  .toc-item.depth-4 {
+    padding-left: var(--space-toc-depth-4);
+  }
+
+  .toc-link {
+    display: block;
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: var(--toc-link-font-size);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition:
+      color 0.2s ease,
+      font-weight 0.2s ease;
+  }
+
+  .toc-link-root {
+    font-weight: 400;
+  }
+
+  .toc-link:hover {
+    color: var(--color-heading);
+  }
+
+  .toc-link.active {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+  :global(.post-content h2),
+  :global(.post-content h3),
+  :global(.post-content h4) {
+    scroll-margin-top: var(--scroll-target-offset);
+  }
+</style>

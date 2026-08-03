@@ -1,0 +1,46 @@
+---
+import { useLocale } from '../locales';
+const locale = useLocale(Astro);
+---
+
+<section class="content-shell hero" aria-labelledby="not-found-title">
+  <h1 id="not-found-title">{locale.notFound.title}</h1>
+  <p>{locale.notFound.description}</p>
+</section>
+
+<style>
+  .hero {
+    margin-top: var(--hero-margin-top);
+    color: var(--color-heading);
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--color-heading);
+    font-size: var(--font-size-hero-title);
+    line-height: var(--line-height-hero-title);
+    font-weight: var(--font-weight-hero-title);
+    letter-spacing: 0;
+    text-rendering: geometricPrecision;
+  }
+
+  p {
+    margin: var(--space-hero-title-description) 0 0;
+    color: var(--color-heading);
+    font-size: var(--font-size-hero-description);
+    line-height: var(--line-height-hero-description);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 960px) {
+    .hero {
+      margin-top: var(--hero-margin-top-mobile);
+    }
+
+    h1 {
+      font-size: var(--font-size-hero-title-mobile);
+      line-height: var(--line-height-hero-title-mobile);
+    }
+  }
+</style>

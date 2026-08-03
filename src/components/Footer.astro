@@ -1,0 +1,29 @@
+---
+import { useLocale } from '../locales';
+import { SITE } from '../settings/site.settings';
+
+const t = useLocale(Astro);
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <p>© {year} {SITE.username}. <span data-i18n="footer.rights">{t.footer.rights}</span></p>
+  <p data-i18n="footer.poweredBy">{t.footer.poweredBy}</p>
+</footer>
+
+<style>
+  footer {
+    padding: var(--footer-padding) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--footer-gap);
+  }
+
+  p {
+    margin: 0;
+    font-size: var(--font-size-base);
+    color: var(--color-muted);
+    text-align: center;
+  }
+</style>

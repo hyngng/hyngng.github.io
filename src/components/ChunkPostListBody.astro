@@ -1,0 +1,102 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../locales';
+import PostCard from './PostCard.astro';
+import LoadMoreCard from './LoadMoreCard.astro';
+import { getPostPath } from '../utils/posts';
+import { SITE } from '../settings/site.settings';
+import { distributeByWeight, SSR_COL_WIDTH } from '../features/post-list/distribution';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  currentChunk: number;
+  chunkBaseUrl: string;
+  totalPosts: number;
+  nextChunk: number | null;
+  homePath: string;
+  locale: Locale;
+  currentLocale: string;
+}
+
+const {
+  posts, currentChunk, chunkBaseUrl, totalPosts,
+  nextChunk, homePath, locale, currentLocale,
+} = Astro.props;
+const prevChunk = currentChunk > 1 ? currentChunk - 1 : null;
+const chunkSize = SITE.postsPerPage;
+const nextPreviewPost = nextChunk ? posts[chunkSize] : undefined;
+const totalRemaining = nextChunk ? totalPosts - (currentChunk * chunkSize) : 0;
+const nextChunkCount = nextChunk ? Math.min(chunkSize, totalRemaining) : 0;
+const chunkPosts = posts.slice(0, chunkSize);
+
+const indexed = chunkPosts.map((post, i) => ({ post, index: (currentChunk - 1) * chunkSize + i }));
+const { left: leftPosts, right: rightPosts, leftWeight, rightWeight } = distributeByWeight(
+  indexed,
+  SSR_COL_WIDTH,
+  item => !!item.post.data.image,
+);
+const loadMoreInLeft = leftWeight <= rightWeight;
+---
+
+<nav class="chunk-nav">
+  {prevChunk && <a href={`${chunkBaseUrl}/${prevChunk}`}>{locale.posts.chunkPrev}</a>}
+  <a href={homePath}>{locale.posts.chunkHome}</a>
+</nav>
+<div
+  class="posts-grid"
+  data-all-posts={JSON.stringify(chunkPosts.map(p => ({
+    path: getPostPath(p.id, p.data.authors, currentLocale),
+    title: p.data.title,
+    description: p.data.description || '',
+  })))}
+>
+  <div class="posts-columns" data-layout="masonry">
+    <div class="posts-col posts-col-left">
+      {leftPosts.map(({ post, index }) => (
+        <PostCard post={post} href={getPostPath(post.id, post.data.authors, currentLocale)} index={index} />
+      ))}
+      {nextChunk && nextPreviewPost && loadMoreInLeft && (
+        <LoadMoreCard
+          nextChunkUrl={`${chunkBaseUrl}/${nextChunk}`}
+          nextPreviewPost={nextPreviewPost}
+          nextChunkCount={nextChunkCount}
+          totalPosts={totalPosts}
+          totalRemaining={totalRemaining}
+          loadMoreOrder={chunkPosts.length}
+          locale={locale}
+        />
+      )}
+    </div>
+    <div class="posts-col posts-col-right">
+      {rightPosts.map(({ post, index }) => (
+        <PostCard post={post} href={getPostPath(post.id, post.data.authors, currentLocale)} index={index} />
+      ))}
+      {nextChunk && nextPreviewPost && !loadMoreInLeft && (
+        <LoadMoreCard
+          nextChunkUrl={`${chunkBaseUrl}/${nextChunk}`}
+          nextPreviewPost={nextPreviewPost}
+          nextChunkCount={nextChunkCount}
+          totalPosts={totalPosts}
+          totalRemaining={totalRemaining}
+          loadMoreOrder={chunkPosts.length}
+          locale={locale}
+        />
+      )}
+    </div>
+  </div>
+</div>
+
+<script>
+  import { relayoutGrid, needsRelayout } from '../features/post-list';
+  const grid = document.querySelector('.posts-grid') as HTMLElement;
+  if (grid) {
+    const columns = grid.querySelector('.posts-columns') as HTMLElement;
+    if (columns && needsRelayout(columns)) {
+      try {
+        relayoutGrid(columns);
+      } catch (error) {
+        console.error('[chunk-page] layout failed', error);
+      }
+    }
+  }
+</script>

@@ -1,0 +1,13 @@
+---
+import { SITE } from '../settings/site.settings';
+
+const code = SITE.analytics.goatCounter;
+if (!code) return;
+---
+
+<script
+  is:inline
+  data-goatcounter={`https://${code}.goatcounter.com/count`}
+  src="//gc.zgo.at/count.js"
+  async
+></script>

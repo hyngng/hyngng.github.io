@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../../layouts/PostLayout.astro';
+import { getPostSlug, getPostLang } from '../../../utils/posts';
+import { ALL_AUTHORS } from '../../../settings/authors.settings';
+import { defaultLocale } from '../../../locales';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts');
+  
+  return allPosts.filter(post => !post.data.draft).flatMap(post => {
+    const lang = getPostLang(post.id);
+    if (lang === defaultLocale) return [];
+    const author = ALL_AUTHORS.find(a => a.id === post.data.authors[0]);
+    if (!author) return [];
+    return [{
+      params: {
+        lang: lang,
+        author: author.id,
+        slug: getPostSlug(post.id),
+      },
+      props: { post },
+    }];
+  });
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<PostLayout post={post} headings={headings}>
+  <Content />
+</PostLayout>

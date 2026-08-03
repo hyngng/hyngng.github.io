@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../locales';
+import { defaultLocale } from '../locales';
+import { type Author, AUTHOR_PREFIX } from '../settings/authors.settings';
+import Hero from './Hero.astro';
+import PostListSection from './PostListSection.astro';
+import Search from './Search.astro';
+
+interface Props {
+  author: Author;
+  locale: Locale;
+  currentLocale: string;
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { author, locale, currentLocale, posts } = Astro.props;
+
+const chunkBaseUrl = currentLocale === defaultLocale
+  ? `/${author.id}/chunk`
+  : `/${currentLocale}/${author.id}/chunk`;
+---
+
+<Hero title={AUTHOR_PREFIX + author.name} description={author.description} />
+
+<div class="content-body-layout">
+  <div class="search-mobile-wrapper">
+    <Search locale={locale} currentLocale={currentLocale} />
+  </div>
+  <PostListSection locale={locale} posts={posts} currentLocale={currentLocale} chunkBaseUrl={chunkBaseUrl} />
+  <aside class="search-sidebar">
+    <Search locale={locale} currentLocale={currentLocale} />
+  </aside>
+</div>
+

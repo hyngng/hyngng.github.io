@@ -1,0 +1,55 @@
+.dark {
+  color-scheme: dark;
+  /* ── 기본 컬러 ── */
+  --color-bg: #202023;
+  --color-text: #AFB0B1;
+  --color-heading: #CACACA;
+  --color-accent: #E8873A;
+  --color-muted: #877575;
+  --color-line: #877575;
+  --color-blockquote-bar: #424242;
+  --color-blockquote-text: #868686;
+  --color-frame: #0a0a0a;
+
+  /* ── 코드 블록 & Shiki ── */
+  --color-post-inline-code-bg: #2a2a2e;
+  --color-post-code-block-bg: #2A2D31;
+  --astro-code-background: #2A2D31;
+  --astro-code-foreground: #AFB0B1;
+
+  /* One Dark Pro 토큰 매핑 */
+  --astro-code-token-constant: #56b6c2;
+  --astro-code-token-string: #98c379;
+  --astro-code-token-comment: #7f848e;
+  --astro-code-token-keyword: #c678dd;
+  --astro-code-token-parameter: #d19a66;
+  --astro-code-token-function: #61afef;
+  --astro-code-token-string-expression: #98c379;
+  --astro-code-token-punctuation: #abb2bf;
+  --astro-code-token-link: #61afef;
+
+  /* ── 컴포넌트 ── */
+  --color-table-border: #333;
+  --color-table-head-bg: #2a2a2e;
+  --color-post-card-bg: #2a2a2e;
+  --author-avatar-placeholder: #2a2a2e;
+  --color-shimmer: #303030;
+  --color-shimmer-highlight: #424242;
+  --color-toast-bg: #CACACA;
+  --color-button-text: var(--color-heading);
+
+  /* ── 테마 토글 아이콘 ── */
+  #theme-icon-sun { display: none; }
+  #theme-icon-moon { display: inline; }
+
+  /* ── Border ── */
+  --color-border: #495057;
+  --color-border-translucent: rgba(255, 255, 255, 0.175);
+
+  /* ── Admonitions ── */
+  --color-admonition-bg: #2a2a2e;
+}
+
+.dark .custom-button:hover {
+  color: #FFFFFF;
+}

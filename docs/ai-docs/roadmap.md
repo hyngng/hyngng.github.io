@@ -1,0 +1,196 @@
+# Roadmap
+
+이 파일은 프로젝트의 장기적인 계획과 미해결 작업을 관리합니다.
+
+- [ ] SEO 관련 작업
+  - [x] **Robots.txt & Sitemap**: `request.url`에서 origin을 추출하여 동적 생성. `astro.config.mjs`의 `site: SITE.url` 설정으로 dev/prod 환경별 올바른 절대 URL 자동 반영.
+  - [x] **Open Graph 메타 태그**: og:title, og:description, og:url, og:type, og:site_name, twitter:card 등 `<head>` 내 메타 태그 추가. 포스트 페이지에서는 포스트 제목/설명으로 동적 오버라이드. BaseLayout의 `<slot name="head">` 기본값으로 사이트 전역 OG 태그 관리.
+  - [x] **Open Graph 이미지**: 
+    - 포스트 프론트매터 내 OG 이미지 필드(og_image) 지원 (우선순위: og_image 프론트매터 > image.path(썸네일) > SITE.ogImage 기본값).
+    - JSON-LD image는 og_image와 분리하여 썸네일을 우선 사용 (SEO/의미적 대표성 고려).
+    - 로컬 상대경로와 외부 URL(CDN) 이미지 모두 지원.
+    - 스키마 transform 로직은 함수(toAbsoluteImageUrl)로 추출, image.path와 og_image가 공유.
+  - [x] **Shimmer 로딩 애니메이션**: rehypeImageWrapper 플러그인 + JS-assisted cross-fade.
+    - 모든 MDX 이미지를 `<span class="img-wrapper">`로 래핑 (`shimmer` 클래스는 제거됨).
+    - 모든 이미지에 `loading="lazy"` 주입 (브라우저 네이티브 지연 로딩).
+    - `img` 자체 `opacity: 0` → `loaded` 시 `opacity: 1` (0.3s fade-in)
+    - `::after`에 shimmer gradient + animation (1.5s loop), `loaded` 시 `opacity: 0` (0.3s fade-out)
+    - `img.decode()`로 렌더링 준비 완료 후 2프레임 지연 뒤 `loaded` 클래스 추가 (GPU 합성 레이어 동기화)
+    - directive wrapper(`:left`, `:right`, `:x` 등) 재사용, `prefers-reduced-motion` 대응.
+    - CDN/로컬 이미지 모두 적용. CLS 없음 (항상 16:9).
+  - [x] **JSON-LD Schema**: `BlogPosting` 타입의 구조화된 데이터 적용 (`inLanguage` 포함).
+  - [x] **GoatCounter Analytics**: `analytics.goatCounter` 설정 시 `GoatCounter.astro` 컴포넌트가 `<head>`에 트래킹 스크립트를 조건부 삽입. `undefined`면 로드 안 됨.
+  - **Google Analytics**: site.settings.ts의 analytics.googleId가 설정된 경우에만 gtag.js를 Head.astro에 조건부 로드.
+  - **Webmaster Verification**: site.settings.ts의 verification 객체를 Head.astro에서 `<meta name="...-site-verification" content="...">`로 조건부 출력.
+  - **검색 설정**: Google Search Console 등 주요 서치어드바이저 지원 구조 마련 (개인정보처리방침 안내 포함).
+- [x] 댓글 및 검색 기능
+  - [x] **검색 기능**: Pagefind 도입 및 인덱싱 준비 (다국어 검색 분리 전략 적용).
+  - [x] **댓글 시스템**: Giscus 단일 구현 (실시간 테마 연동, 동적 언어 처리 완료).
+    - [ ] Utterances 지원 확장 (향후 계획)
+    - [ ] Disqus 지원 확장 (향후 계획)
+  - [x] **포스트 청크 로딩**: HTML 조각 기반 점진적 로딩 시스템.
+    - `site.settings.ts`의 `postsPerPage`로 청크 크기 설정.
+    - 빌드 타임에 `.astro` 청크 페이지 생성 (`/posts/chunk/[n]`, `/[lang]/posts/chunk/[n]`, `/[author]/chunk/[n]`, `/[lang]/[author]/chunk/[n]`).
+    - `chunkEndpoint.ts` 공통 유틸리티로 4개 라우트의 분할 로직 공통화. `totalPosts` prop 전달로 정확한 잔여 포스트 수 계산 지원.
+    - 홈/작가 페이지는 첫 청크만 렌더링, 다음 포스트 프리뷰 카드(`<a class="load-more-card">`)로 progressive enhancement.
+    - JS 활성화 시: `fetch` → `DOMParser` → insertBefore + `.load-more-card` 교체 → `pushState` (URL 상태 반영).
+    - `.posts-grid` 이벤트 위임으로 load-more 클릭 처리 (AbortController로 스코프 관리).
+    - JS 비활성화 시: 청크 페이지 네비게이션 (홈/이전 링크 포함).
+    - 스크롤 80% 도달 시 다음 청크 prefetch.
+    - 새로 로드된 카드에 opacity 페이드인 애니메이션 적용 (`is-new` 클래스, staggered 50ms 간격). 프리뷰 카드(`i === 0`)는 애니메이션 제외.
+    - 청크 페이지: `<meta name="robots" content="noindex,follow">` (중복 인덱싱 방지, 링크 그래프 유지).
+    - 커스텀 sitemap에서 청크 URL 자동 제외.
+    - Search.astro: [x] `getAllCards()` 동적 쿼리로 동적 로드 카드 검색 지원.
+    - [x] Search.astro: `fetchChunkCards()` 도입 — 검색 전용 chunk fetch (pagination 상태 변경 없음). `[data-search-loaded]` 플래깅으로 검색 해제 시 정리.
+    - [x] Search.astro: 검색 해제 시 로드된 카드 정리 + `.load-more-card` 복원.
+    - [x] PostListSection.astro: `(grid as any).loadChunk` 외부 노출 제거 (Search에서 직접 호출하지 않으므로 불필요).
+    - 서비스 워커 프리캐시와 정상 상호작용 확인 (Network 탭 미표시 = 정상).
+    - "프리뷰 카드 클릭 시 네비게이션" 버그 보고 → 조사 결과 오탐 확정 (SW 캐시 히트를 네비게이션으로 오인).
+    - 불필요 코드 정리: `astro:after-swap` 리스너 제거 (ViewTransitions 미사용), 전역 `abortController` 제거.
+  - [x] **포스트 목록 DOM 구조 통합 리팩토링**
+    - 모바일에서 포스트 카드 간격이 0이 되는 버그의 근본 원인: 서버 HTML이 데스크 2열 구조(leftPosts/rightPosts)를 강제하고, JS가 DOM 소유권을 분산시킴.
+    - 해결: `src/scripts/post-layout.ts` 공유 모듈 생성 (`collectPostItems`/`layoutPosts`). 모바일 정본은 시간순 단일 목록, 데스크 2열 배치는 progressive enhancement로 전환.
+    - 5개 템플릿 파일(PostListSection + 4개 chunk 페이지)을 flat list로 변경. `chunk-masonry.ts`/`chunkDistribute.ts` 제거.
+    - `.posts-columns` mobile CSS에 `align-items: stretch` 추가 (flat list 카드 너비 보장).
+    - PostListSection popstate의 `distributeAll` 호출을 `layoutPosts`로 마이그레이션.
+    - **회귀 수정**: `is-new` 영구 클래스 + `columns.innerHTML = ''`로 기존 카드 재애니메이션 → `animateNewCards()` 일회성 함수로 분리, `layoutPosts` 이후 호출. `animationend`/`cancel`에서 `is-new` 제거.
+    - **회귀 수정**: `.posts-col` JS 동적 생성 요소에 Astro scoped CSS 미매칭 → `is:global` 블록으로 전역화. `flex: 1` → `flex: 1 1 0`, `.chunk-page` duplicate는 `global.css`에서 제거.
+    - **회귀 수정**: `colWidth` 계산 `width/2 - gap` → `(width - gap)/2`로 실제 CSS와 일치.
+    - **회귀 수정**: `initLayout`에 `AbortController` 추가 (중복 리스너 방지).
+    - **증분 배치**: `loadChunk` 후 `layoutPosts(grid)` 호출 제거 (전체 재배치로 카드 위치·스크롤 붕괴). 대신 `appendChunkPosts()`로 현재 열에만 증분 추가. `offsetHeight`로 실측 균형. `animateNewCards`는 `appendChunkPosts` 반환값으로 layoutPosts 이후 호출.
+    - [x] **모듈화 리팩토링**: `src/features/post-list/` 모듈 생성 (types/dom/layout/append/controller/loader/animate/registry). PostListSection 인라인 스크립트 → controller + loader 분리. Search.astro의 레거시 API(`window.__postsDistributeCards`) 및 직접 DOM 조작 제거 → controller 메서드로 대체.
+    - [x] **SSR 2열 masonry 리팩토링**: fallback grid 전략 제거, SSR HTML을 2열 masonry로 변경.
+      - `distribution.ts` 생성: `distributeByWeight()/cardWeight()/SSR_COL_WIDTH/GAP` — 서버/클라이언트 공유 분배 알고리즘
+      - PostListSection/ChunkPostListBody: SSR `.posts-columns[data-layout="masonry"]` + 좌/우 `.posts-col`, 각 PostCard에 `--post-order`
+      - 모바일 CSS: `data-layout=masonry` → `display:contents; order:var(--post-order)`, `data-layout=flow` → `order:0`
+      - `data-layout-ready` visibility hiding 패턴 제거
+      - Desktop init `relayout()` 스킵 (SSR masonry 그대로 사용)
+      - `appendChunkItems` 모바일 flow guard (masonry→flow 미전환 시 relayoutGrid 후 append)
+      - `assertInvariant()` dev flow 검사 (cols 없음, load-more 수·위치)
+      - `LoadMoreCard.astro` 추출로 PostListSection/ChunkPostListBody 중복 제거
+      - controller.ts: `findColumns` 중복 호출 정리, append.ts: `minCol()` 헬퍼 + `isMobile()` 단일 평가
+- [x] CI/CD 및 자동화
+  - GitHub Actions를 통한 빌드/배포 자동화 파이프라인 구축 (빌드 시 Pagefind 인덱싱 단계 포함 필수).
+  - `deploy.yml`: main push 시 Astro 빌드 → GitHub Pages 배포
+  - `ci.yml`: PR/main push 시 빌드 검증
+  - `dependabot.yml`: npm + GitHub Actions 의존성 주간 자동 업데이트
+- [x] PWA 지원 계획
+  - **선행 조건**: SEO 섹션의 Sitemap 작업 완료 후 진행 (URL 목록을 캐싱 화이트리스트로 재사용).
+  - `@vite-pwa/astro` 설치 (`npm i @vite-pwa/astro -D`). 직접적인 `sw.js` 및 매니페스트 수동 작성은 지양.
+  - `astro.config.mjs`의 `integrations`에 `AstroPWA()` 추가.
+  - `registerType: 'autoUpdate'`로 설정 (사용자에게 업데이트 프롬프트 없이 자동 갱신).
+  - 아이콘 소스: `src/assets/logo.svg`를 기준으로 PWA 에셋 생성기가 다양한 사이즈 자동 생성.
+  - manifest 필드: `name`, `short_name`은 `SITE.title` 사용, `theme_color`/`background_color`는 `global.css`의 `--color-accent`/`--color-frame`과 일치시킴.
+  - `workbox.navigateFallback: '/'`, `globPatterns`는 `**/*.{css,js,html,svg,png,ico,txt}`로 설정.
+  - 다국어 라우팅(`/en/`, `/ru/` 등) 하위 경로도 캐싱 대상에 포함되는지 확인.
+  - iOS 환경 제약 사항 확인(백그라운드 동기화 미지원, 캐시 용량 제한 등) 및 기대치 조정.
+  - **완료 기준**: `npm run build && npm run preview` 후 브라우저 devtools의 Application 탭에서 서비스 워커 등록 확인, manifest.json 정상 로드 확인, 오프라인 모드에서 캐싱된 페이지가 정상 동작하는지 확인.
+
+## 코드 검증
+
+구현이 완료된 코드는 다음 원칙에 입각하여 정기적으로 리뷰한다.
+- **SOLID 원칙**: 단일 책임, 개방-폐쇄, 리스코프 치환, 인터페이스 분리, 의존성 역전이 올바르게 적용되었는지 검증.
+- **DRY 원칙**: 동일한 로직이나 설정이 중복되지 않았는지, 적절한 추상화로 일관성을 유지하는지 검증.
+
+# To-Do
+
+이 항목들은 아직 수행 순서가 오지 않았거나, 계획만 확정된 작업을 보관함. 작업 완료 후에는 검증 결과를 확인하고 해당 항목을 삭제함.
+
+- [x] `.border` 유틸리티 도입
+  - Bootstrap `.border` 클래스를 이미지 테두리에 적용.
+  - `--color-border`를 테마별 CSS 변수로 관리 (라이트: `#dee2e6`, 다크: `#495057`).
+  - `--border-width: 1px`, `--border-style: solid`는 `global.css`에서 정의.
+  - `.rounded-10`과 조합 시 셀리시티 충돌 없도록 주의 (원자적 조합 원칙 준수).
+  - MDX 사용법: `{ .border .rounded-10 }` (테두리 + 라운딩 명시적 조합).
+- [x] 모바일 프레임 버튼 크기 축소
+  - `--button-size`: 72px → 48px (Material Design 최소 터치 타겟 기준 충족)
+  - `--font-size-action`: 28px → 20px (버튼 축소 비율과 일관성 유지)
+  - 파생 변수(--header-height, --frame-radius, lang-list width 등)는 CSS 변수 체인으로 자동 반영
+  - JS의 `getComputedStyle(--button-size)`도 CSS 변수 변경을 자동 추적하므로 별도 처리 불필요
+  - [x] 포스트 카드 라운딩을 PC에서는 현행대로, 그러나 모바일에서는 16px정도로 별도로 렌더링되도록 만들기.
+  - [x] **LoadMoreCard 미리보기 이미지 표시 및 점진적 로딩 구조 통일**
+    - `nextPreviewPost`에 이미지가 있을 때 `.post-card-image` 영역에 원본 이미지 렌더링.
+    - `PostCard`와 동일하게 LQIP(`::before`) 배경이 먼저 보인 후 원본 이미지(`img`)가 `opacity` 페이드인되며 로딩 교체 (블러 없이 선명하게 페이드).
+    - `LoadMoreCard` 이미지에는 기본 `brightness(0.9) opacity(0.9)` → 호버 시 `brightness(1) opacity(1)` 전환 효과 적용.
+  - [ ] **PostCard 이미지 호버 채도 전환 효과**
+    - 미리보기 이미지는 기본적으로 채도 0(`grayscale(1)`) 상태 유지.
+    - 마우스 호버(`:hover`, `:focus-within`) 시 채도(`grayscale(0)`)로 부드럽게 전환.
+    - 로딩 애니메이션(`blur`)과 채도 전환이 어색하게 섞이지 않도록 `.loaded` 클래스 적용 시점에 필터 속성을 분리(blur 제거 + grayscale 유지)하여 구현.
+  - [x] **모바일 언어 버튼 잘림 수정**
+    - 원인: 문서 가로 스크롤 발생 시 `position: fixed; left: 0; right: 0`인 `.fixed-actions`가 뷰포트가 아닌 문서 전체 너비를 기준으로 확장되어, 우측 버튼이 화면 밖으로 밀려남.
+    - 해결: `.fixed-actions`에 `max-width: 100vw` 추가. 문서가 아무리 넓어져도 헤더는 보이는 화면에 고정.
+    - 언어 목록 열기 시 `width: calc(100vw + var(--button-size) * 2)`로 확장하여 언어 토글이 뷰포트 좌측 끝에 위치하도록 유지.
+  - [x] **Frame 컴포넌트 리팩토링**
+    - 모바일 미디어 쿼리에서 불필요한 flex 레이아웃 속성 제거 (`display: flex`, `position: static`, `min-width: 0`, `flex: 0 1 auto`).
+    - JS에서 `mouseenter`/`mouseleave` 리스너 제거 (CSS `:hover`와 기능 중복).
+    - JS에서 `--lang-list-width` CSS 변수 설정 제거 (CSS `.lang-open` 규칙이 너비를 직접 제어).
+    - CSS 섹션 순서 재배치 (컨테이너 → 액션 블록 → 언어 목록 → 테마 아이콘 → concave corners → 모바일).
+    - HTML 들여쓰기 및 버튼 태그 포맷 정리.
+- [x] RSS 생성
+  - `@astrojs/rss`로 라우트 기반 RSS 생성. 3단계 구조: 루트(`/rss.xml`), 언어별(`/[lang]/rss.xml`), 작가별(`/[lang]/[author]/rss.xml`).
+  - `SITE.title`, `SITE.description`을 RSS 메타데이터에 사용. `site` 필드는 `request.url` origin에서 동적 추출.
+  - `posts` content collection 기준으로 RSS item을 수집.
+  - 포스트 collection schema의 `title`, `description`, `date`, `last_modified_at`, `author`, `tags`, `draft` 사용.
+  - Frame.astro RSS 버튼은 작가 페이지에서 작가별 RSS, 그 외에는 언어별 RSS로 링크됨 (`authorId` prop 사용).
+- [x] 라이트/다크 모드 이미지 구분
+  - `.md`: `![alt](url){.img-light}` 구문 → `remark-image-attributes.mjs` 플러그인이 `{.class}` 파싱 → `hProperties.className` 주입.
+  - `.mdx`: `:img-light[...]` directive 구문 → `remark-directive-classes.mjs`가 처리.
+  - `rehype-image-wrapper.mjs`가 `<img>` 의 클래스를 `<span class="img-wrapper ...">` 래퍼로 이관(hoisting).
+  - `astro.config.mjs`에서 `markdown.processor: unified({...})`를 사용하여 `.md` 파일에서도 remark/rehype 플러그인 체인이 정상 동작하도록 설정.
+  - `rehype-image-wrapper.mjs`의 자동 감지: 파일명/alt에 `light`/`dark`가 포함되면 명시적 클래스 없이도 자동 부여.
+- [x] 프롬프트 블록 구현
+- [x] 미해결 기술 부채 및 신규 작업
+  - [x] embed-video 컴포넌트 스타일 적용 (`margin-bottom: 1rem`; 파일 형태면 `margin: auto; margin-bottom: 0`)
+- [x] remark-directive 통합 시스템 구축
+- [x] 각주 호버 툴팁
+  - 빌드 타임 rehype 플러그인(`rehype-footnote-tooltip.mjs`)이 각주 참조 `<a>`를 `.footnote-ref-wrapper`로 감싸고,
+    인라인-safe하게 변환된 각주 본문을 `.footnote-tooltip`에 삽입.
+  - `role="tooltip"` + `aria-describedby` 병합으로 접근성 대응.
+  - CSS Anchor Positioning(`position-area: top center`) + `@supports` fallback(`bottom: 100%; left: 50%; transform: translateX(-50%)`).
+  - `position-try-fallbacks: flip-block, flip-inline`으로 뷰포트 초과 시 방향 전환.
+  - `prefers-reduced-motion: tooltip-fade-in 0.15s ease` (enter animation only).
+  - 테마별 `--color-tooltip-bg`, `--color-tooltip-text` 변수 사용 (light: `#1e1e1e/#fff`, dark: `#2a2a2e/#e0e0e0`).
+  - `width: max-content`로 포함 블록(각주 번호 폭) 너비 제약 우회. `max-width: min(320px, 90vw)`로 상한 유지.
+- [ ] **PC 검색바 수직 위치 10px 하향 조정**
+  - `.search-sidebar`의 `top: var(--posts-section-margin-top)` (80px) 대신 별도 토큰으로 10px 추가하여 포스트 영역 시작점보다 살짝 아래에 배치.
+  - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.
+  - 모바일 검색(`.search-mobile-wrapper`)에는 영향 없음.
+- [ ] 완료된 작업 (사후 기록)
+  - [x] URL 구조 재설계 및 콘텐츠 컬렉션 네이밍 (blog -> posts)
+  - [x] 모바일 글쓴이(Authors) 섹션 접기/펼치기 기능 추가 및 컴포넌트 간 여백 축소 (Hero, Authors, 검색창)
+  - [x] 404페이지 — NotFoundHero 컴포넌트(Hero 구조 기반) + 다국어(ko/en/ru/fr/es) 지원
+  - [x] Authors 섹션 상하 움직임 수정 — `global.css`에서 `margin-top`/`clip-path` 트랜지션 제거, 상하 위치 고정
+  - [x] CDN 상대경로 지원 — `remark-cdn-images.ts`에 `shouldRewrite()` 함수 추가, 상대경로도 CDN URL로 변환
+  - [x] 작가 아바타 CDN 연동 — `authors.settings.ts`의 `getAuthor()`에서 `resolveAvatar()` 적용
+  - [x] PostCard 이미지 초기화 모듈 분리 — `image-init.ts` 신규 생성, `loader.ts`의 `loadChunk()` 완료 시 호출
+  - [x] img-dark/light CSS Specificity 수정 — `.img-wrapper.img-dark` 형태로 Specificity `(0,2,0)` 높여 `.img-wrapper` `(0,1,0)` 상회
+  - [x] 콘텐츠 디렉토리 이동 — `src/content/` → `content/`, `content.config.ts` base 경로 변경
+  - [x] 홈 페이지 작가 아바타 미표시 수정 — `HomePageContent.astro`에서 `ALL_AUTHORS` 직접 순회 시 `getAuthor()` 호출로 `resolveAvatar()` 적용
+  - [x] `lang`/`locale` 통합 — `SITE.lang`을 BCP-47(`ko-KR`)로 통합, `locale` 필드 제거. `og:locale`은 `replace('-', '_')`로 변환
+  - [x] Timezone 적용 — `z.coerce.date()` → `z.string().transform(parseDateWithTimezone)`으로 타임오프셋 없는 날짜에 `SITE.timezone` 기반 보정 자동 적용
+  - [x] 본문 이미지 강제 16:9 종횡비 수정 — shimmer는 16:9 유지, `.img-wrapper.loaded`에서 `aspect-ratio: auto` + `object-fit: contain`으로 원본 비율 표시
+  - [x] 테이블 `th`/`td` 정렬 불일치 수정 — `article thead th`에 `text-align: left` 추가로 UA 기본 `center` 덮어씀
+  - [x] Mermaid 다이어그램 중앙 정렬 — `article .mermaid`에 `text-align: center` + `margin: var(--block-margin)` 추가
+  - [x] Mermaid 폰트 로딩 레이스 컨디션 수정 — `renderMermaid()`에 `await document.fonts.ready` 추가로 웹폰트 로드 완료 후 렌더링 보장
+  - [x] Mermaid `line-height` 상속 격리 — `.mermaid`에 `line-height: normal`, `font-size: 16px` 리셋으로 `article`의 `line-height: 1.8` 상속 방지
+  - [x] CDN URL 처리 로직 통합 — `src/utils/cdn.ts` 공유 유틸리티 추출. `content.config.ts`와 `authors.settings.ts`의 중복 제거
+  - [x] `site.settings.ts` (`siteConfig`)를 단일 진실 출처(SSOT)로 일원화하여 유저 커스텀 다국어 메타데이터 및 인삿말 관리 구축, 누락 시 `defaultLocale` Fallback (`getSiteMeta`) 적용
+  - [x] 코드 리팩토링 — `site.settings.ts` 오탈자 주석 제거, `Frame.astro` 죽은 `data-i18n` 속성 제거 및 `allLocaleShortCodes` 간소화, `PostCard.astro` IIFE 패턴 제거, `typography.css` 미사용 border utility 12개 제거
+  - [x] GoatCounter 웹 분석 연동 — `analytics.goatCounter` 설정 필드 추가, `GoatCounter.astro` 컴포넌트 생성, `Head.astro`에 조건부 삽입
+  - [x] 보안/구조 감사 14개 항목 정리
+    - [x] 환경변수·시크릿 하드코딩 점검 — 시크릿 노출 없음, 외부 리소스 설정 분리 유지
+    - [x] 의존성 정리 — `@vite-pwa/astro` 제거, `vite-plugin-pwa` 기반 커스텀 `astro-pwa` 통합으로 전환
+    - [x] 작가 시스템 — 첫 번째 작가 대표 구조로 통일
+    - [x] 빌드 경고 점검 — 미번역 포스트(`why-i-built-blog`)는 경고만 출력하고 빌드 진행
+    - [x] 포스트 청크 로딩 시스템 점검 — 동작 보존 확인
+    - [x] PWA — 커스텀 통합 유지, manifest/PWA/SW 정상 동작 확인
+    - [x] 테스트 인프라 — vitest 도입 (`vitest.config.ts`, CDN/타임존/post-list distribution 20개 테스트)
+    - [x] API/라우트 보안 점검 — 동적 라우트 정상 처리 확인
+    - [x] SITE 설정 단일 레지스트리 — `LOCALE_REGISTRY` 신설, `SITE.lang`/`SITE.locales` 제거, `defaultLocale`/`supportedLocales` 파생
+    - [x] 데드 코드 정리 — 미사용 `siteConfig` export, `Line.astro` 컴포넌트, 루트 임시 파일(temp-art-*, test-shiki.js, list_files.py) 삭제
+    - [x] post-list 중복 제거 — `sortByIndex` 단일화(dom.ts), `needsRelayout()` 헬퍼로 ChunkPostListBody/PostListSection의 초기 레이아웃 판정 공통화, `showSearchResults`의 이중 `findColumns` 호출 제거
+    - [x] 미사용 favicon 잔재 삭제 — `public/assets/img/favicons/`의 참조 파일 6개만 유지, 미참조 복제본/정적 manifest 제거
+    - [x] 문서 동기화 — README(명령어/다국어/사이트 설정), `locales.md`(로케일 레지스트리 SSOT) 갱신
+    - [x] astro check 0 errors / 0 warnings / 0 hints 달성
+
+## Option
