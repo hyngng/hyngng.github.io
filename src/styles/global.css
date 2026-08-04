@@ -5,130 +5,130 @@
 
 :root {
   /* ── Typography ───────────────────────── */
-  --font-size-base: 16px;
-  --font-size-action: 28px;
-  --font-size-hero-title: 48px;
-  --font-size-hero-title-mobile: 40px;
-  --font-size-hero-description: 22px;
+  --font-size-base: 12px;
+  --font-size-action: 22px;
+  --font-size-hero-title: 40px;
+  --font-size-hero-title-mobile: 32px;
+  --font-size-hero-description: 18px;
   --font-family-base: var(--configured-font-family, 'Pretendard Variable', Inter, system-ui, sans-serif);
   --font-family-code: 'Reddit Mono', 'Pretendard Variable', 'Pretendard', monospace;
   --font-weight-hero-title: 800;
-  --line-height-hero-title: 58px;
-  --line-height-hero-title-mobile: 46px;
-  --line-height-hero-description: 27px;
-  --font-size-post-h1: 2.5rem;
-  --font-size-post-h2: 2.25rem;
-  --font-size-post-h3: 2rem;
-  --font-size-post-h4: 1.75rem;
-  --font-size-post-h5: 1.5rem;
-  --font-size-post-h6: 1.25rem;
+  --line-height-hero-title: 48px;
+  --line-height-hero-title-mobile: 36px;
+  --line-height-hero-description: 22px;
+  --font-size-post-h1: 2rem;
+  --font-size-post-h2: 1.8rem;
+  --font-size-post-h3: 1.6rem;
+  --font-size-post-h4: 1.4rem;
+  --font-size-post-h5: 1.2rem;
+  --font-size-post-h6: 1rem;
   /* ── Layout ───────────────────────────── */
-  --content-width: 960px;
-  --avatar-size: 48px;
-  --hero-margin-top: 42px;
-  --hero-avatar-margin-top: 47px;
-  --hero-margin-top-mobile: 40px;
-  --authors-margin-top: 128px;
-  --post-margin-top: 42px;
-  --post-header-width: 920px;
-  --section-title-size: 28px;
-  --section-title-line-height: 34px;
-  --font-size-post-title: 48px;
-  --font-size-post-title-mobile: 40px;
+  --content-width: 768px;
+  --avatar-size: 40px;
+  --hero-margin-top: 32px;
+  --hero-avatar-margin-top: 36px;
+  --hero-margin-top-mobile: 32px;
+  --authors-margin-top: 104px;
+  --post-margin-top: 32px;
+  --post-header-width: 736px;
+  --section-title-size: 22px;
+  --section-title-line-height: 28px;
+  --font-size-post-title: 40px;
+  --font-size-post-title-mobile: 32px;
   --font-weight-post-title: 800;
-  --line-height-post-title: 58px;
-  --line-height-post-title-mobile: 46px;
-  --author-name-size: 18px;
-  --author-info-size: 16px;
-  --space-hero-title-description: 8px;
-  --space-avatar-title: 20px;
-  --space-avatar-description: 13px;
-  --space-section-title-content: 32px;
-  --space-authors-list: 38px;
-  --space-author-avatar-text: 8px;
+  --line-height-post-title: 48px;
+  --line-height-post-title-mobile: 36px;
+  --author-name-size: 14px;
+  --author-info-size: 12px;
+  --space-hero-title-description: 6px;
+  --space-avatar-title: 16px;
+  --space-avatar-description: 10px;
+  --space-section-title-content: 24px;
+  --space-authors-list: 32px;
+  --space-author-avatar-text: 6px;
   --space-author-name-info: 4px;
-  --space-post-title-meta: 32px;
-  --space-post-meta-list: 41px;
-  --space-post-meta-content: 80px;
-  --space-post-heading-body: 2rem;
-  --space-post-heading-body-h2: 2.5rem;
-  --space-post-heading-body-h2-bottom: 1.25rem;
-  --space-post-paragraph: 1rem;
-  --table-cell-padding-y: 0.5rem;
-  --table-cell-padding-x: 1rem;
-  --post-toc-width: 280px;
-  --space-post-toc-gap: 40px;
-  --space-post-toc-sticky-top: 2.5rem;
+  --space-post-title-meta: 24px;
+  --space-post-meta-list: 32px;
+  --space-post-meta-content: 64px;
+  --space-post-heading-body: 1.6rem;
+  --space-post-heading-body-h2: 2rem;
+  --space-post-heading-body-h2-bottom: 1rem;
+  --space-post-paragraph: 0.8rem;
+  --table-cell-padding-y: 0.4rem;
+  --table-cell-padding-x: 0.8rem;
+  --post-toc-width: 224px;
+  --space-post-toc-gap: 32px;
+  --space-post-toc-sticky-top: 2rem;
   --toc-title-list-gap: var(--toc-item-gap);
-  --toc-item-gap: 12px;
-  --toc-heading-offset: 1rem;
-  --post-card-radius: 24px;
-  --code-block-radius: 12px;
-  --inline-code-radius: 4px;
-  --block-padding: 1rem 1.25rem;
-  --block-margin: 1.5rem 0;
+  --toc-item-gap: 10px;
+  --toc-heading-offset: 0.8rem;
+  --post-card-radius: 20px;
+  --code-block-radius: 10px;
+  --inline-code-radius: 3px;
+  --block-padding: 0.8rem 1rem;
+  --block-margin: 1.2rem 0;
   --block-radius: var(--code-block-radius);
-  --post-card-gap: 20px;
-  --post-card-height-no-image: 136px;
+  --post-card-gap: 16px;
+  --post-card-height-no-image: 112px;
   --post-card-image-aspect-ratio: 40 / 21;
   --post-card-image-radius: var(--post-card-radius) var(--post-card-radius) 0 0;
-  --posts-section-margin-top: 80px;
-  --frame-thickness: 16px;
-  --button-size: 72px;
+  --posts-section-margin-top: 64px;
+  --frame-thickness: 12px;
+  --button-size: 56px;
   --frame-radius: calc(var(--button-size) / 2);
   --header-height: var(--button-size);
   --scroll-target-offset: var(--frame-thickness);
   --transition-duration: 0.2s;
   --transition-easing: ease;
-  --layout-padding: 32px;
-  --layout-padding-mobile: 16px;
+  --layout-padding: 24px;
+  --layout-padding-mobile: 12px;
 
   /* ── Border ── */
   --border-width: 1px;
   --border-style: solid;
 
   /* ── Spacing Tokens (component-level) ── */
-  --space-search-sidebar-top: 40px;
-  --space-search-title-gap: 2rem;
-  --space-search-bar-gap: 0.75rem;
-  --search-bar-width: 250px;
-  --search-bar-height: 50px;
-  --search-bar-padding-x: 1.25rem;
-  --space-card-content-padding: 1.5rem;
-  --space-card-title-gap: 1rem;
-  --post-card-font-title: 1.25rem;
-  --post-card-line-title: 1.5rem;
-  --post-footer-margin-top: 9rem;
-  --post-footer-margin-bottom: 2.5rem;
-  --space-post-footer-meta-gap: 0.75rem;
-  --post-footer-meta-gap: 1rem;
-  --qr-code-size: 80px;
-  --space-toc-depth-3: 1rem;
-  --space-toc-depth-4: 2rem;
-  --toc-link-font-size: 1.125rem;
-  --space-author-name-line-height: 1.375rem;
-  --space-author-info-line-height: 1.1875rem;
-  --space-hero-caption-gap: 0.5rem;
-  --button-padding-x: 2.5rem;
+  --space-search-sidebar-top: 32px;
+  --space-search-title-gap: 1.6rem;
+  --space-search-bar-gap: 0.6rem;
+  --search-bar-width: 200px;
+  --search-bar-height: 40px;
+  --search-bar-padding-x: 1rem;
+  --space-card-content-padding: 1.2rem;
+  --space-card-title-gap: 0.8rem;
+  --post-card-font-title: 1rem;
+  --post-card-line-title: 1.2rem;
+  --post-footer-margin-top: 7.2rem;
+  --post-footer-margin-bottom: 2rem;
+  --space-post-footer-meta-gap: 0.6rem;
+  --post-footer-meta-gap: 0.8rem;
+  --qr-code-size: 64px;
+  --space-toc-depth-3: 0.8rem;
+  --space-toc-depth-4: 1.6rem;
+  --toc-link-font-size: 0.9rem;
+  --space-author-name-line-height: 20px;
+  --space-author-info-line-height: 16px;
+  --space-hero-caption-gap: 0.4rem;
+  --button-padding-x: 2rem;
 
   /* ── Component Tokens ── */
-  --footer-padding: 4rem;
-  --footer-gap: 0.5rem;
-  --button-padding-y: 1.125rem;
-  --toast-offset: 1rem;
-  --toast-padding-y: 0.5rem;
-  --toast-padding-x: 1rem;
-  --space-caption-gap: 0.5rem;
-  --space-image-caption-margin: 2.5rem;
-  --space-load-more-gap: 0.25rem;
+  --footer-padding: 3.2rem;
+  --footer-gap: 0.4rem;
+  --button-padding-y: 0.9rem;
+  --toast-offset: 0.8rem;
+  --toast-padding-y: 0.4rem;
+  --toast-padding-x: 0.8rem;
+  --space-caption-gap: 0.4rem;
+  --space-image-caption-margin: 2rem;
+  --space-load-more-gap: 0.2rem;
   --font-size-load-more-sub: 0.875em;
   --opacity-load-more-sub: 0.8;
 
   /* ── Chunk Page Tokens ── */
-  --chunk-nav-gap: 1rem;
-  --chunk-nav-padding: 1rem 1.5rem;
-  --chunk-nav-font-size: 0.875rem;
-  --chunk-grid-padding: 1.5rem;
+  --chunk-nav-gap: 0.8rem;
+  --chunk-nav-padding: 0.8rem 1.2rem;
+  --chunk-nav-font-size: 0.7rem;
+  --chunk-grid-padding: 1.2rem;
 }
 
 html {
@@ -163,9 +163,9 @@ body {
     --button-size: 48px;
     --font-size-action: 20px;
     --scroll-target-offset: var(--button-size);
-    --authors-margin-top: 48px;
-    --posts-section-margin-top: 48px;
-    --post-card-radius: 16px;
+    --authors-margin-top: 40px;
+    --posts-section-margin-top: 40px;
+    --post-card-radius: 12px;
   }
 }
 
@@ -202,7 +202,7 @@ body {
   display: none;
   background: none;
   border: none;
-  padding: 8px;
+  padding: 6px;
   cursor: pointer;
   color: var(--color-text);
 }
@@ -260,7 +260,7 @@ body {
     display: block;
     width: 100%;
     margin-top: var(--posts-section-margin-top);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
   }
 
   .content-body-layout {
@@ -356,7 +356,7 @@ body {
   }
 
   .authors-toggle[aria-expanded="true"]+.authors-list {
-    max-height: 500px;
+    max-height: 400px;
     opacity: 1;
   }
 }
@@ -408,14 +408,14 @@ body {
 /* Legacy image alignment (compat with existing markdown) */
 .left {
   float: left !important;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
+  margin-right: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 
 .right {
   float: right !important;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
+  margin-left: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 
 /* Clearfix */
@@ -476,20 +476,20 @@ body {
 }
 
 .border-3 {
-  border-width: 3px !important;
+  border-width: 2px !important;
 }
 
 .border-4 {
-  border-width: 4px !important;
+  border-width: 3px !important;
 }
 
 .border-5 {
-  border-width: 5px !important;
+  border-width: 4px !important;
 }
 
 /* Border radius — Bootstrap 5 scale */
 .rounded {
-  border-radius: 0.375rem !important;
+  border-radius: 0.3rem !important;
 }
 
 .rounded-0 {
@@ -497,27 +497,27 @@ body {
 }
 
 .rounded-1 {
-  border-radius: 0.25rem !important;
+  border-radius: 0.2rem !important;
 }
 
 .rounded-2 {
-  border-radius: 0.375rem !important;
+  border-radius: 0.3rem !important;
 }
 
 .rounded-3 {
-  border-radius: 0.5rem !important;
+  border-radius: 0.4rem !important;
 }
 
 .rounded-4 {
-  border-radius: 0.75rem !important;
+  border-radius: 0.6rem !important;
 }
 
 .rounded-5 {
-  border-radius: 1rem !important;
+  border-radius: 0.8rem !important;
 }
 
 .rounded-10 {
-  border-radius: 10px !important;
+  border-radius: 8px !important;
 }
 
 .rounded-circle {
@@ -525,25 +525,25 @@ body {
 }
 
 .rounded-pill {
-  border-radius: 50rem !important;
+  border-radius: 40rem !important;
 }
 
 .rounded-top {
-  border-top-left-radius: 0.375rem !important;
-  border-top-right-radius: 0.375rem !important;
+  border-top-left-radius: 0.3rem !important;
+  border-top-right-radius: 0.3rem !important;
 }
 
 .rounded-end {
-  border-top-right-radius: 0.375rem !important;
-  border-bottom-right-radius: 0.375rem !important;
+  border-top-right-radius: 0.3rem !important;
+  border-bottom-right-radius: 0.3rem !important;
 }
 
 .rounded-bottom {
-  border-bottom-right-radius: 0.375rem !important;
-  border-bottom-left-radius: 0.375rem !important;
+  border-bottom-right-radius: 0.3rem !important;
+  border-bottom-left-radius: 0.3rem !important;
 }
 
 .rounded-start {
-  border-top-left-radius: 0.375rem !important;
-  border-bottom-left-radius: 0.375rem !important;
+  border-top-left-radius: 0.3rem !important;
+  border-bottom-left-radius: 0.3rem !important;
 }

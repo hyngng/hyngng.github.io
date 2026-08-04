@@ -69,6 +69,9 @@ export default defineConfig({
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2}'],
+          // Static MPA: disable SPA navigation fallback so the SW
+          // does not intercept navigation requests to '/'.
+          navigateFallback: null,
         }
       })
     ] : []),

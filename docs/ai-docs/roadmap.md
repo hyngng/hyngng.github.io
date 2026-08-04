@@ -81,7 +81,7 @@
   - `registerType: 'autoUpdate'`로 설정 (사용자에게 업데이트 프롬프트 없이 자동 갱신).
   - 아이콘 소스: `src/assets/logo.svg`를 기준으로 PWA 에셋 생성기가 다양한 사이즈 자동 생성.
   - manifest 필드: `name`, `short_name`은 `SITE.title` 사용, `theme_color`/`background_color`는 `global.css`의 `--color-accent`/`--color-frame`과 일치시킴.
-  - `workbox.navigateFallback: '/'`, `globPatterns`는 `**/*.{css,js,html,svg,png,ico,txt}`로 설정.
+  - `workbox.navigateFallback: null` (SPA 폴백 비활성화 — 정적 MPA에서 네비게이션을 가로채지 않도록, `astro.config.mjs`의 `astroPwa` `workbox` 옵션에 반영), `globPatterns`는 `**/*.{css,js,html,svg,png,ico,txt}`로 설정.
   - 다국어 라우팅(`/en/`, `/ru/` 등) 하위 경로도 캐싱 대상에 포함되는지 확인.
   - iOS 환경 제약 사항 확인(백그라운드 동기화 미지원, 캐시 용량 제한 등) 및 기대치 조정.
   - **완료 기준**: `npm run build && npm run preview` 후 브라우저 devtools의 Application 탭에서 서비스 워커 등록 확인, manifest.json 정상 로드 확인, 오프라인 모드에서 캐싱된 페이지가 정상 동작하는지 확인.
@@ -156,6 +156,16 @@
   - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.
   - 모바일 검색(`.search-mobile-wrapper`)에는 영향 없음.
 - [ ] 완료된 작업 (사후 기록)
+  - [x] 포스트 URL 구조 변경 — 작가 세그먼트에 `-posts` 접미사 적용 (`/[author.id]/[slug]/` ➔ `/[author.id]-posts/[slug]/`, 예: `/dev/astp-devlog/` → `/dev-posts/astp-devlog/`). 작가 인덱스 페이지(`/[author]/`)와 작가 chunk/RSS는 변경 없음.
+    - `SITE.authorPostsSuffix`(`site.settings.ts`)를 설정 SSOT로 추가.
+    - `getPostPath()`가 접미사를 조합하도록 수정(sitemap/RSS/카드 링크 자동 반영), `getPostAuthorSegment()` 헬퍼 신설로 라우트 `params.author`와 공유.
+    - `[author]/[slug].astro`, `[lang]/[author]/[slug].astro`의 `params.author`를 헬퍼 기반으로 변경.
+    - 빌드 확인: `/dev-posts/astp-devlog/index.html`, `/en/dev-posts/...` 생성됨. `astro check` 0 errors.
+  - [x] 구 URL 리다이렉트 — Jekyll 시절 `/posts/{slug}/` → 현재 `/{authorId}-posts/{slug}/` 정적 리다이렉트 페이지 생성 (`src/pages/posts/[slug].astro`).
+    - `<head>` 최상단 인라인 `<script>`(`location = absoluteTarget`)가 body 파싱 전 즉시 이동 → 깜빡임 없음. 0초 meta refresh는 JS 비활성화 폴백으로 병행. 타깃은 `Astro.site` 기준 절대 URL. 구글 검색 센터 기준 0초 meta refresh는 영구 리다이렉트로 처리되어 인덱스가 신 URL로 이전됨.
+    - 타깃은 `getPostPath()` 재사용(URL 규칙 변경 시 리다이렉트도 자동 추종). 대상은 기본 언어(ko) 비draft 포스트(55개).
+    - `/posts/chunk/{n}/` 페이지네이션과 경로 충돌 없음. 커스텀 sitemap에는 자동 제외(포스트 경로만 나열).
+    - 빌드 확인: `/posts/astp-devlog/index.html` → `/dev-posts/astp-devlog/` 리다이렉트. `astro check` 0 errors.
   - [x] URL 구조 재설계 및 콘텐츠 컬렉션 네이밍 (blog -> posts)
   - [x] 모바일 글쓴이(Authors) 섹션 접기/펼치기 기능 추가 및 컴포넌트 간 여백 축소 (Hero, Authors, 검색창)
   - [x] 404페이지 — NotFoundHero 컴포넌트(Hero 구조 기반) + 다국어(ko/en/ru/fr/es) 지원
@@ -176,6 +186,7 @@
   - [x] CDN URL 처리 로직 통합 — `src/utils/cdn.ts` 공유 유틸리티 추출. `content.config.ts`와 `authors.settings.ts`의 중복 제거
   - [x] `site.settings.ts` (`siteConfig`)를 단일 진실 출처(SSOT)로 일원화하여 유저 커스텀 다국어 메타데이터 및 인삿말 관리 구축, 누락 시 `defaultLocale` Fallback (`getSiteMeta`) 적용
   - [x] 코드 리팩토링 — `site.settings.ts` 오탈자 주석 제거, `Frame.astro` 죽은 `data-i18n` 속성 제거 및 `allLocaleShortCodes` 간소화, `PostCard.astro` IIFE 패턴 제거, `typography.css` 미사용 border utility 12개 제거
+  - [x] 헤더 상단 1px 간격 수정 — 줌 레벨에 따라 `.frame-border` border-top과 `.action-block` 경계 사이에 서브픽셀 반올림으로 생기는 1px 간격 제거. `.action-block`의 `top`을 `calc(var(--frame-thickness) - 1px)` + `padding-top: 1px`으로 1px 겹치게 수정 (콘텐츠 위치 유지, frame-layout.md 문서화). 좌우 경계(`.left-action`/`.right-actions`의 `left`/`right`)에도 동일한 1px 겹침 + padding 적용
   - [x] GoatCounter 웹 분석 연동 — `analytics.goatCounter` 설정 필드 추가, `GoatCounter.astro` 컴포넌트 생성, `Head.astro`에 조건부 삽입
   - [x] 보안/구조 감사 14개 항목 정리
     - [x] 환경변수·시크릿 하드코딩 점검 — 시크릿 노출 없음, 외부 리소스 설정 분리 유지

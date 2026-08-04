@@ -1,9 +1,9 @@
 # Frame Layout Strategy
 
 ## 목표
-- 화면 전체에 고정된 프레임(Fixed Frame) 테두리(16px 두께)를 제공
+- 화면 전체에 고정된 프레임(Fixed Frame) 테두리(12px 두께)를 제공
 - 내부 콘텐츠 영역은 프레임 안쪽에서 스크롤됨
-- 헤더(상단 프레임)의 높이는 72px
+- 헤더(상단 프레임)의 높이는 56px
 
 ## 핵심 원리
 `position: fixed` 레이어와 루트 스크롤의 분리.
@@ -30,23 +30,23 @@
 
 | 변수 | 값 | 설명 |
 |---|---|---|
-| `--frame-thickness` | `16px` | 프레임 테두리 두께 |
-| `--button-size` | `72px` (모바일: `48px`) | 헤더 내 버튼 크기 (헤더 높이이기도 함). 모바일에서는 접근성 가이드라인을 충족하는 최소 크기인 48px로 축소됨 |
-| `--font-size-action` | `28px` (모바일: `20px`) | 버튼 내 아이콘/텍스트 폰트 크기. 버튼 축소 비율에 맞춰 함께 축소됨 |
-| `--frame-radius` | `calc(var(--button-size) / 2)` = `36px` | 콘텐츠 영역의 오목한 곡선 반경 |
-| `--header-height` | `var(--button-size)` = `72px` (모바일: `48px`) | 상단 헤더 높이 |
-| `--content-width` | `960px` | 콘텐츠 영역 최대 폭 |
+| `--frame-thickness` | `12px` | 프레임 테두리 두께 |
+| `--button-size` | `56px` (모바일: `48px`) | 헤더 내 버튼 크기 (헤더 높이이기도 함). 전역 0.8배 스케일 다운에서 모바일 버튼은 접근성 최소 터치 타겟을 보존하기 위해 48px 유지 |
+| `--font-size-action` | `22px` (모바일: `20px`) | 버튼 내 아이콘/텍스트 폰트 크기. 버튼 축소 비율에 맞춰 함께 축소됨 |
+| `--frame-radius` | `calc(var(--button-size) / 2)` = `28px` | 콘텐츠 영역의 오목한 곡선 반경 |
+| `--header-height` | `var(--button-size)` = `56px` (모바일: `48px`) | 상단 헤더 높이 |
+| `--content-width` | `768px` | 콘텐츠 영역 최대 폭 |
 
 ## Side Content Fade
 
-데스크톱에서 중앙 콘텐츠 폭 바깥의 좌우 영역은 `BaseLayout.astro`의 `.content-side-fade`(하단)와 `.content-side-fade-top`(상단)이 배경색으로 fade됨. 중앙 본문은 mask에서 제외되어 영향을 받지 않으며, TOC처럼 본문 외곽에 배치되는 콘텐츠는 위치나 길이와 무관하게 동일한 경계에서 자연스럽게 사라짐. 상하단 모두 `mask-image`로 중앙 콘텐츠 영역(960px)을 투명 처리하여 본문에는 영향 없음.
+데스크톱에서 중앙 콘텐츠 폭 바깥의 좌우 영역은 `BaseLayout.astro`의 `.content-side-fade`(하단)와 `.content-side-fade-top`(상단)이 배경색으로 fade됨. 중앙 본문은 mask에서 제외되어 영향을 받지 않으며, TOC처럼 본문 외곽에 배치되는 콘텐츠는 위치나 길이와 무관하게 동일한 경계에서 자연스럽게 사라짐. 상하단 모두 `mask-image`로 중앙 콘텐츠 영역(768px)을 투명 처리하여 본문에는 영향 없음.
 
 프레임 배경(`::before`, z-index: 0)과 foreground 마스크(`.frame-border`, z-index: 2)는 모두 `position: fixed`로 콘텐츠 뒤와 위에 위치합니다. side fade 요소(z-index: 1)는 그 사이에 위치하므로 시각적으로 마스크에 가려지지만, `mask-image`로 투명 처리된 중앙 콘텐츠 영역에는 영향을 받지 않습니다.
 
 ## 반응형 처리
 - `@media (max-width: 960px)`에서 `--frame-thickness: 0px`, `--frame-radius: 0px`으로 오버라이드하여 프레임을 제거합니다.
 - 모바일에서는 `::before`와 `.frame-border` 모두 `inset: 0`이 되어, 패널이 전체 화면을 덮고 마스크가 비활성화됩니다.
-- 모바일에서는 `--button-size: 48px`, `--font-size-action: 20px`으로 축소됩니다. PC 72px → 48px(약 33% 축소). 48px은 Material Design의 최소 터치 타겟 권장 크기(48×48dp)를 충족하며, Apple HIG(44×44pt)도 여유 있게 상회합니다.
+- 모바일에서는 `--button-size: 48px`, `--font-size-action: 20px`을 유지합니다. 전역 0.8배 스케일 다운에서 모바일 버튼은 접근성 최소 터치 타겟을 보존하기 위해 제외됩니다. 48px은 Material Design의 최소 터치 타겟 권장 크기(48×48dp)를 충족하며, Apple HIG(44×44pt)도 여유 있게 상회합니다.
 - 버튼 크기가 줄어들면 파생 변수(`--header-height`, `--frame-radius`)도 자동으로 따라 줄어듭니다.
 - 모바일 네이티브 스크롤바는 OS 설정에 따름.
 - 모바일에서 `.fixed-actions`는 `max-width: 100vw`를 적용하여 문서가 넓어져도 헤더가 뷰포트 내에 고정되도록 합니다. `.left-action`과 `.right-actions`는 `position: absolute`를 유지합니다.
@@ -130,13 +130,13 @@ const validLangSet = new Set(allLangCodes);
 On desktop screens, the bottom-left and bottom-right corners of the `.page-content` (which should look round/concave because of `border-radius: var(--frame-radius)`) appeared square, or were covered by a weird solid block matching the content background color (`var(--color-bg)`).
 
 ### Root Cause
-1. `.page-content` has `border-radius: var(--frame-radius)` (36px). Its corners clip the content so the dark frame background shows through, creating the concave transition effect.
+1. `.page-content` has `border-radius: var(--frame-radius)` (28px). Its corners clip the content so the dark frame background shows through, creating the concave transition effect.
 2. The side gradient mask blocks (`.content-side-fade` and `.content-side-fade-top`) are positioned on top (`z-index: 1`) with `background: var(--color-bg)`.
 3. However, these mask blocks had square corners (no `border-radius`). Their bottom/top corners overlapped the rounded corners of `.page-content`, bleeding into the clipped area and making the frame's corners look square/buried.
-4. Additionally, the height of the fade block was smaller than `--frame-radius` (36px). If we simply added `border-radius` to the fade blocks, the browser would downscale the radius to fit the smaller height, failing to perfectly match the 36px radius of `.page-content`.
+4. Additionally, the height of the fade block was smaller than `--frame-radius` (28px). If we simply added `border-radius` to the fade blocks, the browser would downscale the radius to fit the smaller height, failing to perfectly match the 28px radius of `.page-content`.
 
 ### Solution
-1. Changed the height of the fade blocks in `BaseLayout.astro` from `var(--content-side-fade-height)` to `var(--frame-radius)` (36px). This guarantees the height is at least equal to the border radius, so no downscaling of the radius occurs.
+1. Changed the height of the fade blocks in `BaseLayout.astro` from `var(--content-side-fade-height)` to `var(--frame-radius)` (28px). This guarantees the height is at least equal to the border radius, so no downscaling of the radius occurs.
 2. Added matched border-radii to the fade blocks:
    - For `.content-side-fade` (bottom): `border-bottom-left-radius: var(--frame-radius)` and `border-bottom-right-radius: var(--frame-radius)`.
    - For `.content-side-fade-top` (top): `border-top-left-radius: var(--frame-radius)` and `border-top-right-radius: var(--frame-radius)`.
@@ -144,6 +144,21 @@ On desktop screens, the bottom-left and bottom-right corners of the `.page-conte
 
 ### Current State
 프레임 테두리가 `border-radius: 0`으로 변경되면서, content-side-fade의 `border-radius`도 제거되었습니다. 프레임이 사각형이므로 corner bleeding 문제가 더 이상 발생하지 않습니다.
+
+## Bug Fix: 헤더 상단 1px 간격 (서브픽셀 반올림)
+
+### Symptom
+특정 줌 레벨(예: Ctrl+스크롤 110%)에서 `.frame-border`의 border-top 하단 경계와 `.action-block`(헤더 바) 상단 경계 사이에 1px 하얀 간격이 보임. 간격 사이로 배경색(`--color-bg`)이 비침.
+
+### Root Cause
+`.frame-border`(z-index: 2)와 `.fixed-actions`(z-index: 100)는 서로 다른 compositing layer로 렌더링됩니다. 두 요소의 경계가 모두 `12px`(= `--frame-thickness`)에 위치하지만, 브라우저가 각 레이어의 위치를 줌 배율에 따라 서브픽셀 반올림하면서 한쪽은 `13px`, 다른 쪽은 `12px`으로 처리되어 1px 간격이 생깁니다.
+
+### Solution
+`.action-block`의 `top`을 `calc(var(--frame-thickness) - 1px)`로 1px 위로 이동해 border-top과 반드시 겹치게 합니다. `padding-top: 1px`을 함께 추가하여 내부 콘텐츠(버튼)의 시각적 위치는 유지합니다 (`height` + `padding-top` = 총 높이 1px 증가, `top`도 1px 이동하므로 바닥 경계는 그대로).
+
+좌우 경계도 동일하게 적용합니다. `.left-action { left: calc(var(--frame-thickness) - 1px); padding-left: 1px }`, `.right-actions { right: calc(var(--frame-thickness) - 1px); padding-right: 1px }`. shrink-to-fit 블록에서 `padding`만큼 너비가 늘고 반대쪽 오프셋이 1px 이동하므로 콘텐츠 위치와 반대쪽 끝 경계는 그대로 유지됩니다.
+
+겹침 영역은 모두 `--color-frame`이라 시각적으로 구분되지 않습니다. 모바일(`--frame-thickness: 0px`)에서는 `top/left/right: -1px`이 되지만 뷰포트 밖으로 나가 잘리고, 콘텐츠 위치는 기존과 동일해 영향이 없습니다.
 
 ## Footnote Tooltip 모바일 포지셔닝
 
@@ -156,7 +171,7 @@ On desktop screens, the bottom-left and bottom-right corners of the `.page-conte
 ### Solution
 미디어 쿼리로 모바일/데스크톱 포지셔닝을 분리:
 
-- **모바일 (≤768px)**: `position: fixed` 하단 시트. `left: 16px; right: 16px`으로 양쪽 여백 확보. `env(safe-area-inset-bottom)`으로 아이폰 노치 대응.
+- **모바일 (≤768px)**: `position: fixed` 하단 시트. `left: 12px; right: 12px`으로 양쪽 여백 확보. `env(safe-area-inset-bottom)`으로 아이폰 노치 대응.
 - **데스크톱 (≥769px)**: 기존 absolute 포지셔닝 유지. `position-try-fallbacks: flip-block, top left, top right`로 우측 넘침 시 좌측 전환.
 
 ## 언어 목록 스크롤
@@ -175,7 +190,7 @@ On desktop screens, the bottom-left and bottom-right corners of the `.page-conte
        └─ EN (var(--button-size))
 ```
 
-PC: --button-size = 72px → 72 × 3 = 216px
+PC: --button-size = 56px → 56 × 3 = 168px
 모바일: --button-size = 48px → 48 × 3 = 144px
 
 ### 문제점

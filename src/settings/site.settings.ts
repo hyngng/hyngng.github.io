@@ -100,6 +100,8 @@ export const SITE = {
   // ── Posts ──────────────────────────────────────────────
 
   postsPerPage: 8,
+  // Post URL author segment suffix: `/dev-posts/{slug}/`.
+  authorPostsSuffix: '-posts',
 
   // ── PWA ──────────────────────────────────────────────────
 

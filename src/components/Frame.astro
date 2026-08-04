@@ -90,7 +90,8 @@ const rssUrl = authorId
   /* ── Action blocks ── */
   .action-block {
     position: absolute;
-    top: var(--frame-thickness);
+    top: calc(var(--frame-thickness) - 1px);
+    padding-top: 1px;
     height: var(--header-height);
     background-color: var(--color-frame);
     pointer-events: auto;
@@ -99,12 +100,14 @@ const rssUrl = authorId
   }
 
   .left-action {
-    left: var(--frame-thickness);
+    left: calc(var(--frame-thickness) - 1px);
+    padding-left: 1px;
     border-bottom-right-radius: var(--frame-radius);
   }
 
   .right-actions {
-    right: var(--frame-thickness);
+    right: calc(var(--frame-thickness) - 1px);
+    padding-right: 1px;
     border-bottom-left-radius: var(--frame-radius);
   }
 

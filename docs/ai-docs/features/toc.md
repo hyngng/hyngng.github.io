@@ -39,23 +39,23 @@ TH 클릭으로 PH를 이동시키는 책임과 현재 PH를 선택하는 책임
 
 ## 상하단 fade
 
-긴 TOC가 viewport 위/아래로 잘릴 때 어색하지 않도록 `BaseLayout`의 `.content-side-fade`(하단)와 `.content-side-fade-top`(상단)이 좌우 콘텐츠 영역을 마스킹함. 중앙 본문 영역(`--content-width` = 960px)은 mask-image로 투명하게 제외하므로, TOC의 위치·길이·sticky 전환과 관계없이 fade 경계가 항상 화면 상단/하단과 일치함.
+긴 TOC가 viewport 위/아래로 잘릴 때 어색하지 않도록 `BaseLayout`의 `.content-side-fade`(하단)와 `.content-side-fade-top`(상단)이 좌우 콘텐츠 영역을 마스킹함. 중앙 본문 영역(`--content-width` = 768px)은 mask-image로 투명하게 제외하므로, TOC의 위치·길이·sticky 전환과 관계없이 fade 경계가 항상 화면 상단/하단과 일치함.
 
-두 요소 모두 `background: var(--color-bg)`로 채워져 있고, `mask-image`로 중앙 콘텐츠 영역(960px)을 투명하게 제외하여 본문에는 영향을 주지 않음:
+두 요소 모두 `background: var(--color-bg)`로 채워져 있고, `mask-image`로 중앙 콘텐츠 영역(768px)을 투명하게 제외하여 본문에는 영향을 주지 않음:
 
 - 하단(`.content-side-fade`): `mask-image`에 `linear-gradient(to bottom, transparent, #000)` 포함 — 위쪽으로 점점 불투명
 - 상단(`.content-side-fade-top`): `mask-image`에 `linear-gradient(to top, transparent, #000)` 포함 — 아래쪽으로 점점 불투명
-- 좌우(`to right` 그라디언트): `--content-side-mask-boundary` 기준으로 중앙 960px만 마스크에서 제외
+- 좌우(`to right` 그라디언트): `--content-side-mask-boundary` 기준으로 중앙 768px만 마스크에서 제외
 
 1281px 이상에서만 visible.
 
 관련 토큰 (현재 `global.css` 변수 참조):
 
-- `--post-toc-width`: TOC 폭 (`280px`).
+- `--post-toc-width`: TOC 폭 (`224px`).
 - `--space-post-toc-gap`: 포스트 본문과의 간격.
 - `--toc-title-list-gap`: 제목과 목록 사이 간격.
 - `--toc-item-gap`: 항목 간격.
-- `--header-height`: 고정 헤더 높이 (`--button-size` = `72px`).
+- `--header-height`: 고정 헤더 높이 (`--button-size` = `56px`).
 - `--scroll-target-offset`: hash 이동과 ScrollSpy 활성 기준선에 공유하는 PH 상단 오프셋. 데스크톱은 `--frame-thickness`, 모바일은 `--button-size`.
 
 ## i18n
@@ -66,7 +66,7 @@ TOC 제목은 `src/locales/`에서 관리함. 서버 렌더링 시 `{title}`(loc
 
 ### TOC 항목 스타일
 
-- `.toc-link`의 `font-size`: `18px`
+- `.toc-link`의 `font-size`: `14px`
 - `.toc-link`에 `white-space: nowrap; overflow: hidden; text-overflow: ellipsis;` 적용 — 긴 헤더는 말줄임표(`...`)로 축약
 - 각 `<a>` 태그에 `title` 속성으로 전체 헤더 텍스트를 툴팁으로 제공
 
