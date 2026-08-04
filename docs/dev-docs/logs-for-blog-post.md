@@ -11,8 +11,8 @@
     - tailwind 자체를 안 쓰게 됨. (07.10) - 안 쓰게 되더라고.
 - [@astrojs/mdx]()
     - mdx 써볼려고.
-- [@vite-pwa/astro]()
-    - PWA
+- [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) + 커스텀 `astro-pwa` 통합
+    - PWA (구 `@vite-pwa/astro`는 Astro 7 미지원으로 대체 — `docs/ai-docs/features/pwa.md` 참조)
 - [remark/rehype]()
     - 프롬프트 블록, 비디오 임베딩 등.
 - [bootstrap](https://getbootstrap.com/)

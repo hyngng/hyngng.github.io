@@ -42,7 +42,7 @@
 - [Search](./features/search.md): Pagefind 기반 검색
 - [Chunk Loading](./features/chunk-loading.md): HTML 조각 기반 점진적 포스트 로딩 시스템
 - [Remark Directives](./features/remark-directives.md): remark-directive 통합 시스템
-- [PWA](./features/pwa.md): @vite-pwa/astro 기반 PWA 통합 설정
+- [PWA](./features/pwa.md): 커스텀 `astro-pwa` 통합(`vite-plugin-pwa` 기반) PWA 설정과 `@vite-pwa/astro` 미사용 사유
 
 ### Typography
 - [Fonts](./typography/fonts.md): Astro Fonts API 기반 폰트 로딩

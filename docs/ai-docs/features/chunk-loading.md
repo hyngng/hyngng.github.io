@@ -193,4 +193,4 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 
 ## 서비스 워커 상호작용
 
-`@vite-pwa/astro`가 빌드 시 `dist/sw.js`를 생성하며, Workbox 프리캐시에 청크 URL이 포함된다. `fetch('/posts/chunk/2')` 호출 시 SW가 프리캐시에서 즉시 응답한다.
+커스텀 `astro-pwa` 통합(`vite-plugin-pwa` 기반)이 빌드 시 `dist/sw.js`를 생성하며, Workbox 프리캐시에 청크 URL이 포함된다. `fetch('/posts/chunk/2')` 호출 시 SW가 프리캐시에서 즉시 응답한다.

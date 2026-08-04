@@ -68,10 +68,24 @@ export default defineConfig({
           ]
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2}'],
-          // Static MPA: disable SPA navigation fallback so the SW
-          // does not intercept navigation requests to '/'.
+          // Static MPA: precache only immutable hashed assets, never HTML.
+          // HTML precache would serve stale pages Cache-First until the SW
+          // updates, so navigation is handled by a NetworkFirst runtime route.
+          globPatterns: ['**/*.{js,css,svg,png,ico,woff,woff2}'],
           navigateFallback: null,
+          runtimeCaching: [
+            {
+              // Serve HTML network-first so content is always fresh without a
+              // hard reload; offline falls back to the last visited copy.
+              urlPattern: ({ request }) => request.mode === 'navigate',
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'pages',
+                networkTimeoutSeconds: 3,
+                expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              },
+            },
+          ],
         }
       })
     ] : []),

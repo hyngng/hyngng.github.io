@@ -76,7 +76,7 @@
   - `dependabot.yml`: npm + GitHub Actions 의존성 주간 자동 업데이트
 - [x] PWA 지원 계획
   - **선행 조건**: SEO 섹션의 Sitemap 작업 완료 후 진행 (URL 목록을 캐싱 화이트리스트로 재사용).
-  - `@vite-pwa/astro` 설치 (`npm i @vite-pwa/astro -D`). 직접적인 `sw.js` 및 매니페스트 수동 작성은 지양.
+  - `@vite-pwa/astro` 설치 (`npm i @vite-pwa/astro -D`). 직접적인 `sw.js` 및 매니페스트 수동 작성은 지양. *(실제 구현은 `@vite-pwa/astro`가 Astro 7을 지원하지 않아 커스텀 `astro-pwa` 통합으로 대체됨 — 아래 보안/구조 감사 항목 및 `features/pwa.md` 참조)*
   - `astro.config.mjs`의 `integrations`에 `AstroPWA()` 추가.
   - `registerType: 'autoUpdate'`로 설정 (사용자에게 업데이트 프롬프트 없이 자동 갱신).
   - 아이콘 소스: `src/assets/logo.svg`를 기준으로 PWA 에셋 생성기가 다양한 사이즈 자동 생성.
@@ -190,11 +190,12 @@
   - [x] GoatCounter 웹 분석 연동 — `analytics.goatCounter` 설정 필드 추가, `GoatCounter.astro` 컴포넌트 생성, `Head.astro`에 조건부 삽입
   - [x] 보안/구조 감사 14개 항목 정리
     - [x] 환경변수·시크릿 하드코딩 점검 — 시크릿 노출 없음, 외부 리소스 설정 분리 유지
-    - [x] 의존성 정리 — `@vite-pwa/astro` 제거, `vite-plugin-pwa` 기반 커스텀 `astro-pwa` 통합으로 전환
+    - [x] 의존성 정리 — `@vite-pwa/astro` 제거, `vite-plugin-pwa` 기반 커스텀 `astro-pwa` 통합으로 전환. **사유**: `@vite-pwa/astro@1.2.0`의 `peerDependencies.astro`가 `^5.0.0`까지라 Astro 7 미지원(peer 충돌). 공식 통합의 핵심 로직(`generateSW` 플로우 + manifest URL 재작성)을 `src/integrations/astro-pwa.ts`로 벤더링하고 pwa-assets/experimental 기능은 제거. 상세는 `docs/ai-docs/features/pwa.md` 참조
     - [x] 작가 시스템 — 첫 번째 작가 대표 구조로 통일
     - [x] 빌드 경고 점검 — 미번역 포스트(`why-i-built-blog`)는 경고만 출력하고 빌드 진행
     - [x] 포스트 청크 로딩 시스템 점검 — 동작 보존 확인
     - [x] PWA — 커스텀 통합 유지, manifest/PWA/SW 정상 동작 확인
+    - [x] PWA HTML 캐싱 전략 변경 — HTML 프리캐시 제거(`globPatterns`에서 `html` 제외) 및 `runtimeCaching` `NetworkFirst`(`pages` 캐시)로 전환. 서비스 워커 갱신과 무관하게 매 네비게이션에서 최신 HTML을 반영해 강제 새로고침 없이 콘텐츠 갱신. GitHub Pages는 커스텀 `Cache-Control` 헤더 미지원(`_headers` 없음, 실측 `max-age=600`)이라 sw.js 헤더 전략은 불가하며, `updateViaCache: 'none'`은 vite-plugin-pwa가 `registerOptions`를 지원하지 않아 주입 불가함을 문서화. 상세는 `docs/ai-docs/features/pwa.md` 참조
     - [x] 테스트 인프라 — vitest 도입 (`vitest.config.ts`, CDN/타임존/post-list distribution 20개 테스트)
     - [x] API/라우트 보안 점검 — 동적 라우트 정상 처리 확인
     - [x] SITE 설정 단일 레지스트리 — `LOCALE_REGISTRY` 신설, `SITE.lang`/`SITE.locales` 제거, `defaultLocale`/`supportedLocales` 파생

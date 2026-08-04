@@ -26,32 +26,15 @@ const { locale, currentLocale } = Astro.props;
   </div>
 </aside>
 
-<script is:inline type="module">
-  if (!window.__pagefind__) {
-    try {
-      const mod = await import('/pagefind/pagefind.js');
-      await mod.init();
-      window.__pagefind__ = mod;
-    } catch {}
-  }
-  document.dispatchEvent(new Event('pagefind-ready'));
-</script>
-
 <script>
   import { requireController, normalizePath, allPostsFromGrid } from '../features/post-list';
 
-  declare global {
-    interface Window {
-      __pagefind__?: {
-        search: (q: string, opts?: { filters?: Record<string, string> }) => Promise<{ results: Array<{ data: () => Promise<{ url: string }> }> }>;
-        init: () => Promise<void>;
-      };
-    }
-  }
+  type PagefindModule = {
+    search: (q: string, opts?: { filters?: Record<string, string> }) => Promise<{ results: Array<{ data: () => Promise<{ url: string }> }> }>;
+    init: () => Promise<void>;
+  };
 
   let abortController: AbortController | undefined;
-
-  type PagefindModule = NonNullable<Window['__pagefind__']>;
 
   let pagefind: PagefindModule | null = null;
   let pagefindLoadPromise: Promise<boolean> | null = null;
@@ -60,28 +43,17 @@ const { locale, currentLocale } = Astro.props;
     if (pagefind) return true;
     if (pagefindLoadPromise) return pagefindLoadPromise;
 
-    pagefindLoadPromise = new Promise<boolean>((resolve) => {
-      if (window.__pagefind__) {
-        pagefind = window.__pagefind__;
-        resolve(true);
-        return;
+    const pagefindUrl = '/pagefind/pagefind.js';
+    pagefindLoadPromise = (async () => {
+      try {
+        const mod = await import(pagefindUrl);
+        await mod.init();
+        pagefind = mod;
+        return true;
+      } catch {
+        return false;
       }
-
-      const handler = () => {
-        if (window.__pagefind__) {
-          pagefind = window.__pagefind__;
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      };
-
-      document.addEventListener('pagefind-ready', handler, { once: true });
-      setTimeout(() => {
-        document.removeEventListener('pagefind-ready', handler);
-        resolve(false);
-      }, 10000);
-    });
+    })();
 
     return pagefindLoadPromise;
   }
