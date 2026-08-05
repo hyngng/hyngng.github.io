@@ -44,7 +44,7 @@ const locale: Locale = {
   },
   footer: {
     rights: 'Все права защищены',
-    poweredBy: 'На базе Astro с темой NAME',
+    poweredBy: (theme: string) => `На базе Astro с темой ${theme}`,
   },
   postFooter: {
     license: 'Материалы этой страницы распространяются под лицензией <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.',
@@ -52,10 +52,6 @@ const locale: Locale = {
     lastUpdate: 'Последнее обновление',
     characterCount: 'Количество символов',
     characterUnit: 'симв.',
-    copied: 'URL скопирован',
-    copyFail: 'Ошибка копирования',
-    qrAria: 'QR-код — нажмите, чтобы скопировать URL',
-    qrTitle: 'Нажмите, чтобы скопировать URL',
     dateLocale: 'ru-RU',
   },
   search: {

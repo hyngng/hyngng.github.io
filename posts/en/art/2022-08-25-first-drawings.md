@@ -94,10 +94,7 @@ last_modified_at: 2026-07-02 15:50:00 +0900
 
 ## **Extra: Animation**
 
-{%
-  include embed/video.html
-  src='/drawing/animations/spinal-reflex-animation.mp4'
-  title='A high school freshman performance assessment on the spinal reflex topic, submitted as an animation.'
-%}
+::video{src="/drawing/animations/spinal-reflex-animation.mp4"}
+*A high school freshman performance assessment on the spinal reflex topic, submitted as an animation.*
 
 I'm posting drawings too! These are pictures I've been doodling from time to time even before starting this blog. It seemed a waste to keep them tucked away in a corner of my gallery app, and I also needed an archive anyway, so I'm putting them up on the blog. I plan to keep posting drawings occasionally and leaving a bit of commentary, and I hope you'll enjoy them.

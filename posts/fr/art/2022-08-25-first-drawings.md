@@ -94,10 +94,7 @@ last_modified_at: 2026-07-02 15:50:00 +0900
 
 ## **Bonus : Animation**
 
-{%
-  include embed/video.html
-  src='/drawing/animations/spinal-reflex-animation.mp4'
-  title='Évaluation de performance en 1ʳᵉ année de lycée sur le réflexe spinal, soumise sous forme d\'animation.'
-%}
+::video{src="/drawing/animations/spinal-reflex-animation.mp4"}
+*Évaluation de performance en 1ʳᵉ année de lycée sur le réflexe spinal, soumise sous forme d'animation.*
 
 Je poste aussi mes dessins ! Ce sont des dessins que j'ai faits de temps en temps avant même de commencer ce blog. Je trouvais dommage de les laisser dans un coin de l'application galerie, et j'avais besoin de les archiver, alors je les mets sur le blog. À l'avenir, je continuerai à poster des dessins et à laisser quelques petites histoires — j'espère que vous les apprécierez.

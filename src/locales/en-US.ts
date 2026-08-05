@@ -44,7 +44,7 @@ const locale: Locale = {
   },
   footer: {
     rights: 'Some rights reserved',
-    poweredBy: 'Powered by Astro with NAME theme',
+    poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,
   },
   postFooter: {
     license: 'The works on this page follow the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> license of the copyright holder.',
@@ -52,10 +52,6 @@ const locale: Locale = {
     lastUpdate: 'Last Updated',
     characterCount: 'Character count',
     characterUnit: ' chars',
-    copied: 'URL copied!',
-    copyFail: 'Copy failed',
-    qrAria: 'QR Code — Click to copy URL',
-    qrTitle: 'Click to copy URL',
     dateLocale: 'en-US',
   },
   search: {

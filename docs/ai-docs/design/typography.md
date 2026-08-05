@@ -8,14 +8,12 @@
 
 ### 구현 계약
 
-- Markdown 이미지 바로 다음에 `_캡션 텍스트_`를 배치합니다.
-- 캡션 요소는 `figcaption`이 아니라 `<em>`을 사용합니다. 기존 게시글 작성 규칙에서 이미지 다음 줄의 기울임꼴 문법을 캡션으로 사용하고 있으며, 기존 콘텐츠와 Markdown 작성 경험의 호환성을 유지해야 하기 때문입니다.
-- `rehype-image-wrapper.mjs`가 `<img>`를 `<span class="img-wrapper">`로 감싸므로 캡션은 이미지와 같은 `<p>`의 직접 자식 `<em>`이어야 합니다.
-- 현재 캡션 선택자는 `article p:has(img) > em`입니다. 이미지가 포함된 문단의 직접 자식 `<em>`만 캡션으로 취급합니다.
-- 이미지와 캡션 사이에 빈 줄을 넣어 캡션이 별도 `<p>`로 분리되면 위 선택자의 대상이 아닙니다. 따라서 이미지 다음 줄에 바로 `_캡션 텍스트_`를 작성합니다.
+- Markdown 이미지 바로 다음 줄에 `_캡션 텍스트_`를 배치합니다 (이미지와 같은 문단). `::video`/`::youtube`/`::audio`는 바로 다음 문단에 배치합니다 (빈 줄 허용).
+- 캡션은 마크다운 `<em>` 문법으로 작성하지만, `remark-media-caption.mjs`가 remark 단계에서 미디어 + 인접 emphasis를 감지하여 `<figure class="media-figure"><figcaption>` 시맨틱으로 정규화합니다.
+- 변환은 mdast-util-to-hast의 표준 확장 메커니즘(`data.hName`)만 사용합니다 (`paragraph` → `figure`, `emphasis` → `figcaption`).
+- 캡션 CSS 선택자는 `article figure.media-figure > figcaption`입니다.
+- float 이미지(`:left`/`:right` 지시어 또는 `{ .left }` 클래스)는 figure로 변환되지 않으며, 캡션이 제거됩니다 (기존 `rehype-image-wrapper` `processFloats` 동작 유지).
 - 이미지 DOM 구조나 캡션 문법을 바꾸면 `src/styles/typography.css`의 선택자와 이 DOM 계약을 함께 갱신해야 합니다.
-- 마크다운 표준 문법 `![alt](src)`를 입력한 후, 다음 줄에 `_캡션 텍스트_`를 배치합니다.
-- CSS `:has()` 선택자와 자식 결합자(`>`)를 활용하여 별도 플러그인 없이 순수 CSS로 캡션 스타일을 적용합니다 (`article p:has(img) > em`).
 
 ## Image Shimmer Loading
 - 모든 본문 이미지는 `<span class="img-wrapper">`로 래핑됨 (`rehype-image-wrapper.mjs`).

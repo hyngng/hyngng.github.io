@@ -77,11 +77,8 @@ Une fois tout cela terminé, il faut ouvrir le serveur local avec la commande `b
 
 ### **Vérification de l'application**
 
-{%
-  include embed/video.html
-  src='/2024-05-12-blog-update/video/240410-232136.mp4'
-  title='Échantillon vidéo. Capture d'écran du jeu en développement.'
-%}
+::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
+*Échantillon vidéo. Capture d'écran du jeu en développement.*
 
 {%
   include embed/audio.html

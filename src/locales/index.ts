@@ -52,7 +52,7 @@ export interface Locale {
   };
   footer: {
     rights: string;
-    poweredBy: string;
+    poweredBy: (theme: string) => string;
   };
   postFooter: {
     license: string;
@@ -60,10 +60,6 @@ export interface Locale {
     lastUpdate: string;
     characterCount: string;
     characterUnit: string;
-    copied: string;
-    copyFail: string;
-    qrAria: string;
-    qrTitle: string;
     dateLocale: string;
   };
   search: {

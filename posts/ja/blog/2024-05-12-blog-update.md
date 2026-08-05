@@ -77,11 +77,8 @@ git add assets/js/dist _sass/vendors -f
 
 ### **適用確認**
 
-{%
-  include embed/video.html
-  src='/2024-05-12-blog-update/video/240410-232136.mp4'
-  title='ビデオサンプル。現在開発中のゲームプレイショットです。'
-%}
+::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
+*ビデオサンプル。現在開発中のゲームプレイショットです。*
 
 {%
   include embed/audio.html

@@ -6,6 +6,8 @@ import remarkDirective from 'remark-directive';
 import { remarkDirectives } from './src/plugins/remark-directives.mjs';
 import { remarkYoutube } from './src/plugins/remark-youtube.mjs';
 import { remarkVideo } from './src/plugins/remark-video.mjs';
+import { remarkAudio } from './src/plugins/remark-audio.mjs';
+import { remarkMediaCaption } from './src/plugins/remark-media-caption.mjs';
 import { rehypeImageWrapper } from './src/plugins/rehype-image-wrapper.mjs';
 import { rehypeTableWrapper } from './src/plugins/rehype-table-wrapper.mjs';
 import { rehypeStripComments } from './src/plugins/rehype-strip-comments.mjs';
@@ -18,9 +20,6 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkDeflist from 'remark-deflist';
 import { remarkImageAttributes } from './src/plugins/remark-image-attributes.mjs';
-
-
-
 import { unified } from '@astrojs/markdown-remark';
 
 // https://astro.build/config
@@ -110,6 +109,8 @@ export default defineConfig({
         remarkDirectives,
         remarkYoutube,
         remarkVideo,
+        remarkAudio,
+        remarkMediaCaption,
         remarkCdnImages,
         remarkMath,
         /** @type {any} */ (remarkDeflist)

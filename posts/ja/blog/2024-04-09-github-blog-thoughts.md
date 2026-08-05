@@ -1,6 +1,6 @@
 ---
 title: "GitHubブログを使う理由"
-authors: ["blog", "dev"]
+authors: ["blog"]
 
 categories: [블로그]
 tags: [블로그, 커스터마이징, Chirpy]

@@ -224,21 +224,65 @@ textDirective를 `<span class="...">`로 변환합니다.
 → <div class="video-embed"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" ...></iframe></div>
 ```
 
+**캡션:** 바로 다음 줄에 `*캡션*`을 작성하면 `<figure class="media-figure"><div class="video-embed">…</div><figcaption>…</figcaption></figure>`로 변환됩니다 (빈 줄 허용).
+
 ### `remark-video.mjs`
 
 `::video{src="..."}` leafDirective를 `<video>` 요소로 변환합니다.
 
 **동작:**
-1. `src`에서 확장자 추출 → MIME 타입 자동 결정 (`.webm` → `video/webm`, `.ogv` → `video/ogg`, 기본 `video/mp4`)
-2. `type` 속성이 명시되면 자동 추론보다 우선
+1. `resolveCdnPath(src)`를 사용하여 상대/절대 로컬 경로인 경우 `SITE.cdn.imageBaseUrl`과 자동 결합된 CDN URL로 변환합니다.
+2. `src`에서 확장자 추출 → MIME 타입 자동 결정 (`.webm` → `video/webm`, `.ogv` → `video/ogg`, 기본 `video/mp4`)
+3. `type` 속성이 명시되면 자동 추론보다 우선
 
 **출력 예시:**
 ```
-::video{src="https://example.com/video.mp4"}
-→ <video class="video-native" controls playsinline><source src="..." type="video/mp4"></video>
+::video{src="/local/video.mp4"}
+→ <video class="video-native" controls playsinline><source src="https://cdn.jsdelivr.net/gh/.../local/video.mp4" type="video/mp4"></video>
 ```
 
-**CSS:** `article .video-native` (typography.css) — `max-width: 100%`, `max-height: 540px`, 검은 배경.
+**캡션:** 바로 다음 줄에 `*캡션*`을 작성하면 `<figure class="media-figure"><video class="video-native">…</video><figcaption>…</figcaption></figure>`로 변환됩니다 (빈 줄 허용).
+
+**CSS:** `article .video-native` (typography.css) — `max-width: 100%`, `max-height: 432px`, 검은 배경. figure 내부에서는 마진이 0으로 리셋됩니다.
+
+### `remark-audio.mjs`
+
+`::audio{src="..."}` leafDirective를 브라우저 네이티브 `<audio>` 요소로 변환합니다.
+
+**동작:**
+1. `resolveCdnPath(src)`를 사용하여 상대/절대 로컬 경로인 경우 CDN URL로 변환합니다.
+2. `src`에서 확장자 추출 → MIME 타입 자동 결정 (`.ogg`/`.oga`/`.opus` → `audio/ogg`, `.wav` → `audio/wav`, `.flac` → `audio/flac`, `.m4a` → `audio/mp4`, `.aac` → `audio/aac`, 기본 `audio/mpeg`)
+3. `type` 속성이 명시되면 자동 추론보다 우선
+
+**출력 예시:**
+```
+::audio{src="/local/audio.mp3"}
+→ <audio class="audio-native" controls preload="metadata"><source src="https://cdn.jsdelivr.net/gh/.../local/audio.mp3" type="audio/mpeg"></audio>
+```
+
+**캡션:** 바로 다음 줄에 `*캡션*`을 작성하면 `<figure class="media-figure"><audio class="audio-native">…</audio><figcaption>…</figcaption></figure>`로 변환됩니다 (빈 줄 허용).
+
+**CSS:** `article .audio-native` (typography.css) — `display: block`, `width: 100%`. figure 내부에서는 마진이 0으로 리셋됩니다.
+
+---
+
+## 4-1. `remark-media-caption.mjs`
+
+미디어 + 인접 emphasis를 remark 단계에서 `<figure>`/`<figcaption>`으로 정규화합니다.
+
+**동작:**
+1. **Rule A**: 이미지(또는 `:x` 등 이미지를 감싼 textDirective)가 있는 문단에 직접 자식 `<em>`이 있으면 → `paragraph.data.hName = 'figure'`, 해당 `emphasis`들은 `data.hName = 'figcaption'`으로 변환.
+2. **Rule B**: `::video`/`::youtube` leafDirective 바로 다음에 emphasis만으로 구성된 문단이 오면(빈 줄 허용) leafDirective를 문단 첫 자식으로 이동 후 Rule A 적용.
+3. **제외**: float(`:left`/`:right` textDirective 또는 이미지의 `{ .left }` 클래스)가 있는 미디어는 figure로 변환하지 않음 — 기존 `<p class="has-float">` + `processFloats` 동작 유지.
+
+변환은 mdast-util-to-hast의 표준 확장 메커니즘(`data.hName`/`data.hProperties`)만 사용하며, leafDirective 렌더링은 `defaultUnknownHandler`가 담당합니다.
+
+**출력 예시:**
+```
+![alt](src)
+*캡션*
+→ <figure class="media-figure"><span class="img-wrapper"><img …></span><figcaption>캡션</figcaption></figure>
+```
 
 ---
 

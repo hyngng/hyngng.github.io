@@ -235,8 +235,8 @@ article p:has(img) {
   margin: 0;
 }
 
-/* 캡션 있는 이미지 — 상하 대칭 마진 */
-article p:has(> .img-wrapper):has(> em) {
+/* 미디어 figure — 상하 대칭 마진 */
+article figure.media-figure {
   margin: var(--space-image-caption-margin) 0;
 }
 
@@ -255,13 +255,14 @@ article p:has(img) img {
 }
 
 /* 지시어 span 래퍼 — inline 높이 문제 방지 */
-article p:has(img)>span {
+article p:has(img)>span,
+article figure.media-figure>span {
   display: block;
   margin-inline: auto;
 }
 
 /* 캡션 */
-article p:has(> .img-wrapper)>em {
+article figure.media-figure>figcaption {
   display: block;
   margin-top: var(--space-caption-gap);
   color: var(--color-muted);
@@ -324,6 +325,24 @@ article .video-native {
   max-height: 432px;
   margin: var(--block-margin);
   background: #000;
+}
+
+/* 미디어 figure 내부의 비디오 — figure가 마진을 담당 */
+article figure.media-figure>.video-native,
+article figure.media-figure>.video-embed {
+  margin: 0;
+}
+
+/* Audio Embed — 로컬 mp3/ogg/wav (native <audio>) */
+article .audio-native {
+  display: block;
+  width: 100%;
+  margin: var(--block-margin);
+}
+
+/* 미디어 figure 내부의 오디오 — figure가 마진을 담당 */
+article figure.media-figure>.audio-native {
+  margin: 0;
 }
 
 /* ── 7. Shimmer Image Loading ── */

@@ -13,10 +13,6 @@ date: 2026-05-04 12:06:00 +0900
 last_modified_at: 2026-05-08 13:00:00 +0900
 ---
 
-:::info
-This review is based on the Korean translation by Kim Jae-hong (Minumsa, 2023). The passages marked with > are taken from George Long's public domain translation (1862) and are not direct translations of the cited Korean edition. They are provided as an alternative rendering of Marcus Aurelius' thoughts, not as exact quotes from the Korean version.
-:::
-
 ## **About the Book**
 
 |Item|Details|

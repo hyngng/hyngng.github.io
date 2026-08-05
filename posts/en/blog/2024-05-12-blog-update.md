@@ -73,11 +73,8 @@ Once that's done, run `bundle exec jekyll s` to spin up a local server and verif
 
 ### **Verification**
 
-{% 
-  include embed/video.html
-  src='/2024-05-12-blog-update/video/240410-232136.mp4'
-  title='Video sample. Gameplay footage from a game in development.'
-%}
+::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
+*Video sample. Gameplay footage from a game in development.*
 
 {% 
   include embed/audio.html

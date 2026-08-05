@@ -14,18 +14,19 @@ cdn: {
 
 `astro.config.mjs`에서 `remarkCdnImages` 플러그인을 연결함.
 
-Markdown 이미지 노드 중 로컬 경로만 CDN URL로 변환함. `shouldRewrite()` 함수가 `https://`, `http://`, `//` 스킴을 필터링하여 외부 URL은 무시하고, 절대경로와 상대경로 모두 변환 대상이 됨.
+Markdown 이미지 노드(`![alt](url)`) 및 HTML 인라인 이미지 태그(`<img src="...">`) 중 로컬 경로를 CDN URL로 자동 변환함.
+- `remarkCdnImages.ts`: 마크다운 표준 이미지 노드 변환 (`shouldRewrite()`)
+- `rehype-image-wrapper.mjs`: HAST AST 단계에서 HTML `<img src="...">` 요소의 로컬 경로 변환 (`shouldRewrite()`)
 
 ```md
-![name](/yyyy-mm-dd/path/filename.webp)      ← 절대경로
-![name](./hero.png)                            ← 상대경로
+![name](/yyyy-mm-dd/path/filename.webp)      ← 마크다운 이미지
+<img src="/yyyy-mm-dd/path/filename.webp">   ← HTML 이미지
 ```
 
-위 형태는 빌드 시 아래처럼 변환됨.
+위 형태는 빌드 시 모두 아래처럼 변환됨.
 
 ```text
 https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master/yyyy-mm-dd/path/filename.webp
-https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master/hero.png
 ```
 
 `https://...` 같은 스킴 포함 URL이나 `//...` 같은 protocol-relative URL은 변경하지 않음.
@@ -35,7 +36,7 @@ https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master/hero.png
 이미지 URL은 두 개의 독립된 차원에서 동작함:
 
 - **`public/` 정적 자산**: 파일 시스템이 직접 서비스. 라우터 개입 없음.
-- **MDX 이미지**: `remarkCdnImages`가 CDN URL로 변환. 라우터와 무관.
+- **MDX 이미지**: `remarkCdnImages` 및 `rehypeImageWrapper`가 CDN URL로 변환. 라우터와 무관.
 
 `onerror` 폴백 없이 CDN URL만 사용. 라우트 패턴(`[lang]/[author]/[slug]`)과 정적 자산이 절대 충돌하지 않는 구조.
 
@@ -76,5 +77,6 @@ CDN URL 변환 로직을 `content.config.ts`와 `authors.settings.ts`가 공유�
 - `src/settings/site.settings.ts`: `SITE.cdn.imageBaseUrl`
 - `src/utils/cdn.ts`: CDN URL 변환 공유 유틸리티
 - `src/plugins/remark-cdn-images.ts`: Markdown 이미지 URL 변환 (`shouldRewrite()`)
+- `src/plugins/rehype-image-wrapper.mjs`: HTML <img> 태그 CDN URL 변환 및 wrapper 주입 (`shouldRewrite()`)
 - `src/settings/authors.settings.ts`: `getAuthor()`에서 `resolveCdnPath()` 호출
 - `astro.config.mjs`: Markdown processor 연결

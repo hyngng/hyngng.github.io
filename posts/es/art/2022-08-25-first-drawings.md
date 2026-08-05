@@ -94,10 +94,7 @@ last_modified_at: 2026-07-02 15:50:00 +0900
 
 ## **Extra: Animación**
 
-{%
-  include embed/video.html
-  src='/drawing/animations/spinal-reflex-animation.mp4'
-  title='Evaluación de desempeño UCC sobre el reflejo espinal en 1.º de instituto. Presentado como animación'
-%}
+::video{src="/drawing/animations/spinal-reflex-animation.mp4"}
+*Evaluación de desempeño UCC sobre el reflejo espinal en 1.º de instituto. Presentado como animación*
 
 ¡También subo dibujos! Son dibujos que he ido haciendo de vez en cuando incluso antes de empezar el blog, y me daba pena tenerlos guardados solo en un rincón de la aplicación de galería; además, necesitaba un archivo independiente, así que los subo al blog. De ahora en adelante, iré publicando dibujos de vez en cuando y dejando también algún que otro comentario; espero que los vean con buenos ojos.

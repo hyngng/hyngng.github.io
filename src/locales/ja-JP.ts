@@ -44,7 +44,7 @@ const locale: Locale = {
   },
   footer: {
     rights: '一部の権利を保留',
-    poweredBy: 'Powered by Astro with NAME theme',
+    poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,
   },
   postFooter: {
     license: 'このページのコンテンツは<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>ライセンスの下で提供されています。',
@@ -52,10 +52,6 @@ const locale: Locale = {
     lastUpdate: '最終更新日',
     characterCount: '文字数',
     characterUnit: '文字',
-    copied: 'URLをコピーしました',
-    copyFail: 'コピーに失敗しました',
-    qrAria: 'QRコード — クリックしてURLをコピー',
-    qrTitle: 'クリックしてURLをコピー',
     dateLocale: 'ja-JP',
   },
   search: {

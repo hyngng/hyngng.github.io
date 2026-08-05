@@ -77,11 +77,8 @@ git add assets/js/dist _sass/vendors -f
 
 ### **应用确认**
 
-{%
-  include embed/video.html
-  src='/2024-05-12-blog-update/video/240410-232136.mp4'
-  title='视频示例。当前正在开发的游戏录制画面。'
-%}
+::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
+*视频示例。当前正在开发的游戏录制画面。*
 
 {%
   include embed/audio.html

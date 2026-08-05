@@ -46,7 +46,7 @@ const { locale, currentLocale } = Astro.props;
     const pagefindUrl = '/pagefind/pagefind.js';
     pagefindLoadPromise = (async () => {
       try {
-        const mod = await import(pagefindUrl);
+        const mod = await import(/* @vite-ignore */ pagefindUrl);
         await mod.init();
         pagefind = mod;
         return true;

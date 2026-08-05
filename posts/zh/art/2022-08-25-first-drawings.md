@@ -94,11 +94,8 @@ last_modified_at: 2026-07-02 15:50:00 +0900
 
 ## **番外：动画**
 
-{%
-  include embed/video.html
-  src='/drawing/animations/spinal-reflex-animation.mp4'
-  title='高中一年级以脊髓反射为主题的UCC表现评价。以动画形式提交'
-%}
+::video{src="/drawing/animations/spinal-reflex-animation.mp4"}
+*高中一年级以脊髓反射为主题的UCC表现评价。以动画形式提交*
 
 也上传画作！这些都是建博客之前断断续续画的，光是放在相册应用的某个角落觉得可惜，加上也需要归档，所以打算上传到博客。以后也会在博客上偶尔上传画作并写写故事，希望能得到大家的喜爱。
 

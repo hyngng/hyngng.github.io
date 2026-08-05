@@ -39,6 +39,7 @@ export const SITE = {
   // ── Basic Info ─────────────────────────────────────────────────
 
   title: 'HYNGNG',
+  themeName: 'Vignette',
   description: '반갑습니다 🔥',
   username: 'hyngng',
   url: 'https://hyngng.github.io',

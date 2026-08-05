@@ -3,37 +3,40 @@ import { resolveCdnPath } from '../utils/cdn.ts';
 
 function getMimeType(src) {
   const ext = src.split('?')[0].split('.').pop().toLowerCase();
-  if (ext === 'webm') return 'video/webm';
-  if (ext === 'ogv') return 'video/ogg';
-  return 'video/mp4';
+  if (ext === 'ogg' || ext === 'oga' || ext === 'opus') return 'audio/ogg';
+  if (ext === 'wav') return 'audio/wav';
+  if (ext === 'flac') return 'audio/flac';
+  if (ext === 'm4a') return 'audio/mp4';
+  if (ext === 'aac') return 'audio/aac';
+  return 'audio/mpeg';
 }
 
-export function remarkVideo() {
+export function remarkAudio() {
   return (tree) => {
     visit(tree, 'leafDirective', (node) => {
-      if (node.name !== 'video') return;
+      if (node.name !== 'audio') return;
 
       const { src, type } = node.attributes || {};
       if (!src) {
-        console.warn('[remark-video] Missing src attribute');
+        console.warn('[remark-audio] Missing src attribute');
         return;
       }
 
-      const videoUrl = resolveCdnPath(src);
+      const audioUrl = resolveCdnPath(src);
       const mimeType = type || getMimeType(src);
 
       const data = node.data || (node.data = {});
-      data.hName = 'video';
+      data.hName = 'audio';
       data.hProperties = {
-        class: 'video-native',
+        class: 'audio-native',
         controls: true,
-        playsinline: true,
+        preload: 'metadata',
       };
       data.hChildren = [
         {
           type: 'element',
           tagName: 'source',
-          properties: { src: videoUrl, type: mimeType },
+          properties: { src: audioUrl, type: mimeType },
           children: [],
         },
       ];

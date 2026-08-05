@@ -34,23 +34,6 @@ export const AUTHOR_PREFIX = '@';
 
 export const AUTHORS = {
 
-  dev: {
-    id: 'dev',
-    name: 'hyngng.dev',
-    description: '프로그래밍과 개발 경험을 기록합니다.',
-    avatar: 'avatar/hyngng-dev.webp',
-    social: {
-      email: 'dev@example.com',
-      github: 'hyngng',
-      twitter: 'hyngng_dev',
-      fediverse: '@hyngng.dev@threads.net',
-    },
-    locales: {
-      'ko-KR': { description: '프로그래밍과 개발 경험을 기록합니다.' },
-      'en-US': { description: 'Recording programming and dev experiences.' },
-    },
-  },
-
   art: {
     id: 'art',
     name: 'hyngng.art',
@@ -78,6 +61,23 @@ export const AUTHORS = {
     locales: {
       'ko-KR': { description: '매해의 사진을 정리한 작은 갤러리입니다.' },
       'en-US': { description: 'A small gallery organizing photos year by year.' },
+    },
+  },
+
+  dev: {
+    id: 'dev',
+    name: 'hyngng.dev',
+    description: '프로그래밍과 개발 경험을 기록합니다.',
+    avatar: 'avatar/hyngng-dev.webp',
+    social: {
+      email: 'dev@example.com',
+      github: 'hyngng',
+      twitter: 'hyngng_dev',
+      fediverse: '@hyngng.dev@threads.net',
+    },
+    locales: {
+      'ko-KR': { description: '프로그래밍과 개발 경험을 기록합니다.' },
+      'en-US': { description: 'Recording programming and dev experiences.' },
     },
   },
 

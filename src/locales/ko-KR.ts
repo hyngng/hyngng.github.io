@@ -44,7 +44,7 @@ const locale: Locale = {
   },
   footer: {
     rights: '일부 권리 보유',
-    poweredBy: 'Powered by Astro with NAME theme',
+    poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,
   },
   postFooter: {
     license: '이 페이지의 저작물은 저작권자의 <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> 라이선스를 따릅니다.',
@@ -52,10 +52,6 @@ const locale: Locale = {
     lastUpdate: '최종 업데이트',
     characterCount: '글자 수',
     characterUnit: '자',
-    copied: 'URL이 복사되었습니다',
-    copyFail: '복사에 실패했습니다',
-    qrAria: 'QR 코드 — 클릭하여 URL 복사',
-    qrTitle: '클릭하여 URL 복사',
     dateLocale: 'ko-KR',
   },
   search: {

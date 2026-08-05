@@ -204,5 +204,12 @@
     - [x] 미사용 favicon 잔재 삭제 — `public/assets/img/favicons/`의 참조 파일 6개만 유지, 미참조 복제본/정적 manifest 제거
     - [x] 문서 동기화 — README(명령어/다국어/사이트 설정), `locales.md`(로케일 레지스트리 SSOT) 갱신
     - [x] astro check 0 errors / 0 warnings / 0 hints 달성
+  - [x] 미디어 캡션 figure 정규화 — `remark-media-caption.mjs` 신설 및 `::audio` 디렉티브 추가
+    - 캡션 있는 미디어(이미지/`::video`/`::youtube`/`::audio`) 문단을 remark 단계에서 `<figure class="media-figure">` + `<figcaption>`으로 정규화.
+    - **Rule A**: 미디어 자식 + 직접 `<em>`이 있는 문단 → `paragraph.data.hName='figure'`, 모든 직접 emphasis에 `hName='figcaption'`. float(`:left`/`:right` 또는 `left`/`right` 클래스)는 레거시 `<p>` + processFloats 경로 유지.
+    - **Rule B**: `::video`/`::youtube`/`::audio` 직후 emphasis-only 문단(빈 줄 허용) → leafDirective를 문단 첫 자식으로 병합 후 Rule A.
+    - `remark-audio.mjs` 신설: `::audio{src="..."}` leafDirective를 브라우저 네이티브 `<audio class="audio-native" controls preload="metadata"><source src="..." type="..."></audio>`로 변환 (확장자별 MIME 타입 자동 추정 및 CDN 경로 해결). `remark-media-caption.mjs`의 `BLOCK_MEDIA`에 `'audio'` 추가.
+    - `astro.config.mjs` remarkPlugins에 `remarkAudio` 등록. `typography.css`에 `.audio-native` 스타일 추가.
+    - 검증: `astro check` 0 errors / 0 warnings / 0 hints 달성, 최종 빌드 성공.
 
 ## Option

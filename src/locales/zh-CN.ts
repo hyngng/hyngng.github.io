@@ -44,7 +44,7 @@ const locale: Locale = {
   },
   footer: {
     rights: '保留部分权利',
-    poweredBy: 'Powered by Astro with NAME theme',
+    poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,
   },
   postFooter: {
     license: '本页内容采用 <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> 许可协议。',
@@ -52,10 +52,6 @@ const locale: Locale = {
     lastUpdate: '最后更新',
     characterCount: '字数',
     characterUnit: '字',
-    copied: '已复制 URL',
-    copyFail: '复制失败',
-    qrAria: '二维码 — 点击复制 URL',
-    qrTitle: '点击复制 URL',
     dateLocale: 'zh-CN',
   },
   search: {

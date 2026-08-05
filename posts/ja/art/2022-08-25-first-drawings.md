@@ -94,10 +94,7 @@ last_modified_at: 2026-07-02 15:50:00 +0900
 
 ## **番外: アニメーション**
 
-{%
-  include embed/video.html
-  src='/drawing/animations/spinal-reflex-animation.mp4'
-  title='高校1年 脊髄反射をテーマにしたUCC課題。アニメーションで提出'
-%}
+::video{src="/drawing/animations/spinal-reflex-animation.mp4"}
+*高校1年 脊髄反射をテーマにしたUCC課題。アニメーションで提出*
 
 絵も載せます！ブログを始める前からちょこちょこ描いていた絵たちですが、ギャラリーアプリの片隅にしまっておくのがもったいなく感じられ、別途アーカイブも必要だったのでブログに載せようと思います。今後もブログに絵を時々載せながら話も少しずつ残していこうと思っていますが、よろしくお願いします。

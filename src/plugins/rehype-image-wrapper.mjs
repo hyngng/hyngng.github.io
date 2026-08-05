@@ -1,4 +1,14 @@
 import { visit } from 'unist-util-visit';
+import { SITE } from '../settings/site.settings.js';
+
+const cdnImageBaseUrl = SITE.cdn.imageBaseUrl.replace(/\/$/, '');
+
+function shouldRewrite(url) {
+  if (!url) return false;
+  if (url.startsWith('//')) return false;
+  if (/^https?:\/\//i.test(url)) return false;
+  return true;
+}
 
 function findNode(root, predicate) {
   if (predicate(root)) return root;
@@ -61,6 +71,11 @@ export function rehypeImageWrapper() {
   return (tree) => {
     visit(tree, 'element', (node, index, parent) => {
       if (node.tagName !== 'img' || !parent) return;
+
+      if (node.properties.src && shouldRewrite(String(node.properties.src))) {
+        const src = String(node.properties.src);
+        node.properties.src = cdnImageBaseUrl + (src.startsWith('/') ? '' : '/') + src;
+      }
 
       node.properties.loading = 'lazy';
 

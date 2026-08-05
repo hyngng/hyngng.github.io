@@ -1,6 +1,6 @@
 ---
 title: "깃허브 블로그를 사용하는 이유"
-authors: ["blog", "dev"]
+authors: ["blog"]
 
 categories: [블로그]
 tags: [블로그, 커스터마이징, Chirpy]
