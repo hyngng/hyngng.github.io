@@ -46,3 +46,6 @@
 
 ### Typography
 - [Fonts](./typography/fonts.md): Astro Fonts API 기반 폰트 로딩
+
+### Development
+- [Build Cache](./development/build-cache.md): `data-store.json` 빌드 캐시 동작 방식. **remark/rehype 플러그인 수정 후 결과가 반영되지 않을 때 캐시 삭제 필요**
