@@ -45,22 +45,22 @@ function toFigure(node) {
 export function remarkMediaCaption() {
   return (tree) => {
     const paragraphs = [];
-    visit(tree, 'paragraph', (node, parent) => {
+    visit(tree, 'paragraph', (node, index, parent) => {
       paragraphs.push({ node, parent });
     });
 
     for (const { node, parent } of paragraphs) {
-      // Rule B: a block media directive (::video / ::youtube) immediately
-      // followed by an emphasis-only paragraph merges into one figure.
+      // Rule B: a block media directive (::video / ::youtube / ::audio)
+      // immediately followed by an emphasis-only paragraph merges into one figure.
       if (!parent || !parent.children) continue;
-      const index = parent.children.indexOf(node);
-      if (index > 0) {
-        const prev = parent.children[index - 1];
+      const idx = parent.children.indexOf(node);
+      if (idx > 0) {
+        const prev = parent.children[idx - 1];
         if (prev && prev.type === 'leafDirective' && BLOCK_MEDIA.includes(prev.name)) {
           const children = node.children || [];
           if (children.length > 0 && children.every((c) => c.type === 'emphasis')) {
             node.children.unshift(prev);
-            parent.children.splice(index - 1, 1);
+            parent.children.splice(idx - 1, 1);
           }
         }
       }
