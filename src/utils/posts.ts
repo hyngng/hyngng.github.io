@@ -11,7 +11,7 @@ import { visit } from 'unist-util-visit';
 import type { RootContent } from 'mdast';
 import { defaultLocale } from '../locales';
 import type { AuthorId } from '../settings/authors.settings';
-import { SITE } from '../settings/site.settings';
+
 
 const DEFAULT_LOCALE = defaultLocale;
 
@@ -27,9 +27,9 @@ export function getPostSlug(id: string): string {
   return filename.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.(md|mdx)$/, '');
 }
 
-// Post URL author segment: `{authorId}{SITE.authorPostsSuffix}` (e.g. `dev-posts`).
+// Post URL author segment: `/{authorId}/{slug}/`.
 export function getPostAuthorSegment(authorId: string): string {
-  return `${authorId}${SITE.authorPostsSuffix}`;
+  return authorId;
 }
 
 export function getPostPath(id: string, authorId: string | string[], currentLocale?: string): string {

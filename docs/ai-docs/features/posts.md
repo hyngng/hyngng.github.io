@@ -20,7 +20,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 `content/ko/blog/2022-08-13-first-post.mdx`는 아래 URL로 생성됨.
 
 ```text
-/blog-posts/first-post/
+/blog/first-post/
 ```
 
 ### 비기본 언어 (en, ru, fr, es)
@@ -28,15 +28,15 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 같은 포스트가 비기본 언어로 존재하는 경우, 아래 URL로 생성됨.
 
 ```text
-/en/blog-posts/first-post/
-/ru/blog-posts/first-post/
-/fr/blog-posts/first-post/
-/es/blog-posts/first-post/
+/en/blog/first-post/
+/ru/blog/first-post/
+/fr/blog/first-post/
+/es/blog/first-post/
 ```
 
 파일명 앞의 `yyyy-mm-dd-` 접두사는 `src/utils/posts.ts`의 `getPostSlug()`가 제거함.
 
-포스트 URL의 작가 세그먼트는 `{authorId}{SITE.authorPostsSuffix}` 형태다. 기본 설정은 `-posts`이므로 `/dev-posts/{slug}/`처럼 생성된다. 작가 인덱스 페이지(`/blog/`)와 달리 포스트 페이지에만 적용된다.
+포스트 URL의 작가 세그먼트는 작가 ID `{authorId}` 형태다 (예: `/dev/{slug}/`). 작가 인덱스 페이지(`/{author}/`)와 동일하다.
 
 URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능은 이 helper를 재사용해야 함. 라우트(`[author]/[slug].astro`)의 `params.author`도 `getPostAuthorSegment()`를 통해 동일하게 조합한다.
 
@@ -45,11 +45,11 @@ URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능�
 이전 Jekyll 블로그의 URL 패턴 `/posts/{slug}/`를 보존하기 위해, 기본 언어(ko) 포스트에 한해 정적 리다이렉트 페이지를 생성한다.
 
 - 파일: `src/pages/posts/[slug].astro`
-- 동작: `/posts/{slug}/` → `/{authorId}-posts/{slug}/`. `<head>` 최상단의 인라인 `<script is:inline>`(`location = absoluteTarget`)이 body 파싱 전 즉시 이동을 시작해 화면 깜빡임이 없다(`jekyll-redirect-from` 방식과 동일). 0초 meta refresh는 JS 비활성화 폴백으로 병행.
+- 동작: `/posts/{slug}/` → `/{authorId}/{slug}/`. `<head>` 최상단의 인라인 `<script is:inline>`(`location = absoluteTarget`)이 body 파싱 전 즉시 이동을 시작해 화면 깜빡임이 없다(`jekyll-redirect-from` 방식과 동일). 0초 meta refresh는 JS 비활성화 폴백으로 병행.
 - 타깃은 `Astro.site`를 기준으로 절대 URL로 변환(`new URL(target, Astro.site).toString()`).
 - SEO: 구글 검색 센터 기준 0초 meta refresh는 영구 리다이렉트로 처리되어 인덱스를 신 URL로 이전한다. `<link rel="canonical">`로 신 URL을 명시하고, 리다이렉트 페이지 자체는 `<meta name="robots" content="noindex">`로 인덱스에서 제외한다.
 - 대상: `draft`가 아닌 기본 언어(ko) 포스트만. 비기본 언어 포스트는 Jekyll 시절 `/posts/` 하위에 존재하지 않았으므로 제외.
-- 타깃 경로는 `getPostPath()`를 재사용하므로, URL 규칙(`SITE.authorPostsSuffix` 등)이 바뀌어도 리다이렉트가 자동으로 따라간다.
+- 타깃 경로는 `getPostPath()`를 재사용하므로, URL 규칙이 바뀌어도 리다이렉트가 자동으로 따라간다.
 - `/posts/chunk/{n}/` 페이지네이션 라우트(`src/pages/posts/chunk/[n].astro`)와 경로가 겹치지 않는다. 커스텀 sitemap은 포스트 경로만 나열하므로 리다이렉트 페이지는 자동 제외된다.
 
 ## 언어 코드 추출
@@ -66,16 +66,16 @@ getPostLang('en/blog/2022-08-13-first-post.mdx') // 'en' 반환
 
 ## URL 생성
 
-`src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getPostAuthorSegment()`가 적용되어 `SITE.authorPostsSuffix`(`-posts`)가 붙는다.
+`src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getPostAuthorSegment()`가 적용되어 작가 ID가 그대로 사용된다.
 
 `currentLocale`을 전달하지 않으면 기본 로케일(`ko`)로 동작하여 `/ko/` 프리픽스 없이 URL을 생성함. `id`에서 언어 코드를 추출하지 않으므로, 비기본 언어 URL을 생성하려면 반드시 `currentLocale`을 전달해야 함.
 
 ```typescript
 // 예시
-getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog')                    // '/blog-posts/first-post/' 반환 (기본 언어)
-getPostPath('en/blog/2022-08-13-first-post.mdx', 'blog')                    // '/blog-posts/first-post/' 반환 (currentLocale 미전달 → 기본 'ko')
-getPostPath('en/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/en/blog-posts/first-post/' 반환
-getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/en/blog-posts/first-post/' 반환 (id의 언어와 무관)
+getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog')                    // '/blog/first-post/' 반환 (기본 언어)
+getPostPath('en/blog/2022-08-13-first-post.mdx', 'blog')                    // '/blog/first-post/' 반환 (currentLocale 미전달 → 기본 'ko')
+getPostPath('en/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/en/blog/first-post/' 반환
+getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/en/blog/first-post/' 반환 (id의 언어와 무관)
 ```
 
 ## Content Collection 경로
@@ -205,7 +205,7 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 
 `astro.config.mjs`의 `server.host: true`, `server.port: 4321`로 dev server 접근 주소를 고정함.
 
-`npm run dev`는 `astro dev`를 실행함. 현재 `http://127.0.0.1:4321/blog-posts/first-post/`에서 확인 가능함.
+`npm run dev`는 `astro dev`를 실행함. 현재 `http://127.0.0.1:4321/blog/first-post/`에서 확인 가능함.
 
 ## MDX
 
@@ -215,7 +215,7 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 ## 검증
 
-`npm run build`에서 `/blog-posts/first-post/index.html` 생성 확인됨.
+`npm run build`에서 `/blog/first-post/index.html` 생성 확인됨.
 
 ## 포스트 청크 로딩
 

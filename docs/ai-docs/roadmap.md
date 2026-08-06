@@ -156,16 +156,7 @@
   - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.
   - 모바일 검색(`.search-mobile-wrapper`)에는 영향 없음.
 - [ ] 완료된 작업 (사후 기록)
-  - [x] 포스트 URL 구조 변경 — 작가 세그먼트에 `-posts` 접미사 적용 (`/[author.id]/[slug]/` ➔ `/[author.id]-posts/[slug]/`, 예: `/dev/astp-devlog/` → `/dev-posts/astp-devlog/`). 작가 인덱스 페이지(`/[author]/`)와 작가 chunk/RSS는 변경 없음.
-    - `SITE.authorPostsSuffix`(`site.settings.ts`)를 설정 SSOT로 추가.
-    - `getPostPath()`가 접미사를 조합하도록 수정(sitemap/RSS/카드 링크 자동 반영), `getPostAuthorSegment()` 헬퍼 신설로 라우트 `params.author`와 공유.
-    - `[author]/[slug].astro`, `[lang]/[author]/[slug].astro`의 `params.author`를 헬퍼 기반으로 변경.
-    - 빌드 확인: `/dev-posts/astp-devlog/index.html`, `/en/dev-posts/...` 생성됨. `astro check` 0 errors.
-  - [x] 구 URL 리다이렉트 — Jekyll 시절 `/posts/{slug}/` → 현재 `/{authorId}-posts/{slug}/` 정적 리다이렉트 페이지 생성 (`src/pages/posts/[slug].astro`).
-    - `<head>` 최상단 인라인 `<script>`(`location = absoluteTarget`)가 body 파싱 전 즉시 이동 → 깜빡임 없음. 0초 meta refresh는 JS 비활성화 폴백으로 병행. 타깃은 `Astro.site` 기준 절대 URL. 구글 검색 센터 기준 0초 meta refresh는 영구 리다이렉트로 처리되어 인덱스가 신 URL로 이전됨.
-    - 타깃은 `getPostPath()` 재사용(URL 규칙 변경 시 리다이렉트도 자동 추종). 대상은 기본 언어(ko) 비draft 포스트(55개).
-    - `/posts/chunk/{n}/` 페이지네이션과 경로 충돌 없음. 커스텀 sitemap에는 자동 제외(포스트 경로만 나열).
-    - 빌드 확인: `/posts/astp-devlog/index.html` → `/dev-posts/astp-devlog/` 리다이렉트. `astro check` 0 errors.
+  - [x] 포스트 URL 구조 `-posts` 접미사 제거 및 롤백 (원래의 `/[author.id]/[slug]/` 구조로 복원). 리다이렉트(`src/pages/posts/[slug].astro`)는 `getPostPath()`를 재사용하므로 자동으로 신규 URL 경로로 반영됨.
   - [x] URL 구조 재설계 및 콘텐츠 컬렉션 네이밍 (blog -> posts)
   - [x] 모바일 글쓴이(Authors) 섹션 접기/펼치기 기능 추가 및 컴포넌트 간 여백 축소 (Hero, Authors, 검색창)
   - [x] 404페이지 — NotFoundHero 컴포넌트(Hero 구조 기반) + 다국어(ko/en/ru/fr/es) 지원

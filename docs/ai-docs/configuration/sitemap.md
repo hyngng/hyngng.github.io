@@ -25,7 +25,7 @@ const origin = new URL(request.url).origin;
 | 루트 인덱스 | `https://hyngng.github.io/` | 없음 |
 | 언어별 인덱스 | `https://hyngng.github.io/en/` | 없음 |
 | 작가별 인덱스 | `https://hyngng.github.io/blog/` | 없음 |
-| 포스트 | `https://hyngng.github.io/blog-posts/first-post/` | `last_modified_at` 또는 `date` |
+| 포스트 | `https://hyngng.github.io/blog/first-post/` | `last_modified_at` 또는 `date` |
 
 - 언어별 인덱스: 기본 로케일(ko)은 루트(`/`)와 겹므로 별도 항목 없음. 비기본 언어(`/en/` 등)만 포함.
 - 작가별 인덱스: 해당 작가의 포스트가 존재할 때만 포함. 빈 작가 페이지는 제외.
@@ -41,13 +41,13 @@ const origin = new URL(request.url).origin;
 
 ```ts
 // 한국어(기본 로케일): 프리픽스 없음
-`/${author}-posts/${slug}/`
+`/${author}/${slug}/`
 
 // 비기본 언어: 언어 코드 프리픽스 포함
-`/${lang}/${author}-posts/${slug}/`
+`/${lang}/${author}/${slug}/`
 ```
 
-작가 인덱스 페이지(`/${author}/`)와 달리 포스트 페이지의 작가 세그먼트에는 `SITE.authorPostsSuffix`(`-posts`, `src/settings/site.settings.ts`)가 붙는다. `getPostLang()`과 `getPostSlug()`은 `src/utils/posts.ts`에서 제공함.
+`getPostLang()`과 `getPostSlug()`은 `src/utils/posts.ts`에서 제공함.
 
 ## 동적 URL 생성 원칙
 
