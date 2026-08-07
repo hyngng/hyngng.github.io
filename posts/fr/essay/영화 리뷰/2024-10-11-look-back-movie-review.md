@@ -6,6 +6,8 @@ image:
 
 title: "Look Back, un film plus sobre que prévu"
 
+authors: ["essay"]
+
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 인문학, 룩 백]
 start_with_ads: true

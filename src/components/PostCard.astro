@@ -107,16 +107,11 @@ const authorSuffix = authorIds.length > 1
     min-height: var(--avatar-size);
   }
 
-  .post-card-author {
-    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
-  }
-
   .post-card-excerpt {
     position: absolute;
     inset: 0;
     margin: 0;
     transform: translateY(100%);
-    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
 
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -128,14 +123,21 @@ const authorSuffix = authorIds.length > 1
     line-height: calc(var(--avatar-size) / 2);
   }
 
-  .post-card:hover .post-card-author,
-  .post-card:focus-within .post-card-author {
-    transform: translateY(-100%);
-  }
+  @media (hover: hover) and (pointer: fine) {
+    .post-card-author,
+    .post-card-excerpt {
+      transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+    }
 
-  .post-card:hover .post-card-excerpt,
-  .post-card:focus-within .post-card-excerpt {
-    transform: translateY(0);
+    .post-card:hover .post-card-author,
+    .post-card:focus-within .post-card-author {
+      transform: translateY(-100%);
+    }
+
+    .post-card:hover .post-card-excerpt,
+    .post-card:focus-within .post-card-excerpt {
+      transform: translateY(0);
+    }
   }
 
   /* ── Image ── */

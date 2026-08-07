@@ -58,7 +58,7 @@ export const SITE = {
 
   // ── OG Image ─────────
 
-  ogImage: '/default-og.jpg',
+  ogImage: '/default-og.webp',
 
   // ── Social ─────────────────────────────────────────────────
 
@@ -73,16 +73,19 @@ export const SITE = {
 
   verification: {
     google: undefined,
-    bing: undefined,
     yandex: undefined,
     baidu: undefined,
+    pinterest: '150084dfff2fed3d81028aea5d976b18',
+    naver: undefined,
   },
 
   // ── Web Analytics Settings ───────────────────────────────────────────
 
   analytics: {
-    googleId: undefined,   // 'G-XXXXXXX'
-    goatCounter: undefined, // 'your-code'
+    google: { id: 'G-XY2QYYTPGN' },          // 'G-XXXXXXX' (Google Analytics 4)
+    googleTagManager: { id: 'GTM-T8X838Q8' }, // 'GTM-XXXXXXX'
+    goatcounter: { id: 'hyngng' },     // 'your-code'
+    adsense: { client: 'ca-pub-2168910631722247', adSlot: '9042589720' },
   },
 
   // ── Giscus ───────────────────────────────────────────────
@@ -97,6 +100,14 @@ export const SITE = {
     inputPosition: 'top',
     reactionsEnabled: '1',
   },
+
+  // ── Resource Hints (preconnect) ──────────────────────────────
+
+  resourceHints: [
+    { origin: 'https://cdn.jsdelivr.net', crossorigin: false },          // 이미지 CDN + KaTeX
+    { origin: 'https://cdnjs.cloudflare.com', crossorigin: true },       // Font Awesome
+    { origin: 'https://www.googletagmanager.com', crossorigin: false },  // GTM
+  ],
 
   // ── Posts ──────────────────────────────────────────────
 

@@ -21,6 +21,7 @@ import rehypeKatex from 'rehype-katex';
 import remarkDeflist from 'remark-deflist';
 import { remarkImageAttributes } from './src/plugins/remark-image-attributes.mjs';
 import { unified } from '@astrojs/markdown-remark';
+import { pagefind } from 'vite-plugin-pagefind';
 
 // https://astro.build/config
 export default defineConfig({
@@ -123,6 +124,16 @@ export default defineConfig({
         rehypeStripComments
       ]
     })
+  },
+
+  vite: {
+    plugins: [
+      pagefind({
+        outputDirectory: 'dist',
+        bundleDirectory: 'pagefind',
+        developStrategy: 'lazy',
+      }),
+    ],
   },
 
   fonts: [

@@ -28,8 +28,11 @@ const defaultOgImageUrl = new URL(SITE.ogImage, Astro.url.origin).toString();
       <meta property="og:site_name" content={siteMeta.title} />
       <meta property="og:locale" content={locale.meta.ogLocale} />
       <meta property="og:image" content={defaultOgImageUrl} />
-      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content={defaultOgImageUrl} />
+      {SITE.social.fediverse && (
+        <meta name="fediverse:creator" content={SITE.social.fediverse} />
+      )}
     </slot>
   </Head>
   <body>
@@ -189,7 +192,7 @@ const defaultOgImageUrl = new URL(SITE.ogImage, Astro.url.origin).toString();
     }
 
     main {
-      padding-top: calc(var(--header-height) + var(--layout-padding-mobile));
+      padding-top: var(--layout-padding-mobile);
       padding-left: var(--layout-padding-mobile);
       padding-right: var(--layout-padding-mobile);
     }

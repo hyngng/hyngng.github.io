@@ -1,0 +1,11 @@
+---
+import { SITE } from '../../../settings/site.settings';
+
+const { google, yandex, baidu, pinterest, naver } = SITE.verification;
+---
+
+{google && <meta name="google-site-verification" content={google} />}
+{naver && <meta name="naver-site-verification" content={naver} />}
+{yandex && <meta name="yandex-verification" content={yandex} />}
+{baidu && <meta name="baidu-site-verification" content={baidu} />}
+{pinterest && <meta name="p:domain_verify" content={pinterest} />}

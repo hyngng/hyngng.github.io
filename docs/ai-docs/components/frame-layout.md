@@ -34,7 +34,7 @@ fixed-actions (position: fixed; z-index: 100)
 
 | 클래스 | 역할 |
 |---|---|
-| `.fixed-actions` | 고정 프레임 컨테이너. `position: fixed`, `z-index: 100`, `pointer-events: none` |
+| `.fixed-actions` | 프레임 컨테이너. 데스크톱: `position: fixed`·`z-index: 100`·`pointer-events: none`. 모바일(≤960px): `position: relative`로 문서 흐름에 포함 |
 | `.action-block` | 좌우 콘텐츠 블록. `position: absolute`, `background-color: var(--color-frame)`, `pointer-events: auto` |
 | `.concave-right` | 좌측 버튼의 우측 상단 오목 모서리 |
 | `.concave-left` | 우측 버튼의 좌측 상단 오목 모서리 |
@@ -160,19 +160,21 @@ fixed-actions (position: fixed; z-index: 100)
 
 ## 모바일 레이아웃 (`max-width: 960px`)
 
-모바일에서 `.fixed-actions`는 프레임 두께가 `0px`이므로 헤더 바 역할을 합니다:
+모바일에서 `.fixed-actions`는 프레임 두께가 `0px`이므로 `position: relative`로 오버라이드되어 문서 흐름에 포함된 헤더 바 역할을 합니다. 페이지 최상단에 놓인 일반 요소이므로 스크롤하면 콘텐츠와 함께 위로 사라지고, 최상단까지 올려야 다시 나타납니다:
 
 ```css
 .fixed-actions {
+  position: relative;
   background-color: var(--color-frame);
   height: var(--header-height);
   pointer-events: auto;
-  max-width: 100vw;  /* 문서가 넓어져도 헤더는 뷰포트 내에 고정 */
+  max-width: 100vw;
 }
 ```
 
-- `.left-action`과 `.right-actions`는 모두 `position: absolute`로 유지
-- `max-width: 100vw`가 뷰포트 밖으로의 확장을 방지 (가로 스크롤 발생 시 문서 너비가 늘어나지만, 헤더는 보이는 화면에 고정)
+- `.left-action`과 `.right-actions`는 모두 `position: absolute`로 유지 (`.fixed-actions`가 containing block)
+- `max-width: 100vw`가 뷰포트 밖으로의 확장을 방지
+- 스크롤 숨김/표시 JS는 없음 (순수 CSS)
 
 ### 언어 목록 열기/닫기 동작
 

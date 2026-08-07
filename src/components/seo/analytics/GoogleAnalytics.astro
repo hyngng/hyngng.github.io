@@ -1,0 +1,15 @@
+---
+import { SITE } from '../../../settings/site.settings';
+
+const id = SITE.analytics.google.id;
+const configSnippet =
+  id &&
+  `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${id}');`;
+if (!id) return;
+---
+
+<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${id}`}></script>
+{configSnippet && <script is:inline set:html={configSnippet} />}

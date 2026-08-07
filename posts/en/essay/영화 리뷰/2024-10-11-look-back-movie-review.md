@@ -6,6 +6,7 @@ image:
 
 title: "A Film More Understated Than I Expected: Look Back"
 
+authors: ["essay"]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 인문학, 룩 백]

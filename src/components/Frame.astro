@@ -18,7 +18,9 @@ const currentLangShort = currentCode.split("-")[0];
 const homeUrl =
   currentLangShort === defaultLocale ? "/" : `/${currentLangShort}/`;
 const rssUrl = authorId
-  ? `/${currentLangShort}/${authorId}/rss.xml`
+  ? currentLangShort === defaultLocale
+    ? `/${authorId}/rss.xml`
+    : `/${currentLangShort}/${authorId}/rss.xml`
   : currentLangShort === defaultLocale
     ? "/rss.xml"
     : `/${currentLangShort}/rss.xml`;
@@ -247,6 +249,7 @@ const rssUrl = authorId
   /* ── Mobile ── */
   @media (max-width: 960px) {
     .fixed-actions {
+      position: relative;
       background-color: var(--color-frame);
       height: var(--header-height);
       pointer-events: auto;

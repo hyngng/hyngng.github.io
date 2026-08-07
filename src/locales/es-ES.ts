@@ -14,7 +14,6 @@ const locale: Locale = {
   authors: {
     title: 'Autores',
     otherCount: (n: number) => `y ${n} autor${n !== 1 ? 'es' : ''} más`,
-    toggleAria: 'Mostrar/ocultar lista de autores',
     postCount: (n: number) => `${n} publicación${n !== 1 ? 'es' : ''}`,
   },
   posts: {

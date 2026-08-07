@@ -39,6 +39,15 @@ const authorsMeta = post.data.authors.map(id => {
 
 const characterCount = countCharacters(post.body);
 
+// fediverse:creator: 작가별 핸들 우선, 없으면 사이트 전역 핸들로 폴백 (중복 제거)
+const fediverseCreators = [
+  ...new Set(
+    authorsMeta
+      .map((a) => a.social?.fediverse || SITE.social.fediverse)
+      .filter((handle): handle is string => Boolean(handle))
+  ),
+];
+
 // 현재 포스트의 슬러그를 공유하는 가용 언어 목록 추출
 const currentSlug = getPostSlug(post.id);
 const availableLocalesForPost = allPublishedPosts
@@ -78,8 +87,11 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <meta property="og:site_name" content={siteMeta.title} />
     <meta property="og:locale" content={locale.meta.ogLocale} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageUrl} />
+    {fediverseCreators.map((handle) => (
+      <meta name="fediverse:creator" content={handle} />
+    ))}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous" />
     <script type="application/ld+json" is:inline set:html={jsonLdString} />
   </Fragment>

@@ -4,6 +4,9 @@
 
 루트 페이지의 글쓴이 영역은 `src/components/Authors.astro`와 `src/components/Author.astro`로 분리함.
 
+- 모바일(≤960px)에서는 `.authors` 섹션 자체가 `global.css`에서 `display: none` 처리되어 표시되지 않는다.
+- 과거에 있던 모바일 전용 '접기/펼치기 토글'(`.authors-toggle` 버튼 + `initAuthorsToggle` 스크립트)은 모바일에서 글쓴이 섹션이 제거되면서 완전히 삭제됨. 관련 `toggleAria` 로케일 필드도 정리됨.
+
 구조:
 
 - 루트 페이지가 `Authors`를 포함함.

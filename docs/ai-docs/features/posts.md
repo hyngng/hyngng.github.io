@@ -90,7 +90,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/
 - `description`: 선택.
 - `date`: 필수, `z.string().transform(parseDateWithTimezone)`으로 문자열 날짜를 타임존 보정하여 Date로 변환. 타임오프셋이 없는 날짜는 `SITE.timezone`(`Asia/Seoul`) 기준으로 보정됨.
 - `last_modified_at`: 선택, `date`와 동일한 타임존 보정 적용.
-- `author`: `src/settings/authors.settings.ts`의 author id로 정규화, 기본값 `dev`.
+- `authors`: `src/settings/authors.settings.ts`의 author id(배열)로 정규화, 기본값 `["dev"]`.
 - `categories`, `tags`: 배열, 기본값 `[]`.
 - `draft`: boolean, 기본값 `false`.
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
@@ -100,7 +100,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/
 
 이전 Jekyll frontmatter의 `author: [hyngng.dev]` 같은 배열 값은 `src/content.config.ts`에서 `dev`로 정규화함.
 
-현재 등록된 author id는 `blog`, `dev`, `art`, `essay` 4개임. `src/settings/authors.settings.ts`의 `getAuthor()` 함수는 미등록 author id가 들어오면 throw하여 빌드를 실패시킴.
+현재 등록된 author id는 `blog`, `dev`, `art`, `essay`, `photography` 5개임. `src/settings/authors.settings.ts`의 `getAuthor()` 함수는 미등록 author id가 들어오면 throw하여 빌드를 실패시킴. 복수 개를 등록하면 해당 글은 여러 author 인덱스에 동시에 노출됨(언어판별 간 일관 유지 필요).
 
 ## Jekyll 이전 호환
 
@@ -124,7 +124,7 @@ Astro Markdown은 Liquid를 실행하지 않으므로 그대로 두면 본문에
 - author meta와 본문 사이: `64px`.
 - body: `16px / 1.8` (`typography.css`에서 `article`에 직접 부여).
 - 인라인 코드: 포인트 컬러(`--color-accent`)를 활용한 배경 및 여유로운 패딩 설계.
-- 테이블: 둥근 모서리(`10px`)와 깔끔한 테두리를 가진 카드 형태 레이아웃.
+- 테이블: 둥근 모서리(`10px`)와 깔끔한 테두리를 가진 카드 형태 레이아웃. `overflow: hidden`으로 `thead` 배경색이 라운딩 밖으로 삐져나오지 않도록 클리핑.
 
 ## 구문 강조 (Syntax Highlighting)
 
@@ -178,7 +178,7 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 `<head>` 내 동적 콘텐츠(OG 메타 태그, JSON-LD, KaTeX CSS 등)는 Astro의 `<slot>` 메커니즘으로 관리됨.
 
 - **`Head.astro`**: `<head>` 요소 내부에 기본 `<slot />`을 두어 자식 콘텐츠 삽입 가능하게 함.
-- **`BaseLayout.astro`**: `<Head>`에 자식으로 `<slot name="head">`를 전달. 포스트가 아닌 페이지(홈, 작가)에서는 이 슬롯의 기본값으로 전역 OG 태그(`og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card`)가 렌더링됨.
+- **`BaseLayout.astro`**: `<Head>`에 자식으로 `<slot name="head">`를 전달. 포스트가 아닌 페이지(홈, 작가)에서는 이 슬롯의 기본값으로 전역 OG 태그(`og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card`, `fediverse:creator`)가 렌더링됨. `fediverse:creator`는 `SITE.social.fediverse`(`@hyngng.main@threads.net`)를 사용.
 - **`PostLayout.astro`**: `<Fragment slot="head">`로 BaseLayout의 슬롯을 오버라이드하여 포스트 전용 OG 태그(`og:type="article"` 포함), JSON-LD, KaTeX CSS를 `<head>` 안에 주입.
 
 ### 동작 원리
@@ -191,10 +191,11 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 ### OG 태그 목록
 
 **전역 기본값 (BaseLayout 슬롯 기본값):**
-- `og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card`
+- `og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card=summary_large_image`, `fediverse:creator=SITE.social.fediverse`
 
 **포스트 오버라이드 (PostLayout 슬롯):**
-- `og:title=post.data.title`, `og:description=post.data.description`, `og:type="article"`, `og:url=Astro.url.href`, `og:site_name=SITE.title`, `twitter:card=summary`
+- `og:title=post.data.title`, `og:description=post.data.description`, `og:type="article"`, `og:url=Astro.url.href`, `og:site_name=SITE.title`, `twitter:card=summary_large_image`
+- `fediverse:creator=작가별 social.fediverse` (없으면 `SITE.social.fediverse`로 폴백, 중복 제거)
 
 ### JSON-LD
 
@@ -252,7 +253,7 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
   - 원본 `img`가 `opacity: 1`로 0.35초간 페이드인된다.
   - `::before` (LQIP)가 `opacity: 0`으로 0.35초간 페이드아웃되어 원본 이미지로 부드럽게 교체된다.
 - **더 보기 교체 카드 (`cards[0]`) 예외 처리**: "더 보기" 버튼 위치에 대체 교체되는 첫 번째 포스트 카드는 카드 등장 애니메이션(`is-new`)에서 제외될 뿐만 아니라, 미리보기 이미지도 LQIP 교체 트랜지션 없이 원본 이미지(`img.loaded`)로 즉시 표출되어 시각적 이질감을 방지한다.
-- `LoadMoreCard` 호버 필터: 기본 `brightness(0.9) opacity(0.9)` 상태에서 호버 시 `brightness(1) opacity(1)`로 밝기/투명도가 복원된다.
+- `LoadMoreCard` 호버 필터: 기본 `brightness(0.9) opacity(0.9)` 상태에서 마우스 호버 시 `brightness(1) opacity(1)`로 밝기/투명도가 복원된다. 호버 계열 애니메이션(`transform`/`color`/`filter` transition + `:hover`/`:focus-within` 규칙)은 `@media (hover: hover) and (pointer: fine)` 블록 안에만 있어 터치 입력에서는 동작하지 않는다.
 
 ### 관련 파일
 

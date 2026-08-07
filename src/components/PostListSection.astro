@@ -138,6 +138,16 @@ const loadMoreInLeft = leftWeight <= rightWeight;
     margin: 0 0 var(--space-section-title-content) 0;
   }
 
+  @media (max-width: 960px) {
+    .section-title {
+      display: none;
+    }
+
+    .posts-section {
+      margin-top: var(--space-search-posts-gap);
+    }
+  }
+
 </style>
 
 <style is:global>

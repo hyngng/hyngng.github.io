@@ -59,19 +59,50 @@ npm run dev
 
 지원 언어와 기본 언어는 동일 파일의 `LOCALE_REGISTRY`에서 단일 관리됩니다 (`defaultLocale`, `supportedLocales`가 파생됩니다).
 
+SNS/공유 메타데이터:
+
+- **`ogImage`** — 기본 OG 이미지(`public/default-og.webp`, 1200x630). 포스트에 별도 이미지가 없을 때 `og:image`/`twitter:image`로 사용됩니다.
+- **`social.fediverse`** — Fediverse 핸들(`@user@domain`). `fediverse:creator` meta로 출력됩니다. 포스트는 작가별 `social.fediverse`를 우선하고, 없으면 이 값으로 폴백합니다.
+- **`resourceHints`** — 외부 CDN(jsdelivr/cdnjs/googletagmanager) preconnect 목록. `Head.astro`에서 `<link rel="preconnect">`로 조건부 출력됩니다.
+- `twitter:card`는 기본값 `summary_large_image`로 출력됩니다.
+
 ### 웹 분석 (Analytics)
 
 `site.settings.ts`의 `analytics` 객체에서 분석 도구를 설정합니다:
 
 ```ts
 analytics: {
-  googleId: undefined,    // 'G-XXXXXXX' (Google Analytics)
-  goatCounter: undefined, // 'your-code' (GoatCounter)
+  google: { id: undefined },              // 'G-XXXXXXX' (Google Analytics 4)
+  googleTagManager: { id: 'GTM-XXXXXXX' }, // Google Tag Manager
+  goatcounter: { id: undefined },         // 'your-code' (GoatCounter)
+  adsense: { client: 'ca-pub-...', adSlot: '...' }, // Google AdSense
 },
 ```
 
-- **GoatCounter**: 코드를 설정하면 `<head>`에 트래킹 스크립트가 자동 삽입됩니다.
-- **Google Analytics**: gtag.js 연동 (구현 예정).
+- **Google Analytics**: `google.id` 설정 시 `<head>`에 gtag.js가 자동 삽입됩니다.
+- **Google Tag Manager**: `googleTagManager.id` 설정 시 `<head>`에 GTM 컨테이너 스크립트가 자동 삽입됩니다.
+- **GoatCounter**: `goatcounter.id` 설정 시 `<head>`에 트래킹 스크립트가 자동 삽입됩니다.
+- **AdSense**: `adsense.client`/`adsense.adSlot` 사용. `src/components/seo/analytics/Adsense.astro`로 분리되어 있으며 아직 레이아웃에 연결되지 않았습니다. AdSense 승인에는 `/ads.txt`가 필요하며 `public/ads.txt`에서 관리됩니다 (클라이언트 ID 변경 시 함께 수정).
+
+각 도구는 `src/components/seo/analytics/` 아래에 컴포넌트로 분리되어 있으며, 값이 `undefined`면 로드되지 않습니다.
+
+### 웹마스터 도구 검증 (Webmaster Verification)
+
+`site.settings.ts`의 `verification` 객체에서 검색 엔진 검증 토큰을 설정합니다:
+
+```ts
+verification: {
+  google: undefined,   // Google Search Console
+  yandex: undefined,   // Yandex Webmaster
+  baidu: undefined,    // Baidu Webmaster
+  naver: undefined,    // Naver Search Advisor
+  pinterest: '...',    // Pinterest
+},
+```
+
+값이 설정되면 `src/components/seo/webmasters_verifications/WebmasterVerifications.astro`가 해당 `<meta name="...-site-verification">`를 `<head>`에 조건부 출력합니다.
+
+> Bing은 Google Search Console과 연동되는 구조라 별도 검증 설정이 필요 없으며, Daum은 별도로 처리되어 검증 대상에서 제외됩니다.
 
 ### 작가 설정
 

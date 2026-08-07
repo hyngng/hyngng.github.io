@@ -189,7 +189,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 | `loadMoreSub(total, remaining)` | 부 정보 (전체 대비 남은 수) | `전체 24편 중 16편 남음` |
 | `loadMoreHover(title, n)` | `aria-label`용 (접근성) | `{title} 외 8건` |
 
-호버 시에는 텍스트 대신 `<Author>` 컴포넌트가 슬라이드업되어 다음 미리보기 글의 작가 정보를 표시한다.
+마우스 호버(`@media (hover: hover) and (pointer: fine)`) 시에는 텍스트 대신 `<Author>` 컴포넌트가 슬라이드업되어 다음 미리보기 글의 작가 정보를 표시한다. 터치 기기에서는 호버 애니메이션이 동작하지 않는다.
 
 ## 서비스 워커 상호작용
 

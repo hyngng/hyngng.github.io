@@ -49,7 +49,18 @@
 - 모바일에서는 `--button-size: 48px`, `--font-size-action: 20px`을 유지합니다. 전역 0.8배 스케일 다운에서 모바일 버튼은 접근성 최소 터치 타겟을 보존하기 위해 제외됩니다. 48px은 Material Design의 최소 터치 타겟 권장 크기(48×48dp)를 충족하며, Apple HIG(44×44pt)도 여유 있게 상회합니다.
 - 버튼 크기가 줄어들면 파생 변수(`--header-height`, `--frame-radius`)도 자동으로 따라 줄어듭니다.
 - 모바일 네이티브 스크롤바는 OS 설정에 따름.
-- 모바일에서 `.fixed-actions`는 `max-width: 100vw`를 적용하여 문서가 넓어져도 헤더가 뷰포트 내에 고정되도록 합니다. `.left-action`과 `.right-actions`는 `position: absolute`를 유지합니다.
+- 모바일에서 `.fixed-actions`는 `position: relative`로 오버라이드되어 문서 흐름에 포함되며, 페이지 최상단에 놓인 일반 헤더처럼 동작합니다. `height: var(--header-height)`로 흐름에서 48px을 차지하고, `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 유지합니다. 데스크톱은 `position: fixed`를 유지합니다.
+
+## 모바일 Frame 일반 요소화 (in-flow)
+
+### 동작
+모바일(`max-width: 960px`)에서 `.fixed-actions`는 `position: relative`로 오버라이드되어 화면 상단 고정을 해제하고 **일반 문서 흐름**에 포함됩니다. 페이지 최상단에 놓인 일반 헤더처럼 동작하므로, 스크롤하면 콘텐츠와 함께 자연스럽게 위로 사라지고, 다시 최상단까지 올려야 나타납니다. 자동 숨김/표시 JS 로직이 없으며 CSS만으로 동작합니다.
+
+### 구현
+- **CSS** (`Frame.astro` 모바일 미디어쿼리): `.fixed-actions`에 `position: relative`만 오버라이드합니다. `height: var(--header-height)`(48px)로 흐름에서 높이를 차지하고, `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 그대로 유지하므로 배치가 깨지지 않습니다.
+- **JS 없음**: 기존 스크롤 연동 코드(`updateFrameOffset`, `scheduleFrameUpdate`, scroll/resize 리스너, rAF 스로틀, abort 시 `cancelAnimationFrame`, `--header-height` 읽기)와 `openLangList()`/`closeLangList()` 내 transform 처리(`updateFrameOffset()` 호출)를 모두 제거했습니다.
+- **데스크톱 전용 유지**: 데스크톱(>960px)은 `position: fixed` 그대로 화면 상단에 고정되어 항상 보입니다.
+- **언어 목록 / reduced-motion**: transform 조작이 없으므로 별도 처리 불필요. `lang-list`는 열린 상태에서도 헤더 안에 자연스럽게 표시됩니다.
 
 ## 스크롤 컨테이너 구조
 
@@ -63,7 +74,7 @@
 
 `.page-content`는 스크롤 컨테이너가 아닙니다. `position: relative; z-index: 1`로 콘텐츠 레이어 역할만 합니다.
 
-`Frame.astro`의 `.fixed-actions`는 `position: fixed`로 viewport 좌표계를 따릅니다. `top: 0; left: 0; right: 0`으로 화면 상단에 고정됩니다. `.left-action { left: var(--frame-thickness) }`와 `.right-actions { right: var(--frame-thickness) }`는 좌우 대칭으로 `position: absolute`로 배치됩니다. concave corner는 각 요소의 `::before`(좌우 측면)와 `::after`(하단) pseudo-element가 radial-gradient로 구현합니다. 모바일에서는 `.fixed-actions`에 `max-width: 100vw`가 적용되어 문서 너비가 뷰포트를 초과해도 헤더가 보이는 화면에 고정됩니다.
+`Frame.astro`의 `.fixed-actions`는 `position: fixed`로 viewport 좌표계를 따릅니다. `top: 0; left: 0; right: 0`으로 화면 상단에 고정됩니다. `.left-action { left: var(--frame-thickness) }`와 `.right-actions { right: var(--frame-thickness) }`는 좌우 대칭으로 `position: absolute`로 배치됩니다. concave corner는 각 요소의 `::before`(좌우 측면)와 `::after`(하단) pseudo-element가 radial-gradient로 구현합니다. 모바일에서는 `.fixed-actions`가 `position: relative`로 문서 흐름에 포함되며 `max-width: 100vw`가 적용됩니다.
 
 스크롤 관련 JS는 window를 대상으로 합니다:
 - `TOC.astro`: TH는 표준 hash 앵커로 이동하며, `scroll-margin-top`과 같은 기준선으로 현재 PH를 선택함
@@ -217,4 +228,4 @@ PC: --button-size = 56px → 56 × 3 = 168px
 
 모바일에서 `.right-actions-inner.lang-open`의 너비는 `calc(100vw + var(--button-size) * 2)`로 확장됩니다. `.right-actions`가 `position: absolute; right: 0`에 고정되어 있으므로, 확장된 너비만큼 **왼쪽으로** 뻗어나갑니다. 처음 두 버튼(테마, RSS)이 뷰포트 밖으로 밀려나고, 언어 토글이 뷰포트 좌측 끝에 위치합니다.
 
-`.fixed-actions`의 `max-width: 100vw`가 문서 너비가 뷰포트를 초과해도 헤더가 보이는 화면에 고정되도록 합니다. 이를 통해 가로 스크롤 발생 시에도 우측 버튼이 화면 밖으로 밀려나지 않습니다.
+`.fixed-actions`의 `max-width: 100vw`가 문서 너비가 뷰포트를 초과해도 헤더가 뷰포트 폭을 넘지 않도록 합니다. 이를 통해 가로 스크롤 발생 시에도 우측 버튼이 화면 밖으로 밀려나지 않습니다.

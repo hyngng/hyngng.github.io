@@ -14,7 +14,6 @@ const locale: Locale = {
   authors: {
     title: '글쓴이',
     otherCount: (n: number) => `및 ${n}명의 작가`,
-    toggleAria: '글쓴이 목록 토글',
     postCount: (n: number) => `${n}개 글`,
   },
   posts: {

@@ -25,7 +25,7 @@ Astro 정적 렌더링과 클라이언트 ScrollSpy 스크립트를 조합해 �
 - TOC 초기화가 다시 실행될 때 이전 스크롤·resize·hashchange 리스너와 예약된 animation frame은 `AbortController`로 정리함.
 - 활성 heading이 속한 그룹만 `.expanded`가 되어 하위 heading을 보여줌.
 - TH는 표준 hash 앵커로 PH를 이동시킴. 수동 `scrollTo()`를 사용하지 않아 클릭, hash 직접 진입, 뒤로가기 모두 같은 브라우저 스크롤 경로를 사용함.
-- heading의 `scroll-margin-top`은 `--scroll-target-offset`임. 데스크톱에서는 중앙 본문을 가리는 프레임 두께, 모바일에서는 전체 폭 고정 액션 바 높이를 사용함.
+- heading의 `scroll-margin-top`은 `--scroll-target-offset`임. 데스크톱에서는 중앙 본문을 가리는 프레임 두께를 사용하고, 모바일에서는 고정 헤더가 없으므로 0임.
 
 ## 이동과 활성 상태의 기준
 
@@ -33,7 +33,7 @@ TH 클릭으로 PH를 이동시키는 책임과 현재 PH를 선택하는 책임
 
 활성 TH는 IntersectionObserver가 동시에 보고하는 여러 항목의 콜백 순서로 결정하지 않음. 대신 `scroll-margin-top`의 계산값을 활성 기준선으로 읽고, 그 기준선을 지난 마지막 PH를 선택함. 따라서 PH가 목표 위치에 도착하면 같은 기준선으로 해당 TH가 활성화되어 이동 위치와 강조 상태가 어긋나지 않음.
 
-`--header-height`는 버튼과 레이아웃의 기존 배치 용도이므로 스크롤 오프셋으로 재사용하지 않음. `--scroll-target-offset`을 별도로 둬 데스크톱의 중앙 본문은 프레임 두께만, 모바일은 전체 폭 고정 액션 바 높이만 보정함.
+`--header-height`는 버튼과 레이아웃의 기존 배치 용도이므로 스크롤 오프셋으로 재사용하지 않음. `--scroll-target-offset`을 별도로 둬 데스크톱의 중앙 본문은 프레임 두께만 보정함. 모바일에서는 헤더가 문서 흐름에 포함되어 화면을 가리지 않으므로 오프셋이 0임.
 
 `html`의 `scroll-behavior: smooth`가 hash 이동을 부드럽게 처리하며, `prefers-reduced-motion: reduce`에서는 이를 비활성화함.
 
@@ -56,7 +56,7 @@ TH 클릭으로 PH를 이동시키는 책임과 현재 PH를 선택하는 책임
 - `--toc-title-list-gap`: 제목과 목록 사이 간격.
 - `--toc-item-gap`: 항목 간격.
 - `--header-height`: 고정 헤더 높이 (`--button-size` = `56px`).
-- `--scroll-target-offset`: hash 이동과 ScrollSpy 활성 기준선에 공유하는 PH 상단 오프셋. 데스크톱은 `--frame-thickness`, 모바일은 `--button-size`.
+- `--scroll-target-offset`: hash 이동과 ScrollSpy 활성 기준선에 공유하는 PH 상단 오프셋. 데스크톱은 `--frame-thickness`(모바일은 0).
 
 ## i18n
 

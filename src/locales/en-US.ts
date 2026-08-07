@@ -14,7 +14,6 @@ const locale: Locale = {
   authors: {
     title: 'Authors',
     otherCount: (n: number) => `and ${n} more author${n !== 1 ? 's' : ''}`,
-    toggleAria: 'Toggle authors list',
     postCount: (n: number) => `${n} post${n !== 1 ? 's' : ''}`,
   },
   posts: {

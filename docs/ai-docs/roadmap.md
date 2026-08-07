@@ -20,8 +20,12 @@
     - CDN/로컬 이미지 모두 적용. CLS 없음 (항상 16:9).
   - [x] **JSON-LD Schema**: `BlogPosting` 타입의 구조화된 데이터 적용 (`inLanguage` 포함).
   - [x] **GoatCounter Analytics**: `analytics.goatCounter` 설정 시 `GoatCounter.astro` 컴포넌트가 `<head>`에 트래킹 스크립트를 조건부 삽입. `undefined`면 로드 안 됨.
-  - **Google Analytics**: site.settings.ts의 analytics.googleId가 설정된 경우에만 gtag.js를 Head.astro에 조건부 로드.
-  - **Webmaster Verification**: site.settings.ts의 verification 객체를 Head.astro에서 `<meta name="...-site-verification" content="...">`로 조건부 출력.
+  - [x] **Google Analytics**: `analytics.google.id` 설정 시 `GoogleAnalytics.astro`(`src/components/seo/analytics/`)가 `<head>`에 gtag.js를 조건부 삽입. `undefined`면 로드 안 됨.
+  - [x] **Google Tag Manager**: `analytics.googleTagManager.id` 설정 시 `GoogleTagManager.astro`가 `<head>`에 GTM 컨테이너 스크립트를 조건부 삽입.
+  - [x] **Webmaster Verification**: `WebmasterVerifications.astro`(`src/components/seo/webmasters_verifications/`)가 `verification` 객체를 `<head>`에서 `<meta name="...-site-verification">`로 조건부 출력 (google/yandex/baidu/naver/pinterest). Bing은 GSC 연동 구조라 별도 설정 불필요, Daum은 별도 처리로 제외. `public/ads.txt`(AdSense 표준 형식)로 광고 도메인 검증 지원.
+  - [x] **fediverse:creator**: 포스트는 작가별 `social.fediverse` 핸들 우선, 없으면 `SITE.social.fediverse` 폴백(중복 제거). 비포스트 페이지는 `SITE.social.fediverse`(`@hyngng.main@threads.net`) 전역 출력. Threads/Fediverse 연동으로 게시글 귀속 확인.
+  - [x] **Resource Hints (preconnect)**: `SITE.resourceHints` 배열(SSOT) 기반으로 `Head.astro`에서 `preconnect` 조건부 출력. jsdelivr(이미지 CDN + KaTeX), cdnjs(Font Awesome, crossorigin), googletagmanager(GTM).
+  - [x] **twitter:card summary_large_image 전환**: `BaseLayout`/`PostLayout` 모두 `summary` → `summary_large_image`. 기본 OG 이미지를 `default-og.webp`(1200x630)로 변경해 대형 카드 요건 충족.
   - **검색 설정**: Google Search Console 등 주요 서치어드바이저 지원 구조 마련 (개인정보처리방침 안내 포함).
 - [x] 댓글 및 검색 기능
   - [x] **검색 기능**: Pagefind 도입 및 인덱싱 준비 (다국어 검색 분리 전략 적용).
@@ -96,6 +100,13 @@
 
 이 항목들은 아직 수행 순서가 오지 않았거나, 계획만 확정된 작업을 보관함. 작업 완료 후에는 검증 결과를 확인하고 해당 항목을 삭제함.
 
+- [x] **모바일 Frame 일반 요소화 (in-flow)**
+  - 모바일(≤960px)에서 `.fixed-actions`를 `position: relative`로 오버라이드하여 일반 문서 흐름에 포함. 페이지 최상단에 놓인 헤더처럼 스크롤과 함께 사라지고, 최상단까지 올리면 다시 보임. 화면 고정·자동 숨김 로직 없음.
+  - 기존 스크롤 연동 JS(`updateFrameOffset`, `scheduleFrameUpdate`, scroll/resize 리스너, rAF 스로틀, abort `cancelAnimationFrame`, `--header-height` 읽기)와 `openLangList`/`closeLangList`의 `updateFrameOffset()` 호출 전부 제거.
+  - 연쇄 수정: `BaseLayout.astro` 모바일 `main`의 `padding-top`에서 `--header-height` 제거(헤더가 in-flow가 되어 이중 간격 방지), `global.css` 모바일 `--scroll-target-offset: var(--button-size)` 제거(고정 헤더가 없으므로 오프셋 0).
+  - 데스크톱은 `position: fixed` 유지. `height: var(--header-height)`로 흐름에서 48px 차지하고 `.action-block`(absolute)의 containing block 역할 유지.
+  - 검증: `npm run build` 성공(574 pages), `astro check` 0 errors / 0 warnings.
+
 - [x] `.border` 유틸리티 도입
   - Bootstrap `.border` 클래스를 이미지 테두리에 적용.
   - `--color-border`를 테마별 CSS 변수로 관리 (라이트: `#dee2e6`, 다크: `#495057`).
@@ -127,7 +138,7 @@
     - CSS 섹션 순서 재배치 (컨테이너 → 액션 블록 → 언어 목록 → 테마 아이콘 → concave corners → 모바일).
     - HTML 들여쓰기 및 버튼 태그 포맷 정리.
 - [x] RSS 생성
-  - `@astrojs/rss`로 라우트 기반 RSS 생성. 3단계 구조: 루트(`/rss.xml`), 언어별(`/[lang]/rss.xml`), 작가별(`/[lang]/[author]/rss.xml`).
+  - `@astrojs/rss`로 라우트 기반 RSS 생성. 구조: 루트(`/rss.xml`), 언어별(`/[lang]/rss.xml`), 작가별(`/[author]/rss.xml` 기본 언어, `/[lang]/[author]/rss.xml` 비기본 언어). 기본 언어는 URL 슬러그 없음 규칙을 RSS에도 동일 적용.
   - `SITE.title`, `SITE.description`을 RSS 메타데이터에 사용. `site` 필드는 `request.url` origin에서 동적 추출.
   - `posts` content collection 기준으로 RSS item을 수집.
   - 포스트 collection schema의 `title`, `description`, `date`, `last_modified_at`, `author`, `tags`, `draft` 사용.
@@ -156,6 +167,7 @@
   - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.
   - 모바일 검색(`.search-mobile-wrapper`)에는 영향 없음.
 - [ ] 완료된 작업 (사후 기록)
+  - [x] 모바일(≤960px) 루트 페이지 영역 낭비 제거 — 글쓴이(Authors) 섹션 숨김(`display: none`) 및 모바일 전용 접기/펼치기 토글(버튼+JS+CSS) 완전 삭제, `toggleAria` 로케일 필드 정리(7개 로케일). `PostListSection`의 `포스트` 섹션 제목 모바일 숨김 → 검색창이 카드 바로 위에 배치. `Search`는 모바일에서 제목과 입력창을 가로(flex row) 배치. 961~1280px 구간은 기존 유지.
   - [x] 포스트 URL 구조 `-posts` 접미사 제거 및 롤백 (원래의 `/[author.id]/[slug]/` 구조로 복원). 리다이렉트(`src/pages/posts/[slug].astro`)는 `getPostPath()`를 재사용하므로 자동으로 신규 URL 경로로 반영됨.
   - [x] URL 구조 재설계 및 콘텐츠 컬렉션 네이밍 (blog -> posts)
   - [x] 모바일 글쓴이(Authors) 섹션 접기/펼치기 기능 추가 및 컴포넌트 간 여백 축소 (Hero, Authors, 검색창)

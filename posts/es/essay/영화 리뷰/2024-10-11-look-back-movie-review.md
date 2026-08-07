@@ -6,6 +6,7 @@ image:
 
 title: "Look Back: una película más sobria de lo que esperaba"
 
+authors: ["essay"]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 인문학, 룩 백]

@@ -22,7 +22,6 @@ export interface Locale {
   authors: {
     title: string;
     otherCount: (n: number) => string;
-    toggleAria: string;
     postCount: (n: number) => string;
   };
   posts: {

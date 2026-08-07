@@ -6,6 +6,7 @@ image:
 
 title: "比想象中更加淡雅的电影，《蓦然回首》"
 
+authors: ["essay"]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 인문학, 룩 백]

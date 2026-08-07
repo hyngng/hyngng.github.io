@@ -14,7 +14,6 @@ const locale: Locale = {
   authors: {
     title: 'Авторы',
     otherCount: (n: number) => `и ещё ${n} автор${n !== 1 ? (n < 5 ? 'а' : 'ов') : ''}`,
-    toggleAria: 'Показать/скрыть список авторов',
     postCount: (n: number) => `${n} публикаций`,
   },
   posts: {

@@ -14,7 +14,6 @@ const locale: Locale = {
   authors: {
     title: '著者',
     otherCount: (n: number) => `他${n}名の著者`,
-    toggleAria: '著者一覧を切り替える',
     postCount: (n: number) => `${n}件`,
   },
   posts: {

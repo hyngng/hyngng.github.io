@@ -14,7 +14,6 @@ const locale: Locale = {
   authors: {
     title: '作者',
     otherCount: (n: number) => `及另外 ${n} 位作者`,
-    toggleAria: '切换作者列表',
     postCount: (n: number) => `${n} 篇`,
   },
   posts: {

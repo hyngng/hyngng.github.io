@@ -25,11 +25,10 @@ To prevent indexing global navigation elements (like header logos, author profil
 
 ### Dev Mode Fallback
 
-Since Pagefind relies on indexing `dist/` (which only exists after building), the Pagefind search script is not available during local development (`npm run dev`).
-To provide a smooth developer experience, `Search.astro` falls back to **DOM Title Filtering**:
-- Each post card is pre-rendered with `data-title` and `data-path`.
-- In development, the search bar checks if `/pagefind/pagefind.js` is loaded. If it's missing, it filters `.post-card` elements by checking if their titles contain the query.
-- In production, it queries Pagefind and shows/hides matching cards based on `data-path`.
+Pagefind indexes `dist/` at build time. During local development (`npm run dev`), `vite-plugin-pagefind` (`astro.config.mjs` → `vite.plugins`) copies the existing `dist/pagefind/` bundle to `public/pagefind/` so `/pagefind/pagefind.js` is served by the dev server (MIME-safe `text/javascript`).
+- The plugin's `developStrategy: 'lazy'` only copies when the dev server starts; run `npm run build` first (or after content changes) so the index reflects the latest posts.
+- `Search.astro` still falls back to **DOM Title Filtering** if `/pagefind/pagefind.js` is unavailable (e.g. `dist/pagefind/` doesn't exist yet). Each post card is pre-rendered with `data-title` and `data-path` for this fallback.
+- In production, the postbuild `pagefind --site dist --output-path dist/pagefind` step generates the index, and Search queries Pagefind, showing/hiding matching cards based on `data-path`.
 
 ## Design & Color Tokens
 
@@ -41,8 +40,10 @@ The Search component uses existing design tokens defined in the theme system (`l
 
 ## Responsive & Mobile Layout
 
-- **Desktop (>1280px)**: The search bar is placed in the right sidebar (`.search-sidebar` in `BaseLayout.astro`) using absolute positioning (`left: 100%`). It remains sticky as the page scrolls.
-- **Mobile (≤1280px)**: The sidebar is hidden via `.search-sidebar { display: none }`. An inline search bar (`.search-mobile-wrapper`) is rendered directly above the post list.
+- **Desktop (>1280px)**: The search bar is placed in the right sidebar (`.search-sidebar`) using absolute positioning (`left: 100%`). It remains sticky as the page scrolls. The title (`.search-title`) and the input bar (`.search-bar`) are stacked vertically.
+- **Mobile (≤1280px)**: The sidebar is hidden via `.search-sidebar { display: none }`. An inline search bar (`.search-mobile-wrapper`) is rendered directly above the post list in the central area. The `.search-title` (`검색` label) is hidden (`display: none`) since the label only appears in the desktop sidebar, and `.search-bar` expands to `width: 100%`.
+- **Tablet (961–1280px)**: `.search-mobile-wrapper` is absolutely positioned (`right: 0`) against the `position: relative` `.content-body-layout`, so the search bar is vertically centered on the `포스트` section-title row and right-aligned to the content column edge. Its vertical offset is derived from tokens: `top: calc(var(--posts-section-margin-top) + (var(--section-title-line-height) - var(--search-bar-height)) / 2)`. The `.search-bar` width follows the wrapper's `var(--search-bar-width)`.
+- **Mobile (≤960px)**: On the root page the `Authors` section and the `포스트` section title (`.section-title` in `PostListSection`) are hidden, so the search sits directly above the post cards. The border-radius stays `20px` (unlike the `12px` post cards). The gap between the search bar and the post list is `--space-search-posts-gap` (`16px`, applied as `.posts-section` margin-top on mobile), while the gap above the search (`--posts-section-margin-top`, `40px` on mobile) is unchanged.
 - **Query Sync**: Multiple search inputs synchronize their values when the user types, ensuring the search state is preserved during viewport resize or orientation changes.
 
 ## Search-Controller Integration

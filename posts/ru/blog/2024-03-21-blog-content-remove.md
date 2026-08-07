@@ -1,6 +1,6 @@
 ---
 title: "Удаление содержимого определённых тегов в GitHub-блоге"
-authors: ["blog"]
+authors: ["blog", "dev"]
 
 categories: [블로그]
 tags: [블로그, 커스터마йзинг, Chirpy, Liquid]
