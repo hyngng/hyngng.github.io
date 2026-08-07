@@ -1,5 +1,6 @@
 ---
 title: "블로그를 직접 만들게 된 개인적인 이유"
+authors: ["blog", "dev"]
 
 categories: [블로그]
 tags: [블로그]
