@@ -12,7 +12,6 @@ tags: [그림, 드로잉, 사람, 총, 우비, 상자]
 start_with_ads: false
 
 toc: false
-toc_sticky: true
  
 date: 2022-08-25 14:38:00 +0900
 last_modified_at: 2026-07-02 15:50:00 +0900

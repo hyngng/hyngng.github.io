@@ -1,0 +1,23 @@
+---
+// Applies the persisted theme before first paint to avoid a flash of the
+// wrong color scheme. Shared by BaseLayout (Head) and ChunkPageLayout.
+---
+
+<script is:inline>
+  (function() {
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      return 'light';
+    })();
+    const element = document.documentElement;
+    if (theme === 'dark') {
+      element.classList.add('dark');
+      element.classList.remove('light');
+    } else {
+      element.classList.remove('dark');
+      element.classList.add('light');
+    }
+  })();
+</script>

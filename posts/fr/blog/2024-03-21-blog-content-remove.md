@@ -7,7 +7,6 @@ tags: [블로그, 커스터마이징, Chirpy, Liquid]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2024-03-21 19:32:00 +0900
 last_modified_at: 2025-10-20 22:29:00 +0900

@@ -43,7 +43,6 @@ const posts = defineCollection({
     draft: z.boolean().default(false),
     start_with_ads: z.boolean().optional(),
     toc: z.boolean().optional(),
-    toc_sticky: z.boolean().optional(),
     og_image: absoluteImageUrl.optional(),
     image: imageSchema,
   }),

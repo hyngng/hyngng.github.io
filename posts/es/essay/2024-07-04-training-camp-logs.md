@@ -7,7 +7,6 @@ tags: [에세이, 일상, 훈련소 일지]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2024-07-04 21:42:00 +0900         
 last_modified_at: 2026-06-25 15:21:00 +0900

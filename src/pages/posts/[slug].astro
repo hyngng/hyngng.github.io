@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { getPostSlug, getPostLang, getPostPath } from '../../utils/posts';
-import { defaultLocale } from '../../locales';
+import { defaultLocale, useLocale } from '../../locales';
 
 // Preserves the Jekyll-era URL scheme `/posts/{slug}/` by redirecting to the
 // current post URL. Google treats a 0s meta refresh as a permanent redirect.
@@ -18,9 +18,11 @@ export async function getStaticPaths() {
 
 const { target } = Astro.props;
 const absoluteTarget = Astro.site ? new URL(target, Astro.site).toString() : target;
+const locale = useLocale(Astro);
+const lang = locale.meta.bcp47;
 ---
 <!doctype html>
-<html lang="ko">
+<html lang={lang}>
 <head>
   <meta charset="utf-8" />
   <link rel="canonical" href={absoluteTarget} />
@@ -29,6 +31,6 @@ const absoluteTarget = Astro.site ? new URL(target, Astro.site).toString() : tar
   <meta name="robots" content="noindex" />
 </head>
 <body>
-  <a href={absoluteTarget}>이동이 자동으로 되지 않으면 여기를 클릭하세요.</a>
+  <a href={absoluteTarget}>{locale.redirect.fallbackLink}</a>
 </body>
 </html>

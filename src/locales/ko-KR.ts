@@ -63,6 +63,9 @@ const locale: Locale = {
     title: '404: 페이지를 찾을 수 없음',
     description: '해당 URL은 존재하지 않습니다.',
   },
+  redirect: {
+    fallbackLink: '이동이 자동으로 되지 않으면 여기를 클릭하세요.',
+  },
 };
 
 export default locale;

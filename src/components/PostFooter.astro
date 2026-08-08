@@ -33,21 +33,21 @@ const formatDate = (date: Date) => {
 ---
 
 <div class="post-footer">
-  <div class="license" data-i18n="postFooter.license" set:html={locale.postFooter.license} />
+  <div class="license" set:html={locale.postFooter.license} />
   <hr class="divider" />
   <div class="meta-container">
     <div class="meta-info">
       <div class="meta-row">
-        <span class="meta-label"><span data-i18n="postFooter.publishDate">{locale.postFooter.publishDate}</span>:</span>
+        <span class="meta-label"><span>{locale.postFooter.publishDate}</span>:</span>
         <span class="meta-value">{formatDate(publishDate)}</span>
       </div>
       <div class="meta-row">
-        <span class="meta-label"><span data-i18n="postFooter.lastUpdate">{locale.postFooter.lastUpdate}</span>:</span>
+        <span class="meta-label"><span>{locale.postFooter.lastUpdate}</span>:</span>
         <span class="meta-value">{updateDate ? formatDate(updateDate) : locale.posts.notUpdated}</span>
       </div>
       <div class="meta-row">
-        <span class="meta-label"><span data-i18n="postFooter.characterCount">{locale.postFooter.characterCount}</span>:</span>
-        <span class="meta-value">{characterCount.toLocaleString()}<span data-i18n="postFooter.characterUnit">{locale.postFooter.characterUnit}</span></span>
+        <span class="meta-label"><span>{locale.postFooter.characterCount}</span>:</span>
+        <span class="meta-value">{characterCount.toLocaleString()}<span>{locale.postFooter.characterUnit}</span></span>
       </div>
     </div>
     <div

@@ -13,7 +13,6 @@ tags: [에세이, 영화 리뷰, 인문학, 룩 백]
 start_with_ads: true
 
 toc: false
-toc_sticky: true
 
 lang: es
 

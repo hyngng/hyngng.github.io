@@ -106,7 +106,7 @@ verification: {
 
 ### 작가 설정
 
-`src/settings/authors.settings.ts`에서 작가 정보를 추가하거나 수정합니다. 포스트 프론트매터의 `author` 필드와 매칭됩니다.
+`src/settings/authors.settings.ts`에서 작가 정보를 추가하거나 수정합니다. 포스트 프론트매터의 `authors` 필드와 매칭됩니다.
 
 ### 폰트 설정
 
@@ -137,7 +137,7 @@ verification: {
 
 ## 콘텐츠 작성
 
-포스트는 `src/content/{lang}/blog/` 디렉토리에 `.mdx` 파일로 작성합니다 (예: `src/content/ko/blog/`).
+포스트는 `posts/{lang}/{author}/` 디렉토리에 `.md` 또는 `.mdx` 파일로 작성합니다 (예: `posts/ko/blog/2026-01-01-example.md`). 파일명은 `YYYY-MM-DD-{slug}` 형식이며, `lang`은 지원 언어 코드(`ko`, `en`, `ru`, `fr`, `es`, `ja`, `zh`)여야 합니다. 기본 언어(`ko`) 외 언어 디렉토리는 라우팅에서 `/en/`, `/ru/` 등 접두사가 붙습니다.
 
 ### 프론트매터 예시
 
@@ -145,7 +145,7 @@ verification: {
 ---
 title: 포스트 제목
 description: 간단한 설명
-author: blog
+authors: [blog]
 date: 2026-01-01 12:00:00 +0900
 categories: [카테고리1, 카테고리2]
 tags: [태그1, 태그2]

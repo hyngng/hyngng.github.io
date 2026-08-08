@@ -11,7 +11,7 @@ const { locale, currentLocale } = Astro.props;
 ---
 
 <aside class="search-container" aria-label={locale.search.aria}>
-  <h2 class="search-title" data-i18n="search.title">{locale.search.title}</h2>
+  <h2 class="search-title">{locale.search.title}</h2>
   <div class="search-bar">
     <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
     <input

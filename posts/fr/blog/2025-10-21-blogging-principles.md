@@ -7,7 +7,6 @@ tags: [블로그, 웹마스터도구, 글쓰기, SEO, Chirpy]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2025-10-21 11:06:00 +0900
 last_modified_at: 2026-05-25 16:20:00 +0900

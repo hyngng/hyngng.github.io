@@ -45,6 +45,9 @@
   --color-border: #495057;
   --color-border-translucent: rgba(255, 255, 255, 0.175);
 
+  /* ── Shadow ── */
+  --color-shadow: rgba(0, 0, 0, 0.35);
+
   /* ── Admonitions ── */
   --color-admonition-bg: #2a2a2e;
 }

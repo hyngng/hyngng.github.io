@@ -12,7 +12,6 @@ tags: [마일스톤, 기타 개발, WinUI 3, MVVM, XAML, C#]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2026-04-02 11:14:00 +0900
 last_modified_at: 2026-06-23 16:47:00 +0900

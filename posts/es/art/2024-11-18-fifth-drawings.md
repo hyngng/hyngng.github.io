@@ -12,7 +12,6 @@ tags: [그림, 신문, 총, 일상, 영수증]
 start_with_ads: false
 
 toc: false
-toc_sticky: true
 
 date: 2024-11-18 20:12:00 +0900
 last_modified_at: 2024-11-29 22:31:00 +0900

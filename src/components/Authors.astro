@@ -18,7 +18,7 @@ const { title = locale.authors.title, authors } = Astro.props;
 ---
 
 <section class="content-shell authors" aria-labelledby="authors-title">
-  <h2 id="authors-title" data-i18n="authors.title">{title}</h2>
+  <h2 id="authors-title">{title}</h2>
   <div id="authors-list-container" class="authors-list">
     {authors.map((author) => <Author {...author} />)}
   </div>

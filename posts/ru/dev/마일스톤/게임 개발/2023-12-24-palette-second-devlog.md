@@ -12,7 +12,6 @@ tags: [마일스톤, 게임 개발, 유니티, C#, URP, 큐빅 서바이벌, 개
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2023-12-22 22:38:00 +0900
 last_modified_at: 2024-03-20 17:38:00 +0900

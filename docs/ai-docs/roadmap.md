@@ -26,6 +26,16 @@
   - [x] **fediverse:creator**: 포스트는 작가별 `social.fediverse` 핸들 우선, 없으면 `SITE.social.fediverse` 폴백(중복 제거). 비포스트 페이지는 `SITE.social.fediverse`(`@hyngng.main@threads.net`) 전역 출력. Threads/Fediverse 연동으로 게시글 귀속 확인.
   - [x] **Resource Hints (preconnect)**: `SITE.resourceHints` 배열(SSOT) 기반으로 `Head.astro`에서 `preconnect` 조건부 출력. jsdelivr(이미지 CDN + KaTeX), cdnjs(Font Awesome, crossorigin), googletagmanager(GTM).
   - [x] **twitter:card summary_large_image 전환**: `BaseLayout`/`PostLayout` 모두 `summary` → `summary_large_image`. 기본 OG 이미지를 `default-og.webp`(1200x630)로 변경해 대형 카드 요건 충족.
+  - [x] **canonical / hreflang / article / author / twitter 메타 보강** (Chirpy head 예시 모티브):
+    - canonical: 포스트는 각 언어 버전이 자기 자신, 일반 페이지(홈/작가)도 자기 자신. `og:url`과 통일.
+    - hreflang: `PostLayout`에서 같은 slug 번역본 전체를 `link rel="alternate" hreflang`으로 출력 (자기 자신 포함, 기본 로케일 버전 존재 시 `x-default`). sitemap.xml.ts의 hreflang 정책과 동일하게 유지.
+    - article 메타: `article:published_time`(`date`), `article:modified_time`(`last_modified_at || date`).
+    - author 메타: `<meta name="author">`에 작가명 나열.
+    - twitter 메타: `twitter:title`/`twitter:description`/`twitter:site`(`SITE.social.twitter` 비어있을 때 생략)/`twitter:creator`(작가별 social.twitter 우선, `SITE.social.twitter` 폴백, `@` 프리픽스 자동 부여).
+    - 404 페이지: `noindex` prop 추가로 `robots=noindex` + canonical 생략.
+    - site.settings.ts: `social.twitter: '' as string` — `as const`로 인한 리터럴 타입 고정이 truthy 분기에서 `never`로 좁혀지는 타입 에러 해소용 명시.
+    - 검증: `npm run build` 성공, `astro check` 0 errors. dist에서 포스트(ko/en) canonical·hreflang·article·twitter·x-default, 홈 자기 canonical, 404 noindex 확인.
+    - theme-color 메타는 사용자 결정으로 스킵 (현행 단일 `#0a0a0a` 유지).
   - **검색 설정**: Google Search Console 등 주요 서치어드바이저 지원 구조 마련 (개인정보처리방침 안내 포함).
 - [x] 댓글 및 검색 기능
   - [x] **검색 기능**: Pagefind 도입 및 인덱싱 준비 (다국어 검색 분리 전략 적용).
@@ -214,5 +224,13 @@
     - `remark-audio.mjs` 신설: `::audio{src="..."}` leafDirective를 브라우저 네이티브 `<audio class="audio-native" controls preload="metadata"><source src="..." type="..."></audio>`로 변환 (확장자별 MIME 타입 자동 추정 및 CDN 경로 해결). `remark-media-caption.mjs`의 `BLOCK_MEDIA`에 `'audio'` 추가.
     - `astro.config.mjs` remarkPlugins에 `remarkAudio` 등록. `typography.css`에 `.audio-native` 스타일 추가.
     - 검증: `astro check` 0 errors / 0 warnings / 0 hints 달성, 최종 빌드 성공.
+  - [x] 감사(A~E) 후속 일괄 정리 (2026-08)
+    - **A (실질 버그)**: `public/llms.txt` 생성 (Head.astro의 llms.txt 404 해소). `mermaidThemeSync.ts` — `ensureMermaidContainers()`+`roots.length===0` 체크를 `loadMermaid()` 앞으로 이동해 무다이어그램 페이지에서 mermaid(~1MB) import 차단. `.border-1`~`.border-5` 삭제(`.border`만 유지). `--color-shadow`(light/dark) + `.shadow` 유틸리티 추가. `NO_IMG_HEIGHT` 136→112로 CSS `--post-card-height-no-image`와 단일화.
+    - **B (DRY)**: `cdn.ts`에 `shouldRewriteCdnUrl()`/`rewriteToCdnUrl()` 추출 — `remark-cdn-images.ts`/`rehype-image-wrapper.mjs`의 중복 CDN 재작성 제거 (+ 테스트). `src/utils/image-reveal.ts` 공용 헬퍼 — `shimmer.ts`/`image-init.ts`의 decode→rAF→loaded 패턴 단일화. `ThemeInit.astro` — Head/ChunkPageLayout의 테마 IIFE 중복 제거. `getChunkRoutes({langs?, authors?})` 팩토리 — 4개 청크 라우트 통합. `PostColumns.astro` — PostListSection/ChunkPostListBody의 2열+LoadMoreCard 중복 제거. TOC.astro — parentH2/H3 재계산을 `closest('.toc-group')`으로 단순화.
+    - **C (죽은 코드)**: `data-i18n` 13개 속성 제거 (클라이언트 리더 없음). `.clearfix` 제거 (float 정리는 `article::after`가 담당). `toc_sticky` 스키마·프론트매터 436개 제거 (TOC가 항상 sticky이므로. 1차 처리 372개는 손상 복구 시 `git checkout -- posts/`로 되돌아간 64개가 남았고, 2026-08 후속 세션에서 전수 436개 완료). `scripts/` 원타임 마이그레이션 잔재 6개 삭제. `posts/[slug].astro`의 `lang="ko"`+한국어 폴백 하드코딩 → `defaultLocaleBcp47`+`locale.redirect.fallbackLink`(로케일 7개 추가). **보존 결정**: `start_with_ads`/Adsense는 Jekyll 호환용으로 유지 — `Adsense.astro`는 아직 미연결 (연결 시 `site.settings.ts`의 `analytics.adsense` 사용, `public/ads.txt` 필요). `default-og.png`는 의도적이라 보존.
+    - **D (의존성)**: `@astrojs/check`/`typescript`/`@types/qrcode` → devDependencies 이동. `micromark-extension-{gfm-table,directive,math}`+`mdast-util-{gfm-table,directive,math}` 6개를 dependencies에 명시 등록 (전이 의존성 제거). `markdown.processor: unified(...)`는 Astro 공식 권장 패턴임을 확인 — 유지. pagefind 이중 실행은 오탐 — `pagefindBuild()` 훅은 인덱싱하지 않고 postbuild CLI만 인덱싱.
+    - **E (아키텍처)**: README의 콘텐츠 구조(`posts/{lang}/{author}/`, `authors` 필드) 갱신. posts.md에 micromark 파서↔astro.config 플러그인 수동 동기화 규칙 문서화(E3). `relativeTime.ts`는 커스텀 "작성" 문구 유지를 위해 현행 유지(E2). `data-all-posts` 인라인 JSON은 청크 카드 DOM 검색 폴백으로 기능적이라 유지(E4).
+    - **F (버그 수정 및 캐시 문서화)**: `remark-media-caption.mjs` 방문자 콜백 3-arg 복구(`visit(tree, 'paragraph', (node, index, parent) => ...)` - 2-arg 사용 시 `parent`가 undefined가 되어 figure 변환이 전부 건너뛰어지는 이슈 해결). Astro 7의 Content Layer 캐시 구조(`dev` 모드는 프로젝트 루트 `.astro/data-store.json`, `build` 모드는 `node_modules/.astro/data-store.json`)와 dev 서버 캐시 무효화 절차를 `docs/ai-docs/development/build-cache.md`에 반영 및 검증 완료.
+    - 검증: `npm run build` + `npx astro check` + `npm test` 성공. dev 서버(`localhost:4321`) 및 빌드 산출물(`dist`) 전수 media-figure/figcaption 정상 변환 확인.
 
 ## Option

@@ -13,7 +13,6 @@ tags: [에세이, 영화 리뷰, 인문학, 룩 백]
 start_with_ads: true
 
 toc: false
-toc_sticky: true
 
 date: 2024-10-11 21:05:00 +0900
 last_modified_at: 2025-10-28 13:43:00 +0900

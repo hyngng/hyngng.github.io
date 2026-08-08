@@ -1,7 +1,33 @@
 import { describe, it, expect } from 'vitest';
-import { isLocalAbsolutePath, resolveCdnPath, toAbsoluteImageUrl } from './cdn';
+import {
+  isLocalAbsolutePath,
+  resolveCdnPath,
+  rewriteToCdnUrl,
+  shouldRewriteCdnUrl,
+  toAbsoluteImageUrl,
+} from './cdn';
 
 const BASE = 'https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master';
+
+describe('shouldRewriteCdnUrl', () => {
+  it('rewrites relative and root-relative paths', () => {
+    expect(shouldRewriteCdnUrl('foo.webp')).toBe(true);
+    expect(shouldRewriteCdnUrl('/2026-01-01/foo.webp')).toBe(true);
+  });
+
+  it('skips protocol-relative, absolute and empty urls', () => {
+    expect(shouldRewriteCdnUrl('//cdn.example.com/foo.webp')).toBe(false);
+    expect(shouldRewriteCdnUrl('https://example.com/foo.webp')).toBe(false);
+    expect(shouldRewriteCdnUrl('')).toBe(false);
+  });
+});
+
+describe('rewriteToCdnUrl', () => {
+  it('resolves absolute and relative paths against the CDN base', () => {
+    expect(rewriteToCdnUrl('/2026-01-01/foo.webp')).toBe(`${BASE}/2026-01-01/foo.webp`);
+    expect(rewriteToCdnUrl('avatar/foo.webp')).toBe(`${BASE}/avatar/foo.webp`);
+  });
+});
 
 describe('isLocalAbsolutePath', () => {
   it('accepts root-relative paths', () => {

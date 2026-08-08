@@ -7,7 +7,6 @@ tags: [프로그래밍, 프로그래밍 패턴, 유니티, C#, 이벤트 주도�
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2024-05-27 17:32:00 +0900
 last_modified_at: 2024-05-27 17:32:00 +0900

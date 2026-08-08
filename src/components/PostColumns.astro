@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../locales';
+import PostCard from './PostCard.astro';
+import LoadMoreCard from './LoadMoreCard.astro';
+import { getPostPath } from '../utils/posts';
+
+interface IndexedPost {
+  post: CollectionEntry<'posts'>;
+  index: number;
+}
+
+interface Props {
+  leftPosts: IndexedPost[];
+  rightPosts: IndexedPost[];
+  loadMoreInLeft: boolean;
+  showLoadMore: boolean;
+  nextChunkUrl: string;
+  nextPreviewPost?: CollectionEntry<'posts'>;
+  nextChunkCount: number;
+  totalPosts: number;
+  totalRemaining: number;
+  loadMoreOrder: number;
+  locale: Locale;
+  currentLocale: string;
+}
+
+const {
+  leftPosts, rightPosts, loadMoreInLeft, showLoadMore,
+  nextChunkUrl, nextPreviewPost, nextChunkCount,
+  totalPosts, totalRemaining, loadMoreOrder, locale, currentLocale,
+} = Astro.props;
+
+const columns = [
+  { className: 'posts-col posts-col-left', items: leftPosts, showLoadMore: loadMoreInLeft },
+  { className: 'posts-col posts-col-right', items: rightPosts, showLoadMore: !loadMoreInLeft },
+];
+---
+
+<div class="posts-columns" data-layout="masonry">
+  {columns.map((column) => (
+    <div class={column.className}>
+      {column.items.map((item) => (
+        <PostCard
+          post={item.post}
+          href={getPostPath(item.post.id, item.post.data.authors, currentLocale)}
+          index={item.index}
+        />
+      ))}
+      {showLoadMore && nextPreviewPost && column.showLoadMore && (
+        <LoadMoreCard
+          nextChunkUrl={nextChunkUrl}
+          nextPreviewPost={nextPreviewPost}
+          nextChunkCount={nextChunkCount}
+          totalPosts={totalPosts}
+          totalRemaining={totalRemaining}
+          loadMoreOrder={loadMoreOrder}
+          locale={locale}
+        />
+      )}
+    </div>
+  ))}
+</div>

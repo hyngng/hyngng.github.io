@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import type { MarkdownHeading } from 'astro';
-import { SITE, getSiteMeta } from '../settings/site.settings';
+import { SITE, getSiteMeta, getLocaleEntry } from '../settings/site.settings';
 import { getAuthor } from '../settings/authors.settings';
 import Author from '../components/Author.astro';
 import BaseLayout from './BaseLayout.astro';
@@ -10,7 +10,7 @@ import PostFooter from '../components/PostFooter.astro';
 import Comments from '../components/Comments.astro';
 import TOC from '../components/TOC.astro';
 import { getLocale, defaultLocale } from '../locales';
-import { countCharacters, getPostNumber, getPostSlug, getPostLang } from '../utils/posts';
+import { countCharacters, getPostNumber, getPostSlug, getPostLang, getPostPath } from '../utils/posts';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -48,14 +48,45 @@ const fediverseCreators = [
   ),
 ];
 
-// 현재 포스트의 슬러그를 공유하는 가용 언어 목록 추출
+// 현재 포스트의 슬러그를 공유하는 번역본 목록 (hreflang/canonical용)
 const currentSlug = getPostSlug(post.id);
-const availableLocalesForPost = allPublishedPosts
+const postTranslations = allPublishedPosts
   .filter(p => getPostSlug(p.id) === currentSlug)
   .map(p => {
-    const parts = p.id.split('/');
-    return parts.length > 1 ? parts[0] : defaultLocale;
+    const lang = getPostLang(p.id);
+    return {
+      lang,
+      href: new URL(getPostPath(p.id, p.data.authors[0], lang), Astro.url.origin).toString(),
+    };
   });
+const availableLocalesForPost = postTranslations.map(t => t.lang);
+
+// canonical: 각 언어 버전이 자기 자신
+const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).toString();
+
+// hreflang: 번역본 전체(자기 자신 포함) + 기본 로케일 버전 존재 시 x-default
+const hreflangAlternates = postTranslations.map(t => ({
+  hreflang: getLocaleEntry(t.lang).bcp47,
+  href: t.href,
+}));
+if (postTranslations.length > 1) {
+  const defaultTranslation = postTranslations.find(t => t.lang === defaultLocale);
+  if (defaultTranslation) {
+    hreflangAlternates.push({ hreflang: 'x-default', href: defaultTranslation.href });
+  }
+}
+
+// twitter:site / twitter:creator: 작가별 핸들 우선, 없으면 사이트 전역으로 폴백 (중복 제거)
+const twitterCreators = [
+  ...new Set(
+    authorsMeta
+      .map((a) => a.social?.twitter || SITE.social.twitter)
+      .filter((handle): handle is string => Boolean(handle))
+  ),
+].map((handle) => (handle.startsWith('@') ? handle : `@${handle}`));
+const twitterSite = SITE.social.twitter
+  ? (SITE.social.twitter.startsWith('@') ? SITE.social.twitter : `@${SITE.social.twitter}`)
+  : undefined;
 
 // OG image: 프론트매터 og_image > 본문 썸네일(image.path) > 글로벌 기본값
 const ogImageUrl = post.data.og_image
@@ -77,18 +108,31 @@ const jsonLd = {
 const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
-<BaseLayout lang={lang.split('-')[0]}>
+<BaseLayout lang={lang.split('-')[0]} title={post.data.title}>
   <Fragment slot="head">
     <meta name="description" content={post.data.description || siteMeta.description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {hreflangAlternates.map((alt) => (
+      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+    ))}
+    <meta name="author" content={authorsMeta.map((a) => a.name).join(', ')} />
     <meta property="og:title" content={post.data.title} />
     <meta property="og:description" content={post.data.description || siteMeta.description} />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={siteMeta.title} />
     <meta property="og:locale" content={locale.meta.ogLocale} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="article:published_time" content={post.data.date.toISOString()} />
+    <meta property="article:modified_time" content={(post.data.last_modified_at || post.data.date).toISOString()} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={post.data.title} />
+    <meta name="twitter:description" content={post.data.description || siteMeta.description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    {twitterSite && <meta name="twitter:site" content={twitterSite} />}
+    {twitterCreators.map((handle) => (
+      <meta name="twitter:creator" content={handle} />
+    ))}
     {fediverseCreators.map((handle) => (
       <meta name="fediverse:creator" content={handle} />
     ))}

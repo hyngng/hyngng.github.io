@@ -7,7 +7,6 @@ tags: [에세이, 알베르 카뮈, 시지프 신화, 역사, 고려]
 start_with_ads: false
 
 toc: true
-toc_sticky: true
 
 date: 2025-09-25 15:08:00 +0900
 last_modified_at: 2026-01-26 21:24:00 +0900

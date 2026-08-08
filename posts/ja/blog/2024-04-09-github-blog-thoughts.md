@@ -7,7 +7,6 @@ tags: [블로그, 커스터마이징, Chirpy]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2024-04-09 15:24:00 +0900
 last_modified_at: 2024-05-20 23:14:00 +0900

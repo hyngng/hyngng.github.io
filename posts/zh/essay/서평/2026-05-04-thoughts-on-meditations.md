@@ -7,7 +7,6 @@ tags: [에세이, 서평, 명상록, 50번째 글]
 start_with_ads: false
 
 toc: true
-toc_sticky: true
 
 date: 2026-05-04 12:06:00 +0900
 last_modified_at: 2026-05-08 13:00:00 +0900

@@ -12,7 +12,6 @@ tags: [사진, 송도, 서울식물원, 아파트, 봄꽃, 덕수궁, 구름, �
 start_with_ads: false
 
 toc: false
-toc_sticky: true
 
 date: 2024-12-31 21:50:00 +0900
 last_modified_at: 2025-04-16 14:57:00 +0900

@@ -7,7 +7,6 @@ tags: [프로그래밍, 문법]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2025-03-17 15:25:00 +0900
 last_modified_at: 2025-12-29 09:40:00 +0900

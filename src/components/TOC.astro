@@ -45,7 +45,7 @@ for (const heading of filteredHeadings) {
 {
   tocGroups.length > 0 && (
     <nav class="toc-container" aria-label={locale.toc.aria}>
-      <h2 class="toc-title" data-i18n="toc.title">
+      <h2 class="toc-title">
         {title}
       </h2>
       <div class="toc-scroll">
@@ -116,37 +116,6 @@ for (const heading of filteredHeadings) {
 
     if (headings.length === 0) return;
 
-    const headingList = headings.map((h, index) => {
-      const slug = h.getAttribute("id") || "";
-
-      let parentH2 = "";
-      let parentH3 = "";
-
-      if (h.tagName === "H2") {
-        parentH2 = slug;
-      } else if (h.tagName === "H3") {
-        parentH3 = slug;
-        for (let i = index - 1; i >= 0; i--) {
-          if (headings[i].tagName === "H2") {
-            parentH2 = headings[i].getAttribute("id") || "";
-            break;
-          }
-        }
-      } else {
-        for (let i = index - 1; i >= 0; i--) {
-          if (!parentH3 && headings[i].tagName === "H3") {
-            parentH3 = headings[i].getAttribute("id") || "";
-          }
-          if (!parentH2 && headings[i].tagName === "H2") {
-            parentH2 = headings[i].getAttribute("id") || "";
-          }
-          if (parentH2 && parentH3) break;
-        }
-      }
-
-      return { slug, parentH2, parentH3 };
-    });
-
     const getActivationLine = () => {
       const scrollMarginTop = getComputedStyle(headings[0]).scrollMarginTop;
       return parseFloat(scrollMarginTop) || 0;
@@ -154,36 +123,28 @@ for (const heading of filteredHeadings) {
 
     const updateActiveHeading = () => {
       const activationLine = getActivationLine();
-      let activeSlug = headingList[0].slug;
+      let activeSlug = headings[0].getAttribute("id") || "";
 
       for (const heading of headings) {
         if (heading.getBoundingClientRect().top > activationLine + 1) break;
         activeSlug = heading.getAttribute("id") || activeSlug;
       }
 
-      const activeInfo = headingList.find(
-        (heading) => heading.slug === activeSlug,
-      );
-      const activeParentH2 = activeInfo?.parentH2;
-      const activeParentH3 = activeInfo?.parentH3;
-
       tocLinks.forEach((link) => {
         const href = link.getAttribute("href")?.substring(1);
         link.classList.toggle("active", href === activeSlug);
       });
 
-      const activeGroupEl = activeParentH2
-        ? document.querySelector(`.toc-group[data-slug="${activeParentH2}"]`)
-        : null;
+      const activeLink = tocLinks.find(
+        (link) => link.getAttribute("href")?.substring(1) === activeSlug,
+      );
+
+      const activeGroupEl = activeLink?.closest<HTMLElement>(".toc-group") || null;
       tocGroups.forEach((group) => {
         group.classList.toggle("expanded", group === activeGroupEl);
       });
 
-      const activeSubgroupEl = activeParentH3
-        ? document.querySelector(
-            `.toc-subgroup[data-slug="${activeParentH3}"]`,
-          )
-        : null;
+      const activeSubgroupEl = activeLink?.closest<HTMLElement>(".toc-subgroup") || null;
       tocSubgroups.forEach((subgroup) => {
         subgroup.classList.toggle("expanded", subgroup === activeSubgroupEl);
       });

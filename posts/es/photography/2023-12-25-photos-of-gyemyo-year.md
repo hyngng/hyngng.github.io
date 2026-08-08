@@ -12,7 +12,6 @@ tags: [사진, 불멍, 지하철, 개수대, 구름, 감자튀김, 바닷가, �
 start_with_ads: false
 
 toc: false
-toc_sticky: true
  
 date: 2023-12-25 21:35:00 +0900
 last_modified_at: 2025-04-16 14:57:00 +0900

@@ -163,10 +163,8 @@ remark-directive는 AST 파싱만 하고 HTML 변환은 하지 않습니다:
 방향별: `.rounded-top`, `.rounded-end`, `.rounded-bottom`, `.rounded-start`
 
 ### Clearfix
-```css
-.clearfix::after { display: block; clear: both; content: ""; }
-```
-`article`에는 `article::after { clear: both; }`가 자동 적용됩니다.
+
+`.clearfix` 유틸리티는 제거됨 (2026-08). float 정리는 `article::after { clear: both; }`(`src/styles/typography.css`)가 담당하므로 별도 클래스가 필요 없다.
 
 ### 라이트/다크 모드
 ```css

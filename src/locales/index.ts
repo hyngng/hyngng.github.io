@@ -71,6 +71,9 @@ export interface Locale {
     title: string;
     description: string;
   };
+  redirect: {
+    fallbackLink: string;
+  };
 }
 
 const locales: Record<string, Locale> = {

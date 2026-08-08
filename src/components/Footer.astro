@@ -7,8 +7,8 @@ const year = new Date().getFullYear();
 ---
 
 <footer>
-  <p>© {year} {SITE.username}. <span data-i18n="footer.rights">{t.footer.rights}</span></p>
-  <p data-i18n="footer.poweredBy">{t.footer.poweredBy(SITE.themeName)}</p>
+  <p>© {year} {SITE.username}. <span>{t.footer.rights}</span></p>
+  <p>{t.footer.poweredBy(SITE.themeName)}</p>
 </footer>
 
 <style>

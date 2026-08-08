@@ -64,7 +64,7 @@ export const SITE = {
 
   social: {
     github: '',
-    twitter: '',
+    twitter: '' as string,
     fediverse: '@hyngng.main@threads.net',
     pinterest: undefined,
   },

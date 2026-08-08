@@ -12,7 +12,6 @@ tags: [그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]
 start_with_ads: false
 
 toc: false
-toc_sticky: true
  
 date: 2024-05-16 13:53:00 +0900
 last_modified_at: 2024-05-16 13:53:00 +0900

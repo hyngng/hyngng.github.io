@@ -12,7 +12,6 @@ tags: [그림, 드로잉, 비니, 광각, 총, 양뿔, 망토, 트래픽 콘]
 start_with_ads: false
 
 toc: false
-toc_sticky: true
  
 date: 2023-03-19 15:24:00 +0900
 last_modified_at: 2023-03-26 15:24:00 +0900

@@ -1,0 +1,17 @@
+# HYNGNG
+
+> 개인 블로그 — 사진, 그림, 개발, 에세이를 다국어(ko/en/ru/fr/es/ja/zh)로 발행합니다.
+
+## Sections
+
+- [홈](https://hyngng.github.io/)
+- [RSS](https://hyngng.github.io/rss.xml)
+
+## Authors
+
+- [dev](https://hyngng.github.io/dev/)
+
+## About
+
+- GitHub Pages 기반 정적 사이트 (Astro). 컨텐츠는 작가별 · 언어별 경로로 제공됩니다.
+- 최신 글은 [홈](https://hyngng.github.io/) 또는 [RSS](https://hyngng.github.io/rss.xml)에서 확인할 수 있습니다.

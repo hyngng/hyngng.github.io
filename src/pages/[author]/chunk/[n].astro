@@ -1,22 +1,11 @@
 ---
-import { getChunkStaticPaths } from '../../../utils/chunkEndpoint';
+import { getChunkRoutes } from '../../../utils/chunkEndpoint';
 import { defaultLocale, getLocale } from '../../../locales';
-import { ALL_AUTHORS, type AuthorId } from '../../../settings/authors.settings';
 import ChunkPageLayout from '../../../layouts/ChunkPageLayout.astro';
 import ChunkPostListBody from '../../../components/ChunkPostListBody.astro';
 
 export async function getStaticPaths() {
-  const paths = [];
-  for (const author of ALL_AUTHORS) {
-    const chunkPaths = await getChunkStaticPaths(defaultLocale, `/${author.id}/chunk`, author.id as AuthorId);
-    for (const p of chunkPaths) {
-      paths.push({
-        params: { author: author.id, n: p.params.n },
-        props: p.props,
-      });
-    }
-  }
-  return paths;
+  return getChunkRoutes({ authors: true });
 }
 
 const { author } = Astro.params;

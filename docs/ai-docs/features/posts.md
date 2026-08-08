@@ -64,6 +64,8 @@ getPostLang('ko/blog/2022-08-13-first-post.mdx') // 'ko' 반환
 getPostLang('en/blog/2022-08-13-first-post.mdx') // 'en' 반환
 ```
 
+> 포스트는 프로젝트 루트 `posts/{lang}/{author}/` 아래에 위치한다 (`content.config.ts`의 `base: './posts'`). 예: `posts/ko/blog/2022-08-13-first-post.mdx`.
+
 ## URL 생성
 
 `src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getPostAuthorSegment()`가 적용되어 작가 ID가 그대로 사용된다.
@@ -80,7 +82,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/
 
 ## Content Collection 경로
 
-콘텐츠 디렉토리는 프로젝트 루트의 `content/`에 위치한다 (`content.config.ts`의 `base: './content'`). 기존 `src/content/`에서 이동됨.
+콘텐츠 디렉토리는 프로젝트 루트의 `posts/`에 위치한다 (`content.config.ts`의 `base: './posts'`). 기존 `src/content/`에서 이동됨.
 
 ## Schema
 
@@ -94,7 +96,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/
 - `categories`, `tags`: 배열, 기본값 `[]`.
 - `draft`: boolean, 기본값 `false`.
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
-- `start_with_ads`, `toc`, `toc_sticky`: 이전 Jekyll frontmatter 호환용 선택 필드.
+- `start_with_ads`, `toc`: 이전 Jekyll frontmatter 호환용 선택 필드. `toc_sticky`는 TOC가 항상 sticky이므로 2026-08 스키마에서 제거됨.
 
 ## Author 호환
 
@@ -173,12 +175,12 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 | `src/types/mermaid.d.ts` | CDN mermaid v10 API TypeScript 선언 (initialize, run만 선언) |
 | `src/styles/typography.css` | `.mermaid` 중앙 정렬, `line-height` 리셋, SVG 반응형 스타일 |
 
-## `<head>` 슬롯 아키텍처 (OG + JSON-LD)
+## `<head>` 슬롯 아키텍처 (OG + JSON-LD + SEO)
 
 `<head>` 내 동적 콘텐츠(OG 메타 태그, JSON-LD, KaTeX CSS 등)는 Astro의 `<slot>` 메커니즘으로 관리됨.
 
 - **`Head.astro`**: `<head>` 요소 내부에 기본 `<slot />`을 두어 자식 콘텐츠 삽입 가능하게 함.
-- **`BaseLayout.astro`**: `<Head>`에 자식으로 `<slot name="head">`를 전달. 포스트가 아닌 페이지(홈, 작가)에서는 이 슬롯의 기본값으로 전역 OG 태그(`og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card`, `fediverse:creator`)가 렌더링됨. `fediverse:creator`는 `SITE.social.fediverse`(`@hyngng.main@threads.net`)를 사용.
+- **`BaseLayout.astro`**: `<Head>`에 자식으로 `<slot name="head">`를 전달. 포스트가 아닌 페이지(홈, 작가)에서는 이 슬롯의 기본값으로 전역 OG 태그(`og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card`, `fediverse:creator`)가 렌더링됨. `fediverse:creator`는 `SITE.social.fediverse`(`@hyngng.main@threads.net`)를 사용. `noindex` prop이 true면 `<meta name="robots" content="noindex">`를 넣고 canonical을 생략함 (404 페이지가 사용).
 - **`PostLayout.astro`**: `<Fragment slot="head">`로 BaseLayout의 슬롯을 오버라이드하여 포스트 전용 OG 태그(`og:type="article"` 포함), JSON-LD, KaTeX CSS를 `<head>` 안에 주입.
 
 ### 동작 원리
@@ -187,15 +189,18 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 |---|---|---|
 | 홈/작가 | 미사용 → 기본값 렌더링 | `og:title=SITE.title`, `og:type="website"` |
 | 포스트 | PostLayout이 오버라이드 | `og:title=post.data.title`, `og:type="article"` |
+| 404 | 미사용 + `noindex` | `robots=noindex`, canonical 없음 |
 
-### OG 태그 목록
+### OG/SEO 태그 목록
 
 **전역 기본값 (BaseLayout 슬롯 기본값):**
-- `og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card=summary_large_image`, `fediverse:creator=SITE.social.fediverse`
+- `og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card=summary_large_image`, `twitter:title`, `twitter:description`, `fediverse:creator=SITE.social.fediverse`
+- `canonical` (자기 자신, `noindex` 시 생략), `twitter:site` (`SITE.social.twitter` 비어있지 않을 때만)
 
 **포스트 오버라이드 (PostLayout 슬롯):**
-- `og:title=post.data.title`, `og:description=post.data.description`, `og:type="article"`, `og:url=Astro.url.href`, `og:site_name=SITE.title`, `twitter:card=summary_large_image`
+- `og:title=post.data.title`, `og:description=post.data.description`, `og:type="article"`, `og:url=canonicalUrl`, `og:site_name=SITE.title`, `twitter:card=summary_large_image`, `twitter:title`, `twitter:description`
 - `fediverse:creator=작가별 social.fediverse` (없으면 `SITE.social.fediverse`로 폴백, 중복 제거)
+- `canonical` (자기 자신), `hreflang` alternate (같은 slug의 번역본 전체 + 기본 로케일 존재 시 `x-default`), `author` (작가명들), `article:published_time=post.data.date`, `article:modified_time=post.data.last_modified_at || date`, `twitter:site`, `twitter:creator` (작가별 social.twitter, 없으면 `SITE.social.twitter`로 폴백, `@` 프리픽스 자동 부여)
 
 ### JSON-LD
 
@@ -293,7 +298,9 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 | `micromark-extension-gfm-table` + `mdast-util-gfm-table` | 테이블의 `|`를 텍스트로 집계하지 않도록 `table` 노드로 파싱 |
 | `micromark-extension-directive` + `mdast-util-directive` | 디렉티브 구문이 `text` 노드로 집계되지 않도록 파싱 |
 
-`micromark-extension-math`/`mdast-util-math`는 `remark-math`의 transitive dependency로 프로젝트에 이미 존재하며 별도 설치가 필요 없다.
+`micromark-extension-*`/`mdast-util-*` 6개 패키지는 `package.json`의 `dependencies`에 명시 등록되어 있다 (전이 의존성에 기대지 않음).
+
+> **E3 동기화 규칙**: `posts.ts`의 `countCharacters()`/`extractExcerpt()`가 사용하는 micromark 확장 목록은 `astro.config.mjs`의 `markdown.processor` remarkPlugins(렌더링)와 **수동으로 동기화**해야 한다. 새 마크다운 문법 플러그인(예: remark-xxx)을 추가하면 ① astro.config의 remarkPlugins, ② posts.ts의 `extensions`/`mdastExtensions`, ③ package.json dependencies, 이렇게 세 곳을 함께 갱신한다.
 
 ## 포스트 카드 Excerpt 추출
 

@@ -63,6 +63,9 @@ const locale: Locale = {
     title: '404: 页面未找到',
     description: '请求的 URL 不存在。',
   },
+  redirect: {
+    fallbackLink: '如果未自动跳转，请点击此处。',
+  },
 };
 
 export default locale;

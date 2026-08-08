@@ -12,7 +12,6 @@ tags: [근무지에서, 전봇대, 눈, 편의점, 아파트, 비, 지하철, �
 start_with_ads: false
 
 toc: false
-toc_sticky: true
 
 date: 2025-12-25 11:39:00 +0900
 last_modified_at: 2026-06-25 21:29:00 +0900

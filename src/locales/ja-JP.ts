@@ -63,6 +63,9 @@ const locale: Locale = {
     title: '404: ページが見つかりません',
     description: 'お探しのURLは存在しません。',
   },
+  redirect: {
+    fallbackLink: '自動的にリダイレクトされない場合は、こちらをクリックしてください。',
+  },
 };
 
 export default locale;

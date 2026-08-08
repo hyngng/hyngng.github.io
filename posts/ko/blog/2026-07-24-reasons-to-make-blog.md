@@ -1,4 +1,4 @@
----
+﻿---
 title: "블로그를 직접 만들게 된 개인적인 이유"
 authors: ["blog", "dev"]
 
@@ -7,10 +7,9 @@ tags: [블로그]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
-date: 2026-07-29 00:00:00 +0900
-last_modified_at: 2026-07-29 00:00:00 +0900
+date: 2026-08-08 21:09:00 +0900
+last_modified_at: 2026-08-08 21:09:00 +0900
 ---
 
 ## **블로그를 만들었습니다**

@@ -12,7 +12,6 @@ tags: [그림]
 start_with_ads: false
 
 toc: false
-toc_sticky: true
 
 date: 2025-11-25 20:34:00 +0900
 last_modified_at: 2026-01-29 23:26:00 +0900

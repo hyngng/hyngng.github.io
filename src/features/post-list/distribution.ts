@@ -1,4 +1,6 @@
-export const NO_IMG_HEIGHT = 136;
+// Height of a card without an image. Must match `--post-card-height-no-image`
+// in `src/styles/global.css` so the SSR masonry weight matches rendered heights.
+export const NO_IMG_HEIGHT = 112;
 export const IMG_ASPECT = 21 / 40;
 export const GAP = 20;
 export const SSR_COL_WIDTH = 438;

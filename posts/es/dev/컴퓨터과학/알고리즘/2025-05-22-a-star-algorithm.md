@@ -7,7 +7,6 @@ tags: [컴퓨터과학, 알고리즘]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2025-05-28 10:50:00 +0900
 last_modified_at: 2025-12-29 07:29:00 +0900

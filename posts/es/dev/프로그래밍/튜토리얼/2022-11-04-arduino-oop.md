@@ -7,7 +7,6 @@ tags: [프로그래밍, 튜토리얼, 아두이노, 객체지향]
 start_with_ads: true
 
 toc: false
-toc_sticky: true
  
 date: 2022-11-04 13:48:00 +0900
 last_modified_at: 2023-04-12 20:38:00 +0900

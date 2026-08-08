@@ -7,7 +7,6 @@ tags: [에세이, 서평, 도덕경]
 start_with_ads: false
 
 toc: true
-toc_sticky: true
 
 lang: es
 

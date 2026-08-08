@@ -50,6 +50,12 @@ function ensureMermaidContainers(): void {
  * `nodes` 파라미터를 사용하여 DOM 재쿼리 레이스를 방지합니다.
  */
 async function renderMermaid(theme: 'dark' | 'default', revision: number): Promise<void> {
+  ensureMermaidContainers();
+
+  const roots = document.querySelectorAll<HTMLElement>('.mermaid:not([data-processed])');
+  if (roots.length === 0) return;
+
+  // Import the ~1MB mermaid module only when a diagram actually needs rendering.
   if ('fonts' in document) {
     await document.fonts.ready;
   }
@@ -58,10 +64,6 @@ async function renderMermaid(theme: 'dark' | 'default', revision: number): Promi
   if (revision !== renderRevision) return;
 
   mermaid.initialize({ startOnLoad: false, theme });
-  ensureMermaidContainers();
-
-  const roots = document.querySelectorAll<HTMLElement>('.mermaid:not([data-processed])');
-  if (roots.length === 0) return;
 
   try {
     await mermaid.run({ nodes: Array.from(roots) });

@@ -1,11 +1,11 @@
 ---
-import { getChunkStaticPaths } from '../../../utils/chunkEndpoint';
+import { getChunkRoutes } from '../../../utils/chunkEndpoint';
 import { defaultLocale, getLocale } from '../../../locales';
 import ChunkPageLayout from '../../../layouts/ChunkPageLayout.astro';
 import ChunkPostListBody from '../../../components/ChunkPostListBody.astro';
 
 export async function getStaticPaths() {
-  return getChunkStaticPaths(defaultLocale, '/posts/chunk');
+  return getChunkRoutes();
 }
 
 const { posts, currentChunk, totalChunks, chunkBaseUrl, totalPosts } = Astro.props;

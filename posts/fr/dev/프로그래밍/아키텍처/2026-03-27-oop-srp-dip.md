@@ -7,7 +7,6 @@ tags: [프로그래밍, 아키텍처]
 start_with_ads: false
 
 toc: true
-toc_sticky: true
 
 date: 2026-06-01 13:54:00 +0900
 last_modified_at: 2026-06-29 23:23:00 +0900

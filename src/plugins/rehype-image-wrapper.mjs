@@ -1,14 +1,5 @@
 import { visit } from 'unist-util-visit';
-import { SITE } from '../settings/site.settings.js';
-
-const cdnImageBaseUrl = SITE.cdn.imageBaseUrl.replace(/\/$/, '');
-
-function shouldRewrite(url) {
-  if (!url) return false;
-  if (url.startsWith('//')) return false;
-  if (/^https?:\/\//i.test(url)) return false;
-  return true;
-}
+import { rewriteToCdnUrl, shouldRewriteCdnUrl } from '../utils/cdn.js';
 
 function findNode(root, predicate) {
   if (predicate(root)) return root;
@@ -72,9 +63,8 @@ export function rehypeImageWrapper() {
     visit(tree, 'element', (node, index, parent) => {
       if (node.tagName !== 'img' || !parent) return;
 
-      if (node.properties.src && shouldRewrite(String(node.properties.src))) {
-        const src = String(node.properties.src);
-        node.properties.src = cdnImageBaseUrl + (src.startsWith('/') ? '' : '/') + src;
+      if (node.properties.src && shouldRewriteCdnUrl(String(node.properties.src))) {
+        node.properties.src = rewriteToCdnUrl(String(node.properties.src));
       }
 
       node.properties.loading = 'lazy';

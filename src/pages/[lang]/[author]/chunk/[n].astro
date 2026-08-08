@@ -1,25 +1,14 @@
 ---
-import { getChunkStaticPaths } from '../../../../utils/chunkEndpoint';
+import { getChunkRoutes } from '../../../../utils/chunkEndpoint';
 import { availableLocales, defaultLocale, getLocale } from '../../../../locales';
-import { ALL_AUTHORS, type AuthorId } from '../../../../settings/authors.settings';
 import ChunkPageLayout from '../../../../layouts/ChunkPageLayout.astro';
 import ChunkPostListBody from '../../../../components/ChunkPostListBody.astro';
 
 export async function getStaticPaths() {
-  const paths = [];
-  for (const { code } of availableLocales) {
-    if (code === defaultLocale) continue;
-    for (const author of ALL_AUTHORS) {
-      const chunkPaths = await getChunkStaticPaths(code, `/${code}/${author.id}/chunk`, author.id as AuthorId);
-      for (const p of chunkPaths) {
-        paths.push({
-          params: { lang: code, author: author.id, n: p.params.n },
-          props: p.props,
-        });
-      }
-    }
-  }
-  return paths;
+  const langs = availableLocales
+    .map(({ code }) => code)
+    .filter((code) => code !== defaultLocale);
+  return getChunkRoutes({ langs, authors: true });
 }
 
 const { lang, author } = Astro.params;

@@ -7,7 +7,6 @@ tags: [마일스톤, 게임 개발, 유니티, C#, 행선지, 개발, 개발일�
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2024-10-23 21:32:00 +0900
 last_modified_at: 2024-11-02 20:41:00 +0900

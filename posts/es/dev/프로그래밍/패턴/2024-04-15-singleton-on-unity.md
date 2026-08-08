@@ -7,7 +7,6 @@ tags: [프로그래밍, 프로그래밍 패턴, 유니티, C#, 싱글톤 패턴]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2024-04-15 20:24:00 +0900
 last_modified_at: 2026-01-05 14:13:00 +0900

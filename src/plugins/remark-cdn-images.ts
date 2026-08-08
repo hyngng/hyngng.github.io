@@ -1,4 +1,4 @@
-import { SITE } from '../settings/site.settings';
+import { rewriteToCdnUrl, shouldRewriteCdnUrl } from '../utils/cdn';
 
 type MarkdownNode = {
   type?: string;
@@ -6,17 +6,9 @@ type MarkdownNode = {
   children?: MarkdownNode[];
 };
 
-const cdnImageBaseUrl = SITE.cdn.imageBaseUrl.replace(/\/$/, '');
-
-function shouldRewrite(url: string): boolean {
-  if (url.startsWith('//')) return false;
-  if (/^https?:\/\//i.test(url)) return false;
-  return true;
-}
-
 function visitImages(node: MarkdownNode) {
-  if (node.type === 'image' && node.url && shouldRewrite(node.url)) {
-    node.url = cdnImageBaseUrl + (node.url.startsWith('/') ? '' : '/') + node.url;
+  if (node.type === 'image' && node.url && shouldRewriteCdnUrl(node.url)) {
+    node.url = rewriteToCdnUrl(node.url);
   }
 
   node.children?.forEach(visitImages);

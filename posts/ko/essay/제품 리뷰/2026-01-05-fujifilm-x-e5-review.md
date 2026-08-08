@@ -7,7 +7,6 @@ tags: [에세이, 제품 리뷰]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2026-01-21 09:58:00 +0900
 last_modified_at: 2026-04-20 15:05:00 +0900

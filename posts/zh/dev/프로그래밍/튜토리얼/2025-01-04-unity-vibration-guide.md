@@ -7,7 +7,6 @@ tags: [프로그래밍, 튜토리얼]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2025-01-31 10:18:00 +0900
 last_modified_at: 2026-02-11 17:36:00 +0900

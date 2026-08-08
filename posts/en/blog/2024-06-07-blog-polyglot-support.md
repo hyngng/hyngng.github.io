@@ -7,7 +7,6 @@ tags: [블로그, 다국어, jekyll-polyglot]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2024-06-07 22:00:00 +0900
 last_modified_at: 2025-10-16 13:07:00 +0900

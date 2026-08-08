@@ -9,27 +9,38 @@ import "../styles/global.css";
 interface Props {
   lang?: string;
   authorId?: string;
+  title?: string;
+  noindex?: boolean;
 }
 
-const { lang = Astro.currentLocale || defaultLocale, authorId } = Astro.props;
+const { lang = Astro.currentLocale || defaultLocale, authorId, title, noindex = false } = Astro.props;
 const locale = getLocale(lang);
 const siteMeta = getSiteMeta(lang);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).toString();
 const defaultOgImageUrl = new URL(SITE.ogImage, Astro.url.origin).toString();
+const twitterSite = SITE.social.twitter
+  ? (SITE.social.twitter.startsWith('@') ? SITE.social.twitter : `@${SITE.social.twitter}`)
+  : undefined;
 ---
 
 <html lang={lang}>
-  <Head>
+  <Head title={title}>
     <slot name="head">
       <meta name="description" content={siteMeta.description} />
+      {noindex && <meta name="robots" content="noindex" />}
+      {!noindex && <link rel="canonical" href={canonicalUrl} />}
       <meta property="og:title" content={siteMeta.title} />
       <meta property="og:description" content={siteMeta.description} />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={Astro.url.href} />
+      <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content={siteMeta.title} />
       <meta property="og:locale" content={locale.meta.ogLocale} />
       <meta property="og:image" content={defaultOgImageUrl} />
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={siteMeta.title} />
+      <meta name="twitter:description" content={siteMeta.description} />
       <meta name="twitter:image" content={defaultOgImageUrl} />
+      {twitterSite && <meta name="twitter:site" content={twitterSite} />}
       {SITE.social.fediverse && (
         <meta name="fediverse:creator" content={SITE.social.fediverse} />
       )}

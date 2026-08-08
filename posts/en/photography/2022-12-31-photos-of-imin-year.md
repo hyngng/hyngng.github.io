@@ -12,7 +12,6 @@ tags: [사진, 감자튀김, 복도, 친구, 눈, 벚꽃, 구름, 크레인]
 start_with_ads: false
 
 toc: false
-toc_sticky: true
 
 date: 2022-12-31 14:53:00 +0900
 last_modified_at: 2025-10-21 17:10:00 +0900

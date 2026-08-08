@@ -7,7 +7,6 @@ tags: [프로그래밍, 개발, 노래]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2025-06-30 23:01:00 +0900
 last_modified_at: 2026-05-31 14:30:00 +0900

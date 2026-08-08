@@ -7,7 +7,6 @@ tags: [프로그래밍, 문법, 파이썬, 매직 메서드]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2025-02-17 16:42:00 +0900
 last_modified_at: 2026-01-16 13:16:00 +0900

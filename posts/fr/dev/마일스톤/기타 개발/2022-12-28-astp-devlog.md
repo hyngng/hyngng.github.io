@@ -7,7 +7,6 @@ tags: [마일스톤, 기타 개발, 프로그래밍, 파이썬, ASTP, 주식, �
 start_with_ads: true
 
 toc: true
-toc_sticky: true
  
 date: 2022-12-28 22:15:00 +0900
 last_modified_at: 2026-02-11 17:39:00 +0900

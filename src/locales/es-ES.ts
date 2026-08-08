@@ -63,6 +63,9 @@ const locale: Locale = {
     title: '404: Página no encontrada',
     description: 'La URL solicitada no existe.',
   },
+  redirect: {
+    fallbackLink: 'Haga clic aquí si no es redirigido automáticamente.',
+  },
 };
 
 export default locale;

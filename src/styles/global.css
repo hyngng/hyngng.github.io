@@ -387,13 +387,6 @@ body {
   margin-bottom: 0.8rem;
 }
 
-/* Clearfix */
-.clearfix::after {
-  display: block;
-  clear: both;
-  content: "";
-}
-
 /* Border — base */
 .border {
   border: var(--border-width, 1px) var(--border-style, solid) var(--color-border, #dee2e6) !important;
@@ -435,25 +428,9 @@ body {
   border-left: 0 !important;
 }
 
-/* Border width */
-.border-1 {
-  border-width: 1px !important;
-}
-
-.border-2 {
-  border-width: 2px !important;
-}
-
-.border-3 {
-  border-width: 2px !important;
-}
-
-.border-4 {
-  border-width: 3px !important;
-}
-
-.border-5 {
-  border-width: 4px !important;
+/* Shadow */
+.shadow {
+  box-shadow: 0 0.5rem 1rem var(--color-shadow) !important;
 }
 
 /* Border radius — Bootstrap 5 scale */

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ThemeInit from '../components/ThemeInit.astro';
 
 interface Props {
   lang: string;
@@ -16,24 +17,7 @@ const { lang, title } = Astro.props;
   <script is:inline>document.documentElement.dataset.js='true'</script>
   <meta name="robots" content="noindex,follow" />
   <title>{title}</title>
-  <script is:inline>
-    (function() {
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        return 'light';
-      })();
-      const element = document.documentElement;
-      if (theme === 'dark') {
-        element.classList.add('dark');
-        element.classList.remove('light');
-      } else {
-        element.classList.remove('dark');
-        element.classList.add('light');
-      }
-    })();
-  </script>
+  <ThemeInit />
 </head>
 <body class="chunk-page">
   <main>

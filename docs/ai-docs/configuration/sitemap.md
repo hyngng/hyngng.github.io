@@ -52,7 +52,9 @@ const origin = new URL(request.url).origin;
 
 **포스트**: `getPostSlug()`(파일명에서 날짜/확장자 제거)로 번역 그룹을 묶음. 그룹 내 번역본이 2개 이상일 때만 alternate 출력. 기본 로케일(ko) 버전이 존재하면 `hreflang="x-default"`도 함께 출력.
 
-**언어별 홈페이지**: 루트(`/`)와 각 언어 홈페이지(`/en/`, `/ru/`, ...)가 서로를 alternate로 참조하고, 루트(`/`)를 `x-default`로 지정.
+**포스트 페이지 `<head>`의 hreflang**: sitemap과 동일한 정책을 `PostLayout.astro`에서도 `<link rel="alternate" hreflang="...">`로 출력함 (번역본 전체 + 기본 로케일 존재 시 `x-default`, 자기 자신 포함). 포스트 `canonical`은 각 언어 버전이 자기 자신을 가리킴 (단일 정본을 두지 않는 번역 블로그 표준). 이중 `ko` 번역본이 없거나 번역본이 1개뿐인 포스트는 canonical만 있고 hreflang/x-default는 생략됨.
+
+**언어별 홈페이지**: 루트(`/`)와 각 언어 홈페이지(`/en/`, `/ru/`, ...)가 서로를 alternate로 참조하고, 루트(`/`)를 `x-default`로 지정. 홈페이지 `<head>`는 자기 자신 canonical만 출력 (hreflang은 sitemap에서만 관리).
 
 작가별 인덱스 페이지에는 hreflang을 적용하지 않음.
 

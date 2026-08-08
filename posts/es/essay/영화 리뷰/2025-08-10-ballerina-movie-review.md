@@ -12,7 +12,6 @@ tags: [에세이, 영화 리뷰, 발레리나]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 lang: es
 

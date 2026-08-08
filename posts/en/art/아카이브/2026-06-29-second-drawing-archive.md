@@ -12,7 +12,6 @@ tags: [그림, 아카이브]
 start_with_ads: false
 
 toc: false
-toc_sticky: true
 
 date: 2026-07-01 13:37:00 +0900
 last_modified_at: 2026-07-02 15:21:00 +0900

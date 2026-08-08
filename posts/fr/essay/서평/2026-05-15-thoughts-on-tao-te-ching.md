@@ -7,7 +7,6 @@ tags: [에세이, 서평, 도덕경]
 start_with_ads: false
 
 toc: true
-toc_sticky: true
 
 date: 2026-05-16 17:25:00 +0900
 last_modified_at: 2026-07-01 20:31:00 +0900

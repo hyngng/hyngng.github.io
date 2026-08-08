@@ -12,7 +12,6 @@ tags: [에세이, 사회복무요원]
 start_with_ads: true
 
 toc: true
-toc_sticky: true
 
 date: 2026-03-12 10:30:00 +0900
 last_modified_at: 2026-06-25 15:26:00 +0900
