@@ -1,6 +1,5 @@
 ﻿---
 title: "블로그를 직접 만들게 된 개인적인 이유"
-authors: ["blog", "dev"]
 
 categories: [블로그]
 tags: [블로그]
@@ -10,6 +9,8 @@ toc: true
 
 date: 2026-08-08 21:09:00 +0900
 last_modified_at: 2026-08-08 21:09:00 +0900
+
+mermaid: true
 ---
 
 ## **블로그를 만들었습니다**
@@ -97,7 +98,7 @@ SEO 및 AI 최적화도 있음. `llms.txt`같은거. 효용은 없었지만.
 7월 한 달간 Gemini 시리즈, BigPickle, Nemotron 3 Ultra, DeepSeek V4 Flash Free의 도움을 받아 만들었습니다. Claude 5 Sonnet 무료 이용분으로 모르는 개념에 대한 설명과 기술사항에 대한 여론과 유망함 등의 조사를 부탁했고, Antigravity와 Codex 무료 이용분으로 수정 계획을, OpenCode의 BigPickle, Nemotron 3 Ultra 무료 이용분으로 구현을 맡겼습니다.
 
 - 로컬호스트를 여는 명령어가 `bundle exec jekyll s` 대신 `npm run dev`로 달라졌습니다.
-- 본문 주석이 {% endcomment%}`에서 `<!-- --`로 바뀌었습니다.
+- 본문 주석이 `endcomment`에서 `<!-- --`로 바뀌었습니다.
 
 그리고 이 문제는 테마를 바꾼다고 해서 해결되는 문제는 아닌 것 같았습니다. 적어도 제가 능력으로는 이 고민을 하는 테마를 찾지 못했습니다.
 

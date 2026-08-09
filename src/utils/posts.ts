@@ -27,16 +27,11 @@ export function getPostSlug(id: string): string {
   return filename.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.(md|mdx)$/, '');
 }
 
-// Post URL author segment: `/{authorId}/{slug}/`.
-export function getPostAuthorSegment(authorId: string): string {
-  return authorId;
-}
-
 export function getPostPath(id: string, authorId: string | string[], currentLocale?: string): string {
   const primary = Array.isArray(authorId) ? authorId[0] : authorId;
   const locale = currentLocale || DEFAULT_LOCALE;
   const prefix = locale === DEFAULT_LOCALE ? '' : `/${locale}`;
-  return `${prefix}/${getPostAuthorSegment(primary)}/${getPostSlug(id)}/`;
+  return `${prefix}/${primary}/${getPostSlug(id)}/`;
 }
 
 export function getAuthorPath(authorId: string, currentLocale?: string): string {

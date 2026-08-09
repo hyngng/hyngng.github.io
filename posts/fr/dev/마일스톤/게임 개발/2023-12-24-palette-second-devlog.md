@@ -215,14 +215,9 @@ Je les ai principalement exportées depuis Clip Studio au format PNG avec fond t
 
 Grâce à [mon hobby photographique](https://hyngng.github.io/posts/photos-of-imin/), j'ai découvert qu'on pouvait exprimer beaucoup de choses avec l'angle de vue, et j'ai voulu l'appliquer à mon jeu. L'environnement 2D d'Unity affiche la scène en projection orthographique, donc le concept diffère, mais du point de vue abstrait de ce qui est inclus dans le cadre, j'ai estimé qu'il y avait aussi des considérations à prendre en compte en 2D.
 
-<div class="row">
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/pistol-reload.webp" alt="pistol-reload">
-    </div>
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/game-enter-cropped.webp" alt="game-enter-cropped">
-    </div>
-</div>
+![pistol-reload](/2023-12-24-palette-second-devlog/pistol-reload.webp)
+
+![game-enter-cropped](/2023-12-24-palette-second-devlog/game-enter-cropped.webp)
 
 J'ai donc fait en sorte que la valeur `Camera.orthographicSize`, qui détermine le champ de vision de la caméra, puisse changer selon mes souhaits à différents moments. Par exemple, lors d'un rechargement ou au début d'une nouvelle partie, j'ai réduit l'angle de vue pour exprimer vulnérabilité et tension. En buildant une application de test et en jouant directement, j'ai constaté que l'intention était bien rendue et rendait le gameplay unique, ce qui m'a satisfait.
 

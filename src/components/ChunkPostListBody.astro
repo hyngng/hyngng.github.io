@@ -4,7 +4,7 @@ import type { Locale } from '../locales';
 import PostColumns from './PostColumns.astro';
 import { getPostPath } from '../utils/posts';
 import { SITE } from '../settings/site.settings';
-import { distributeByWeight, SSR_COL_WIDTH } from '../features/post-list/distribution';
+import { distributePostColumns } from '../features/post-list/distribution';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];
@@ -28,13 +28,7 @@ const totalRemaining = nextChunk ? totalPosts - (currentChunk * chunkSize) : 0;
 const nextChunkCount = nextChunk ? Math.min(chunkSize, totalRemaining) : 0;
 const chunkPosts = posts.slice(0, chunkSize);
 
-const indexed = chunkPosts.map((post, i) => ({ post, index: (currentChunk - 1) * chunkSize + i }));
-const { left: leftPosts, right: rightPosts, leftWeight, rightWeight } = distributeByWeight(
-  indexed,
-  SSR_COL_WIDTH,
-  item => !!item.post.data.image,
-);
-const loadMoreInLeft = leftWeight <= rightWeight;
+const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostColumns(chunkPosts, (currentChunk - 1) * chunkSize);
 ---
 
 <nav class="chunk-nav">

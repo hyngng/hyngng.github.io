@@ -96,7 +96,7 @@ remark-directive는 AST 파싱만 하고 HTML 변환은 하지 않습니다:
 **출력:**
 ```html
 <div class="admonition admonition-tip">
-  <span class="admonition-icon" aria-hidden="true"></span>
+  <span class="admonition-icon" aria-hidden="true"><svg …lightbulb…></svg></span>
   <div class="admonition-body">
     <p>내용</p>
   </div>
@@ -105,9 +105,9 @@ remark-directive는 AST 파싱만 하고 HTML 변환은 하지 않습니다:
 
 **구조:**
 - `.admonition` — `position: relative` 컨테이너 (좌측 `padding-left: 3rem`으로 아이콘 영역 확보)
-- `.admonition-icon` — `position: absolute` (레이아웃 흐름에서 분리). Font Awesome 6 Solid `::before` (`aria-hidden="true"`)
+- `.admonition-icon` — `position: absolute` (레이아웃 흐름에서 분리). 타입별 인라인 SVG (`aria-hidden="true"`, `fill: currentColor`)
 - `.admonition-body` — 본문 래퍼 (기본 블록 레이아웃, 추가 스타일 불필요)
-- 타입: `tip` (lightbulb `\f0eb`), `info` (circle-info `\f05a`), `warning` (triangle-exclamation `\f071`), `danger` (circle-exclamation `\f06a`)
+- 타입: `tip` (lightbulb), `info` (circle-info), `warning` (triangle-exclamation), `danger` (circle-exclamation) — `ADMONITION_ICONS` 인라인 SVG
 - 색상 변수: `--color-admonition-bg`, `--color-admonition-{type}-icon` (light.css / dark.css)
 
 ---
@@ -291,5 +291,5 @@ textDirective를 `<span class="...">`로 변환합니다.
 | `remark-image-align.mjs` | 삭제 | `remark-directive-classes.mjs` |
 | `remark-theme-picture.mjs` | 삭제 | CSS 클래스 (`.img-light`, `.img-dark`) |
 | `remark-image-attributes.mjs` | **신규** | `.md`에서 `{.class}` 이미지 속성 부여 |
-| `remark-admonitions.mjs` | 유지 | icon + body 구조 주입 (Font Awesome 아이콘) |
+| `remark-admonitions.mjs` | 유지 | icon + body 구조 주입 (타입별 인라인 SVG 아이콘) |
 | `remark-cdn-images.ts` | 유지 | 변경 없음 |

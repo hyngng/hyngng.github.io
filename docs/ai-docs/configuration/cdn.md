@@ -14,9 +14,9 @@ cdn: {
 
 `astro.config.mjs`에서 `remarkCdnImages` 플러그인을 연결함.
 
-Markdown 이미지 노드(`![alt](url)`) 및 HTML 인라인 이미지 태그(`<img src="...">`) 중 로컬 경로를 CDN URL로 자동 변환함.
-- `remarkCdnImages.ts`: 마크다운 표준 이미지 노드 변환 (`shouldRewrite()`)
-- `rehype-image-wrapper.mjs`: HAST AST 단계에서 HTML `<img src="...">` 요소의 로컬 경로 변환 (`shouldRewrite()`)
+Markdown 이미지 노드(`![alt](url)`) 및 HTML `<img src="...">` 태그(인라인/블록 여부 무관) 중 로컬 경로를 CDN URL로 자동 변환함.
+- `remarkCdnImages.ts`: remark 단계에서 마크다운 표준 이미지 노드 변환 (`shouldRewrite()`)
+- `rehype-image-wrapper.mjs`: HAST AST 단계에서 HTML `<img>` 요소 변환 및 wrapper 주입 (`shouldRewrite()`)
 
 ```md
 ![name](/yyyy-mm-dd/path/filename.webp)      ← 마크다운 이미지
@@ -30,6 +30,29 @@ https://cdn.jsdelivr.net/gh/hyngng/hyngng.github.io.resources@master/yyyy-mm-dd/
 ```
 
 `https://...` 같은 스킴 포함 URL이나 `//...` 같은 protocol-relative URL은 변경하지 않음.
+
+### raw HTML 블록 이미지 처리 (`rehype-raw`)
+
+블록 레벨 raw HTML(`<div class="row"><div class="col-md-6"><img ...></div></div>` 등)은 remark-parse에서 `html` 노드(문자열)로 파싱되고, remark-rehype를 거치면 `raw` 노드(문자열)로 남는다. `remarkCdnImages`(mdast `image` 노드만)와 `rehypeImageWrapper`(hast `element` 노드만)는 이를 처리하지 못해 CDN 변환이 누락되고 깨진 이미지(404)가 발생한다.
+
+`astro.config.mjs`의 `rehypePlugins` 첫 항목에 `rehypeRaw`를 등록해 이 문제를 해결한다. `rehypeRaw`가 raw HTML 문자열을 hast `element` 노드로 파싱하므로, 이후 실행되는 `rehypeImageWrapper`가 `<img>`의 CDN 변환·`img-wrapper`·`loading=lazy`를 자동 적용한다. `rehypeKatex`보다 앞에 두어 raw HTML 내부의 KaTeX 수식도 변환되도록 한다.
+
+### 레거시 그리드 raw HTML (`.row`/`.col-md-6`)
+
+Jekyll 시절 포스트의 `row`/`col-md-6` 2열 그리드는 `src/styles/typography.css`의 `article .row`(CSS Grid, `repeat(2, 1fr)`)로 지원한다. `gap`은 `--space-image-grid-gap`(1rem), 상하 마진은 `--space-image-caption-margin`(2rem)을 사용하며, `@media (max-width: 960px)`에서 1열로 접힌다.
+
+```html
+<div class="row">
+    <div class="col-md-6">
+        <img src="/2022-08-24-lavad-devlog/lavad-bug1.webp" alt="lavad-bug1">
+    </div>
+    <div class="col-md-6">
+        <img src="/2022-08-24-lavad-devlog/lavad-bug2.webp" alt="lavad-bug2">
+    </div>
+</div>
+```
+
+⚠️ **작성 규칙**: 각 `.row` 블록 내부에 **빈 줄을 넣지 말 것**. CommonMark type-6 HTML 블록은 첫 빈 줄에서 끝나므로, `.row` 안에 빈 줄이 있으면 `<div>`들이 분리되고 내부 `<img>`가 `<code>` 블록으로 변환되어 깨진다. 두 `.row` 사이의 빈 줄은 무해하다. 이미지의 CDN 변환·`img-wrapper`·`loading=lazy`는 `rehype-raw` → `rehype-image-wrapper`가 자동 적용한다.
 
 ## 아키텍처 원칙
 
@@ -79,4 +102,4 @@ CDN URL 변환 로직을 `content.config.ts`와 `authors.settings.ts`가 공유�
 - `src/plugins/remark-cdn-images.ts`: Markdown 이미지 URL 변환 (`shouldRewrite()`)
 - `src/plugins/rehype-image-wrapper.mjs`: HTML <img> 태그 CDN URL 변환 및 wrapper 주입 (`shouldRewrite()`)
 - `src/settings/authors.settings.ts`: `getAuthor()`에서 `resolveCdnPath()` 호출
-- `astro.config.mjs`: Markdown processor 연결
+- `astro.config.mjs`: Markdown processor 연결 (`rehypePlugins` 첫 항목의 `rehypeRaw`가 raw HTML 블록을 element로 파싱)

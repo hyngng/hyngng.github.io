@@ -214,14 +214,9 @@ I mainly used Clip Studio to export images as transparent-background PNGs, then 
 
 Through my [photography hobby](https://hyngng.github.io/posts/photos-of-imin/), I discovered that a lot can be expressed through field of view, and I wanted to apply this to my game. Since Unity's 2D environment renders scenes in orthographic mode, the concept is different, but I felt there was still room to think about how much to include in the frame from an abstract perspective.
 
-<div class="row">
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/pistol-reload.webp" alt="pistol-reload">
-    </div>
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/game-enter-cropped.webp" alt="game-enter-cropped">
-    </div>
-</div>
+![pistol-reload](/2023-12-24-palette-second-devlog/pistol-reload.webp)
+
+![game-enter-cropped](/2023-12-24-palette-second-devlog/game-enter-cropped.webp)
 
 So I made the `Camera.orthographicSize` value — which governs the camera's field of view — dynamically adjustable to whatever value I wanted at any given time. For example, I thought it would be interesting to narrow the field of view during reloading or when starting a new game to express helplessness and tension. Building a test application and playing it myself showed the intention came through well and made the gameplay feel unique, which was satisfying.
 

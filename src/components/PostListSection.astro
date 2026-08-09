@@ -4,7 +4,7 @@ import type { Locale } from '../locales';
 import PostColumns from './PostColumns.astro';
 import { getPostPath } from '../utils/posts';
 import { SITE } from '../settings/site.settings';
-import { distributeByWeight, SSR_COL_WIDTH } from '../features/post-list/distribution';
+import { distributePostColumns } from '../features/post-list/distribution';
 
 interface Props {
   locale: Locale;
@@ -22,13 +22,7 @@ const nextPreviewPost = hasMore ? posts[chunkSize] : undefined;
 const totalRemaining = hasMore ? posts.length - chunkSize : 0;
 const nextChunkCount = hasMore ? Math.min(chunkSize, totalRemaining) : 0;
 
-const indexed = firstChunk.map((post, i) => ({ post, index: i }));
-const { left: leftPosts, right: rightPosts, leftWeight, rightWeight } = distributeByWeight(
-  indexed,
-  SSR_COL_WIDTH,
-  item => !!item.post.data.image,
-);
-const loadMoreInLeft = leftWeight <= rightWeight;
+const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostColumns(firstChunk, 0);
 ---
 
 <section class="posts-section">

@@ -45,8 +45,7 @@ npm run dev
 
 | 리소스 | CDN | 용도 |
 | :--- | :--- | :--- |
-| Font Awesome 6.5.1 | cdnjs.cloudflare.com | 아이콘 |
-| KaTeX 0.16.10 CSS | cdn.jsdelivr.net | 수식 스타일 |
+| KaTeX 0.16.10 CSS | cdn.jsdelivr.net | 수식 스타일 (수식 있는 포스트만 로드) |
 | Mermaid 10 | cdn.jsdelivr.net | 다이어그램 렌더링 |
 
 > CDN URL은 `src/components/Head.astro`에서 관리됩니다.
@@ -63,7 +62,7 @@ SNS/공유 메타데이터:
 
 - **`ogImage`** — 기본 OG 이미지(`public/default-og.webp`, 1200x630). 포스트에 별도 이미지가 없을 때 `og:image`/`twitter:image`로 사용됩니다.
 - **`social.fediverse`** — Fediverse 핸들(`@user@domain`). `fediverse:creator` meta로 출력됩니다. 포스트는 작가별 `social.fediverse`를 우선하고, 없으면 이 값으로 폴백합니다.
-- **`resourceHints`** — 외부 CDN(jsdelivr/cdnjs/googletagmanager) preconnect 목록. `Head.astro`에서 `<link rel="preconnect">`로 조건부 출력됩니다.
+- **`resourceHints`** — 외부 CDN(jsdelivr/googletagmanager) preconnect 목록. `Head.astro`에서 `<link rel="preconnect">`로 조건부 출력됩니다.
 - `twitter:card`는 기본값 `summary_large_image`로 출력됩니다.
 
 ### 웹 분석 (Analytics)
@@ -84,7 +83,7 @@ analytics: {
 - **GoatCounter**: `goatcounter.id` 설정 시 `<head>`에 트래킹 스크립트가 자동 삽입됩니다.
 - **AdSense**: `adsense.client`/`adsense.adSlot` 사용. `src/components/seo/analytics/Adsense.astro`로 분리되어 있으며 아직 레이아웃에 연결되지 않았습니다. AdSense 승인에는 `/ads.txt`가 필요하며 `public/ads.txt`에서 관리됩니다 (클라이언트 ID 변경 시 함께 수정).
 
-각 도구는 `src/components/seo/analytics/` 아래에 컴포넌트로 분리되어 있으며, 값이 `undefined`면 로드되지 않습니다.
+각 도구는 `src/components/seo/analytics/` 아래에 컴포넌트로 분리되어 있으며, 값이 `undefined`면 로드되지 않습니다. 또한 분석 스크립트는 **프로덕션 빌드(`astro build`)에서만** 로드됩니다. (`import.meta.env.PROD` 게이트 — dev 서버에서 로드되지 않아 개발 중 콘솔 에러와 분석 트래픽 오염을 방지)
 
 ### 웹마스터 도구 검증 (Webmaster Verification)
 

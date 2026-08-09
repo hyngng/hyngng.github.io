@@ -53,7 +53,7 @@
 
 ```
 .admonition (position: relative)
-  ├── .admonition-icon (position: absolute) — Font Awesome 6 Solid ::before
+  ├── .admonition-icon (position: absolute) — 인라인 SVG (remark-directives가 타입별로 주입)
   └── .admonition-body (본문 래퍼)
         └── 마크다운 콘텐츠 (p, ul, ol, blockquote, table, code 등)
 ```
@@ -68,7 +68,7 @@
 
 ### 아이콘 및 색상
 
-- 타입별 아이콘: tip (lightbulb `\f0eb`), info (circle-info `\f05a`), warning (triangle-exclamation `\f071`), danger (circle-exclamation `\f06a`)
+- 타입별 아이콘: tip (lightbulb), info (circle-info), warning (triangle-exclamation), danger (circle-exclamation) — `src/plugins/remark-directives.mjs`의 `ADMONITION_ICONS`에 인라인 SVG로 정의, `fill: currentColor`로 텍스트 색상 상속.
 - 타입별 색상: `--color-admonition-{type}-icon` 변수 (light.css / dark.css)
 - 배경: `--color-admonition-bg`
 

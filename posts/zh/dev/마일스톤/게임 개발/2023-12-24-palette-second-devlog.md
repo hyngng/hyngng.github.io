@@ -214,14 +214,9 @@ public class Pistol : Weapon
 
 我通过自己的[摄影爱好](https://hyngng.github.io/posts/photos-of-imin/)发现了通过视角可以表现很多东西，并希望将其应用到我的游戏中。Unity 的 2D 环境以正交投影方式显示场景，虽然概念上有所不同，但从能够容纳多少的抽象角度来看，我认为 2D 环境下也有值得思考的地方。
 
-<div class="row">
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/pistol-reload.webp" alt="pistol-reload">
-    </div>
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/game-enter-cropped.webp" alt="game-enter-cropped">
-    </div>
-</div>
+![pistol-reload](/2023-12-24-palette-second-devlog/pistol-reload.webp)
+
+![game-enter-cropped](/2023-12-24-palette-second-devlog/game-enter-cropped.webp)
 
 因此，在制作游戏时，我使影响相机视野的 `Camera.orthographicSize` 值能够随时根据需要变更。例如，装弹或开始新游戏时，为了表现无力感和紧张感，我使视角变窄。构建测试应用亲自试玩后发现，意图得到了很好的表现，同时也让游戏体验变得独特，令人满意。
 

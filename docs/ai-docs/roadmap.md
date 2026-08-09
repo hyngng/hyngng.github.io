@@ -24,7 +24,7 @@
   - [x] **Google Tag Manager**: `analytics.googleTagManager.id` 설정 시 `GoogleTagManager.astro`가 `<head>`에 GTM 컨테이너 스크립트를 조건부 삽입.
   - [x] **Webmaster Verification**: `WebmasterVerifications.astro`(`src/components/seo/webmasters_verifications/`)가 `verification` 객체를 `<head>`에서 `<meta name="...-site-verification">`로 조건부 출력 (google/yandex/baidu/naver/pinterest). Bing은 GSC 연동 구조라 별도 설정 불필요, Daum은 별도 처리로 제외. `public/ads.txt`(AdSense 표준 형식)로 광고 도메인 검증 지원.
   - [x] **fediverse:creator**: 포스트는 작가별 `social.fediverse` 핸들 우선, 없으면 `SITE.social.fediverse` 폴백(중복 제거). 비포스트 페이지는 `SITE.social.fediverse`(`@hyngng.main@threads.net`) 전역 출력. Threads/Fediverse 연동으로 게시글 귀속 확인.
-  - [x] **Resource Hints (preconnect)**: `SITE.resourceHints` 배열(SSOT) 기반으로 `Head.astro`에서 `preconnect` 조건부 출력. jsdelivr(이미지 CDN + KaTeX), cdnjs(Font Awesome, crossorigin), googletagmanager(GTM).
+  - [x] **Resource Hints (preconnect)**: `SITE.resourceHints` 배열(SSOT) 기반으로 `Head.astro`에서 `preconnect` 조건부 출력. jsdelivr(이미지 CDN + KaTeX), googletagmanager(GTM). *(cdnjs는 2026-08 Font Awesome 제거 시 함께 삭제됨 — 아래 감사 후속 일괄 정리 2 참조)*
   - [x] **twitter:card summary_large_image 전환**: `BaseLayout`/`PostLayout` 모두 `summary` → `summary_large_image`. 기본 OG 이미지를 `default-og.webp`(1200x630)로 변경해 대형 카드 요건 충족.
   - [x] **canonical / hreflang / article / author / twitter 메타 보강** (Chirpy head 예시 모티브):
     - canonical: 포스트는 각 언어 버전이 자기 자신, 일반 페이지(홈/작가)도 자기 자신. `og:url`과 통일.
@@ -232,5 +232,30 @@
     - **E (아키텍처)**: README의 콘텐츠 구조(`posts/{lang}/{author}/`, `authors` 필드) 갱신. posts.md에 micromark 파서↔astro.config 플러그인 수동 동기화 규칙 문서화(E3). `relativeTime.ts`는 커스텀 "작성" 문구 유지를 위해 현행 유지(E2). `data-all-posts` 인라인 JSON은 청크 카드 DOM 검색 폴백으로 기능적이라 유지(E4).
     - **F (버그 수정 및 캐시 문서화)**: `remark-media-caption.mjs` 방문자 콜백 3-arg 복구(`visit(tree, 'paragraph', (node, index, parent) => ...)` - 2-arg 사용 시 `parent`가 undefined가 되어 figure 변환이 전부 건너뛰어지는 이슈 해결). Astro 7의 Content Layer 캐시 구조(`dev` 모드는 프로젝트 루트 `.astro/data-store.json`, `build` 모드는 `node_modules/.astro/data-store.json`)와 dev 서버 캐시 무효화 절차를 `docs/ai-docs/development/build-cache.md`에 반영 및 검증 완료.
     - 검증: `npm run build` + `npx astro check` + `npm test` 성공. dev 서버(`localhost:4321`) 및 빌드 산출물(`dist`) 전수 media-figure/figcaption 정상 변환 확인.
+  - [x] **raw HTML `<img>` CDN 변환 파이프라인 보강 (`rehype-raw` 도입)**
+    - 증상: dev 서버에서 `/2022-08-24-lavad-devlog/lavad-bug*.webp`, `/2023-12-24-palette-second-devlog/{pistol-reload,game-enter-cropped}.webp` 404 경고.
+    - 근본 원인: `<div class="row">` 내부의 raw HTML `<img>`는 remark-parse에서 `html` 노드(문자열) → hast `raw` 노드(문자열)로 남아, `remark-cdn-images.ts`(mdast `image` 노드만)와 `rehype-image-wrapper.mjs`(hast `element` 노드만) 모두 처리 불가. 이미지는 로컬에 없고 CDN(`SITE.cdn.imageBaseUrl`)에만 존재하므로 CDN 재작성 누락 시 404.
+    - 해결: `rehype-raw`(`^7.0.0`)를 `astro.config.mjs` rehypePlugins 첫 항목(`rehypeKatex` 이전)에 등록. raw HTML을 hast element로 파싱하여 `rehypeImageWrapper`가 CDN 변환·`img-wrapper`·`loading=lazy`를 적용. 상세는 `docs/ai-docs/configuration/cdn.md` 참조.
+    - 콘텐츠 수정 병행: 그리드 클래스(`row`/`col-md-6`)는 프로젝트에 해당 CSS가 없어 시각 효과가 없었으므로 plain 마크다운으로 교체 — lavad-devlog(7개 언어)는 4장 세로 스택, palette-second-devlog(7개 언어)는 2장 세로 스택.
+    - 검증: `npx astro check` 0 errors / 0 warnings, `npm run build` 성공(574 pages), dist에서 6개 이미지 모두 CDN URL·`img-wrapper`·`loading=lazy` 렌더링 확인.
+  - [x] **dev-toolbar MIME 오류 수정 및 Astro 7.2.0 업그레이드**
+    - 증상: dev 모드에서 `/@id/astro/runtime/client/dev-toolbar/entrypoint.js`가 `허용되지 않는 MIME 형식("")`로 차단됨.
+    - 근본 원인: `mermaid`는 `mermaidThemeSync.ts`에서 클라이언트 런타임에만 `import('mermaid')`로 동적 import되어 초기 스캔에서 빠지고, mermaid 포스트 방문 시 Vite가 재최적화(re-optimization)를 실행. 재최적화 중 dev-toolbar entrypoint 캐시가 무효화되어 `504 Outdated Optimize Dep`(Content-Type 헤더 없는 응답)가 브라우저 MIME 차단을 유발.
+    - 해결: `astro.config.mjs`의 `vite.optimizeDeps.include: ['mermaid']`로 사전 번들 고정 (런타임 재최적화 원천 차단) + `astro@7.2.0`(dev-toolbar 사전 번들 강화 PR #16480) 업그레이드. 이에 따라 `@astrojs/mdx@7.0.5`, `@astrojs/markdown-remark@7.2.2` 동반 업그레이드.
+    - 검증: 캐시(`node_modules/.vite`) 삭제 후 dev 재시작 시 시작점부터 optimized 세트에 `mermaid` 포함 확인, entrypoint 응답 200/`text/javascript` 확인, `npm run build` 성공, `astro check` 0 errors. 상세는 `docs/ai-docs/development/build-cache.md` 참조.
+  - [x] **감사 후속 일괄 정리 2 (2026-08, 사용자 결정 반영)**
+    - **스코프 결정**: `posts/` 확장자 없는 파일 75개 미발행은 의도된 상태 → 콘텐츠/glob 변경 없음(A1 제외). 나머지 수정은 승인.
+    - **A2 (no-JS 이미지 게이트)**: `Head.astro`/`ChunkPageLayout.astro`가 셋팅만 하던 `dataset.js`를 소비. `typography.css` shimmer(`::after`)·`img{opacity:0}`와 `PostCard.astro` 카드 이미지를 `html[data-js]` 뒤로 게이트하고, `html:not([data-js])` 폴백으로 JS 없는 환경에서도 이미지 즉시 표시(`aspect-ratio:auto` + `height:auto`).
+    - **A3 (KaTeX 조건부 로드)**: `content.config.ts`에 `math: z.boolean().optional()` 추가. `PostLayout.astro`에서 `post.data.math`일 때만 KaTeX CSS `<link>` 출력 (수식 있는 14개 파일은 이미 `math: true`라 그대로 동작, 나머지 페이지에서 ~50KB CSS 절약).
+    - **B (죽은 코드/에셋 삭제)**: `posts.count` 로케일 키(타입+7개 파일) 삭제, `PostCard`의 `data-title` 삭제(`data-path`/`data-index`는 Search가 사용하므로 유지), 빈 `src/lib/` 삭제, `getPostAuthorSegment`(identity 함수) 제거 후 3곳 `author.id` 직접 사용, 미참조 폰트 전수 삭제 — `public/fonts/Pretendard-1.3.9/`(62개), `public/fonts/Reddit_Mono/static/`(9개), `src/assets/fonts/Pretendard-1.3.9/`에서 astro.config의 Font API가 참조하는 5개 subset woff2 + LICENSE만 유지.
+    - **C (Font Awesome → 인라인 SVG)**: Head.astro의 cdnjs all.min.css(~600KB) 링크 제거, `site.settings.ts` cdnjs preconnect 제거. Frame.astro(home/sun/moon/rss)·Search.astro(magnifying-glass)를 `viewBox`+`<path>` 인라인 SVG(`fill="currentColor"`, `1em`)로 교체 — 테마 토글은 `#theme-icon-sun/moon` 엘리먼트 2개 + dark.css `display` 토글 유지. Admonition 아이콘(tip/info/warning/danger)은 `remark-directives.mjs`가 SVG를 직접 주입, `typography.css`의 FA `::before` 규칙 제거.
+    - **D (중복 공용화)**: `distribution.ts`에 `distributePostColumns(posts, indexOffset)` 헬퍼 추가 — PostListSection/ChunkPostListBody의 `indexed`→`distributeByWeight`→`loadMoreInLeft` 중복 블록 통합. (Search 2회 렌더는 모바일/사이드바 반응형 패턴이라 기능적 — 현행 유지.)
+    - **검증**: `npm run build` 성공(574 pages), `npx astro check` 0 errors, `npm test` 23 passed. dist 전수 확인 — cdnjs/FA 잔재 0, KaTeX CSS가 수식 포스트에만 존재, 프레임/admonition 인라인 SVG 렌더링 확인.
+  - [x] **레거시 그리드 CSS 복원 (row/col-md-6 2열 이미지)**
+    - 배경: Jekyll 시절 `row`/`col-md-6` raw HTML은 그리드 CSS가 없어 2열로 안 나옴. float(`.w-50`+`.float-start`)로 시도 → 본문 텍스트가 float 사이로 흘러들어가 레이아웃 붕괴 → 폐기.
+    - 해결: `typography.css`에 `article .row`(CSS Grid `repeat(2, 1fr)`) + 960px에서 1열. `gap: var(--space-image-grid-gap)`(토큰 1개 `global.css:root`에 추가). 이미지 CDN 변환은 기존 `rehype-raw`→`rehype-image-wrapper` 파이프라인 그대로.
+    - 작성 규칙(중요): CommonMark type-6 HTML 블록은 첫 빈 줄에서 종료 → `.row` 내부에 빈 줄이 있으면 `<div>` 분리 + 내부 `<img>`가 `<code>` 블록이 됨(파서로 검증). `.row` 사이 빈 줄은 무해.
+    - 콘텐츠: lavad-devlog 7개 언어의 4장 버그 스크린샷을 2×2 HTML로 복원 (ko/en/ja는 이번 세션, 나머지는 사용자 수정분).
+    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors, `npm test` 23 passed. dist에서 7개 언어 모두 `.row`/`col-md-6` + CDN `img-wrapper` 렌더링 확인.
 
 ## Option

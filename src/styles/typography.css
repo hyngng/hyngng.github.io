@@ -273,6 +273,23 @@ article figure.media-figure>figcaption {
   line-height: 1.5;
 }
 
+/* Legacy grid (Jekyll-era raw HTML) — row/col-md-6
+   Parsed by rehype-raw; CDN/loading handled by rehype-image-wrapper.
+   IMPORTANT: keep each .row block free of blank lines — a blank line
+   ends the CommonMark type-6 HTML block and splits the markup. */
+article .row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-image-grid-gap);
+  margin: var(--space-image-caption-margin) 0;
+}
+
+@media (max-width: 960px) {
+  article .row {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Light/Dark Mode Images */
 .img-wrapper.img-light,
 .img-wrapper.light {
@@ -355,8 +372,10 @@ article figure.media-figure>.audio-native {
   display: block;
 }
 
-/* Shimmer on ::after — above img, visible throughout loading */
-.img-wrapper::after {
+/* Shimmer on ::after — above img, visible throughout loading.
+   Gated behind html[data-js] (set in Head.astro): without JS the image
+   must show immediately instead of staying invisible behind the shimmer. */
+html[data-js] .img-wrapper::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -370,18 +389,18 @@ article figure.media-figure>.audio-native {
 }
 
 /* Fade out shimmer once image loads */
-.img-wrapper.loaded::after {
+html[data-js] .img-wrapper.loaded::after {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
 
-.img-wrapper.loaded {
+html[data-js] .img-wrapper.loaded {
   aspect-ratio: auto;
 }
 
 /* Error state: do nothing — shimmer continues indefinitely so the
    user sees the gradient animation over the browser's broken-image icon. */
-.img-wrapper img {
+html[data-js] .img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -390,9 +409,21 @@ article figure.media-figure>.audio-native {
   transition: opacity 0.3s ease-in-out;
 }
 
-.img-wrapper.loaded img {
+html[data-js] .img-wrapper.loaded img {
   opacity: 1;
   object-fit: contain;
+}
+
+/* No-JS fallback: show the full image without shimmer */
+html:not([data-js]) .img-wrapper {
+  aspect-ratio: auto;
+}
+
+html:not([data-js]) .img-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 1;
 }
 
 @keyframes shimmer-anim {
@@ -406,7 +437,7 @@ article figure.media-figure>.audio-native {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .img-wrapper::after {
+  html[data-js] .img-wrapper::after {
     animation: none;
   }
 }
@@ -551,34 +582,11 @@ article .mermaid svg {
   justify-content: center;
 }
 
-.admonition-icon::before {
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  font-size: 0.8rem;
-  line-height: 1;
+.admonition-icon svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: currentColor;
 }
-
-/* Type-specific icons (Font Awesome 6 Solid) */
-.admonition-tip>.admonition-icon::before {
-  content: "\f0eb";
-}
-
-/* lightbulb */
-.admonition-info>.admonition-icon::before {
-  content: "\f05a";
-}
-
-/* circle-info */
-.admonition-warning>.admonition-icon::before {
-  content: "\f071";
-}
-
-/* triangle-exclamation */
-.admonition-danger>.admonition-icon::before {
-  content: "\f06a";
-}
-
-/* circle-exclamation */
 
 .admonition-body> :first-child {
   margin-top: 0;

@@ -26,7 +26,6 @@ export interface Locale {
   };
   posts: {
     title: string;
-    count: (n: number) => string;
     empty: string;
     postNumber: (n: number) => string;
     notUpdated: string;

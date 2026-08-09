@@ -8,7 +8,7 @@ const configSnippet =
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', '${id}');`;
-if (!id) return;
+if (!id || !import.meta.env.PROD) return;
 ---
 
 <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${id}`}></script>

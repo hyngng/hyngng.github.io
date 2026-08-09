@@ -9,6 +9,7 @@ import { remarkVideo } from './src/plugins/remark-video.mjs';
 import { remarkAudio } from './src/plugins/remark-audio.mjs';
 import { remarkMediaCaption } from './src/plugins/remark-media-caption.mjs';
 import { rehypeImageWrapper } from './src/plugins/rehype-image-wrapper.mjs';
+import rehypeRaw from 'rehype-raw';
 import { rehypeTableWrapper } from './src/plugins/rehype-table-wrapper.mjs';
 import { rehypeStripComments } from './src/plugins/rehype-strip-comments.mjs';
 import { rehypeFootnoteTooltip } from './src/plugins/rehype-footnote-tooltip.mjs';
@@ -117,6 +118,7 @@ export default defineConfig({
         /** @type {any} */ (remarkDeflist)
       ],
       rehypePlugins: [
+        rehypeRaw,
         rehypeKatex,
         rehypeFootnoteTooltip,
         rehypeImageWrapper,
@@ -134,6 +136,13 @@ export default defineConfig({
         developStrategy: 'lazy',
       }),
     ],
+    optimizeDeps: {
+      // Prevent dev-toolbar MIME error (empty Content-Type): mermaid is only
+      // dynamically imported at runtime in mermaidThemeSync.ts, so it misses
+      // the initial scan and triggers dep re-optimization during dev.
+      // Pre-bundling it avoids that race. See docs/ai-docs/development/build-cache.md
+      include: ['mermaid'],
+    },
   },
 
   fonts: [

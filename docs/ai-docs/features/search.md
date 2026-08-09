@@ -60,6 +60,8 @@ The search feature no longer directly manipulates the DOM or calls legacy global
 | `controller.clearSearch()` | Query cleared | Removes search-loaded cards, shows all original cards, restores load-more, relayouts masonry |
 | `controller.fetchSearchChunk(n)` | Need unloaded chunk | Fetches chunk HTML, extracts cards, inserts into appropriate column, tracks for cleanup |
 
+`showSearchResults`는 레이아웃에 무관하게 동작한다: 카드 필터링(`display: none`), load-more 숨김, empty 상태 토글은 공통으로 수행하고, `distributeByWeight` 2열 재분배는 `.posts-col`(masonry/데스크톱)이 존재할 때만 실행한다. 모바일 flow 레이아웃(`data-layout="flow"`, `.posts-col` 없음)에서는 `findColumns`의 `leftCol`/`rightCol`이 `null`이 되므로 재분배를 건너뛰고 필터링 결과를 DOM 순서 그대로 유지한다.
+
 ### Search-Chunk Integration
 
 The search feature integrates with the chunk loading system to search across **all posts**, not just the ones currently loaded in the DOM.

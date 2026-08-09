@@ -221,14 +221,9 @@ public class Pistol : Weapon
 
 저는 제 [사진 취미](https://hyngng.github.io/posts/photos-of-imin/)를 통해 화각으로 많은 것을 표현할 수 있음을 발견했고, 이를 제 게임에 적용해보고 싶었습니다. 유니티의 2D환경은 정사영(Orthographic) 방식으로 씬을 보여주므로 개념에는 차이가 있지만 얼마나 더 넓게 담을지에 대한 추상적인 관점에서는 2D에서도 고민할 부분이 있다고 생각했습니다.
 
-<div class="row">
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/pistol-reload.webp" alt="pistol-reload">
-    </div>
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/game-enter-cropped.webp" alt="game-enter-cropped">
-    </div>
-</div>
+![pistol-reload](/2023-12-24-palette-second-devlog/pistol-reload.webp)
+
+![game-enter-cropped](/2023-12-24-palette-second-devlog/game-enter-cropped.webp)
 
 그래서 게임을 만들 때 카메라 시야에 관여하는 `Camera.orthographicSize`값이 그때그때 제가 원하는 값으로 변경될 수 있도록 만들었습니다. 예를 들어 재장전을 하거나 새 게임이 시작될 때 무력감과 긴장감이 표현되면 재미있겠다는 생각에 화각이 좁아지도록 만들었습니다. 테스트 어플리케이션을 빌드해서 직접 플레이해보니 의도가 잘 표현되면서도 게임플레이를 독특하게 만들어주는 것 같아 만족스럽습니다.
 

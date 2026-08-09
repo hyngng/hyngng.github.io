@@ -18,7 +18,6 @@ const locale: Locale = {
   },
   posts: {
     title: '文章',
-    count: (n: number) => `共 ${n} 篇文章`,
     empty: '暂无文章。',
     postNumber: (n: number) => `第 ${n} 篇`,
     notUpdated: '未更新',

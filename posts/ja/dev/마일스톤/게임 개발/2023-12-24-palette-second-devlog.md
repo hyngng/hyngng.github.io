@@ -214,14 +214,9 @@ Unityでデフォルト提供する四角い図形をプレイヤーとして使
 
 私は[写真趣味](https://hyngng.github.io/posts/photos-of-imin/)を通じて、画角で多くのことを表現できることを発見し、それを自分のゲームに適用してみたかったです。Unityの2D環境は正射影(Orthographic)方式でシーンを表示するので概念には違いがありますが、どれだけ広く収めるかという抽象的な観点では2Dでも考慮すべき点があると思いました。
 
-<div class="row">
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/pistol-reload.webp" alt="pistol-reload">
-    </div>
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/game-enter-cropped.webp" alt="game-enter-cropped">
-    </div>
-</div>
+![pistol-reload](/2023-12-24-palette-second-devlog/pistol-reload.webp)
+
+![game-enter-cropped](/2023-12-24-palette-second-devlog/game-enter-cropped.webp)
 
 そこでゲームを作る際に、カメラの視野に関与する`Camera.orthographicSize`値がその時々で自分の希望する値に変更されるようにしました。例えば再装填をする時や新ゲームが始まる時に無力感と緊張感が表現されたら面白いと思い、画角が狭くなるようにしました。テストアプリケーションをビルドして実際にプレイしてみると、意図がよく表現されつつもゲームプレイをユニークにしてくれるようで満足しています。
 

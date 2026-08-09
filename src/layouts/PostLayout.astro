@@ -136,7 +136,9 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     {fediverseCreators.map((handle) => (
       <meta name="fediverse:creator" content={handle} />
     ))}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous" />
+    {post.data.math && (
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous" />
+    )}
     <script type="application/ld+json" is:inline set:html={jsonLdString} />
   </Fragment>
   <article class="content-shell post" data-available-locales={availableLocalesForPost.join(',')} data-pagefind-filter={`lang:${lang.split('-')[0]}`}>

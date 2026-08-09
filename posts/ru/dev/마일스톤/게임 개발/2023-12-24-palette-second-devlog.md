@@ -217,14 +217,9 @@ public class Pistol : Weapon
 
 Благодаря своему [увлечению фотографией](https://hyngng.github.io/posts/photos-of-imin/) я обнаружил, что угол обзора может многое выразить, и захотел применить это в своей игре. Хотя 2D-среда Unity отображает сцену в ортографической проекции, что концептуально отличается, я считал, что с абстрактной точки зрения — насколько широкая область захватывается — в 2D тоже есть над чем подумать.
 
-<div class="row">
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/pistol-reload.webp" alt="pistol-reload">
-    </div>
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/game-enter-cropped.webp" alt="game-enter-cropped">
-    </div>
-</div>
+![pistol-reload](/2023-12-24-palette-second-devlog/pistol-reload.webp)
+
+![game-enter-cropped](/2023-12-24-palette-second-devlog/game-enter-cropped.webp)
 
 Я сделал так, чтобы значение `Camera.orthographicSize`, отвечающее за поле зрения камеры, могло динамически меняться на нужное мне. Например, при перезарядке или начале новой игры, когда я хотел выразить чувство беспомощности и напряжённости, я сужал угол обзора. После сборки тестового приложения и личного опробования я остался доволен: замысел хорошо передаётся и при этом делает игровой процесс уникальным.
 

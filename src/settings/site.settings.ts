@@ -105,7 +105,6 @@ export const SITE = {
 
   resourceHints: [
     { origin: 'https://cdn.jsdelivr.net', crossorigin: false },          // 이미지 CDN + KaTeX
-    { origin: 'https://cdnjs.cloudflare.com', crossorigin: true },       // Font Awesome
     { origin: 'https://www.googletagmanager.com', crossorigin: false },  // GTM
   ],
 

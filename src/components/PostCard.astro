@@ -27,7 +27,6 @@ const authorSuffix = authorIds.length > 1
 <article
   class:list={["post-card", { "post-card--with-image": !!image }]}
   data-path={href}
-  data-title={title}
   data-index={index}
   style={`--post-order: ${index}`}
 >
@@ -175,9 +174,13 @@ const authorSuffix = authorIds.length > 1
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
     transition: opacity 0.35s ease;
     border-radius: inherit;
+  }
+
+  /* Only hide until loaded when JS is available; without JS show immediately. */
+  html[data-js] .post-card-image img {
+    opacity: 0;
   }
 
   .post-card-image img.loaded {

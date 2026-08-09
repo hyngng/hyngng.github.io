@@ -18,7 +18,6 @@ const locale: Locale = {
   },
   posts: {
     title: '포스트',
-    count: (n: number) => `총 ${n}개 글`,
     empty: '포스트가 없습니다.',
     postNumber: (n: number) => `${n}번째 글`,
     notUpdated: '업데이트되지 않음',

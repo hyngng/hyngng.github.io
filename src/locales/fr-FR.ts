@@ -18,7 +18,6 @@ const locale: Locale = {
   },
   posts: {
     title: 'Articles',
-    count: (n: number) => `${n} articles`,
     empty: 'Aucun article.',
     postNumber: (n: number) => `Article n°${n}`,
     notUpdated: 'Non mis à jour',

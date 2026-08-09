@@ -2,7 +2,7 @@
 import { SITE } from '../../../settings/site.settings';
 
 const code = SITE.analytics.goatcounter.id;
-if (!code) return;
+if (!code || !import.meta.env.PROD) return;
 ---
 
 <script

@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
-import { getPostSlug, getPostLang, getPostAuthorSegment } from '../../utils/posts';
+import { getPostSlug, getPostLang } from '../../utils/posts';
 import { ALL_AUTHORS } from '../../settings/authors.settings';
 import { defaultLocale } from '../../locales';
 
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     if (!author) return [];
     return [{
       params: {
-        author: getPostAuthorSegment(author.id),
+        author: author.id,
         slug: getPostSlug(post.id),
       },
       props: { post },

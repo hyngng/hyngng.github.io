@@ -214,14 +214,9 @@ Principalmente, exportaba las imágenes desde Clip Studio en formato PNG con fon
 
 Descubrí a través de mi [afición a la fotografía](https://hyngng.github.io/posts/photos-of-imin/) que se puede expresar mucho con el ángulo de visión, y quise aplicarlo a mi juego. Como el entorno 2D de Unity muestra la escena en proyección ortográfica, aunque conceptualmente hay diferencias, pensé que desde una perspectiva abstracta de cuánto más se abarca, también hay aspectos que considerar en 2D.
 
-<div class="row">
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/pistol-reload.webp" alt="pistol-reload">
-    </div>
-    <div class="col-md-6">
-        <img src="/2023-12-24-palette-second-devlog/game-enter-cropped.webp" alt="game-enter-cropped">
-    </div>
-</div>
+![pistol-reload](/2023-12-24-palette-second-devlog/pistol-reload.webp)
+
+![game-enter-cropped](/2023-12-24-palette-second-devlog/game-enter-cropped.webp)
 
 Así que, al crear el juego, hice que el valor `Camera.orthographicSize`, que afecta al campo de visión de la cámara, pudiera cambiarse al valor deseado en cada momento. Por ejemplo, pensé que sería interesante que al recargar o al iniciar una nueva partida se expresara una sensación de impotencia y tensión, así que hice que el ángulo de visión se estrechara. Al compilar la aplicación de prueba y jugar directamente, me quedé satisfecho porque la intención se expresaba bien y, además, hacía que el juego resultara único.
 

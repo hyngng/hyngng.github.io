@@ -42,13 +42,18 @@
     registerSW({ immediate: true });
   </script>
 )}
+
+{import.meta.env.PROD && SITE.pwa.enabled && (
+  <link rel="manifest" href="/manifest.webmanifest" />
+)}
 ```
 
 - 프로덕션(`import.meta.env.PROD`)이고 `SITE.pwa.enabled`일 때만 스크립트가 번들에 포함 → 개발 모드에서 불필요한 `/sw.js` 요청과 캐시 동기화 문제를 원천 차단.
+- `<link rel="manifest">`도 동일 조건으로 렌더링. 매니페스트는 빌드 타임에만 생성되므로 dev 모드에서 참조하면 `/manifest.webmanifest` 404와 함께 라우터가 동적 라우트(`[author]`, `[lang]`)를 탐색하는 WARN이 발생한다. PROD 전용 렌더링으로 이 경고를 원천 차단한다.
 
 ### 3. 매니페스트
 
-`manifest.webmanifest`는 빌드 시 `astro.config.mjs`의 `manifest` 옵션에서 생성되어 `dist/`에 출력된다. `<head>`의 `<link rel="manifest" href="/manifest.webmanifest" />`가 이를 참조한다.
+`manifest.webmanifest`는 빌드 시 `astro.config.mjs`의 `manifest` 옵션에서 생성되어 `dist/`에 출력된다. `<head>`의 `<link rel="manifest" href="/manifest.webmanifest" />`가 이를 참조하며, 링크는 `Head.astro`에서 PROD 전용으로 조건부 렌더링된다 (dev 모드에서는 404 방지를 위해 미출력).
 
 ## 캐싱 전략
 

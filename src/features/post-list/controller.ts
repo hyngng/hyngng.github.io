@@ -28,7 +28,7 @@ export function createPostListController(grid: HTMLElement): PostListController 
 
     async showSearchResults(paths: string[]) {
       const { columns, leftCol, rightCol, loadMore } = findColumns(grid);
-      if (!columns || !leftCol || !rightCol) return;
+      if (!columns) return;
 
       const matchedSet = new Set(paths.map(normalizePath));
       const allCards = collectCards(grid);
@@ -47,6 +47,7 @@ export function createPostListController(grid: HTMLElement): PostListController 
       if (emptyEl) emptyEl.hidden = visibleCount > 0;
 
       if (visibleCount === 0) return;
+      if (!leftCol || !rightCol) return;
       const visibleCards = allCards.filter(c => c.style.display !== 'none');
       const sorted = sortByIndex(visibleCards);
 
