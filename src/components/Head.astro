@@ -1,5 +1,5 @@
 ---
-import { SITE, defaultLocale } from '../settings/site.settings';
+import { SITE, defaultLocale, getLocaleEntry } from '../settings/site.settings';
 import { Font } from 'astro:assets';
 import GoatCounter from './seo/analytics/GoatCounter.astro';
 import GoogleAnalytics from './seo/analytics/GoogleAnalytics.astro';
@@ -9,16 +9,18 @@ import ThemeInit from './ThemeInit.astro';
 
 interface Props {
   title?: string;
+  lang?: string;
 }
 
-const { title = SITE.username } = Astro.props;
+const { title = SITE.title, lang = defaultLocale } = Astro.props;
+const languageCode = getLocaleEntry(lang).code;
 ---
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script is:inline>document.documentElement.dataset.js='true'</script>
-    <meta name="language" content={defaultLocale} />
+    <meta name="language" content={languageCode} />
     <title>{title}</title>
     <ThemeInit />
     <WebmasterVerifications />

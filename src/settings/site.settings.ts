@@ -63,10 +63,8 @@ export const SITE = {
   // ── Social ─────────────────────────────────────────────────
 
   social: {
-    github: '',
     twitter: '' as string,
     fediverse: '@hyngng.main@threads.net',
-    pinterest: undefined,
   },
 
   // ── Webmaster Tools Verifications ────────────────────────────────────

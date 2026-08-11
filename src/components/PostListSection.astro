@@ -66,8 +66,7 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
 </section>
 
 <script>
-  import { createPostListController, setController, needsRelayout } from '../features/post-list';
-  import { createChunkLoader } from '../features/post-list';
+  import { createPostListController, setController, needsRelayout, createChunkLoader } from '../features/post-list';
 
   let abortController: AbortController | undefined;
 

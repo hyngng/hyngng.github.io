@@ -73,8 +73,9 @@ export function countCharacters(body: string = ''): number {
 }
 
 const EXCERPT_MAX_LENGTH = 100;
+export const META_DESCRIPTION_MAX_LENGTH = 155;
 
-export function extractExcerpt(description: string | undefined, body: string | undefined): string {
+export function extractExcerpt(description: string | undefined, body: string | undefined, maxLength: number = EXCERPT_MAX_LENGTH): string {
   if (description) return description;
   if (!body) return '';
 
@@ -88,12 +89,12 @@ export function extractExcerpt(description: string | undefined, body: string | u
     if (node.type !== 'paragraph') continue;
     if ('children' in node && (node.children as RootContent[]).some((c) => c.type === 'image')) continue;
     parts.push(toString(node));
-    if (parts.join(' ').length >= EXCERPT_MAX_LENGTH) break;
+    if (parts.join(' ').length >= maxLength) break;
   }
 
   return parts.join(' ')
     .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
-    .replace(/\s+/g, ' ').trim().slice(0, EXCERPT_MAX_LENGTH);
+    .replace(/\s+/g, ' ').trim().slice(0, maxLength);
 }
 
 interface QueryPostsOptions {
@@ -137,7 +138,7 @@ export async function getRssItems(options: { lang?: string; authorId?: AuthorId 
   return posts.map((post) => ({
     title: post.data.title,
     pubDate: post.data.date,
-    description: post.data.description,
+    description: extractExcerpt(post.data.description, post.body) || undefined,
     link: getPostPath(post.id, post.data.authors[0], lang),
   }));
 }

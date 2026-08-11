@@ -10,7 +10,7 @@ import PostFooter from '../components/PostFooter.astro';
 import Comments from '../components/Comments.astro';
 import TOC from '../components/TOC.astro';
 import { getLocale, defaultLocale } from '../locales';
-import { countCharacters, getPostNumber, getPostSlug, getPostLang, getPostPath } from '../utils/posts';
+import { countCharacters, extractExcerpt, META_DESCRIPTION_MAX_LENGTH, getPostNumber, getPostSlug, getPostLang, getPostPath } from '../utils/posts';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -38,6 +38,7 @@ const authorsMeta = post.data.authors.map(id => {
 });
 
 const characterCount = countCharacters(post.body);
+const postDescription = extractExcerpt(post.data.description, post.body, META_DESCRIPTION_MAX_LENGTH) || siteMeta.description;
 
 // fediverse:creator: 작가별 핸들 우선, 없으면 사이트 전역 핸들로 폴백 (중복 제거)
 const fediverseCreators = [
@@ -98,7 +99,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   headline: post.data.title,
-  description: post.data.description || '',
+  description: postDescription,
   image: jsonLdImage,
   datePublished: post.data.date.toISOString(),
   dateModified: (post.data.last_modified_at || post.data.date).toISOString(),
@@ -110,14 +111,14 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
 <BaseLayout lang={lang.split('-')[0]} title={post.data.title}>
   <Fragment slot="head">
-    <meta name="description" content={post.data.description || siteMeta.description} />
+    <meta name="description" content={postDescription} />
     <link rel="canonical" href={canonicalUrl} />
     {hreflangAlternates.map((alt) => (
       <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
     ))}
     <meta name="author" content={authorsMeta.map((a) => a.name).join(', ')} />
     <meta property="og:title" content={post.data.title} />
-    <meta property="og:description" content={post.data.description || siteMeta.description} />
+    <meta property="og:description" content={postDescription} />
     <meta property="og:type" content="article" />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={siteMeta.title} />
@@ -127,7 +128,7 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <meta property="article:modified_time" content={(post.data.last_modified_at || post.data.date).toISOString()} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={post.data.title} />
-    <meta name="twitter:description" content={post.data.description || siteMeta.description} />
+    <meta name="twitter:description" content={postDescription} />
     <meta name="twitter:image" content={ogImageUrl} />
     {twitterSite && <meta name="twitter:site" content={twitterSite} />}
     {twitterCreators.map((handle) => (

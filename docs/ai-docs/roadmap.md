@@ -36,6 +36,12 @@
     - site.settings.ts: `social.twitter: '' as string` — `as const`로 인한 리터럴 타입 고정이 truthy 분기에서 `never`로 좁혀지는 타입 에러 해소용 명시.
     - 검증: `npm run build` 성공, `astro check` 0 errors. dist에서 포스트(ko/en) canonical·hreflang·article·twitter·x-default, 홈 자기 canonical, 404 noindex 확인.
     - theme-color 메타는 사용자 결정으로 스킵 (현행 단일 `#0a0a0a` 유지).
+  - [x] **SEO 풀 리뷰 후속 정리 (2026-08)**:
+    - 검색 `h2` 중복 제거: `Search.astro`의 `.search-title`을 `<h2>` → `<p>`로 변경. 모바일 wrapper + 데스크 사이드바에 동일 레이블이 2회 렌더링되어 헤딩 중복·문서 아웃라인 오염이 발생했던 문제 해소 (`docs/ai-docs/features/search.md` 갱신).
+    - 포스트 메타 description 자동 생성: `extractExcerpt()`에 `maxLength` 파라미터 추가(`META_DESCRIPTION_MAX_LENGTH = 155`). `PostLayout.astro`에서 본문 기반 excerpt로 `description`/`og:description`/`twitter:description`/JSON-LD `description` 채움. description 미기입 포스트(ko 54개 전수)의 사이트 전역 기본 메타 중복 폴백 제거. RSS(`getRssItems()`)에도 excerpt 적용.
+    - title 브랜드 통일: `Head.astro` 기본 title `SITE.username`(`hyngng`) → `SITE.title`(`HYNGNG`). og:title과 불일치하던 문제 해소.
+    - 작가 페이지 타이틀·메타 고유화: `[author]/index.astro`, `[lang]/[author]/index.astro`에서 `title`(`@작가명`)과 `description`(작가별 로컬라이즈 설명) 전달. `BaseLayout`에 `description` prop 추가, og/twitter title은 페이지 타이틀 반영.
+    - 검증: `npm run build` 성공, `npx astro check` 0 errors, `npm test` 23 passed. dist에서 루트 h1=1/h2=2, 포스트 JSON-LD description 155자, 작가 페이지 `<title>@hyngng.dev</title>`, RSS 아이템별 description 확인.
   - **검색 설정**: Google Search Console 등 주요 서치어드바이저 지원 구조 마련 (개인정보처리방침 안내 포함).
 - [x] 댓글 및 검색 기능
   - [x] **검색 기능**: Pagefind 도입 및 인덱싱 준비 (다국어 검색 분리 전략 적용).

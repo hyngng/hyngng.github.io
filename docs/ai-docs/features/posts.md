@@ -302,9 +302,9 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 > **E3 동기화 규칙**: `posts.ts`의 `countCharacters()`/`extractExcerpt()`가 사용하는 micromark 확장 목록은 `astro.config.mjs`의 `markdown.processor` remarkPlugins(렌더링)와 **수동으로 동기화**해야 한다. 새 마크다운 문법 플러그인(예: remark-xxx)을 추가하면 ① astro.config의 remarkPlugins, ② posts.ts의 `extensions`/`mdastExtensions`, ③ package.json dependencies, 이렇게 세 곳을 함께 갱신한다.
 
-## 포스트 카드 Excerpt 추출
+## 포스트 Excerpt 추출
 
-포스트 카드(`PostCard.astro`)의 요약 텍스트는 `src/utils/posts.ts`의 `extractExcerpt()` 함수가 생성한다.
+포스트 카드(`PostCard.astro`)의 요약 텍스트, 포스트 페이지의 메타 description(`PostLayout.astro`), RSS 아이템 description(`getRssItems()`) 모두 `src/utils/posts.ts`의 `extractExcerpt()` 함수가 생성한다.
 
 ### 우선순위
 
@@ -313,12 +313,13 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 ### 자동 추출 로직
 
-`mdast-util-from-markdown`으로 body를 AST로 파싱한 뒤, **루트 레벨의 paragraph 노드를 순서대로 수집**하여 100자까지 채운다.
+`mdast-util-from-markdown`으로 body를 AST로 파싱한 뒤, **루트 레벨의 paragraph 노드를 순서대로 수집**하여 `maxLength`까지 채운다 (기본 `100`, 메타 description용 `META_DESCRIPTION_MAX_LENGTH = 155`).
 
 - **긍정 선택 방식**: "무엇을 버릴지" 나열하는 블랙리스트가 아니라, "paragraph인가?"와 "이미지를 포함하는가?" 두 조건만으로 동작.
 - 비문단 노드(heading, table, directive, blockquote 등)는 `continue`로 건너뜀.
 - 이미지 paragraph(이미지 alt 텍스트/캡션)는 `continue`로 건너뜀.
-- 루트 레벨의 연속 paragraph를 순서대로 모아 100자에 도달하면 중단.
+- 루트 레벨의 연속 paragraph를 순서대로 모아 `maxLength`에 도달하면 중단.
+- **메타 description**: 프론트매터가 없는 포스트도 본문 기반의 페이지별 고유 description을 가지므로 사이트 전역 기본 메타로의 폴백이 최소화된다.
 
 ### 파서 확장
 

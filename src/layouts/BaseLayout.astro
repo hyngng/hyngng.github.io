@@ -10,12 +10,15 @@ interface Props {
   lang?: string;
   authorId?: string;
   title?: string;
+  description?: string;
   noindex?: boolean;
 }
 
-const { lang = Astro.currentLocale || defaultLocale, authorId, title, noindex = false } = Astro.props;
+const { lang = Astro.currentLocale || defaultLocale, authorId, title, description, noindex = false } = Astro.props;
 const locale = getLocale(lang);
 const siteMeta = getSiteMeta(lang);
+const pageTitle = title || siteMeta.title;
+const siteMetaDescription = description || siteMeta.description;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).toString();
 const defaultOgImageUrl = new URL(SITE.ogImage, Astro.url.origin).toString();
 const twitterSite = SITE.social.twitter
@@ -24,21 +27,21 @@ const twitterSite = SITE.social.twitter
 ---
 
 <html lang={lang}>
-  <Head title={title}>
+  <Head title={title} lang={lang}>
     <slot name="head">
-      <meta name="description" content={siteMeta.description} />
+      <meta name="description" content={siteMetaDescription} />
       {noindex && <meta name="robots" content="noindex" />}
       {!noindex && <link rel="canonical" href={canonicalUrl} />}
-      <meta property="og:title" content={siteMeta.title} />
-      <meta property="og:description" content={siteMeta.description} />
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={siteMetaDescription} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content={siteMeta.title} />
       <meta property="og:locale" content={locale.meta.ogLocale} />
       <meta property="og:image" content={defaultOgImageUrl} />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={siteMeta.title} />
-      <meta name="twitter:description" content={siteMeta.description} />
+      <meta name="twitter:title" content={pageTitle} />
+      <meta name="twitter:description" content={siteMetaDescription} />
       <meta name="twitter:image" content={defaultOgImageUrl} />
       {twitterSite && <meta name="twitter:site" content={twitterSite} />}
       {SITE.social.fediverse && (

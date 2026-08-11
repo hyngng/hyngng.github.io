@@ -2,20 +2,13 @@
 interface Props {
   title: string;
   description: string;
-  avatarSrc?: string;
-  avatarAlt?: string;
 }
 
-const { title, description, avatarSrc, avatarAlt = '' } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
-<section class:list={['content-shell', 'hero', avatarSrc && 'has-avatar']} aria-labelledby="hero-title">
-  <div class="hero-heading">
-    {avatarSrc && (
-      <img class="hero-avatar" src={avatarSrc} alt={avatarAlt} loading="eager" decoding="async" />
-    )}
-    <h1 id="hero-title">{title}</h1>
-  </div>
+<section class="content-shell hero" aria-labelledby="hero-title">
+  <h1 id="hero-title">{title}</h1>
   <p>{description}</p>
 </section>
 
@@ -23,12 +16,6 @@ const { title, description, avatarSrc, avatarAlt = '' } = Astro.props;
   .hero {
     margin-top: var(--hero-margin-top);
     color: var(--color-heading);
-  }
-
-  .hero-heading {
-    display: flex;
-    align-items: center;
-    gap: var(--space-avatar-title);
   }
 
   h1 {
@@ -48,22 +35,6 @@ const { title, description, avatarSrc, avatarAlt = '' } = Astro.props;
     line-height: var(--line-height-hero-description);
     font-weight: 400;
     letter-spacing: 0;
-  }
-
-  .hero-avatar {
-    width: var(--avatar-size);
-    height: var(--avatar-size);
-    border-radius: 50%;
-    object-fit: cover;
-    flex: 0 0 auto;
-  }
-
-  .has-avatar {
-    margin-top: var(--hero-avatar-margin-top);
-  }
-
-  .has-avatar p {
-    margin-top: var(--space-avatar-description);
   }
 
   @media (max-width: 960px) {

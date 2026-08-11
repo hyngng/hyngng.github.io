@@ -26,7 +26,6 @@
   --content-width: 768px;
   --avatar-size: 40px;
   --hero-margin-top: 32px;
-  --hero-avatar-margin-top: 36px;
   --hero-margin-top-mobile: 32px;
   --authors-margin-top: 104px;
   --post-margin-top: 32px;
@@ -41,8 +40,6 @@
   --author-name-size: 14px;
   --author-info-size: 12px;
   --space-hero-title-description: 6px;
-  --space-avatar-title: 16px;
-  --space-avatar-description: 10px;
   --space-section-title-content: 24px;
   --space-authors-list: 32px;
   --space-author-avatar-text: 6px;

@@ -8,10 +8,8 @@ props:
 
 - `title`: 표시할 제목.
 - `description`: 표시할 설명.
-- `avatarSrc`: 선택적 아바타 이미지 경로.
-- `avatarAlt`: 선택적 아바타 대체 텍스트.
 
-메인 페이지에서는 `src/pages/index.astro`에서 `SITE.title`, `SITE.description`을 넘겨 사용함. 아바타는 메인 페이지에서는 표시하지 않음.
+메인 페이지에서는 `src/pages/index.astro`에서 `SITE.title`, `SITE.description`을 넘겨 사용함.
 
 ## Figma 기준
 
@@ -28,8 +26,6 @@ Figma 파일 `BLOGGING`의 `메인 페이지 - 라이트` Frame 기준.
 - Hero description color: `#2E2E2E`
 - Hero description font: Inter Regular, `22px`, weight `400`
 - title과 description 사이 시각적 간격: 약 `8px` (실제 구현은 `--space-hero-title-description` 변수 사용)
-- 아바타 변형의 avatar size: `48 x 48`
-- 아바타와 title 사이 간격: 약 `20px` (실제 구현은 `--space-avatar-title` 변수 사용)
 
 ## 토큰
 
@@ -40,8 +36,6 @@ Figma 파일 `BLOGGING`의 `메인 페이지 - 라이트` Frame 기준.
 - `--font-size-hero-description`
 - `--line-height-hero-title`
 - `--line-height-hero-description`
-- `--avatar-size`
 - `--hero-margin-top`
 - `--space-hero-title-description`
-- `--space-avatar-title`
 - `--hero-margin-top-mobile` (모바일 breakpoint에서 `--hero-margin-top`을 오버라이드하는 용도로 사용)

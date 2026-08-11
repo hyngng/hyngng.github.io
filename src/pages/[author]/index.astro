@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { ALL_AUTHORS, getAuthor } from '../../settings/authors.settings';
+import { ALL_AUTHORS, AUTHOR_PREFIX, getAuthor } from '../../settings/authors.settings';
 import { getPublishedPosts } from '../../utils/posts';
 import { useLocale, defaultLocale } from '../../locales';
 import AuthorPageContent from '../../components/AuthorPageContent.astro';
@@ -19,6 +19,6 @@ const locale = useLocale(Astro);
 const sortedPosts = await getPublishedPosts({ lang: currentLocale, authorId: author.id });
 ---
 
-<BaseLayout lang={currentLocale} authorId={author.id}>
+<BaseLayout lang={currentLocale} authorId={author.id} title={`${AUTHOR_PREFIX}${author.name}`} description={author.description}>
   <AuthorPageContent author={author} locale={locale} currentLocale={currentLocale} posts={sortedPosts} />
 </BaseLayout>
