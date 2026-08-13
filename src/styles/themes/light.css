@@ -13,7 +13,7 @@
   --color-frame: #0a0a0a;
 
   /* ── 코드 블록 & Shiki ── */
-  --color-post-inline-code-bg: #E8EDF3;
+  --color-post-inline-code-bg: #EEEEEE;
   --color-post-code-block-bg: #E8ECF1;
   --astro-code-background: #E8ECF1;
   --astro-code-foreground: #2E2E2E;
@@ -31,9 +31,9 @@
 
   /* ── 컴포넌트 ── */
   --color-table-border: #e5e7eb;
-  --color-table-head-bg: #E8EDF3;
+  --color-table-head-bg: #EEEEEE;
   --color-post-card-bg: #EAECEF;
-  --author-avatar-placeholder: #E8EDF3;
+  --author-avatar-placeholder: #EEEEEE;
   --color-shimmer: #d4d4d4;
   --color-shimmer-highlight: #e8e8e8;
   --color-button-text: var(--color-bg);
@@ -46,5 +46,5 @@
   --color-shadow: rgba(0, 0, 0, 0.15);
 
   /* ── Admonitions ── */
-  --color-admonition-bg: #E8EDF3;
+  --color-admonition-bg: #EEEEEE;
 }
