@@ -38,7 +38,7 @@ While researching hardware characteristics and image processing elements — Bay
 1. Improved signal-to-noise ratio (SNR)
 2. Improved dynamic range (DR)
 
-The key question is how much benefit you get relative to the weight and bulk expended. The most intuitive example: over the past three years, I've felt that [even a smartphone camera like the Galaxy S22 Ultra can take impressive photos.](https://hyngng.github.io/posts/photos-of-eulsa-year/) Noise isn't an issue in well-lit conditions, and even when it is, AI denoising handles it well enough. So the one advantage a large sensor exclusively holds is DR — and even that isn't terribly critical in everyday conditions, and can be compensated for with HDR merging in static environments.
+The key question is how much benefit you get relative to the weight and bulk expended. The most intuitive example: over the past three years, I've felt that [even a smartphone camera like the Galaxy S22 Ultra can take impressive photos.](https://hyngng.github.io/en/photography/photos-of-eulsa-year/) Noise isn't an issue in well-lit conditions, and even when it is, AI denoising handles it well enough. So the one advantage a large sensor exclusively holds is DR — and even that isn't terribly critical in everyday conditions, and can be compensated for with HDR merging in static environments.
 
 ### **Emotional Disappointments**
 

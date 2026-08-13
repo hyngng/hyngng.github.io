@@ -40,6 +40,9 @@ const locale: Locale = {
     title: 'Sommaire',
     aria: 'Sommaire',
   },
+  footnote: {
+    label: 'Notes de bas de page',
+  },
   footer: {
     rights: 'Tous droits réservés',
     poweredBy: (theme: string) => `Propulsé par Astro avec le thème ${theme}`,

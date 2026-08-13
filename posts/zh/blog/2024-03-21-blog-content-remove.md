@@ -18,7 +18,7 @@ last_modified_at: 2025-10-20 22:29:00 +0900
 
 ## **引言**
 
-Chirpy主题干净利落，但原始状态下偶尔会觉得有些地方需要改进。虽然[不时会进行修改](https://hyngng.github.io/posts/first-blog-customization/)，但个人仍然觉得有几个遗憾之处。
+Chirpy主题干净利落，但原始状态下偶尔会觉得有些地方需要改进。虽然[不时会进行修改](https://hyngng.github.io/zh/blog/first-blog-customization/)，但个人仍然觉得有几个遗憾之处。
 
 ![before-light](/2024-03-21-blog-content-remove/before-light.webp){: .light .w-75 .border }
 ![before-dark](/2024-03-21-blog-content-remove/before-dark.webp){: .dark .w-75 }

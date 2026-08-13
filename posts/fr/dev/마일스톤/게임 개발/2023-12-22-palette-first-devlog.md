@@ -24,7 +24,7 @@ lang: fr
 
 Au Nouvel An 2023, je devais trouver quelque chose à faire. Je voulais créer quelque chose qui m'aiderait à améliorer mes compétences en programmation tout en restant amusant. Après le carillon de minuit, le lendemain, j'ai établi quelques plans.
 
-En réfléchissant à quelques idées, j'avais une bibliothèque Python basée sur les 5W1H, une application photo de type mirrorless, et un jeu mobile 2D. Chacune découlait d'[un programme Python](https://hyngng.github.io/posts/astp-devlog/), d'une simple application Android Studio, ou de [mon précédent projet Unity](https://hyngng.github.io/posts/lavad-devlog/).
+En réfléchissant à quelques idées, j'avais une bibliothèque Python basée sur les 5W1H, une application photo de type mirrorless, et un jeu mobile 2D. Chacune découlait d'[un programme Python](https://hyngng.github.io/fr/dev/astp-devlog/), d'une simple application Android Studio, ou de [mon précédent projet Unity](https://hyngng.github.io/fr/dev/lavad-devlog/).
 
 Mais le développement de jeu avait l'air trop amusant. L'expérience passée avec Unity m'avait marqué, et l'idée de pouvoir utiliser mes propres assets maison me semblait passionnante. Même si c'était difficile, le thème de créer un programme avec mon propre matériau qu'on ne trouve nulle part ailleurs me semblait très attrayant. Comme je commençais à apprécier l'orienté objet, j'ai voulu utiliser un langage orienté objet correctement, et j'ai donc commencé à créer un jeu mobile 2D.
 

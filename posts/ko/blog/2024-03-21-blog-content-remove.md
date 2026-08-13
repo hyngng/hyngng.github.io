@@ -18,7 +18,7 @@ Jekyll 프레임워크를 사용할 때 작성된 글입니다. 현재는 Astro�
 
 ## **들어가며**
 
-Chirpy 테마는 깔끔하고 단정하지만 순정 상태에서는 이건 개선이 필요하겠다 생각이 드는 부분이 간혹 보입니다. [간간히 수정](https://hyngng.github.io/posts/first-blog-customization/)해주고는 있지만 개인적으로 아쉬운 점이 여전히 몇 가지 남아있었죠.
+Chirpy 테마는 깔끔하고 단정하지만 순정 상태에서는 이건 개선이 필요하겠다 생각이 드는 부분이 간혹 보입니다. [간간히 수정](https://hyngng.github.io/blog/first-blog-customization/)해주고는 있지만 개인적으로 아쉬운 점이 여전히 몇 가지 남아있었죠.
 
 ![before-light](/2024-03-21-blog-content-remove/before-light.webp){: .light .w-75 .border }
 ![before-dark](/2024-03-21-blog-content-remove/before-dark.webp){: .dark .w-75 }

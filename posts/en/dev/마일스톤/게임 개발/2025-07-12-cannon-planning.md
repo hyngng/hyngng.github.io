@@ -23,7 +23,7 @@ last_modified_at: 2026-01-23 09:05:00 +0900
 **This post is a concept plan!**
 :::
 
-One thing I learned from [my previous project experience](https://hyngng.github.io/posts/armonia-devlog-cancelled/) is that developing something over a long period of time also means getting entangled in a larger context. If handled poorly, the development process can end up being a tiring and painful experience, so I need to carefully deliberate and choose my subject wisely.
+One thing I learned from [my previous project experience](https://hyngng.github.io/en/dev/armonia-devlog-cancelled/) is that developing something over a long period of time also means getting entangled in a larger context. If handled poorly, the development process can end up being a tiring and painful experience, so I need to carefully deliberate and choose my subject wisely.
 
 This concept design is something of an experiment in that context. First, I plan to spend about one to two months concretizing ideas for streamlining the development process — producing draft designs, writing documents, designing classes, and so on. Then, weighing various opportunity costs, I'll either actually start developing the game or organize my thoughts along the way and write about them.
 

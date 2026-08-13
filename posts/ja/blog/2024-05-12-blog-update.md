@@ -30,7 +30,7 @@ Jekyllフレームワークを使用していた時に書かれた記事です�
 
 GitHubブログが他のブログプラットフォームに比べてサービス提供者との結合度が低い分、アップデートのプロセスは単に既存のフォルダに新しいファイルとコードを持ってくることだと思えばよい。これまでにアップデートされたコードを自分のリポジトリにマージすることが全てだからだ。なので、すでにGitを使ったマージプロセスを経験した方には難しくないかもしれない。
 
-私の場合[テーマをカスタマイズする際に](https://hyngng.github.io/posts/first-blog-customization/)、`_data/locales/ko-KR.yml` の韓国語翻訳を独自に改善したり、サイドバーアイコンの種類とサイズを変更したり、記事プレビューのタイトルを別途ボールド体で処理するなど、様々な細かい作業をしていたが、こうした変更は当然公式には反映されないため、アップデートのたびに修正されたコードを外科手術のように一つひとつ確認して保存しなければならない。[公式アップグレードガイド](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide)でも「Please be patient and careful to resolve these conflicts」と、忍耐強く作業するよう案内している。
+私の場合[テーマをカスタマイズする際に](https://hyngng.github.io/ja/blog/first-blog-customization/)、`_data/locales/ko-KR.yml` の韓国語翻訳を独自に改善したり、サイドバーアイコンの種類とサイズを変更したり、記事プレビューのタイトルを別途ボールド体で処理するなど、様々な細かい作業をしていたが、こうした変更は当然公式には反映されないため、アップデートのたびに修正されたコードを外科手術のように一つひとつ確認して保存しなければならない。[公式アップグレードガイド](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide)でも「Please be patient and careful to resolve these conflicts」と、忍耐強く作業するよう案内している。
 
 ### **自動マージ**
 

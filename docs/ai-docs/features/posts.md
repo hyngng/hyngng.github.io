@@ -45,12 +45,19 @@ URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능�
 이전 Jekyll 블로그의 URL 패턴 `/posts/{slug}/`를 보존하기 위해, 기본 언어(ko) 포스트에 한해 정적 리다이렉트 페이지를 생성한다.
 
 - 파일: `src/pages/posts/[slug].astro`
-- 동작: `/posts/{slug}/` → `/{authorId}/{slug}/`. `<head>` 최상단의 인라인 `<script is:inline>`(`location = absoluteTarget`)이 body 파싱 전 즉시 이동을 시작해 화면 깜빡임이 없다(`jekyll-redirect-from` 방식과 동일). 0초 meta refresh는 JS 비활성화 폴백으로 병행.
+- 동작: `/posts/{slug}/` → `/{authorId}/{slug}/`. `<head>` 최상단의 인라인 `<script is:inline>`(`location = absoluteTarget`)이 body 파싱 전 즉시 이동을 시작해 화면 깜빡임이 없다(`jekyll-redirect-from` 방식과 Unified/Astro 이전 완료). 0초 meta refresh는 JS 비활성화 폴백으로 병행.
 - 타깃은 `Astro.site`를 기준으로 절대 URL로 변환(`new URL(target, Astro.site).toString()`).
 - SEO: 구글 검색 센터 기준 0초 meta refresh는 영구 리다이렉트로 처리되어 인덱스를 신 URL로 이전한다. `<link rel="canonical">`로 신 URL을 명시하고, 리다이렉트 페이지 자체는 `<meta name="robots" content="noindex">`로 인덱스에서 제외한다.
 - 대상: `draft`가 아닌 기본 언어(ko) 포스트만. 비기본 언어 포스트는 Jekyll 시절 `/posts/` 하위에 존재하지 않았으므로 제외.
 - 타깃 경로는 `getPostPath()`를 재사용하므로, URL 규칙이 바뀌어도 리다이렉트가 자동으로 따라간다.
 - `/posts/chunk/{n}/` 페이지네이션 라우트(`src/pages/posts/chunk/[n].astro`)와 경로가 겹치지 않는다. 커스텀 sitemap은 포스트 경로만 나열하므로 리다이렉트 페이지는 자동 제외된다.
+
+### 본문 내 마크다운 하이퍼링크 규격
+
+Jekyll 시절의 구 URL 형식(`https://hyngng.github.io/posts/{slug}/`)으로 작성된 본문 하이퍼링크는 현재 프로젝트의 다국어 라우팅 규칙에 맞춰 일괄 재정의됨:
+- **기본 언어 (ko)**: `https://hyngng.github.io/{author}/{slug}/`
+- **비기본 언어 (en, ru, fr, es, ja, zh)**: `https://hyngng.github.io/{lang}/{author}/{slug}/`
+- 대상 포스트가 해당 언어 버전으로 존재하는 경우에만 언어 경로를 반영하며, 존재하지 않거나 무효한 슬러그인 경우 원본 링크를 유지하여 리다이렉트에 위임함. 앵커(#)가 포함된 링크도 그대로 보존됨.
 
 ## 언어 코드 추출
 

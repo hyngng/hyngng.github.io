@@ -21,7 +21,7 @@ mermaid: true
 
 ## **Introducción**
 
-> Continúa desde [la entrada anterior](https://hyngng.github.io/posts/armonia-devlog-planning/).
+> Continúa desde [la entrada anterior](https://hyngng.github.io/es/dev/armonia-devlog-planning/).
 :::
 
 Esta es la crónica de desarrollo de mi [cuarto hito](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/), al que me enfrenté de nuevo porque me resultaba divertido. Necesitaba hacer un balance intermedio y organizar notas mientras desarrollaba, así que he resumido brevemente los resultados de aproximadamente un mes de trabajo. Lo creado en esta fase de desarrollo es lo siguiente:

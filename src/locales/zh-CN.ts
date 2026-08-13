@@ -40,6 +40,9 @@ const locale: Locale = {
     title: '目录',
     aria: '目录',
   },
+  footnote: {
+    label: '脚注',
+  },
   footer: {
     rights: '保留部分权利',
     poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,

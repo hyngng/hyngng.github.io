@@ -26,7 +26,7 @@ Back up your files first!
 
 Since a GitHub blog is loosely coupled with the service provider, think of the update process as simply pulling new files and code into your existing folders. It's essentially merging the updated code into your repository. If you've done Git merges before, this won't be too hard.
 
-In my case, while [customizing the theme](https://hyngng.github.io/posts/first-blog-customization/), I'd improved the Korean translations in `_data/locales/ko-KR.yml`, changed sidebar icon types and sizes, bolded post preview titles, and made various other tweaks. Naturally, none of these are officially incorporated, so every update requires carefully verifying and preserving modified code like surgery. The [official upgrade guide](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide) even advises: "Please be patient and careful to resolve these conflicts."
+In my case, while [customizing the theme](https://hyngng.github.io/en/blog/first-blog-customization/), I'd improved the Korean translations in `_data/locales/ko-KR.yml`, changed sidebar icon types and sizes, bolded post preview titles, and made various other tweaks. Naturally, none of these are officially incorporated, so every update requires carefully verifying and preserving modified code like surgery. The [official upgrade guide](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide) even advises: "Please be patient and careful to resolve these conflicts."
 
 ### **Auto Merge**
 

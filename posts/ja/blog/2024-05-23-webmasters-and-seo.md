@@ -143,7 +143,7 @@ end
 Liquid::Template.register_filter(Jekyll::ContentFilter)
 ```
 
-`content` は `content_filer` というカスタムRubyプラグインを経由するが、これはタイトル、公開日、筆者および「はじめに」の導入部など、descriptionとして不要な情報をある程度除去するためである。記事本文が全て `<div class="content"></div>` タグに渡される点を利用しており、[以前に似たようなコードを](https://hyngng.github.io/posts/blog-content-remove/)実装したことがあったがまだ慣れていなかったため、この部分はGPTの助言を求めた。
+`content` は `content_filer` というカスタムRubyプラグインを経由するが、これはタイトル、公開日、筆者および「はじめに」の導入部など、descriptionとして不要な情報をある程度除去するためである。記事本文が全て `<div class="content"></div>` タグに渡される点を利用しており、[以前に似たようなコードを](https://hyngng.github.io/ja/blog/blog-content-remove/)実装したことがあったがまだ慣れていなかったため、この部分はGPTの助言を求めた。
 
 :::info
 **2024-09-25 更新！**

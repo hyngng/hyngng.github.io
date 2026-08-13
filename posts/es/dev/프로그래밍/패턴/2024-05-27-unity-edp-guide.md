@@ -20,7 +20,7 @@ redirect_from:
 
 ## **Introducción**
 
-La programación dirigida por eventos (Event Driven Programming) es un paradigma en el que el flujo del programa está determinado por eventos. Gestiona la ocurrencia, administración y ejecución de eventos, y se utiliza para aumentar la extensibilidad del código y mejorar la legibilidad y el mantenimiento. Me resultó de gran ayuda en [otro proceso de desarrollo de juegos](https://hyngng.github.io/posts/armonia-first-devlog/) y creo que seguirá siendo útil en el futuro, así que lo dejo por escrito.
+La programación dirigida por eventos (Event Driven Programming) es un paradigma en el que el flujo del programa está determinado por eventos. Gestiona la ocurrencia, administración y ejecución de eventos, y se utiliza para aumentar la extensibilidad del código y mejorar la legibilidad y el mantenimiento. Me resultó de gran ayuda en [otro proceso de desarrollo de juegos](https://hyngng.github.io/es/dev/armonia-first-devlog/) y creo que seguirá siendo útil en el futuro, así que lo dejo por escrito.
 
 ## **Conceptos básicos**
 
@@ -194,4 +194,4 @@ El método `OnEvent()` se invoca cuando ocurre un evento. Recibe como argumentos
 
 ![example](/2024-05-27-event-driven-programming/example.webp)
 
-Ejemplo utilizado en [el juego que estoy desarrollando](https://hyngng.github.io/posts/armonia-first-devlog/). Al seleccionar un objeto concreto, algunos objetos interactuables se resaltan en tonos amarillos, y al deseleccionarlos, vuelven a su estado original. Está implementado mediante programación dirigida por eventos.
+Ejemplo utilizado en [el juego que estoy desarrollando](https://hyngng.github.io/es/dev/armonia-first-devlog/). Al seleccionar un objeto concreto, algunos objetos interactuables se resaltan en tonos amarillos, y al deseleccionarlos, vuelven a su estado original. Está implementado mediante programación dirigida por eventos.

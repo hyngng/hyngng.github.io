@@ -21,7 +21,7 @@ mermaid: true
 ## **前言**
 
 :::info
-接[前一篇文章](https://hyngng.github.io/posts/armonia-first-devlog/)。
+接[前一篇文章](https://hyngng.github.io/zh/dev/armonia-first-devlog/)。
 :::
 
 这是我的[第四个里程碑](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/)的开发记录。整理了又一个月的工作成果。这一个月的工作主要是扩展游戏系统和内容，具体在本阶段制作的内容如下。
@@ -75,7 +75,7 @@ mermaid: true
 ![people-staring-pigeons](/2024-05-31-armonia-second-devlog/people-staring-pigeons.webp){: .w-75 }
 *附近有鸽子时会看过去*
 
-在制作[上一个里程碑](https://hyngng.github.io/posts/palette-second-devlog/)时，我看到利用程序化动画创建与环境互动的有机动画，觉得非常棒，所以记住了，这次尝试了一下。原本以为是通过技术上精密的调节条件来实现的，但因为是 Unity 包提供的，所以比想象中简单，不过用代码控制比想象中复杂。
+在制作[上一个里程碑](https://hyngng.github.io/zh/dev/palette-second-devlog/)时，我看到利用程序化动画创建与环境互动的有机动画，觉得非常棒，所以记住了，这次尝试了一下。原本以为是通过技术上精密的调节条件来实现的，但因为是 Unity 包提供的，所以比想象中简单，不过用代码控制比想象中复杂。
 
 与鸽子不同，人的头部、身体、腿部等是作为独立对象分开的，我利用 [Animation Rigging 包](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/index.html) 的 `Multiple Aim Constraint` 组件，尝试实现了人的头部对象在特定距离内看向鸽子的功能。
 
@@ -117,7 +117,7 @@ public void ChangeSourceObject(GameObject discoveredObject)
 
 调试过程中，手机很快就变热的感觉令人不适，于是我首次挑战使用 Profiler 进行优化。过程比想象中简单：在 Unity Profiler 录制的数据区间中，找到帧率测量值较高的部分，找出什么任务执行得最多，然后改进该部分即可。
 
-在我的情况下，`Semaphore.WaitForSignal` 占用了 50~70% 的份额，看到一篇帖子说这种情况通常建议将 Shader 更换为更轻量的版本，于是将[之前找到的 Shader 文件](https://hyngng.github.io/posts/armonia-first-devlog/#%EC%8A%A4%ED%94%84%EB%9D%BC%EC%9D%B4%ED%8A%B8-%EC%85%B0%EC%9D%B4%EB%8D%94)替换为了更轻量的版本，结果帧率大幅上升，发热也显著减少。
+在我的情况下，`Semaphore.WaitForSignal` 占用了 50~70% 的份额，看到一篇帖子说这种情况通常建议将 Shader 更换为更轻量的版本，于是将[之前找到的 Shader 文件](https://hyngng.github.io/zh/dev/armonia-first-devlog/#%EC%8A%A4%ED%94%84%EB%9D%BC%EC%9D%B4%ED%8A%B8-%EC%85%B0%EC%9D%B4%EB%8D%94)替换为了更轻量的版本，结果帧率大幅上升，发热也显著减少。
 
 ## **发布标准**
 

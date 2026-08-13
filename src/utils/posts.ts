@@ -133,7 +133,7 @@ export async function getPublishedPosts(options: { lang?: string; authorId?: str
 
 export async function getRssItems(options: { lang?: string; authorId?: AuthorId } = {}) {
   const { lang, authorId } = options;
-  const posts = await queryPosts({ lang, authorId, sort: 'none' });
+  const posts = await queryPosts({ lang, authorId, sort: 'desc' });
 
   return posts.map((post) => ({
     title: post.data.title,

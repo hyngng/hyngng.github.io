@@ -22,7 +22,7 @@ mermaid: true
 ## **はじめに**
 
 :::info
-[前の記事](https://hyngng.github.io/posts/armonia-first-devlog/)からの続きです。
+[前の記事](https://hyngng.github.io/ja/dev/armonia-first-devlog/)からの続きです。
 :::
 
 私の[4つ目のマイルストーン](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/)開発記です。さらにもう一ヶ月で作った成果物をまとめました。今回の一ヶ月は主にゲームのシステムとコンテンツ拡張作業が中心となり、詳細には今回の段階で作ったものはこうです。
@@ -76,7 +76,7 @@ mermaid: true
 ![people-staring-pigeons](/2024-05-31-armonia-second-devlog/people-staring-pigeons.webp){: .w-75 }
 *近くに鳩がいるとときどき見る*
 
-[以前のマイルストーン](https://hyngng.github.io/posts/palette-second-devlog/)を作りながら、プロシージャルアニメーションを使って環境とインタラクションする有機的なアニメーションを作るのを見て本当に素晴らしいと思い、よく覚えておいて今回試してみました。技術的に精巧な条件を設定して実装するものだと思っていましたが、Unityパッケージとして提供されているため思ったより簡単でした。ただしコードで制御するのは思ったより複雑でした。
+[以前のマイルストーン](https://hyngng.github.io/ja/dev/palette-second-devlog/)を作りながら、プロシージャルアニメーションを使って環境とインタラクションする有機的なアニメーションを作るのを見て本当に素晴らしいと思い、よく覚えておいて今回試してみました。技術的に精巧な条件を設定して実装するものだと思っていましたが、Unityパッケージとして提供されているため思ったより簡単でした。ただしコードで制御するのは思ったより複雑でした。
 
 鳩と違い、人は頭、体、脚などが個別オブジェクトとして独立して分かれており、[Animation Riggingパッケージ](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/index.html)の`Multiple Aim Constraint`コンポーネントを使って、人の頭部オブジェクトが一定距離内で鳩の方を向いて見る機能を試しに実装しました。
 
@@ -118,7 +118,7 @@ public void ChangeSourceObject(GameObject discoveredObject)
 
 デバッグ中にすぐに熱くなるスマホが不快に感じられ、初めてプロファイラを使った最適化に挑戦しました。プロセスは思ったより単純で、Unityプロファイラが録画したデータ区間の中でフレームが高く測定される部分について、どの作業が最も多く実行されているかを探し、該当部分を改善するだけでした。
 
-私の場合、`Semaphore.WaitForSignal`が50〜70%ほどのシェアを占めていましたが、この場合主にシェーダーを軽いものに変更する作業を推奨するという記事を見て、[以前に探したシェーダーファイル](https://hyngng.github.io/posts/armonia-first-devlog/#%EC%8A%A4%ED%94%84%EB%9D%BC%EC%9D%B4%ED%8A%B8-%EC%85%B0%EC%9D%B4%EB%8D%94)をより軽いものに交換したところ、フレームがかなり上昇し、発熱が相当減る経験ができました。
+私の場合、`Semaphore.WaitForSignal`が50〜70%ほどのシェアを占めていましたが、この場合主にシェーダーを軽いものに変更する作業を推奨するという記事を見て、[以前に探したシェーダーファイル](https://hyngng.github.io/ja/dev/armonia-first-devlog/#%EC%8A%A4%ED%94%84%EB%9D%BC%EC%9D%B4%ED%8A%B8-%EC%85%B0%EC%9D%B4%EB%8D%94)をより軽いものに交換したところ、フレームがかなり上昇し、発熱が相当減る経験ができました。
 
 ## **リリース基準**
 

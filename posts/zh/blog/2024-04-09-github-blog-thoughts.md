@@ -21,7 +21,7 @@ math: true
 
 ## **引言**
 
-自[第一篇博客](https://hyngng.github.io/posts/first-post/)开设以来已近两年。坦白说，以两年时间来看，迄今为止写的文章数量不算多，但这期间并非没有投入感情。虽然有时因各种公事私事忙碌，有时自己活动减少，但都这样定期运营着博客。
+自[第一篇博客](https://hyngng.github.io/zh/blog/first-post/)开设以来已近两年。坦白说，以两年时间来看，迄今为止写的文章数量不算多，但这期间并非没有投入感情。虽然有时因各种公事私事忙碌，有时自己活动减少，但都这样定期运营着博客。
 
 最近重新整修博客并申请了站点搜索注册，我开始觉得自己对这个平台比以前熟悉了不少。写作比以前轻松了许多，省下的精力用来装饰博客。个人觉得选择GitHub博客这个决定虽然有风险，但我似乎正在享受平台本身的特色，因此想整理一下GitHub博客有哪些优点吸引了我。
 
@@ -40,7 +40,7 @@ GitHub博客与其他博客平台不同，给人的感觉是开放而灵活。�
 - SCSS
 - JavaScript
 
-关于这方面，我已经写过两篇文章：分别是[各种定制设置](https://hyngng.github.io/posts/first-blog-customization/)和[特定功能实现](https://hyngng.github.io/posts/blog-content-remove/)。此外虽然没有单独写文章，但最近还自行添加了LQIP预览图、Instagram图标、Applause-Button等功能。
+关于这方面，我已经写过两篇文章：分别是[各种定制设置](https://hyngng.github.io/zh/blog/first-blog-customization/)和[特定功能实现](https://hyngng.github.io/zh/blog/blog-content-remove/)。此外虽然没有单独写文章，但最近还自行添加了LQIP预览图、Instagram图标、Applause-Button等功能。
 
 正因为定制如此自由，才有装饰的乐趣，这也是持续运营博客的动力。平时看着博客，会不断思考如何进一步改进，或者寻找其他类似类型的博客，思考有哪些优点可以引入到自己的博客中。
 

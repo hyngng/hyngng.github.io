@@ -40,6 +40,9 @@ const locale: Locale = {
     title: '目次',
     aria: '目次',
   },
+  footnote: {
+    label: '脚注',
+  },
   footer: {
     rights: '一部の権利を保留',
     poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,

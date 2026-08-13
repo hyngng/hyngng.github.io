@@ -125,7 +125,7 @@ def ndx_collapsed():
 - 为了使用韩国投资证券提供的服务，程序之外需要两项准备工作。
     1. 必须开设韩国投资证券账户并申请 [OpenAPI](https://apiportal.koreainvestment.com/intro)。在申请页面获取 `key` 和 `secret`，将这些值与虚拟账号一起保存在项目内的 `mock.key` 中使用。
     2. 为了处理订单收发或余额查询等，必须安装韩国投资证券提供的 [eFriend Expert](https://www.truefriend.com/main/customer/systemdown/OpenAPI.jsp?cmd=TF04ea01200) 程序。
-- 此外，由于共同认证证书模块不支持 64bit 环境，虽然不便，但需要任意构建 [32bit 虚拟环境](https://hyngng.github.io/posts/virtual-32bit/)，并在构建的虚拟环境上运行代码。
+- 此外，由于共同认证证书模块不支持 64bit 环境，虽然不便，但需要任意构建 [32bit 虚拟环境](https://hyngng.github.io/zh/dev/virtual-32bit/)，并在构建的虚拟环境上运行代码。
 
 ## **结语**
 

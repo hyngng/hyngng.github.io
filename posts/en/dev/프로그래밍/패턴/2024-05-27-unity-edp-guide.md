@@ -20,7 +20,7 @@ redirect_from:
 
 ## **Introduction**
 
-Event-Driven Programming is a programming paradigm where the flow of a program is determined by events. It manages the occurrence, handling, and execution of events to improve code extensibility, readability, and maintainability. Since it proved very helpful during [another game development project](https://hyngng.github.io/posts/armonia-first-devlog/), I'm documenting it here as I expect to use it frequently going forward.
+Event-Driven Programming is a programming paradigm where the flow of a program is determined by events. It manages the occurrence, handling, and execution of events to improve code extensibility, readability, and maintainability. Since it proved very helpful during [another game development project](https://hyngng.github.io/en/dev/armonia-first-devlog/), I'm documenting it here as I expect to use it frequently going forward.
 
 ## **Basic Concepts**
 
@@ -194,4 +194,4 @@ The `OnEvent()` method is called when an event occurs. It receives the event typ
 
 ![example](/2024-05-27-event-driven-programming/example.webp)
 
-An example from a [game I'm developing](https://hyngng.github.io/posts/armonia-first-devlog/). When a specific object is selected, some interactable objects are highlighted in yellow, and when deselected, they return to their original state. This was implemented using Event-Driven Programming.
+An example from a [game I'm developing](https://hyngng.github.io/en/dev/armonia-first-devlog/). When a specific object is selected, some interactable objects are highlighted in yellow, and when deselected, they return to their original state. This was implemented using Event-Driven Programming.

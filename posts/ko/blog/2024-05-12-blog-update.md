@@ -36,7 +36,7 @@ Jekyll 프레임워크를 사용할 때 작성된 글입니다. 현재는 Astro�
 
 깃허브 블로그가 타 블로그 플랫폼 대비 서비스 제공자와의 결합도가 낮은 만큼 업데이트 과정은 단순히 기존 폴더에 새 파일과 코드를 가져오는 것이라고 생각하면 편합니다. 그간 업데이트된 코드를 내 저장소로 병합(Merge)하는 것이 전부이기 때문입니다. 그래서, 먼저 깃을 통한 병합 과정을 겪어보신 분들께는 어렵지 않을 수 있습니다.
 
-제 경우 [테마를 꾸미면서](https://hyngng.github.io/posts/first-blog-customization/) `_data/locales/ko-KR.yml`의 한국어 번역 내역을 자체적으로 개선하고, 사이드바 아이콘의 유형과 크기를 변경하고, 글 미리보기 제목을 따로 볼드체로 처리하는 등 여러 자잘한 작업을 해두었는데 이런 변경사항은 당연히 공식적으로 반영되지 않기 때문에 업데이트가 있을 때마다 수정된 코드를 외과수술 하듯이 하나하나 확인하며 보존해야 합니다. [공식 업그레이드 가이드](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide)에서도 "Please be patient and careful to resolve these conflicts"라며 인내심을 가지고 작업할 것을 안내하고 있습니다.
+제 경우 [테마를 꾸미면서](https://hyngng.github.io/blog/first-blog-customization/) `_data/locales/ko-KR.yml`의 한국어 번역 내역을 자체적으로 개선하고, 사이드바 아이콘의 유형과 크기를 변경하고, 글 미리보기 제목을 따로 볼드체로 처리하는 등 여러 자잘한 작업을 해두었는데 이런 변경사항은 당연히 공식적으로 반영되지 않기 때문에 업데이트가 있을 때마다 수정된 코드를 외과수술 하듯이 하나하나 확인하며 보존해야 합니다. [공식 업그레이드 가이드](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide)에서도 "Please be patient and careful to resolve these conflicts"라며 인내심을 가지고 작업할 것을 안내하고 있습니다.
 
 ### **자동 병합**
 

@@ -125,7 +125,7 @@ Since it is a simple Python program without a UI, it runs without issues through
 - Two prerequisite steps are required outside the program itself to use Korea Investment & Securities services:
     1. Open a Korea Investment & Securities account and apply for [OpenAPI](https://apiportal.koreainvestment.com/intro). Obtain `key` and `secret` from the application page and store them along with the virtual account number in the project's `mock.key` file.
     2. Install the [eFriend Expert](https://www.truefriend.com/main/customer/systemdown/OpenAPI.jsp?cmd=TF04ea01200) program provided by Korea Investment & Securities to handle order transmission, balance inquiries, etc.
-- Additionally, since the shared certificate module does not support 64-bit environments, you must [set up a 32-bit virtual environment](https://hyngng.github.io/posts/virtual-32bit/) and run the code on that environment, even if inconvenient.
+- Additionally, since the shared certificate module does not support 64-bit environments, you must [set up a 32-bit virtual environment](https://hyngng.github.io/en/dev/virtual-32bit/) and run the code on that environment, even if inconvenient.
 
 ## **Closing**
 

@@ -23,7 +23,7 @@ lang: fr
 ## **Pourquoi j'ai repris le développement**
 
 :::info
-Cet article fait suite au [précédent](https://hyngng.github.io/posts/palette-first-devlog/).
+Cet article fait suite au [précédent](https://hyngng.github.io/fr/dev/palette-first-devlog/).
 :::
 
 ```mermaid
@@ -243,7 +243,7 @@ void PlayerDied()
 }
 ```
 
-C'est une fonctionnalité que j'ai implémentée assez tôt dans le développement avancé. Après avoir créé [un petit robot de trading automatique d'actions](https://hyngng.github.io/posts/astp-devlog/), je m'intéressais à l'utilisation de modules externes comme les API ou SDK, et par curiosité j'ai créé la fonction d'appel publicitaire. Lorsque le joueur meurt et passe à l'écran de fin, une interstitielle s'affiche entre-temps.
+C'est une fonctionnalité que j'ai implémentée assez tôt dans le développement avancé. Après avoir créé [un petit robot de trading automatique d'actions](https://hyngng.github.io/fr/dev/astp-devlog/), je m'intéressais à l'utilisation de modules externes comme les API ou SDK, et par curiosité j'ai créé la fonction d'appel publicitaire. Lorsque le joueur meurt et passe à l'écran de fin, une interstitielle s'affiche entre-temps.
 
 En suivant la [documentation officielle Google AdMob](https://developers.google.com/admob/unity/banner?hl=ko), le guide officiel étant très accessible, la création a été bien plus facile que prévu. Le résultat fonctionnait proprement, ce qui m'a étonné.
 
@@ -282,7 +282,7 @@ Pour l'uniformité, le logo de l'application reprend la même image que le bouto
 ![google-play-console](/2023-12-24-palette-second-devlog/google-play-console.webp){: .dark w="960" }
 *Formulaire d'informations de publication dans la Google Console*
 
-La publication s'est limitée au Play Store, via la Google Console. En fait, j'avais déjà publié une fois [en phase de développement initial](https://hyngng.github.io/posts/palette-first-devlog/), par curiosité pour voir si mon application serait vraiment mise en ligne. Après avoir confirmé la publication, j'avais immédiatement désactivé l'application.
+La publication s'est limitée au Play Store, via la Google Console. En fait, j'avais déjà publié une fois [en phase de développement initial](https://hyngng.github.io/fr/dev/palette-first-devlog/), par curiosité pour voir si mon application serait vraiment mise en ligne. Après avoir confirmé la publication, j'avais immédiatement désactivé l'application.
 
 Six mois plus tard, l'investissement de temps dans ce projet commençait à peser, et la qualité du jeu était devenue assez présentable. J'ai donc décidé de mettre à jour l'application et de la réactiver. Pour la publication, j'ai réécrit le nom et la description de l'application, et mis à jour l'icône, les images graphiques et les captures d'écran.
 

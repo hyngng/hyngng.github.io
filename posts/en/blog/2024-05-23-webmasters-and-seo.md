@@ -144,7 +144,7 @@ end
 Liquid::Template.register_filter(Jekyll::ContentFilter)
 ```
 
-The `content` passes through a custom Ruby plugin `content_filter`, which strips unnecessary info like titles, dates, authors, and the "Introduction" opening. It leverages the fact that post bodies land inside `<div class="content"></div>`. I'd [implemented similar code before](https://hyngng.github.io/posts/blog-content-remove/) but wasn't fully comfortable yet, so I consulted GPT for this part.
+The `content` passes through a custom Ruby plugin `content_filter`, which strips unnecessary info like titles, dates, authors, and the "Introduction" opening. It leverages the fact that post bodies land inside `<div class="content"></div>`. I'd [implemented similar code before](https://hyngng.github.io/en/blog/blog-content-remove/) but wasn't fully comfortable yet, so I consulted GPT for this part.
 
 :::info
 **Updated 2024-09-25!**

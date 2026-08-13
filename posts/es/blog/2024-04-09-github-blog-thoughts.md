@@ -21,7 +21,7 @@ Este artículo fue escrito cuando usaba el framework Jekyll. ¡Ahora he migrado 
 
 ## **Introducción**
 
-Ha pasado casi dos años desde que abrí el blog tras el [primer post](https://hyngng.github.io/posts/first-post/). La verdad es que, para dos años, no es que haya escrito muchos artículos, pero no significa que no le haya tomado cariño. A veces he estado ocupado con asuntos públicos o privados, y otras veces mi propia actividad ha sido escasa, pero así, periódicamente, he ido gestionando el blog.
+Ha pasado casi dos años desde que abrí el blog tras el [primer post](https://hyngng.github.io/es/blog/first-post/). La verdad es que, para dos años, no es que haya escrito muchos artículos, pero no significa que no le haya tomado cariño. A veces he estado ocupado con asuntos públicos o privados, y otras veces mi propia actividad ha sido escasa, pero así, periódicamente, he ido gestionando el blog.
 
 Recientemente, al renovar el blog y solicitar el registro en los motores de búsqueda, empecé a sentir que me había familiarizado bastante con la plataforma de GitHub Pages, más que antes. Ahora escribo artículos con mucha más comodidad que antes, y el tiempo libre que me queda lo dedico a decorar el blog. Personalmente, creo que, aunque elegir GitHub Pages fue una apuesta, estoy disfrutando de la personalidad propia de la plataforma, así que me gustaría resumir qué ventajas de GitHub Pages me resultan atractivas.
 
@@ -40,7 +40,7 @@ GitHub Pages me da constantemente una sensación de apertura y flexibilidad, a d
 - SCSS
 - JavaScript
 
-En mi caso, ya he escrito dos artículos al respecto: uno sobre [varios ajustes de personalización](https://hyngng.github.io/posts/first-blog-customization/) y otro sobre la [implementación de una función específica](https://hyngng.github.io/posts/blog-content-remove/). Además, aunque no he escrito un artículo aparte, recientemente añadí algunos elementos como imágenes de vista previa LQIP, un icono de Instagram y un botón de aplausos.
+En mi caso, ya he escrito dos artículos al respecto: uno sobre [varios ajustes de personalización](https://hyngng.github.io/es/blog/first-blog-customization/) y otro sobre la [implementación de una función específica](https://hyngng.github.io/es/blog/blog-content-remove/). Además, aunque no he escrito un artículo aparte, recientemente añadí algunos elementos como imágenes de vista previa LQIP, un icono de Instagram y un botón de aplausos.
 
 Precisamente porque la personalización es tan libre, tiene su gracia decorarlo, y eso me motiva a seguir gestionando el blog con cariño. Constantemente pienso en cómo podría mejorarlo al verlo, o busco otros blogs similares para ver qué cosas buenas podría incorporar al mío.
 

@@ -105,6 +105,9 @@ export default defineConfig({
       theme: 'css-variables',
     },
     processor: unified({
+      remarkRehype: {
+        footnoteLabelTagName: 'span',
+      },
       remarkPlugins: [
         remarkImageAttributes,
         remarkDirective,

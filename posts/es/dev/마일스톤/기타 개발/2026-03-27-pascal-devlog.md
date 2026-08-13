@@ -23,7 +23,7 @@ mermaid: true
 
 > "Gracias, pero como somos una institución pública, no podemos usar programas externos sin permiso"
 
-Durante mi servicio social militar, surgió un problema en la oficina. Está detallado más extensamente en [la entrada sobre el servicio social militar](https://hyngng.github.io/posts/sabok-logs/), pero en resumen, se me señaló que las instituciones públicas no pueden usar programas externos sin licencia, y esa experiencia me llevó a desarrollar este programa. Sin embargo, no comencé solo con la idea de «hagámoslo nosotros mismos». También quería usar C#, que había conocido antes con Unity, en otro contexto, y deseaba experimentar con un programa serio para Windows, así que me animé a abrir un nuevo proyecto.
+Durante mi servicio social militar, surgió un problema en la oficina. Está detallado más extensamente en [la entrada sobre el servicio social militar](https://hyngng.github.io/es/essay/sabok-logs/), pero en resumen, se me señaló que las instituciones públicas no pueden usar programas externos sin licencia, y esa experiencia me llevó a desarrollar este programa. Sin embargo, no comencé solo con la idea de «hagámoslo nosotros mismos». También quería usar C#, que había conocido antes con Unity, en otro contexto, y deseaba experimentar con un programa serio para Windows, así que me animé a abrir un nuevo proyecto.
 
 El programa se llama Pascal porque inicialmente se desarrolló con el objetivo de comprimir PDF. Aunque finalmente la función de compresión no se implementó porque el licenciamiento estaba a punto de finalizar y no compensaba, el contexto de manipulación de archivos PDF se implementó primero con dos funciones: fusionar y dividir.
 

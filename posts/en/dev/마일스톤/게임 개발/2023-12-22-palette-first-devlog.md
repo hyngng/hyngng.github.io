@@ -23,7 +23,7 @@ mermaid: true
 
 In the new year of 2023, I needed to find something to do. I wanted to make something that would help me improve my programming skills while also being enjoyable for me. After the New Year's bells rang, I drew up a few plans the next day.
 
-I came up with a few ideas: a Python library based on the 5W1H principle, a mirrorless-style camera application, and a 2D mobile game. Each was derived from my experience making [a Python-based program](https://hyngng.github.io/posts/astp-devlog/), building simple applications with Android Studio, or my [previous Unity project](https://hyngng.github.io/posts/lavad-devlog/).
+I came up with a few ideas: a Python library based on the 5W1H principle, a mirrorless-style camera application, and a 2D mobile game. Each was derived from my experience making [a Python-based program](https://hyngng.github.io/en/dev/astp-devlog/), building simple applications with Android Studio, or my [previous Unity project](https://hyngng.github.io/en/dev/lavad-devlog/).
 
 But game development looked way too fun. My previous experience with Unity had left a strong impression, and the idea of being able to create and use my own assets was incredibly appealing. Even though it would be a lot of hard work, the theme of making a program with my own unique material that you couldn't find anywhere else felt very attractive. Plus, I was enjoying object-oriented programming at the time and wanted to use an object-oriented language properly, so I decided to start making a 2D mobile game.
 

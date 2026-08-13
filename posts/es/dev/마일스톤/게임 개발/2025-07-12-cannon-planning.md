@@ -23,7 +23,7 @@ last_modified_at: 2026-01-23 09:05:00 +0900
 **¡Este artículo es un borrador de concepto!**
 :::
 
-Una de las cosas que aprendí de [la experiencia del proyecto anterior](https://hyngng.github.io/posts/armonia-devlog-cancelled/) es que desarrollar algo durante un largo periodo de tiempo implica, por un lado, involucrarse en un contexto enorme. Si no se tiene cuidado, el proceso de desarrollo puede convertirse en una experiencia agotadora y dolorosa, por lo que es necesario meditar bien el tema y elegirlo con cuidado.
+Una de las cosas que aprendí de [la experiencia del proyecto anterior](https://hyngng.github.io/es/dev/armonia-devlog-cancelled/) es que desarrollar algo durante un largo periodo de tiempo implica, por un lado, involucrarse en un contexto enorme. Si no se tiene cuidado, el proceso de desarrollo puede convertirse en una experiencia agotadora y dolorosa, por lo que es necesario meditar bien el tema y elegirlo con cuidado.
 
 Este diseño conceptual es, en ese contexto, un pequeño experimento. Primero, durante uno o dos meses, quiero concretar ideas para acortar el proceso de desarrollo mediante la creación de un borrador de diseño, la redacción de documentos y el diseño de clases, y luego, considerando diversos costes de oportunidad, desarrollar realmente el juego o dejar constancia por escrito de los pensamientos durante el proceso.
 

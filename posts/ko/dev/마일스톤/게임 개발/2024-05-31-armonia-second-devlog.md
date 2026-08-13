@@ -22,7 +22,7 @@ mermaid: true
 ## **들어가며**
 
 :::info
-[전 글](https://hyngng.github.io/posts/armonia-first-devlog/)에서 이어집니다.
+[전 글](https://hyngng.github.io/dev/armonia-first-devlog/)에서 이어집니다.
 :::
 
 제 [네 번째 마일스톤](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) 개발기입니다. 또다른 한 달 동안 만든 결과물을 정리했습니다. 이번 한 달은 주로 게임의 시스템과 컨텐츠 확장 작업이 주가 되었으며, 세부적으로 이번 단계에서 만든 것은 이렇습니다.
@@ -82,7 +82,7 @@ mermaid: true
 ![people-staring-pigeons](/2024-05-31-armonia-second-devlog/people-staring-pigeons.webp){: .w-75 }
 *근처에 비둘기 있으면 한 번씩 쳐다봄*
 
-[이전 마일스톤](https://hyngng.github.io/posts/palette-second-devlog/)을 만들면서 절차적 애니메이션을 이용해 환경과 상호작용하는 유기적인 애니메이션을 만드는 것을 보고 정말 멋지다고 생각한 적이 있어서 잘 기억해두고 있다가 이번에 시도해봤습니다. 기술적으로 정교한 조건을 두어 구현하는 것인 줄 알았는데 유니티 패키지로 제공되기 때문에 생각보다 쉬웠고, 다만 코드로 제어하는 것이 생각보다 복잡했습니다.
+[이전 마일스톤](https://hyngng.github.io/dev/palette-second-devlog/)을 만들면서 절차적 애니메이션을 이용해 환경과 상호작용하는 유기적인 애니메이션을 만드는 것을 보고 정말 멋지다고 생각한 적이 있어서 잘 기억해두고 있다가 이번에 시도해봤습니다. 기술적으로 정교한 조건을 두어 구현하는 것인 줄 알았는데 유니티 패키지로 제공되기 때문에 생각보다 쉬웠고, 다만 코드로 제어하는 것이 생각보다 복잡했습니다.
 
 비둘기와 달리 사람은 머리, 몸, 다리 등이 개별 오브젝트로 독립적으로 나뉘어져 있어 [Animation Rigging 패키지](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/index.html)의 `Multiple Aim Constraint` 컴포넌트를 이용해 사람의 머리 오브젝트가 일정 거리 내에서 비둘기를 향해 쳐다보는 기능을 시도삼아 구현했습니다.
 
@@ -124,7 +124,7 @@ public void ChangeSourceObject(GameObject discoveredObject)
 
 디버깅중에 금세 뜨끈해지는 폰이 불쾌하게 느껴져 처음으로 프로파일러를 이용한 최적화에 도전했습니다. 과정은 생각보다 단순했는데, 유니티 프로파일러가 녹화한 데이터구간 중 프레임이 높게 측정되는 부분에 대해 어떤 작업이 가장 많이 실행되고 있는지를 찾고 해당 부분을 개선해주는 것이 전부였습니다.
 
-제 경우 `Semaphore.WaitForSignal`이 50~70%가량의 지분을 차지하고 있었는데, 이 경우 주로 셰이더를 가벼운 것으로 변경해주는 작업을 권장한다는 글을 보고 [이전에 찾았던 셰이더 파일](https://hyngng.github.io/posts/armonia-first-devlog/#%EC%8A%A4%ED%94%84%EB%9D%BC%EC%9D%B4%ED%8A%B8-%EC%85%B0%EC%9D%B4%EB%8D%94)을 보다 가벼운 것으로 교체해줬더니 프레임이 꽤 상승하고, 발열이 상당수 줄어드는 경험을 할 수 있었습니다.
+제 경우 `Semaphore.WaitForSignal`이 50~70%가량의 지분을 차지하고 있었는데, 이 경우 주로 셰이더를 가벼운 것으로 변경해주는 작업을 권장한다는 글을 보고 [이전에 찾았던 셰이더 파일](https://hyngng.github.io/dev/armonia-first-devlog/#%EC%8A%A4%ED%94%84%EB%9D%BC%EC%9D%B4%ED%8A%B8-%EC%85%B0%EC%9D%B4%EB%8D%94)을 보다 가벼운 것으로 교체해줬더니 프레임이 꽤 상승하고, 발열이 상당수 줄어드는 경험을 할 수 있었습니다.
 
 ## **출시 기준**
 

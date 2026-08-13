@@ -41,13 +41,13 @@ xychart-beta
 
 ### **持续的博客定制**
 
-也许是博客配置文件的便利，每次写文章时我都会审视页面结构并频繁进行修改。之前已经[修改过几次](https://hyngng.github.io/posts/first-blog-customization/)，至今仍在持续按个人喜好调整。最近的例子是禁用了深色/浅色模式切换动画。主题本身没有提供禁用选项，实在觉得碍眼，于是找到定义了主题切换效果的属性如`id="post-preview"`，用`transition: none !important`覆盖了它。现在切换非常干净利落。
+也许是博客配置文件的便利，每次写文章时我都会审视页面结构并频繁进行修改。之前已经[修改过几次](https://hyngng.github.io/zh/blog/first-blog-customization/)，至今仍在持续按个人喜好调整。最近的例子是禁用了深色/浅色模式切换动画。主题本身没有提供禁用选项，实在觉得碍眼，于是找到定义了主题切换效果的属性如`id="post-preview"`，用`transition: none !important`覆盖了它。现在切换非常干净利落。
 
 另外，在博客主题版本`v7.3.1`中发现首页预览图从LQIP切换到原图时虚化效果不播放的bug，经过长时间调试后解决，并在官方仓库[提交了issue](https://github.com/cotes2020/jekyll-theme-chirpy/issues/2537)。大约两周半后开发者确认了问题，不久便创建了[反映我视角的新提交](https://github.com/cotes2020/jekyll-theme-chirpy/pull/2551)，随后新版本[v7.4.0](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/docs/CHANGELOG.md#740-2025-10-19)发布，该bug正式修复。
 
 ### **搜索引擎相关杂谈**
 
-已经[写过一篇相关文章](https://hyngng.github.io/posts/webmasters-and-seo/)，所以当个后续故事看就好。首先，处理站长工具时需要有耐心。真的需要极大的耐心。特别是Google Search Console，注册后到正常被搜索到可能需要半年左右，即使过了足够长时间，如果页面权威性低，爬虫活动也会大幅下降。我的印象可能不准确，但感觉域名权威性对于索引生成来说比SEO优化程度更为重要。
+已经[写过一篇相关文章](https://hyngng.github.io/zh/blog/webmasters-and-seo/)，所以当个后续故事看就好。首先，处理站长工具时需要有耐心。真的需要极大的耐心。特别是Google Search Console，注册后到正常被搜索到可能需要半年左右，即使过了足够长时间，如果页面权威性低，爬虫活动也会大幅下降。我的印象可能不准确，但感觉域名权威性对于索引生成来说比SEO优化程度更为重要。
 
 在Bing上曾发生过索引突然被取消的情况。具体来说，Bing将页面分为"已编入索引"、"错误"、"警告"、"已排除"四类，而我的博客所有页面都被移到了"已排除"类别，从Bing搜索结果中消失了。由于站点托管和`robots.txt`等页面本身没有问题，我于8月13日[向Bing站长工具支持团队](https://www.bing.com/webmasters/support)提交了咨询，8月30日收到_"We have reviewed your site and sent it to our Product Review group for further assessment."_，10月3日收到_"I am happy to inform you that the issue related to your site has been resolved"_的回复邮件。虽然花了一个半月左右，但索引基本恢复，现在搜索曝光正常。
 

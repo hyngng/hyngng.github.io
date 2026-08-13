@@ -38,13 +38,15 @@ const origin = new URL(request.url).origin;
 `<urlset>` 루트는 3개 네임스페이스를 선언함:
 
 ```xml
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="https://www.w3.org/1999/xhtml"
+        xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">
 ```
 
 - `xhtml`: 다국어 alternate(`hreflang`)용
 - `image`: 구글 이미지 사이트맵 확장용
+
+**스키마 URL은 반드시 `https`를 사용할 것.** `http://www.w3.org/1999/xhtml`은 HTML/XHTML 네임스페이스와 동일한 URI로, Chromium/Firefox 내장 XML 뷰어가 `<xhtml:link>`를 HTML 파서로 처리하다 트리 렌더링에 실패하고 raw 텍스트로 폴백한다(콘솔: `Cannot read properties of null (reading 'childNodes')`). `https://` 스키마로 선언하면 뷰어가 XHTML 모드로 전환되지 않아 `xhtml:link`를 유지한 채 네이티브 트리 뷰가 복구된다 (알려진 Chromium 동작, [crbug 580033](https://bugs.chromium.org/p/chromium/issues/detail?id=580033), [adithya.dev](https://adithya.dev/xml-sitemap-is-rendering-as-plain-text/)).
 
 ## 다국어 hreflang
 
@@ -120,3 +122,5 @@ RSS는 기본 언어(ko)는 접두사 없는 루트 경로, 비기본 언어는 
 | 작가별(비기본 언어) | `/[lang]/[author]/rss.xml` | 해당 작가 + 해당 언어 포스트 |
 
 `site` 필드는 `request.url` origin에서 동적 추출 (sitemap과 동일 원칙). Frame.astro의 RSS 버튼은 작가 페이지에서 작가별 RSS로, 그 외에서는 언어별 RSS로 링크됨. 기본 언어 작가 페이지는 `/[author]/rss.xml`(접두사 없음), 비기본 언어 작가 페이지는 `/[lang]/[author]/rss.xml`.
+
+아이템은 작가와 무관하게 날짜 내림차순(최신순)으로 정렬됨 — `getRssItems()`(`src/utils/posts.ts`)이 `queryPosts({ sort: 'desc' })`를 사용.

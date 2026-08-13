@@ -14,7 +14,7 @@ last_modified_at: 2025-10-20 22:29:00 +0900
 
 ## **Introduction**
 
-The Chirpy theme is clean and tidy, but in its stock state, a few spots call for improvement. I've [tweaked it occasionally](https://hyngng.github.io/posts/first-blog-customization/), yet some personal gripes remain.
+The Chirpy theme is clean and tidy, but in its stock state, a few spots call for improvement. I've [tweaked it occasionally](https://hyngng.github.io/en/blog/first-blog-customization/), yet some personal gripes remain.
 
 ![before-light](/2024-03-21-blog-content-remove/before-light.webp){: .light .w-75 .border }
 ![before-dark](/2024-03-21-blog-content-remove/before-dark.webp){: .dark .w-75 }

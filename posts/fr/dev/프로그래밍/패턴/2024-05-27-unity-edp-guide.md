@@ -20,7 +20,7 @@ redirect_from:
 
 ## **Introduction**
 
-La programmation événementielle (Event Driven Programming) est un paradigme où le flux du programme est déterminé par des événements. Elle gère la survenue, la gestion et l'exécution des événements, et est utilisée pour améliorer l'extensibilité du code ainsi que sa lisibilité et sa maintenabilité. M'ayant été très utile dans [un autre projet de développement de jeu](https://hyngng.github.io/posts/armonia-first-devlog/), j'ai pensé la résumer par écrit pour pouvoir l'utiliser à l'avenir.
+La programmation événementielle (Event Driven Programming) est un paradigme où le flux du programme est déterminé par des événements. Elle gère la survenue, la gestion et l'exécution des événements, et est utilisée pour améliorer l'extensibilité du code ainsi que sa lisibilité et sa maintenabilité. M'ayant été très utile dans [un autre projet de développement de jeu](https://hyngng.github.io/fr/dev/armonia-first-devlog/), j'ai pensé la résumer par écrit pour pouvoir l'utiliser à l'avenir.
 
 ## **Concepts de base**
 
@@ -194,4 +194,4 @@ La méthode `OnEvent()` est appelée lorsqu'un événement se produit. Elle reç
 
 ![example](/2024-05-27-event-driven-programming/example.webp)
 
-Exemple tiré d'un [jeu en cours de développement](https://hyngng.github.io/posts/armonia-first-devlog/). Lorsqu'un objet spécifique est sélectionné, certains objets interactifs s'affichent dans des tons jaunes ; lorsqu'on le désélectionne, ils retrouvent leur état initial. Cela a été implémenté via la programmation événementielle.
+Exemple tiré d'un [jeu en cours de développement](https://hyngng.github.io/fr/dev/armonia-first-devlog/). Lorsqu'un objet spécifique est sélectionné, certains objets interactifs s'affichent dans des tons jaunes ; lorsqu'on le désélectionne, ils retrouvent leur état initial. Cela a été implémenté via la programmation événementielle.

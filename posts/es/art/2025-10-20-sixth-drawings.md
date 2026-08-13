@@ -69,4 +69,4 @@ Y,
 ![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .dark }
 *Banner para redes sociales #2*
 
-En particular, el primer banner lo hice reutilizando apropiadamente dibujos que había subido antes en [Dibujo digital #4](https://hyngng.github.io/posts/fourth-drawings/) y [Dibujo digital #5](https://hyngng.github.io/posts/fifth-drawings/). No está claro si tendré actividad activa en redes sociales de ahora en adelante, pero quiero tenerlo preparado para dar una buena impresión cuando tenga que promocionar algo en Reddit o similares.
+En particular, el primer banner lo hice reutilizando apropiadamente dibujos que había subido antes en [Dibujo digital #4](https://hyngng.github.io/es/art/fourth-drawings/) y [Dibujo digital #5](https://hyngng.github.io/es/art/fifth-drawings/). No está claro si tendré actividad activa en redes sociales de ahora en adelante, pero quiero tenerlo preparado para dar una buena impresión cuando tenga que promocionar algo en Reddit o similares.

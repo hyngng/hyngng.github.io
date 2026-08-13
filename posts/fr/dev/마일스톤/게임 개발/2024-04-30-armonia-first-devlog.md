@@ -22,7 +22,7 @@ lang: fr
 
 ## **Introduction**
 
-> Suite de [l'article précédent](https://hyngng.github.io/posts/armonia-devlog-planning/).
+> Suite de [l'article précédent](https://hyngng.github.io/fr/dev/armonia-devlog-planning/).
 
 Voici le rapport de développement de [mon quatrième jalon](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) — un défi que je relève avec plaisir. J'avais besoin d'un point de contrôle à mi-parcours pour organiser mes notes, je résume donc ici ce que j'ai produit en environ un mois. Voici ce qui a été fait durant cette phase :
 

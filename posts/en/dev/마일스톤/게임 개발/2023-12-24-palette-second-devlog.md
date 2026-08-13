@@ -22,7 +22,7 @@ mermaid: true
 ## **Why I Resumed Development**
 
 :::info
-Continues from the [previous post](https://hyngng.github.io/posts/palette-first-devlog/).
+Continues from the [previous post](https://hyngng.github.io/en/dev/palette-first-devlog/).
 :::
 
 ```mermaid
@@ -242,7 +242,7 @@ void PlayerDied()
 }
 ```
 
-This was implemented fairly early in the later development stage. Having worked with externally distributed modules like APIs and SDKs while making a [simple automated stock trading program](https://hyngng.github.io/posts/astp-devlog/), I was interested in them, so out of curiosity I created the ad-calling feature. When the player dies and transitions to the results screen, an interstitial ad appears.
+This was implemented fairly early in the later development stage. Having worked with externally distributed modules like APIs and SDKs while making a [simple automated stock trading program](https://hyngng.github.io/en/dev/astp-devlog/), I was interested in them, so out of curiosity I created the ad-calling feature. When the player dies and transitions to the results screen, an interstitial ad appears.
 
 I followed the [Google AdMob official documentation](https://developers.google.com/admob/unity/banner?hl=ko) while implementing it, and carefully going through the official guide made it much easier than I expected. The result worked cleanly, which was surprising.
 
@@ -281,7 +281,7 @@ For consistency, I made the app logo using the same image as the play button. Fo
 ![google-play-console](/2023-12-24-palette-second-devlog/google-play-console.webp){: .dark w="960" }
 *Store listing information form in the Google Console*
 
-I limited the app registration to the Play Store, so I used the Google Console. In fact, I had registered it once during the [initial development stage](https://hyngng.github.io/posts/palette-first-devlog/), but that was just out of curiosity to see what the app registration process was like and whether my app would actually appear on the store. After confirming it was registered properly, I immediately deactivated the app.
+I limited the app registration to the Play Store, so I used the Google Console. In fact, I had registered it once during the [initial development stage](https://hyngng.github.io/en/dev/palette-first-devlog/), but that was just out of curiosity to see what the app registration process was like and whether my app would actually appear on the store. After confirming it was registered properly, I immediately deactivated the app.
 
 Then, after more than half a year passed, I felt that continuing to invest time in this project had become burdensome, but I also thought the game's quality had improved enough compared to the beginning. So I updated the app and decided to activate it. During registration, I rewrote the app name and description, and updated the app icon, graphic images, and screenshots with new ones.
 

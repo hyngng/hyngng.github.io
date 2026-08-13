@@ -143,7 +143,7 @@ end
 Liquid::Template.register_filter(Jekyll::ContentFilter)
 ```
 
-El `content` pasa por un plugin Ruby personalizado llamado `content_filter`, cuyo propósito es eliminar en cierta medida la información innecesaria para la description, como títulos, fechas de publicación, autor y la introducción «들어가며». Aproveché que todo el cuerpo del artículo se transmite dentro de la etiqueta `<div class="content"></div>`, y aunque ya había [implementado un código similar antes](https://hyngng.github.io/posts/blog-content-remove/), como aún no estaba familiarizado, recurrí a GPT para esta parte.
+El `content` pasa por un plugin Ruby personalizado llamado `content_filter`, cuyo propósito es eliminar en cierta medida la información innecesaria para la description, como títulos, fechas de publicación, autor y la introducción «들어가며». Aproveché que todo el cuerpo del artículo se transmite dentro de la etiqueta `<div class="content"></div>`, y aunque ya había [implementado un código similar antes](https://hyngng.github.io/es/blog/blog-content-remove/), como aún no estaba familiarizado, recurrí a GPT para esta parte.
 
 :::info
 **¡Actualizado el 25 de septiembre de 2024!**

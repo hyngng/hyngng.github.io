@@ -23,7 +23,7 @@ mermaid: true
 
 > "Thanks, but we're a public institution — we can't just use any external program"
 
-There was a problem at the office during my alternative civilian service. It's covered in more detail in [my alternative service log post](https://hyngng.github.io/posts/sabok-logs/), but to summarize, I was once told that public institutions cannot arbitrarily use external programs without a license, and that experience led to the motivation for developing this program. However, it wasn't just a simple "let's build it ourselves" idea. I also wanted to use C#, which I had first encountered through Unity, in a different context, and I wanted to properly work on a Windows program, which gave me the courage to start a new project.
+There was a problem at the office during my alternative civilian service. It's covered in more detail in [my alternative service log post](https://hyngng.github.io/en/essay/sabok-logs/), but to summarize, I was once told that public institutions cannot arbitrarily use external programs without a license, and that experience led to the motivation for developing this program. However, it wasn't just a simple "let's build it ourselves" idea. I also wanted to use C#, which I had first encountered through Unity, in a different context, and I wanted to properly work on a Windows program, which gave me the courage to start a new project.
 
 The program is named Pascal because it initially aimed to implement PDF compression. In the end, the compression feature was not implemented since my discharge was approaching and it didn't seem worthwhile, but PDF manipulation was realized through two features: merging and splitting.
 

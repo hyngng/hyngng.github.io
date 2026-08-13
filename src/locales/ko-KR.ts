@@ -40,6 +40,9 @@ const locale: Locale = {
     title: '목차',
     aria: '목차',
   },
+  footnote: {
+    label: '각주',
+  },
   footer: {
     rights: '일부 권리 보유',
     poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,

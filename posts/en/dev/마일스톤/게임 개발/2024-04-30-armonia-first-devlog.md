@@ -22,7 +22,7 @@ mermaid: true
 ## **Introduction**
 
 :::info
-Continues from the [previous post](https://hyngng.github.io/posts/armonia-devlog-planning/).
+Continues from the [previous post](https://hyngng.github.io/en/dev/armonia-devlog-planning/).
 :::
 
 This is the development log for my [fourth milestone](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/), which I'm tackling again because it's fun. I needed to organize my notes and do a mid-point check, so I've briefly summarized what I made in about a month. Here's what was accomplished in this development phase:

@@ -69,4 +69,4 @@ Et,
 ![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .dark }
 *Bannière SNS #2*
 
-La première bannière, en particulier, a été faite en réutilisant des dessins déjà postés dans [Dessin numérique #4](https://hyngng.github.io/posts/fourth-drawings/) et [Dessin numérique #5](https://hyngng.github.io/posts/fifth-drawings/). Je ne sais pas si mon activité SNS sera soutenue, mais je veux être prêt à donner un bon signal si jamais je dois promouvoir quelque chose sur Reddit ou ailleurs.
+La première bannière, en particulier, a été faite en réutilisant des dessins déjà postés dans [Dessin numérique #4](https://hyngng.github.io/fr/art/fourth-drawings/) et [Dessin numérique #5](https://hyngng.github.io/fr/art/fifth-drawings/). Je ne sais pas si mon activité SNS sera soutenue, mais je veux être prêt à donner un bon signal si jamais je dois promouvoir quelque chose sur Reddit ou ailleurs.

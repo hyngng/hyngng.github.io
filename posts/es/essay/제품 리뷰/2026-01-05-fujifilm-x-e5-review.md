@@ -40,7 +40,7 @@ Al investigar las características del hardware de las cámaras de los smartphon
 1. Mejora de la relación señal-ruido (SNR)
 2. Mejora del rango dinámico (DR)
 
-La clave aquí es cuánto efecto se puede obtener en relación con el peso y el volumen invertidos. El ejemplo más intuitivo es que en los últimos 3 años he notado que [incluso con una cámara de móvil como la Galaxy S22 Ultra se pueden tomar fotos impresionantes](https://hyngng.github.io/posts/photos-of-eulsa-year/). El ruido no es un problema cuando hay suficiente luz, e incluso si no la hay, se puede mejorar suficientemente con AI Denoise, etc. Entonces, la ventaja que monopoliza un sensor grande es solo el DR, y ni siquiera eso es muy necesario en condiciones cotidianas, y en entornos estáticos se puede complementar con fusión HDR.
+La clave aquí es cuánto efecto se puede obtener en relación con el peso y el volumen invertidos. El ejemplo más intuitivo es que en los últimos 3 años he notado que [incluso con una cámara de móvil como la Galaxy S22 Ultra se pueden tomar fotos impresionantes](https://hyngng.github.io/es/photography/photos-of-eulsa-year/). El ruido no es un problema cuando hay suficiente luz, e incluso si no la hay, se puede mejorar suficientemente con AI Denoise, etc. Entonces, la ventaja que monopoliza un sensor grande es solo el DR, y ni siquiera eso es muy necesario en condiciones cotidianas, y en entornos estáticos se puede complementar con fusión HDR.
 
 ### **Decepción emocional**
 

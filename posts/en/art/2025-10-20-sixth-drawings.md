@@ -69,4 +69,4 @@ And,
 ![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .dark }
 *SNS banner #2*
 
-The first banner in particular reuses drawings from [Digital Drawing #4](https://hyngng.github.io/posts/fourth-drawings/) and [Digital Drawing #5](https://hyngng.github.io/posts/fifth-drawings/). It's unclear whether I'll be active on SNS going forward, but I'm preparing these just in case I need to promote something on Reddit or elsewhere and want to make a good impression.
+The first banner in particular reuses drawings from [Digital Drawing #4](https://hyngng.github.io/en/art/fourth-drawings/) and [Digital Drawing #5](https://hyngng.github.io/en/art/fifth-drawings/). It's unclear whether I'll be active on SNS going forward, but I'm preparing these just in case I need to promote something on Reddit or elsewhere and want to make a good impression.

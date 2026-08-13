@@ -14,7 +14,7 @@ last_modified_at: 2025-10-20 22:29:00 +0900
 
 ## **Введение**
 
-Тема Chirpy выглядит чисто и аккуратно, но в стоковом состоянии иногда встречаются моменты, которые хочется доработать. Я [вношу правки время от времени](https://hyngng.github.io/posts/first-blog-customization/), но всё равно оставалось несколько личных недочётов.
+Тема Chirpy выглядит чисто и аккуратно, но в стоковом состоянии иногда встречаются моменты, которые хочется доработать. Я [вношу правки время от времени](https://hyngng.github.io/ru/blog/first-blog-customization/), но всё равно оставалось несколько личных недочётов.
 
 ![before-light](/2024-03-21-blog-content-remove/before-light.webp){: .light .w-75 .border }
 ![before-dark](/2024-03-21-blog-content-remove/before-dark.webp){: .dark .w-75 }

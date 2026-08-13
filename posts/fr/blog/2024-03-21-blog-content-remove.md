@@ -18,7 +18,7 @@ Cet article a été rédigé sous le framework Jekyll. Il a depuis migré vers A
 
 ## **Introduction**
 
-Le thème Chirpy est épuré et soigné, mais dans son état d'origine, certains points méritent selon moi des améliorations. J'ai déjà [apporté quelques modifications](https://hyngng.github.io/posts/first-blog-customization/) de temps à autre, mais il restait quelques points frustrants.
+Le thème Chirpy est épuré et soigné, mais dans son état d'origine, certains points méritent selon moi des améliorations. J'ai déjà [apporté quelques modifications](https://hyngng.github.io/fr/blog/first-blog-customization/) de temps à autre, mais il restait quelques points frustrants.
 
 ![before-light](/2024-03-21-blog-content-remove/before-light.webp){: .light .w-75 .border }
 ![before-dark](/2024-03-21-blog-content-remove/before-dark.webp){: .dark .w-75 }

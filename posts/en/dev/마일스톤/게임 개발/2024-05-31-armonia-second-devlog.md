@@ -22,7 +22,7 @@ mermaid: true
 ## **Introduction**
 
 :::info
-Continues from the [previous post](https://hyngng.github.io/posts/armonia-first-devlog/).
+Continues from the [previous post](https://hyngng.github.io/en/dev/armonia-first-devlog/).
 :::
 
 This is the development log for my [fourth milestone](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/). I've summarized the results of another month of work. This month mainly focused on expanding the game's systems and content. The specifics of what was accomplished in this phase are as follows:
@@ -76,7 +76,7 @@ There are still things to finish — text is displayed in the default font, for 
 ![people-staring-pigeons](/2024-05-31-armonia-second-devlog/people-staring-pigeons.webp){: .w-75 }
 *Looks at the pigeon occasionally when one is nearby*
 
-While working on my [previous milestone](https://hyngng.github.io/posts/palette-second-devlog/), I saw organic animations interacting with the environment using procedural animation and thought they looked really cool. I filed that away and decided to try it this time. I thought it would require technically sophisticated conditions to implement, but since it's provided as a Unity package, it was easier than expected. However, controlling it with code was more complex than I anticipated.
+While working on my [previous milestone](https://hyngng.github.io/en/dev/palette-second-devlog/), I saw organic animations interacting with the environment using procedural animation and thought they looked really cool. I filed that away and decided to try it this time. I thought it would require technically sophisticated conditions to implement, but since it's provided as a Unity package, it was easier than expected. However, controlling it with code was more complex than I anticipated.
 
 Unlike the pigeon, the person's head, body, and legs are separate independent objects. Using the `Multiple Aim Constraint` component from the [Animation Rigging package](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/index.html), I experimentally implemented the ability for the person's head object to look toward pigeons within a certain distance.
 
@@ -118,7 +118,7 @@ My game was strangely overheating to the point where it couldn't maintain 40 FPS
 
 The phone getting uncomfortably warm during debugging bothered me, so I decided to tackle optimization with the Profiler for the first time. The process was simpler than I thought: within the data recorded by the Unity Profiler, I identified which operations were most heavily used in the sections where frame rates were high, and improved those parts.
 
-In my case, `Semaphore.WaitForSignal` was taking up about 50–70% of the share. After reading that in this case, the recommended approach is to switch to a lighter shader, I replaced the [shader file I had previously found](https://hyngng.github.io/posts/armonia-first-devlog/#sprite-shader) with a lighter one. This led to a considerable increase in frame rate and a significant reduction in overheating.
+In my case, `Semaphore.WaitForSignal` was taking up about 50–70% of the share. After reading that in this case, the recommended approach is to switch to a lighter shader, I replaced the [shader file I had previously found](https://hyngng.github.io/en/dev/armonia-first-devlog/#sprite-shader) with a lighter one. This led to a considerable increase in frame rate and a significant reduction in overheating.
 
 ## **Release Criteria**
 

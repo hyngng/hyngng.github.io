@@ -122,7 +122,7 @@ public void Vibrate()
 }
 ```
 
-[以前のプロジェクト](https://hyngng.github.io/posts/armonia-second-devlog/)で上記のように使用したことがあります。プレイヤーが特定オブジェクトをタッチすると、該当オブジェクトがアクティブ化され`MainManager`の`ActivatedObject`の位置に登録される方式ですが、満足のいく動作でした。
+[以前のプロジェクト](https://hyngng.github.io/ja/dev/armonia-second-devlog/)で上記のように使用したことがあります。プレイヤーが特定オブジェクトをタッチすると、該当オブジェクトがアクティブ化され`MainManager`の`ActivatedObject`の位置に登録される方式ですが、満足のいく動作でした。
 
 :::info
 **2025-07-28 更新！**

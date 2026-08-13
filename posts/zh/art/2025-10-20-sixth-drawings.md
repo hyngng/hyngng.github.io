@@ -69,5 +69,5 @@ last_modified_at: 2026-01-29 23:26:00 +0900
 ![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .dark }
 *SNS横幅 #2*
 
-尤其是第一个横幅，适当重用了之前在[数字绘画 #4](https://hyngng.github.io/posts/fourth-drawings/)、[数字绘画 #5](https://hyngng.github.io/posts/fifth-drawings/)中上传过的画作。今后SNS活动是否活跃尚不明朗，但为了将来在Reddit等地需要宣传什么时能传递良好信号，还是先准备着。
+尤其是第一个横幅，适当重用了之前在[数字绘画 #4](https://hyngng.github.io/zh/art/fourth-drawings/)、[数字绘画 #5](https://hyngng.github.io/zh/art/fifth-drawings/)中上传过的画作。今后SNS活动是否活跃尚不明朗，但为了将来在Reddit等地需要宣传什么时能传递良好信号，还是先准备着。
 

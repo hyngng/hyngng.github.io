@@ -22,7 +22,7 @@ mermaid: true
 ## **開発を再開した理由**
 
 :::info
-[前の記事](https://hyngng.github.io/posts/palette-first-devlog/)からの続きです。
+[前の記事](https://hyngng.github.io/ja/dev/palette-first-devlog/)からの続きです。
 :::
 
 ```mermaid
@@ -242,7 +242,7 @@ void PlayerDied()
 }
 ```
 
-後期開発の中ではほぼ最初に実装した機能です。[簡単な株式自動取引機](https://hyngng.github.io/posts/astp-devlog/)を作りながら、APIやSDKなど外部で配布するモジュールを使うことに興味があった時期で、好奇心から広告呼び出し機能を作りました。プレイヤーが死んで結果画面に移行する際に、途中でインタースティシャル広告が表示されるようになります。
+後期開発の中ではほぼ最初に実装した機能です。[簡単な株式自動取引機](https://hyngng.github.io/ja/dev/astp-devlog/)を作りながら、APIやSDKなど外部で配布するモジュールを使うことに興味があった時期で、好奇心から広告呼び出し機能を作りました。プレイヤーが死んで結果画面に移行する際に、途中でインタースティシャル広告が表示されるようになります。
 
 [Google AdMob公式ドキュメント](https://developers.google.com/admob/unity/banner?hl=ko)を参考にしながら作りましたが、公式ガイドをゆっくり辿っていくと、予想よりはるかに簡単に作ることができました。成果物もすっきりと動作して不思議でした。
 
@@ -281,7 +281,7 @@ void Purchase()
 ![google-play-console](/2023-12-24-palette-second-devlog/google-play-console.webp){: .dark w="960" }
 *Google Consoleのストア登録情報記入欄*
 
-アプリ登録はPlayストアに限定し、したがってGoogle Consoleを利用しました。実は[初期開発段階](https://hyngng.github.io/posts/palette-first-devlog/)で一度登録したことがありますが、アプリ登録の手続きや自分のアプリが本当にストアに上がるのかが気になって好奇心で登録したもので、正常に登録されることを確認した後、アプリをすぐに無効化していました。
+アプリ登録はPlayストアに限定し、したがってGoogle Consoleを利用しました。実は[初期開発段階](https://hyngng.github.io/ja/dev/palette-first-devlog/)で一度登録したことがありますが、アプリ登録の手続きや自分のアプリが本当にストアに上がるのかが気になって好奇心で登録したもので、正常に登録されることを確認した後、アプリをすぐに無効化していました。
 
 そして半年以上時間が経つと、これ以上このプロジェクトに時間を投じるのが負担に感じられるようになり、ゲームの完成度も最初よりはかなり見られるようになったと思い、アプリをアップデートした後、有効化することにしました。登録にあたってはアプリ名とアプリ説明を新たに書き、アプリアイコンとグラフィック画像、そして自社スクリーンショットも新しいものにアップデートしました。
 

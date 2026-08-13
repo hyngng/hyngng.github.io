@@ -69,4 +69,4 @@ last_modified_at: 2026-01-29 23:26:00 +0900
 ![banner-beer-twitter](/2025-10-20-sixth-drawings/banner-beer-twitter.webp){: .rounded-10 .dark }
 *SNSバナー #2*
 
-特に最初のバナーは以前[デジタルドローイング #4](https://hyngng.github.io/posts/fourth-drawings/)、[デジタルドローイング #5](https://hyngng.github.io/posts/fifth-drawings/)のときに載せた絵を適宜再利用して作りました。今後SNS活動が活発になるかは不透明ですが、将来Redditなどで何か宣伝するときに良いシグナルを与えるためにも準備しておこうと思います。
+特に最初のバナーは以前[デジタルドローイング #4](https://hyngng.github.io/ja/art/fourth-drawings/)、[デジタルドローイング #5](https://hyngng.github.io/ja/art/fifth-drawings/)のときに載せた絵を適宜再利用して作りました。今後SNS活動が活発になるかは不透明ですが、将来Redditなどで何か宣伝するときに良いシグナルを与えるためにも準備しておこうと思います。

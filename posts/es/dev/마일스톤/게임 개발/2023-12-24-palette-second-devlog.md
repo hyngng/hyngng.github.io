@@ -22,7 +22,7 @@ mermaid: true
 ## **Por qué retomé el desarrollo**
 
 :::info
-Continúa desde [la entrada anterior](https://hyngng.github.io/posts/palette-first-devlog/).
+Continúa desde [la entrada anterior](https://hyngng.github.io/es/dev/palette-first-devlog/).
 :::
 
 ```mermaid
@@ -242,7 +242,7 @@ void PlayerDied()
 }
 ```
 
-Fue una de las primeras funciones que implementé en el desarrollo tardío. Como al hacer el [simple automatizador de trading de acciones](https://hyngng.github.io/posts/astp-devlog/) me interesaba usar módulos distribuidos externamente, como APIs o SDKs, por curiosidad creé la función de llamada a anuncios. Cuando el jugador muere y pasa a la pantalla de resultados, aparece un anuncio intersticial.
+Fue una de las primeras funciones que implementé en el desarrollo tardío. Como al hacer el [simple automatizador de trading de acciones](https://hyngng.github.io/es/dev/astp-devlog/) me interesaba usar módulos distribuidos externamente, como APIs o SDKs, por curiosidad creé la función de llamada a anuncios. Cuando el jugador muere y pasa a la pantalla de resultados, aparece un anuncio intersticial.
 
 Lo hice consultando la [documentación oficial de Google AdMob](https://developers.google.com/admob/unity/banner?hl=ko), y siguiendo lentamente la guía oficial resultó mucho más fácil de lo que esperaba. El resultado funcionó de forma limpia y me pareció sorprendente.
 
@@ -281,7 +281,7 @@ Para mantener la coherencia, el logotipo de la aplicación se hizo con la misma 
 ![google-play-console](/2023-12-24-palette-second-devlog/google-play-console.webp){: .dark w="960" }
 *Campos de información del registro en la tienda en Google Console*
 
-El registro de la aplicación se limitó a Play Store, por lo que usé Google Console. De hecho, ya la había registrado una vez durante [la fase de desarrollo inicial](https://hyngng.github.io/posts/palette-first-devlog/), pero fue por curiosidad, para ver cómo era el proceso de registro y si mi aplicación realmente aparecía en la tienda; una vez que confirmé que se registraba correctamente, la desactivé inmediatamente.
+El registro de la aplicación se limitó a Play Store, por lo que usé Google Console. De hecho, ya la había registrado una vez durante [la fase de desarrollo inicial](https://hyngng.github.io/es/dev/palette-first-devlog/), pero fue por curiosidad, para ver cómo era el proceso de registro y si mi aplicación realmente aparecía en la tienda; una vez que confirmé que se registraba correctamente, la desactivé inmediatamente.
 
 Pasados más de seis meses, sentí que seguir invirtiendo tiempo en este proyecto se estaba volviendo una carga, y también consideré que el nivel de finalización del juego había mejorado bastante respecto al principio, así que decidí actualizar la aplicación y reactivarla. Durante el registro, reescribí el nombre y la descripción de la aplicación, y también actualicé el icono, las imágenes gráficas y las capturas de pantalla propias.
 

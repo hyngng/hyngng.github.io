@@ -121,7 +121,7 @@ public void Vibrate()
 }
 ```
 
-I used it as shown above in a [previous project](https://hyngng.github.io/posts/armonia-second-devlog/). When the player touches a specific object, that object becomes active and registers itself in `MainManager`'s `ActivatedObject` slot — it worked quite well.
+I used it as shown above in a [previous project](https://hyngng.github.io/en/dev/armonia-second-devlog/). When the player touches a specific object, that object becomes active and registers itself in `MainManager`'s `ActivatedObject` slot — it worked quite well.
 
 :::info
 **Updated on 2025-07-28!**

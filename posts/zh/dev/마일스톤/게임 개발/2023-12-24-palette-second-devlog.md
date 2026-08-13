@@ -22,7 +22,7 @@ mermaid: true
 ## **重新开始开发的原因**
 
 :::info
-接[前一篇文章](https://hyngng.github.io/posts/palette-first-devlog/)。
+接[前一篇文章](https://hyngng.github.io/zh/dev/palette-first-devlog/)。
 :::
 
 ```mermaid
@@ -242,7 +242,7 @@ void PlayerDied()
 }
 ```
 
-这是后期开发中最早实现的功能之一。制作[简单的自动股票交易机](https://hyngng.github.io/posts/astp-devlog/)时，对使用 API 或 SDK 等外部发布模块产生了兴趣，出于好奇制作了广告调用功能。当玩家死亡进入结果窗口时，其间会弹出插页式广告。
+这是后期开发中最早实现的功能之一。制作[简单的自动股票交易机](https://hyngng.github.io/zh/dev/astp-devlog/)时，对使用 API 或 SDK 等外部发布模块产生了兴趣，出于好奇制作了广告调用功能。当玩家死亡进入结果窗口时，其间会弹出插页式广告。
 
 参考 [Google AdMob 官方文档](https://developers.google.com/admob/unity/banner?hl=ko)进行制作，跟着官方指南一步步来，比预想中简单得多。效果也很干净利落，让人惊奇。
 
@@ -281,7 +281,7 @@ void Purchase()
 ![google-play-console](/2023-12-24-palette-second-devlog/google-play-console.webp){: .dark w="960" }
 *Google Console 的商店注册信息填写栏*
 
-应用注册限定在 Play Store，因此使用了 Google Console。实际上在[初期开发阶段](https://hyngng.github.io/posts/palette-first-devlog/)已经注册过一次，当时只是因为好奇应用注册流程以及想确认自己的应用是否真的能上架，所以注册后确认正常上架便立即停用了应用。
+应用注册限定在 Play Store，因此使用了 Google Console。实际上在[初期开发阶段](https://hyngng.github.io/zh/dev/palette-first-devlog/)已经注册过一次，当时只是因为好奇应用注册流程以及想确认自己的应用是否真的能上架，所以注册后确认正常上架便立即停用了应用。
 
 过了半年多，觉得再投入时间到这个项目已经有些负担，同时游戏的完成度也比初版有了不少改善，于是决定更新应用后重新启用。注册时重新编写了应用名称和应用说明，应用图标、图形图像以及自定义截图也更新为新的。
 

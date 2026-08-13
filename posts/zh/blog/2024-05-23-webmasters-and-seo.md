@@ -142,7 +142,7 @@ end
 Liquid::Template.register_filter(Jekyll::ContentFilter)
 ```
 
-`content`经过`content_filter`这个自定义Ruby插件处理，旨在去除标题、发布日期、作者以及"引言"等作为description不需要的信息。利用文章正文全部传递到`<div class="content"></div>`标签的方式，虽然[之前实现过类似的代码](https://hyngng.github.io/posts/blog-content-remove/)，但由于还不够熟悉，这部分咨询了GPT。
+`content`经过`content_filter`这个自定义Ruby插件处理，旨在去除标题、发布日期、作者以及"引言"等作为description不需要的信息。利用文章正文全部传递到`<div class="content"></div>`标签的方式，虽然[之前实现过类似的代码](https://hyngng.github.io/zh/blog/blog-content-remove/)，但由于还不够熟悉，这部分咨询了GPT。
 
 
 :::info

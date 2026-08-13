@@ -4,6 +4,7 @@
 
 - [ ] SEO 관련 작업
   - [x] **Robots.txt & Sitemap**: `request.url`에서 origin을 추출하여 동적 생성. `astro.config.mjs`의 `site: SITE.url` 설정으로 dev/prod 환경별 올바른 절대 URL 자동 반영.
+  - **후속 (2026-08)**: sitemap.xml 스키마 URL(http → https) 변경으로 `xhtml:link`가 있어도 Chromium/Firefox에서 네이티브 XML 트리 뷰 렌더링 복구. 원인: `http://www.w3.org/1999/xhtml`이 HTML/XHTML과 동일 URI라 뷰어가 XHTML 모드 전환 후 트리 렌더링 실패(raw 텍스트 폴백, `childNodes` 크래시). 상세는 `sitemap.md` 참조.
   - [x] **Open Graph 메타 태그**: og:title, og:description, og:url, og:type, og:site_name, twitter:card 등 `<head>` 내 메타 태그 추가. 포스트 페이지에서는 포스트 제목/설명으로 동적 오버라이드. BaseLayout의 `<slot name="head">` 기본값으로 사이트 전역 OG 태그 관리.
   - [x] **Open Graph 이미지**: 
     - 포스트 프론트매터 내 OG 이미지 필드(og_image) 지원 (우선순위: og_image 프론트매터 > image.path(썸네일) > SITE.ogImage 기본값).
@@ -178,6 +179,8 @@
   - `prefers-reduced-motion: tooltip-fade-in 0.15s ease` (enter animation only).
   - 테마별 `--color-tooltip-bg`, `--color-tooltip-text` 변수 사용 (light: `#1e1e1e/#fff`, dark: `#2a2a2e/#e0e0e0`).
   - `width: max-content`로 포함 블록(각주 번호 폭) 너비 제약 우회. `max-width: min(320px, 90vw)`로 상한 유지.
+  - [x] **"Footnotes" h2 라벨 제거 및 로케일 번역**: `remark-rehype`가 생성하는 `<h2 class="sr-only" id="footnote-label">`를 옵션(`remarkRehype.footnoteLabelTagName: 'span'`)으로 `span`으로 전환해 TOC 오염(`rehypeHeadingIds`가 `tagName[0] !== 'h'` 제외) 해소 + 표준 `.sr-only` CSS(`global.css`)로 시각 숨김. 라벨 텍스트는 `rehype-footnote-tooltip.mjs`가 `file.history`의 `/posts/{lang}/` 경로로 로케일을 추정해 `getLocale(lang).footnote.label`로 교체 (7개 로케일 추가). DOM 제거를 하지 않는 이유(접근성: `aria-describedby` 연결 보존)는 `docs/ai-docs/features/footnotes.md`에 문서화. 검증: build 성공, astro check 0 errors, dist에서 7개 언어 span 라벨·TOC 미포함 확인.
+  - [x] **본문 마크다운 하이퍼링크 재정의**: Jekyll 시절 구 URL(`https://hyngng.github.io/posts/{slug}/`) 하이퍼링크 235개를 현재 다국어 라우팅 규칙(`/{author}/{slug}/` 또는 `/{lang}/{author}/{slug}/`)에 맞춰 일괄 업데이트. 대상 언어에 포스트가 존재하는 항목만 변환, 앵커(#) 보존. 상세는 `docs/ai-docs/features/posts.md` 참조.
 - [ ] **PC 검색바 수직 위치 10px 하향 조정**
   - `.search-sidebar`의 `top: var(--posts-section-margin-top)` (80px) 대신 별도 토큰으로 10px 추가하여 포스트 영역 시작점보다 살짝 아래에 배치.
   - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.

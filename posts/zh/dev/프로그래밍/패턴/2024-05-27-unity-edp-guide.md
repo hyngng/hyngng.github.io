@@ -20,7 +20,7 @@ redirect_from:
 
 ## **引言**
 
-事件驱动编程(Event Driven Programming)是一种程序流程由事件决定的编程范式，负责事件的发生、管理和执行，用于提高代码的可扩展性，管理可读性和可维护性。它在[其他游戏开发过程](https://hyngng.github.io/posts/armonia-first-devlog/)中提供了很大帮助，我认为将来也会很有用，因此整理成文。
+事件驱动编程(Event Driven Programming)是一种程序流程由事件决定的编程范式，负责事件的发生、管理和执行，用于提高代码的可扩展性，管理可读性和可维护性。它在[其他游戏开发过程](https://hyngng.github.io/zh/dev/armonia-first-devlog/)中提供了很大帮助，我认为将来也会很有用，因此整理成文。
 
 ## **基本概念**
 
@@ -194,4 +194,4 @@ public class ListenerObject : MonoBehaviour
 
 ![example](/2024-05-27-event-driven-programming/example.webp)
 
-这是在[正在开发的游戏](https://hyngng.github.io/posts/armonia-first-devlog/)中使用的示例。选择特定对象时，部分可交互对象会以黄色系高亮显示，取消选择该对象时则恢复原状。这是通过事件驱动编程实现的。
+这是在[正在开发的游戏](https://hyngng.github.io/zh/dev/armonia-first-devlog/)中使用的示例。选择特定对象时，部分可交互对象会以黄色系高亮显示，取消选择该对象时则恢复原状。这是通过事件驱动编程实现的。

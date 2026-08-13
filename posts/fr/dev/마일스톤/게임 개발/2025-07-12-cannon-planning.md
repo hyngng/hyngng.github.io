@@ -24,7 +24,7 @@ lang: fr
 **Cet article est un concept design !**
 :::
 
-L'une des leçons tirées de [l'expérience du projet précédent](https://hyngng.github.io/posts/armonia-devlog-cancelled/) est que développer quelque chose sur une longue période implique de s'engager dans un certain contexte plus vaste. Le processus de développement pourrait facilement devenir une expérience fatigante et douloureuse, il est donc nécessaire de bien choisir son sujet avec réflexion et prudence.
+L'une des leçons tirées de [l'expérience du projet précédent](https://hyngng.github.io/fr/dev/armonia-devlog-cancelled/) est que développer quelque chose sur une longue période implique de s'engager dans un certain contexte plus vaste. Le processus de développement pourrait facilement devenir une expérience fatigante et douloureuse, il est donc nécessaire de bien choisir son sujet avec réflexion et prudence.
 
 Ce concept design est une petite expérience dans ce contexte. Pendant environ 1 à 2 mois, je vais concrétiser des idées pour raccourcir le processus de développement via la création de brouillons, la rédaction de documents, la conception de classes, etc., puis, en pesant les coûts d'opportunité, soit développer réellement le jeu, soit organiser mes réflexions intermédiaires par écrit.
 

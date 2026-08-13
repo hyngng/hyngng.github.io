@@ -48,6 +48,9 @@ export interface Locale {
     title: string;
     aria: string;
   };
+  footnote: {
+    label: string;
+  };
   footer: {
     rights: string;
     poweredBy: (theme: string) => string;

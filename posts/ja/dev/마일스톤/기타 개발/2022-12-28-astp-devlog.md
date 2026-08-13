@@ -125,7 +125,7 @@ UIのない単純なPythonプログラムのため、コマンドプロンプト
 - 韓国投資証券が提供するサービスを利用するために、プログラム外で事前作業が二つ必要です。
     1. 韓国投資証券の口座を開設し、[OpenAPI](https://apiportal.koreainvestment.com/intro)を申請する必要があります。申請ページで`key`と`secret`を発行され、その値を仮想口座番号と共にプロジェクト内の`mock.key`に保存して使用するためです。
     2. 注文の送受信や残高照会などを処理するために、韓国投資証券が提供する[eFriend Expert](https://www.truefriend.com/main/customer/systemdown/OpenAPI.jsp?cmd=TF04ea01200)プログラムをインストールする必要があります。
-- この他に、共同認証書モジュールが64bit環境を未サポートという問題があるため、不便でも[32bit仮想環境](https://hyngng.github.io/posts/virtual-32bit/)を任意に構築し、構築された仮想環境上でコードを実行する必要があります。
+- この他に、共同認証書モジュールが64bit環境を未サポートという問題があるため、不便でも[32bit仮想環境](https://hyngng.github.io/ja/dev/virtual-32bit/)を任意に構築し、構築された仮想環境上でコードを実行する必要があります。
 
 ## **おわりに**
 

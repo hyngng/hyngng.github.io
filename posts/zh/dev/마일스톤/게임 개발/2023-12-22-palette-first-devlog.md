@@ -23,7 +23,7 @@ mermaid: true
 
 2023 年新年，我需要找点事做。既然要做，我希望做点既能提高编程熟练度、又能让我乐在其中的东西。新年钟声敲响后的第二天，我制定了几项计划。
 
-想了一下几个想法，包括基于六何原则的 Python 库、类无反相机风格的应用、2D 移动端游戏等。这些分别源于[基于 Python 的程序](https://hyngng.github.io/posts/astp-devlog/)、使用 Android Studio 制作简单应用的经验，或[之前的 Unity 项目](https://hyngng.github.io/posts/lavad-devlog/)。
+想了一下几个想法，包括基于六何原则的 Python 库、类无反相机风格的应用、2D 移动端游戏等。这些分别源于[基于 Python 的程序](https://hyngng.github.io/zh/dev/astp-devlog/)、使用 Android Studio 制作简单应用的经验，或[之前的 Unity 项目](https://hyngng.github.io/zh/dev/lavad-devlog/)。
 
 但是游戏开发看起来太有趣了。之前使用 Unity 的经验本身就很新奇，而且当时能够自给自足使用资源这一点看起来非常吸引人。虽然确实是辛苦活儿，但用别人找不到的独有素材来制作程序这个主题非常吸引我，而且正值我对面向对象产生兴趣的时候，想认真使用一下面向对象语言，于是开始制作 2D 移动端游戏。
 

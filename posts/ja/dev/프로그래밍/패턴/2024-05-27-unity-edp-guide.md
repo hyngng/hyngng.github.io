@@ -20,7 +20,7 @@ redirect_from:
 
 ## **はじめに**
 
-イベント駆動型プログラミング(Event Driven Programming)は、プログラムの流れがイベントによって決定されるプログラミングパラダイムで、イベントの発生、管理、実行を主管し、コードの拡張性を高め、可読性と保守性を管理するために使用します。[他のゲーム開発過程](https://hyngng.github.io/posts/armonia-first-devlog/)で大いに役立ったので、今後も有用に使えそうで記事にまとめます。
+イベント駆動型プログラミング(Event Driven Programming)は、プログラムの流れがイベントによって決定されるプログラミングパラダイムで、イベントの発生、管理、実行を主管し、コードの拡張性を高め、可読性と保守性を管理するために使用します。[他のゲーム開発過程](https://hyngng.github.io/ja/dev/armonia-first-devlog/)で大いに役立ったので、今後も有用に使えそうで記事にまとめます。
 
 ## **基本概念**
 
@@ -194,4 +194,4 @@ public class ListenerObject : MonoBehaviour
 
 ![example](/2024-05-27-event-driven-programming/example.webp)
 
-[開発中のゲーム](https://hyngng.github.io/posts/armonia-first-devlog/)で使用した例です。特定オブジェクトを選択すると、一部のインタラクション可能なオブジェクトが黄色系で表示され、該当オブジェクトの選択を解除すると元に戻ります。イベント駆動型プログラミングで実装しました。
+[開発中のゲーム](https://hyngng.github.io/ja/dev/armonia-first-devlog/)で使用した例です。特定オブジェクトを選択すると、一部のインタラクション可能なオブジェクトが黄色系で表示され、該当オブジェクトの選択を解除すると元に戻ります。イベント駆動型プログラミングで実装しました。

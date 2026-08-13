@@ -23,7 +23,7 @@ mermaid: true
 
 En el Año Nuevo de 2023, necesitaba encontrar algo que hacer. Pensé que, a ser posible, quería crear algo que me ayudara a mejorar mi habilidad en programación y que además disfrutara. Así que después de que sonaran las campanas de Nochevieja, al día siguiente hice algunos planes.
 
-Considerando varias ideas, se me ocurrieron: una librería de Python basada en las 6W (qué, quién, cuándo, dónde, por qué, cómo — Who, What, When, Where, Why, How), una aplicación de cámara estilo mirrorless, y un juego 2D para móvil. Cada una derivaba de [un programa en Python](https://hyngng.github.io/posts/astp-devlog/), de la experiencia haciendo una aplicación sencilla con Android Studio, o de [un proyecto anterior de Unity](https://hyngng.github.io/posts/lavad-devlog/).
+Considerando varias ideas, se me ocurrieron: una librería de Python basada en las 6W (qué, quién, cuándo, dónde, por qué, cómo — Who, What, When, Where, Why, How), una aplicación de cámara estilo mirrorless, y un juego 2D para móvil. Cada una derivaba de [un programa en Python](https://hyngng.github.io/es/dev/astp-devlog/), de la experiencia haciendo una aplicación sencilla con Android Studio, o de [un proyecto anterior de Unity](https://hyngng.github.io/es/dev/lavad-devlog/).
 
 Pero el desarrollo de juegos me parecía demasiado divertido. La experiencia previa con Unity me había impresionado, y la idea de poder usar recursos autogestionados me parecía muy interesante. Aunque fuera un trabajo duro, el tema de crear un programa con material propio que no se encuentra en otros lugares me resultaba muy atractivo, y como justo estaba disfrutando de la orientación a objetos, quería usar un lenguaje orientado a objetos en serio, así que empecé a desarrollar un juego 2D para móvil.
 

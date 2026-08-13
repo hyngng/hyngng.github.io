@@ -1,4 +1,13 @@
 import { visit } from 'unist-util-visit';
+import { getLocale } from '../locales/index';
+
+const LOCALE_FROM_PATH = /[\\/]posts[\\/]([a-z]{2})[\\/]/;
+
+function localeLabel(file) {
+  const path = file?.history?.[0] ?? '';
+  const match = LOCALE_FROM_PATH.exec(path);
+  return getLocale(match?.[1]).footnote.label;
+}
 
 function toInlineSafe(node) {
   if (node.type === 'element' && (node.tagName === 'p' || node.tagName === 'div')) {
@@ -16,7 +25,15 @@ function toInlineSafe(node) {
 }
 
 export function rehypeFootnoteTooltip() {
-  return (tree) => {
+  return (tree, file) => {
+    const label = localeLabel(file);
+
+    visit(tree, 'element', (node) => {
+      if (node.properties?.id === 'footnote-label') {
+        node.children = [{ type: 'text', value: label }];
+      }
+    });
+
     const definitions = new Map();
     visit(tree, 'element', (node) => {
       if (

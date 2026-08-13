@@ -21,7 +21,7 @@ Cet article a été rédigé sous le framework Jekyll. Il a depuis migré vers A
 
 ## **Introduction**
 
-Cela fait bientôt deux ans que j'ai ouvert ce blog depuis [mon premier article](https://hyngng.github.io/posts/first-post/). Pour deux ans, le nombre d'articles écrits jusqu'à présent n'est pas énorme, mais cela ne signifie pas que je n'y suis pas attaché. Entre les obligations professionnelles et personnelles, et les périodes où mon activité s'est ralentie, j'ai continué à gérer ce blog régulièrement.
+Cela fait bientôt deux ans que j'ai ouvert ce blog depuis [mon premier article](https://hyngng.github.io/fr/blog/first-post/). Pour deux ans, le nombre d'articles écrits jusqu'à présent n'est pas énorme, mais cela ne signifie pas que je n'y suis pas attaché. Entre les obligations professionnelles et personnelles, et les périodes où mon activité s'est ralentie, j'ai continué à gérer ce blog régulièrement.
 
 Récemment, en remaniant le blog et en l'inscrivant aux moteurs de recherche, j'ai réalisé que je m'étais pas mal familiarisé avec la plateforme GitHub Blog. Écrire des articles est devenu bien plus facile, et le temps libre ainsi gagné me permet de peaufiner le blog. Personnellement, même si choisir GitHub Blog était un pari, j'ai l'impression d'apprécier le caractère unique de cette plateforme, et je voudrais résumer ce qui rend GitHub Blog si attrayant à mes yeux.
 
@@ -40,7 +40,7 @@ Contrairement aux autres plateformes de blog, GitHub Blog donne une impression d
 - SCSS
 - JavaScript
 
-Dans mon cas, j'ai déjà écrit deux articles à ce sujet : l'un sur [divers réglages de personnalisation](https://hyngng.github.io/posts/first-blog-customization/) et l'autre sur [l'implémentation d'une fonction spécifique](https://hyngng.github.io/posts/blog-content-remove/). Sans en faire un article à part, j'ai aussi récemment ajouté quelques gadgets comme les images LQIP, l'icône Instagram, et le bouton d'applaudissements.
+Dans mon cas, j'ai déjà écrit deux articles à ce sujet : l'un sur [divers réglages de personnalisation](https://hyngng.github.io/fr/blog/first-blog-customization/) et l'autre sur [l'implémentation d'une fonction spécifique](https://hyngng.github.io/fr/blog/blog-content-remove/). Sans en faire un article à part, j'ai aussi récemment ajouté quelques gadgets comme les images LQIP, l'icône Instagram, et le bouton d'applaudissements.
 
 La liberté de personnalisation rend l'embellissement du blog amusant, et c'est ce qui me motive à continuer à m'y intéresser et à le gérer régulièrement. Je passe mon temps à observer mon blog en me demandant comment l'améliorer, ou à chercher d'autres blogs similaires pour voir quelles bonnes idées je pourrais y importer.
 

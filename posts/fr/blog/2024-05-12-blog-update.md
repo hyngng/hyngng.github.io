@@ -30,7 +30,7 @@ Il est recommandé de sauvegarder vos fichiers au préalable !
 
 Comme GitHub Blog est moins lié au fournisseur de services que les autres plateformes, le processus de mise à jour consiste simplement à importer les nouveaux fichiers et codes dans le dossier existant. Il s'agit uniquement de fusionner (merge) le code mis à jour dans mon dépôt. Pour ceux qui ont déjà expérimenté le processus de fusion via Git, ce ne devrait pas être trop difficile.
 
-Dans mon cas, j'avais [personnalisé le thème](https://hyngng.github.io/posts/first-blog-customization/) en améliorant la traduction coréenne dans `_data/locales/ko-KR.yml`, en modifiant le type et la taille des icônes de la barre latérale, et en mettant les titres de prévisualisation en gras. Ces modifications n'étant pas officiellement prises en charge, je dois, à chaque mise à jour, vérifier et préserver le code modifié comme un chirurgien. Le [guide de mise à jour officiel](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide) recommande également de « Please be patient and careful to resolve these conflicts ».
+Dans mon cas, j'avais [personnalisé le thème](https://hyngng.github.io/fr/blog/first-blog-customization/) en améliorant la traduction coréenne dans `_data/locales/ko-KR.yml`, en modifiant le type et la taille des icônes de la barre latérale, et en mettant les titres de prévisualisation en gras. Ces modifications n'étant pas officiellement prises en charge, je dois, à chaque mise à jour, vérifier et préserver le code modifié comme un chirurgien. Le [guide de mise à jour officiel](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide) recommande également de « Please be patient and careful to resolve these conflicts ».
 
 ### **Fusion automatique**
 

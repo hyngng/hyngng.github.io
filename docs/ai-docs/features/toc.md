@@ -8,6 +8,7 @@ Astro 정적 렌더링과 클라이언트 ScrollSpy 스크립트를 조합해 �
 
 - `render(post)`에서 `Content`와 `headings`를 함께 받음.
 - `headings`를 `PostLayout`에 전달함.
+- headings는 `rehypeHeadingIds`가 수집하며, `h1`~`h6`가 아닌 요소(예: 각주 라벨 `<span id="footnote-label">`)는 제외됨. 상세는 `footnotes.md` 참조.
 
 ## `src/layouts/PostLayout.astro`
 

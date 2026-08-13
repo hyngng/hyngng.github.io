@@ -122,7 +122,7 @@ public void Vibrate()
 }
 ```
 
-在[之前的项目](https://hyngng.github.io/posts/armonia-second-devlog/)中曾如上使用。玩家触摸特定对象时，该对象被激活并注册到 `MainManager` 的 `ActivatedObject` 位置，效果令人满意。
+在[之前的项目](https://hyngng.github.io/zh/dev/armonia-second-devlog/)中曾如上使用。玩家触摸特定对象时，该对象被激活并注册到 `MainManager` 的 `ActivatedObject` 位置，效果令人满意。
 
 :::info
 **2025-07-28 已更新！**

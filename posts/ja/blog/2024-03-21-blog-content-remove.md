@@ -18,7 +18,7 @@ Jekyllフレームワークを使用していた時に書かれた記事です�
 
 ## **はじめに**
 
-Chirpyテーマはすっきりと整っているが、素の状態ではこれは改善が必要だと思う部分が時々見られる。[ちょこちょこと修正](https://hyngng.github.io/posts/first-blog-customization/)はしているが、個人的に惜しい点がまだいくつか残っていた。
+Chirpyテーマはすっきりと整っているが、素の状態ではこれは改善が必要だと思う部分が時々見られる。[ちょこちょこと修正](https://hyngng.github.io/ja/blog/first-blog-customization/)はしているが、個人的に惜しい点がまだいくつか残っていた。
 
 ![before-light](/2024-03-21-blog-content-remove/before-light.webp){: .light .w-75 .border }
 ![before-dark](/2024-03-21-blog-content-remove/before-dark.webp){: .dark .w-75 }

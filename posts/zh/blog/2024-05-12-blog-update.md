@@ -30,7 +30,7 @@ last_modified_at: 2025-10-20 13:55:00 +0900
 
 GitHub博客相比其他博客平台，与服务提供商的耦合度较低，因此更新过程可以简单理解为将新文件和代码合并到现有文件夹中。因为只需将通过更新后的代码合并(Merge)到我的仓库中。所以，对于经历过Git合并流程的人来说并不困难。
 
-我的情况是，在[对主题进行定制](https://hyngng.github.io/posts/first-blog-customization/)时，自行改进了`_data/locales/ko-KR.yml`的韩语翻译内容、更改了侧边栏图标的类型和大小、单独对文章预览标题做了加粗处理等多项调整。这些修改自然不会在官方更新中反映，因此每次更新时都需要像外科手术一样逐一确认并保留被修改的代码。[官方升级指南](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide)也提醒要"Please be patient and careful to resolve these conflicts"。
+我的情况是，在[对主题进行定制](https://hyngng.github.io/zh/blog/first-blog-customization/)时，自行改进了`_data/locales/ko-KR.yml`的韩语翻译内容、更改了侧边栏图标的类型和大小、单独对文章预览标题做了加粗处理等多项调整。这些修改自然不会在官方更新中反映，因此每次更新时都需要像外科手术一样逐一确认并保留被修改的代码。[官方升级指南](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide)也提醒要"Please be patient and careful to resolve these conflicts"。
 
 ### **自动合并**
 

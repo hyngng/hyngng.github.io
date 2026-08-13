@@ -38,7 +38,7 @@ En cherchant à comprendre les caractéristiques des capteurs de smartphones —
 1. Amélioration du rapport signal/bruit (SNR)
 2. Amélioration de la plage dynamique (DR)
 
-Mais l'essentiel est de savoir quel bénéfice on tire par rapport au poids et à l'encombrement. L'exemple le plus frappant : j'ai constaté ces trois dernières années qu'[un smartphone comme le Galaxy S22 Ultra peut déjà prendre des photos impressionnantes](https://hyngng.github.io/posts/photos-of-eulsa-year/). Le bruit n'est pas un problème quand la lumière est suffisante, et même autrement, le débruitage IA peut largement compenser. Le seul avantage qu'un grand capteur monopolise est la DR, et encore, elle n'est pas cruciale dans des conditions quotidiennes, et peut être compensée par un assemblage HDR en environnement statique.
+Mais l'essentiel est de savoir quel bénéfice on tire par rapport au poids et à l'encombrement. L'exemple le plus frappant : j'ai constaté ces trois dernières années qu'[un smartphone comme le Galaxy S22 Ultra peut déjà prendre des photos impressionnantes](https://hyngng.github.io/fr/photography/photos-of-eulsa-year/). Le bruit n'est pas un problème quand la lumière est suffisante, et même autrement, le débruitage IA peut largement compenser. Le seul avantage qu'un grand capteur monopolise est la DR, et encore, elle n'est pas cruciale dans des conditions quotidiennes, et peut être compensée par un assemblage HDR en environnement statique.
 
 ### **Déceptions émotionnelles**
 

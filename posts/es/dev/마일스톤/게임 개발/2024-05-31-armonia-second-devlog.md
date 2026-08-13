@@ -22,7 +22,7 @@ mermaid: true
 ## **Introducción**
 
 :::info
-Continúa desde [la entrada anterior](https://hyngng.github.io/posts/armonia-first-devlog/).
+Continúa desde [la entrada anterior](https://hyngng.github.io/es/dev/armonia-first-devlog/).
 :::
 
 Esta es la crónica de desarrollo de mi [cuarto hito](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/). He organizado los resultados de otro mes de trabajo. Este mes, el trabajo se centró principalmente en la expansión del sistema y el contenido del juego. En detalle, lo creado en esta fase es lo siguiente:
@@ -76,7 +76,7 @@ Aunque aún quedan partes por completar, como que el texto se muestra con la fue
 ![people-staring-pigeons](/2024-05-31-armonia-second-devlog/people-staring-pigeons.webp){: .w-75 }
 *Si hay una paloma cerca, la miran de vez en cuando*
 
-Al crear [el hito anterior](https://hyngng.github.io/posts/palette-second-devlog/), vi que se usaba animación procedural para crear animaciones orgánicas que interactúan con el entorno, y pensé que era realmente genial, así que lo recordé bien y lo probé esta vez. Pensaba que se implementaba con condiciones técnicamente sofisticadas, pero como se proporciona como paquete de Unity, resultó más fácil de lo esperado; sin embargo, controlarlo mediante código fue más complejo de lo que imaginaba.
+Al crear [el hito anterior](https://hyngng.github.io/es/dev/palette-second-devlog/), vi que se usaba animación procedural para crear animaciones orgánicas que interactúan con el entorno, y pensé que era realmente genial, así que lo recordé bien y lo probé esta vez. Pensaba que se implementaba con condiciones técnicamente sofisticadas, pero como se proporciona como paquete de Unity, resultó más fácil de lo esperado; sin embargo, controlarlo mediante código fue más complejo de lo que imaginaba.
 
 A diferencia de la paloma, la persona tiene la cabeza, el cuerpo y las piernas como objetos independientes separados, así que utilicé el componente `Multiple Aim Constraint` del [paquete Animation Rigging](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/index.html) para implementar, a modo de prueba, la función de que el objeto de la cabeza de la persona mire hacia una paloma dentro de una cierta distancia.
 
@@ -118,7 +118,7 @@ Extrañamente, mi juego tenía un calor excesivo tras la compilación, hasta el 
 
 Durante la depuración, el teléfono se calentaba rápidamente y resultaba incómodo, así que por primera vez intenté optimizar usando el Profiler. El proceso fue más simple de lo que pensaba: se trataba de encontrar qué operación se estaba ejecutando más en las secciones donde el Profiler de Unity registraba fotogramas altos y mejorar esa parte.
 
-En mi caso, `Semaphore.WaitForSignal` ocupaba entre el 50 y el 70% del tiempo. Al leer un artículo que recomendaba cambiar el shader por uno más ligero en estos casos, sustituí [el archivo de shader que había encontrado antes](https://hyngng.github.io/posts/armonia-first-devlog/#%EC%8A%A4%ED%94%84%EB%9D%BC%EC%9D%B4%ED%8A%B8-%EC%85%B0%EC%9D%B4%EB%8D%94) por uno más ligero, y pude experimentar un aumento considerable de FPS y una reducción significativa del calor.
+En mi caso, `Semaphore.WaitForSignal` ocupaba entre el 50 y el 70% del tiempo. Al leer un artículo que recomendaba cambiar el shader por uno más ligero en estos casos, sustituí [el archivo de shader que había encontrado antes](https://hyngng.github.io/es/dev/armonia-first-devlog/#%EC%8A%A4%ED%94%84%EB%9D%BC%EC%9D%B4%ED%8A%B8-%EC%85%B0%EC%9D%B4%EB%8D%94) por uno más ligero, y pude experimentar un aumento considerable de FPS y una reducción significativa del calor.
 
 ## **Criterios de lanzamiento**
 

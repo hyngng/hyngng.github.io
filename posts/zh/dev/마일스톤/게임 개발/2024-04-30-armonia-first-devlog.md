@@ -21,7 +21,7 @@ mermaid: true
 
 ## **前言**
 
-> 接[前一篇文章](https://hyngng.github.io/posts/armonia-devlog-planning/)。
+> 接[前一篇文章](https://hyngng.github.io/zh/dev/armonia-devlog-planning/)。
 
 这是有趣而再次挑战的[第四个里程碑](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/)开发记录。为了在制作过程中整理笔记，也需要进行中期检查，所以简单整理了约一个月的工作成果。本开发阶段制作的内容整理如下。
 

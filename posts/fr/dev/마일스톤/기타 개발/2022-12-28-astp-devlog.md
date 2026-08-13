@@ -125,7 +125,7 @@ def ndx_collapsed():
 - L'utilisation des services fournis par Korea Investment & Securities nécessite deux étapes préalables en dehors du programme.
     1. Ouvrir un compte chez Korea Investment & Securities et demander l'[OpenAPI](https://apiportal.koreainvestment.com/intro). Sur la page de demande, obtenir une `key` et un `secret`, puis les enregistrer avec le numéro de compte virtuel dans le fichier `mock.key` du projet.
     2. Installer le programme [eFriend Expert](https://www.truefriend.com/main/customer/systemdown/OpenAPI.jsp?cmd=TF04ea01200) fourni par Korea Investment & Securities pour traiter la transmission des ordres et la consultation des soldes.
-- En outre, le module de certificat numérique commun ne prenant pas en charge l'environnement 64 bits, il est nécessaire de construire un [environnement virtuel 32 bits](https://hyngng.github.io/posts/virtual-32bit/) et d'exécuter le code dans cet environnement, même si cela est peu pratique.
+- En outre, le module de certificat numérique commun ne prenant pas en charge l'environnement 64 bits, il est nécessaire de construire un [environnement virtuel 32 bits](https://hyngng.github.io/fr/dev/virtual-32bit/) et d'exécuter le code dans cet environnement, même si cela est peu pratique.
 
 ## **Pour conclure**
 

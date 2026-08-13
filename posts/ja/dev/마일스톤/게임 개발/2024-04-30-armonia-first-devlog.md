@@ -21,7 +21,7 @@ mermaid: true
 
 ## **はじめに**
 
-> [前の記事](https://hyngng.github.io/posts/armonia-devlog-planning/)からの続きです。
+> [前の記事](https://hyngng.github.io/ja/dev/armonia-devlog-planning/)からの続きです。
 :::
 
 面白くて再挑戦する私の[4つ目のマイルストーン](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/)開発記です。作りながらメモを整理するついでに中間チェックも必要だったので、約一ヶ月で作った成果物を簡単にまとめました。この開発段階で作ったものはまとめるとこうです。

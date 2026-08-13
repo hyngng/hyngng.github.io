@@ -17,7 +17,7 @@ math: true
 
 ## **Introduction**
 
-It's been nearly two years since [the first post](https://hyngng.github.io/posts/first-post/). Honestly, the post count isn't high for a two-year span, but that doesn't mean I lacked attachment. Between public and private obligations, and periods when my own activity lagged, I've still been managing this blog periodically.
+It's been nearly two years since [the first post](https://hyngng.github.io/en/blog/first-post/). Honestly, the post count isn't high for a two-year span, but that doesn't mean I lacked attachment. Between public and private obligations, and periods when my own activity lagged, I've still been managing this blog periodically.
 
 Lately, while revamping the blog and applying for search engine indexing, I realized I've grown quite comfortable with the GitHub Pages platform. Writing posts has become noticeably easier than before, and with the leftover bandwidth I've been polishing the blog. Personally, choosing a GitHub blog felt like a bit of a gamble, yet I'm genuinely enjoying the platform's character — so I want to lay out what advantages made it appealing.
 
@@ -36,7 +36,7 @@ Unlike other blog platforms that feel like closed gardens where you can only use
 - SCSS
 - JavaScript
 
-In my case, I've already written two posts about [miscellaneous custom settings](https://hyngng.github.io/posts/first-blog-customization/) and [implementing a specific feature](https://hyngng.github.io/posts/blog-content-remove/). Beyond those, I've recently added a few gizmos without dedicated posts: LQIP preview images, an Instagram icon, an Applause Button.
+In my case, I've already written two posts about [miscellaneous custom settings](https://hyngng.github.io/en/blog/first-blog-customization/) and [implementing a specific feature](https://hyngng.github.io/en/blog/blog-content-remove/). Beyond those, I've recently added a few gizmos without dedicated posts: LQIP preview images, an Instagram icon, an Applause Button.
 
 That degree of customization freedom makes tinkering fun, and that fun becomes the motivation to keep running the blog steadily. I find myself constantly looking at the blog wondering how to improve it further, or browsing similar blogs for good ideas to adopt.
 
