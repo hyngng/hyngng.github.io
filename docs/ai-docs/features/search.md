@@ -79,17 +79,31 @@ Pagefind indexes all posts at build time, but DOM queries only cover currently l
 2. The controller marks inserted cards internally (via `searchTagged` Set) for cleanup on `clearSearch()`
 3. After all chunks are loaded, calls `controller.showSearchResults(paths)` to filter visibility
 
-### Search Flow
+### Search Flow (2-Stage Pipeline: Fast-Path + Async Full-Text)
 
-1. `pagefind.search(query)` returns matching URLs from the full index
-2. `ensureMatchingChunksLoaded()` determines which chunks contain matching posts using `data-all-posts` metadata
-3. `controller.fetchSearchChunk(n)` fetches each needed chunk and inserts cards
-4. `controller.showSearchResults(paths)` filters all DOM cards (original + search-loaded) against Pagefind results
+The search pipeline uses a two-stage architecture with generation tracking (`searchSeq`) to ensure instantaneous UI response (1ms) while seamlessly expanding with full-text results:
+
+1. **Stage 1 (Fast-Path — Local Metadata Instant Filter)**:
+   - Immediately queries the in-memory `data-all-posts` array for matching titles/descriptions.
+   - Calls `controller.showSearchResults(fastMatchedPaths)` immediately (1ms) to eliminate typing lag and UI freezing.
+   - Triggers `ensureMatchingChunksLoaded` in parallel (`Promise.allSettled`) for any unloaded chunks matching the fast-path query.
+
+2. **Stage 2 (Async-Path — Pagefind Full-Text Search & Expansion)**:
+   - Asynchronously queries Pagefind (`pagefind.search(query, { filters: { lang: currentLocale } })`).
+   - Gathers all result fragments in parallel (`Promise.all(result.results.map(r => r.data()))`).
+   - Combines full-text matched URLs with the fast-path results.
+   - Fetches any additional needed chunks in parallel.
+   - If the search generation ID matches the current active query (`currentSeq === searchSeq`), calls `controller.showSearchResults(fullMatchedPaths)`.
+
+### Generation Tracking & Fault Tolerance
+- **Generation ID (`searchSeq`)**: Every keystroke increments `searchSeq`. Any stale asynchronous responses from previous keystrokes are automatically discarded, preventing race conditions.
+- **Fault Tolerance**: Chunk fetches and fragment parsing use `Promise.allSettled` and per-request `catch` handlers. Network hiccups or single-chunk fetch failures do not abort the search pipeline, ensuring available results are always rendered.
 
 ### Data Attributes
 
 | Attribute | Location | Purpose |
 |---|---|---|
-| `data-all-posts` | `.posts-grid` | JSON array of `{path, title}` for all posts — enables chunk calculation without fetching |
+| `data-all-posts` | `.posts-grid` | JSON array of `{path, title, description}` for all posts — enables instant local filtering and chunk calculation without fetching |
 | `data-path` | `.post-card` | Post URL for Pagefind result matching |
 | `data-title` | `.post-card` | Post title for dev mode DOM fallback |
+
