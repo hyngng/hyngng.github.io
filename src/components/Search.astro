@@ -5,9 +5,10 @@ import { defaultLocale } from '../locales';
 interface Props {
   locale: Locale;
   currentLocale: string;
+  authorId?: string;
 }
 
-const { locale, currentLocale } = Astro.props;
+const { locale, currentLocale, authorId } = Astro.props;
 ---
 
 <aside class="search-container" aria-label={locale.search.aria}>
@@ -21,6 +22,7 @@ const { locale, currentLocale } = Astro.props;
       aria-label={locale.search.aria}
       data-locale={currentLocale}
       data-default-locale={defaultLocale}
+      data-author={authorId}
       autocomplete="off"
     />
   </div>
@@ -28,43 +30,9 @@ const { locale, currentLocale } = Astro.props;
 
 <script>
   import { requireController, normalizePath, allPostsFromGrid } from '../features/post-list';
-
-  type PagefindModule = {
-    search: (q: string, opts?: { filters?: Record<string, string> }) => Promise<{ results: Array<{ data: () => Promise<{ url: string }> }> }>;
-    init: () => Promise<void>;
-  };
+  import { getSearchEngine } from '../features/search/engine';
 
   let abortController: AbortController | undefined;
-  let pagefind: PagefindModule | null = null;
-  let pagefindLoadPromise: Promise<boolean> | null = null;
-  const PAGEFIND_LOAD_TIMEOUT_MS = 2500;
-
-  async function ensurePagefind(): Promise<boolean> {
-    if (pagefind) return true;
-    if (pagefindLoadPromise) return pagefindLoadPromise;
-
-    const pagefindUrl = '/pagefind/pagefind.js';
-    pagefindLoadPromise = (async () => {
-      try {
-        const timeout = new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('Pagefind load timeout')), PAGEFIND_LOAD_TIMEOUT_MS)
-        );
-        const mod = await Promise.race([
-          import(/* @vite-ignore */ pagefindUrl),
-          timeout,
-        ]);
-        await mod.init();
-        pagefind = mod as PagefindModule;
-        return true;
-      } catch {
-        pagefindLoadPromise = null;
-        return false;
-      }
-    })();
-
-    return pagefindLoadPromise;
-  }
-
   let debounceTimer: ReturnType<typeof setTimeout>;
   let searchSeq = 0;
 
@@ -76,16 +44,25 @@ const { locale, currentLocale } = Astro.props;
     if (!document.querySelector('.search-container')) return;
 
     const allInputs = document.querySelectorAll<HTMLInputElement>('.search-input');
+    const grid = document.querySelector('.posts-grid') as HTMLElement | null;
+    const allPosts = allPostsFromGrid(grid || document.createElement('div'));
 
-    async function ensureMatchingChunksLoaded(
+    // 검색 input focus 시 pagefind 백그라운드 프리로드 → 첫 검색 지연 원천 제거.
+    // 페이지인드 불가 환경은 엔진 결정 시 DOM 폴백으로 영구 전환된다.
+    allInputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        getSearchEngine(allPosts).catch(err => {
+          console.error('[search:engine]', err);
+        });
+      }, { signal });
+    });
+
+    async function ensureChunksLoaded(
       controller: ReturnType<typeof requireController>,
-      matchedPaths?: Set<string>,
-      query?: string,
+      matchedPaths: Set<string>,
     ) {
-      const grid = document.querySelector('.posts-grid') as HTMLElement | null;
       if (!grid?.dataset.allPosts) return;
 
-      const allPosts = allPostsFromGrid(grid);
       const chunkSize = parseInt(grid.dataset.chunkSize || '6', 10);
       const currentChunk = parseInt(grid.dataset.currentChunk || '1', 10);
 
@@ -94,16 +71,7 @@ const { locale, currentLocale } = Astro.props;
       allPosts.forEach((post, index) => {
         const postChunk = Math.floor(index / chunkSize) + 1;
         if (postChunk <= currentChunk) return;
-
-        let isMatch = false;
-        if (matchedPaths) {
-          isMatch = matchedPaths.has(normalizePath(post.path));
-        } else if (query) {
-          const q = query.toLowerCase();
-          isMatch = post.title.toLowerCase().includes(q) || ((post as any).description && (post as any).description.toLowerCase().includes(q));
-        }
-
-        if (isMatch) chunksToLoad.add(postChunk);
+        if (matchedPaths.has(normalizePath(post.path))) chunksToLoad.add(postChunk);
       });
 
       if (chunksToLoad.size === 0) return;
@@ -128,57 +96,22 @@ const { locale, currentLocale } = Astro.props;
 
       const currentSeq = ++searchSeq;
 
-      // 1단계: Fast-Path (로컬 메타데이터 기반 1ms 즉시 반응)
-      const grid = document.querySelector('.posts-grid') as HTMLElement | null;
-      const allPosts = allPostsFromGrid(grid || document.createElement('div'));
-      const q = query.toLowerCase();
-      const fastMatchedPaths = allPosts
-        .filter(p => p.title.toLowerCase().includes(q) || (p.description && p.description.toLowerCase().includes(q)))
-        .map(p => normalizePath(p.path));
-
-      controller.showSearchResults(fastMatchedPaths);
-
-      // Fast-path 매칭 청크 병렬 로드
-      await ensureMatchingChunksLoaded(controller, undefined, query);
-      if (currentSeq !== searchSeq) return;
-      controller.showSearchResults(fastMatchedPaths);
-
-      // 2단계: Async-Path (Pagefind 본문 전체 검색 및 결과 확장)
-      const loaded = await ensurePagefind();
+      const engine = await getSearchEngine(allPosts);
       if (currentSeq !== searchSeq) return;
 
-      if (loaded && pagefind) {
-        try {
-          const input = allInputs[0];
-          const rawLocale = input?.dataset.locale || input?.dataset.defaultLocale || 'ko';
-          const currentLocale = rawLocale.split('-')[0];
-          const result = await pagefind.search(query, {
-            filters: { lang: currentLocale },
-          });
+      const rawLocale = allInputs[0]?.dataset.locale || allInputs[0]?.dataset.defaultLocale || 'ko';
+      const lang = rawLocale.split('-')[0];
+      const authorId = allInputs[0]?.dataset.author || undefined;
 
-          if (currentSeq !== searchSeq) return;
+      // 단일 엔진, 단일 결과 집합
+      const paths = await engine.search(query, { lang, authorId });
+      if (currentSeq !== searchSeq) return;
 
-          const resultsData = await Promise.all(
-            result.results.map(r => r.data().catch(() => null))
-          );
+      await ensureChunksLoaded(controller, new Set(paths));
+      if (currentSeq !== searchSeq) return;
 
-          if (currentSeq !== searchSeq) return;
-
-          const fullMatchedPaths = new Set(fastMatchedPaths);
-          for (const data of resultsData) {
-            if (data?.url) {
-              fullMatchedPaths.add(normalizePath(data.url));
-            }
-          }
-
-          await ensureMatchingChunksLoaded(controller, fullMatchedPaths);
-          if (currentSeq !== searchSeq) return;
-
-          controller.showSearchResults(Array.from(fullMatchedPaths));
-        } catch (err) {
-          console.error('[search:pagefind]', err);
-        }
-      }
+      // 유일한 커밋 지점 (검색당 1회). 대기 중 그리드는 변이하지 않는다.
+      controller.showSearchResults(paths);
     }
 
     allInputs.forEach(input => {

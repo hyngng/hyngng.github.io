@@ -286,5 +286,15 @@
       - 인라인/모바일(≤1280px): `position: static; width: 100%;`로 전환되어 `PostFooter` 아래에 인라인으로 렌더링되며, `--space-post-comments-margin-top`(`3.2rem`)을 통해 `메타데이터 ↔ 다른 글 더 보기` 간격과 `다른 글 더 보기 ↔ 댓글창` 간격을 대칭으로 일치.
       - i18n: 7개 언어 로케일에 `morePosts` 번역 객체 등록 완료.
     - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors / 0 warnings, `npm test` 23 passed. 상세는 `docs/ai-docs/features/posts.md`의 '다른 글 더 보기 (MorePosts)' 섹션 참조.
+  - [x] **검색 플리커 근본 원인 제거 (단일 엔진·단일 커밋 재설계)**
+    - 증상: 검색 시 0.1초간 다른 결과(패스트패스 잠정 렌더)가 보였다가 최종 결과(pagefind)로 바뀌는 플리커.
+    - 근본 원인: 검색 파이프라인이 결과 소스 2개(로컬 title/description 정규식 vs pagefind 전문 검색)를 혼합하고, 확정 전 잠정 결과를 마치 최종인 것처럼 DOM에 먼저 커밋(검색당 `showSearchResults` 3회 호출) → 결과 집합이 달라 플리커가 구조적으로 보장됨. 동기화(`searchSeq`)·병렬화로는 잠정 렌더 구조 자체를 못 고침.
+    - 해결: **한 검색 = 한 엔진 = 한 번의 원자적 커밋** 원칙으로 재설계.
+      - `src/features/search/engine.ts` 신설 — `PagefindEngine`(정규) / `DomFallbackEngine`(dev 폴백) 중 세션당 1회 엔진 확정. 결과 혼합·잠정 렌더 폐기.
+      - 검색 input `focus` 이벤트에서 pagefind 백그라운드 프리로드 → 첫 검색 지연(패스트패스가 존재했던 이유) 원천 제거.
+      - `fetchSearchChunk`가 카드를 `display: none`으로 추가 → 청크 비매칭 카드 노출 원천 차단. `showSearchResults`는 검색당 1회만 호출.
+      - 작가 페이지 검색 범위 격리: `PostLayout`에 `data-pagefind-filter="author:<id>"` 다중 태깅, `Search`에 `authorId` prop 전달 → `filters: { lang, author }` 적용 (같은 언어 다른 작가 결과 배제).
+    - 문서: `search.md` 요구사항 중심 재작성, `chunk-loading.md`의 `fetchSearchChunk` 숨김 append 반영.
+    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors, `npm test` 23 passed. headless Chromium 실측: 빌드된 pagefind 인덱스에서 검색·`lang`/`author` 필터 정상 동작 확인(같은 언어 타 작가 결과 제외, 다중 작가 포스트 포함, 본문 전용 검색어 히트), dist 산출물의 `data-pagefind-filter`와 결과 교차 검증. 플리커는 구조적으로 차단됨: 검색당 `showSearchResults` 1회(단일 커밋 지점), `searchSeq` 경합 가드, `fetchSearchChunk`의 숨김 append로 대기 중 그리드 변이 없음.
 
 ## Option

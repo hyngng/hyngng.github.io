@@ -59,8 +59,7 @@ post-list의 모든 DOM 조작을 단일 controller가 소유한다:
 | `clearSearch()` | 검색 해제 (추가된 카드 제거, 모든 원본 카드 표시, masonry 복원) |
 | `restoreChunkCount(target)` | popstate 시 이전 청크 수로 복원 |
 | `relayout()` | 현재 viewport에 맞춰 masonry 재배치 |
-| `importCardsForSearch(cards)` | 검색 전용 chunk 카드를 적절한 컬럼에 삽입 |
-| `fetchSearchChunk(n)` | 청크 fetch + parse + importCardsForSearch |
+| `fetchSearchChunk(n)` | 검색 전용 청크 fetch + parse + **숨김(`display: none`) 카드** 삽입 |
 
 ### loader (`createChunkLoader`)
 

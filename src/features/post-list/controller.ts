@@ -119,7 +119,12 @@ export function createPostListController(grid: HTMLElement): PostListController 
       const { columns, leftCol, rightCol } = findColumns(grid);
       if (!columns) return;
       distributeCards(columns, leftCol, rightCol, cards);
-      cards.forEach(card => searchTagged.add(card));
+      // 검색용 카드는 숨김 상태로만 추가한다. 최종 showSearchResults의
+      // 단일 커밋에서 매칭 카드만 표시되어, 비매칭 카드가 잠깐 노출되지 않는다.
+      cards.forEach(card => {
+        card.style.display = 'none';
+        searchTagged.add(card);
+      });
       initPostCardImages();
     },
 
