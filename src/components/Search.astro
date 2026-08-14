@@ -12,7 +12,7 @@ const { locale, currentLocale } = Astro.props;
 
 <aside class="search-container" aria-label={locale.search.aria}>
   <p class="search-title">{locale.search.title}</p>
-  <form class="search-bar" role="search" action="javascript:void(0)">
+  <div class="search-bar">
     <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
     <input
       type="search"
@@ -23,7 +23,7 @@ const { locale, currentLocale } = Astro.props;
       data-default-locale={defaultLocale}
       autocomplete="off"
     />
-  </form>
+  </div>
 </aside>
 
 <script>
@@ -39,8 +39,6 @@ const { locale, currentLocale } = Astro.props;
   let pagefind: PagefindModule | null = null;
   let pagefindLoadPromise: Promise<boolean> | null = null;
 
-  const PAGEFIND_LOAD_TIMEOUT_MS = 3000;
-
   async function ensurePagefind(): Promise<boolean> {
     if (pagefind) return true;
     if (pagefindLoadPromise) return pagefindLoadPromise;
@@ -48,16 +46,11 @@ const { locale, currentLocale } = Astro.props;
     const pagefindUrl = '/pagefind/pagefind.js';
     pagefindLoadPromise = (async () => {
       try {
-        const timeout = new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('pagefind load timeout')), PAGEFIND_LOAD_TIMEOUT_MS),
-        );
-        const mod = await Promise.race([import(/* @vite-ignore */ pagefindUrl), timeout]);
+        const mod = await import(/* @vite-ignore */ pagefindUrl);
         await mod.init();
         pagefind = mod;
         return true;
       } catch {
-        // Allow a retry on a later search instead of caching the failure forever.
-        pagefindLoadPromise = null;
         return false;
       }
     })();
@@ -167,30 +160,14 @@ const { locale, currentLocale } = Astro.props;
       controller.showSearchResults(matchedPaths);
     }
 
-    function scheduleSearch(input: HTMLInputElement) {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        handleSearch(input.value.trim()).catch(err => {
-          console.error('[search]', err);
-        });
-      }, 300);
-    }
-
     allInputs.forEach(input => {
-      input.addEventListener('input', () => scheduleSearch(input), { signal });
-      input.addEventListener('compositionend', () => scheduleSearch(input), { signal });
-    });
-
-    document.querySelectorAll<HTMLFormElement>('.search-bar').forEach(form => {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const input = form.querySelector<HTMLInputElement>('.search-input');
-        if (input) {
-          clearTimeout(debounceTimer);
+      input.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
           handleSearch(input.value.trim()).catch(err => {
             console.error('[search]', err);
           });
-        }
+        }, 300);
       }, { signal });
     });
 

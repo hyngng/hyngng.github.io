@@ -20,7 +20,7 @@
 - `AUTHOR_PREFIX = '@'` 전역 상수가 `Author.astro` 내부에서 name 앞에 붙여서 렌더링됨.
 
 
-`avatar`가 없거나 빈 문자열이면 `#EEEEEE` 배경의 원형 placeholder를 표시함.
+`avatar`가 없거나 빈 문자열이면 `#F0F0F0` 배경의 원형 placeholder를 표시함.
 
 섹션 제목은 `src/locales/ko-KR.ts`, `src/locales/en-US.ts`의 `authors.title`에서 가져옴. `Authors` 컴포넌트의 `title` prop으로 필요 시 override 가능함.
 
