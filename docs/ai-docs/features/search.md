@@ -27,9 +27,8 @@ To prevent indexing global navigation elements (like header logos, author profil
 
 Pagefind indexes `dist/` at build time. During local development (`npm run dev`), `vite-plugin-pagefind` (`astro.config.mjs` → `vite.plugins`) copies the existing `dist/pagefind/` bundle to `public/pagefind/` so `/pagefind/pagefind.js` is served by the dev server (MIME-safe `text/javascript`).
 - The plugin's `developStrategy: 'lazy'` only copies when the dev server starts; run `npm run build` first (or after content changes) so the index reflects the latest posts.
-- `Search.astro` still falls back to **DOM Title Filtering** if `/pagefind/pagefind.js` is unavailable (e.g. `dist/pagefind/` doesn't exist yet). `ensurePagefind()` uses a 2.5s `Promise.race` timeout to avoid hanging if the dynamic import or initialization stalls, resetting its internal promise on failure to allow subsequent retries. Each post card is pre-rendered with `data-title` and `data-path` for this fallback.
+- `Search.astro` still falls back to **DOM Title Filtering** if `/pagefind/pagefind.js` is unavailable (e.g. `dist/pagefind/` doesn't exist yet). Each post card is pre-rendered with `data-title` and `data-path` for this fallback.
 - In production, the postbuild `pagefind --site dist --output-path dist/pagefind` step generates the index, and Search queries Pagefind, showing/hiding matching cards based on `data-path`.
-- **Mobile Input & Virtual Keyboards**: Search bar is wrapped in `<form class="search-bar" role="search" action="javascript:void(0)">` to properly trigger immediate search on mobile virtual keyboard "Search/Go" actions (`submit` event), alongside `compositionend` support for CJK/Korean IME input finalization and `input` debounce (300ms).
 
 ## Design & Color Tokens
 
