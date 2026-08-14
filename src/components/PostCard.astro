@@ -2,7 +2,7 @@
 import Author from "./Author.astro";
 import { getAuthor } from "../settings/authors.settings";
 import { useLocale, defaultLocale } from "../locales";
-import { extractExcerpt } from "../utils/posts";
+import { extractExcerpt, getAuthorPath } from "../utils/posts";
 import { getRelativeTime } from "../utils/relativeTime";
 import type { CollectionEntry } from "astro:content";
 
@@ -19,6 +19,7 @@ const excerpt = extractExcerpt(post.data.description, post.body);
 const relativeDate = getRelativeTime(date, locale);
 
 const primaryAuthor = getAuthor(authorIds[0], Astro.currentLocale || defaultLocale);
+const primaryAuthorHref = getAuthorPath(authorIds[0], Astro.currentLocale || defaultLocale);
 const authorSuffix = authorIds.length > 1
   ? ` ${locale.authors.otherCount(authorIds.length - 1)}`
   : undefined;
@@ -49,7 +50,7 @@ const authorSuffix = authorIds.length > 1
     <div class="post-card-content">
       <h3 class="post-card-title">{title}</h3>
       <div class="post-card-meta">
-        <div class="post-card-author">
+        <div class="post-card-author" data-author-href={primaryAuthorHref}>
           <Author
             avatar={primaryAuthor.avatar}
             name={primaryAuthor.name}

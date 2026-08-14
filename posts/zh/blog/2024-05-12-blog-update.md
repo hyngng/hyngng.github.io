@@ -37,7 +37,6 @@ GitHub博客相比其他博客平台，与服务提供商的耦合度较低，�
 ```bash
 git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 ```
-{: .nolineno }
 
 我为以防万一，先额外注册了一个Git仓库。这不是必需步骤。
 
@@ -45,7 +44,6 @@ git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 git fetch upstream
 git merge remotes/upstream/master
 ```
-{: .nolineno }
 
 然后合并Chirpy的`master`分支。合并的文件版本可通过[此链接](https://github.com/cotes2020/jekyll-theme-chirpy/tags)注册的最新标签确认，在撰写本文时当然为`v7.0.0`。如果中间没有冲突，Git会尽可能自动合并，然后需要手动处理剩余的合并项。
 
@@ -61,14 +59,12 @@ git merge remotes/upstream/master
 ```bash
 npm run build
 ```
-{: .nolineno }
 
 合并完成后，编译CSS和JavaScript文件。即使麻烦也需手动完成。
 
 ```bash
 git add assets/js/dist _sass/vendors -f
 ```
-{: .nolineno }
 
 然后将生成的文件添加到Git仓库并推送即可。
 

@@ -37,7 +37,6 @@ In my case, while [customizing the theme](https://hyngng.github.io/en/blog/first
 ```bash
 git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 ```
-{: .nolineno }
 
 I started by registering the upstream repository as a precaution. Not strictly required.
 
@@ -45,7 +44,6 @@ I started by registering the upstream repository as a precaution. Not strictly r
 git fetch upstream
 git merge remotes/upstream/master
 ```
-{: .nolineno }
 
 Next, I merged with Chirpy's `master` branch. The merged file versions can be checked via the [tags](https://github.com/cotes2020/jekyll-theme-chirpy/tags) page; at the time of writing it's `v7.0.0`. If no issues arise, Git auto-merges what it can, and the remaining conflicts must be resolved manually.
 
@@ -61,14 +59,12 @@ My previous version was `6.3.1`, so there were many intervening changes plus my 
 ```bash
 npm run build
 ```
-{: .nolineno }
 
 After merging, compile the CSS and JavaScript files. Do this manually even if it's tedious.
 
 ```bash
 git add assets/js/dist _sass/vendors -f
 ```
-{: .nolineno }
 
 Then add the generated files to the Git repo and push.
 

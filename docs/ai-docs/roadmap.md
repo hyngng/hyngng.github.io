@@ -296,5 +296,11 @@
       - 작가 페이지 검색 범위 격리: `PostLayout`에 `data-pagefind-filter="author:<id>"` 다중 태깅, `Search`에 `authorId` prop 전달 → `filters: { lang, author }` 적용 (같은 언어 다른 작가 결과 배제).
     - 문서: `search.md` 요구사항 중심 재작성, `chunk-loading.md`의 `fetchSearchChunk` 숨김 append 반영.
     - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors, `npm test` 23 passed. headless Chromium 실측: 빌드된 pagefind 인덱스에서 검색·`lang`/`author` 필터 정상 동작 확인(같은 언어 타 작가 결과 제외, 다중 작가 포스트 포함, 본문 전용 검색어 히트), dist 산출물의 `data-pagefind-filter`와 결과 교차 검증. 플리커는 구조적으로 차단됨: 검색당 `showSearchResults` 1회(단일 커밋 지점), `searchSeq` 경합 가드, `fetchSearchChunk`의 숨김 append로 대기 중 그리드 변이 없음.
+  - [x] **포스트 카드 작가 영역 모바일 링크**
+    - 증상: 모바일에서 포스트 카드의 작가 영역을 눌러도 전체 카드 링크(`<a class="post-card-link">`)에 가로채져 포스트가 열림.
+    - 제약: `<a>` 중첩은 HTML 위반(파서가 바깥 링크를 끊어 카드 레이아웃이 깨짐) → `Author.astro`의 오버레이 링크 패턴을 카드에 재사용 불가.
+    - 해결: `PostCard.astro`에 `getAuthorPath(authorIds[0], currentLocale)`로 `data-author-href` 주입 + `PostListSection.astro` `init()`의 AbortController 스코프에서 문서 레벨 위임 `click` 리스너 — `closest('.post-card-author')` 감지, `isMobile()`(기존 960px 규약) 가드 후 `preventDefault()`로 카드 링크 차단 및 작가 페이지 이동. 위임 방식이라 동적 추가 카드(청크/검색)도 자동 적용. 데스크톱은 기존 동작(포스트 열기) 유지.
+    - 문서: `posts.md`의 '포스트 카드 작가 영역 (모바일 링크)' 섹션.
+    - 검증: `npx astro check` 0 errors, `npm run build` 성공. headless Edge CDP E2E: 모바일(390px, `isMobileMedia=true`)은 작가 영역 클릭 → `/dev/`(작가 페이지), 타이틀 클릭 → 포스트. 데스크톱(1400px, `isMobileMedia=false`)은 작가 영역 클릭 → 포스트 (기존 동작 유지). 두 뷰포트 모두 기대 동작 일치.
 
 ## Option

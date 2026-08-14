@@ -66,7 +66,7 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
 </section>
 
 <script>
-  import { createPostListController, setController, needsRelayout, createChunkLoader } from '../features/post-list';
+  import { createPostListController, setController, needsRelayout, createChunkLoader, isMobile } from '../features/post-list';
 
   let abortController: AbortController | undefined;
 
@@ -77,6 +77,16 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
 
     const grid = document.querySelector('.posts-grid') as HTMLElement | null;
     if (!grid) return;
+
+    // On mobile (<=960px) tapping the author area navigates to the author page.
+    // Nested <a> is invalid HTML, so intercept the card link via event delegation.
+    document.addEventListener('click', (e) => {
+      if (!isMobile()) return;
+      const author = (e.target as Element).closest<HTMLElement>('.post-card-author');
+      if (!author?.dataset.authorHref) return;
+      e.preventDefault();
+      window.location.href = author.dataset.authorHref;
+    }, { signal });
 
     const controller = createPostListController(grid);
     setController(controller);

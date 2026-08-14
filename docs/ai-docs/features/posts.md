@@ -339,6 +339,23 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 이 확장들이 없으면 테이블과 directive 블록이 paragraph로 분류되어 excerpt에 마크다운 원문이 노출된다.
 
+## 포스트 카드 작가 영역 (모바일 링크)
+
+포스트 카드(`PostCard.astro`)는 전체가 단일 `<a class="post-card-link">`로 감싸져 있고, 작가 영역은 데스크톱에서 카드 호버 시 본문 excerpt로 전환된다. `<a>` 내부에 `<a>`를 넣는 것은 HTML 위반(파서가 바깥 링크를 끊어 카드 레이아웃이 깨짐)이므로, 모바일에서 작가 페이지로 이동시키기 위해 오버레이 링크 대신 JS 위임 이벤트를 사용한다.
+
+### 동작
+
+- **모바일(≤960px, `isMobile()`)**: `.post-card-author` 영역 탭 → `data-author-href`로 이동 (첫 번째 작가 `authors[0]`의 페이지).
+- **데스크톱(>960px)**: 기존대로 작가 영역 포함 카드 전체가 포스트를 연다. 호버 애니메이션(작가↔excerpt 전환)과 레이아웃은 변경 없음.
+- 다중 작가 포스트: 표시 중인 primary author(`authors[0]`) 페이지로 이동.
+
+### 구현
+
+- `PostCard.astro`: `getAuthorPath(authorIds[0], currentLocale)`로 `data-author-href`를 `.post-card-author`에 주입.
+- `PostListSection.astro`의 `init()`(AbortController 스코프)에서 `document`에 위임 `click` 리스너 등록 — `closest('.post-card-author')`로 탭 대상 감지 → `isMobile()` 가드 후 `e.preventDefault()`로 카드 링크 네비게이션 차단, `window.location.href`로 이동.
+- 위임 방식이라 청크 로딩·검색으로 동적 추가된 카드에도 자동 적용.
+- 모바일 판정은 `src/features/post-list/layout.ts`의 `isMobile()`(기존 960px 규약)을 재사용하므로 중복 정의 없음.
+
 ## 다른 글 더 보기 (MorePosts)
 
 포스트 하단 메타데이터(`PostFooter`) 영역과 연계하여, 첫 번째 작가(`post.data.authors[0]`)의 시간순서상 가장 인접한 글 목록(최대 3개)을 SEO 내부 링크 및 탐색용으로 제공한다.

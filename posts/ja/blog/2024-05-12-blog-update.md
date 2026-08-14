@@ -37,7 +37,6 @@ GitHubブログが他のブログプラットフォームに比べてサービ�
 ```bash
 git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 ```
-{: .nolineno }
 
 私は念のためGitリポジトリをもう一度登録することから始めた。必須ではない。
 
@@ -45,7 +44,6 @@ git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 git fetch upstream
 git merge remotes/upstream/master
 ```
-{: .nolineno }
 
 次にChirpyの `master` ブランチとマージした。マージされるファイルのバージョンは[こちら](https://github.com/cotes2020/jekyll-theme-chirpy/tags)に登録された最新タグで確認でき、この記事を書いている時点では当然 `v7.0.0` と確認される。途中で問題がなければGitが可能なものについては自動マージが行われ、Gitでは処理できない残りのマージ事項を手動で引き続き行う必要がある。
 
@@ -61,14 +59,12 @@ git merge remotes/upstream/master
 ```bash
 npm run build
 ```
-{: .nolineno }
 
 マージが終わったらCSSとJavaScriptファイルをコンパイルする。面倒でも手動で行う必要がある。
 
 ```bash
 git add assets/js/dist _sass/vendors -f
 ```
-{: .nolineno }
 
 そして生成されたファイルをGitリポジトリに追加した後、プッシュすれば完了である。
 

@@ -43,7 +43,6 @@ Jekyll 프레임워크를 사용할 때 작성된 글입니다. 현재는 Astro�
 ```bash
 git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 ```
-{: .nolineno }
 
 저는 만약의 경우를 위해 깃 저장소를 한 번 더 등록하는 것으로 시작했습니다. 필수사항은 아닙니다.
 
@@ -51,7 +50,6 @@ git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 git fetch upstream
 git merge remotes/upstream/master
 ```
-{: .nolineno }
 
 다음엔 Chirpy의 `master` 브랜치와 병합해주었습니다. 병합되는 파일 버전은 [이곳](https://github.com/cotes2020/jekyll-theme-chirpy/tags)에 등록된 최신 태그로 확인이 가능하며, 글을 쓰는 이 시점에서 당연 `v7.0.0`으로 확인됩니다. 중간에 문제가 없었다면 깃이 가능한 것 위주로 자동병합이 이루어지고 깃이 할 수 없는 나머지 병합사항을 수동으로 이어 진행해주어야 합니다.
 
@@ -67,14 +65,12 @@ git merge remotes/upstream/master
 ```bash
 npm run build
 ```
-{: .nolineno }
 
 병합이 끝나면 CSS와 자바스크립트 파일을 컴파일해줍니다. 번거롭더라도 수동으로 해주어야 합니다.
 
 ```bash
 git add assets/js/dist _sass/vendors -f
 ```
-{: .nolineno }
 
 그리고 생성된 파일을 깃 저장소로 추가해준 뒤 푸시하면 끝입니다.
 

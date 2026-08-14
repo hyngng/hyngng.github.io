@@ -37,7 +37,6 @@ Dans mon cas, j'avais [personnalisé le thème](https://hyngng.github.io/fr/blog
 ```bash
 git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 ```
-{: .nolineno }
 
 Pour plus de sécurité, j'ai commencé par enregistrer le dépôt Git une fois de plus. Ce n'est pas obligatoire.
 
@@ -45,7 +44,6 @@ Pour plus de sécurité, j'ai commencé par enregistrer le dépôt Git une fois 
 git fetch upstream
 git merge remotes/upstream/master
 ```
-{: .nolineno }
 
 Ensuite, j'ai fusionné avec la branche `master` de Chirpy. La version des fichiers fusionnés peut être vérifiée via les [tags](https://github.com/cotes2020/jekyll-theme-chirpy/tags) ; au moment de la rédaction, il s'agit de `v7.0.0`. Si tout s'est bien passé, Git effectue automatiquement les fusions possibles, et il faut ensuite procéder manuellement aux fusions restantes.
 
@@ -61,14 +59,12 @@ La version que j'utilisais avant était `6.3.1`. Entre-temps, les changements s'
 ```bash
 npm run build
 ```
-{: .nolineno }
 
 Une fois la fusion terminée, il faut compiler les fichiers CSS et JavaScript. Même si c'est fastidieux, il faut le faire manuellement.
 
 ```bash
 git add assets/js/dist _sass/vendors -f
 ```
-{: .nolineno }
 
 Ensuite, on ajoute les fichiers générés au dépôt Git, on push, et c'est fini.
 

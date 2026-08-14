@@ -37,7 +37,6 @@ last_modified_at: 2025-10-20 13:55:00 +0900
 ```bash
 git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 ```
-{: .nolineno }
 
 Я начал с повторной регистрации Git-репозитория на всякий случай. Это необязательно.
 
@@ -45,7 +44,6 @@ git remote add upstream https://github.com/cotes2020/jekyll-theme-chirpy.git
 git fetch upstream
 git merge remotes/upstream/master
 ```
-{: .nolineno }
 
 Затем выполнил слияние с веткой `master` Chirpy. Версию сливаемых файлов можно проверить по [последнему тегу](https://github.com/cotes2020/jekyll-theme-chirpy/tags), который на момент написания статьи, конечно же, `v7.0.0`. Если проблем не возникло, Git автоматически сливает то, что может, а остальное нужно доделать вручную.
 
@@ -61,14 +59,12 @@ git merge remotes/upstream/master
 ```bash
 npm run build
 ```
-{: .nolineno }
 
 После слияния нужно скомпилировать CSS и JavaScript-файлы. Даже если это хлопотно, делать это нужно вручную.
 
 ```bash
 git add assets/js/dist _sass/vendors -f
 ```
-{: .nolineno }
 
 Затем добавить сгенерированные файлы в репозиторий и запушить — готово.
 
