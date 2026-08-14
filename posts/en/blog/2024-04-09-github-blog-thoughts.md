@@ -15,6 +15,10 @@ mermaid: true
 math: true
 ---
 
+:::info
+This article was written when I was using the Jekyll framework. It has now migrated to Astro!
+:::
+
 ## **Introduction**
 
 It's been nearly two years since [the first post](https://hyngng.github.io/en/blog/first-post/). Honestly, the post count isn't high for a two-year span, but that doesn't mean I lacked attachment. Between public and private obligations, and periods when my own activity lagged, I've still been managing this blog periodically.

@@ -12,6 +12,10 @@ date: 2023-11-25 23:24:00 +0900
 last_modified_at: 2025-10-15 09:22:00 +0900
 ---
 
+:::info
+Эта статья была написана при использовании фреймворка Jekyll. Сейчас я перешёл на Astro!
+:::
+
 ## **Введение**
 
 ![new-files-dark](/2023-11-25-first-blog-customization/new-files-dark.webp){: .dark .w-50 .right .shadow }

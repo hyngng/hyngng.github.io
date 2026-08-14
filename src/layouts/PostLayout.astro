@@ -201,6 +201,18 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     margin-top: var(--space-post-title-meta);
   }
 
+  .post-meta :global(.author + .author::before) {
+    content: "";
+    position: absolute;
+    left: calc(var(--space-post-meta-list) / -2);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--post-meta-dot-size);
+    height: var(--post-meta-dot-size);
+    border-radius: 50%;
+    background: var(--color-text);
+  }
+
   .post-body-container {
     display: flex;
     justify-content: center;

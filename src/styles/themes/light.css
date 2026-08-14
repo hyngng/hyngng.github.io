@@ -3,6 +3,7 @@
   color-scheme: light;
   /* ── 기본 컬러 ── */
   --color-bg: #F7F7F7;
+  --color-bg-soft: #EEEEEE;
   --color-text: #2E2E2E;
   --color-heading: #2E2E2E;
   --color-accent: #CA4519;
@@ -13,9 +14,8 @@
   --color-frame: #0a0a0a;
 
   /* ── 코드 블록 & Shiki ── */
-  --color-post-inline-code-bg: #EEEEEE;
-  --color-post-code-block-bg: #E8ECF1;
-  --astro-code-background: #E8ECF1;
+  --color-post-inline-code-bg: var(--color-bg-soft);
+  --astro-code-background: var(--color-bg-soft);
   --astro-code-foreground: #2E2E2E;
 
   /* GitHub Light 토큰 매핑 */
@@ -31,12 +31,11 @@
 
   /* ── 컴포넌트 ── */
   --color-table-border: #e5e7eb;
-  --color-table-head-bg: #EEEEEE;
-  --color-post-card-bg: #EAECEF;
-  --author-avatar-placeholder: #EEEEEE;
+  --color-table-head-bg: var(--color-bg-soft);
+  --color-post-card-bg: var(--color-bg-soft);
+  --author-avatar-placeholder: var(--color-bg-soft);
   --color-shimmer: #d4d4d4;
   --color-shimmer-highlight: #e8e8e8;
-  --color-button-text: var(--color-bg);
 
   /* ── Border ── */
   --color-border: #dee2e6;
@@ -46,5 +45,5 @@
   --color-shadow: rgba(0, 0, 0, 0.15);
 
   /* ── Admonitions ── */
-  --color-admonition-bg: #EEEEEE;
+  --color-admonition-bg: var(--color-bg-soft);
 }

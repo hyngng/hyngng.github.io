@@ -12,6 +12,10 @@ date: 2024-05-12 11:32:00 +0900
 last_modified_at: 2025-10-20 13:55:00 +0900
 ---
 
+:::info
+This article was written when I was using the Jekyll framework. It has now migrated to Astro!
+:::
+
 ## **Introduction**
 
 The Chirpy theme I use is actively maintained and updated periodically. I occasionally check the [changelog](https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/docs/CHANGELOG.md) when bored, and this time I saw the version had just bumped to `7.0.0` yesterday with several improvements and new features.

@@ -47,6 +47,7 @@
   --space-post-title-meta: 24px;
   --space-post-meta-list: 32px;
   --space-post-meta-content: 64px;
+  --post-meta-dot-size: 3px;
   --space-post-heading-body: 1.6rem;
   --space-post-heading-body-h2: 2rem;
   --space-post-heading-body-h2-bottom: 1rem;
@@ -113,6 +114,7 @@
   --footer-padding: 3.2rem;
   --footer-gap: 0.4rem;
   --button-padding-y: 0.9rem;
+  --color-button-text: #ffffff;
   --space-caption-gap: 0.4rem;
   --space-image-caption-margin: 2rem;
   --space-image-grid-gap: 1rem;

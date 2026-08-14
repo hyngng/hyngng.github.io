@@ -367,9 +367,17 @@ article figure.media-figure>.audio-native {
 
 .img-wrapper {
   position: relative;
+  /* Fallback until the image header is read (image-reveal.ts overwrites this
+     with the real ratio via inline style once naturalWidth is available). */
   aspect-ratio: 16 / 9;
   overflow: hidden;
   display: block;
+}
+
+/* Animate the ratio correction (16:9 fallback → real image ratio) instead of
+   an abrupt jump. Only meaningful when JS sets the inline aspect-ratio. */
+html[data-js] .img-wrapper {
+  transition: aspect-ratio 0.25s ease;
 }
 
 /* Shimmer on ::after — above img, visible throughout loading.
@@ -439,6 +447,10 @@ html:not([data-js]) .img-wrapper img {
 @media (prefers-reduced-motion: reduce) {
   html[data-js] .img-wrapper::after {
     animation: none;
+  }
+
+  html[data-js] .img-wrapper {
+    transition: none;
   }
 }
 

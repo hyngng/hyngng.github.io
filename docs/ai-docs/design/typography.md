@@ -18,8 +18,20 @@
 ## Image Shimmer Loading
 - 모든 본문 이미지는 `<span class="img-wrapper">`로 래핑됨 (`rehype-image-wrapper.mjs`).
 - Shimmer 로딩 애니메이션: `::after` 의사 요소에 그라디언트 애니메이션, `loaded` 클래스 추가 시 fade-out.
-- 로딩 중: `aspect-ratio: 16 / 9`로 영역 확보 (CLS 방지).
+- 로딩 중: `aspect-ratio: 16 / 9`로 영역 확보 (CLS 방지용 폴백).
 - 로드 후: `.img-wrapper.loaded`에서 `aspect-ratio: auto` + `object-fit: contain`으로 원본 비율 표시.
+
+### 비율 동기화 (헤더 수신 기반 조기 리사이즈)
+
+이미지 실제 비율이 1:1이 아닐 때 로드 완료 시점에 박스가 급격히 리사이즈되어 레이아웃이 튀던 문제를 해소한다.
+
+- **원리**: 브라우저는 이미지 전체가 아니라 **헤더만 수신해도** `naturalWidth`/`naturalHeight`를 노출한다. 스트리밍 중 첫 패킷 도착 시점에 실제 비율을 알 수 있다.
+- **동작**: `image-reveal.ts`(`syncAspectRatio`/`pollAspectRatio`)가 `naturalWidth > 0`이 되는 순간 `.img-wrapper`에 인라인 `aspect-ratio: w/h`를 설정한다. rAF 폴링으로 감지하며, 실패(오류) 시 폴링을 중단한다.
+- **전환 애니메이션**: `html[data-js] .img-wrapper`의 `transition: aspect-ratio 0.25s ease`로 16:9 → 실제 비율 변경을 부드럽게 모프한다. (`aspect-ratio`는 ratio 값 간 보간이 지원됨)
+- **충돌 없음**: 인라인 스타일이 `.img-wrapper.loaded { aspect-ratio: auto }` 클래스 규칙보다 우선하므로 로드 시 2차 변경이 없다.
+- **reduced-motion**: `@media (prefers-reduced-motion: reduce)`에서 transition 해제.
+- **적용 범위**: 본문 이미지(`.img-wrapper`)만. 포스트 카드(`.post-card-image`, 40/21 고정)와 LoadMoreCard는 포함되지 않는다.
+- **참고**: 비율을 아는 시점은 "이미지 fetch 시작 직후(첫 패킷)"이므로, 뷰포트 진입 직전까지는 16:9 폴백으로 보인다.
 
 ## Table Styling
 - `article thead th`에 `text-align: left` 적용. 브라우저 UA 기본값(`center`)을 덮어써 `td`와 정렬 일관성 확보.

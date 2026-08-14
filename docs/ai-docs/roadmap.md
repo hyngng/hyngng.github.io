@@ -266,5 +266,16 @@
     - 작성 규칙(중요): CommonMark type-6 HTML 블록은 첫 빈 줄에서 종료 → `.row` 내부에 빈 줄이 있으면 `<div>` 분리 + 내부 `<img>`가 `<code>` 블록이 됨(파서로 검증). `.row` 사이 빈 줄은 무해.
     - 콘텐츠: lavad-devlog 7개 언어의 4장 버그 스크린샷을 2×2 HTML로 복원 (ko/en/ja는 이번 세션, 나머지는 사용자 수정분).
     - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors, `npm test` 23 passed. dist에서 7개 언어 모두 `.row`/`col-md-6` + CDN `img-wrapper` 렌더링 확인.
+  - [x] **코드 블럭 첫 줄 `<!--` 소실 원인 확정 (캐시 잔재)**
+    - 증상: 코드 블럭(` ```html `) 첫 줄 `<!--`가 빈 `<span class="line">`으로 소실됨. `rehype-strip-comments` 텍스트 노드 검사 제거(주석 타입만 제거)로 수정한 후에도 dist에서 빈 span이 관측됨.
+    - 조사(부정적): `createMarkdownProcessor` 단독 재현에서 플러그인 조합 전부(rehypeRaw/KaTeX/imageWrapper/footnoteTooltip/tableWrapper/strip + remark 7종) 포함해도 `<!--` 보존. `hast-util-raw`의 파서 상태 기반 문자 유실 경로 존재하나 재현 불가 → 파이프라인 버그 아님.
+    - 확정: Astro 7 캐시가 원인. 프로젝트 루트 `.astro/data-store.json`은 dev 모드, `node_modules/.astro/data-store.json`은 build 모드 캐시(`docs/ai-docs/development/build-cache.md` 참조). 이전 빈 span dist 산출물은 수정 전 렌더링이 캐시에 잔존한 것. `.astro` 삭제 후 클린 빌드 → 7개 언어 전부 `&#x3C;!--` 보존, dist 576개 HTML 전수 빈 첫 줄 span 0건.
+    - 검증: `npm run build` 성공(575 pages), `npx astro check` 0 errors / 0 warnings. 임시 산출물(`shiki-test.mjs`, `pipeline-test.mjs`, `test-comment.astro`, `dist/test-comment`) 삭제 완료.
+  - [x] **shimmer 비율 보정: 16:9 폴백 + 헤더 기반 실제 비율 조기 적용 (레이아웃 점프 제거)**
+    - 배경: `.img-wrapper`의 기본 `aspect-ratio: 16/9`와 실제 이미지 비율(균등 샘플 median 1.50, 범위 0.63~5.73)이 달라 로드 완료 시점에 박스가 갑자기 리사이즈되어 레이아웃이 튐.
+    - 해결: 브라우저가 이미지 헤더만 수신해도 `naturalWidth`/`naturalHeight`를 노출하는 특성을 이용해 `image-reveal.ts`(`syncAspectRatio`/`pollAspectRatio`)가 첫 패킷 도착(rAF 폴링) 시점에 `.img-wrapper`에 인라인 `aspect-ratio: w/h`를 설정 → `html[data-js] .img-wrapper`의 `transition: aspect-ratio 0.25s ease`로 16:9 → 실제 비율을 부드럽게 모프.
+    - 폴백 비율은 **16:9 유지** (1:1 시도 후 사용자가 16:9로 환원 결정). 인라인 스타일이 `.img-wrapper.loaded { aspect-ratio: auto }`보다 우선이라 로드 시 2차 변경 없음. `prefers-reduced-motion: reduce`에서 transition 해제. 적용 범위는 본문 이미지(`.img-wrapper`)만 — 포스트 카드(`.post-card-image`, 40/21 고정)·LoadMoreCard는 제외 (사용자 결정).
+    - 미채택 옵션: Range 요청으로 치수 선취득(B)·빌드 타임 치수 주입(C) — CDN·비용 대비 단순성에서 기각, 논의용으로만 정리.
+    - 검증: `npm run build` 성공, `npx astro check` 0 errors / 0 warnings. 상세는 `docs/ai-docs/design/typography.md`의 Image Shimmer Loading 섹션 참조.
 
 ## Option

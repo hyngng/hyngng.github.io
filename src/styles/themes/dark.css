@@ -2,6 +2,7 @@
   color-scheme: dark;
   /* ── 기본 컬러 ── */
   --color-bg: #202023;
+  --color-bg-soft: #2a2a2e;
   --color-text: #AFB0B1;
   --color-heading: #CACACA;
   --color-accent: #E8873A;
@@ -12,9 +13,8 @@
   --color-frame: #0a0a0a;
 
   /* ── 코드 블록 & Shiki ── */
-  --color-post-inline-code-bg: #2a2a2e;
-  --color-post-code-block-bg: #2A2D31;
-  --astro-code-background: #2A2D31;
+  --color-post-inline-code-bg: var(--color-bg-soft);
+  --astro-code-background: var(--color-bg-soft);
   --astro-code-foreground: #AFB0B1;
 
   /* One Dark Pro 토큰 매핑 */
@@ -30,12 +30,11 @@
 
   /* ── 컴포넌트 ── */
   --color-table-border: #333;
-  --color-table-head-bg: #2a2a2e;
-  --color-post-card-bg: #2a2a2e;
-  --author-avatar-placeholder: #2a2a2e;
+  --color-table-head-bg: var(--color-bg-soft);
+  --color-post-card-bg: var(--color-bg-soft);
+  --author-avatar-placeholder: var(--color-bg-soft);
   --color-shimmer: #303030;
   --color-shimmer-highlight: #424242;
-  --color-button-text: var(--color-heading);
 
   /* ── 테마 토글 아이콘 ── */
   #theme-icon-sun { display: none; }
@@ -49,9 +48,5 @@
   --color-shadow: rgba(0, 0, 0, 0.35);
 
   /* ── Admonitions ── */
-  --color-admonition-bg: #2a2a2e;
-}
-
-.dark .custom-button:hover {
-  color: #FFFFFF;
+  --color-admonition-bg: var(--color-bg-soft);
 }
