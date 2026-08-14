@@ -53,7 +53,7 @@ export default defineConfig({
           start_url: '/',
           display: 'standalone',
           lang: defaultLocaleBcp47,
-          background_color: '#F7F7F7',
+          background_color: '#FAFAFA',
           theme_color: '#0a0a0a',
           icons: [
             {

@@ -40,6 +40,10 @@ const locale: Locale = {
     title: 'Tabla de contenido',
     aria: 'Tabla de contenido',
   },
+  morePosts: {
+    title: 'Más publicaciones',
+    aria: 'Más publicaciones',
+  },
   footnote: {
     label: 'Notas al pie',
   },

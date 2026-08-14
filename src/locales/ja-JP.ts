@@ -40,6 +40,10 @@ const locale: Locale = {
     title: '目次',
     aria: '目次',
   },
+  morePosts: {
+    title: 'その他の記事',
+    aria: 'その他の記事',
+  },
   footnote: {
     label: '脚注',
   },

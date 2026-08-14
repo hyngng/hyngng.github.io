@@ -48,6 +48,10 @@ export interface Locale {
     title: string;
     aria: string;
   };
+  morePosts: {
+    title: string;
+    aria: string;
+  };
   footnote: {
     label: string;
   };

@@ -16,7 +16,7 @@ props:
 Figma 파일 `BLOGGING`의 `메인 페이지 - 라이트` Frame 기준.
 
 - Frame: `1920 x 2271`
-- 배경: `#F7F7F7`
+- 배경: `#FAFAFA`
 - 콘텐츠 시작: `x=480`
 - 콘텐츠 폭: `960`
 - Hero title: `x=480`, `y=158`, `w=215`, `h=58`

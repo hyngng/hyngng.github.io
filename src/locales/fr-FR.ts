@@ -40,6 +40,10 @@ const locale: Locale = {
     title: 'Sommaire',
     aria: 'Sommaire',
   },
+  morePosts: {
+    title: 'Autres articles',
+    aria: 'Autres articles',
+  },
   footnote: {
     label: 'Notes de bas de page',
   },

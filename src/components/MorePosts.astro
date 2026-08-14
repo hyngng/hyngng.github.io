@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { useLocale } from '../locales';
+import { getPostPath } from '../utils/posts';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  lang?: string;
+}
+
+const locale = useLocale(Astro);
+const { posts, lang = Astro.currentLocale } = Astro.props;
+---
+
+{
+  posts.length > 0 && (
+    <nav class="more-posts-container" aria-label={locale.morePosts.aria}>
+      <h2 class="more-posts-title">{locale.morePosts.title}</h2>
+      <ul class="more-posts-list">
+        {posts.map((post) => (
+          <li class="more-posts-item">
+            <a
+              href={getPostPath(post.id, post.data.authors[0], lang)}
+              class="more-posts-link"
+              title={post.data.title}
+            >
+              {post.data.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .more-posts-container {
+    width: 100%;
+  }
+
+  .more-posts-title {
+    margin: 0 0 var(--toc-title-list-gap) 0;
+    font-size: var(--post-card-font-title);
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .more-posts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--toc-item-gap);
+  }
+
+  .more-posts-item {
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .more-posts-link {
+    display: block;
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: var(--toc-link-font-size);
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition:
+      color 0.2s ease,
+      font-weight 0.2s ease;
+  }
+
+  .more-posts-link:hover {
+    color: var(--color-accent);
+  }
+</style>

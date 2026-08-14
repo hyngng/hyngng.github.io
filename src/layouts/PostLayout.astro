@@ -9,6 +9,7 @@ import BaseLayout from './BaseLayout.astro';
 import PostFooter from '../components/PostFooter.astro';
 import Comments from '../components/Comments.astro';
 import TOC from '../components/TOC.astro';
+import MorePosts from '../components/MorePosts.astro';
 import { getLocale, defaultLocale } from '../locales';
 import { countCharacters, extractExcerpt, META_DESCRIPTION_MAX_LENGTH, getPostNumber, getPostSlug, getPostLang, getPostPath } from '../utils/posts';
 
@@ -26,6 +27,20 @@ const shouldShowToc = post.data.toc !== false && tocHeadings.length > 0;
 
 const allPublishedPosts = await getCollection('posts', ({ data }) => !data.draft);
 const allPublishedPostsInLang = allPublishedPosts.filter(p => getPostLang(p.id) === lang);
+
+const primaryAuthorId = post.data.authors[0];
+const currentPostTime = post.data.date.getTime();
+const morePosts = allPublishedPostsInLang
+  .filter(p => p.id !== post.id && p.data.authors.includes(primaryAuthorId))
+  .sort((a, b) => {
+    const diffA = Math.abs(a.data.date.getTime() - currentPostTime);
+    const diffB = Math.abs(b.data.date.getTime() - currentPostTime);
+    if (diffA !== diffB) return diffA - diffB;
+    return b.data.date.getTime() - a.data.date.getTime();
+  })
+  .slice(0, 3)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const shouldShowMorePosts = morePosts.length > 0;
 
 const authorsMeta = post.data.authors.map(id => {
   const author = getAuthor(id, lang);
@@ -163,12 +178,19 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
       )}
     </div>
 
-    <PostFooter 
-      publishDate={post.data.date} 
-      updateDate={post.data.last_modified_at} 
-      characterCount={characterCount} 
-      lang={lang}
-    />
+    <div class="post-footer-container">
+      <PostFooter 
+        publishDate={post.data.date} 
+        updateDate={post.data.last_modified_at} 
+        characterCount={characterCount} 
+        lang={lang}
+      />
+      {shouldShowMorePosts && (
+        <aside class="post-more-posts-container">
+          <MorePosts posts={morePosts} lang={lang} />
+        </aside>
+      )}
+    </div>
     
     <Comments />
   </article>
@@ -239,9 +261,31 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     top: calc(var(--header-height) + var(--space-post-toc-sticky-top));
   }
 
+  .post-footer-container {
+    position: relative;
+    margin-top: var(--post-footer-margin-top);
+    margin-bottom: var(--post-footer-margin-bottom);
+  }
+
+  .post-more-posts-container {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: var(--post-toc-width);
+    margin-left: var(--space-post-toc-gap);
+  }
+
   @media (max-width: 1280px) {
     .post-toc-container {
       display: none;
+    }
+
+    .post-more-posts-container {
+      position: static;
+      width: 100%;
+      margin-left: 0;
+      margin-top: var(--space-post-comments-margin-top);
+      margin-bottom: 0;
     }
   }
 

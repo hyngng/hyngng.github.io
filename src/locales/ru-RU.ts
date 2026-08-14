@@ -40,6 +40,10 @@ const locale: Locale = {
     title: 'Содержание',
     aria: 'Содержание',
   },
+  morePosts: {
+    title: 'Другие публикации',
+    aria: 'Другие публикации',
+  },
   footnote: {
     label: 'Сноски',
   },

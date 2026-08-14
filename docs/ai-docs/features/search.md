@@ -30,6 +30,20 @@ Pagefind indexes `dist/` at build time. During local development (`npm run dev`)
 - `Search.astro` still falls back to **DOM Title Filtering** if `/pagefind/pagefind.js` is unavailable (e.g. `dist/pagefind/` doesn't exist yet). Each post card is pre-rendered with `data-title` and `data-path` for this fallback.
 - In production, the postbuild `pagefind --site dist --output-path dist/pagefind` step generates the index, and Search queries Pagefind, showing/hiding matching cards based on `data-path`.
 
+### Pagefind Load Timeout
+
+`ensurePagefind()` races the `import('/pagefind/pagefind.js')` + `init()` against a `PAGEFIND_LOAD_TIMEOUT_MS` (`3000`) timer. If the module fetch or init stalls (e.g. a stale Service Worker precache entry, a slow mobile network, or a dev-server lazy-plugin miss), the load is aborted and `handleSearch` falls back to DOM filtering instead of hanging forever.
+- The in-flight `Promise.race` is cached in `pagefindLoadPromise` and reused by concurrent searches.
+- On failure the cached promise is reset to `null`, so the next search attempt retries loading Pagefind. Previously a single failure was cached forever and every later search returned the same rejected promise.
+
+### Mobile Input Handling
+
+Real-device typing on mobile (especially Korean IME) differs from desktop, so the input is hardened against missed triggers:
+
+- **`<form>` wrapper**: `.search-bar` is a `<form role="search">` (was a `<div>`). The mobile virtual keyboard's "search"/"done" key now fires a `submit` event, which runs an immediate (non-debounced) search. `e.preventDefault()` plus `action="javascript:void(0)"` prevents navigation.
+- **`compositionend`**: each `.search-input` listens to both `input` (300ms debounce) and `compositionend`. IME composition is committed before `compositionend` fires, so Korean input always triggers a search even when a mobile browser skips the final `input` event. Duplicate triggers are collapsed by the debounce timer.
+- All listeners are bound under the `initSearch` `AbortController` signal (no listener leaks on re-init).
+
 ## Design & Color Tokens
 
 The Search component uses existing design tokens defined in the theme system (`light.css` / `dark.css`):

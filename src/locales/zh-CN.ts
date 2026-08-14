@@ -40,6 +40,10 @@ const locale: Locale = {
     title: '目录',
     aria: '目录',
   },
+  morePosts: {
+    title: '更多文章',
+    aria: '更多文章',
+  },
   footnote: {
     label: '脚注',
   },

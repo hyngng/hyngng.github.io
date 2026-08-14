@@ -46,6 +46,13 @@
   - **검색 설정**: Google Search Console 등 주요 서치어드바이저 지원 구조 마련 (개인정보처리방침 안내 포함).
 - [x] 댓글 및 검색 기능
   - [x] **검색 기능**: Pagefind 도입 및 인덱싱 준비 (다국어 검색 분리 전략 적용).
+  - [x] **모바일 검색 미동작 수정 (2026-08)**: PC(창 축소)는 동작, 실기기 모바일은 무반응 증상.
+    - 근본 원인(가설 A): `ensurePagefind()`의 `import('/pagefind/pagefind.js')`가 hanging되면 `pagefindLoadPromise`에 캐시된 Promise가 영원히 resolve되지 않고, 이후 모든 검색 시도가 멈춤. 프로덕션에서 SW precache/Slow mobile network 경유 시 로드 지연 가능.
+    - 수정 1: `Promise.race`로 3초 타임아웃(`PAGEFIND_LOAD_TIMEOUT_MS`) 추가, 실패 시 `pagefindLoadPromise = null` 리셋으로 다음 검색에서 재시도 허용 → hanging되도 `searchWithDOM` 폴백으로 전환.
+    - 수정 2: `compositionend` 리스너 추가 — 한글 IME 조합 확정 시에도 확실히 검색 트리거 (디바운스로 중복 흡수). 모바일 가상 키보드의 `input` 이벤트 누락 대비.
+    - 수정 3: `.search-bar`를 `<div>` → `<form role="search">`로 변경 — 가상 키보드 "검색"/"완료" 버튼이 `submit` 이벤트로 즉시 검색 실행 (`e.preventDefault()` + `action="javascript:void(0)"`로 네비게이션 방지).
+    - 수정하지 않음: CSS 중단점(1280/960px), `handleSearch` input.value 동기화, PostListSection 초기화 순서.
+    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors / 0 warnings, `npm test` 23 passed. 상세는 `docs/ai-docs/features/search.md` 참조.
   - [x] **댓글 시스템**: Giscus 단일 구현 (실시간 테마 연동, 동적 언어 처리 완료).
     - [ ] Utterances 지원 확장 (향후 계획)
     - [ ] Disqus 지원 확장 (향후 계획)
@@ -277,5 +284,14 @@
     - 폴백 비율은 **16:9 유지** (1:1 시도 후 사용자가 16:9로 환원 결정). 인라인 스타일이 `.img-wrapper.loaded { aspect-ratio: auto }`보다 우선이라 로드 시 2차 변경 없음. `prefers-reduced-motion: reduce`에서 transition 해제. 적용 범위는 본문 이미지(`.img-wrapper`)만 — 포스트 카드(`.post-card-image`, 40/21 고정)·LoadMoreCard는 제외 (사용자 결정).
     - 미채택 옵션: Range 요청으로 치수 선취득(B)·빌드 타임 치수 주입(C) — CDN·비용 대비 단순성에서 기각, 논의용으로만 정리.
     - 검증: `npm run build` 성공, `npx astro check` 0 errors / 0 warnings. 상세는 `docs/ai-docs/design/typography.md`의 Image Shimmer Loading 섹션 참조.
+  - [x] **다른 글 더 보기 (MorePosts) 컴포넌트 및 반응형 레이아웃 구현**
+    - 배경: 카테고리가 없는 구조에서 첫 번째 작가(`authors[0]`)를 카테고리 역할로 활용하여, 포스트 하단에 시간순서상 가장 인접한 글 3개를 노출하는 내부 링크/SEO 컴포넌트 도입. (단순 최신순 대비 블로그 전역의 촘촘한 내부 링크망 형성 및 탐색성 개선).
+    - 구현:
+      - `MorePosts.astro`: TOC 토큰 기반 타이틀/리스트 스타일링, 마우스 호버 시 `--color-accent` 전환, 순수 정적 HTML/CSS 목록.
+      - `PostLayout.astro`: 첫 번째 작가 기준 현재 글 작성일과 시간 차이(`Math.abs(p.date - current.date)`)가 가장 작은 3개 글 필터링 후 최신순 렌더링.
+      - 데스크톱(>1280px): `.post-footer-container` 우측 사이드바(`position: absolute; left: 100%; top: 0; width: var(--post-toc-width); margin-left: var(--space-post-toc-gap);`)에 메타데이터(CC 라이선스 문구)와 동일한 Y축 높이로 나란히 렌더링.
+      - 인라인/모바일(≤1280px): `position: static; width: 100%;`로 전환되어 `PostFooter` 아래에 인라인으로 렌더링되며, `--space-post-comments-margin-top`(`3.2rem`)을 통해 `메타데이터 ↔ 다른 글 더 보기` 간격과 `다른 글 더 보기 ↔ 댓글창` 간격을 대칭으로 일치.
+      - i18n: 7개 언어 로케일에 `morePosts` 번역 객체 등록 완료.
+    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors / 0 warnings, `npm test` 23 passed. 상세는 `docs/ai-docs/features/posts.md`의 '다른 글 더 보기 (MorePosts)' 섹션 참조.
 
 ## Option

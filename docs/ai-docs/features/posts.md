@@ -338,3 +338,27 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 | `micromark-extension-directive` + `mdast-util-directive` | `:::tip` 같은 directive를 `containerDirective` 노드로 파싱 |
 
 이 확장들이 없으면 테이블과 directive 블록이 paragraph로 분류되어 excerpt에 마크다운 원문이 노출된다.
+
+## 다른 글 더 보기 (MorePosts)
+
+포스트 하단 메타데이터(`PostFooter`) 영역과 연계하여, 첫 번째 작가(`post.data.authors[0]`)의 시간순서상 가장 인접한 글 목록(최대 3개)을 SEO 내부 링크 및 탐색용으로 제공한다.
+
+### 동작 및 레이아웃 정책
+
+- **데이터 수집 (시간순 인접 탐색)**:
+  - 현재 포스트와 동일 언어(`lang`)의 발행 포스트 중, 첫 번째 작가(`post.data.authors[0]`)가 동일하고 현재 글을 제외한(`p.id !== post.id`) 글들을 대상으로 한다.
+  - 단순 최신순이 아닌 **현재 포스트 작성일과의 시간 차이(`Math.abs(p.date - currentPost.date)`)가 가장 작은 3개 글**을 추출한다. (단순 최신순 추천 시 모든 글이 동일한 최신 글 3개만 추천하는 문제를 방지하고 촘촘한 내부 링크 네트워크를 형성).
+  - 최종 렌더링 시에는 추출된 3개의 글을 최신순으로 정렬하여 일관된 목록 순서를 제공한다. 다른 글이 없으면 렌더링하지 않는다.
+- **스타일링 (`MorePosts.astro`)**:
+  - `TOC.astro`의 텍스트 및 간격 토큰(`--toc-title-list-gap`, `--toc-item-gap`, `--post-card-font-title`, `--toc-link-font-size`, `text-overflow: ellipsis`)을 공유한다.
+  - 마우스 호버 시 포인트 컬러(`--color-accent`)로 부드럽게 전환된다.
+  - 접기/펼치기 및 ScrollSpy 감지 스크립트 없이 항상 펼쳐진 정적 순수 HTML/CSS 목록으로 경량 동작한다.
+- **반응형 배치 (`PostLayout.astro`)**:
+  - **데스크톱 (>1280px, 좌우 영역 존재 시)**:
+    - 외곽 래퍼 `.post-footer-container`(`position: relative; margin-top: var(--post-footer-margin-top); margin-bottom: var(--post-footer-margin-bottom);`)가 여백을 소유하고, 내부 `PostFooter`는 `margin: 0`으로 배치된다.
+    - 우측 사이드바 컨테이너 `.post-more-posts-container`는 `position: absolute; left: 100%; top: 0; width: var(--post-toc-width); margin-left: var(--space-post-toc-gap);`로 위치한다.
+    - 이에 따라 TOC와 정확히 일치하는 우측 컬럼 그리드 라인에서, **포스트 메타데이터(CC 라이선스 텍스트)와 정확히 동일한 수평 높이(Y축)**에서 나란히 고정(non-sticky) 렌더링된다.
+  - **인라인 (≤1280px, 좌우 영역 부재 시)**:
+    - `.post-more-posts-container`가 `position: static; width: 100%;`로 전환되어 `PostFooter` 아래에 인라인으로 렌더링된다.
+    - 상단 간격은 `--space-post-comments-margin-top`(`3.2rem`)으로 설정되어, `포스트 메타데이터 ↔ 다른 글 더 보기` 사이의 간격과 `다른 글 더 보기 ↔ 댓글창(Comments)` 사이의 간격이 완벽히 동일하게 대칭을 이룬다.
+- **i18n**: 7개 언어 로케일(`ko-KR`, `en-US`, `ru-RU`, `fr-FR`, `es-ES`, `ja-JP`, `zh-CN`)의 `locale.morePosts.title`('다른 글 더 보기' 등) 및 `aria` 라벨을 지원한다.

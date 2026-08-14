@@ -40,6 +40,10 @@ const locale: Locale = {
     title: '목차',
     aria: '목차',
   },
+  morePosts: {
+    title: '다른 글 더 보기',
+    aria: '다른 글 더 보기',
+  },
   footnote: {
     label: '각주',
   },
