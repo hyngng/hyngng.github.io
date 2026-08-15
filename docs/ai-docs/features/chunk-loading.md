@@ -45,6 +45,7 @@ postsPerPage: 8,  // 한 번에 표시할 포스트 수
 | `loader.ts` | 청크 fetch, prefetch, History, popstate 처리 (`createChunkLoader`) |
 | `animate.ts` | 카드 등장 애니메이션 (`animateNewCards`) |
 | `image-init.ts` | 포스트 카드 이미지 초기화 (`initPostCardImages`) — `loaded` 클래스 추가로 shimmer fade-out |
+| `author-link.ts` | 모바일 카드 작가 링크 위임 (`initMobileAuthorLink`) — 문서 레벨 click 인터셉트 |
 | `registry.ts` | controller 전역 레지스트리 (`setController`, `requireController`) |
 | `index.ts` | 공개 API re-export |
 
@@ -124,7 +125,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 | `src/pages/[author]/chunk/[n].astro` | `/{author}/chunk/{n}` | 기본 언어 작가 |
 | `src/pages/[lang]/[author]/chunk/[n].astro` | `/{lang}/{author}/chunk/{n}` | 다국어 작가 |
 
-각 청크 페이지는 독립 HTML로, SSR 2열 masonry로 렌더링된다. 검색·청크 로더 기능은 없다(홈/작가 페이지에서만 동작).
+각 청크 페이지는 독립 HTML로, SSR 2열 masonry로 렌더링된다. 검색·청크 로더 기능은 없다(홈/작가 페이지에서만 동작). 단, 모바일 작가 링크(`initMobileAuthorLink`)는 청크 페이지의 `ChunkPostListBody` 스크립트에서도 등록되어 홈/작가 페이지와 동일하게 작동한다.
 
 ## CSS 변수
 

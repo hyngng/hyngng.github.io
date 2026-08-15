@@ -346,15 +346,17 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 ### 동작
 
 - **모바일(≤960px, `isMobile()`)**: `.post-card-author` 영역 탭 → `data-author-href`로 이동 (첫 번째 작가 `authors[0]`의 페이지).
+- **히트 영역 제한**: `.post-card-author`는 `width: fit-content; max-width: 100%`로 콘텐츠 크기(아바타 + 이름/날짜)로 수축하므로, 탭 히트 영역 = 눈에 보이는 작가 콘텐츠 박스. 텍스트가 없는 빈 공간(카드 폭 우측 여백)은 카드 링크에 귀속되어 포스트를 연다.
 - **데스크톱(>960px)**: 기존대로 작가 영역 포함 카드 전체가 포스트를 연다. 호버 애니메이션(작가↔excerpt 전환)과 레이아웃은 변경 없음.
 - 다중 작가 포스트: 표시 중인 primary author(`authors[0]`) 페이지로 이동.
 
 ### 구현
 
 - `PostCard.astro`: `getAuthorPath(authorIds[0], currentLocale)`로 `data-author-href`를 `.post-card-author`에 주입.
-- `PostListSection.astro`의 `init()`(AbortController 스코프)에서 `document`에 위임 `click` 리스너 등록 — `closest('.post-card-author')`로 탭 대상 감지 → `isMobile()` 가드 후 `e.preventDefault()`로 카드 링크 네비게이션 차단, `window.location.href`로 이동.
+- `src/features/post-list/author-link.ts`의 `initMobileAuthorLink(signal)`: 문서 레벨 위임 `click` 리스너 등록 — `closest('.post-card-author')`로 탭 대상 감지 → `isMobile()` 가드 후 `e.preventDefault()`로 카드 링크 네비게이션 차단, `window.location.assign()`으로 이동.
+- 등록 지점: `PostListSection.astro` `init()`(AbortController 스코프)과 `ChunkPostListBody.astro`(청크 페이지). 카드가 렌더링되는 홈/작가/청크 페이지에서 동일 동작.
 - 위임 방식이라 청크 로딩·검색으로 동적 추가된 카드에도 자동 적용.
-- 모바일 판정은 `src/features/post-list/layout.ts`의 `isMobile()`(기존 960px 규약)을 재사용하므로 중복 정의 없음.
+- 모바일 판정은 `src/features/post-list/layout.ts`의 `isMobile()`을 재사용. 브레이크포인트는 `MOBILE_QUERY`(`'(max-width: 960px)'`) 상수로 중앙 관리하므로 JS에서 중복 정의 없음.
 
 ## 다른 글 더 보기 (MorePosts)
 

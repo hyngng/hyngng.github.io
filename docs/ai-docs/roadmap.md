@@ -302,5 +302,7 @@
     - 해결: `PostCard.astro`에 `getAuthorPath(authorIds[0], currentLocale)`로 `data-author-href` 주입 + `PostListSection.astro` `init()`의 AbortController 스코프에서 문서 레벨 위임 `click` 리스너 — `closest('.post-card-author')` 감지, `isMobile()`(기존 960px 규약) 가드 후 `preventDefault()`로 카드 링크 차단 및 작가 페이지 이동. 위임 방식이라 동적 추가 카드(청크/검색)도 자동 적용. 데스크톱은 기존 동작(포스트 열기) 유지.
     - 문서: `posts.md`의 '포스트 카드 작가 영역 (모바일 링크)' 섹션.
     - 검증: `npx astro check` 0 errors, `npm run build` 성공. headless Edge CDP E2E: 모바일(390px, `isMobileMedia=true`)은 작가 영역 클릭 → `/dev/`(작가 페이지), 타이틀 클릭 → 포스트. 데스크톱(1400px, `isMobileMedia=false`)은 작가 영역 클릭 → 포스트 (기존 동작 유지). 두 뷰포트 모두 기대 동작 일치.
+    - 보정(히트 영역): `.post-card-author`에 `width: fit-content` 적용으로 탭 히트 영역을 작가 콘텐츠 박스(아바타+이름/날짜)로 제한 — 텍스트 없는 빈 공간(우측 여백)은 카드 링크로 포스트가 열림. E2E 재검증: 모바일에서 아바타/이름 탭 → 작가 페이지, 빈 공간 탭 → 포스트.
+    - 보정(구조): 인라인 리스너를 `src/features/post-list/author-link.ts`의 `initMobileAuthorLink(signal)`로 추출하고, 960px 문자열을 `layout.ts`의 `MOBILE_QUERY` 상수로 중앙화(`isMobile`과 동일 소스). `ChunkPostListBody.astro`에서도 등록하여 청크 페이지(홈/작가 파생 뷰)까지 모바일 작가 링크 동작 일관화.
 
 ## Option

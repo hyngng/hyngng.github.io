@@ -60,7 +60,8 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
 </div>
 
 <script>
-  import { relayoutGrid, needsRelayout } from '../features/post-list';
+  import { relayoutGrid, needsRelayout, initMobileAuthorLink } from '../features/post-list';
+  initMobileAuthorLink();
   const grid = document.querySelector('.posts-grid') as HTMLElement;
   if (grid) {
     const columns = grid.querySelector('.posts-columns') as HTMLElement;

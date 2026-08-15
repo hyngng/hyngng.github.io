@@ -1,8 +1,10 @@
 import { collectCards, sortByIndex } from './dom';
 import { distributeByWeight, GAP } from './distribution';
 
+export const MOBILE_QUERY = '(max-width: 960px)';
+
 export function isMobile(): boolean {
-  return window.matchMedia('(max-width: 960px)').matches;
+  return window.matchMedia(MOBILE_QUERY).matches;
 }
 
 export function needsRelayout(columns: HTMLElement | null): boolean {
