@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import type { MarkdownHeading } from 'astro';
 import { SITE, getSiteMeta, getLocaleEntry } from '../settings/site.settings';
-import { getAuthor } from '../settings/authors.settings';
+import { getAuthor, getAuthorProfileUrls, normalizeTwitterHandle } from '../settings/authors.settings';
 import Author from '../components/Author.astro';
 import BaseLayout from './BaseLayout.astro';
 import PostFooter from '../components/PostFooter.astro';
@@ -11,7 +11,8 @@ import Comments from '../components/Comments.astro';
 import TOC from '../components/TOC.astro';
 import MorePosts from '../components/MorePosts.astro';
 import { getLocale, defaultLocale } from '../locales';
-import { countCharacters, extractExcerpt, META_DESCRIPTION_MAX_LENGTH, getPostNumber, getPostSlug, getPostLang, getPostPath } from '../utils/posts';
+import { countCharacters, extractExcerpt, META_DESCRIPTION_MAX_LENGTH, getPostNumber, getPostSlug, getPostLang, getPostPath, getAuthorPath } from '../utils/posts';
+import { buildBlogPostingJsonLd, buildBreadcrumbJsonLd, serializeJsonLd } from '../utils/jsonLd';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -99,9 +100,9 @@ const twitterCreators = [
       .map((a) => a.social?.twitter || SITE.social.twitter)
       .filter((handle): handle is string => Boolean(handle))
   ),
-].map((handle) => (handle.startsWith('@') ? handle : `@${handle}`));
+].map(normalizeTwitterHandle);
 const twitterSite = SITE.social.twitter
-  ? (SITE.social.twitter.startsWith('@') ? SITE.social.twitter : `@${SITE.social.twitter}`)
+  ? normalizeTwitterHandle(SITE.social.twitter)
   : undefined;
 
 // OG image: 프론트매터 og_image > 본문 썸네일(image.path) > 글로벌 기본값
@@ -110,18 +111,27 @@ const ogImageUrl = post.data.og_image
   || new URL(SITE.ogImage, Astro.url.origin).toString();
 // JSON-LD image: og_image가 별도 지정된 경우에도 썸네일(대표 이미지) 우선, 없으면 og image 사용
 const jsonLdImage = post.data.image?.path || ogImageUrl;
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: post.data.title,
+const jsonLd = buildBlogPostingJsonLd({
+  title: post.data.title,
   description: postDescription,
   image: jsonLdImage,
   datePublished: post.data.date.toISOString(),
   dateModified: (post.data.last_modified_at || post.data.date).toISOString(),
-  author: authorsMeta.map(a => ({ '@type': 'Person', name: a.name })),
-  inLanguage: lang,
-};
-const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+  authors: authorsMeta.map(a => ({
+    name: a.name,
+    url: new URL(getAuthorPath(a.id, lang), Astro.url.origin).toString(),
+    sameAs: getAuthorProfileUrls(a),
+  })),
+  inLanguage: getLocaleEntry(lang).bcp47,
+  url: canonicalUrl,
+});
+const jsonLdString = serializeJsonLd(jsonLd);
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: siteMeta.title, url: new URL('/', Astro.url.origin).toString() },
+  { name: getAuthor(primaryAuthorId, lang).name, url: new URL(getAuthorPath(primaryAuthorId, lang), Astro.url.origin).toString() },
+  { name: post.data.title, url: canonicalUrl },
+]);
+const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
 ---
 
 <BaseLayout lang={lang.split('-')[0]} title={post.data.title}>
@@ -156,6 +166,7 @@ const jsonLdString = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous" />
     )}
     <script type="application/ld+json" is:inline set:html={jsonLdString} />
+    <script type="application/ld+json" is:inline set:html={breadcrumbJsonLdString} />
   </Fragment>
   <article class="content-shell post" data-available-locales={availableLocalesForPost.join(',')} data-pagefind-filter={`lang:${lang.split('-')[0]}`}>
     {post.data.authors.map(id => (

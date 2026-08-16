@@ -45,7 +45,7 @@ function toFigure(node) {
 export function remarkMediaCaption() {
   return (tree) => {
     const paragraphs = [];
-    visit(tree, 'paragraph', (node, index, parent) => {
+    visit(tree, 'paragraph', (node, parent) => {
       paragraphs.push({ node, parent });
     });
 

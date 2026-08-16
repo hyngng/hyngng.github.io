@@ -12,6 +12,33 @@ export interface Social {
   website?: string;
 }
 
+// Social handle -> profile URL resolver registry.
+// New platform: add a key to `Social` and an entry here (e.g. bluesky, facebook, mastodon, pinterest).
+export const SOCIAL_PROFILE_URLS: Record<string, (handle: string) => string | undefined> = {
+  github: (handle) => `https://github.com/${handle}`,
+  twitter: (handle) => `https://x.com/${handle}`,
+  instagram: (handle) => `https://instagram.com/${handle}`,
+  website: (handle) => handle,
+  fediverse: (handle) => {
+    const match = handle.match(/^@?([^@]+)@([^@]+)$/);
+    return match ? `https://${match[2]}/@${match[1]}` : undefined;
+  },
+};
+
+export function getAuthorProfileUrls(author: Author): string[] {
+  return Object.entries(author.social).flatMap(([key, handle]) => {
+    if (!handle) return [];
+    const resolve = SOCIAL_PROFILE_URLS[key];
+    if (!resolve) return [];
+    const url = resolve(handle);
+    return url ? [url] : [];
+  });
+}
+
+export function normalizeTwitterHandle(handle: string): string {
+  return handle.startsWith('@') ? handle : `@${handle}`;
+}
+
 export interface AuthorLocaleMeta {
   description: string;
 }

@@ -3,7 +3,9 @@ import Footer from "../components/Footer.astro";
 import Frame from "../components/Frame.astro";
 import Head from "../components/Head.astro";
 import { SITE, getSiteMeta } from "../settings/site.settings";
+import { normalizeTwitterHandle } from "../settings/authors.settings";
 import { defaultLocale, getLocale } from "../locales";
+import { buildBreadcrumbJsonLd, serializeJsonLd, type BreadcrumbItem } from "../utils/jsonLd";
 
 import "../styles/global.css";
 interface Props {
@@ -12,17 +14,21 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  breadcrumbItems?: BreadcrumbItem[];
 }
 
-const { lang = Astro.currentLocale || defaultLocale, authorId, title, description, noindex = false } = Astro.props;
+const { lang = Astro.currentLocale || defaultLocale, authorId, title, description, noindex = false, breadcrumbItems = [] } = Astro.props;
 const locale = getLocale(lang);
 const siteMeta = getSiteMeta(lang);
 const pageTitle = title || siteMeta.title;
 const siteMetaDescription = description || siteMeta.description;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).toString();
 const defaultOgImageUrl = new URL(SITE.ogImage, Astro.url.origin).toString();
+const breadcrumbJsonLdString = breadcrumbItems.length > 0
+  ? serializeJsonLd(buildBreadcrumbJsonLd(breadcrumbItems))
+  : undefined;
 const twitterSite = SITE.social.twitter
-  ? (SITE.social.twitter.startsWith('@') ? SITE.social.twitter : `@${SITE.social.twitter}`)
+  ? normalizeTwitterHandle(SITE.social.twitter)
   : undefined;
 ---
 
@@ -46,6 +52,9 @@ const twitterSite = SITE.social.twitter
       {twitterSite && <meta name="twitter:site" content={twitterSite} />}
       {SITE.social.fediverse && (
         <meta name="fediverse:creator" content={SITE.social.fediverse} />
+      )}
+      {breadcrumbJsonLdString && (
+        <script type="application/ld+json" is:inline set:html={breadcrumbJsonLdString} />
       )}
     </slot>
   </Head>

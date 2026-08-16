@@ -20,6 +20,13 @@
     - directive wrapper(`:left`, `:right`, `:x` 등) 재사용, `prefers-reduced-motion` 대응.
     - CDN/로컬 이미지 모두 적용. CLS 없음 (항상 16:9).
   - [x] **JSON-LD Schema**: `BlogPosting` 타입의 구조화된 데이터 적용 (`inLanguage` 포함).
+  - [x] **JSON-LD 전체 확장 (2026-08)**:
+    - 사이트 전역 `WebSite` 스키마를 `Head.astro`에서 주입 (홈/작가/포스트/404 전체 커버. PostLayout의 head 슬롯 오버라이드와 무관하게 유지).
+    - `BlogPosting` 보강: `url`, `mainEntityOfPage`(WebPage/@id=canonical), author `url`(작가 페이지) + `sameAs`, `inLanguage`를 BCP-47(`ko-KR` 등)로 정규화.
+    - `BreadcrumbList`: 포스트(Home→작가→포스트)는 PostLayout, 작가(Home→작가)는 BaseLayout의 `breadcrumbItems` prop으로 주입.
+    - author `sameAs`는 `authors.settings.ts`의 `SOCIAL_PROFILE_URLS` 레지스트리로 핸들→URL 변환 (하드코딩 금지. 새 SNS는 `Social` 필드 + 레지스트리 항목 추가만으로 확장).
+    - 빌더는 `src/utils/jsonLd.ts` 순수 함수(`buildWebSiteJsonLd`/`buildBreadcrumbJsonLd`/`buildBlogPostingJsonLd`/`serializeJsonLd`)로 분리, `jsonLd.test.ts`(9건)로 검증.
+    - 검증: `npm test` 38 passed, `npm run build` 성공, `npx astro check` 0 errors. dist에서 홈=WebSite, 작가=WebSite+BreadcrumbList, 포스트=WebSite+BlogPosting+BreadcrumbList 확인. 상세는 `posts.md` 참조.
   - [x] **GoatCounter Analytics**: `analytics.goatCounter` 설정 시 `GoatCounter.astro` 컴포넌트가 `<head>`에 트래킹 스크립트를 조건부 삽입. `undefined`면 로드 안 됨.
   - [x] **Google Analytics**: `analytics.google.id` 설정 시 `GoogleAnalytics.astro`(`src/components/seo/analytics/`)가 `<head>`에 gtag.js를 조건부 삽입. `undefined`면 로드 안 됨.
   - [x] **Google Tag Manager**: `analytics.googleTagManager.id` 설정 시 `GoogleTagManager.astro`가 `<head>`에 GTM 컨테이너 스크립트를 조건부 삽입.
@@ -310,5 +317,12 @@
     - 구성: `# SITE.title` / `> getSiteMeta('en').description`(en Hero description) / 기본 언어 명시(`defaultLocaleBcp47` = ko-KR, 작성 사유 + `supportedLocales` 목록) / `## Sections`(Home·RSS) / `## Authors`(작가 5명, `getAuthor(id, 'en-US')` 로컬라이즈 설명) / 작가별 `### {author.name}` 서브섹션(`## Authors` 하위) — `authors[0]` 기준 그룹핑, 날짜 내림차순, 최대 10개, `post.data.description` 없으면 `extractExcerpt(..., 155)` 폴백(잘릴 때 `...` 부착 — `extractExcerpt`에 `truncationSuffix` 파라미터 추가, 기존 meta description/RSS 동작 불변). **본문 텍스트는 en 로케일로 작성하되 링크는 기본 로케일(ko) 경로**(`getPostPath`/`getAuthorPath`에 `defaultLocale` 전달) — 영어는 AI 동작 표준을 위한 것이며, 사이트 고유 URL은 `/en/` 프리픽스 없이 유지.
     - `public/llms.txt` 삭제(dynamic route와 dist 충돌 방지). Head.astro의 `/llms.txt` 링크는 그대로 유효.
     - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors(기존 `remark-media-caption.mjs` unused `index` hint 1건은 사전 존재, 무관), `npm test` 29 passed(신규 `llms.test.ts` 6건 — 상한·그룹핑·excerpt 폴백·draft/locale 제외·잘림 `...` 부착/미부착). dist/llms.txt에서 작가별 10개 상한 및 잘린 설명 `...` 확인.
+  - [x] **건강한 리팩토링 (2026-08, 동일 동작 보장)**
+    - twitter 핸들 `@` 프리픽스 정규화 DRY: `BaseLayout.astro`/`PostLayout.astro`의 `twitter:site`·`twitter:creator`에서 중복되던 `startsWith('@')` 삼항식을 `authors.settings.ts`의 `normalizeTwitterHandle()`로 단일화 (3곳 → 1개 헬퍼).
+    - `remark-media-caption.mjs` 방문자 콜백의 미사용 `index` 파라미터 제거 → astro check **0 errors / 0 warnings / 0 hints** 달성 (llms.txt 항목에서 사전 존재로 기록했던 hint 1건 해소).
+    - `jsonLd.ts` 타입 재검토: `BreadcrumbItem`/`JsonLdAuthor`/`BlogPostingData`(입력)와 `*JsonLd` 반환 인터페이스(출력)는 형태가 달라 이중화가 아니므로 **변경하지 않음**. `llms.ts`도 정돈된 상태로 유지 (미니멀 수정 원칙).
+    - 문서: `posts.md` JSON-LD 섹션에 **`SearchAction` 미포함 결정**(사용자 결정 — 사이트 검색 UI가 이미 존재하므로 중복 구조화 회피) 기록.
+    - 검토 중 발견·수정: `BreadcrumbList`/`BlogPosting`의 작가 URL이 `getAuthorPath()`에 `currentLocale`을 전달하지 않아 모든 로케일에서 기본(ko) 경로(`/dev/`)로 고정되던 문제 — `PostLayout.astro`·`[lang]/[author]/index.astro`에서 `getAuthorPath(id, lang)`으로 수정 (기존 `PostCard`/`Author` 컴포넌트 규칙과 일치). ko 페이지는 동일 경로라 영향 없음.
+    - 검증: `npm test` 38 passed, `npm run build` 성공, `npx astro check` 0 errors / 0 warnings / 0 hints. dist에서 `twitter:site`/`twitter:creator` 메타 바이트 동일 확인, en 포스트/작가 페이지 BreadcrumbList·author url이 `/en/dev/` 로케일 경로로 렌더링 확인.
 
 ## Option

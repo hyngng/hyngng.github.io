@@ -211,8 +211,14 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 
 ### JSON-LD
 
-- **안전한 직렬화**: `JSON.stringify(jsonLd).replace(/</g, '\\u003c')` 형식으로 특수문자 이스케이프 처리.
-- **이미지 및 언어**: `SITE.ogImage`를 기본 이미지 주소로 사용하며, 현재 포스트 빌드 맥락의 언어(short format)를 `inLanguage`에 설정.
+구조화 데이터 빌더는 `src/utils/jsonLd.ts`에 순수 함수로 모아 두고(`buildWebSiteJsonLd`, `buildBreadcrumbJsonLd`, `buildBlogPostingJsonLd`), 로직을 테스트하는 `src/utils/jsonLd.test.ts`가 함께 관리됨.
+
+- **안전한 직렬화**: `serializeJsonLd()`가 `JSON.stringify(data).replace(/</g, '\\u003c')`로 특수문자를 이스케이프 처리. 모든 JSON-LD 스크립트는 이 함수를 경유함.
+- **사이트 전역 `WebSite`** (`Head.astro`): BaseLayout을 쓰는 모든 페이지(홈/작가/포스트/404)에 주입. `name=SITE.title`, `description=getSiteMeta(lang).description`, `image=ogImage` 절대 URL. PostLayout이 head 슬롯을 오버라이드해도 유지됨.
+  - **`SearchAction` 미포함** (사용자 결정): 사이트 자체 검색 UI(Pagefind)가 이미 제공되므로 구조화된 검색 액션은 중복으로 판단하여 제외. WebSite는 기본 필드(name/url/description/image)만 유지.
+- **`BlogPosting`** (`PostLayout.astro`): `headline`, `description`, `image`, `datePublished`, `dateModified`, `author`(Person 배열), `inLanguage`(BCP-47, `getLocaleEntry(lang).bcp47`), `url`, `mainEntityOfPage`(`WebPage`/@id=canonical). `image`는 `og_image`보다 썸네일(`image.path`)을 우선.
+- **`BreadcrumbList`**: 포스트 페이지는 Home → 작가 → 포스트 (PostLayout에서 직접 주입), 작가 페이지는 Home → 작가 (`BaseLayout`의 `breadcrumbItems` prop으로 전달). 작가 URL은 현재 페이지 로케일 경로 사용 (`getAuthorPath(id, lang)` — `PostCard`/`Author` 컴포넌트와 동일 규칙).
+- **author `sameAs` 파생** (`src/settings/authors.settings.ts`): 하드코딩 없이 `SOCIAL_PROFILE_URLS` 레지스트리로 핸들을 URL로 변환 (`github`→`github.com/`, `twitter`→`x.com/`, `instagram`→`instagram.com/`, `website`는 그대로, `fediverse` `@user@domain`→`https://domain/@user`). 미래의 새 SNS는 `Social` 인터페이스에 필드 추가 + 레지스트리에 항목 1줄 추가만으로 확장 가능.
 
 ## Dev Server
 
