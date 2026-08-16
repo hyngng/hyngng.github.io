@@ -304,5 +304,11 @@
     - 검증: `npx astro check` 0 errors, `npm run build` 성공. headless Edge CDP E2E: 모바일(390px, `isMobileMedia=true`)은 작가 영역 클릭 → `/dev/`(작가 페이지), 타이틀 클릭 → 포스트. 데스크톱(1400px, `isMobileMedia=false`)은 작가 영역 클릭 → 포스트 (기존 동작 유지). 두 뷰포트 모두 기대 동작 일치.
     - 보정(히트 영역): `.post-card-author`에 `width: fit-content` 적용으로 탭 히트 영역을 작가 콘텐츠 박스(아바타+이름/날짜)로 제한 — 텍스트 없는 빈 공간(우측 여백)은 카드 링크로 포스트가 열림. E2E 재검증: 모바일에서 아바타/이름 탭 → 작가 페이지, 빈 공간 탭 → 포스트.
     - 보정(구조): 인라인 리스너를 `src/features/post-list/author-link.ts`의 `initMobileAuthorLink(signal)`로 추출하고, 960px 문자열을 `layout.ts`의 `MOBILE_QUERY` 상수로 중앙화(`isMobile`과 동일 소스). `ChunkPostListBody.astro`에서도 등록하여 청크 페이지(홈/작가 파생 뷰)까지 모바일 작가 링크 동작 일관화.
+  - [x] **llms.txt 동적 생성** (사용자 결정: 영어 기본, 작가별 서브섹션, Hero description 재사용)
+    - 배경: `public/llms.txt`는 하드코딩된 정적 파일(감사 A 항목에서 404 해소용 생성) → 콘텐츠/설정과 이중 관리 문제.
+    - 해결: `src/pages/llms.txt.ts` 동적 엔드포인트(robots/sitemap/rss와 동일 패턴, `request.url` origin 추출) + `src/utils/llms.ts`의 `buildLlmsTxt()` 순수 함수(테스트 가능).
+    - 구성: `# SITE.title` / `> getSiteMeta('en').description`(en Hero description) / 기본 언어 명시(`defaultLocaleBcp47` = ko-KR, 작성 사유 + `supportedLocales` 목록) / `## Sections`(Home·RSS) / `## Authors`(작가 5명, `getAuthor(id, 'en-US')` 로컬라이즈 설명) / 작가별 `### {author.name}` 서브섹션(`## Authors` 하위) — `authors[0]` 기준 그룹핑, 날짜 내림차순, 최대 10개, `post.data.description` 없으면 `extractExcerpt(..., 155)` 폴백(잘릴 때 `...` 부착 — `extractExcerpt`에 `truncationSuffix` 파라미터 추가, 기존 meta description/RSS 동작 불변). **본문 텍스트는 en 로케일로 작성하되 링크는 기본 로케일(ko) 경로**(`getPostPath`/`getAuthorPath`에 `defaultLocale` 전달) — 영어는 AI 동작 표준을 위한 것이며, 사이트 고유 URL은 `/en/` 프리픽스 없이 유지.
+    - `public/llms.txt` 삭제(dynamic route와 dist 충돌 방지). Head.astro의 `/llms.txt` 링크는 그대로 유효.
+    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors(기존 `remark-media-caption.mjs` unused `index` hint 1건은 사전 존재, 무관), `npm test` 29 passed(신규 `llms.test.ts` 6건 — 상한·그룹핑·excerpt 폴백·draft/locale 제외·잘림 `...` 부착/미부착). dist/llms.txt에서 작가별 10개 상한 및 잘린 설명 `...` 확인.
 
 ## Option

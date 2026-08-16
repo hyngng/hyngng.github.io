@@ -52,6 +52,10 @@ const origin = new URL(request.url).origin;
 
 동일 콘텐츠의 번역본을 연결하기 위해 `<xhtml:link rel="alternate" hreflang="..." href="..." />`를 사용함. 자기 자신을 포함한 전체 번역본을 출력해야 Google이 hreflang을 인식함.
 
+**자기 참조(self-referencing)는 필수 규칙**: Google 가이드("Each language version must list itself as well as all other language versions", sitemap은 "including itself")에 따라 각 `<url>`은 자기 자신을 가리키는 alternate도 포함해야 함. 즉 루트 홈페이지가 `<xhtml:link rel="alternate" hreflang="ko-KR" href="https://.../" />`처럼 자기 자신을 가리키는 것은 버그가 아니라 정상이며, "이 URL이 한국어 버전이다"는 신호로 해석됨. 양방향(self 포함)이 안 되면 Google이 hreflang을 무시하므로 생략하면 안 됨.
+
+**각 `<url>`의 반복 나열은 스펙상 필수**: 7개 언어 번역 그룹 포스트의 sitemap은 번역본마다 `<url>`을 별도로 만들고, 각 `<url>`에 자기 자신을 포함한 전체 alternate(7개 hreflang + `x-default`)를 동일하게 반복한다. `<loc>`과 자기 자신을 가리키는 href만 다르고 나머지는 완전히 중복이라 "길어 보이지만", Google Sitemap 규칙("Create a separate `<url>` element for each URL", "Each `<url>` element must ... lists every alternate version of the page, including itself")과 상호 참조 지침("If two pages don't both point to each other, the tags will be ignored") 때문에 이 구조를 유지해야 한다. 한 곳에만 전체 목록을 두고 나머지에서 생략하면 양방향이 깨져 hreflang이 무시됨.
+
 **포스트**: `getPostSlug()`(파일명에서 날짜/확장자 제거)로 번역 그룹을 묶음. 그룹 내 번역본이 2개 이상일 때만 alternate 출력. 기본 로케일(ko) 버전이 존재하면 `hreflang="x-default"`도 함께 출력.
 
 **포스트 페이지 `<head>`의 hreflang**: sitemap과 동일한 정책을 `PostLayout.astro`에서도 `<link rel="alternate" hreflang="...">`로 출력함 (번역본 전체 + 기본 로케일 존재 시 `x-default`, 자기 자신 포함). 포스트 `canonical`은 각 언어 버전이 자기 자신을 가리킴 (단일 정본을 두지 않는 번역 블로그 표준). 이중 `ko` 번역본이 없거나 번역본이 1개뿐인 포스트는 canonical만 있고 hreflang/x-default는 생략됨.
@@ -109,6 +113,7 @@ const origin = new URL(request.url).origin;
 
 - 공식 Astro 문서: https://docs.astro.build/en/guides/integrations-guide/sitemap/
 - sitemap.xml 스펙: https://www.sitemaps.org/protocol.html
+- Google hreflang 가이드: https://developers.google.com/search/docs/specialty/international/localized-versions (자기 참조 포함 · 각 `<url>` 반복 나열 규칙 근거)
 
 ## RSS 라우트
 

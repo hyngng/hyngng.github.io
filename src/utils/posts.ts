@@ -75,7 +75,7 @@ export function countCharacters(body: string = ''): number {
 const EXCERPT_MAX_LENGTH = 100;
 export const META_DESCRIPTION_MAX_LENGTH = 155;
 
-export function extractExcerpt(description: string | undefined, body: string | undefined, maxLength: number = EXCERPT_MAX_LENGTH): string {
+export function extractExcerpt(description: string | undefined, body: string | undefined, maxLength: number = EXCERPT_MAX_LENGTH, truncationSuffix: string = ''): string {
   if (description) return description;
   if (!body) return '';
 
@@ -92,9 +92,14 @@ export function extractExcerpt(description: string | undefined, body: string | u
     if (parts.join(' ').length >= maxLength) break;
   }
 
-  return parts.join(' ')
+  const joined = parts.join(' ')
     .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
-    .replace(/\s+/g, ' ').trim().slice(0, maxLength);
+    .replace(/\s+/g, ' ').trim();
+
+  if (joined.length <= maxLength) return joined;
+
+  const truncated = joined.slice(0, Math.max(0, maxLength - truncationSuffix.length));
+  return truncationSuffix ? `${truncated.trimEnd()}${truncationSuffix}` : truncated;
 }
 
 interface QueryPostsOptions {
