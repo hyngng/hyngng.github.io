@@ -47,6 +47,7 @@ const posts = defineCollection({
     mermaid: z.boolean().optional(),
     og_image: absoluteImageUrl.optional(),
     image: imageSchema,
+    redirect_from: z.array(z.string()).optional(),
   }),
 });
 
