@@ -134,7 +134,7 @@ const breadcrumbJsonLd = buildBreadcrumbJsonLd([
 const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
 ---
 
-<BaseLayout lang={lang.split('-')[0]} title={post.data.title}>
+<BaseLayout lang={lang.split('-')[0]} title={post.data.title} enableMermaid={post.data.mermaid}>
   <Fragment slot="head">
     <meta name="description" content={postDescription} />
     <link rel="canonical" href={canonicalUrl} />
@@ -235,18 +235,6 @@ const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
     flex-wrap: wrap;
     gap: var(--space-post-meta-list);
     margin-top: var(--space-post-title-meta);
-  }
-
-  .post-meta :global(.author + .author::before) {
-    content: "";
-    position: absolute;
-    left: calc(var(--space-post-meta-list) / -2);
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: var(--post-meta-dot-size);
-    height: var(--post-meta-dot-size);
-    border-radius: 50%;
-    background: var(--color-text);
   }
 
   .post-body-container {

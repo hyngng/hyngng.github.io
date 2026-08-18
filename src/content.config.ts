@@ -44,6 +44,7 @@ const posts = defineCollection({
     start_with_ads: z.boolean().optional(),
     toc: z.boolean().optional(),
     math: z.boolean().optional(),
+    mermaid: z.boolean().optional(),
     og_image: absoluteImageUrl.optional(),
     image: imageSchema,
   }),

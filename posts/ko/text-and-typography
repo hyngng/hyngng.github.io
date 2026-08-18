@@ -15,6 +15,9 @@ toc: true
 date: 2019-08-08 11:33:00 +0800
 last_modified_at: 2019-08-08 11:33:00 +0800
 
+mermaid: true
+math: true
+
 lang: ko
 ---
 

@@ -22,7 +22,28 @@ import rehypeKatex from 'rehype-katex';
 import remarkDeflist from 'remark-deflist';
 import { remarkImageAttributes } from './src/plugins/remark-image-attributes.mjs';
 import { unified } from '@astrojs/markdown-remark';
+import { visit } from 'unist-util-visit';
 import { pagefind } from 'vite-plugin-pagefind';
+
+function conditionalMath() {
+  /** @param {import('unist').Parent} tree @param {import('vfile').VFile} file */
+  return (tree, file) => {
+    if (file?.data?.astro?.frontmatter?.math) return;
+    visit(tree, 'inlineMath', /** @param {any} node */ (node) => {
+      node.type = 'text';
+      node.value = '$' + node.value + '$';
+      delete node.data;
+    });
+    visit(tree, 'math', /** @param {any} node @param {number | undefined} index @param {any} parent */ (node, index, parent) => {
+      if (parent && index != null) {
+        parent.children[index] = {
+          type: 'paragraph',
+          children: [{ type: 'text', value: '$$\n' + node.value + '\n$$' }],
+        };
+      }
+    });
+  };
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -118,6 +139,7 @@ export default defineConfig({
         remarkMediaCaption,
         remarkCdnImages,
         remarkMath,
+        conditionalMath,
         /** @type {any} */ (remarkDeflist)
       ],
       rehypePlugins: [

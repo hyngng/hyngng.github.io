@@ -15,9 +15,10 @@ interface Props {
   description?: string;
   noindex?: boolean;
   breadcrumbItems?: BreadcrumbItem[];
+  enableMermaid?: boolean;
 }
 
-const { lang = Astro.currentLocale || defaultLocale, authorId, title, description, noindex = false, breadcrumbItems = [] } = Astro.props;
+const { lang = Astro.currentLocale || defaultLocale, authorId, title, description, noindex = false, breadcrumbItems = [], enableMermaid = false } = Astro.props;
 const locale = getLocale(lang);
 const siteMeta = getSiteMeta(lang);
 const pageTitle = title || siteMeta.title;
@@ -71,11 +72,14 @@ const twitterSite = SITE.social.twitter
       <div class="content-side-fade" aria-hidden="true"></div>
       <div class="content-side-fade-top" aria-hidden="true"></div>
     </div>
+    {enableMermaid && (
+      <script>
+        import { initMermaidThemeSync } from '../utils/mermaidThemeSync';
+        initMermaidThemeSync();
+      </script>
+    )}
     <script>
-      import { initMermaidThemeSync } from '../utils/mermaidThemeSync';
       import { initShimmer } from '../utils/shimmer';
-
-      initMermaidThemeSync();
       initShimmer();
     </script>
   </body>

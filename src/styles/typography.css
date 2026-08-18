@@ -59,10 +59,17 @@ article ul {
   list-style-type: disc;
 }
 
-/* 중첩 리스트는 margin을 리셋하여 부모 li 간격에 의존 */
+/* li 요소에 명시적 간격 */
+article li {
+  margin: 0.25rem 0;
+  padding-left: 0.25rem;
+}
+
+/* 중첩 리스트는 부모 li 간격에 의존하도록 margin 조정 */
 article li ol,
 article li ul {
-  margin: 0;
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
 }
 
 /* ── 태스크 리스트 (To-Do List) ── */

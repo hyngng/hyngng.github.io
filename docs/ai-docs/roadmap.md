@@ -324,5 +324,14 @@
     - 문서: `posts.md` JSON-LD 섹션에 **`SearchAction` 미포함 결정**(사용자 결정 — 사이트 검색 UI가 이미 존재하므로 중복 구조화 회피) 기록.
     - 검토 중 발견·수정: `BreadcrumbList`/`BlogPosting`의 작가 URL이 `getAuthorPath()`에 `currentLocale`을 전달하지 않아 모든 로케일에서 기본(ko) 경로(`/dev/`)로 고정되던 문제 — `PostLayout.astro`·`[lang]/[author]/index.astro`에서 `getAuthorPath(id, lang)`으로 수정 (기존 `PostCard`/`Author` 컴포넌트 규칙과 일치). ko 페이지는 동일 경로라 영향 없음.
     - 검증: `npm test` 38 passed, `npm run build` 성공, `npx astro check` 0 errors / 0 warnings / 0 hints. dist에서 `twitter:site`/`twitter:creator` 메타 바이트 동일 확인, en 포스트/작가 페이지 BreadcrumbList·author url이 `/en/dev/` 로케일 경로로 렌더링 확인.
+  - [x] **Math/Mermaid 조건부 로딩 (2026-08)**
+    - `astro.config.mjs`: `conditionalMath()` remark attacher 플러그인 추가. `math` 프론트매터가 `true`가 아닌 파일에서 `math`/`inlineMath` AST 노드를 raw 텍스트(`$...$`, `$$...$$`)로 복원하여 `rehypeKatex`가 처리할 노드가 없도록 함. `remarkMath` 뒤에 위치하여 remark 파싱 후 동작. unified `remarkPlugins`에 attacher 참조(`conditionalMath`)로 등록 (함수 호출 `conditionalMath()` 사용 시 unified가 transformer를 attacher로 오인해 `tree`가 `undefined`되어 런타임 에러 발생).
+    - `content.config.ts`: `mermaid: z.boolean().optional()` 스키마 추가.
+    - `BaseLayout.astro`: `enableMermaid?: boolean` prop 추가. mermaid/shimmer 초기화 스크립트를 분리하여 `enableMermaid`일 때만 mermaid 스크립트 태그 삽입.
+    - `PostLayout.astro`: `enableMermaid={post.data.mermaid}`를 BaseLayout에 전달.
+    - `PostLayout.astro`: `post.data.math`일 때만 KaTeX CSS `<link>` 조건부 출력.
+    - 결과: `math: true`/`mermaid: true` 포스트만 해당 JS/CSS 로드, 미설정 포스트에서는 ~50KB(KaTeX) + ~1MB(mermaid) 로드 제거.
+    - `remark-media-caption.mjs`: `visit` 콜백 미사용 `index` → `_index`로 변경으로 unused variable 경고 해소.
+    - 검증: `npm run build` 성공, `npx astro check` 0 errors / 0 warnings / 0 hints. dist에서 `math: true` 포스트에 KaTeX CSS·mermaid 스크립트 존재, 미설정 포스트에서는 미존재 확인.
 
 ## Option
