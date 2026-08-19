@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
 import rss from '@astrojs/rss';
 import { getRssItems } from '../../../utils/posts';
-import { ALL_AUTHORS } from '../../../settings/authors.settings';
+import { ALL_AUTHORS, getAuthor } from '../../../settings/authors.settings';
 import { availableLocales, defaultLocale } from '../../../locales';
 
 export async function getStaticPaths() {
@@ -17,11 +17,12 @@ export async function getStaticPaths() {
 export async function GET(context: APIContext) {
   const origin = new URL(context.request.url).origin;
   const { author, lang } = context.props;
+  const resolved = getAuthor(author.id, lang);
   const items = await getRssItems({ lang, authorId: author.id });
 
   return rss({
     title: `${author.name} RSS`,
-    description: author.description,
+    description: resolved.description,
     site: origin,
     items,
   });

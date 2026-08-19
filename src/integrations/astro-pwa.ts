@@ -15,16 +15,6 @@ interface PwaContext {
   useDirectoryFormat: boolean;
 }
 
-/**
- * vite-plugin-pwa를 Astro 정적 빌드에 연결하는 통합.
- *
- * Astro의 vite 빌드는 SSR 컨텍스트로 실행되어 vite-plugin-pwa의 자체
- * `closeBundle` 훅이 서비스 워커 생성을 건너뛰므로:
- * - `astro:config:setup`에서 VitePWA 플러그인을 클라이언트 빌드에 등록하고
- * - `astro:build:done`에서 플러그인 API를 통해 `generateSW()`를 직접 호출한다.
- *
- * 참고: @vite-pwa/astro와 동일한 접근(플러그인 필터 + api.generateSW)이다.
- */
 function astroPwa(options: Partial<VitePWAOptions> = {}): AstroIntegration {
   const ctx: PwaContext = {
     api: undefined,

@@ -25,6 +25,7 @@ Astro 정적 렌더링과 클라이언트 ScrollSpy 스크립트를 조합해 �
 - ScrollSpy는 화면 상단의 활성 기준선을 지난 마지막 heading을 현재 heading으로 선택함. 스크롤 이벤트는 `requestAnimationFrame`으로 묶어 한 프레임에 한 번만 계산함.
 - TOC 초기화가 다시 실행될 때 이전 스크롤·resize·hashchange 리스너와 예약된 animation frame은 `AbortController`로 정리함.
 - 활성 heading이 속한 그룹만 `.expanded`가 되어 하위 heading을 보여줌.
+- TH 클릭 시 `pendingSlug`를 설정하여 목적지 도달 전까지 `render()`를 억제함. `computeActiveSlug()`의 계산 결과가 `pendingSlug`와 같아지는 순간 억제를 해제하고 실제 위치로 동기화함.
 - TH는 표준 hash 앵커로 PH를 이동시킴. 수동 `scrollTo()`를 사용하지 않아 클릭, hash 직접 진입, 뒤로가기 모두 같은 브라우저 스크롤 경로를 사용함.
 - heading의 `scroll-margin-top`은 `--scroll-target-offset`임. 데스크톱에서는 중앙 본문을 가리는 프레임 두께를 사용하고, 모바일에서는 고정 헤더가 없으므로 0임.
 
@@ -37,6 +38,15 @@ TH 클릭으로 PH를 이동시키는 책임과 현재 PH를 선택하는 책임
 `--header-height`는 버튼과 레이아웃의 기존 배치 용도이므로 스크롤 오프셋으로 재사용하지 않음. `--scroll-target-offset`을 별도로 둬 데스크톱의 중앙 본문은 프레임 두께만 보정함. 모바일에서는 헤더가 문서 흐름에 포함되어 화면을 가리지 않으므로 오프셋이 0임.
 
 `html`의 `scroll-behavior: smooth`가 hash 이동을 부드럽게 처리하며, `prefers-reduced-motion: reduce`에서는 이를 비활성화함.
+
+## 스크롤 억제 (Suppress)
+
+TOC에서 헤더를 클릭하면 네이티브 smooth scroll이 발생하는데, 이동 경로 상의 중간 헤더를 통과하면서 `.expanded`가 잠깐 토글되었다가 해제되는 깜빡임이 발생함. 이를 방지하기 위해 `pendingSlug` 기반 억제 로직이 있음.
+
+- `pendingSlug`: 클릭된 목적지의 slug. `null`이면 억제 중이 아님.
+- 클릭 시 `render(destSlug)`로 즉시 목적지 상태를 렌더링하고, 매 스크롤 프레임마다 `computeActiveSlug()`가 계산한 실제 slug가 `pendingSlug`와 같아지는 순간 억제를 해제함.
+- 네이티브 smooth scroll은 항상 목표 지점에 정확히 멈추므로, 애니메이션 종료 시점에 `computeActiveSlug() === pendingSlug`가 보장됨.
+- 안전망: `setTimeout` 1초. 스크롤이 거의 없어 `scroll` 이벤트가 충분히 발생하지 않는 경우(이미 목적지 근처) 대비.
 
 ## 상하단 fade
 

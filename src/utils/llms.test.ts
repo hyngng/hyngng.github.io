@@ -54,7 +54,7 @@ describe('buildLlmsTxt', () => {
     expect(text).toContain(`- [Home](${ORIGIN}/)`);
     expect(text).toContain(`- [RSS](${ORIGIN}/rss.xml)`);
     expect(text).toContain('## Authors\n');
-    expect(text).toContain(`- [hyngng.dev](${ORIGIN}/dev/): Recording programming and dev experiences.`);
+    expect(text).toContain(`- [hyngng.dev](${ORIGIN}/dev/): Recording programming and development experiences.`);
   });
 
   it('groups posts by primary author and links to the default locale post path', () => {

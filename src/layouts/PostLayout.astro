@@ -56,7 +56,6 @@ const authorsMeta = post.data.authors.map(id => {
 const characterCount = countCharacters(post.body);
 const postDescription = extractExcerpt(post.data.description, post.body, META_DESCRIPTION_MAX_LENGTH) || siteMeta.description;
 
-// fediverse:creator: 작가별 핸들 우선, 없으면 사이트 전역 핸들로 폴백 (중복 제거)
 const fediverseCreators = [
   ...new Set(
     authorsMeta
@@ -65,7 +64,6 @@ const fediverseCreators = [
   ),
 ];
 
-// 현재 포스트의 슬러그를 공유하는 번역본 목록 (hreflang/canonical용)
 const currentSlug = getPostSlug(post.id);
 const postTranslations = allPublishedPosts
   .filter(p => getPostSlug(p.id) === currentSlug)
@@ -78,10 +76,8 @@ const postTranslations = allPublishedPosts
   });
 const availableLocalesForPost = postTranslations.map(t => t.lang);
 
-// canonical: 각 언어 버전이 자기 자신
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).toString();
 
-// hreflang: 번역본 전체(자기 자신 포함) + 기본 로케일 버전 존재 시 x-default
 const hreflangAlternates = postTranslations.map(t => ({
   hreflang: getLocaleEntry(t.lang).bcp47,
   href: t.href,
@@ -93,7 +89,6 @@ if (postTranslations.length > 1) {
   }
 }
 
-// twitter:site / twitter:creator: 작가별 핸들 우선, 없으면 사이트 전역으로 폴백 (중복 제거)
 const twitterCreators = [
   ...new Set(
     authorsMeta
@@ -105,11 +100,9 @@ const twitterSite = SITE.social.twitter
   ? normalizeTwitterHandle(SITE.social.twitter)
   : undefined;
 
-// OG image: 프론트매터 og_image > 본문 썸네일(image.path) > 글로벌 기본값
 const ogImageUrl = post.data.og_image
   || post.data.image?.path
   || new URL(SITE.ogImage, Astro.url.origin).toString();
-// JSON-LD image: og_image가 별도 지정된 경우에도 썸네일(대표 이미지) 우선, 없으면 og image 사용
 const jsonLdImage = post.data.image?.path || ogImageUrl;
 const jsonLd = buildBlogPostingJsonLd({
   title: post.data.title,

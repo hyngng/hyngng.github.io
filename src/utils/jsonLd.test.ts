@@ -8,7 +8,7 @@ import {
 import { getAuthorProfileUrls, type Author } from '../settings/authors.settings';
 
 function mockAuthor(social: Author['social']): Author {
-  return { id: 'dev', name: 'hyngng.dev', description: '', avatar: '', social, locales: {} };
+  return { id: 'dev', name: 'hyngng.dev', description: '', avatar: '', social };
 }
 
 describe('serializeJsonLd', () => {

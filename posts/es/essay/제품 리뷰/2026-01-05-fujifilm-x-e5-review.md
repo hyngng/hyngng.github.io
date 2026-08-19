@@ -1,6 +1,6 @@
 ---
 title: "Impresiones de la Fujifilm X-E5 como sustituto de fotograma completo"
-authors: ["essay"]
+authors: ["essay", "photography"]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

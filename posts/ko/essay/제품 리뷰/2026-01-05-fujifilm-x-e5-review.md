@@ -1,6 +1,6 @@
 ---
 title: "풀프레임 대체 용도의 후지필름 X-E5 사용기"
-authors: ["essay"]
+authors: ["essay", "photography"]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

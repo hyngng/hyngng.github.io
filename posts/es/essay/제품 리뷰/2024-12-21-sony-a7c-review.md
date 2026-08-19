@@ -1,6 +1,6 @@
 ---
 title: "Reseña de la Sony A7C desde la perspectiva de un usuario de cámara de móvil"
-authors: ["essay"]
+authors: ["essay", "photography"]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

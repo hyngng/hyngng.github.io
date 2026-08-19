@@ -9,15 +9,6 @@ const ADMONITION_ICONS = {
   danger: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zm0 288a32 32 0 1 1 0-64 32 32 0 1 1 0 64z"/></svg>',
 };
 
-/**
- * remark plugin: Unified directive processor.
- *
- * textDirective  → <span class="name class1 class2">content</span>
- *   Syntax: :name[content]{ .class1 .class2 }
- *
- * containerDirective (:::tip, :::warning, :::danger, :::info)
- *   → <div class="admonition admonition-{type}">…</div>
- */
 export function remarkDirectives() {
   return (tree) => {
     visit(tree, 'textDirective', (node) => {

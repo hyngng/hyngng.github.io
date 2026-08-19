@@ -75,7 +75,7 @@
   --frame-radius: calc(var(--button-size) / 2);
   --header-height: var(--button-size);
   --scroll-target-offset: var(--frame-thickness);
-  --transition-duration: 0.2s;
+  --transition-duration: 0.1s;
   --transition-easing: ease;
   --layout-padding: 24px;
   --layout-padding-mobile: 12px;

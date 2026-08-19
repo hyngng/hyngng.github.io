@@ -121,7 +121,7 @@ for (const heading of filteredHeadings) {
       return parseFloat(scrollMarginTop) || 0;
     };
 
-    const updateActiveHeading = () => {
+    const computeActiveSlug = () => {
       const activationLine = getActivationLine();
       let activeSlug = headings[0].getAttribute("id") || "";
 
@@ -130,13 +130,17 @@ for (const heading of filteredHeadings) {
         activeSlug = heading.getAttribute("id") || activeSlug;
       }
 
+      return activeSlug;
+    };
+
+    const render = (slug: string) => {
       tocLinks.forEach((link) => {
         const href = link.getAttribute("href")?.substring(1);
-        link.classList.toggle("active", href === activeSlug);
+        link.classList.toggle("active", href === slug);
       });
 
       const activeLink = tocLinks.find(
-        (link) => link.getAttribute("href")?.substring(1) === activeSlug,
+        (link) => link.getAttribute("href")?.substring(1) === slug,
       );
 
       const activeGroupEl = activeLink?.closest<HTMLElement>(".toc-group") || null;
@@ -149,6 +153,48 @@ for (const heading of filteredHeadings) {
         subgroup.classList.toggle("expanded", subgroup === activeSubgroupEl);
       });
     };
+
+    let pendingSlug: string | null = null;
+    let pendingTimeout: number | undefined;
+
+    const clearPending = () => {
+      pendingSlug = null;
+      if (pendingTimeout !== undefined) {
+        window.clearTimeout(pendingTimeout);
+        pendingTimeout = undefined;
+      }
+    };
+
+    const updateActiveHeading = () => {
+      const activeSlug = computeActiveSlug();
+
+      if (pendingSlug !== null && activeSlug !== pendingSlug) {
+        return;
+      }
+      if (pendingSlug !== null) clearPending();
+
+      render(activeSlug);
+    };
+
+    tocLinks.forEach((link) => {
+      link.addEventListener(
+        "click",
+        () => {
+          const destSlug = link.getAttribute("href")?.substring(1);
+          if (!destSlug) return;
+
+          pendingSlug = destSlug;
+          render(destSlug);
+
+          if (pendingTimeout !== undefined) window.clearTimeout(pendingTimeout);
+          pendingTimeout = window.setTimeout(() => {
+            clearPending();
+            render(computeActiveSlug());
+          }, 1000);
+        },
+        { signal },
+      );
+    });
 
     let animationFrame: number | undefined;
     const scheduleActiveHeadingUpdate = () => {
@@ -170,6 +216,8 @@ for (const heading of filteredHeadings) {
     signal.addEventListener("abort", () => {
       if (animationFrame !== undefined)
         window.cancelAnimationFrame(animationFrame);
+      if (pendingTimeout !== undefined)
+        window.clearTimeout(pendingTimeout);
     });
 
     updateActiveHeading();

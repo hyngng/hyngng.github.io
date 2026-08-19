@@ -47,8 +47,6 @@ const { locale, currentLocale, authorId } = Astro.props;
     const grid = document.querySelector('.posts-grid') as HTMLElement | null;
     const allPosts = allPostsFromGrid(grid || document.createElement('div'));
 
-    // 검색 input focus 시 pagefind 백그라운드 프리로드 → 첫 검색 지연 원천 제거.
-    // 페이지인드 불가 환경은 엔진 결정 시 DOM 폴백으로 영구 전환된다.
     allInputs.forEach(input => {
       input.addEventListener('focus', () => {
         getSearchEngine(allPosts).catch(err => {
@@ -103,14 +101,12 @@ const { locale, currentLocale, authorId } = Astro.props;
       const lang = rawLocale.split('-')[0];
       const authorId = allInputs[0]?.dataset.author || undefined;
 
-      // 단일 엔진, 단일 결과 집합
       const paths = await engine.search(query, { lang, authorId });
       if (currentSeq !== searchSeq) return;
 
       await ensureChunksLoaded(controller, new Set(paths));
       if (currentSeq !== searchSeq) return;
 
-      // 유일한 커밋 지점 (검색당 1회). 대기 중 그리드는 변이하지 않는다.
       controller.showSearchResults(paths);
     }
 

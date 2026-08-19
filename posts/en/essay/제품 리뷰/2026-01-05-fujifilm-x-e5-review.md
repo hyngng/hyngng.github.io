@@ -1,6 +1,6 @@
 ---
 title: "Fujifilm X-E5 as a Full-Frame Replacement"
-authors: ["essay"]
+authors: ["essay", "photography"]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

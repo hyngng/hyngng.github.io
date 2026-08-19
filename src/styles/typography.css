@@ -1,4 +1,4 @@
-/* 1. article 컨테이너 및 폴백 상태 메시지 속성 통합 */
+
 article,
 .post-preview-state {
   color: var(--color-text);
@@ -19,7 +19,7 @@ article> :last-child,
   margin-bottom: 0;
 }
 
-/* 2. article 내부 HTML 태그별 스타일 및 마진 상쇄 무력화 방어 */
+
 article p,
 .post-preview-state p {
   margin: var(--space-post-paragraph) 0;
@@ -232,13 +232,13 @@ article .table-wrapper {
   overflow-x: auto;
 }
 
-/* 3. 빈 목록 상태 텍스트 마진 강제 조정 */
+
 .post-preview-state {
   margin-top: 0;
   margin-bottom: var(--space-post-paragraph);
 }
 
-/* 4. 이미지 캡션 자동 스타일링 및 오버플로우 제어 */
+
 article p:has(img) {
   margin: 0;
 }
@@ -370,7 +370,7 @@ article figure.media-figure>.audio-native {
   margin: 0;
 }
 
-/* ── 7. Shimmer Image Loading ── */
+/* ── Shimmer Image Loading ── */
 
 .img-wrapper {
   position: relative;
@@ -461,7 +461,7 @@ html:not([data-js]) .img-wrapper img {
   }
 }
 
-/* ── 8. Footnote Tooltip ── */
+/* ── Footnote Tooltip ── */
 article {
   anchor-scope: all;
 }

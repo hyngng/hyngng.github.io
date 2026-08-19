@@ -13,7 +13,6 @@ export async function getStaticPaths() {
     (post) => !post.data.draft && getPostLang(post.id) === defaultLocale,
   );
 
-  // Build slug → target map for default locale posts
   const slugToTarget = new Map<string, string>();
   const currentSlugs = new Set<string>();
   for (const post of defaultPosts) {
@@ -25,18 +24,15 @@ export async function getStaticPaths() {
   const paths: Array<{ params: { slug: string }; props: { target: string } }> = [];
   const usedRedirectSlugs = new Set<string>();
 
-  // Generate redirects for default locale posts (current slug → current URL)
   for (const slug of currentSlugs) {
     paths.push({ params: { slug }, props: { target: slugToTarget.get(slug)! } });
   }
 
-  // Generate redirects for redirect_from paths (from all locale posts)
   for (const post of posts) {
     if (!post.data.redirect_from) continue;
 
     for (const redirectPath of post.data.redirect_from) {
       const redirectSlug = redirectPath.replace(/^\/?posts\//, '').replace(/\/+$/, '');
-      // Find the Korean post target by matching the post slug
       const target = slugToTarget.get(getPostSlug(post.id));
       if (
         redirectSlug &&

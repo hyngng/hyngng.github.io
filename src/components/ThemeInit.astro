@@ -1,23 +1,16 @@
 ---
-// Applies the persisted theme before first paint to avoid a flash of the
-// wrong color scheme. Shared by BaseLayout (Head) and ChunkPageLayout.
+// Applies the theme before first paint to avoid a flash of the wrong color
+// scheme. Checks localStorage first, then falls back to OS preference.
 ---
 
 <script is:inline>
   (function() {
-    const theme = (() => {
-      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-        return localStorage.getItem('theme');
-      }
-      return 'light';
-    })();
-    const element = document.documentElement;
-    if (theme === 'dark') {
-      element.classList.add('dark');
-      element.classList.remove('light');
-    } else {
-      element.classList.remove('dark');
-      element.classList.add('light');
-    }
+    const stored = localStorage.getItem('theme');
+    const isDark = stored
+      ? stored === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const el = document.documentElement;
+    el.classList.toggle('dark', isDark);
+    el.classList.toggle('light', !isDark);
   })();
 </script>

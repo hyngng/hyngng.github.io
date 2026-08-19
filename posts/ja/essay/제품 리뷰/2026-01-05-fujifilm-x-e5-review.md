@@ -1,6 +1,6 @@
 ---
 title: "フルサイズ代替としての富士フイルム X-E5 使用記"
-authors: ["essay"]
+authors: ["essay", "photography"]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

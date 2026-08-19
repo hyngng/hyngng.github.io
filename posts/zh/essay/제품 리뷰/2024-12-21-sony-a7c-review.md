@@ -1,6 +1,6 @@
 ---
 title: "手机摄影用户视角下的索尼 A7C 评测"
-authors: ["essay"]
+authors: ["essay", "photography"]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

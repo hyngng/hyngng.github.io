@@ -25,7 +25,7 @@ export const SOCIAL_PROFILE_URLS: Record<string, (handle: string) => string | un
   },
 };
 
-export function getAuthorProfileUrls(author: Author): string[] {
+export function getAuthorProfileUrls(author: { social: Social }): string[] {
   return Object.entries(author.social).flatMap(([key, handle]) => {
     if (!handle) return [];
     const resolve = SOCIAL_PROFILE_URLS[key];
@@ -39,18 +39,15 @@ export function normalizeTwitterHandle(handle: string): string {
   return handle.startsWith('@') ? handle : `@${handle}`;
 }
 
-export interface AuthorLocaleMeta {
-  description: string;
+interface AuthorData {
+  id: string;
+  name: string;
+  description: Partial<Record<string, string>>; // per-locale descriptions
+  avatar: string;
+  social: Social;
 }
 
-export interface Author {
-  id: string; // used in frontmatter & routing
-  name: string; // e.g. 'hyngng.dev'
-  description: string;
-  avatar: string; // e.g. '/assets/img/authors/dev.jpg'
-  social: Social;
-  locales: Partial<Record<string, AuthorLocaleMeta>>;
-}
+export type Author = Omit<AuthorData, 'description'> & { description: string };
 
 // ── Configuration ────────────────────────────────────────
 
@@ -64,82 +61,102 @@ export const AUTHORS = {
   art: {
     id: 'art',
     name: 'hyngng.art',
-    description: '그림과 그림에 대한 생각을 정리합니다.',
     avatar: 'avatar/hyngng-art.webp',
     social: {
       instagram: 'hyngng.art',
-      fediverse: '@hyngng.art@threads.net',
-      website: 'https://hyngng.art',
+      // fediverse: '@hyngng.art@threads.net',
+      // website: 'https://hyngng.art',
     },
-    locales: {
-      'ko-KR': { description: '그림과 그림에 대한 생각을 정리합니다.' },
-      'en-US': { description: 'Organizing thoughts on art and drawing.' },
+    description: {
+      'ko-KR': '그림과 그림에 대한 생각을 정리합니다.',
+      'en-US': 'Organizing artwork and thoughts about art.',
+      'ru-RU': 'Упорядочиваю рисунки и мысли о рисовании.',
+      'fr-FR': 'J\'organise mes dessins et mes réflexions sur le dessin.',
+      'es-ES': 'Organizo dibujos y reflexiones sobre el dibujo.',
+      'ja-JP': '絵と絵についての考えを整理しています。',
+      'zh-CN': '整理画作与关于画作的思考。',
     },
   },
 
   photography: {
     id: 'photography',
     name: 'hyngng.photography',
-    description: '매해의 사진을 정리한 작은 갤러리입니다.',
     avatar: 'avatar/hyngng-photography.webp',
     social: {
-      fediverse: '@hyngng.essay@threads.net',
+      // fediverse: '@hyngng.essay@threads.net',
     },
-    locales: {
-      'ko-KR': { description: '매해의 사진을 정리한 작은 갤러리입니다.' },
-      'en-US': { description: 'A small gallery organizing photos year by year.' },
+    description: {
+      'ko-KR': '사진과 사진에 대한 생각을 정리합니다.',
+      'en-US': 'Organizing photos and thoughts about photography.',
+      'ru-RU': 'Упорядочиваю фотографии и мысли о фотографии.',
+      'fr-FR': 'J\'organise mes photos et mes réflexions sur la photographie.',
+      'es-ES': 'Organizo fotos y reflexiones sobre la fotografía.',
+      'ja-JP': '写真と写真についての考えを整理しています。',
+      'zh-CN': '整理照片与关于摄影的想法。',
     },
   },
 
   dev: {
     id: 'dev',
     name: 'hyngng.dev',
-    description: '프로그래밍과 개발 경험을 기록합니다.',
     avatar: 'avatar/hyngng-dev.webp',
     social: {
-      email: 'dev@example.com',
+      // email: 'dev@example.com',
       github: 'hyngng',
       twitter: 'hyngng_dev',
-      fediverse: '@hyngng.dev@threads.net',
+      // fediverse: '@hyngng.dev@threads.net',
     },
-    locales: {
-      'ko-KR': { description: '프로그래밍과 개발 경험을 기록합니다.' },
-      'en-US': { description: 'Recording programming and dev experiences.' },
+    description: {
+      'ko-KR': '프로그래밍과 개발 경험을 기록합니다.',
+      'en-US': 'Recording programming and development experiences.',
+      'ru-RU': 'Записываю опыт программирования и разработки.',
+      'fr-FR': 'Je consigne mes expériences de programmation et de développement.',
+      'es-ES': 'Documento mis experiencias de programación y desarrollo.',
+      'ja-JP': 'プログラミングと開発の経験を記録しています。',
+      'zh-CN': '记录编程与开发经验。',
     },
   },
 
   blog: {
     id: 'blog',
     name: 'hyngng.blog',
-    description: '블로그 관리 기록을 정리합니다.',
     avatar: 'avatar/hyngng-blog.webp',
     social: {
-      email: 'blog@example.com',
+      // email: 'blog@example.com',
       github: 'hyngng',
       twitter: 'hyngng_blog',
-      fediverse: '@hyngng.blog@threads.net',
+      // fediverse: '@hyngng.blog@threads.net',
     },
-    locales: {
-      'ko-KR': { description: '블로그 관리 기록을 정리합니다.' },
-      'en-US': { description: 'Documenting blog management logs.' },
+    description: {
+      'ko-KR': '블로그 관리 기록을 정리합니다.',
+      'en-US': 'Organizing blog management records.',
+      'ru-RU': 'Упорядочиваю записи об управлении блогом.',
+      'fr-FR': 'J\'organise les archives de gestion du blog.',
+      'es-ES': 'Organizo los registros de administración del blog.',
+      'ja-JP': 'ブログ運営の記録を整理しています。',
+      'zh-CN': '整理博客的管理记录。',
     },
   },
 
   essay: {
     id: 'essay',
     name: 'hyngng.essay',
-    description: '에세이와 생각을 기록합니다.',
     avatar: 'avatar/hyngng-essay.webp',
     social: {
-      fediverse: '@hyngng.essay@threads.net',
+      // fediverse: '@hyngng.essay@threads.net',
     },
-    locales: {
-      'ko-KR': { description: '에세이와 생각을 기록합니다.' },
-      'en-US': { description: 'Recording essays and reflections.' },
+    description: {
+      'ko-KR': '에세이와 생각을 기록합니다.',
+      'en-US': 'Recording essays and thoughts.',
+      'ru-RU': 'Записываю эссе и мысли.',
+      'fr-FR': 'Je consigne des essais et des pensées.',
+      'es-ES': 'Documento ensayos y pensamientos.',
+      'ja-JP': 'エッセイと思いを記録しています。',
+      'zh-CN': '记录随笔与想法。',
     },
   },
 
-} satisfies Record<string, Omit<Author, 'id'> & { id: string }>;
+} satisfies Record<string, AuthorData>;
 
 // ── Derived types ────────────────────────────────────────
 
@@ -149,25 +166,26 @@ export const AUTHOR_IDS = Object.keys(AUTHORS) as [AuthorId, ...AuthorId[]];
 
 // ── Helpers ──────────────────────────────────────────────
 
-function resolveAuthorLocale(author: Author, lang?: string): AuthorLocaleMeta | undefined {
-  if (!lang) lang = defaultLocaleBcp47;
-  if (author.locales[lang]) return author.locales[lang];
+function resolveAuthorDescription(author: AuthorData, lang?: string): string {
+  const descriptions = author.description;
+  const locale = lang ?? defaultLocaleBcp47;
 
-  const prefix = lang.split('-')[0];
-  const matched = Object.entries(author.locales).find(([key]) => key.startsWith(prefix));
-  if (matched) return matched[1];
+  if (descriptions[locale]) return descriptions[locale]!;
 
-  return author.locales[defaultLocaleBcp47];
+  const prefix = locale.split('-')[0];
+  const matched = Object.entries(descriptions).find(([key]) => key.startsWith(prefix));
+  if (matched) return matched[1]!;
+
+  return descriptions[defaultLocaleBcp47] ?? '';
 }
 
-export function getAuthor(id: string, lang?: string): Author & AuthorLocaleMeta {
+export function getAuthor(id: string, lang?: string): Author {
   const author = AUTHORS[id as AuthorId];
   if (!author) throw new Error(`Unknown author: "${id}"`);
-  const meta = resolveAuthorLocale(author, lang);
   return {
     ...author,
     avatar: resolveCdnPath(author.avatar),
-    description: meta?.description ?? author.description,
+    description: resolveAuthorDescription(author, lang),
   };
 }
 

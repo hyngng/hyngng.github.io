@@ -1,9 +1,5 @@
 import { visit } from 'unist-util-visit';
 
-/**
- * remark plugin: Parses attribute lists like {.class1 .class2} directly following images.
- * Example: ![alt](url){.img-light .border}
- */
 export function remarkImageAttributes() {
   return (tree) => {
     visit(tree, 'image', (node, index, parent) => {

@@ -48,9 +48,6 @@ interface IndexedPost {
   index: number;
 }
 
-// SSR-side helper shared by the first chunk (PostListSection) and
-// subsequent chunk pages (ChunkPostListBody) to split posts into two
-// balanced columns and decide which side holds the load-more card.
 export function distributePostColumns(
   posts: CollectionEntry<'posts'>[],
   indexOffset: number,
