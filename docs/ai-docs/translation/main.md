@@ -128,6 +128,19 @@ any one target language:
   surrounding context intends and translate that sense specifically —
   do not default to the most common or most literal sense of the word
   merely because it is the first one that comes to mind.
+- **Kinship terms as generic reference**: a language's kinship word
+  (e.g. for "grandfather," "grandmother") may be used not only for an
+  actual family member but as a neutral, everyday way to refer to an
+  unrelated stranger of that age (as Korean does with 할아버지/할머니).
+  In that generic use the source word carries no family warmth — it
+  functions as an age descriptor, and may even appear in a distant or
+  critical register. The target language's equivalent kinship word often
+  inextricably carries affectionate, family-related warmth (as English
+  "grandfather," Russian "дедушка," or Chinese "老爷爷" do), which would
+  falsely import intimacy the source does not intend. Judge whether the
+  source term is being used generically for a stranger; if so, render it
+  with a register-appropriate neutral age descriptor rather than the
+  literal kinship word.
 - **Phonetic/orthographic false friends in proper nouns**: never let a
   proper noun's accidental resemblance — in sound or spelling — to an
   existing, meaningful word or concept in {target_lang} cause you to

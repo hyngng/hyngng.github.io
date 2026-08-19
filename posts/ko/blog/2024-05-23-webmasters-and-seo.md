@@ -21,7 +21,7 @@ mermaid: true
 ![search-console](/2024-05-23-webmasters-and-seo/search-console.webp){: .w-75 }
 *대표적인 웹마스터도구, 구글 서치 콘솔*
 
-한국 포털사이트 점유율 순으로 [구글 서치 콘솔](https://search.google.com/search-console/)과 [네이버 서치어드바이저](https://searchadvisor.naver.com/), [다음 웹마스터도구](https://webmaster.daum.net/), [빙 웹마스터도구](https://www.bing.com/webmasters?lang=ko) 총 4가지 플랫폼에 등록해주었습니다. 특이한 점은 사이트별로 도메인 등록 후 실제 검색결과에 노출되기까지의 시간이 천차만별이었다는 건데, 3월 20일 즈음에 도메인을 신청하고나서부터 다음은 약 하루, 구글은 약 2주, 네이버와 빙은 약 3주 정도의 시간이 지나고 나서야 노출이 되기 시작했습니다.
+한국 포털사이트 점유율 순으로 [구글 서치 콘솔](https://search.google.com/search-console/)과 [네이버 서치어드바이저](https://searchadvisor.naver.com/), [다음 웹마스터도구](https://webmaster.daum.net/), [빙 웹마스터도구](https://www.bing.com/webmasters?lang=ko) 총 4가지 플랫폼에 등록해주었습니다. 특이한 점은 사이트별로 도메인 등록 후 실제 검색결과에 노출되기까지의 시간이 천차만별이었다는 건데, 3월 20일 즈음에 도메인을 신청하고 나서부터 다음은 약 하루, 구글은 약 2주, 네이버와 빙은 약 3주 정도의 시간이 지나고 나서야 노출이 되기 시작했습니다.
 
 :::info
 **2024-05-25 업데이트됨!**
@@ -29,7 +29,7 @@ mermaid: true
 추가적으로 [핀터레스트 비즈니스 허브](https://www.pinterest.co.kr/business/hub/)에도 등록해주었습니다. 사이트 소유권이 확인되면 RSS 기반으로 이미지를 수집하여 핀을 생성해줍니다.
 :::
 
-결과적으로 현재 모든 플랫폼에서 `site:hyngng.github.io` 검색어 입력 시 블로그 노출이 확인되는 상태입니다. 만약 저처럼 웹마스터도구에 개인 사이트를 등록하고싶으신 분이 계시다면 다음을 참고하시면 도움이 될 것 같습니다.
+결과적으로 현재 모든 플랫폼에서 `site:hyngng.github.io` 검색어 입력 시 블로그 노출이 확인되는 상태입니다. 만약 저처럼 웹마스터도구에 개인 사이트를 등록하고 싶으신 분이 계시다면 다음을 참고하시면 도움이 될 것 같습니다.
 
 ### **구글 서치 콘솔**
 
@@ -47,7 +47,7 @@ mermaid: true
 
 ### **빙 웹마스터도구**
 
-- 구글 서치 콘솔에 사이트가 정상적으로 등록되어있다면 구글과 연결해서 그대로 사용할 수 있습니다. 사이트 소유권 인증을 건너뛰고 제출한 사이트맵, 피드 등이 자동으로 연동됩니다.
+- 구글 서치 콘솔에 사이트가 정상적으로 등록되어 있다면 구글과 연결해서 그대로 사용할 수 있습니다. 사이트 소유권 인증을 건너뛰고 제출한 사이트맵, 피드 등이 자동으로 연동됩니다.
 - 빙 웹마스터도구도 파비콘이 노출되지 않는 문제가 있으나 [지원 팀에 문의](https://www.bing.com/webmasters/support)하면 친절히 해결해줍니다. 제 경우 문의를 보낸 후 이틀만에 파비콘이 정상적으로 노출되었습니다.
 - 네이버와 마찬가지로 [IndexNow](https://www.indexnow.org/ko_kr/index)를 지원합니다.
 
@@ -149,7 +149,7 @@ end
 Liquid::Template.register_filter(Jekyll::ContentFilter)
 ```
 
-`content`는 `content_filer`라는 커스텀 루비 플러그인을 거치는데, 제목, 게시일, 글쓴이 및 "들어가며" 도입부 등 description으로서 필요 없는 정보를 어느정도 제거하기 위함입니다. 글 본문이 모두 `<div class="content"></div>` 태그에 하달되는 점을 이용했으며, [예전에 비슷한 코드를](https://hyngng.github.io/blog/blog-content-remove/) 구현해본 적이 있었지만 아직 익숙하지 않아서 이 부분은 GPT의 조언을 구했습니다.
+`content`는 `content_filer`라는 커스텀 루비 플러그인을 거치는데, 제목, 게시일, 글쓴이 및 "들어가며" 도입부 등 description으로서 필요 없는 정보를 어느 정도 제거하기 위함입니다. 글 본문이 모두 `<div class="content"></div>` 태그에 하달되는 점을 이용했으며, [예전에 비슷한 코드를](https://hyngng.github.io/blog/blog-content-remove/) 구현해본 적이 있었지만 아직 익숙하지 않아서 이 부분은 GPT의 조언을 구했습니다.
 
 :::info
 **2024-09-25 업데이트됨!**

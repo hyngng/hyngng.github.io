@@ -18,13 +18,13 @@ Jekyll 프레임워크를 사용할 때 작성된 글입니다. 현재는 Astro�
 
 ## **들어가며**
 
-Chirpy 테마는 깔끔하고 단정하지만 순정 상태에서는 이건 개선이 필요하겠다 생각이 드는 부분이 간혹 보입니다. [간간히 수정](https://hyngng.github.io/blog/first-blog-customization/)해주고는 있지만 개인적으로 아쉬운 점이 여전히 몇 가지 남아있었죠.
+Chirpy 테마는 깔끔하고 단정하지만 순정 상태에서는 이건 개선이 필요하겠다 생각이 드는 부분이 간혹 보입니다. [간간히 수정](https://hyngng.github.io/blog/first-blog-customization/)해주고는 있지만 개인적으로 아쉬운 점이 여전히 몇 가지 남아 있었죠.
 
 ![before-light](/2024-03-21-blog-content-remove/before-light.webp){: .light .w-75 .border }
 ![before-dark](/2024-03-21-blog-content-remove/before-dark.webp){: .dark .w-75 }
 *수정 전 블로그 홈에 표시되는 포스트 요약본*
 
-그 중 하나는 블로그 홈의 글 요약본이 이미지 캡션이나 헤더 등을 포함한 날것 그대로 보인다는 겁니다. 위처럼 이미지 캡션이나 "들어가며" 같은 불필요한 부분이 같이 표시되어 가독성이 나빠지고 있죠. 이런건 당연히 기본 처리가 되어있어야 하는게 아닌가 싶은데, 이번에 방법을 찾아서 수정해주었습니다.
+그 중 하나는 블로그 홈의 글 요약본이 이미지 캡션이나 헤더 등을 포함한 날것 그대로 보인다는 겁니다. 위처럼 이미지 캡션이나 "들어가며" 같은 불필요한 부분이 같이 표시되어 가독성이 나빠지고 있죠. 이런 건 당연히 기본 처리가 되어있어야 하는 게 아닌가 싶은데, 이번에 방법을 찾아서 수정해주었습니다.
 
 ## **원인 파악**
 
@@ -78,7 +78,7 @@ Liquid::Template.register_filter(Jekyll::RemoveTagFilter)
 검색 결과 텍스트를 담당하는 `assets/js/data/search.json` 파일에도 비슷한 처리를 해줄 수 있습니다.
 :::
 
-Ruby나 Liquid에 대해서는 배경지식이 없어 방법을 알아내느라 조금 고생했습니다. `split` 또는 `join` 등 Liquid만으로 해결하려고 했는데 원하는 결과물을 만들기 힘들어 GPT의 도움을 받았고,`_plugins/remove-tags.rb` 경로로 Ruby 파일을 만들어 이용하는 식으로 해결했습니다. Ruby 파일에는 태그 유형을 매개변수로 받아 내부 텍스트를 정규 표현식으로 제거하는 함수를 만들었습니다. `Nokogiri`라는 파싱 라이브러리를 이용했고, Liquid 파일에서 `remove_tag: 'h2', 'h3', 'em', 'blockquote'`와 같이 사용합니다.
+Ruby나 Liquid에 대해서는 배경지식이 없어 방법을 알아내느라 조금 고생했습니다. `split` 또는 `join` 등 Liquid만으로 해결하려고 했는데 원하는 결과물을 만들기 힘들어 GPT의 도움을 받았고, `_plugins/remove-tags.rb` 경로로 Ruby 파일을 만들어 이용하는 식으로 해결했습니다. Ruby 파일에는 태그 유형을 매개변수로 받아 내부 텍스트를 정규 표현식으로 제거하는 함수를 만들었습니다. `Nokogiri`라는 파싱 라이브러리를 이용했고, Liquid 파일에서 `remove_tag: 'h2', 'h3', 'em', 'blockquote'`와 같이 사용합니다.
 
 :::info
 2025-10-20 업데이트됨!

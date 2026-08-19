@@ -75,7 +75,7 @@ Besides that, there were irregular duty-related experiences. Memorable ones incl
 
 Besides these, there were things like creating an impromptu program via vibe coding to convert large batches of `heif` files to `jpg` locally, and making a personnel selection program using Excel's `RAND()` function with all function structures visible — these remain memorable.
 
-## **The King's Ears Are Donkey Ears**[^1]
+## **The King's Ears Are Donkey Ears**
 
 ![reading-clips](/2026-03-12-sabok-logs/reading-clips.webp)
 *Reading helped a lot in steadying my mind and verifying principles*
@@ -97,7 +97,7 @@ My workplace had a "class culture" (seniority-based hierarchy), and conversation
 
 > Q. Do you have experience resolving conflicts in group life?
 
-This item appears frequently in many companies' **cover letter prompts** and interview questions. And experiencing it firsthand, I came to understand why. Conflict becomes significant pressure and stress for the parties involved, making wise resolution difficult. Most model answers cite quietly telling a superior, creating a logical compromise, or making new rules and agreeing to keep them — but in my case, using such frontal methods was difficult. The *gap-eul* (갑을, master-servant relationship) dynamic where obedience within regulations is mandatory was a problem, and the biggest problem was that the perceptions of stakeholders — staff and social service agents — were fundamentally different from mine. So in my case, unfortunately, it took the form of accepting disadvantages.
+This item appears frequently in many companies' cover letter prompts and interview questions. And experiencing it firsthand, I came to understand why. Conflict becomes significant pressure and stress for the parties involved, making wise resolution difficult. Most model answers cite quietly telling a superior, creating a logical compromise, or making new rules and agreeing to keep them — but in my case, using such frontal methods was difficult. The *gap-eul* (갑을, master-servant relationship) dynamic where obedience within regulations is mandatory was a problem, and the biggest problem was that the perceptions of stakeholders — staff and social service agents — were fundamentally different from mine. So in my case, unfortunately, it took the form of accepting disadvantages.
 
 ### **Notification Disguised as Persuasion**
 
@@ -154,9 +154,9 @@ print(sum(map(int, input().split())))
 	- Finished cup ramen, delivery lunch containers, unclaimed hospitality drink bottles not even empty.
 	- Dried spider corpses and stale coffee residue on general waste bags about to burst.
 	- Dusty desks, phone ringing every 10 minutes, curses and shouting, distinctive musty smell.
-	- 50-60 year old grandfathers offering handshakes with unwashed hands after using the restroom.
+	- 50-60 year old men offering handshakes with unwashed hands after using the restroom.
 	- Thick cigarette smoke from various smokers.
-	- Etc. etc. etc. (215GB)
+	- Etc, etc, etc.txt (215GB)
 
 ## **Closing**
 
