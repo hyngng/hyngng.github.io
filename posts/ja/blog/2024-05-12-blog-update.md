@@ -75,11 +75,8 @@ git add assets/js/dist _sass/vendors -f
 ::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
 *ビデオサンプル。現在開発中のゲームプレイショットです。*
 
-{%
-  include embed/audio.html
-  src='/2024-05-12-blog-update/audio/eating-chips.mp3'
-  title='オーディオサンプル。パリパリとしたお菓子を食べる音です。'
-%}
+::audio{src="/2024-05-12-blog-update/audio/eating-chips.mp3"}
+*オーディオサンプル。パリパリとしたお菓子を食べる音です。*
 
 ## **おわりに**
 

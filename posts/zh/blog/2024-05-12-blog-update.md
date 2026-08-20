@@ -75,11 +75,8 @@ git add assets/js/dist _sass/vendors -f
 ::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
 *视频示例。当前正在开发的游戏录制画面。*
 
-{%
-  include embed/audio.html
-  src='/2024-05-12-blog-update/audio/eating-chips.mp3'
-  title='音频示例。吃酥脆零食的声音。'
-%}
+::audio{src="/2024-05-12-blog-update/audio/eating-chips.mp3"}
+*音频示例。吃酥脆零食的声音。*
 
 ## **结语**
 

@@ -75,11 +75,8 @@ Si se ha completado hasta aquí, por último hay que abrir el servidor local con
 ::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
 *Muestra de vídeo. Captura de juego en desarrollo actualmente.*
 
-{%
-  include embed/audio.html
-  src='/2024-05-12-blog-update/audio/eating-chips.mp3'
-  title='Muestra de audio. Sonido de comer patatas crujientes.'
-%}
+::audio{src="/2024-05-12-blog-update/audio/eating-chips.mp3"}
+*Muestra de audio. Sonido de comer patatas crujientes.*
 
 ## **Conclusión**
 

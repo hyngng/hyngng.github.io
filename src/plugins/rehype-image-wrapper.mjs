@@ -1,5 +1,5 @@
 import { visit } from 'unist-util-visit';
-import { rewriteToCdnUrl, shouldRewriteCdnUrl } from '../utils/cdn.js';
+import { rewriteToCdnUrl, shouldRewriteCdnUrl } from '../utils/cdn';
 
 function findNode(root, predicate) {
   if (predicate(root)) return root;

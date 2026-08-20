@@ -1,6 +1,7 @@
 export interface PostItem {
   path: string;
   title: string;
+  description?: string;
 }
 
 export interface PostListConfig {

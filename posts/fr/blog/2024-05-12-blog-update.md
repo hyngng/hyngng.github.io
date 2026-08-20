@@ -75,11 +75,8 @@ Une fois tout cela terminé, il faut ouvrir le serveur local avec la commande `b
 ::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
 *Échantillon vidéo. Capture d'écran du jeu en développement.*
 
-{%
-  include embed/audio.html
-  src='/2024-05-12-blog-update/audio/eating-chips.mp3'
-  title='Échantillon audio. Bruit de chips croquantes.'
-%}
+::audio{src="/2024-05-12-blog-update/audio/eating-chips.mp3"}
+*Échantillon audio. Bruit de chips croquantes.*
 
 ## **Conclusion**
 

@@ -75,11 +75,8 @@ Once that's done, run `bundle exec jekyll s` to spin up a local server and verif
 ::video{src="/2024-05-12-blog-update/video/240410-232136.mp4"}
 *Video sample. Gameplay footage from a game in development.*
 
-{% 
-  include embed/audio.html
-  src='/2024-05-12-blog-update/audio/eating-chips.mp3'
-  title='Audio sample. The crisp sound of eating chips.'
-%}
+::audio{src="/2024-05-12-blog-update/audio/eating-chips.mp3"}
+*Audio sample. The crisp sound of eating chips.*
 
 ## **Closing**
 
