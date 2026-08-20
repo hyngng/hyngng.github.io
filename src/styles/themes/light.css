@@ -1,6 +1,6 @@
 :root,
 .light {
-  color-scheme: light;
+  color-scheme: only light;
   /* ── 기본 컬러 ── */
   --color-bg: #F7F7F7;
   --color-bg-soft: #F1F1F1;

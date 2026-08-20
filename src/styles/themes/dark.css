@@ -1,5 +1,5 @@
 .dark {
-  color-scheme: dark;
+  color-scheme: only dark;
   /* ── 기본 컬러 ── */
   --color-bg: #202023;
   --color-bg-soft: #2a2a2e;
