@@ -168,6 +168,7 @@ const rssUrl = authorId
     font-size: var(--font-size-action);
     font-weight: 700;
     border-radius: 50%;
+    -webkit-tap-highlight-color: transparent;
     transition:
       background-color var(--transition-duration) var(--transition-easing),
       color var(--transition-duration) var(--transition-easing);
@@ -178,8 +179,10 @@ const rssUrl = authorId
     cursor: not-allowed;
   }
 
-  .lang-item:hover:not(:disabled) {
-    background-color: var(--color-accent);
+  @media (hover: hover) and (pointer: fine) {
+    .lang-item:hover:not(:disabled) {
+      background-color: var(--color-accent);
+    }
   }
 
   /* ── Home icon (desktop hidden, mobile visible) ── */
@@ -331,7 +334,6 @@ const rssUrl = authorId
       langList!.style.width = `${langItems.length * buttonSize}px`;
       langList!.setAttribute("aria-hidden", "false");
       rightActionsInner!.classList.add("lang-open");
-      langToggle!.classList.add("lang-active");
     }
 
     function closeLangList() {
@@ -339,7 +341,6 @@ const rssUrl = authorId
       langList!.style.width = "0";
       langList!.setAttribute("aria-hidden", "true");
       rightActionsInner!.classList.remove("lang-open");
-      langToggle!.classList.remove("lang-active");
     }
 
     langToggle.addEventListener(

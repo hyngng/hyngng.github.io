@@ -34,11 +34,14 @@ const Tag = (Element === 'a' || href) ? 'a' : Element;
     border: none;
     cursor: pointer;
     font-family: var(--font-family-base);
+    -webkit-tap-highlight-color: transparent;
     transition: background-color var(--transition-duration) var(--transition-easing), color var(--transition-duration) var(--transition-easing);
   }
 
-  .custom-button:hover {
-    background-color: var(--color-accent);
+  @media (hover: hover) and (pointer: fine) {
+    .custom-button:hover {
+      background-color: var(--color-accent);
+    }
   }
 
   .variant-title {
