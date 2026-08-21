@@ -62,7 +62,12 @@ const twitterSite = SITE.social.twitter
   <body>
     <div class="viewport-container">
       <Frame authorId={authorId} />
-      <div class="frame-border" aria-hidden="true"></div>
+      <div class="frame-border" aria-hidden="true">
+        <div class="frame-edge frame-edge-top"></div>
+        <div class="frame-edge frame-edge-bottom"></div>
+        <div class="frame-edge frame-edge-left"></div>
+        <div class="frame-edge frame-edge-right"></div>
+      </div>
       <div class="page-content">
         <main>
           <slot />
@@ -107,9 +112,40 @@ const twitterSite = SITE.social.twitter
     position: fixed;
     inset: 0;
     z-index: 2;
-    box-sizing: border-box;
-    border: var(--frame-thickness) solid var(--color-frame);
     pointer-events: none;
+  }
+
+  .frame-edge {
+    position: absolute;
+    background-color: var(--color-frame);
+  }
+
+  .frame-edge-top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--frame-thickness);
+  }
+
+  .frame-edge-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--frame-thickness);
+  }
+
+  .frame-edge-left {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--frame-thickness);
+  }
+
+  .frame-edge-right {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: var(--frame-thickness);
   }
 
   .frame-border::before,
@@ -122,8 +158,8 @@ const twitterSite = SITE.social.twitter
   }
 
   .frame-border::before {
-    bottom: 0;
-    left: 0;
+    bottom: var(--frame-thickness);
+    left: var(--frame-thickness);
     background: radial-gradient(
       circle at 100% 0%,
       transparent var(--frame-radius),
@@ -132,8 +168,8 @@ const twitterSite = SITE.social.twitter
   }
 
   .frame-border::after {
-    bottom: 0;
-    right: 0;
+    bottom: var(--frame-thickness);
+    right: var(--frame-thickness);
     background: radial-gradient(
       circle at 0% 0%,
       transparent var(--frame-radius),

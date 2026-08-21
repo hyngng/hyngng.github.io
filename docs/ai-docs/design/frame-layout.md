@@ -13,7 +13,7 @@
 3. `.viewport-container`는 `position: relative; min-height: 100dvh; isolation: isolate`로 일반 흐름에서 콘텐츠 래퍼 역할을 하며, 자체 stacking context를 형성합니다.
 4. `.viewport-container::before` pseudo-element가 `position: fixed; inset: var(--frame-thickness); z-index: 0`으로 viewport 전체를 덮는 밝은 배경 패널을 그립니다. 네 면 모두 동일한 여백으로 대칭적입니다. `background-color: var(--color-bg)`를 가집니다.
 5. `.page-content`는 `position: relative; z-index: 1`로 콘텐츠 레이어 역할만 합니다. 배경색은 투명이며, `min-height: calc(100dvh - var(--frame-thickness) * 2)`로 프레임 내부를 채웁니다.
-6. `.frame-border` 요소가 `position: fixed; inset: 0; z-index: 2`로 프레임 바깥 영역을 검은색으로 덮는 foreground 마스크 역할을 합니다. `box-sizing: border-box`와 `border: var(--frame-thickness) solid var(--color-frame)`로, 네 면 모두 뷰포트 안에 완전히 들어가는 사각형 테두리를 그립니다. `pointer-events: none`으로 클릭 및 스크롤을 방해하지 않습니다. `::before`/`::after` pseudo-element가 하단 좌우 모서리에 concave corner를 만듭니다 — `bottom: 0; left: 0`(or `right: 0`)로 Padding Box 안쪽 모서리에 배치하고, `radial-gradient(circle at 반대쪽 상단, transparent → var(--color-frame))`로 검은 프레임이 콘텐츠 영역 안쪽으로 부드럽게 곡면 연결되도록 합니다.
+6. `.frame-border` 요소가 `position: fixed; inset: 0; z-index: 2`로 프레임 바깥 영역을 검은색으로 덮는 foreground 마스크 역할을 합니다. 네이티브 `border`를 사용하지 않고 4개의 `.frame-edge`(`.frame-edge-top`, `.frame-edge-bottom`, `.frame-edge-left`, `.frame-edge-right`) 절대 위치 자식 요소에 `background-color: var(--color-frame)`를 적용하여 사각형 테두리를 그립니다. 이는 삼성 브라우저/Chromium 계열의 Force Dark 페인트 경로에서 `border` 전용 명도/대비 보정 알고리즘으로 인해 테두리가 회색으로 변색되는 현상을 방지하고, 상단 헤더 블록(`.action-block`)과 동일한 background 페인트 경로로 통일하기 위함입니다. `pointer-events: none`으로 클릭 및 스크롤을 방해하지 않습니다. `::before`/`::after` pseudo-element가 하단 좌우 모서리에 concave corner를 만듭니다 — `bottom: var(--frame-thickness); left: var(--frame-thickness)`(or `right: var(--frame-thickness)`)로 테두리 안쪽 모서리에 배치하고, `radial-gradient(circle at 반대쪽 상단, transparent → var(--color-frame))`로 검은 프레임이 콘텐츠 영역 안쪽으로 부드럽게 곡면 연결되도록 합니다.
 7. `Frame.astro`의 `.fixed-actions`는 `z-index: 100`으로 모든 레이어 위에 버튼과 상단 concave를 렌더링합니다. concave corner는 `.left-action`과 `.right-actions`의 `::before`/`::after` pseudo-element로 구현되어, DOM 추가 없이 radial-gradient로 부드러운 전환을 만듭니다.
 8. 네이티브 스크롤바는 `html`의 루트 스크롤바로 렌더링됩니다. canvas 배경(`--color-bg`)이 스크롤바 gutter 뒤에 비쳐, 테마와 일관된 색상을 보여줍니다.
 
@@ -22,7 +22,7 @@
 ```
 0   ::before — 밝은 패널 배경
 1   .page-content — 스크롤 콘텐츠
-2   .frame-border — 프레임 바깥 검은 마스크 (사각형, pointer-events: none)
+2   .frame-border — 프레임 바깥 검은 마스크 (4개 .frame-edge + concave pseudo-element, pointer-events: none)
 100 .fixed-actions — 버튼 + concave (pseudo-element)
 ```
 
@@ -68,7 +68,7 @@
 
 프레임 배경은 `.viewport-container::before` pseudo-element가 담당합니다 (`position: fixed; inset: var(--frame-thickness); z-index: 0`). 네 면 모두 동일한 여백으로, viewport 안에서 프레임 두께만큼 안쪽으로 들어간 영역을 밝은 배경으로 채웁니다. 콘텐츠 흐름에 관여하지 않습니다.
 
-프레임 foreground 마스크는 `.frame-border` 독립 DOM 요소가 담당합니다 (`position: fixed; inset: 0; z-index: 2`). `box-sizing: border-box`와 `border: var(--frame-thickness) solid var(--color-frame)`로, 네 면 모두 뷰포트 안에 완전히 들어가는 사각형 테두리를 그립니다. `position: fixed; inset: 0`은 layout viewport(스크롤바 gutter 제외)를 기준으로 하므로, border가 스크롤바 gutter를 침범할 수 없습니다. `pointer-events: none`으로 스크롤 및 클릭을 방해하지 않습니다.
+프레임 foreground 마스크는 `.frame-border` 독립 DOM 요소와 4개의 `.frame-edge` 자식 요소가 담당합니다 (`position: fixed; inset: 0; z-index: 2`). 네 면 각각을 `background-color: var(--color-frame)`인 독립 요소로 덮어 브라우저의 Force Dark border 왜곡을 방지합니다. `position: fixed; inset: 0`은 layout viewport(스크롤바 gutter 제외)를 기준으로 하므로, 테두리가 스크롤바 gutter를 침범하지 않습니다. `pointer-events: none`으로 스크롤 및 클릭을 방해하지 않습니다.
 
 `.viewport-container`에 `isolation: isolate`가 설정되어, `::before`/`.frame-border`와 `.page-content`가 같은 stacking context 안에서 z-index가 작동합니다.
 
