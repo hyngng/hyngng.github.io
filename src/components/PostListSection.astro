@@ -66,7 +66,7 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
 </section>
 
 <script>
-  import { createPostListController, setController, needsRelayout, createChunkLoader, initMobileAuthorLink, MOBILE_QUERY } from '../features/post-list';
+  import { createPostListController, setController, needsRelayout, createChunkLoader, initLoadMorePreview, initMobileAuthorLink, MOBILE_QUERY } from '../features/post-list';
 
   let abortController: AbortController | undefined;
 
@@ -92,6 +92,7 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
     mq.addEventListener('change', () => controller.relayout(), { signal });
 
     createChunkLoader(grid, controller, signal);
+    initLoadMorePreview(grid, signal);
   }
 
   init();

@@ -20,6 +20,52 @@ last_modified_at: 2026-08-19 00:00:00 +0900
 
 - 기술사항을 쭉 나열하는 건 의미없다고 생각
 
-## **삼성 브라우저**
+### ****
+
+### **모바일 삼성 브라우저 대응**
 
 - OS 다크모드에 따라 웹 CSS를 강력하게 재조정함.
+
+### **청크 기반 더 보기 버튼**
+
+2. "더 보기" 클릭 → 렌더 전체 흐름
+#	단계	위치	비동기?	DOM 변이
+1	클릭 감지 (위임)	loader.ts:91-96	-	-
+2	네트워크 fetch (캐시 히트 시 즉시)	chunk-repository.ts:7	O	-
+3	DOMParser 파싱 (오프스크린)	dom.ts:18	-	-
+4	replaceWith(cards[0]) — LoadMoreCard → 첫 새 카드로 교체	append.ts:51	-	O
+5	distributeCards() — 나머지 카드 배치	append.ts:52	-	O + reflow 유발(offsetHeight)
+6	다음 LoadMoreCard 삽입	append.ts:53-59	-	O
+7	history.pushState()	loader.ts:35	-	-
+8	animateNewCards() — fade-in 클래스 추가	animate.ts:5-14	애니메이션 완료 비동기	class 추가
+9	initPostCardImages() — img.decode() + rAF×2	image-reveal.ts:29-57	O (decode)	class 'loaded'
+10	마지막 청크면 load-more 숨김	loader.ts:40-43	-	O
+사용자 체감 지연 주범
+
+## **AI**
+
+### **가난한 자의 고민**
+
+시도해본 것
+
+- OpenCode
+- Antigravity
+- Codex
+- Cursor
+- Kiro
+- Devin
+- Loom
+
+사용한 AI
+
+|모델명|사용기|
+|---||
+|BigPickle||
+|Gemini 3.1 Flash Lite||
+|Gemini 3.5 Flash||
+|Gemini 3.6 Flash||
+|Gemini 3.7 Flash||
+
+올해 초 VSCode Copilot 학생 티어에서 Claude Sonnet 4.6을 무료로 사용할 수 있었던 것을 기억함. 3월에 제미나이만 사용 가능하도록 칼질, 6월에 토큰을 완전히 칼질.
+
+### ****

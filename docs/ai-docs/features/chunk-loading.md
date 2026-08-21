@@ -189,7 +189,18 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 | `loadMoreSub(total, remaining)` | 부 정보 (전체 대비 남은 수) | `전체 24편 중 16편 남음` |
 | `loadMoreHover(title, n)` | `aria-label`용 (접근성) | `{title} 외 8건` |
 
-마우스 호버(`@media (hover: hover) and (pointer: fine)`) 시에는 텍스트 대신 `<Author>` 컴포넌트가 슬라이드업되어 다음 미리보기 글의 작가 정보를 표시한다. 터치 기기에서는 호버 애니메이션이 동작하지 않는다.
+마우스 호버(`@media (hover: hover) and (pointer: fine)`) 시에는 텍스트 대신 `<Author>` 컴포넌트가 슬라이드업되어 다음 미리보기 글의 작가 정보를 표시한다.
+
+터치 기기(`@media (hover: none)`)에서는 동일한 슬라이드 연출이 **스크롤 근접 기반**으로 구동된다 (`src/features/post-list/load-more-preview.ts`):
+
+- 문서 하단까지 남은 거리가 `--load-more-reveal-start`(global.css 토큰, 125px) 이하로 줄어들면 `--lm-progress`(0~1)가 연속 계산되고, 잔여 거리가 `--load-more-reveal-end`(25px)에 도달하면 전환이 완료되어 Author가 고정된다. 카드의 `.load-more-default`/`.load-more-hover` transform과 제목·Author·이미지 색상/필터가 이 변수로 구동된다 (PC와 동일한 시각 언어, keyframe 없음).
+- 양방향: 위로 스크롤해 시작 지점(125px) 밖으로 나가면 텍스트 상태로 복귀.
+- 탭은 기존과 동일하게 즉시 `loadChunk()` 실행 — 이 연출이 탭 실행을 지연하지 않는다.
+- 갱신 시점: scroll/resize(rAF 스로틀, 읽기→쓰기 순서로 리플로우 회피) + `ResizeObserver(document.body)`(청크 로드·이미지 reveal로 인한 문서 높이 변화 대응).
+- `prefers-reduced-motion: reduce`에서는 변수를 설정하지 않아 텍스트 상태 고정.
+- 접근성: Author 정보는 DOM에 상시 존재하며, `<a>`의 `aria-label`(`loadMoreHover`)이 AT 접근 이름을 제공하므로 시각 상태와 무관하게 항상 접근 가능하다.
+
+트리거 거리를 절대 px(비율 아님)로 정의한 이유는 페이지 길이와 무관하게 일관된 물리적 거리에서 전환이 시작되도록 하기 위함이다. 전환 구간은 125px→25px(100px 폭)로, 문서 최하단에 도달하기 전에 전환이 완료되어 완성된 Author 상태를 볼 시간이 확보된다.
 
 ## 서비스 워커 상호작용
 

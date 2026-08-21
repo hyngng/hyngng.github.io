@@ -308,6 +308,12 @@
     - 제약: `<a>` 중첩은 HTML 위반(파서가 바깥 링크를 끊어 카드 레이아웃이 깨짐) → `Author.astro`의 오버레이 링크 패턴을 카드에 재사용 불가.
     - 해결: `PostCard.astro`에 `getAuthorPath(authorIds[0], currentLocale)`로 `data-author-href` 주입 + `PostListSection.astro` `init()`의 AbortController 스코프에서 문서 레벨 위임 `click` 리스너 — `closest('.post-card-author')` 감지, `isMobile()`(기존 960px 규약) 가드 후 `preventDefault()`로 카드 링크 차단 및 작가 페이지 이동. 위임 방식이라 동적 추가 카드(청크/검색)도 자동 적용. 데스크톱은 기존 동작(포스트 열기) 유지.
     - 문서: `posts.md`의 '포스트 카드 작가 영역 (모바일 링크)' 섹션.
+  - [x] **모바일 LoadMoreCard 스크롤 근접 기반 Author 프리뷰 전환**
+    - 배경: PC `:hover` 슬라이드(텍스트→Author)는 모바일에서 재현 불가. touchstart 유예(≈220ms 지연), 아바타 배지 상시 노출, view() 타임라인 등 대안 검토 후 기각 — "문서 하단까지 남은 px 거리"를 트리거로 쓰는 방식이 새 제스처 충돌 없이 PC의 "다가감→전환" 서사와 대응.
+    - 구현: `src/features/post-list/load-more-preview.ts` 신설 — 잔여 거리가 `--load-more-reveal-start`(global.css 토큰, 125px) 이하가 되면 `--lm-progress`(0~1)를 연속 계산해 인라인 설정, `--load-more-reveal-end`(25px) 도달 시 전환 완료·Author 고정(최하단 도달 전 완료). rAF 스로틀 + 읽기→쓰기 순서로 리플로우 회피, `ResizeObserver(document.body)`로 청크 로드/이미지 reveal 대응, AbortController 스코프 정리.
+    - CSS: PC 호버 규칙을 `@media (hover: hover) and (pointer: fine)`로 스코프(동작 동일), 모바일은 `@media (hover: none)`에서 동일 transform/색상을 변수 구동(`color-mix`)으로 재사용 — keyframe 신규 없음. 양방향 복귀, 잔여 25px에서 Author 고정, 탭은 즉시 `loadChunk()`(연출이 실행을 지연하지 않음).
+    - 접근성: reduced-motion 시 변수 미설정(텍스트 고정), AT는 앵커 `aria-label`로 시각 상태와 무관하게 Author 정보 접근 가능.
+    - 검증: `npm run build` 성공(587 pages), `npx astro check` 0 errors / 0 warnings / 0 hints. dist CSS에서 `(hover:hover) and (pointer:fine)`/`(hover:none)`/`(prefers-reduced-motion:reduce)` 3종 미디어 쿼리 확인. 상세는 `chunk-loading.md` 참조.
     - 검증: `npx astro check` 0 errors, `npm run build` 성공. headless Edge CDP E2E: 모바일(390px, `isMobileMedia=true`)은 작가 영역 클릭 → `/dev/`(작가 페이지), 타이틀 클릭 → 포스트. 데스크톱(1400px, `isMobileMedia=false`)은 작가 영역 클릭 → 포스트 (기존 동작 유지). 두 뷰포트 모두 기대 동작 일치.
     - 보정(히트 영역): `.post-card-author`에 `width: fit-content` 적용으로 탭 히트 영역을 작가 콘텐츠 박스(아바타+이름/날짜)로 제한 — 텍스트 없는 빈 공간(우측 여백)은 카드 링크로 포스트가 열림. E2E 재검증: 모바일에서 아바타/이름 탭 → 작가 페이지, 빈 공간 탭 → 포스트.
     - 보정(구조): 인라인 리스너를 `src/features/post-list/author-link.ts`의 `initMobileAuthorLink(signal)`로 추출하고, 960px 문자열을 `layout.ts`의 `MOBILE_QUERY` 상수로 중앙화(`isMobile`과 동일 소스). `ChunkPostListBody.astro`에서도 등록하여 청크 페이지(홈/작가 파생 뷰)까지 모바일 작가 링크 동작 일관화.

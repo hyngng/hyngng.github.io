@@ -121,6 +121,8 @@
   --space-load-more-gap: 0.2rem;
   --font-size-load-more-sub: 0.875em;
   --opacity-load-more-sub: 0.8;
+  --load-more-reveal-start: 125px;
+  --load-more-reveal-end: 25px;
 
   /* ── Chunk Page Tokens ── */
   --chunk-nav-gap: 0.8rem;
