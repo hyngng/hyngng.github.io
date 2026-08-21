@@ -59,6 +59,10 @@ const Tag = (Element === 'a' || href) ? 'a' : Element;
   }
 
   @media (max-width: 960px) {
+    .custom-button {
+      transition: background-color 0.5s var(--transition-easing), color 0.5s var(--transition-easing);
+    }
+
     .variant-title {
       width: var(--button-size);
       padding: 0;
