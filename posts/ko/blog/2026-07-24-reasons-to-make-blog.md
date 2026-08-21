@@ -1,5 +1,6 @@
 ﻿---
 title: "새 블로그를 기획하게 된 이유"
+authors: ["blog", "dev"]
 
 categories: [블로그]
 tags: [블로그]
