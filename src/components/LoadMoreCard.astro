@@ -151,54 +151,52 @@ const suffix =
     color: var(--color-muted);
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .load-more-title {
-      transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
-    }
+  .load-more-title {
+    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
 
-    .load-more-card:hover .load-more-title,
-    .load-more-card:focus-within .load-more-title {
-      color: var(--color-heading);
-    }
+  .load-more-card:hover .load-more-title,
+  .load-more-card:focus-within .load-more-title {
+    color: var(--color-heading);
+  }
 
-    .load-more-default,
-    .load-more-hover {
-      transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
-    }
+  .load-more-default,
+  .load-more-hover {
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
 
-    .load-more-card:hover .load-more-default,
-    .load-more-card:focus-within .load-more-default {
-      transform: translateY(-100%);
-    }
+  .load-more-card:hover .load-more-default,
+  .load-more-card:focus-within .load-more-default {
+    transform: translateY(-100%);
+  }
 
-    .load-more-card:hover .load-more-hover,
-    .load-more-card:focus-within .load-more-hover {
-      transform: translateY(0);
-    }
+  .load-more-card:hover .load-more-hover,
+  .load-more-card:focus-within .load-more-hover {
+    transform: translateY(0);
+  }
 
-    .load-more-card .load-more-hover span,
-    .load-more-card .load-more-hover p {
-      transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
-    }
+  .load-more-card .load-more-hover span,
+  .load-more-card .load-more-hover p {
+    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
+  }
 
-    .load-more-card:hover .load-more-hover span,
-    .load-more-card:focus-within .load-more-hover span {
-      color: var(--color-text);
-    }
+  .load-more-card:hover .load-more-hover span,
+  .load-more-card:focus-within .load-more-hover span {
+    color: var(--color-text);
+  }
 
-    .load-more-card:hover .load-more-hover p,
-    .load-more-card:focus-within .load-more-hover p {
-      color: var(--color-heading);
-    }
+  .load-more-card:hover .load-more-hover p,
+  .load-more-card:focus-within .load-more-hover p {
+    color: var(--color-heading);
+  }
 
-    .load-more-card .post-card-image {
-      transition: filter 0.35s ease;
-    }
+  .load-more-card .post-card-image {
+    transition: filter 0.35s ease;
+  }
 
-    .load-more-card:hover .post-card-image,
-    .load-more-card:focus-within .post-card-image {
-      filter: brightness(1) opacity(1);
-    }
+  .load-more-card:hover .post-card-image,
+  .load-more-card:focus-within .post-card-image {
+    filter: brightness(1) opacity(1);
   }
 
   /* ── LoadMoreCard Image ── */
