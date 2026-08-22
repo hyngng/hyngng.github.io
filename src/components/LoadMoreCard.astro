@@ -194,6 +194,9 @@ const suffix =
 
   .load-more-card .post-card-image {
     transition: filter 0.35s ease;
+    /* Must precede the mobile --lm-progress rule below: equal specificity,
+       so source order decides and this rest state has to lose there. */
+    filter: brightness(0.9) opacity(0.9);
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -229,23 +232,19 @@ const suffix =
       color: color-mix(in srgb, var(--color-muted), var(--color-heading) calc(var(--lm-progress, 0) * 100%));
     }
 
+    /* Same visual language as PC hover: dimmed rest state restored to full
+       brightness/opacity as the card completes. */
+    .load-more-card .post-card-image {
+      filter: brightness(calc(0.9 + 0.1 * var(--lm-progress, 0)))
+        opacity(calc(0.9 + 0.1 * var(--lm-progress, 0)));
+    }
+
     .load-more-card .load-more-hover span {
       color: color-mix(in srgb, var(--color-muted), var(--color-text) calc(var(--lm-progress, 0) * 100%));
     }
 
     .load-more-card .load-more-hover p {
       color: color-mix(in srgb, var(--color-muted), var(--color-heading) calc(var(--lm-progress, 0) * 100%));
-    }
-  }
-
-  /* Image curtain-lift: grayscale+dim at rest, full color when the card
-     completes. Gated off under reduced motion so the rest state keeps the
-     plain dimmed look instead of staying desaturated. */
-  @media (max-width: 960px) and (prefers-reduced-motion: no-preference) {
-    .load-more-card .post-card-image {
-      filter: grayscale(calc(1 - var(--lm-progress, 0)))
-        brightness(calc(0.9 + 0.1 * var(--lm-progress, 0)))
-        opacity(calc(0.9 + 0.1 * var(--lm-progress, 0)));
     }
   }
 
@@ -260,7 +259,6 @@ const suffix =
     border-radius: var(--post-card-image-radius);
     overflow: hidden;
     transform: translateZ(0);
-    filter: brightness(0.9) opacity(0.9);
   }
 
   .load-more-card .post-card-image::before {

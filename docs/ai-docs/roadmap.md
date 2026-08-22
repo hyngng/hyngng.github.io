@@ -318,7 +318,7 @@
     - 보정(히트 영역): `.post-card-author`에 `width: fit-content` 적용으로 탭 히트 영역을 작가 콘텐츠 박스(아바타+이름/날짜)로 제한 — 텍스트 없는 빈 공간(우측 여백)은 카드 링크로 포스트가 열림. E2E 재검증: 모바일에서 아바타/이름 탭 → 작가 페이지, 빈 공간 탭 → 포스트.
     - 보정(구조): 인라인 리스너를 `src/features/post-list/author-link.ts`의 `initMobileAuthorLink(signal)`로 추출하고, 960px 문자열을 `layout.ts`의 `MOBILE_QUERY` 상수로 중앙화(`isMobile`과 동일 소스). `ChunkPostListBody.astro`에서도 등록하여 청크 페이지(홈/작가 파생 뷰)까지 모바일 작가 링크 동작 일관화.
     - 수정(실기기 미동작 해소): 모바일 활성 조건을 `(hover: none)` → `@media (max-width: 960px)`으로 변경 — 실기기가 `hover: hover`로 평가하면 모바일 블록이 아예 적용되지 않음(JS는 progress를 1까지 계산했으므로 CSS 게이트가 원인). 프로젝트 모바일 규약(`MOBILE_QUERY`, 960px)과 통일해 입력 장치 리포팅 의존 제거. 실기기 동작 확인.
-    - 후속(이미지 커튼 리프트): 미리보기 이미지도 같은 구간(125px→25px)에서 전환 — `grayscale 1→0` + `brightness/opacity 0.9→1`을 `--lm-progress`에 직결("더 보기 커튼 → 포스트 카드" 연출). `@media (max-width: 960px) and (prefers-reduced-motion: no-preference)` 블록으로 분리해 reduce 사용자는 기본 딤 상태 유지.
+    - 후속(이미지 전환): 미리보기 이미지도 같은 구간(125px→25px)에서 `brightness/opacity 0.9→1` 복원을 `--lm-progress`에 직결 — PC 호버와 동일한 시각 언어. grayscale 커튼 리프트를 시도했다가 제거(사용자 결정: PC와의 일관성 우선, 변화폭 10%라 인지가 어려울 뿐 동작 자체는 정상).
   - [x] **llms.txt 동적 생성** (사용자 결정: 영어 기본, 작가별 서브섹션, Hero description 재사용)
     - 배경: `public/llms.txt`는 하드코딩된 정적 파일(감사 A 항목에서 404 해소용 생성) → 콘텐츠/설정과 이중 관리 문제.
     - 해결: `src/pages/llms.txt.ts` 동적 엔드포인트(robots/sitemap/rss와 동일 패턴, `request.url` origin 추출) + `src/utils/llms.ts`의 `buildLlmsTxt()` 순수 함수(테스트 가능).

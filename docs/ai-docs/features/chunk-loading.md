@@ -194,7 +194,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 모바일 레이아웃(`@media (max-width: 960px)` — JS의 `MOBILE_QUERY`와 동일 기준)에서는 동일한 슬라이드 연출이 **스크롤 근접 기반**으로 구동된다 (`src/features/post-list/load-more-preview.ts`). 입력 장치 리포팅 기반인 `(hover: none)`은 실기기·웹뷰·마우스 연결 상태에 따라 평가가 들쭉날쭉해 배제했다(실기기 미동작 원인이었음):
 
 - 문서 하단까지 남은 거리가 `--load-more-reveal-start`(global.css 토큰, 125px) 이하로 줄어들면 `--lm-progress`(0~1)가 연속 계산되고, 잔여 거리가 `--load-more-reveal-end`(25px)에 도달하면 전환이 완료되어 Author가 고정된다. 카드의 `.load-more-default`/`.load-more-hover` transform과 제목·Author 색상이 이 변수로 구동된다 (PC와 동일한 시각 언어, keyframe 없음).
-- 미리보기 이미지는 같은 구간에서 "커튼 해제" 연출로 이행한다: `grayscale 1→0` + `brightness/opacity 0.9→1`이 `--lm-progress`에 직결된다. `prefers-reduced-motion: reduce`에서는 이 블록 자체를 적용하지 않아 grayscale 없이 기본 딤 상태(`brightness/opacity 0.9`)를 유지한다.
+- 미리보기 이미지는 같은 구간에서 `brightness/opacity 0.9→1`로 복원된다 — PC 호버와 동일한 시작·종료 값, 동일 토큰 구동(사용자 결정: grayscale 등 추가 연출은 배제). 변수 미설정 시(reduced-motion 포함) 기본 딤 상태를 유지한다.
 - 양방향: 위로 스크롤해 시작 지점(125px) 밖으로 나가면 텍스트 상태로 복귀.
 - 탭은 기존과 동일하게 즉시 `loadChunk()` 실행 — 이 연출이 탭 실행을 지연하지 않는다.
 - 갱신 시점: scroll/resize(rAF 스로틀, 읽기→쓰기 순서로 리플로우 회피) + `ResizeObserver(document.body)`(청크 로드·이미지 reveal로 인한 문서 높이 변화 대응).
