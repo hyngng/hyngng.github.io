@@ -203,9 +203,11 @@ const suffix =
     }
   }
 
-  /* ── Mobile: scroll-proximity driven preview (--lm-progress: 0..1) ── */
+  /* ── Mobile layout: scroll-proximity driven preview (--lm-progress: 0..1) ──
+     Gated by the same breakpoint as MOBILE_QUERY instead of (hover: none):
+     some devices/webviews report hover:hover and would never match. */
 
-  @media (hover: none) {
+  @media (max-width: 960px) {
     .load-more-title,
     .load-more-default,
     .load-more-hover,
