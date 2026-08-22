@@ -192,62 +192,6 @@ const suffix =
     }
   }
 
-  .load-more-card .post-card-image {
-    transition: filter 0.35s ease;
-    /* Must precede the mobile --lm-progress rule below: equal specificity,
-       so source order decides and this rest state has to lose there. */
-    filter: brightness(0.9) opacity(0.9);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .load-more-card:hover .post-card-image,
-    .load-more-card:focus-within .post-card-image {
-      filter: brightness(1) opacity(1);
-    }
-  }
-
-  /* ── Mobile layout: scroll-proximity driven preview (--lm-progress: 0..1) ──
-     Gated by the same breakpoint as MOBILE_QUERY instead of (hover: none):
-     some devices/webviews report hover:hover and would never match. */
-
-  @media (max-width: 960px) {
-    .load-more-title,
-    .load-more-default,
-    .load-more-hover,
-    .load-more-card .load-more-hover span,
-    .load-more-card .load-more-hover p,
-    .load-more-card .post-card-image {
-      transition: none;
-    }
-
-    .load-more-card .load-more-default {
-      transform: translateY(calc(var(--lm-progress, 0) * -100%));
-    }
-
-    .load-more-card .load-more-hover {
-      transform: translateY(calc((1 - var(--lm-progress, 0)) * 100%));
-    }
-
-    .load-more-card .load-more-title {
-      color: color-mix(in srgb, var(--color-muted), var(--color-heading) calc(var(--lm-progress, 0) * 100%));
-    }
-
-    /* Same visual language as PC hover: dimmed rest state restored to full
-       brightness/opacity as the card completes. */
-    .load-more-card .post-card-image {
-      filter: brightness(calc(0.9 + 0.1 * var(--lm-progress, 0)))
-        opacity(calc(0.9 + 0.1 * var(--lm-progress, 0)));
-    }
-
-    .load-more-card .load-more-hover span {
-      color: color-mix(in srgb, var(--color-muted), var(--color-text) calc(var(--lm-progress, 0) * 100%));
-    }
-
-    .load-more-card .load-more-hover p {
-      color: color-mix(in srgb, var(--color-muted), var(--color-heading) calc(var(--lm-progress, 0) * 100%));
-    }
-  }
-
   /* ── LoadMoreCard Image ── */
 
   .load-more-card .post-card-image {
@@ -259,6 +203,8 @@ const suffix =
     border-radius: var(--post-card-image-radius);
     overflow: hidden;
     transform: translateZ(0);
+    transition: filter 0.35s ease;
+    filter: brightness(0.9) opacity(0.9);
   }
 
   .load-more-card .post-card-image::before {
@@ -290,6 +236,55 @@ const suffix =
 
   html[data-js] .load-more-card .post-card-image img.loaded {
     opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .load-more-card:hover .post-card-image,
+    .load-more-card:focus-within .post-card-image {
+      filter: brightness(1) opacity(1);
+    }
+  }
+
+  /* ── Mobile layout: scroll-proximity driven preview (--lm-progress: 0..1) ──
+     Gated by max-width (the MOBILE_QUERY breakpoint), not (hover: none): some
+     devices/webviews report hover:hover and would never match. Placed after
+     every base rule — at equal specificity, source order decides. */
+
+  @media (max-width: 960px) {
+    .load-more-title,
+    .load-more-default,
+    .load-more-hover,
+    .load-more-card .load-more-hover span,
+    .load-more-card .load-more-hover p,
+    .load-more-card .post-card-image {
+      transition: none;
+    }
+
+    .load-more-card .load-more-default {
+      transform: translateY(calc(var(--lm-progress, 0) * -100%));
+    }
+
+    .load-more-card .load-more-hover {
+      transform: translateY(calc((1 - var(--lm-progress, 0)) * 100%));
+    }
+
+    .load-more-card .load-more-title {
+      color: color-mix(in srgb, var(--color-muted), var(--color-heading) calc(var(--lm-progress, 0) * 100%));
+    }
+
+    /* PC hover parity: dimmed rest state restored as the card completes. */
+    .load-more-card .post-card-image {
+      filter: brightness(calc(0.9 + 0.1 * var(--lm-progress, 0)))
+        opacity(calc(0.9 + 0.1 * var(--lm-progress, 0)));
+    }
+
+    .load-more-card .load-more-hover span {
+      color: color-mix(in srgb, var(--color-muted), var(--color-text) calc(var(--lm-progress, 0) * 100%));
+    }
+
+    .load-more-card .load-more-hover p {
+      color: color-mix(in srgb, var(--color-muted), var(--color-heading) calc(var(--lm-progress, 0) * 100%));
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -195,6 +195,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 
 - 문서 하단까지 남은 거리가 `--load-more-reveal-start`(global.css 토큰, 125px) 이하로 줄어들면 `--lm-progress`(0~1)가 연속 계산되고, 잔여 거리가 `--load-more-reveal-end`(25px)에 도달하면 전환이 완료되어 Author가 고정된다. 카드의 `.load-more-default`/`.load-more-hover` transform과 제목·Author 색상이 이 변수로 구동된다 (PC와 동일한 시각 언어, keyframe 없음).
 - 미리보기 이미지는 같은 구간에서 `brightness/opacity 0.9→1`로 복원된다 — PC 호버와 동일한 시작·종료 값, 동일 토큰 구동(사용자 결정: grayscale 등 추가 연출은 배제). 변수 미설정 시(reduced-motion 포함) 기본 딤 상태를 유지한다.
+- 스타일 배치 제약: `LoadMoreCard` 스타일은 **기본 → PC 호버(`hover:hover`) → 모바일 변수 구동(`max-width:960px`) → reduced-motion** 순으로 배치한다. 동일 특이도 규칙의 승패는 소스 순서로 갈린다 — 과거 정적 이미지 `filter`가 변수 구동 규칙보다 뒤에 선언되어 무효화됐던 사건(모바일 이미지 무반응)의 원인이었다. 기본 선언을 옮기거나 새 규칙을 추가할 때 이 순서를 유지할 것.
 - 양방향: 위로 스크롤해 시작 지점(125px) 밖으로 나가면 텍스트 상태로 복귀.
 - 탭은 기존과 동일하게 즉시 `loadChunk()` 실행 — 이 연출이 탭 실행을 지연하지 않는다.
 - 갱신 시점: scroll/resize(rAF 스로틀, 읽기→쓰기 순서로 리플로우 회피) + `ResizeObserver(document.body)`(청크 로드·이미지 reveal로 인한 문서 높이 변화 대응).

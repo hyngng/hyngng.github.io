@@ -318,7 +318,8 @@
     - 보정(히트 영역): `.post-card-author`에 `width: fit-content` 적용으로 탭 히트 영역을 작가 콘텐츠 박스(아바타+이름/날짜)로 제한 — 텍스트 없는 빈 공간(우측 여백)은 카드 링크로 포스트가 열림. E2E 재검증: 모바일에서 아바타/이름 탭 → 작가 페이지, 빈 공간 탭 → 포스트.
     - 보정(구조): 인라인 리스너를 `src/features/post-list/author-link.ts`의 `initMobileAuthorLink(signal)`로 추출하고, 960px 문자열을 `layout.ts`의 `MOBILE_QUERY` 상수로 중앙화(`isMobile`과 동일 소스). `ChunkPostListBody.astro`에서도 등록하여 청크 페이지(홈/작가 파생 뷰)까지 모바일 작가 링크 동작 일관화.
     - 수정(실기기 미동작 해소): 모바일 활성 조건을 `(hover: none)` → `@media (max-width: 960px)`으로 변경 — 실기기가 `hover: hover`로 평가하면 모바일 블록이 아예 적용되지 않음(JS는 progress를 1까지 계산했으므로 CSS 게이트가 원인). 프로젝트 모바일 규약(`MOBILE_QUERY`, 960px)과 통일해 입력 장치 리포팅 의존 제거. 실기기 동작 확인.
-    - 후속(이미지 전환): 미리보기 이미지도 같은 구간(125px→25px)에서 `brightness/opacity 0.9→1` 복원을 `--lm-progress`에 직결 — PC 호버와 동일한 시각 언어. grayscale 커튼 리프트를 시도했다가 제거(사용자 결정: PC와의 일관성 우선, 변화폭 10%라 인지가 어려울 뿐 동작 자체는 정상).
+    - 후속(이미지 전환): 미리보기 이미지도 같은 구간(125px→25px)에서 `brightness/opacity 0.9→1` 복원을 `--lm-progress`에 직결 — PC 호버와 동일한 시작·종료 값. grayscale 커튼 리프트는 시도 후 제거(사용자 결정: PC와의 일관성 우선).
+    - 정리(원인 수정·구조화): 모바일 이미지 무반응의 실제 원인은 캐스케이드 순서 — 정적 `filter` 기본값이 동일 특이도 변수 구동 규칙보다 소스상 뒤에 선언되어 항상 덮어씀(grayscale 실험도 같은 위치라 처음부터 렌더링 무효였음). 스타일 섹션을 기본 → PC 호버 → 모바일 → reduced-motion 순으로 재배치하고 분리됐던 filter/transition 선언을 이미지 베이스 규칙에 병합해 순서 의존을 구조적으로 보장. 검증: astro check 0 errors, build 성공, 빌드 CSS에서 static < calc 구동 규칙 순서 확인.
   - [x] **llms.txt 동적 생성** (사용자 결정: 영어 기본, 작가별 서브섹션, Hero description 재사용)
     - 배경: `public/llms.txt`는 하드코딩된 정적 파일(감사 A 항목에서 404 해소용 생성) → 콘텐츠/설정과 이중 관리 문제.
     - 해결: `src/pages/llms.txt.ts` 동적 엔드포인트(robots/sitemap/rss와 동일 패턴, `request.url` origin 추출) + `src/utils/llms.ts`의 `buildLlmsTxt()` 순수 함수(테스트 가능).
