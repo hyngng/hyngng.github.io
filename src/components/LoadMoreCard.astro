@@ -229,17 +229,23 @@ const suffix =
       color: color-mix(in srgb, var(--color-muted), var(--color-heading) calc(var(--lm-progress, 0) * 100%));
     }
 
-    .load-more-card .post-card-image {
-      filter: brightness(calc(0.9 + 0.1 * var(--lm-progress, 0)))
-        opacity(calc(0.9 + 0.1 * var(--lm-progress, 0)));
-    }
-
     .load-more-card .load-more-hover span {
       color: color-mix(in srgb, var(--color-muted), var(--color-text) calc(var(--lm-progress, 0) * 100%));
     }
 
     .load-more-card .load-more-hover p {
       color: color-mix(in srgb, var(--color-muted), var(--color-heading) calc(var(--lm-progress, 0) * 100%));
+    }
+  }
+
+  /* Image curtain-lift: grayscale+dim at rest, full color when the card
+     completes. Gated off under reduced motion so the rest state keeps the
+     plain dimmed look instead of staying desaturated. */
+  @media (max-width: 960px) and (prefers-reduced-motion: no-preference) {
+    .load-more-card .post-card-image {
+      filter: grayscale(calc(1 - var(--lm-progress, 0)))
+        brightness(calc(0.9 + 0.1 * var(--lm-progress, 0)))
+        opacity(calc(0.9 + 0.1 * var(--lm-progress, 0)));
     }
   }
 
