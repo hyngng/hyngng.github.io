@@ -43,6 +43,9 @@ export function initLoadMorePreview(grid: HTMLElement, signal: AbortSignal): voi
 
   reducedMotion.addEventListener('change', () => {
     if (reducedMotion.matches && card) card.style.removeProperty(PROGRESS_VAR);
+    // Resync in both directions: turning reduce off must recompute immediately,
+    // not wait for the next scroll event.
+    scheduleUpdate();
   }, { signal });
 
   signal.addEventListener('abort', () => {

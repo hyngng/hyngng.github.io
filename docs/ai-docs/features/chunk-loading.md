@@ -197,7 +197,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 - 양방향: 위로 스크롤해 시작 지점(125px) 밖으로 나가면 텍스트 상태로 복귀.
 - 탭은 기존과 동일하게 즉시 `loadChunk()` 실행 — 이 연출이 탭 실행을 지연하지 않는다.
 - 갱신 시점: scroll/resize(rAF 스로틀, 읽기→쓰기 순서로 리플로우 회피) + `ResizeObserver(document.body)`(청크 로드·이미지 reveal로 인한 문서 높이 변화 대응).
-- `prefers-reduced-motion: reduce`에서는 변수를 설정하지 않아 텍스트 상태 고정.
+- `prefers-reduced-motion: reduce`에서는 변수를 설정하지 않아 텍스트 상태 고정. 설정 토글 시 즉시 재동기화된다.
 - 접근성: Author 정보는 DOM에 상시 존재하며, `<a>`의 `aria-label`(`loadMoreHover`)이 AT 접근 이름을 제공하므로 시각 상태와 무관하게 항상 접근 가능하다.
 
 트리거 거리를 절대 px(비율 아님)로 정의한 이유는 페이지 길이와 무관하게 일관된 물리적 거리에서 전환이 시작되도록 하기 위함이다. 전환 구간은 125px→25px(100px 폭)로, 문서 최하단에 도달하기 전에 전환이 완료되어 완성된 Author 상태를 볼 시간이 확보된다.
