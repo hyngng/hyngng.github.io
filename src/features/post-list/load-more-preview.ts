@@ -1,14 +1,11 @@
-const PROGRESS_VAR = '--lm-progress';
-const FALLBACK_START_PX = 125;
-const FALLBACK_END_PX = 25;
+import { MOBILE_QUERY } from './layout';
+
+// Integer-rounded scroll metrics leave a few px of residual at true bottom
+// (measured 3px); 8px absorbs rounding across device pixel ratios.
+const BOTTOM_EPSILON_PX = 8;
 
 export function initLoadMorePreview(grid: HTMLElement, signal: AbortSignal): void {
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const rootStyle = getComputedStyle(document.documentElement);
-  const startDistance = parseFloat(rootStyle.getPropertyValue('--load-more-reveal-start')) || FALLBACK_START_PX;
-  const endDistance = parseFloat(rootStyle.getPropertyValue('--load-more-reveal-end')) || FALLBACK_END_PX;
-  const span = Math.max(1, startDistance - endDistance);
-
+  const mobile = window.matchMedia(MOBILE_QUERY);
   let card: HTMLElement | null = null;
   let rafId = 0;
 
@@ -19,15 +16,14 @@ export function initLoadMorePreview(grid: HTMLElement, signal: AbortSignal): voi
   function update() {
     rafId = 0;
     if (!card || !card.isConnected) resolveCard();
-    if (!card || reducedMotion.matches) return;
+    if (!card || !mobile.matches) return;
 
     const el = document.scrollingElement;
     if (!el) return;
-    // Reads precede writes; the custom property only feeds transform/filter/color,
+    // Reads precede writes; toggling a class only dirties the card subtree,
     // so scrollHeight stays clean and no forced reflow happens per frame.
     const remaining = el.scrollHeight - el.clientHeight - el.scrollTop;
-    const progress = Math.min(1, Math.max(0, (startDistance - remaining) / span));
-    card.style.setProperty(PROGRESS_VAR, progress.toFixed(4));
+    card.classList.toggle('is-active', remaining <= BOTTOM_EPSILON_PX);
   }
 
   function scheduleUpdate() {
@@ -41,10 +37,9 @@ export function initLoadMorePreview(grid: HTMLElement, signal: AbortSignal): voi
   const observer = new ResizeObserver(scheduleUpdate);
   observer.observe(document.body);
 
-  reducedMotion.addEventListener('change', () => {
-    if (reducedMotion.matches && card) card.style.removeProperty(PROGRESS_VAR);
-    // Resync in both directions: turning reduce off must recompute immediately,
-    // not wait for the next scroll event.
+  // Leaving the mobile layout must clear the state even without a scroll event.
+  mobile.addEventListener('change', () => {
+    if (!mobile.matches && card) card.classList.remove('is-active');
     scheduleUpdate();
   }, { signal });
 

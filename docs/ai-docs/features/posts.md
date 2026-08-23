@@ -271,7 +271,7 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
   - 원본 `img`가 `opacity: 1`로 0.35초간 페이드인된다.
   - `::before` (LQIP)가 `opacity: 0`으로 0.35초간 페이드아웃되어 원본 이미지로 부드럽게 교체된다.
 - **더 보기 교체 카드 (`cards[0]`) 예외 처리**: "더 보기" 버튼 위치에 대체 교체되는 첫 번째 포스트 카드는 카드 등장 애니메이션(`is-new`)에서 제외될 뿐만 아니라, 미리보기 이미지도 LQIP 교체 트랜지션 없이 원본 이미지(`img.loaded`)로 즉시 표출되어 시각적 이질감을 방지한다.
-- `LoadMoreCard` 호버 필터: 기본 `brightness(0.9) opacity(0.9)` 상태에서 마우스 호버 시 `brightness(1) opacity(1)`로 밝기/투명도가 복원된다. 호버 계열 애니메이션(`transform`/`color`/`filter` transition + `:hover`/`:focus-within` 규칙)은 `@media (hover: hover) and (pointer: fine)` 블록 안에만 있어 터치 입력에서는 동작하지 않는다.
+- `LoadMoreCard` 밝기 필터: 기본 `brightness(0.9) opacity(0.9)` 상태에서 `:hover`/`:focus-within`(마우스) 또는 `.is-active`(모바일에서 문서 최하단 도달 — `load-more-preview.ts`가 부착) 시 `brightness(1) opacity(1)`로 복원된다. 상태 규칙은 포인터 게이트 없이 세 진입점이 병렬 정의된다.
 
 ### 관련 파일
 

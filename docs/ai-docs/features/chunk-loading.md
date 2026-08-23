@@ -189,20 +189,18 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 | `loadMoreSub(total, remaining)` | 부 정보 (전체 대비 남은 수) | `전체 24편 중 16편 남음` |
 | `loadMoreHover(title, n)` | `aria-label`용 (접근성) | `{title} 외 8건` |
 
-마우스 호버(`@media (hover: hover) and (pointer: fine)`) 시에는 텍스트 대신 `<Author>` 컴포넌트가 슬라이드업되어 다음 미리보기 글의 작가 정보를 표시한다.
+`<Author>` 컴포넌트가 슬라이드업되어 다음 미리보기 글의 작가 정보를 표시하는 상태 전환은 **진입점 3개가 하나의 정의를 공유**한다: 마우스 `:hover`, 키보드 `:focus-within`, 그리고 모바일의 `.is-active`. 포인터 게이트(`(hover:hover)` 래퍼)는 없다 — 터치 스티키 호버는 탭이 곧 내비게이션이라 실효 리스크가 없고, 데스크톱 narrow 창에서도 호버가 정상 동작한다.
 
-모바일 레이아웃(`@media (max-width: 960px)` — JS의 `MOBILE_QUERY`와 동일 기준)에서는 동일한 슬라이드 연출이 **스크롤 근접 기반**으로 구동된다 (`src/features/post-list/load-more-preview.ts`). 입력 장치 리포팅 기반인 `(hover: none)`은 실기기·웹뷰·마우스 연결 상태에 따라 평가가 들쭉날쭉해 배제했다(실기기 미동작 원인이었음):
+모바일 레이아웃(`MOBILE_QUERY`, ≤960px)에서는 호버 대신 **문서 최하단 도달**이 트리거다 (`src/features/post-list/load-more-preview.ts`):
 
-- 문서 하단까지 남은 거리가 `--load-more-reveal-start`(global.css 토큰, 125px) 이하로 줄어들면 `--lm-progress`(0~1)가 연속 계산되고, 잔여 거리가 `--load-more-reveal-end`(25px)에 도달하면 전환이 완료되어 Author가 고정된다. 카드의 `.load-more-default`/`.load-more-hover` transform과 제목·Author 색상이 이 변수로 구동된다 (PC와 동일한 시각 언어, keyframe 없음).
-- 미리보기 이미지는 같은 구간에서 `brightness/opacity 0.9→1`로 복원된다 — PC 호버와 동일한 시작·종료 값, 동일 토큰 구동(사용자 결정: grayscale 등 추가 연출은 배제). 변수 미설정 시(reduced-motion 포함) 기본 딤 상태를 유지한다.
-- 스타일 배치 제약: `LoadMoreCard` 스타일은 **기본 → PC 호버(`hover:hover`) → 모바일 변수 구동(`max-width:960px`) → reduced-motion** 순으로 배치한다. 동일 특이도 규칙의 승패는 소스 순서로 갈린다 — 과거 정적 이미지 `filter`가 변수 구동 규칙보다 뒤에 선언되어 무효화됐던 사건(모바일 이미지 무반응)의 원인이었다. 기본 선언을 옮기거나 새 규칙을 추가할 때 이 순서를 유지할 것.
-- 양방향: 위로 스크롤해 시작 지점(125px) 밖으로 나가면 텍스트 상태로 복귀.
-- 탭은 기존과 동일하게 즉시 `loadChunk()` 실행 — 이 연출이 탭 실행을 지연하지 않는다.
-- 갱신 시점: scroll/resize(rAF 스로틀, 읽기→쓰기 순서로 리플로우 회피) + `ResizeObserver(document.body)`(청크 로드·이미지 reveal로 인한 문서 높이 변화 대응).
-- `prefers-reduced-motion: reduce`에서는 변수를 설정하지 않아 텍스트 상태 고정. 설정 토글 시 즉시 재동기화된다.
+- 잔여 거리(scrollHeight − clientHeight − scrollTop)가 `BOTTOM_EPSILON_PX`(8px) 이하가 되면 `.is-active`를 부착하고, 위로 벗어나면 제거한다(양방향 복귀). 스크롤 지표는 정수 반올림되어 최하단에서도 잔여 수 px가 남으므로(에뮬레이터 실측 3px), 1px 같은 타이트한 값은 트리거가 영원히 불발된다 — 엡실론은 실측 잔여보다 넉넉하게 유지할 것.
+- JS는 상태 클래스만 관리하고 연출 자체는 PC 호버와 완전히 동일한 CSS transition(0.25s 슬라이드/색상, 이미지 밝기 복원)으로 재생된다 — 진행 상태 변수·키프레임 없음.
+- 갱신 시점: scroll/resize(rAF 스로틀, 읽기→쓰기 순서) + `ResizeObserver(document.body)` + `MOBILE_QUERY` change(레이아웃 이탈 시 클래스 해제).
+- `prefers-reduced-motion: reduce`에서는 transition 차단으로 즉시 스왑된다(PC 호버와 동일 처리, JS 게이트 없음).
+- 탭은 기존과 동일하게 즉시 `loadChunk()` 실행 — 연출이 탭 실행을 지연하지 않는다.
 - 접근성: Author 정보는 DOM에 상시 존재하며, `<a>`의 `aria-label`(`loadMoreHover`)이 AT 접근 이름을 제공하므로 시각 상태와 무관하게 항상 접근 가능하다.
 
-트리거 거리를 절대 px(비율 아님)로 정의한 이유는 페이지 길이와 무관하게 일관된 물리적 거리에서 전환이 시작되도록 하기 위함이다. 전환 구간은 125px→25px(100px 폭)로, 문서 최하단에 도달하기 전에 전환이 완료되어 완성된 Author 상태를 볼 시간이 확보된다.
+스타일 배치 제약: `LoadMoreCard` 스타일은 **기본 → 상태 진입점 선택자 → reduced-motion** 순으로 배치한다. 과거 동일 특이도 정적 `filter`가 오버라이드 규칙보다 뒤에 선언되어 무효화됐던 사건이 있었다. 구 스크롤 근접 연출(`--lm-progress`, 125↔25px 비례)의 요구사항·운영 사건·코드는 `plans/load-more-scroll-proximity-archive.md`에 보존되어 있다.
 
 ## 서비스 워커 상호작용
 

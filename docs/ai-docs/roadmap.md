@@ -320,6 +320,12 @@
     - 수정(실기기 미동작 해소): 모바일 활성 조건을 `(hover: none)` → `@media (max-width: 960px)`으로 변경 — 실기기가 `hover: hover`로 평가하면 모바일 블록이 아예 적용되지 않음(JS는 progress를 1까지 계산했으므로 CSS 게이트가 원인). 프로젝트 모바일 규약(`MOBILE_QUERY`, 960px)과 통일해 입력 장치 리포팅 의존 제거. 실기기 동작 확인.
     - 후속(이미지 전환): 미리보기 이미지도 같은 구간(125px→25px)에서 `brightness/opacity 0.9→1` 복원을 `--lm-progress`에 직결 — PC 호버와 동일한 시작·종료 값. grayscale 커튼 리프트는 시도 후 제거(사용자 결정: PC와의 일관성 우선).
     - 정리(원인 수정·구조화): 모바일 이미지 무반응의 실제 원인은 캐스케이드 순서 — 정적 `filter` 기본값이 동일 특이도 변수 구동 규칙보다 소스상 뒤에 선언되어 항상 덮어씀(grayscale 실험도 같은 위치라 처음부터 렌더링 무효였음). 스타일 섹션을 기본 → PC 호버 → 모바일 → reduced-motion 순으로 재배치하고 분리됐던 filter/transition 선언을 이미지 베이스 규칙에 병합해 순서 의존을 구조적으로 보장. 검증: astro check 0 errors, build 성공, 빌드 CSS에서 static < calc 구동 규칙 순서 확인.
+  - [x] **LoadMoreCard 모바일 전환 교체 — 바닥 도달 상태 토글 (2026-08, 사용자 결정)**
+    - 결정: 스크롤 비례 스크럽(125↔25px `--lm-progress`) 폐기 → 문서 최하단 도달(잔여 거리 ≤8px) 시 PC 호버와 동일한 이산 전환 재생, 위로 벗어나면 복귀하는 양방향 토글.
+    - 구현: `load-more-preview.ts` 재작성(~40행) — `MOBILE_QUERY` 게이트 + rAF 스로틀 scroll/resize + `ResizeObserver(body)` 유지, `classList.toggle('is-active')`; reduced-motion 게이트 제거(CSS transition 차단에 위임 = PC 호버와 동일 처리). CSS는 `:hover`/`:focus-within`/`.is-active` 병렬 선택자로 단일 정의 통합, `(hover:hover) and (pointer:fine)` 래퍼 제거(터치 스티키 호버는 탭=내비게이션), `--load-more-reveal-*` 토큰 삭제. 호출부(`PostListSection`) 시그니처 불변.
+    - 보존: 구 연출의 요구사항·운영 사건 3건·코드 스냅샷은 `plans/load-more-scroll-proximity-archive.md`.
+    - 검증: astro check 0 errors / build 성공 / 빌드 CSS에서 `.is-active` 존재·`--lm-progress` 및 reveal 토큰 부재 확인.
+    - 후속(모바일 무반응 수정): 초기 `BOTTOM_EPSILON_PX = 1`은 정수 반올림 잔여(실측 3px) 때문에 최하단에서도 절대 발화하지 않음 → 8으로 상향, CDP 재검증(바닥 부착/복귀). 데스크톱 무반응 보고는 버그 아님 — 바닥 트리거는 `MOBILE_QUERY` 게이트로 모바일 전용이 설계이며(사용자 확인), 데스크톱 호버는 순수 CSS로 정상.
   - [x] **llms.txt 동적 생성** (사용자 결정: 영어 기본, 작가별 서브섹션, Hero description 재사용)
     - 배경: `public/llms.txt`는 하드코딩된 정적 파일(감사 A 항목에서 404 해소용 생성) → 콘텐츠/설정과 이중 관리 문제.
     - 해결: `src/pages/llms.txt.ts` 동적 엔드포인트(robots/sitemap/rss와 동일 패턴, `request.url` origin 추출) + `src/utils/llms.ts`의 `buildLlmsTxt()` 순수 함수(테스트 가능).
