@@ -108,6 +108,7 @@ const suffix =
     font-weight: 700;
     line-height: var(--post-card-line-title);
     margin: 0 0 var(--space-card-title-gap) 0;
+    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
   }
 
   .load-more-card .post-card-meta {
@@ -120,6 +121,7 @@ const suffix =
     display: flex;
     flex-direction: column;
     gap: var(--space-load-more-gap);
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
   }
 
   .load-more-main {
@@ -141,27 +143,12 @@ const suffix =
     color: var(--color-muted);
     font-size: var(--author-info-size);
     line-height: 1.5;
-  }
-
-  .load-more-card .load-more-hover span {
-    color: var(--color-muted);
-  }
-
-  .load-more-card .load-more-hover p {
-    color: var(--color-muted);
-  }
-
-  .load-more-title {
-    transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
-  }
-
-  .load-more-default,
-  .load-more-hover {
     transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
   }
 
   .load-more-card .load-more-hover span,
   .load-more-card .load-more-hover p {
+    color: var(--color-muted);
     transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
   }
 
