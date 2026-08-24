@@ -12,6 +12,8 @@ date: 2026-06-01 13:54:00 +0900
 last_modified_at: 2026-06-29 23:23:00 +0900
 
 mermaid: true
+
+lang: ko
 ---
 
 <!--

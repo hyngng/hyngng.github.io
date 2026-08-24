@@ -10,6 +10,8 @@ toc: true
 
 date: 2025-04-28 19:02:00 +0900
 last_modified_at: 2026-02-01 15:26:00 +0900
+
+lang: en
 ---
 
 ## **A Good Way to Use Habitus, Proposed by Oneself <sup>04.13</sup>**

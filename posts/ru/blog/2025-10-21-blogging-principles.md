@@ -16,6 +16,8 @@ mermaid: true
 redirect_from:
     - /posts/blog-checkup-and-writing-credo/
     - /posts/blog-checkup-and-writing-principles/
+
+lang: ru
 ---
 
 ## **Зачем я вообще начал вести блог**

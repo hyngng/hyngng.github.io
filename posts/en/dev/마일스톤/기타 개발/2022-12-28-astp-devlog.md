@@ -15,6 +15,8 @@ mermaid: true
 
 redirect_from:
     - /posts/astp-devlog/
+
+lang: en
 ---
 
 ## **ASTP, the Auto Stock Trading Program**

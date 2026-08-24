@@ -10,6 +10,8 @@ toc: true
 
 date: 2023-11-25 23:24:00 +0900
 last_modified_at: 2025-10-15 09:22:00 +0900
+
+lang: fr
 ---
 
 :::info

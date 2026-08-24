@@ -18,6 +18,8 @@ last_modified_at: 2025-04-16 14:57:00 +0900
 
 redirect_from:
   - /posts/photos-of-gyemyo/
+
+lang: zh
 ---
 
 ![20230117_205758](/photo/20230117_205758.webp){: .rounded-10 }

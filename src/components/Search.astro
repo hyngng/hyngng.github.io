@@ -98,7 +98,7 @@ const { locale, currentLocale, authorId } = Astro.props;
       if (currentSeq !== searchSeq) return;
 
       const rawLocale = allInputs[0]?.dataset.locale || allInputs[0]?.dataset.defaultLocale || 'ko';
-      const lang = rawLocale.split('-')[0];
+      const lang = rawLocale;
       const authorId = allInputs[0]?.dataset.author || undefined;
 
       const paths = await engine.search(query, { lang, authorId });

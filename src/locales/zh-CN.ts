@@ -1,10 +1,6 @@
 import type { Locale } from './index';
 
 const locale: Locale = {
-  meta: {
-    bcp47: 'zh-CN',
-    ogLocale: 'zh_CN',
-  },
   frame: {
     lang: 'ZH',
     langAria: '选择语言',

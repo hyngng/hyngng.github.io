@@ -12,6 +12,8 @@ date: 2025-06-30 23:01:00 +0900
 last_modified_at: 2026-05-31 14:30:00 +0900
 
 mermaid: true
+
+lang: es
 ---
 
 Escuchar música mientras se trabaja no ayuda a la concentración plena, por lo que no es beneficioso para el trabajo cognitivo. Sin embargo, muchas personas escuchan música durante el trabajo simplemente para llenar el silencio de fondo, o por la familiaridad y seguridad que la música les brinda. Personalmente, busco música por esas razones. Cuando desarrollo software, escribo entradas para el blog o realizo otras tareas, recurro al ruido blanco cuando realmente necesito eficiencia, pero cuando tengo margen, busco los siguientes géneros.

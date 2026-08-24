@@ -14,16 +14,15 @@ const locale = getLocale(currentCode);
 const siteMeta = getSiteMeta(currentCode);
 const otherLocales = availableLocales.filter((l) => l.code !== currentCode);
 
-const currentLangShort = currentCode.split("-")[0];
 const homeUrl =
-  currentLangShort === defaultLocale ? "/" : `/${currentLangShort}/`;
+  currentCode === defaultLocale ? "/" : `/${currentCode}/`;
 const rssUrl = authorId
-  ? currentLangShort === defaultLocale
+  ? currentCode === defaultLocale
     ? `/${authorId}/rss.xml`
-    : `/${currentLangShort}/${authorId}/rss.xml`
-  : currentLangShort === defaultLocale
+    : `/${currentCode}/${authorId}/rss.xml`
+  : currentCode === defaultLocale
     ? "/rss.xml"
-    : `/${currentLangShort}/rss.xml`;
+    : `/${currentCode}/rss.xml`;
 ---
 
 <div class="fixed-actions">
@@ -325,14 +324,13 @@ const rssUrl = authorId
       const pathSegments = window.location.pathname
         .split("/")
         .filter(Boolean);
-      const langCodeNormalized = langCode.split("-")[0];
 
       if (localeCodes.has(pathSegments[0])) {
         pathSegments.shift();
       }
 
-      if (langCodeNormalized !== defaultLocale) {
-        pathSegments.unshift(langCodeNormalized);
+      if (langCode !== defaultLocale) {
+        pathSegments.unshift(langCode);
       }
 
       return `/${pathSegments.join("/")}${window.location.search}${window.location.hash}`;

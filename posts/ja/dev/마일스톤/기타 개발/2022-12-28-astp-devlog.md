@@ -15,6 +15,8 @@ mermaid: true
 
 redirect_from:
     - /posts/astp-devlog/
+
+lang: ja
 ---
 
 ## **自動株式取引機、ASTP**

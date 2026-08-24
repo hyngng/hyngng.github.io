@@ -12,6 +12,8 @@ last_modified_at: 2026-02-11 17:36:00 +0900
 
 redirect_from:
     - /posts/unity-vibration-implementation/
+
+lang: en
 ---
 
 :::warning

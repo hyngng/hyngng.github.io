@@ -15,6 +15,8 @@ toc: false
  
 date: 2024-05-16 13:53:00 +0900
 last_modified_at: 2024-05-16 13:53:00 +0900
+
+lang: es
 ---
 
 ![240415-헤드폰목도리](/drawing/240415-헤드폰목도리.webp){: .rounded-10 .light .border }

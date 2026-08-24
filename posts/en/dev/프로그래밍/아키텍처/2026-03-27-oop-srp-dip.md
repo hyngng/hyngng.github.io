@@ -12,6 +12,8 @@ date: 2026-06-01 13:54:00 +0900
 last_modified_at: 2026-06-29 23:23:00 +0900
 
 mermaid: true
+
+lang: en
 ---
 
 I'm not sure exactly where I am on the path, but if I were to use the Four Stages of Competence as an analogy, I'd guess I'm somewhere around conscious competence. I don't think I yet have the eye to see what constitutes good design, but amidst that uncertainty, a few things are gradually coming into focus, and some of them are quite interesting to think about.

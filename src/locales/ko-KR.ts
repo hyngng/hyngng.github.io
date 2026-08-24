@@ -1,10 +1,6 @@
 import type { Locale } from './index';
 
 const locale: Locale = {
-  meta: {
-    bcp47: 'ko-KR',
-    ogLocale: 'ko_KR',
-  },
   frame: {
     lang: 'KO',
     langAria: '언어 선택',

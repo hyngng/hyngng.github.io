@@ -10,6 +10,8 @@ toc: false
  
 date: 2022-11-04 13:48:00 +0900
 last_modified_at: 2023-04-12 20:38:00 +0900
+
+lang: fr
 ---
 
 Personnellement, je n'aime pas beaucoup Arduino car mon expérience en programmation n'est pas très nette. Mais récemment, j'ai eu une nouvelle occasion d'utiliser Arduino.

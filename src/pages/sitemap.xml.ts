@@ -67,7 +67,7 @@ export async function GET({ request }: APIContext) {
   // ── 2. Author index pages ─────────────────────────────
   const authorSet = new Set<string>();
   for (const post of posts) {
-    const lang = getPostLang(post.id);
+    const lang = getPostLang(post);
     for (const authorId of post.data.authors) {
       authorSet.add(`${lang}/${authorId}`);
     }
@@ -90,7 +90,7 @@ export async function GET({ request }: APIContext) {
   for (const group of postGroups.values()) {
     const alternates: Alternate[] = group.length > 1
       ? group.map((post) => {
-          const lang = getPostLang(post.id);
+          const lang = getPostLang(post);
           return {
             hreflang: bcp47(lang),
             href: `${origin}${getPostPath(post.id, post.data.authors[0], lang)}`,
@@ -99,7 +99,7 @@ export async function GET({ request }: APIContext) {
       : [];
 
     if (alternates.length > 0) {
-      const defaultPost = group.find((post) => getPostLang(post.id) === defaultLocale);
+      const defaultPost = group.find((post) => getPostLang(post) === defaultLocale);
       if (defaultPost) {
         alternates.push({
           hreflang: 'x-default',
@@ -109,7 +109,7 @@ export async function GET({ request }: APIContext) {
     }
 
     for (const post of group) {
-      const lang = getPostLang(post.id);
+      const lang = getPostLang(post);
       const lastmod = (post.data.last_modified_at || post.data.date).toISOString().split('T')[0];
       const image = post.data.og_image || post.data.image?.path;
       urls.push({

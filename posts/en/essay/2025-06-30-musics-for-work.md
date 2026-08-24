@@ -15,6 +15,8 @@ mermaid: true
 
 redirect_from:
     - /posts/music-for-work/
+
+lang: en
 ---
 
 Listening to music while working can interfere with full immersion, so it's not helpful for cognitive labor. Yet many people still listen to music while working, likely either to fill background silence or for the familiarity and comfort the music provides. I also look for music for those reasons. When coding or writing blog posts — when I truly need efficiency, I seek white noise, but when I have some leeway, I turn to the following genres.

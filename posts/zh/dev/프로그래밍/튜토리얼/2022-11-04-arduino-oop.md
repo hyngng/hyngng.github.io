@@ -10,6 +10,8 @@ toc: false
  
 date: 2022-11-04 13:48:00 +0900
 last_modified_at: 2023-04-12 20:38:00 +0900
+
+lang: zh
 ---
 
 个人而言，由于编程经验不够简洁，我不太喜欢Arduino。但最近又有机会使用Arduino了。

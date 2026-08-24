@@ -10,6 +10,8 @@ toc: true
 
 date: 2025-04-28 19:02:00 +0900
 last_modified_at: 2026-02-01 15:26:00 +0900
+
+lang: es
 ---
 
 ## **Una buena forma de usar el habitus que propongo <sup>13.04</sup>**

@@ -18,6 +18,7 @@ function mockPost(
     draft?: boolean;
     description?: string;
     body?: string;
+    lang?: string;
   } = {},
 ): CollectionEntry<'posts'> {
   return {
@@ -29,6 +30,7 @@ function mockPost(
       draft: overrides.draft ?? false,
       description: overrides.description,
       body: overrides.body ?? '',
+      lang: overrides.lang ?? id.split('/')[0],
       categories: [],
       tags: [],
     },
@@ -49,7 +51,10 @@ describe('buildLlmsTxt', () => {
     expect(text).toContain('# HYNGNG\n');
     expect(text).toContain('> Greetings 🔥');
     expect(text).toContain('Default language: ko-KR.');
-    expect(text).toContain('Available locales: ko, en, ru, fr, es, ja, zh.');
+    const availLine = text.match(/Available locales: ([^.]+)\./)![1];
+    for (const code of ['ko', 'en', 'ru', 'fr', 'es', 'ja', 'zh']) {
+      expect(availLine).toContain(code);
+    }
     expect(text).toContain('## Sections\n');
     expect(text).toContain(`- [Home](${ORIGIN}/)`);
     expect(text).toContain(`- [RSS](${ORIGIN}/rss.xml)`);

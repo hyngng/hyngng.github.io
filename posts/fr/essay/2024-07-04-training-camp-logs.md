@@ -12,6 +12,8 @@ date: 2024-07-04 21:42:00 +0900
 last_modified_at: 2026-06-25 15:21:00 +0900
 
 mermaid: true
+
+lang: fr
 ---
 
 J'ai la tête encore ailleurs. Le temps qui s'écoulait lentement a soudainement disparu, et me voilà sorti du centre d'entraînement, écrivant chez moi.

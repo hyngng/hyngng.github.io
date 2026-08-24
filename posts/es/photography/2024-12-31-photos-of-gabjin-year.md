@@ -18,6 +18,8 @@ last_modified_at: 2025-04-16 14:57:00 +0900
 
 redirect_from:
   - /posts/photos-of-gabjin/
+
+lang: es
 ---
 
 ![20240126_153421](/photo/20240126_153421.webp){: .rounded-10 }

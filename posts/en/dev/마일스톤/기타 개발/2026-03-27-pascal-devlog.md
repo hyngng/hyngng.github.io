@@ -17,6 +17,8 @@ date: 2026-04-02 11:14:00 +0900
 last_modified_at: 2026-06-23 16:47:00 +0900
 
 mermaid: true
+
+lang: en
 ---
 
 ## **Development Motivation**

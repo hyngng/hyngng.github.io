@@ -15,6 +15,8 @@ mermaid: true
 
 redirect_from:
     - /posts/astp-devlog/
+
+lang: fr
 ---
 
 ## **Robot de trading automatisé, ASTP**

@@ -12,6 +12,8 @@ date: 2026-06-01 13:54:00 +0900
 last_modified_at: 2026-06-29 23:23:00 +0900
 
 mermaid: true
+
+lang: es
 ---
 
 No sé exactamente en qué punto me encuentro, pero si lo comparara con las cuatro etapas del conocimiento, diría que estoy en la fase de competencia consciente. Todavía no creo tener el criterio para discernir qué es un buen diseño, pero en medio de todo eso, van surgiendo pequeñas cosas que creo entender, y algunas de ellas me parecen bastante interesantes.

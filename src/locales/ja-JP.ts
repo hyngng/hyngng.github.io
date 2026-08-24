@@ -1,10 +1,6 @@
 import type { Locale } from './index';
 
 const locale: Locale = {
-  meta: {
-    bcp47: 'ja-JP',
-    ogLocale: 'ja_JP',
-  },
   frame: {
     lang: 'JA',
     langAria: '言語を選択',

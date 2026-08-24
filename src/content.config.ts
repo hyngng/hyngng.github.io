@@ -32,7 +32,7 @@ const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './posts' }),
   schema: z.object({
     title: z.string(),
-    lang: z.string().optional(),
+    lang: z.string().regex(/^[a-z]{2}$/, 'Language must be a 2-letter lowercase code (e.g. "en")'),
     description: z.string().optional(),
     date: z.string().transform(v => parseDateWithTimezone(String(v), SITE.timezone)),
     last_modified_at: z.string().optional()

@@ -15,6 +15,8 @@ mermaid: true
 
 redirect_from:
     - /posts/astp-devlog/
+
+lang: zh
 ---
 
 ## **自动股票交易机，ASTP**

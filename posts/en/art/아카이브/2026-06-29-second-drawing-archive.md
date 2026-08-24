@@ -15,6 +15,8 @@ toc: false
 
 date: 2026-07-01 13:37:00 +0900
 last_modified_at: 2026-07-02 15:21:00 +0900
+
+lang: en
 ---
 
 This is the second drawing archive. I have easily twice as much material as what I'm posting here, but for reasons of privacy, subject overlap, embarrassment, and so on, I've cut most of it down and only picked a few to upload. Due to cost issues, I used a digital camera and post-processing instead of a scanner, and there is some noise from limited lighting control. Descriptions are linked as footnotes in the image captions so as not to interrupt the flow.

@@ -12,6 +12,8 @@ date: 2026-06-01 13:54:00 +0900
 last_modified_at: 2026-06-29 23:23:00 +0900
 
 mermaid: true
+
+lang: fr
 ---
 
 Je ne sais pas exactement où j'en suis, mais pour utiliser une analogie avec les quatre stades de la connaissance, je dois être au stade de la compétence consciente. Je n'ai pas encore le recul nécessaire pour discerner ce qu'est une bonne conception, mais des bribes de compréhension émergent peu à peu, et certaines d'entre elles me paraissent assez intéressantes.

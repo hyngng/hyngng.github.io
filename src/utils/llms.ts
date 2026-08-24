@@ -25,7 +25,7 @@ export function buildLlmsTxt({ origin, posts }: LlmsTxtInput): string {
   const siteMeta = getSiteMeta(locale);
 
   const published = posts.filter(
-    (post) => !post.data.draft && getPostLang(post.id) === locale,
+    (post) => !post.data.draft && getPostLang(post) === locale,
   );
 
   const lines: string[] = [];

@@ -10,6 +10,8 @@ toc: false
  
 date: 2022-11-04 13:48:00 +0900
 last_modified_at: 2023-04-12 20:38:00 +0900
+
+lang: en
 ---
 
 Personally, I'm not very fond of Arduino because my programming experience with it hasn't been particularly clean. But recently, I had another opportunity to use Arduino.

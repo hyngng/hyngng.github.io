@@ -1,7 +1,7 @@
 // ── Types ────────────────────────────────────────────────
 
 import { resolveCdnPath } from '../utils/cdn';
-import { defaultLocaleBcp47 } from './site.settings';
+import { defaultLocaleBcp47, getLocaleEntry } from './site.settings';
 
 export interface Social {
   email?: string;
@@ -168,15 +168,9 @@ export const AUTHOR_IDS = Object.keys(AUTHORS) as [AuthorId, ...AuthorId[]];
 
 function resolveAuthorDescription(author: AuthorData, lang?: string): string {
   const descriptions = author.description;
-  const locale = lang ?? defaultLocaleBcp47;
+  const entry = getLocaleEntry(lang);
 
-  if (descriptions[locale]) return descriptions[locale]!;
-
-  const prefix = locale.split('-')[0];
-  const matched = Object.entries(descriptions).find(([key]) => key.startsWith(prefix));
-  if (matched) return matched[1]!;
-
-  return descriptions[defaultLocaleBcp47] ?? '';
+  return descriptions[entry.bcp47] ?? descriptions[defaultLocaleBcp47] ?? '';
 }
 
 export function getAuthor(id: string, lang?: string): Author {

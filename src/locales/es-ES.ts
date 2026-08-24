@@ -1,10 +1,6 @@
 import type { Locale } from './index';
 
 const locale: Locale = {
-  meta: {
-    bcp47: 'es-ES',
-    ogLocale: 'es_ES',
-  },
   frame: {
     lang: 'ES',
     langAria: 'Cambiar idioma',

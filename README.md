@@ -56,7 +56,7 @@ npm run dev
 
 `src/settings/site.settings.ts`에서 사이트 제목, 설명, URL, 소셜 링크 등을 수정합니다.
 
-지원 언어와 기본 언어는 동일 파일의 `LOCALE_REGISTRY`에서 단일 관리됩니다 (`defaultLocale`, `supportedLocales`가 파생됩니다).
+지원 언어는 포스트 프론트매터의 `lang` 값에서 빌드 시점에 **자동 파생**되므로 중앙 목록 편집이 필요 없습니다(자세한 규칙은 `docs/ai-docs/configuration/locales.md` 참고). `src/settings/site.settings.ts`의 `LOCALE_REGISTRY`는 알려진 언어의 SEO 메타 보강용이며, `defaultLocale`(`ko`)은 항상 포함됩니다.
 
 SNS/공유 메타데이터:
 
@@ -128,7 +128,7 @@ verification: {
 - `ja-JP.ts` — 일본어
 - `zh-CN.ts` — 중국어
 
-지원 언어 추가/제거는 `src/settings/site.settings.ts`의 `LOCALE_REGISTRY`를 수정하고, `src/locales/index.ts`에 로케일 파일을 등록합니다. 자세한 규칙은 `docs/ai-docs/configuration/locales.md`를 참고하세요.
+새 언어로 포스트를 작성하려면 프론트매터에 `lang: xx`만 설정하면 됩니다(중앙 목록 불필요). 사이트 크롬(UI)도 번역하려면 `src/locales/xx-XX.ts`를 추가하고 `src/locales/index.ts`에 등록하세요. 자세한 규칙은 `docs/ai-docs/configuration/locales.md`를 참고하세요.
 
 ### 디자인 토큰
 
@@ -136,7 +136,7 @@ verification: {
 
 ## 콘텐츠 작성
 
-포스트는 `posts/{lang}/{author}/` 디렉토리에 `.md` 또는 `.mdx` 파일로 작성합니다 (예: `posts/ko/blog/2026-01-01-example.md`). 파일명은 `YYYY-MM-DD-{slug}` 형식이며, `lang`은 지원 언어 코드(`ko`, `en`, `ru`, `fr`, `es`, `ja`, `zh`)여야 합니다. 기본 언어(`ko`) 외 언어 디렉토리는 라우팅에서 `/en/`, `/ru/` 등 접두사가 붙습니다.
+포스트는 `posts/` 아래 `.md` 또는 `.mdx` 파일로 작성합니다 (예: `posts/ko/blog/2026-01-01-example.md`). 파일명은 `YYYY-MM-DD-{slug}` 형식입니다. 언어는 **프론트매터 `lang` 필드**(2자리 코드, 예: `ko`, `en`, `ru`, `fr`, `es`, `ja`, `zh`)로 지정하며, 폴더 경로는 언어를 결정하지 않고 순수 조직용입니다. `lang` 값을 가진 포스트가 있으면 해당 언어가 자동 지원됩니다. 기본 언어(`ko`) 외 언어는 라우팅에서 `/en/`, `/ru/` 등 접두사가 붙습니다.
 
 ### 프론트매터 예시
 

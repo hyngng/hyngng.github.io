@@ -61,23 +61,22 @@ Jekyll 시절의 구 URL 형식(`https://hyngng.github.io/posts/{slug}/`)으로 
 
 ## 언어 코드 추출
 
-포스트의 언어 코드는 파일명의 첫 번째 세그먼트에서 추출함. 예: `content/ko/blog/2022-08-13-first-post.mdx`의 언어 코드는 `ko`.
+포스트의 언어는 **프론트매터 `lang` 필드**가 단일 진실 출처입니다(`src/content.config.ts`에서 필수 2자리 코드로 검증). 폴더 경로는 언어를 결정하지 않습니다.
 
-`src/utils/posts.ts`의 `getPostLang(postId)` 함수가 이 역할을 수행함.
+`src/utils/posts.ts`의 `getPostLang(post)` 함수가 `post.data.lang`을 반환합니다. 지원 언어 집합은 `site.settings.ts`의 `supportedLocales`로, 빌드 시 `./posts`를 스캔해 파생됩니다(중앙 목록 불필요).
 
 ```typescript
 // 예시
-getPostLang('ko/blog/2022-08-13-first-post.mdx') // 'ko' 반환
-getPostLang('en/blog/2022-08-13-first-post.mdx') // 'en' 반환
+getPostLang(post) // post.data.lang 반환 (예: 'ko', 'en')
 ```
 
-> 포스트는 프로젝트 루트 `posts/{lang}/{author}/` 아래에 위치한다 (`content.config.ts`의 `base: './posts'`). 예: `posts/ko/blog/2022-08-13-first-post.mdx`.
+> 포스트는 프로젝트 루트 `posts/` 아래 어디에든 위치할 수 있습니다(`content.config.ts`의 `base: './posts'`). 폴더는 순수 조직용이며 예: `posts/ko/blog/2022-08-13-first-post.mdx`.
 
 ## URL 생성
 
 `src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getAuthorPath(authorIds[0], currentLocale)`가 적용되어 작가 ID가 그대로 사용된다.
 
-`currentLocale`을 전달하지 않으면 기본 로케일(`ko`)로 동작하여 `/ko/` 프리픽스 없이 URL을 생성함. `id`에서 언어 코드를 추출하지 않으므로, 비기본 언어 URL을 생성하려면 반드시 `currentLocale`을 전달해야 함.
+`currentLocale`(= 포스트의 `lang`)을 전달하지 않으면 기본 로케일(`ko`)로 동작하여 `/ko/` 프리픽스 없이 URL을 생성함. 언어는 `id`가 아닌 `currentLocale`에서 온다.
 
 ```typescript
 // 예시
@@ -104,7 +103,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/
 - `draft`: boolean, 기본값 `false`.
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
 - `start_with_ads`, `toc`: 이전 Jekyll frontmatter 호환용 선택 필드. `toc_sticky`는 TOC가 항상 sticky이므로 2026-08 스키마에서 제거됨.
-- `lang`: 선택, 포스트 언어 코드 (파일 경로에서 추출되며 명시적 설정도 가능).
+- `lang`: **필수**, 포스트 언어 코드 (2자리 소문자, 예: `ko`, `en`). 지원 언어는 이 값에서 빌드 시점에 파생되므로 중앙 목록 편집 불필요. 폴더 경로는 언어와 무관.
 - `math`: 선택(boolean), 수식(KaTeX) 사용 여부. `true`면 `PostLayout.astro`가 KaTeX CSS를 `<head>`에 주입.
 - `mermaid`: 선택(boolean), Mermaid 다이어그램 사용 여부. `true`면 `BaseLayout`이 `initMermaidThemeSync()`를 로드.
 - `og_image`: 선택, OG 이미지 절대 URL (`image.path`보다 우선).

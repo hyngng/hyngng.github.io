@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { getPostSlug, getPostLang, getPostPath } from '../../utils/posts';
 import { defaultLocale, useLocale } from '../../locales';
+import { getLocaleEntry } from '../../settings/site.settings';
 
 // Preserves the Jekyll-era URL scheme `/posts/{slug}/` by redirecting to the
 // current post URL. Google treats a 0s meta refresh as a permanent redirect.
@@ -10,7 +11,7 @@ export async function getStaticPaths() {
   const posts = await getCollection('posts');
 
   const defaultPosts = posts.filter(
-    (post) => !post.data.draft && getPostLang(post.id) === defaultLocale,
+    (post) => !post.data.draft && getPostLang(post) === defaultLocale,
   );
 
   const slugToTarget = new Map<string, string>();
@@ -52,7 +53,7 @@ export async function getStaticPaths() {
 const { target } = Astro.props;
 const absoluteTarget = Astro.site ? new URL(target, Astro.site).toString() : target;
 const locale = useLocale(Astro);
-const lang = locale.meta.bcp47;
+const lang = getLocaleEntry(Astro.currentLocale).bcp47;
 ---
 <!doctype html>
 <html lang={lang}>

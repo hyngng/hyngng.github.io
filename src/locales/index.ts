@@ -6,13 +6,9 @@ import frFR from './fr-FR';
 import esES from './es-ES';
 import jaJP from './ja-JP';
 import zhCN from './zh-CN';
-import { LOCALE_REGISTRY } from '../settings/site.settings';
+import { supportedLocales, defaultLocale } from '../settings/site.settings';
 
 export interface Locale {
-  meta: {
-    bcp47: string;
-    ogLocale: string;
-  };
   frame: {
     lang: string;
     langAria: string;
@@ -83,24 +79,26 @@ export interface Locale {
 }
 
 const locales: Record<string, Locale> = {
-  'ko': koKR,
-  'en': enUS,
-  'ru': ruRU,
-  'fr': frFR,
-  'es': esES,
-  'ja': jaJP,
-  'zh': zhCN,
+  ko: koKR,
+  en: enUS,
+  ru: ruRU,
+  fr: frFR,
+  es: esES,
+  ja: jaJP,
+  zh: zhCN,
 };
 
-export const defaultLocale = LOCALE_REGISTRY[0].code;
+export { defaultLocale } from '../settings/site.settings';
+export { supportedLocales } from '../settings/site.settings';
 
-export const availableLocales = LOCALE_REGISTRY.map((entry) => ({
-  code: entry.code,
-  label: locales[entry.code]?.frame.lang ?? entry.code,
+export const availableLocales = supportedLocales.map((code) => ({
+  code,
+  label: locales[code]?.frame.lang ?? code,
 }));
 
 export function getLocale(lang?: string): Locale {
-  return locales[lang || defaultLocale] || locales[defaultLocale];
+  if (lang && lang in locales) return locales[lang];
+  return locales[defaultLocale];
 }
 
 export function useLocale(Astro: AstroGlobal): Locale {

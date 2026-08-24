@@ -15,6 +15,8 @@ toc: false
 
 date: 2024-10-11 21:05:00 +0900
 last_modified_at: 2025-10-28 13:43:00 +0900
+
+lang: ko
 ---
 
 :::warning

@@ -15,10 +15,8 @@ import type { AuthorId } from '../settings/authors.settings';
 
 const DEFAULT_LOCALE = defaultLocale;
 
-// id format: "ko/blog/2022-08-13-first-post.mdx"
-export function getPostLang(id: string): string {
-  const normalized = id.replace(/\\/g, '/');
-  return normalized.split('/')[0] || DEFAULT_LOCALE;
+export function getPostLang(post: CollectionEntry<'posts'>): string {
+  return post.data.lang || DEFAULT_LOCALE;
 }
 
 export function getPostSlug(id: string): string {
@@ -116,7 +114,7 @@ export async function queryPosts(options: QueryPostsOptions = {}): Promise<Colle
   let posts = includeDraft ? allPosts : allPosts.filter(({ data }) => !data.draft);
 
   if (lang) {
-    posts = posts.filter((post) => getPostLang(post.id) === lang);
+    posts = posts.filter((post) => getPostLang(post) === lang);
   }
 
   if (authorId) {

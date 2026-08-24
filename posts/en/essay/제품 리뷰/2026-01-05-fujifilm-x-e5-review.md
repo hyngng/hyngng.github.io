@@ -12,6 +12,8 @@ date: 2026-01-21 09:58:00 +0900
 last_modified_at: 2026-04-20 15:05:00 +0900
 
 mermaid: true
+
+lang: en
 ---
 
 ## **The Disappointing Sony A7C**

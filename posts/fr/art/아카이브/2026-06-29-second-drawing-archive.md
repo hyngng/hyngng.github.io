@@ -15,6 +15,8 @@ toc: false
 
 date: 2026-07-01 13:37:00 +0900
 last_modified_at: 2026-07-02 15:21:00 +0900
+
+lang: fr
 ---
 
 Voici le deuxième archive de dessins. J'en ai vraiment plus du double en quantité, mais j'en ai écarté une grande partie pour des raisons de vie privée, de redondance des sujets, de gêne, etc., et je ne poste que quelques-uns. Pour des raisons de coût, j'ai utilisé un appareil photo numérique avec post-traitement plutôt qu'un scanner, et il y a du bruit à cause des limites de contrôle de la lumière. Les descriptions sont liées en notes de bas de page dans les légendes des images pour ne pas interrompre le flux.

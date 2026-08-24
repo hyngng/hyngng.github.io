@@ -13,6 +13,8 @@ last_modified_at: 2024-05-20 23:14:00 +0900
 
 mermaid: true
 math: true
+
+lang: zh
 ---
 
 :::info

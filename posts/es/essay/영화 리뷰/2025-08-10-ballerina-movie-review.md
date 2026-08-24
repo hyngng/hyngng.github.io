@@ -13,10 +13,11 @@ start_with_ads: true
 
 toc: true
 
-lang: es
 
 date: 2025-08-10 10:36:00 +0900
 last_modified_at: 2026-03-31 20:51:00 +0900
+
+lang: es
 ---
 
 :::warning

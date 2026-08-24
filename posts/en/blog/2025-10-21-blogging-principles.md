@@ -16,6 +16,8 @@ mermaid: true
 redirect_from:
     - /posts/blog-checkup-and-writing-credo/
     - /posts/blog-checkup-and-writing-principles/
+
+lang: en
 ---
 
 ## **Why Did I Start This Blog?**

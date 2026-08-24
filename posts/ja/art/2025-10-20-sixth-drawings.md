@@ -15,6 +15,8 @@ toc: false
 
 date: 2025-11-25 20:34:00 +0900
 last_modified_at: 2026-01-29 23:26:00 +0900
+
+lang: ja
 ---
 
 ![251012-손풀기1](/drawing/251012-손풀기1.webp){: .rounded-10 .light .border}

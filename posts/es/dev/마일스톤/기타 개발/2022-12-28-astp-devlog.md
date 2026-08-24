@@ -15,6 +15,8 @@ mermaid: true
 
 redirect_from:
     - /posts/astp-devlog/
+
+lang: es
 ---
 
 ## **ASTP, el automatizador de trading de acciones**

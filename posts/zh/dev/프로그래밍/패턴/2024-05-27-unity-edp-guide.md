@@ -16,6 +16,8 @@ mermaid: true
 redirect_from:
     - /posts/event-driven-programming-on-unity/
     - /posts/unity-event-driven-guide/
+
+lang: zh
 ---
 
 ## **引言**
