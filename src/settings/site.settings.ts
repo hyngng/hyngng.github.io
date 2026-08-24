@@ -75,6 +75,7 @@ export const SITE = {
     baidu: undefined,
     pinterest: '150084dfff2fed3d81028aea5d976b18',
     naver: undefined,
+    daum: '#DaumWebMasterTool:888dbe1bcc4e27a7b1331a7b12e15bd6a837d90cdbab04a73d9c9d8bba43bcb6:0OfsYyHnFuv/yXuBH678tw==',
   },
 
   // ── Web Analytics Settings ───────────────────────────────────────────

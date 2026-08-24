@@ -1,6 +1,6 @@
 ---
 title: "블로그 기술사항"
-authors: []
+authors: [blog]
 
 categories: []
 tags: []
@@ -41,6 +41,10 @@ last_modified_at: 2026-08-19 00:00:00 +0900
 9	initPostCardImages() — img.decode() + rAF×2	image-reveal.ts:29-57	O (decode)	class 'loaded'
 10	마지막 청크면 load-more 숨김	loader.ts:40-43	-	O
 사용자 체감 지연 주범
+
+### **이 외 기타 등등**
+
+- SSR 2열 Masonry & 모바일 Flat Flow 전환
 
 ## **AI**
 

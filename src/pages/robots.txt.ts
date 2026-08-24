@@ -1,4 +1,5 @@
 import type { APIContext } from 'astro';
+import { SITE } from '../settings/site.settings';
 
 export async function GET({ request }: APIContext) {
   const origin = new URL(request.url).origin;
@@ -7,8 +8,8 @@ export async function GET({ request }: APIContext) {
   const robots = [
     'User-agent: *',
     'Allow: /',
-    '',
     `Sitemap: ${sitemapUrl}`,
+    ...(SITE.verification.daum ? ['', SITE.verification.daum] : []),
   ].join('\n');
 
   return new Response(robots, {

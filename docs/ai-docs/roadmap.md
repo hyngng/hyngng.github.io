@@ -30,7 +30,7 @@
   - [x] **GoatCounter Analytics**: `analytics.goatCounter` 설정 시 `GoatCounter.astro` 컴포넌트가 `<head>`에 트래킹 스크립트를 조건부 삽입. `undefined`면 로드 안 됨.
   - [x] **Google Analytics**: `analytics.google.id` 설정 시 `GoogleAnalytics.astro`(`src/components/seo/analytics/`)가 `<head>`에 gtag.js를 조건부 삽입. `undefined`면 로드 안 됨.
   - [x] **Google Tag Manager**: `analytics.googleTagManager.id` 설정 시 `GoogleTagManager.astro`가 `<head>`에 GTM 컨테이너 스크립트를 조건부 삽입.
-  - [x] **Webmaster Verification**: `WebmasterVerifications.astro`(`src/components/seo/webmasters_verifications/`)가 `verification` 객체를 `<head>`에서 `<meta name="...-site-verification">`로 조건부 출력 (google/yandex/baidu/naver/pinterest). Bing은 GSC 연동 구조라 별도 설정 불필요, Daum은 별도 처리로 제외. `public/ads.txt`(AdSense 표준 형식)로 광고 도메인 검증 지원.
+  - [x] **Webmaster Verification**: `WebmasterVerifications.astro`(`src/components/seo/webmasters_verifications/`)가 `verification` 객체를 `<head>`에서 `<meta name="...-site-verification">`로 조건부 출력 (google/yandex/baidu/naver/pinterest). Daum은 `SITE.verification.daum` 설정을 통해 `src/pages/robots.txt.ts`에서 PIN 코드를 `robots.txt`에 조건부 주입. Bing은 GSC 연동 구조라 별도 설정 불필요. `public/ads.txt`(AdSense 표준 형식)로 광고 도메인 검증 지원.
   - [x] **fediverse:creator**: 포스트는 작가별 `social.fediverse` 핸들 우선, 없으면 `SITE.social.fediverse` 폴백(중복 제거). 비포스트 페이지는 `SITE.social.fediverse`(`@hyngng.main@threads.net`) 전역 출력. Threads/Fediverse 연동으로 게시글 귀속 확인.
   - [x] **Resource Hints (preconnect)**: `SITE.resourceHints` 배열(SSOT) 기반으로 `Head.astro`에서 `preconnect` 조건부 출력. jsdelivr(이미지 CDN + KaTeX), googletagmanager(GTM). *(cdnjs는 2026-08 Font Awesome 제거 시 함께 삭제됨 — 아래 감사 후속 일괄 정리 2 참조)*
   - [x] **twitter:card summary_large_image 전환**: `BaseLayout`/`PostLayout` 모두 `summary` → `summary_large_image`. 기본 OG 이미지를 `default-og.webp`(1200x630)로 변경해 대형 카드 요건 충족.
