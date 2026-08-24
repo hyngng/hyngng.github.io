@@ -17,7 +17,7 @@
     - `info`: 부가 정보
     - `id`: 작가 식별자 (링크 생성용)
     - `clickable`: (선택, 기본값 `true`) 작가 영역 클릭 시 상세 페이지 이동 여부
-- `AUTHOR_PREFIX = '@'` 전역 상수가 `Author.astro` 내부에서 name 앞에 붙여서 렌더링됨.
+- `AUTHOR_PREFIX = '@'` 상수는 `src/settings/authors.settings.ts`에 정의되어 `Author.astro`가 import하여 name 앞에 붙여 렌더링합니다.
 
 
 `avatar`가 없거나 빈 문자열이면 `#F1F1F1` 배경의 원형 placeholder를 표시함.

@@ -65,6 +65,16 @@ article li {
   padding-left: 0.25rem;
 }
 
+/* li 내부 단일 문단은 간격 책임 없음, 간격은 li 마진이 담당 */
+article li > p {
+  margin: 0;
+}
+
+/* 드물게 한 li에 여러 문단이 들어갈 때만 문단 간 최소 간격 */
+article li > p + p {
+  margin-top: 0.4rem;
+}
+
 /* 중첩 리스트는 부모 li 간격에 의존하도록 margin 조정 */
 article li ol,
 article li ul {

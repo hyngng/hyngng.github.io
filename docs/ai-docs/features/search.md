@@ -127,3 +127,9 @@ Pagefind는 빌드 시 전체 포스트를 인덱스하지만, DOM에는 현재 
 | `data-path` | `.post-card` | 결과 URL과 카드 매칭 |
 | `data-locale` / `data-default-locale` | `.search-input` | 검색 언어 필터 |
 | `data-author` | `.search-input` | 작가 페이지 검색 필터 (비작가 페이지는 미설정) |
+
+## 관련 문서
+
+- [Chunk Loading](./chunk-loading.md) — `controller`/`distributeByWeight`/`fetchSearchChunk` 재사용
+- [Post routing & i18n](./posts.md) — `data-all-posts` 메타 소스, 포스트 카드 구조
+- [Locales](../configuration/locales.md) — `data-locale`/`data-default-locale` 언어 필터

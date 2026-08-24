@@ -103,3 +103,9 @@ CDN URL 변환 로직을 `content.config.ts`와 `authors.settings.ts`가 공유�
 - `src/plugins/rehype-image-wrapper.mjs`: HTML <img> 태그 CDN URL 변환 및 wrapper 주입 (`shouldRewrite()`)
 - `src/settings/authors.settings.ts`: `getAuthor()`에서 `resolveCdnPath()` 호출
 - `astro.config.mjs`: Markdown processor 연결 (`rehypePlugins` 첫 항목의 `rehypeRaw`가 raw HTML 블록을 element로 파싱)
+
+## 관련 문서
+
+- [Remark Directives](../features/remark-directives.md) — 미디어 지시어의 `resolveCdnPath` URL 변환
+- [Post routing & i18n](../features/posts.md) — 포스트 이미지 스키마(`image.path` → CDN URL)
+- [Locales](../configuration/locales.md) — 다국어 경로와 CDN URL 조합

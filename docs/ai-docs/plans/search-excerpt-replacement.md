@@ -1,5 +1,7 @@
 # 검색 excerpt로 Author 정보 대체
 
+> **상태: 제안(미구현)** — 이 문서는 설계 제안서이며, 현재 코드베이스(`Search.astro`, `global.css`/`typography.css`)에는 반영되어 있지 않습니다. 검색 결과 카드는 여전히 Author 정보(`.post-card-meta`)를 그대로 표시합니다.
+
 ## 목표
 
 Pagefind 검색 시 포스트 카드의 Author 영역(`.post-card-meta`)을 검색 결과 excerpt("왜 이 결과가 매칭됐는지"를 보여주는 본문 일부)로 동적 교체. 검색 비활성화 시 원본 Author 정보로 복원.

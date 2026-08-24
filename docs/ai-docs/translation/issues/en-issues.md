@@ -669,3 +669,7 @@ EN은 `parental affection` = 자애. `filial piety` = 효도. 적절. `rejects`�
 > KO: **와중에 X-E5에 사용할만한 렌즈는 꽤 후하게 찾아봐도 찾아보기 어렵습니다.**
 
 `Even after generous searching, finding decent lenses for the X-E5 is difficult` — KO `와중에 X-E5에 사용할만한 렌즈는 꽤 후하게 찾아봐도 찾아보기 어렵습니다`(even after searching quite generously, usable lenses are hard to find). `decent`는 "괜찮은" 수준. KO `사용할만한`(usable/decent enough)과 의미가 일치하나, EN은 `decent`가 "적당한/쓸만한"이고 KO는 `사용할만한`(worth using). 동일 범주.
+
+---
+
+**Title (front matter)** — 원문 KO `풀프레임 대체 용도의 후지필름 X-E5 사용기`의 `사용기`(review/usage account) 성분이 EN 번역에서 누락됨. ZH(使用体验), ES(Impresiones), JA(使用記), FR(Test)는 모두 보존. Fidelity Principle 위반으로 판단하여 수정: `"Fujifilm X-E5 as a Full-Frame Replacement"` → `"Reviewing the Fujifilm X-E5 as a Full-Frame Replacement"`(동명사형으로 `사용기` 보존, 콜론 없이 원문 구조 유지). `description` 필드는 미기입이므로 포스트 카드 excerpt는 본문 기반 `EXCERPT_MAX_LENGTH = 150`(src/utils/posts.ts:75) 적용.

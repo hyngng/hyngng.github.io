@@ -13,7 +13,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 
 ## 현재 라우팅 규칙
 
-이 프로젝트는 **기본 언어(ko)**와 **비기본 언어(en, ru, fr, es)**를 구분하여 포스트 페이지를 생성함.
+이 프로젝트는 **기본 언어(ko)**와 **비기본 언어(en, ru, fr, es, ja, zh)**를 구분하여 포스트 페이지를 생성함.
 
 ### 기본 언어 (ko)
 
@@ -23,7 +23,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 /blog/first-post/
 ```
 
-### 비기본 언어 (en, ru, fr, es)
+### 비기본 언어 (en, ru, fr, es, ja, zh)
 
 같은 포스트가 비기본 언어로 존재하는 경우, 아래 URL로 생성됨.
 
@@ -38,7 +38,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 
 포스트 URL의 작가 세그먼트는 작가 ID `{authorId}` 형태다 (예: `/dev/{slug}/`). 작가 인덱스 페이지(`/{author}/`)와 동일하다.
 
-URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능은 이 helper를 재사용해야 함. 라우트(`[author]/[slug].astro`)의 `params.author`도 `getPostAuthorSegment()`를 통해 동일하게 조합한다.
+URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능은 이 helper를 재사용해야 함. 라우트(`[author]/[slug].astro`)의 `params.author`도 `getAuthorPath()`를 통해 동일하게 조합한다.
 
 ## 구 URL 리다이렉트 (`/posts/{slug}/`)
 
@@ -75,7 +75,7 @@ getPostLang('en/blog/2022-08-13-first-post.mdx') // 'en' 반환
 
 ## URL 생성
 
-`src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getPostAuthorSegment()`가 적용되어 작가 ID가 그대로 사용된다.
+`src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getAuthorPath(authorIds[0], currentLocale)`가 적용되어 작가 ID가 그대로 사용된다.
 
 `currentLocale`을 전달하지 않으면 기본 로케일(`ko`)로 동작하여 `/ko/` 프리픽스 없이 URL을 생성함. `id`에서 언어 코드를 추출하지 않으므로, 비기본 언어 URL을 생성하려면 반드시 `currentLocale`을 전달해야 함.
 
@@ -104,6 +104,11 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/
 - `draft`: boolean, 기본값 `false`.
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
 - `start_with_ads`, `toc`: 이전 Jekyll frontmatter 호환용 선택 필드. `toc_sticky`는 TOC가 항상 sticky이므로 2026-08 스키마에서 제거됨.
+- `lang`: 선택, 포스트 언어 코드 (파일 경로에서 추출되며 명시적 설정도 가능).
+- `math`: 선택(boolean), 수식(KaTeX) 사용 여부. `true`면 `PostLayout.astro`가 KaTeX CSS를 `<head>`에 주입.
+- `mermaid`: 선택(boolean), Mermaid 다이어그램 사용 여부. `true`면 `BaseLayout`이 `initMermaidThemeSync()`를 로드.
+- `og_image`: 선택, OG 이미지 절대 URL (`image.path`보다 우선).
+- `redirect_from`: 선택(배열), 레거시 Jekyll URL 목록.
 
 ## Author 호환
 
@@ -128,7 +133,7 @@ Astro Markdown은 Liquid를 실행하지 않으므로 그대로 두면 본문에
 홈 Hero와 포스트 페이지는 `src/styles/global.css`의 `.content-shell`, `--content-width`, `--color-bg`, layout token을 공유함. 포스트 페이지의 Figma 기준은 "포스트 페이지 - 라이트 - 기믹"이며, 현재 주요 값은 다음처럼 token화 및 `typography.css`에 직접 하드코딩 또는 변수로 적용함.
 
 - content width: `768px`.
-- title: `40px / 48px`, bold.
+  - title: `2rem`(32px), bold.
 - title과 author meta 사이: `24px`.
 - author meta와 본문 사이: `64px`.
 - body: `16px / 1.8` (`typography.css`에서 `article`에 직접 부여).
@@ -156,7 +161,7 @@ Astro Markdown은 Liquid를 실행하지 않으므로 그대로 두면 본문에
 ### 렌더링 파이프라인
 
 1. Astro 마크다운 파서가 `` ```mermaid `` 블록을 `<pre data-language="mermaid">`로 변환합니다 (Shiki는 mermaid 언어를 지원하지 않아 구문 강조 없이 통과).
-2. `initMermaidThemeSync()`가 페이지 로드 시 CDN(`mermaid@10`)에서 mermaid를 동적으로 import합니다.
+2. `initMermaidThemeSync()`가 페이지 로드 시 로컬 번들된 `mermaid` 패키지(`package.json`의 `^11.16.0`)를 `await import('mermaid')`로 동적으로 import합니다 (`astro.config.mjs`의 `optimizeDeps.include: ['mermaid']`로 사전 번들되어 dev-toolbar MIME 레이스도 방지).
 3. `ensureMermaidContainers()`가 `<pre>`를 `div.mermaid`로 교체하고, 원본 소스를 `data-mermaid-source` 속성에 저장합니다.
 4. `mermaid.run({ nodes })`가 `.mermaid:not([data-processed])` 요소를 찾아 SVG로 렌더링합니다.
 
@@ -178,8 +183,7 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 
 | 파일 | 역할 |
 |---|---|
-| `src/utils/mermaidThemeSync.ts` | 런타임 렌더링 및 테마 동기화 핵심 로직 |
-| `src/types/mermaid.d.ts` | CDN mermaid v10 API TypeScript 선언 (initialize, run만 선언) |
+| `src/utils/mermaidThemeSync.ts` | 런타임 렌더링 및 테마 동기화 핵심 로직 (타입은 `mermaid` 패키지에서 `import type { Mermaid }`로 가져오며, 별도 선언 파일은 없음) |
 | `src/styles/typography.css` | `.mermaid` 중앙 정렬, `line-height` 리셋, SVG 반응형 스타일 |
 
 ## `<head>` 슬롯 아키텍처 (OG + JSON-LD + SEO)
@@ -387,3 +391,13 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
     - `.post-more-posts-container`가 `position: static; width: 100%;`로 전환되어 `PostFooter` 아래에 인라인으로 렌더링된다.
     - 상단 간격은 `--space-post-comments-margin-top`(`3.2rem`)으로 설정되어, `포스트 메타데이터 ↔ 다른 글 더 보기` 사이의 간격과 `다른 글 더 보기 ↔ 댓글창(Comments)` 사이의 간격이 완벽히 동일하게 대칭을 이룬다.
 - **i18n**: 7개 언어 로케일(`ko-KR`, `en-US`, `ru-RU`, `fr-FR`, `es-ES`, `ja-JP`, `zh-CN`)의 `locale.morePosts.title`('다른 글 더 보기' 등) 및 `aria` 라벨을 지원한다.
+
+## 관련 문서
+
+- [Chunk Loading](./chunk-loading.md) — 청크 라우팅·카드 가로 채움 배치
+- [Remark Directives](./remark-directives.md) — 마크다운 확장(admonition/media/scroller 등)
+- [CDN](../configuration/cdn.md) — 이미지 URL 변환(`resolveCdnPath`)
+- [Footnotes](./footnotes.md) — 각주 툴팁(`rehype-footnote-tooltip.mjs`)
+- [Theme Toggle](./theme-toggle.md) — Mermaid/KaTeX 조건부 로딩·테마 동기화
+- [Locales](../configuration/locales.md) / [Sitemap](../configuration/sitemap.md) — 다국어 경로·URL 정책
+- [Search](./search.md) — `data-all-posts` 메타 폴백 소스

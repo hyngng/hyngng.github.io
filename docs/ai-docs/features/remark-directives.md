@@ -196,7 +196,7 @@ html.dark .img-dark { display: block; }
 
 > **참고:** `astro.config.mjs`에서 `markdown.processor: unified({...})`를 사용해야 `.md` 파일에서 remark/rehype 플러그인이 정상 동작합니다. 표준 `remarkPlugins`/`rehypePlugins` 배열만으로는 `.md` 파일에 플러그인이 적용되지 않을 수 있습니다.
 
-### `remark-directive-classes.mjs`
+### `remark-directives.mjs` (textDirective → `<span>`)
 
 textDirective를 `<span class="...">`로 변환합니다.
 
@@ -224,7 +224,7 @@ textDirective를 `<span class="...">`로 변환합니다.
 
 **캡션:** 바로 다음 줄에 `*캡션*`을 작성하면 `<figure class="media-figure"><div class="video-embed">…</div><figcaption>…</figcaption></figure>`로 변환됩니다 (빈 줄 허용).
 
-### `remark-video.mjs`
+### `remark-media.mjs` (`remarkVideo`)
 
 `::video{src="..."}` leafDirective를 `<video>` 요소로 변환합니다.
 
@@ -243,7 +243,7 @@ textDirective를 `<span class="...">`로 변환합니다.
 
 **CSS:** `article .video-native` (typography.css) — `max-width: 100%`, `max-height: 432px`, 검은 배경. figure 내부에서는 마진이 0으로 리셋됩니다.
 
-### `remark-audio.mjs`
+### `remark-media.mjs` (`remarkAudio`)
 
 `::audio{src="..."}` leafDirective를 브라우저 네이티브 `<audio>` 요소로 변환합니다.
 
@@ -288,8 +288,15 @@ textDirective를 `<span class="...">`로 변환합니다.
 
 | 기존 플러그인 | 상태 | 대체 |
 |--------------|------|------|
-| `remark-image-align.mjs` | 삭제 | `remark-directive-classes.mjs` |
+| `remark-image-align.mjs` | 삭제 | `remark-directives.mjs` |
 | `remark-theme-picture.mjs` | 삭제 | CSS 클래스 (`.img-light`, `.img-dark`) |
 | `remark-image-attributes.mjs` | **신규** | `.md`에서 `{.class}` 이미지 속성 부여 |
-| `remark-admonitions.mjs` | 유지 | icon + body 구조 주입 (타입별 인라인 SVG 아이콘) |
+| `remark-admonitions.mjs` | `remark-directives.mjs` 내부 (`ADMONITION_ICONS`)로 통합 | icon + body 구조 주입 (타입별 인라인 SVG 아이콘) |
 | `remark-cdn-images.ts` | 유지 | 변경 없음 |
+
+## 관련 문서
+
+- [CDN](../configuration/cdn.md) — `resolveCdnPath` 이미지/미디어 URL 변환
+- [Typography](../design/typography.md) — `article .video-native`/`.audio-native`/`.media-figure` 스타일
+- [Post routing & i18n](./posts.md) — 마크다운 파이프라인 내 remark/rehype 위치
+- [Footnotes](./footnotes.md) — remark/rehype 단계 분리와의 대조

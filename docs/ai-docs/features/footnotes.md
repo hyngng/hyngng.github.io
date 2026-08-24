@@ -83,14 +83,16 @@ processor: unified({
 </section>
 ```
 
-## 알려진 별개 이슈
+## 참고: `aria-describedby` 처리
 
-`rehype-footnote-tooltip.mjs`는 `ariaDescribedby`(소문자 `b`)를 읽지만 라이브러리는
-`ariaDescribedBy`(대문자 `B`, 배열)로 저장한다. 그 결과 각주 참조 링크에
-`aria-describedby`가 두 번 출력된다 (`aria-describedby="footnote-label" aria-describedby="fn-tooltip-1"`).
-HTML에서 중복 속성은 첫 번째가 우선하므로 툴팁 `aria-describedby` 연결이 무효화된다.
-주요 작업(라벨 숨김/번역)과 별개의 접근성 이슈로, 수정 시 플러그인의 속성 읽기/쓰기
-키를 `ariaDescribedBy`로 통일하면 된다.
+`rehype-footnote-tooltip.mjs`는 각주 참조 링크(`node`)의 `properties.ariaDescribedby`(hast 표준 속성명, 소문자 `b`)를 **일관되게 읽고 씁니다**.
+
+```js
+const existing = node.properties.ariaDescribedby;
+node.properties.ariaDescribedby = existing ? `${existing} ${tooltipId}` : tooltipId;
+```
+
+즉 플러그인과 라이브러리 간 대소문자 불일치는 발생하지 않습니다. 각주 라벨은 `id="footnote-label"`로, 툴팁은 `id="fn-tooltip-{n}"`으로 각각 고유한 참조 지점을 가지며, 참조 링크는 툴팁 `id`를 가리킵니다.
 
 ## 검증
 
@@ -98,3 +100,9 @@ HTML에서 중복 속성은 첫 번째가 우선하므로 툴팁 `aria-described
 - `npx astro check` 0 errors
 - dist에서 각주 포스트(7개 언어)에 `<span class="sr-only" id="footnote-label">` 확인,
   `<h2 ... id="footnote-label">` 부재, TOC headings에 라벨 미포함 확인
+
+## 관련 문서
+
+- [Remark Directives](./remark-directives.md) — remark/rehype 단계 분리와의 대조
+- [Post routing & i18n](./posts.md) — 포스트 본문 파이프라인 내 각주 위치
+- [Typography](../design/typography.md) — `.footnote-ref-wrapper`/`.footnote-tooltip` 표현

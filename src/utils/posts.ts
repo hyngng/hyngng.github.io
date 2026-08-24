@@ -72,7 +72,7 @@ export function countCharacters(body: string = ''): number {
   return Array.from(normalized).length;
 }
 
-const EXCERPT_MAX_LENGTH = 100;
+const EXCERPT_MAX_LENGTH = 150;
 export const META_DESCRIPTION_MAX_LENGTH = 155;
 
 export function extractExcerpt(description: string | undefined, body: string | undefined, maxLength: number = EXCERPT_MAX_LENGTH, truncationSuffix: string = ''): string {

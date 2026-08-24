@@ -131,9 +131,9 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 
 | 변수 | 값 | 설명 |
 |---|---|---|
-| `--post-card-height-no-image` | `136px` | 이미지 없는 카드 높이 |
+| `--post-card-height-no-image` | `112px` | 이미지 없는 카드 높이 |
 | `--post-card-image-aspect-ratio` | `40/21` | 이미지 카드 종횡비 |
-| `--post-card-gap` | `20px` | 카드 간 간격 |
+| `--post-card-gap` | `16px` | 카드 간 간격 |
 
 ## 로드 흐름 (`loadChunk`)
 
@@ -205,3 +205,10 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 ## 서비스 워커 상호작용
 
 커스텀 `astro-pwa` 통합(`vite-plugin-pwa` 기반)이 빌드 시 `dist/sw.js`를 생성하며, Workbox 프리캐시에 청크 URL이 포함된다. `fetch('/posts/chunk/2')` 호출 시 SW가 프리캐시에서 즉시 응답한다.
+
+## 관련 문서
+
+- [Post routing & i18n](./posts.md) — 청크 라우트 구조, 포스트 카드 이미지 아키텍처, `data-all-posts` 메타
+- [Frame 컴포넌트](../components/frame-layout.md) / [Frame 설계](../design/frame-layout.md) — Frame 컨테이너 내 배치
+- [Search](./search.md) — 검색 시 숨김 카드 추가·`distributeByWeight` 재분배 재사용
+- [PWA](./pwa.md) — 서비스 워커 프리캐시와 청크 응답

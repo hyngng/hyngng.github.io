@@ -28,25 +28,19 @@ fixed-actions (position: fixed; z-index: 100)
 
 ## 오목한 모서리(Concave Corner) 구현
 
-`Frame`은 CSS만으로 **안쪽으로 패인(inward) 모서리** 효과를 구현합니다. CSS 표준에 `border-radius`의 반대 개념(내부 오목)이 없으므로, **둥근 div(펀치)를 프레임 테두리 바깥으로 밀어내어 모서리를 덮는 방식**을 사용합니다.
+`Frame`은 CSS만으로 **안쪽으로 패인(inward) 모서리** 효과를 구현합니다. CSS 표준에 `border-radius`의 반대 개념(내부 오목)이 없으므로, **둥근 원형 펀치를 프레임 테두리 바깥으로 밀어내어 모서리를 덮는 방식**을 사용합니다. 이때 별도 자식 요소를 만들지 않고 `.left-action` / `.right-actions`의 **의사클래스(`::before` / `::after`)**로만 구현합니다.
 
-### 핵심 CSS 클래스
+### 구현 원리
 
-| 클래스 | 역할 |
-|---|---|
-| `.fixed-actions` | 프레임 컨테이너. 데스크톱: `position: fixed`·`z-index: 100`·`pointer-events: none`. 모바일(≤960px): `position: relative`로 문서 흐름에 포함 |
-| `.action-block` | 좌우 콘텐츠 블록. `position: absolute`, `background-color: var(--color-frame)`, `pointer-events: auto` |
-| `.concave-right` | 좌측 버튼의 우측 상단 오목 모서리 |
-| `.concave-left` | 우측 버튼의 좌측 상단 오목 모서리 |
-| `.concave-bottom` | 하단 오목 모서리 (좌/우 각각 별도) |
-
-### 작동 원리
-
-4개의 concave corner 요소는 공통 기본 스타일과 그룹별 위치/그라디언트로 구조화됩니다:
+4개의 의사클래스가 공통 기본 스타일과 그룹별 위치·그라디언트로 구조화됩니다 (`Frame.astro` `<style>` 참조):
 
 ```css
 /* 공통 기본 */
-.concave-right, .concave-bottom, .concave-left {
+.left-action::before,
+.left-action::after,
+.right-actions::before,
+.right-actions::after {
+  content: "";
   position: absolute;
   width: var(--frame-radius);
   height: var(--frame-radius);
@@ -54,8 +48,8 @@ fixed-actions (position: fixed; z-index: 100)
 }
 
 /* 좌측 버튼: 그라디언트가 우하단에서 확장 */
-.left-action .concave-right,
-.left-action .concave-bottom {
+.left-action::before,
+.left-action::after {
   background: radial-gradient(
     circle at 100% 100%,
     transparent var(--frame-radius),
@@ -64,32 +58,40 @@ fixed-actions (position: fixed; z-index: 100)
 }
 
 /* 우측 버튼: 그라디언트가 좌하단에서 확장 */
-.right-actions .concave-left,
-.right-actions .concave-bottom {
+.right-actions::before,
+.right-actions::after {
   background: radial-gradient(
     circle at 0 100%,
     transparent var(--frame-radius),
     var(--color-frame) var(--frame-radius)
   );
 }
+
+/* 좌측 버튼 펀치 위치: 우상단·좌하단 모서리 */
+.left-action::before { right: calc(var(--frame-radius) * -1); top: 0; }
+.left-action::after  { left: 0; bottom: calc(var(--frame-radius) * -1); }
+
+/* 우측 버튼 펀치 위치: 좌상단·우하단 모서리 */
+.right-actions::before { left: calc(var(--frame-radius) * -1); top: 0; }
+.right-actions::after  { right: 0; bottom: calc(var(--frame-radius) * -1); }
 ```
 
-- **원형 div**를 `var(--frame-radius)` 크기로 생성
 - `radial-gradient`로 **테두리 색상(`var(--color-frame)`)이 프레임 안쪽을 향해 확장**되도록 설정
-- 결과적으로 프레임 테두리의 모서리 부분이 **원형 div 아래 가려져** 오목해 보이는 착시 발생
-- 좌/우 버튼은 gradient 확장 방향만 다르고, 나머지 속성은 동일
+- 결과적으로 프레임 테두리의 모서리 부분이 **원형 펀치 아래 가려져** 오목해 보이는 착시 발생
+- 좌/우 버튼은 gradient 확장 방향만 다르고(`circle at 100% 100%` vs `circle at 0 100%`), 나머지 속성은 동일
+- 의사클래스 기반이라 DOM 노드를 추가하지 않고, `.action-block`의 `border-bottom-*-radius`와 함께 작동합니다
 
 ### `--frame-radius` 변수
 
 ```css
 :root {
-  --frame-radius: calc(var(--button-size) / 2); /* 36px */
+  --frame-radius: calc(var(--button-size) / 2); /* 28px */
 }
 ```
 
-- `--button-size`(72px)의 절반으로 정의됨
-- `Frame`의 `border-radius`와 완전히 동일한 값
-- `.fixed-actions`의 `height` 계산, `.concave-*`의 크기/위치에 모두 연동
+- `--button-size`(데스크톱 56px, 모바일 48px)의 절반으로 정의됨
+- `.action-block`의 `border-bottom-*-radius`와 완전히 동일한 값
+- `.fixed-actions`의 `height` 계산, 펀치 의사클래스의 크기/위치에 모두 연동
 - 모바일(`max-width: 960px`)에서 `0px`으로 오버라이드
 - 변경 시 **전체 프레임 구조가 자동 조정**됨
 
@@ -116,7 +118,7 @@ fixed-actions (position: fixed; z-index: 100)
 
 ### 클릭 처리 로직
 
-`Frame.astro`는 초기 문서 로드 시 `initFrame()`을 한 번 호출해 이벤트 리스너를 등록합니다. ViewTransitions/ClientRouter를 사용하지 않으므로 `astro:after-swap` 재초기화는 두지 않습니다.
+`Frame.astro`는 초기 문서 로드 시 `initFrame()`을 한 번 호출해 이벤트 리스너를 등록합니다. Astro ClientRouter(ViewTransitions)가 활성화되어 있더라도 `astro:after-swap` 재초기화는 두지 않고, 대신 `astro:before-preparation` 리스너에서 언어 목록을 닫도록 합니다 (`AbortController`로 리스너 스코프 관리).
 
 #### 언어 변경 흐름
 
@@ -153,8 +155,8 @@ fixed-actions (position: fixed; z-index: 100)
 
 데스크톱에서 `.action-block`은 `position: absolute`로 양쪽 끝에 배치됩니다:
 
-- `.left-action { left: var(--frame-thickness) }` — 좌측 프레임 안쪽
-- `.right-actions { right: var(--frame-thickness) }` — 우측 프레임 안쪽
+- `.left-action { left: calc(var(--frame-thickness) - 1px) }` — 좌측 프레임 안쪽 (1px overlap hack 적용)
+- `.right-actions { right: calc(var(--frame-thickness) - 1px) }` — 우측 프레임 안쪽 (1px overlap hack 적용)
 
 `.right-actions-inner`는 `display: flex; overflow: hidden; width: calc(var(--button-size) * 3)`으로, 닫힌 상태에서 3개의 고정 버튼(테마, RSS, 언어 토글)만 표시합니다.
 
@@ -211,3 +213,10 @@ fixed-actions (position: fixed; z-index: 100)
 - `dark`/`light` 클래스를 `<html>`에 토글
 - `localStorage`에 테마 저장
 - `themeChange` 커스텀 이벤트 디스패치 (외부 리스너가 반응)
+
+## 관련 문서
+
+- [Frame 설계 원리](../design/frame-layout.md) — 오목한 모서리/action-block의 근본 원리(`::before`/`::after`)
+- [Chunk Loading](../features/chunk-loading.md) — Frame 내 컨테이너와 카드 배치 관계
+- [Button](../components/button.md) — `--button-size`/`--button-padding-*` 토큰 출처
+- [Theme Toggle](../features/theme-toggle.md) — `themeChange` 이벤트 소비자(Mermaid/Giscus)

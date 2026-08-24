@@ -9,7 +9,7 @@ props:
 - `title`: 표시할 제목.
 - `description`: 표시할 설명.
 
-메인 페이지에서는 `src/pages/index.astro`에서 `SITE.title`, `SITE.description`을 넘겨 사용함.
+메인 페이지에서는 `src/pages/index.astro`가 `HomePageContent.astro`를 렌더링하고, `HomePageContent.astro`가 `<Hero title={siteMeta.title} description={siteMeta.description} />`로 주입합니다. `siteMeta`는 `getSiteMeta()`가 현재 로케일 기준으로 반환한 값이며, `description`은 `SITE.description`이 아니라 로케일별 `description`입니다.
 
 ## Figma 기준
 

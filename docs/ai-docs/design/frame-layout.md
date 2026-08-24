@@ -11,7 +11,7 @@
 1. `html`은 `min-height: 100%; overflow-y: scroll; overflow-x: hidden`으로 브라우저 루트 스크롤바를 사용합니다. `background-color: var(--color-bg)`를 명시하여, CSS 명세상 `body` 배경이 canvas(scrollbar gutter 포함)로 전파되는 것을 차단합니다.
 2. `body`의 `background-color: var(--color-frame)`은 layout viewport 내부에만 적용됩니다. 프레임 테두리는 사각형(`border-radius` 없음)이며, concave corner는 `Frame.astro`의 pseudo-element가 radial-gradient로 구현합니다.
 3. `.viewport-container`는 `position: relative; min-height: 100dvh; isolation: isolate`로 일반 흐름에서 콘텐츠 래퍼 역할을 하며, 자체 stacking context를 형성합니다.
-4. `.viewport-container::before` pseudo-element가 `position: fixed; inset: var(--frame-thickness); z-index: 0`으로 viewport 전체를 덮는 밝은 배경 패널을 그립니다. 네 면 모두 동일한 여백으로 대칭적입니다. `background-color: var(--color-bg)`를 가집니다.
+4. `.viewport-container::before` pseudo-element가 `position: fixed; inset: 0; z-index: 0`으로 viewport 전체를 덮는 밝은 배경 패널을 그립니다. 네 면 모두 동일한 여백으로 대칭적입니다. `background-color: var(--color-bg)`를 가집니다. (프레임 가장자리는 `z-index: 2`의 `.frame-border`가 덮으므로, 패널이 전체를 덮어도 화면에 보이는 밝은 영역은 프레임 안쪽으로 제한됩니다.)
 5. `.page-content`는 `position: relative; z-index: 1`로 콘텐츠 레이어 역할만 합니다. 배경색은 투명이며, `min-height: calc(100dvh - var(--frame-thickness) * 2)`로 프레임 내부를 채웁니다.
 6. `.frame-border` 요소가 `position: fixed; inset: 0; z-index: 2`로 프레임 바깥 영역을 검은색으로 덮는 foreground 마스크 역할을 합니다. 네이티브 `border`를 사용하지 않고 4개의 `.frame-edge`(`.frame-edge-top`, `.frame-edge-bottom`, `.frame-edge-left`, `.frame-edge-right`) 절대 위치 자식 요소에 `background-color: var(--color-frame)`를 적용하여 사각형 테두리를 그립니다. 삼성 인터넷은 Force Dark에서 웹 색상을 자체 변환하며([Samsung Internet 안내](https://developer.samsung.com/internet/blog/en/2020/12/15/dark-mode-in-samsung-internet)), Chromium은 `border`에 별도의 대비 보정을 적용합니다([DarkModeFilter 소스](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/third_party/blink/renderer/platform/graphics/dark_mode_filter.cc)). 따라서 `border`를 사용하면 프레임이 회색으로 변색될 수 있습니다. 4개의 background 블록으로 그리면 상단 헤더 블록(`.action-block`)과 같은 background 페인트 경로를 사용하므로 이 변색을 피할 수 있습니다. `pointer-events: none`으로 클릭 및 스크롤을 방해하지 않습니다. `::before`/`::after` pseudo-element가 하단 좌우 모서리에 concave corner를 만듭니다 — `bottom: var(--frame-thickness); left: var(--frame-thickness)`(or `right: var(--frame-thickness)`)로 테두리 안쪽 모서리에 배치하고, `radial-gradient(circle at 반대쪽 상단, transparent → var(--color-frame))`로 검은 프레임이 콘텐츠 영역 안쪽으로 부드럽게 곡면 연결되도록 합니다.
 7. `Frame.astro`의 `.fixed-actions`는 `z-index: 100`으로 모든 레이어 위에 버튼과 상단 concave를 렌더링합니다. concave corner는 `.left-action`과 `.right-actions`의 `::before`/`::after` pseudo-element로 구현되어, DOM 추가 없이 radial-gradient로 부드러운 전환을 만듭니다.
@@ -82,7 +82,7 @@
 
 ## (Historical) Bug Fix: Language Switching Design Flaw
 
-> **참고**: 이 섹션은 이전에 작성된 기록용 문서다. 현재 코드에서는 `window.__AVAILABLE_LANG_CODES__`를 사용하지 않으며, 언어 전환은 `Frame.astro`의 `changeLang()` 함수가 `pathSegments` 기반으로 처리한다.
+> **참고**: 이 섹션은 이전에 작성된 기록용 문서다. 현재 코드에서는 전역 `window.__*` 변수를 사용하지 않으며, 언어 전환은 `Frame.astro`의 `getLocalizedPath()` 함수가 `#lang-list`의 `data-locale-codes` / `data-default-locale` DOM 속성을 읽어 `pathSegments` 기반으로 처리한다.
 
 ### Symptom
 When switching languages from a non-Korean page (e.g., `/en/`), the URL would incorrectly append the new language code instead of replacing the existing one.
@@ -229,3 +229,9 @@ PC: --button-size = 56px → 56 × 3 = 168px
 모바일에서 `.right-actions-inner.lang-open`의 너비는 `calc(100vw + var(--button-size) * 2)`로 확장됩니다. `.right-actions`가 `position: absolute; right: 0`에 고정되어 있으므로, 확장된 너비만큼 **왼쪽으로** 뻗어나갑니다. 처음 두 버튼(테마, RSS)이 뷰포트 밖으로 밀려나고, 언어 토글이 뷰포트 좌측 끝에 위치합니다.
 
 `.fixed-actions`의 `max-width: 100vw`가 문서 너비가 뷰포트를 초과해도 헤더가 뷰포트 폭을 넘지 않도록 합니다. 이를 통해 가로 스크롤 발생 시에도 우측 버튼이 화면 밖으로 밀려나지 않습니다.
+
+## 관련 문서
+
+- [Frame 컴포넌트](../components/frame-layout.md) — 실제 구현 및 JS 스크립트(`astro:before-preparation` 테마 주입 등)
+- [Chunk Loading](../features/chunk-loading.md) — 카드 가로 채움 배치 알고리즘
+- [Typography](./typography.md) — 본문 표현 원칙

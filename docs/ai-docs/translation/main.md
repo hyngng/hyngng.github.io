@@ -605,10 +605,11 @@ Fidelity" above:
 ## Output Format
 
 Structure your response using exactly the following two markers, and no
-other top-level markers or headers of this form. This output is parsed
-programmatically — the text between the markers is written directly to
-a `.md` file, so any deviation from this exact structure will corrupt
-the published post.
+other top-level markers or headers of this form. This output follows the
+structure the translation pipeline expects: the `===TRANSLATION===` /
+`===NOTES===` markers separate the translated document from the reviewer
+notes. Deviating from this exact marker structure prevents the pipeline
+from reliably splitting the translation from the notes.
 
 ===TRANSLATION===
 (the complete translated Markdown content goes here, and nothing else —

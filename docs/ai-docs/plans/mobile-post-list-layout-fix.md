@@ -72,7 +72,7 @@
 - `src/pages/[lang]/posts/chunk/[n].astro`
 - `src/pages/[author]/chunk/[n].astro`
 - `src/pages/[lang]/[author]/chunk/[n].astro`
-- `src/scripts/chunk-masonry.ts`
+- `src/features/post-list/` (공통 배치 모듈 — `distribution.ts`, `layout.ts`, `append.ts` 등)
 
 작업:
 

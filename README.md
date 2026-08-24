@@ -46,9 +46,9 @@ npm run dev
 | 리소스 | CDN | 용도 |
 | :--- | :--- | :--- |
 | KaTeX 0.16.10 CSS | cdn.jsdelivr.net | 수식 스타일 (수식 있는 포스트만 로드) |
-| Mermaid 10 | cdn.jsdelivr.net | 다이어그램 렌더링 |
+| Mermaid 11 | 로컬 번들(npm `mermaid@^11.16.0`) | 다이어그램 렌더링 (런타임 동적 `import('mermaid')`, CDN 아님) |
 
-> CDN URL은 `src/components/Head.astro`에서 관리됩니다.
+> 런타임 CDN(preconnect 힌트)은 `Head.astro`에서, KaTeX CSS `<link>`는 `PostLayout.astro`에서, 이미지 CDN URL 변환은 `src/plugins`/`src/utils/cdn.ts`에서 각각 관리됩니다.
 
 ## 커스터마이징
 

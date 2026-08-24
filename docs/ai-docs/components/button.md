@@ -7,12 +7,12 @@
 
 ## Variants
 `variant` prop을 통해 다양한 형태를 지원합니다:
-- `title`: 헤더의 로고/타이틀용. 패딩(좌우 40px, 상하 18px), 굵은 텍스트.
-- `icon`: 72px 정사각형/원형 뼈대의 아이콘 버튼 (예: RSS, 테마 전환).
+- `title`: 헤더의 로고/타이틀용. 패딩은 좌우 `var(--button-padding-x)`(2rem=32px), 상하 `var(--button-padding-y)`(0.9rem≈14.4px), 굵은 텍스트.
+- `icon`: 56px(데스크톱) / 48px(모바일) 정사각형/원형 뼈대의 아이콘 버튼 (예: RSS, 테마 전환).
 - `text`: 아이콘 대신 짧은 텍스트가 들어가는 버튼 (예: 언어 선택 'KO').
 
 ## 스타일링
 - 호버 시 엑센트 컬러(`var(--color-accent)`, `#CA4519`)로 배경이 부드럽게 전환됩니다.
-- 아이콘 변형은 `--button-size` CSS 변수(72px)를 기준으로 설계됨.
+- 아이콘 변형은 `--button-size` CSS 변수(데스크톱 56px / 모바일 48px)를 기준으로 설계됨.
 - 타겟 크기 보장을 위해 최소 48x48px를 유지함.
 - Frame의 lang-list 너비 계산 시 JavaScript에서 `getComputedStyle`으로 `--button-size` CSS 변수를 읽어 활용함.
