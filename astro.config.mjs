@@ -13,6 +13,7 @@ import { rehypeTableWrapper } from './src/plugins/rehype-table-wrapper.mjs';
 import { rehypeStripComments } from './src/plugins/rehype-strip-comments.mjs';
 import { rehypeFootnoteTooltip } from './src/plugins/rehype-footnote-tooltip.mjs';
 import { SITE, defaultLocale, defaultLocaleBcp47, supportedLocales } from './src/settings/site.settings';
+import { segmentMap } from './src/utils/locale-segments';
 import { validateRoutes } from './src/integrations/validate-routes';
 import astroPwa from './src/integrations/astro-pwa';
 
@@ -113,8 +114,15 @@ export default defineConfig({
   ],
 
   i18n: {
-    defaultLocale,
-    locales: supportedLocales,
+    defaultLocale: new Intl.Locale(defaultLocale).language,
+    locales: supportedLocales.map((code) => ({
+      codes: [code],
+      // Segment comes from the single shared map so it stays consistent with
+      // the URLs posts.ts / validate-routes build. Default keeps its label.
+      path: code === defaultLocale
+        ? new Intl.Locale(defaultLocale).language
+        : (segmentMap.get(code) ?? new Intl.Locale(code).language),
+    })),
     routing: {
       prefixDefaultLocale: false,
     }

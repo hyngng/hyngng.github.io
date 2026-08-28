@@ -13,7 +13,7 @@ last_modified_at: 2026-04-20 15:05:00 +0900
 
 mermaid: true
 
-lang: zh
+lang: zh-CN
 ---
 
 ## **令人失望的索尼 A7C**

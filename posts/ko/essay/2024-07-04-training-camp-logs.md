@@ -13,7 +13,7 @@ last_modified_at: 2026-06-25 15:21:00 +0900
 
 mermaid: true
 
-lang: ko
+lang: ko-KR
 ---
 
 <!--

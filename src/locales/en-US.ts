@@ -1,6 +1,7 @@
 import type { Locale } from './index';
 
 const locale: Locale = {
+  description: 'Greetings 🔥',
   frame: {
     lang: 'EN',
     langAria: 'Select language',

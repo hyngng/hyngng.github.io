@@ -14,7 +14,7 @@ last_modified_at: 2025-12-29 07:29:00 +0900
 mermaid: true
 math: true
 
-lang: fr
+lang: fr-FR
 ---
 
 L'algorithme A* est un algorithme de recherche de graphe conçu pour trouver le chemin le plus court entre deux points spécifiques. Sa caractéristique peut se résumer par l'équation suivante, où $n$ représente un nœud :

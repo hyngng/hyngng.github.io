@@ -11,7 +11,7 @@ toc: true
 date: 2025-03-17 15:25:00 +0900
 last_modified_at: 2025-12-29 09:40:00 +0900
 
-lang: fr
+lang: fr-FR
 ---
 
 ## **Il faut distinguer les variables internes et externes à la classe**

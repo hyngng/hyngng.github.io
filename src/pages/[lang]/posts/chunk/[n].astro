@@ -12,12 +12,13 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const currentLocale = Astro.currentLocale || defaultLocale;
 const { posts, currentChunk, totalChunks, chunkBaseUrl, totalPosts } = Astro.props;
-const locale = getLocale(lang);
+const locale = getLocale(currentLocale);
 const nextChunk = currentChunk < totalChunks ? currentChunk + 1 : null;
 const homePath = `/${lang}/`;
 ---
 
-<ChunkPageLayout lang={lang} title={`${locale.posts.title} - ${currentChunk}`}>
-  <ChunkPostListBody {posts} {currentChunk} {chunkBaseUrl} {totalPosts} {nextChunk} homePath={homePath} {locale} currentLocale={lang} />
+<ChunkPageLayout lang={currentLocale} title={`${locale.posts.title} - ${currentChunk}`}>
+  <ChunkPostListBody {posts} {currentChunk} {chunkBaseUrl} {totalPosts} {nextChunk} homePath={homePath} {locale} currentLocale={currentLocale} />
 </ChunkPageLayout>

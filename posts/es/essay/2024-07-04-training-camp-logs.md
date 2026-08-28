@@ -13,7 +13,7 @@ last_modified_at: 2026-06-25 15:21:00 +0900
 
 mermaid: true
 
-lang: es
+lang: es-ES
 ---
 
 Me siento desconcertado. El tiempo, que fluía lentamente, de repente se ha ido, y estoy escribiendo esto en casa después de salir del Yeonmugwan.

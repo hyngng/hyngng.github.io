@@ -2,7 +2,8 @@
 import Footer from "../components/Footer.astro";
 import Frame from "../components/Frame.astro";
 import Head from "../components/Head.astro";
-import { SITE, getSiteMeta, getLocaleEntry } from "../settings/site.settings";
+import { SITE, getLocaleEntry } from "../settings/site.settings";
+import { getSiteMeta } from "../locales";
 import { normalizeTwitterHandle } from "../settings/authors.settings";
 import { defaultLocale } from "../locales";
 import { buildBreadcrumbJsonLd, serializeJsonLd, type BreadcrumbItem } from "../utils/jsonLd";

@@ -16,7 +16,7 @@ toc: false
 date: 2024-06-11 17:52:00 +0900
 last_modified_at: 2026-07-01 14:01:00 +0900
 
-lang: ru
+lang: ru-RU
 ---
 
 ## **Первая тетрадь**

@@ -2,6 +2,8 @@ import type { AstroIntegration } from 'astro';
 import fs from 'node:fs';
 import path from 'node:path';
 import { getFrontmatterLang } from '../utils/frontmatter-lang';
+import { normalizeLang } from '../utils/lang';
+import { localePath } from '../utils/locale-segments';
 import { ALL_AUTHORS } from '../settings/authors.settings';
 
 const POSTS_DIR = path.resolve('posts');
@@ -23,11 +25,19 @@ function getLangSlugPairs(dir = POSTS_DIR): Array<{ lang: string; slug: string; 
     if (!match) continue;
     const slug = match[1];
     const raw = fs.readFileSync(entryPath, 'utf8');
-    const lang = getFrontmatterLang(raw);
+    let lang: string | null;
+    try {
+      lang = normalizeLang(getFrontmatterLang(raw) ?? '');
+    } catch (err) {
+      throw new Error(
+        `[Frontmatter Parse Error] Post "${path.relative(POSTS_DIR, entryPath)}" has invalid frontmatter YAML.`,
+        { cause: err }
+      );
+    }
     if (!lang) {
       throw new Error(
         `[Missing lang] Post "${path.relative(POSTS_DIR, entryPath)}" has no frontmatter \`lang\`. ` +
-        `Language is required and must be a 2-letter code.`
+        `Language is required and must be a BCP 47 language tag (e.g. ko-KR, zh-CN).`
       );
     }
     pairs.push({ lang, slug, file: path.relative(POSTS_DIR, entryPath) });
@@ -49,7 +59,9 @@ export function validateRoutes(): AstroIntegration {
               `Reserved slugs: ${RESERVED_SLUGS.join(', ')}`
             );
           }
-          const key = `${lang}/${slug}`;
+          // Key on the actual output path (segment + slug), not the canonical
+          // lang, so the check matches real route collisions.
+          const key = `${localePath(lang)}/${slug}`;
           if (seen.has(key)) {
             throw new Error(
               `[Duplicate Post] lang "${lang}" + slug "${slug}" is used by more than one post ` +

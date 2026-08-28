@@ -11,7 +11,7 @@ toc: true
 date: 2025-02-17 16:42:00 +0900
 last_modified_at: 2026-01-16 13:16:00 +0900
 
-lang: es
+lang: es-ES
 ---
 
 ## **Qué son los métodos mágicos**

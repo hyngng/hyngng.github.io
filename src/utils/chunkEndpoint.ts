@@ -1,5 +1,5 @@
 import type { CollectionEntry } from 'astro:content';
-import { getPublishedPosts } from './posts';
+import { getPublishedPosts, localePath } from './posts';
 import { SITE } from '../settings/site.settings';
 import { ALL_AUTHORS, type AuthorId } from '../settings/authors.settings';
 import { defaultLocale } from '../locales';
@@ -66,12 +66,13 @@ export async function getChunkRoutes(options: GetChunkRoutesOptions = {}): Promi
 
   for (const lang of langCodes) {
     for (const authorId of authorIds) {
+      const shortLang = lang ? localePath(lang).slice(1) : '';
       const chunkBaseUrl = authorId
-        ? lang
-          ? `/${lang}/${authorId}/chunk`
+        ? shortLang
+          ? `/${shortLang}/${authorId}/chunk`
           : `/${authorId}/chunk`
-        : lang
-          ? `/${lang}/posts/chunk`
+        : shortLang
+          ? `/${shortLang}/posts/chunk`
           : '/posts/chunk';
 
       const chunkPaths = await getChunkStaticPaths(
@@ -83,7 +84,7 @@ export async function getChunkRoutes(options: GetChunkRoutesOptions = {}): Promi
       for (const p of chunkPaths) {
         routes.push({
           params: {
-            ...(lang ? { lang } : {}),
+            ...(lang ? { lang: shortLang } : {}),
             ...(authorId ? { author: authorId } : {}),
             n: p.params.n,
           },

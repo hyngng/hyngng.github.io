@@ -14,7 +14,7 @@ mermaid: true
 date: 2026-01-21 09:58:00 +0900
 last_modified_at: 2026-04-20 15:05:00 +0900
 
-lang: es
+lang: es-ES
 ---
 
 ## **La decepcionante Sony A7C**
@@ -181,6 +181,7 @@ Por cierto, los objetivos que valen la pena para la X-E5 son difíciles de encon
 
 Por otro lado, tras cuatro meses de uso, ya tengo una idea más o menos clara. En conclusión, está en algún punto entre neutral y decepcionante. Resumiendo la experiencia de uso, es "una cámara que claramente es divertida de usar, pero que en algún aspecto es un blanda". Puede sustituir a la Sony A7C en tamaño, peso y sensaciones, pero la conclusión es que falta bastante en calidad de imagen y fiabilidad. Como es una comparación entre una cámara de 2020 y una de 2025, supongo que la diferencia con las cámaras de fotograma completo recientes será bastante grande.
 
+<!--
 ### **Sensor de imagen**
 
 Acercándose un poco más a la ingeniería, el patrón Bayer y tal...
@@ -200,3 +201,4 @@ Además, recientemente hay rumores de que se sale la anilla.
 *¿Eh?*
 
 Recientemente, hay un problema con la X-E5 en el que se sale la anilla para la correa. Me sorprendió un poco, así que investigué la situación y, en conclusión, parece que se trata de un error de diseño de Fujifilm. No sé los detalles, pero a simple vista, el problema parece ser que no hay soporte físico y que la estructura tiene un tornillo apretado en la dirección en la que recibe la fuerza. No hay refuerzo como pegamento, por lo que parece que acaba saliéndose, y en algunos productos con el tornillo flojo, el problema parece ocurrir antes.
+-->

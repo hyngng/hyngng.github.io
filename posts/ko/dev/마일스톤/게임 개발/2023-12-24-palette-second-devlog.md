@@ -18,7 +18,7 @@ last_modified_at: 2024-03-20 17:38:00 +0900
 
 mermaid: true
 
-lang: ko
+lang: ko-KR
 ---
 
 ## **개발을 다시 시작한 이유**

@@ -13,7 +13,7 @@ last_modified_at: 2024-11-02 20:41:00 +0900
 
 mermaid: true
 
-lang: ko
+lang: ko-KR
 ---
 
 ## **무슨 일이 일어났는가**

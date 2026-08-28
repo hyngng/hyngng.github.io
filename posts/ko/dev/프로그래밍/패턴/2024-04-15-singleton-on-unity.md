@@ -16,7 +16,7 @@ mermaid: true
 redirect_from:
     - /posts/singleton-pattern-on-unity/
 
-lang: ko
+lang: ko-KR
 ---
 
 ## **들어가며**

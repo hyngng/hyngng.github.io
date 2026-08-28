@@ -16,7 +16,7 @@ toc: true
 date: 2025-07-28 21:56:00 +0900
 last_modified_at: 2026-01-23 09:05:00 +0900
 
-lang: en
+lang: en-US
 ---
 
 ## **Introduction**

@@ -11,7 +11,7 @@ toc: true
 date: 2024-05-12 11:32:00 +0900
 last_modified_at: 2025-10-20 13:55:00 +0900
 
-lang: ja
+lang: ja-JP
 ---
 
 :::info

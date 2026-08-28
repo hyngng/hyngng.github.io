@@ -13,7 +13,7 @@ last_modified_at: 2026-05-25 16:20:00 +0900
 
 mermaid: true
 
-lang: ko
+lang: ko-KR
 ---
 
 ## **왜 블로그를 시작했더라**

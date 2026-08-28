@@ -16,7 +16,7 @@ toc: false
 date: 2024-11-18 20:12:00 +0900
 last_modified_at: 2024-11-29 22:31:00 +0900
 
-lang: es
+lang: es-ES
 ---
 
 ![241006-바렛쏘기](/drawing/241006-바렛쏘기.webp){: .rounded-10 }

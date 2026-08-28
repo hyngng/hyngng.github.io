@@ -18,7 +18,7 @@ last_modified_at: 2024-05-23 23:11:00 +0900
 
 mermaid: true
 
-lang: es
+lang: es-ES
 ---
 
 ## **Introducción**

@@ -1,0 +1,743 @@
+---
+title: "블로그 기술사항"
+authors: ["blog", "dev"]
+
+categories: []
+tags: []
+start_with_ads: true
+
+toc: true
+
+date: 2026-08-24 00:00:00 +0900
+last_modified_at: 2026-08-24 00:00:00 +0900
+
+math: true
+
+lang: ko-KR
+---
+
+<!--
+글이 최초로 작성된 것은 2026-08-19
+-->
+
+:::info
+다음의 두 개 글에서 이어집니다!
+
+- [새 블로그를 기획하게 된 이유]()
+- [블로그 디자인 철학과 설계 기조]()
+:::
+
+## **들어가며**
+
+이 글은 Vignette theme에 대한 기술사항을 다루는 글이지만, 2026년에 기술사항을 전시하듯이 나열하는 것은 큰 의미가 없다고 생각합니다. 다만 어떤 선택을을 왜, 어떻게 상행했는지는 앞으로도 사람들의 관심사로 남을 것 같다는 생각입니다.
+
+## **프레임 효과의 구현**
+
+`Frame.astro`라는 별개의 컴포넌트로 구현되어 모든 레이아웃에서 호출됩니다. 여기에서 소개할만한 부분은 역방향 라운딩입니다.
+
+```css
+.left-action::after {
+  background: radial-gradient(circle at 100% 100%,
+    transparent var(--frame-radius),
+    var(--color-frame) var(--frame-radius));ㄴ
+}
+```
+
+DOM 요소를 증가시키고 싶지 않아 가상 요소만 사용했고, `radial-gradient`로 색을 지워 구현했습니다. 다만 이 부분에서 특기하고 싶은 것은 어떻게 구현했는지보다, 왜 background를 사용했는지입니다.
+
+![]()
+*이미지*
+
+모바일 삼성 브라우저와 같은 일부 환경에서 색이 강제로 재조정되지 않도록 `background-color`가 채워진 별도의 박스 요소로 구성했습니다. `border` 프로퍼티를 사용하는 일반적 접근의 대안입니다.
+
+네이티브 `border`를 사용할 때 모바일 삼성 브라우저에서 다크모드에서 색상을 변환하는 문제가 있었습니다. 프레임은 회색으로 변색되는 문제가 있었습니다.
+
+border 없이 , + `radial-gradient(circle at 100% 100%, transparent r, 프레임색 r)`로 오목 곡면 생성. DOM을 증가시키지 않고 해결했습니다. Force Dark 회피하여 해결했습니다.
+
+## **다국어 최적화**
+
+### **언어 설정과 로케일 표시**
+
+로케일 표현은 en-US와 같이 `xx-XX` 형태를 기본으로 하며, `xx`, `xx_XX`와 같은 표현은 각 상황의 요구사항을 따라 그때그때 파생됩니다. 예를 들어 다음과 같은 식입니다.
+
+|표현|형태 예시|설명|
+|---|---|---|
+|`language`|`en`|URL 라우팅에서 사용됨. URL은 단순명료한 것으로 충분함.|
+|`ogLocale`|`en_US`|`og:locale`는 `xx_XX` 형식을 강제함.|
+|`bcp47`|`en-US`|`hreflang`와 같은 메타데이터/매니페스트|
+
+이는 페이지가 지원할 언어가 포스트 프론트매터로부터 자동으로 결정되도록 만들기 위함입니다. 이 접근을 따르면 예를 들어 별도의 `config` 파일에서 지원 언어 목록을 선언할 필요가 없습니다. 포스트 프론트매터는 `lang: en-US`와 같이 bcp47 형식의 언어 설정을 요구하며, 입력된 로케일 정보는 다음과 같이 `Intl.Locale`을 경유하여 형식 변환을 거치고 곳곳에 할당됩니다.
+
+```ts
+export function deriveLocaleMeta(code: string): LocaleMeta {
+  const m = new Intl.Locale(code).maximize();
+  const region = m.region ?? '';
+  const bcp47 = m.language + (region ? `-${region}` : '');
+  const ogLocale = `${m.language}_${region}`;
+  return { code, bcp47, language: m.language, region, ogLocale };
+}
+```
+
+### **사이트맵 최적화**
+
+사이트맵은 루트 페이지에서 단 한 개만 생성되며, 언어별 홈페이지는 서로를 `alternate`로, 루트를 `x-default`로 맺습니다.
+
+```ts
+const homepageAlternates: Alternate[] = homepages.map(({ code, href }) => ({
+  hreflang: bcp47(code),
+  href,
+}));
+homepageAlternates.push({ hreflang: 'x-default', href: `${origin}/` });
+
+for (const { href } of homepages) {
+  urls.push({ loc: href, alternates: homepageAlternates });
+}
+```
+
+이 글을 쓰는 시점에서 모국어인 한국어를 제외하고 6개 언어를 지원하고 있으므로, 로컬 서버에서 예를 들어 다음과 같이 표시됩니다.
+
+```xml
+<url>
+  <loc>http://127.0.0.1:4321/</loc>
+  <xhtml:link rel="alternate" hreflang="ko-KR" href="http://127.0.0.1:4321/"/>
+  <xhtml:link rel="alternate" hreflang="en-US" href="http://127.0.0.1:4321/en/"/>
+  <xhtml:link rel="alternate" hreflang="ru-RU" href="http://127.0.0.1:4321/ru/"/>
+  <xhtml:link rel="alternate" hreflang="fr-FR" href="http://127.0.0.1:4321/fr/"/>
+  <xhtml:link rel="alternate" hreflang="es-ES" href="http://127.0.0.1:4321/es/"/>
+  <xhtml:link rel="alternate" hreflang="ja-JP" href="http://127.0.0.1:4321/ja/"/>
+  <xhtml:link rel="alternate" hreflang="zh-CN" href="http://127.0.0.1:4321/zh/"/>
+  <xhtml:link rel="alternate" hreflang="x-default" href="http://127.0.0.1:4321/"/>
+</url>
+```
+
+사이트맵 길이가 언어를 하나 지원할 때 대비 폭증합니다. 휴리스틱으로 잡아도 지원 언어 수의 제곱에 비례합니다. 실제로 확인해보면 지나치게 길다는 느낌이 있지만, 그럼에도 유지하는 이유는 구글이 안내하는 가이드라인을 준수하기 위함입니다. Google Search Central의 [Google에 페이지의 현지화된 버전 알리기 - 언어 버전을 명시하는 모든 방법에 관한 가이드라인](https://developers.google.com/search/docs/specialty/international/localized-versions#all-method-guidelines)을 확인해보면, 글을 쓰는 시점을 기준으로 다음의 두 가지 사항이 명시되어 있습니다.
+
+- 각 언어 버전은 해당 언어뿐만 아니라 다른 모든 언어 버전을 나열해야 합니다.<sup>Each language version must list itself as well as all other language versions.</sup>
+- 두 페이지가 서로를 가리키지 않는 경우 태그가 무시됩니다. 이는 다른 사이트에 있는 사용자가 페이지의 대체 버전으로 이름을 지정하여 태그를 임의로 만들 수 없도록 하기 위함입니다.<sup>If two pages don't both point to each other, the tags will be ignored. This is so that someone on another site can't arbitrarily create a tag naming itself as an alternative version of one of your pages.</sup>
+
+그 결과가 매우 길어진 사이트맵입니다. 이 부분을 구현하면서 사람보다 기계를 위한 문서라는 것을 체감했습니다.
+
+### **RSS 최적화**
+
+RSS 2.0은 표준 `hreflang`이 없기도 하거니와 테마 정체성에 잘 부합하기 때문에 피드를 언어별, 페르소나별로 분리합니다. 따라서 이 테마에서 RSS는 여러 개가 생성됩니다.
+
+여기서 언어별(/[lang]/rss.xml)은 getStaticPaths로 비기본 언어마다 정적 경로를 만듭니다:
+
+```ts
+export async function getStaticPaths() {
+  const locales = availableLocales.map((l) => l.code).filter((code) => code !== defaultLocale);
+  return locales.map((code) => ({
+    params: { lang: localePath(code).slice(1) },   // '/en' → 'en'
+    props: { lang: code },
+  }));
+}
+```
+
+작가별(기본 언어)과 작가+언어별은 flatMap으로 조합:
+
+```ts
+// [lang]/[author]/rss.xml.ts
+export async function getStaticPaths() {
+  const locales = availableLocales.map((l) => l.code).filter((code) => code !== defaultLocale);
+  return ALL_AUTHORS.flatMap((author) =>
+    locales.map((code) => ({
+      params: { lang: localePath(code).slice(1), author: author.id },
+      props: { author, lang: code },
+    }))
+  );
+}
+```
+
+그리고 결과는 다음과 같습니다.
+
+```xml
+
+```
+
+```xml
+
+```
+
+### **기타**
+
+- 중국어는 문제가 큽니다. goatcounter도 `zh-CN` `zh-TW`
+
+URL에서 모든 언어를 `/en/`, `/ja/`와 같이 짧은 코드로 표현하면 좋겠지만 `zh-CN`과 `zh-TW`를 동시에 지원하면 둘 다 /zh/가 됩니다.
+규칙은 명확합니다: language 서브태그가 유일하면 짧은 코드(/zh/), 같은 language를 공유하는 로케일이 둘 이상이면 full code로 자동 승격(/zh-cn/, /zh-tw/). 그래도 충돌이 남으면 throw로 빌드를 멈춥니다. 코드 하나만 보는 순수 함수(localePath(code))로는 전역 유일성을 보장할 수 없기 때문에, 전체 집합을 한 번에 계산하는 것이 핵심입니다.
+
+
+astro.config.mjs는 astro:content 가상 모듈을 import할 수 없어, supportedLocales를 fs로 스캔해야만 합니다. "왜 getCollection으로 안 하냐"는 질문에 대한 구조적 답변
+
+
+
+URL에서는 언어 코드 `ko`, 오픈그래프의 `og:locale` 정보에는 `ko_KR`의 형태를,
+- 기본 언어는 슬러그가 삽입되지 않습니다.
+- 번역본이 없는 경우 비활성화됩니다.
+
+로케일 표현을 HTML, Open Graph, hreflang/SEO의 요구사항에 맞게 명시적으로 분리하고, 포스트 번역 관계를 하나의 규칙으로 관리해 HTML head와 sitemap의 hreflang 출력을 일관되게 유지했다.
+
+언어, 지역 정보를 하나의 문자열로 임의 변환해 사용하지 않고, HTML의 lang에는 단축 언어 코드(ko), Open Graph의 og:locale에는 언더스코어 형식(ko_KR), hreflang에는 BCP 47 형식(ko-KR)을 각각 명시적으로 사용하도록 분리했다. 또한 포스트의 실제 번역본 관계를 기준으로 head와 sitemap의 hreflang을 동일한 규칙으로 생성해 두 출력 간 불일치를 방지했다.
+
+포스트는 `postTranslations` 배열로 관리됩니다. 실제로 존재하는 번역만 대안 링크로 노출하기 위해 배열 크기가 2 이상일 때에만
+
+## **SEO 최적화**
+
+### **llms.txt**
+
+웹사이트 탐색비용을 줄이기 위해 루트 경로로 `llms.txt`를 지원하자는 아이디어는 단지 제안 사항일 뿐이었고, 현존하는 LLM 서비스 중에 주어진 웹사이트 링크에 대해 `llms.txt`부터 탐색하는 경우는 확인하지 못했습니다. 그런데 2025년 말, 2026년 초 부근부터 다양한 서드파티 SEO 서비스가 `llms.txt`를 지원해야 한다고 지적하기 시작하더니 최근에는 구글 서치 콘솔도 `llms.txt` 인식 지원을 시작했습니다.
+
+더불어 `llms.txt` 구현 비용은 굉장히 낮기 때문에, 이 테마에서도 지원하기로 했습니다. 이 테마에서 `llms.txt`는 모든 포스트를 한 곳에서 소개할 목적으로 동적으로 생성되며, AI용 사이트맵 또는 RSS의 역할을 맡도록 구성되었습니다. 예컨대
+
+## **이미지 크기 맞추기**
+
+④ naturalWidth 헤더 트릭 — 이건 정말로 잘 알려지지 않은 브라우저 동작입니다. 이미지가 완전히 로드되기 전, 헤더만 파싱된 시점에 naturalWidth/Height가 채워진다는 걸 실전에서 활용하는 코드는 흔치 않아요. rAF 폴링 + 무한폴링 방지 + 이중 rAF 합성까지 엣지케이스를 챙긴 것도 좋습니다. 이 항목이 Tier 1에서 가장 근거가 탄탄해요.
+④ 이미지 비율 모프 — 헤더만 와도 naturalWidth가 노출된다
+문제: 로드 완료 시점에만 비율을 반영하면 16:9→원본비율로 늘어나며 CLS 발생.
+전략 (image-reveal.ts): 브라우저가 이미지 전체가 아닌 첫 패킷(헤더)만 받아도 naturalWidth/Height를 채운다는 동작을 활용. rAF 폴링으로 naturalWidth>0 첫 프레임에 인라인 aspect-ratio를 박고, CSS transition: aspect-ratio로 16:9→실제비율을 부드럽게 모핑. 무한 폴링 방지(complete && naturalWidth===0)·이중 rAF 합성까지 정교.
+차용 가치: 대부분이 모르는 브라우저 동작을 실전에 쓴, CLS를 근본에서 잡는 해법.
+
+이미지 래퍼(`.img-wrapper`)의 기본 종횡비(16:9)와 원본 비율의 차이로 인한 CLS(누적 레이아웃 시프트)를 방지하기 위해, 브라우저가 **이미지 전체 다운로드 전 헤더 패킷만 수신해도 `naturalWidth`와 `naturalHeight`를 노출**한다는 특성을 활용합니다.
+
+기본 종횡비는 `16:9`로 설정됩니다.
+
+```ts
+// src/utils/image-reveal.ts
+function syncAspectRatio(img: HTMLImageElement, target: HTMLElement): boolean {
+  if (target.style.aspectRatio) return true;
+  if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+    target.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+    return true;
+  }
+  return false;
+}
+
+function pollAspectRatio(img: HTMLImageElement, target: HTMLElement): void {
+  const tick = () => {
+    if (syncAspectRatio(img, target)) return;
+    if (img.complete && img.naturalWidth === 0) return; // 에러 시 무한 폴링 차단
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function decodeAndMark(img: HTMLImageElement, target: HTMLElement, syncRatio: boolean): void {
+  const markLoaded = () => {
+    // 2프레임 지연: GPU Compositing Layer 동기화
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => target.classList.add('loaded'));
+    });
+  };
+
+  const showImage = async () => {
+    if (syncRatio) syncAspectRatio(img, target);
+    try {
+      await img.decode(); // 비동기 디코딩 완료 대기
+    } catch { /* decode fallback */ }
+    markLoaded();
+  };
+
+  if (img.complete && img.naturalWidth > 0) {
+    showImage();
+  } else {
+    if (syncRatio) pollAspectRatio(img, target);
+    img.addEventListener('load', showImage, { once: true });
+  }
+}
+```
+
+| 파이프라인 단계 | 실행 작업 | 엔지니어링 목표 |
+|---|---|---|
+| **1. Header 수신 (rAF)** | `syncAspectRatio` 폴링 | 16:9 → 원본 비율 조기 모핑 (CLS 방지) |
+| **2. 디코드 완료** | `await img.decode()` | 메인 스레드 렌더링 블로킹 방지 |
+| **3. GPU 합성 대기** | Double `requestAnimationFrame` | 스타일 적용과 페인트 프레임 간 플리커 제거 |
+| **4. No-JS 폴백** | `html:not([data-js])` CSS | 자바스크립트 비활성화 환경 즉시 렌더 |
+
+
+
+
+
+
+
+
+① SSR/클라이언트 메이슨리 일치 (가중치 모델 + 데드밴드) — "측정 불가능한 정보를 근사하되, 근사가 참이 되도록 디자인 자체를 제약한다"는 사고방식은 실제로 좋은 엔지니어링 판단입니다. 다만 이건 Pinterest류 메이슨리 구현에서 반복적으로 등장하는 패턴이라 "발명"은 아니고 "제대로 적용"에 가깝습니다. 데드밴드 히스테리시스를 추가한 건 디테일이 좋다는 증거고요.
+문제: 서버는 카드 실제 높이를 모르는데, 클라이언트 JS 로드 후 메이슨리가 깨지지 않으려면 SSR 분배와 클라이언트 분배가 동일한 결과를 내야 한다. "그냥 JS로 돌린다"는 초보 해법은 레이아웃 시프트를 낳는다.
+전략 (distribution.ts): 카드 높이를 콘텐츠와 무관한 가중치 모델로 근사한다. 이미지 있으면 colWidth*IMG_ASPECT + NO_IMG_HEIGHT, 없으면 NO_IMG_HEIGHT. 핵심 통찰은 *"카드 레이아웃 자체를 이미지 비율 고정 + 텍스트 말줄임으로 설계했으므로, 이 근사가 실제 렌더 높이와 일치한다"*는 점 — 즉 디자인을 제약해 근사가 참이 되게 만든 것. 게다가 diff > NO_IMG_HEIGHT 기준 데드밴드 히스테리시스로 픽셀 단위 좌우 진동을 막는다.
+차용 가치: "측정 불가 정보를 근사로 풀되, 모델이 참이 되도록 시스템을 바꾸는" 사고방식. 진짜 엔지니어링.
+
+
+
+## **실현하지 않은 아이디어**
+
+- HTML와 주석이 제거 등의 처리를 거친 `.md` 원본을 모두 생성하고, 접속자가 AI 에이전트일 경우 토큰 절약을 위해 `.md` 원본을 보여주고자 하는 아이디어가 있었고, 조사 결과 많은 웹페이지가 실제로 적용중인 사항이기도 하나, 정적 웹페이지가 아니라 서버단에서 해결해야 하는 문제로서 실현되지 못했습니다.
+
+<!--
+### **CSS 속성 부여**
+
+- Astro에는 그런 거 없음.
+- 기존의 `{: .class }` 문법도 나쁘지 않았음.
+- 그렇다면 Jekyll 환경에서 마이그레이션할 수 있도록 커스텀 플러그인 작성해서 해결할 것.
+- 이외의 bootstrap에서 자주 사용했던 몇 개를 커스텀으로 정의했음.
+
+```css
+/* boorstrap에서 따온 예시 css */
+```
+
+### **모바일 삼성 브라우저 대응**
+
+![]()
+*문제 상황*
+
+- 안드로이드 기기에서의 삼성 브라우저 어플은 OS 다크모드 여부에 따라 웹 CSS를 강제로 재조정합니다. 네이버 등 메이저 플랫폼도 완벽한 대응이 어려운 모양입니다.
+
+이 테마도 예외는 아니었습니다. 태블릿 환경에서 검은 프레임 테두리가 회색으로 변색되는 문제가 발생했고
+
+- `border`를 일절 쓰지 않고, `position: fixed`된 4개의 독립 `.frame-edge` 자식 요소에 `background-color: var(--color-frame)`를 칠했습니다. 이렇게 하면 브라우저 렌더러가 헤더 액션 블록(`.action-block`)과 동일한 배경 페인트 경로를 타므로 Force Dark에서도 완전한 블랙을 유지합니다.
+
+삼성 브라우저 Force Dark를 뚫는 '4면 백그라운드 프레임'과 1px 서브픽셀 트릭
+- **문제**: Chromium의 `DarkModeFilter`와 삼성 인터넷의 Force Dark는 네이티브 CSS `border`에 강제 명도/대비 보정을 걸어버립니다. 
+- **돌파구**: 
+  - 브라우저 줌 배율(110% 등) 시 레이어 간 반올림 오차로 1px 흰 틈새가 보이는 현상은 `.action-block`을 1px 겹치게 밀어 넣고(`calc(12px - 1px)`) 내부 `padding: 1px`로 상쇄해 시각적 크기는 보존하면서 틈새를 지웠습니다.
+
+### **청크 기반 더 보기 버튼**
+
+2. "더 보기" 클릭 → 렌더 전체 흐름
+#	단계	위치	비동기?	DOM 변이
+1	클릭 감지 (위임)	loader.ts:91-96	-	-
+2	네트워크 fetch (캐시 히트 시 즉시)	chunk-repository.ts:7	O	-
+3	DOMParser 파싱 (오프스크린)	dom.ts:18	-	-
+4	replaceWith(cards[0]) — LoadMoreCard → 첫 새 카드로 교체	append.ts:51	-	O
+5	distributeCards() — 나머지 카드 배치	append.ts:52	-	O + reflow 유발(offsetHeight)
+6	다음 LoadMoreCard 삽입	append.ts:53-59	-	O
+7	history.pushState()	loader.ts:35	-	-
+8	animateNewCards() — fade-in 클래스 추가	animate.ts:5-14	애니메이션 완료 비동기	class 추가
+9	initPostCardImages() — img.decode() + rAF×2	image-reveal.ts:29-57	O (decode)	class 'loaded'
+10	마지막 청크면 load-more 숨김	loader.ts:40-43	-	O
+사용자 체감 지연 주범
+
+
+
+### **이 외 기타 등등**
+
+- SSR 2열 Masonry & 모바일 Flat Flow 전환
+
+## **Astro 잘 활용하기**
+
+## **AI도 잘 활용하기**
+
+### **가난한 자의 고민**
+
+시도해본 것
+
+- OpenCode
+- Antigravity
+- Codex
+- Cursor
+- Kiro
+- Devin
+- Loom
+
+사용한 AI
+
+|모델명|사용기|
+|---|---|
+|BigPickle||
+|Hy3 Free||
+|Nemotron 3 Ultra Free||
+|Gemini 3.1 Flash Lite||
+|Gemini 3.5 Flash||
+|Gemini 3.6 Flash||
+|Gemini 3.7 Flash||
+
+올해 초 VSCode Copilot 학생 티어에서 Claude Sonnet 4.6을 무료로 사용할 수 있었던 것을 기억함. 3월에 제미나이만 사용 가능하도록 칼질, 6월에 토큰을 완전히 칼질.
+
+### ****
+
+
+
+# 기계를 위한 웹 엔지니어링: Astro 기반 정적 다국어 블로그 아키텍처 심층 보고서
+
+## **1. 서론: 기계의 규칙을 마주한다는 것**
+
+정적 웹사이트에서 가장 많은 리소스와 코드가 투입되는 영역은 사람이 읽는 콘텐츠 본문이 아닙니다. 브라우저 렌더링 엔진(Blink, WebKit), 마크다운 AST 변환 파이프라인(Unified, MDX), 검색엔진 크롤러(Googlebot), 서비스 워커 캐시 런타임(Workbox), 그리고 국제화 표준(ECMA-402, CLDR)이 요구하는 **"기계를 위한 규칙과 제약"**을 충족하는 과정입니다.
+
+본 보고서는 정적 블로그 프로젝트([hyngng.github.io](https://hyngng.github.io))를 구축하면서 마주한 비표준적 제약, 트레이드오프, 브라우저 엔진 레벨의 숨은 버그와 이를 돌파한 엔지니어링 사례를 상세히 정리합니다.
+
+---
+
+## **2. 다국어 및 메타데이터 파이프라인: 검색엔진과 크롤러를 위한 시스템**
+
+### 2.1 단일 프론트매터 필드 기반 로케일 구조 파생
+포스트 프론트매터에는 오직 하나의 BCP 47 코드(`lang: ko-KR`)만 선언합니다. 그러나 실제 소비처는 표준과 컨텍스트에 따라 서로 다른 세 가지 형태를 요구합니다.
+
+| 식별자 | 형태 예시 | 주요 소비처 | 요구 규격 및 표준 |
+|---|---|---|---|
+| `language` | `ko`, `en`, `zh` | URL 라우팅 세그먼트 (`/en/`, `/zh/`) | 간결한 URL 경로 표기 |
+| `ogLocale` | `ko_KR`, `zh_CN` | `<meta property="og:locale">` | Open Graph 프로토콜 (`xx_XX`) |
+| `bcp47` | `ko-KR`, `zh-CN` | `hreflang`, JSON-LD `inLanguage`, PWA `lang` | BCP 47 (RFC 5646) |
+
+```ts
+// src/utils/lang.ts
+export function deriveLocaleMeta(code: string): LocaleMeta {
+  const m = new Intl.Locale(code).maximize();
+  const region = m.region ?? '';
+  const bcp47 = m.language + (region ? `-${region}` : '');
+  const ogLocale = `${m.language}_${region}`;
+  return { code, bcp47, language: m.language, region, ogLocale };
+}
+```
+
+> **스펙 근거**:
+> `Intl.Locale.prototype.maximize()`는 ECMA-402 명세에 따라 Unicode CLDR의 "Add Likely Subtags" 알고리즘을 수행합니다. `"ko"` 입력 시 기본 문자 체계와 대표 지역을 보완하여 `"ko-Kore-KR"`로 확장하므로, 미완성 태그에서도 `region`(`"KR"`)을 결정론적으로 파생할 수 있습니다. — [ECMA-402 §14.3.3](https://tc39.es/ecma402/#sec-Intl.Locale.prototype.maximize)
+
+### 2.2 정규식 제거와 `Intl.Locale` 유효성 위임
+초기에는 BCP 47 사전 검증을 위해 정규식(`/^[a-z]{2}(-[a-z]{4})?(-[a-z]{2})?$/i`)을 사용했으나, 이는 필리핀어(`fil`, 3자리)나 UN M.49 숫자 지역 코드(`es-419`, 라틴아메리카)를 거부하는 오탐을 유발했습니다.
+
+```ts
+// src/utils/lang.ts
+export function normalizeLang(raw: string): string | null {
+  if (!raw) return null;
+  const v = raw.trim().toLowerCase();
+  try {
+    return deriveLocaleMeta(v).bcp47;
+  } catch (err) {
+    console.warn(`[normalizeLang] BCP 47 변환 실패 (무시됨): "${raw}"`, err);
+    return null;
+  }
+}
+```
+
+자체 정규식을 폐기하고 유효성 판단을 V8/런타임의 `Intl.Locale`에 전적으로 위임함으로써 정규식 유지보수 부채를 없애고 표준 호환성을 확보했습니다.
+
+### 2.3 Astro Config 시점 제약과 `fs` 동기 스캔
+Astro의 빌드 라이프사이클에서 `astro.config.mjs`는 Content Collection(`astro:content`)보다 먼저 평가됩니다. 따라서 설정 파일에서는 `getCollection()` API를 사용할 수 없습니다.
+
+지원 언어 목록을 별도 설정 파일 없이 포스트 파일에서 직접 파생하기 위해, 설정 시점에 `posts/` 디렉토리를 `node:fs`로 직접 스캔합니다:
+
+```ts
+// src/settings/site.settings.ts
+function scanPostLangValues(): Set<string> {
+  const set = new Set<string>([defaultLocale]);
+  const postsDir = path.resolve('posts');
+  if (!fs.existsSync(postsDir)) return set;
+  const walk = (dir: string): void => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!/\.(md|mdx)$/i.test(entry.name)) continue;
+      try {
+        const raw = fs.readFileSync(full, 'utf8');
+        const lang = getFrontmatterLang(raw); // gray-matter 파서 사용
+        if (lang !== undefined) {
+          const normalized = normalizeLang(lang);
+          if (normalized) set.add(normalized);
+        }
+      } catch (err) { /* skip */ }
+    }
+  };
+  walk(postsDir);
+  return set;
+}
+```
+
+Astro의 공식 콘텐츠 로더가 사용하는 YAML 파서인 `gray-matter`를 동일하게 사용하여 설정 시점 스캔과 콘텐츠 컬렉션 로더 간의 파싱 불일치(Drift)를 차단했습니다.
+
+### 2.4 URL 세그먼트 전역 주사 사상(Injective Mapping)과 빌드 타임 Fail-Fast
+코드 하나만 평가하는 순수 함수(`localePath(code)`)는 다른 언어들의 존재를 알지 못하므로 전역 고유성(Injectivity)을 보장할 수 없습니다. 예를 들어 `zh-CN`과 `zh-TW`가 공존할 때 각각 `/zh`로 축약되면 경로 충돌이 발생합니다.
+
+```ts
+// src/utils/locale-segments.ts
+export function buildSegmentMap(locales: string[], defLocale: string): ReadonlyMap<string, string> {
+  const byLanguage = new Map<string, string[]>();
+  for (const code of locales) {
+    const lang = new Intl.Locale(code).language;
+    const group = byLanguage.get(lang);
+    if (group) group.push(code);
+    else byLanguage.set(lang, [code]);
+  }
+
+  const map = new Map<string, string>();
+  for (const [, codes] of byLanguage) {
+    const ambiguous = codes.length > 1;
+    for (const code of codes) {
+      if (code === defLocale) { map.set(code, ''); continue; }
+      // 언어가 중복되면 full code(zh-cn, zh-tw)로 승격, 유일하면 short code(en, ru) 유지
+      map.set(code, ambiguous ? code.toLowerCase() : new Intl.Locale(code).language);
+    }
+  }
+
+  // 충돌 검증 (Fail-Fast)
+  const seen = new Set<string>();
+  for (const seg of map.values()) {
+    if (seen.has(seg)) {
+      throw new Error(`[locale-segments] URL segment collision detected: "${seg}"`);
+    }
+    seen.add(seg);
+  }
+  return map;
+}
+```
+
+### 2.5 사이트맵 `hreflang`의 자기참조 필수 규칙과 증폭 공식
+Google Search Central 가이드라인에 따르면 다국어 페이지의 `hreflang` 태그는 두 가지 엄격한 규칙을 요구합니다:
+
+1. **자기 자신을 포함한 모든 언어 버전을 나열할 것** (*"Each language version must list itself as well as all other language versions."*)
+2. **모든 페이지가 상호 참조(양방향)를 가질 것** (*"If two pages don't both point to each other, the tags will be ignored."*)
+
+```xml
+포스트 하나의 사이트맵 항목 (ko-KR 기준)
+<url>
+  <loc>https://hyngng.github.io/blog/post-slug/</loc>
+  <xhtml:link rel="alternate" hreflang="ko-KR" href="https://hyngng.github.io/blog/post-slug/" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://hyngng.github.io/en/blog/post-slug/" />
+  <xhtml:link rel="alternate" hreflang="ru-RU" href="https://hyngng.github.io/ru/blog/post-slug/" />
+  <xhtml:link rel="alternate" hreflang="x-default" href="https://hyngng.github.io/blog/post-slug/" />
+</url>
+```
+
+포스트 하나당 $L$개 언어로 번역된 경우, 각 언어 버전마다 별도의 `<url>` 블록이 생성되고 각각 $(L + 1)$개의 alternate 링크(`x-default` 포함)를 가집니다. 따라서 사이트맵 내 alternate 행 수는 정확히 다음과 같이 증폭됩니다:
+
+$$\text{Alternate Lines} = \text{Post Groups} \times L \times (L + 1)$$
+
+> **네임스페이스 https gotcha**:
+> `<urlset>`에서 xhtml 네임스페이스 선언 시 `http://www.w3.org/1999/xhtml`을 사용하면 Chromium/Firefox 내장 XML 뷰어가 문서를 XHTML로 오인하여 트리 렌더링에 실패하고 raw 텍스트로 폴백(`Cannot read properties of null (reading 'childNodes')`)합니다. 반드시 `xmlns:xhtml="https://www.w3.org/1999/xhtml"`을 선언해야 브라우저의 네이티브 XML 트리 뷰어가 정상 작동합니다([crbug 580033](https://bugs.chromium.org/p/chromium/issues/detail?id=580033)).
+
+### 2.6 RSS 2.0의 `hreflang` 부재와 엔드포인트 분할
+RSS 2.0 스펙에는 다국어 대체 링크(`hreflang`)를 표현하는 표준 요소가 존재하지 않습니다(`<channel>` 레벨의 단일 `<language>` 태그만 존재). 따라서 이 프로젝트는 언어와 작가 조합별로 독립된 RSS 피드 엔드포인트를 분할 생성합니다:
+
+```ts
+// src/pages/[lang]/[author]/rss.xml.ts
+export async function getStaticPaths() {
+  const locales = availableLocales.map((l) => l.code).filter((code) => code !== defaultLocale);
+  return ALL_AUTHORS.flatMap((author) =>
+    locales.map((code) => ({
+      params: { lang: localePath(code).slice(1), author: author.id },
+      props: { author, lang: code },
+    }))
+  );
+}
+```
+
+---
+
+## **3. 브라우저 렌더링 엔진 튜닝: 픽셀과 페인트의 경계**
+
+### 3.1 이미지 스트리밍 조기 감지와 Double rAF GPU 합성 동기화
+이미지 래퍼(`.img-wrapper`)의 기본 종횡비(16:9)와 원본 비율의 차이로 인한 CLS(누적 레이아웃 시프트)를 방지하기 위해, 브라우저가 **이미지 전체 다운로드 전 헤더 패킷만 수신해도 `naturalWidth`와 `naturalHeight`를 노출**한다는 특성을 활용합니다.
+
+```ts
+// src/utils/image-reveal.ts
+function syncAspectRatio(img: HTMLImageElement, target: HTMLElement): boolean {
+  if (target.style.aspectRatio) return true;
+  if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+    target.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+    return true;
+  }
+  return false;
+}
+
+function pollAspectRatio(img: HTMLImageElement, target: HTMLElement): void {
+  const tick = () => {
+    if (syncAspectRatio(img, target)) return;
+    if (img.complete && img.naturalWidth === 0) return; // 에러 시 무한 폴링 차단
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function decodeAndMark(img: HTMLImageElement, target: HTMLElement, syncRatio: boolean): void {
+  const markLoaded = () => {
+    // 2프레임 지연: GPU Compositing Layer 동기화
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => target.classList.add('loaded'));
+    });
+  };
+
+  const showImage = async () => {
+    if (syncRatio) syncAspectRatio(img, target);
+    try {
+      await img.decode(); // 비동기 디코딩 완료 대기
+    } catch { /* decode fallback */ }
+    markLoaded();
+  };
+
+  if (img.complete && img.naturalWidth > 0) {
+    showImage();
+  } else {
+    if (syncRatio) pollAspectRatio(img, target);
+    img.addEventListener('load', showImage, { once: true });
+  }
+}
+```
+
+| 파이프라인 단계 | 실행 작업 | 엔지니어링 목표 |
+|---|---|---|
+| **1. Header 수신 (rAF)** | `syncAspectRatio` 폴링 | 16:9 → 원본 비율 조기 모핑 (CLS 방지) |
+| **2. 디코드 완료** | `await img.decode()` | 메인 스레드 렌더링 블로킹 방지 |
+| **3. GPU 합성 대기** | Double `requestAnimationFrame` | 스타일 적용과 페인트 프레임 간 플리커 제거 |
+| **4. No-JS 폴백** | `html:not([data-js])` CSS | 자바스크립트 비활성화 환경 즉시 렌더 |
+
+### 3.2 Chromium DarkModeFilter 우회: 4면 Background Mask & 서브픽셀 1px 상쇄
+Chromium의 `DarkModeFilter` 및 삼성 인터넷의 Force Dark는 네이티브 CSS `border`에 강제 색상 반전/대비 알고리즘을 적용하여 순수 블랙 테두리를 회색으로 왜곡합니다([Chromium dark_mode_filter.cc](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/third_party/blink/renderer/platform/graphics/dark_mode_filter.cc)).
+
+이를 해결하기 위해 `border` 속성을 전면 배제하고, `position: fixed`된 4개의 독립 `.frame-edge` 요소에 `background-color`를 적용하여 브라우저 배경 페인트 파이프라인을 타도록 구성했습니다.
+
+```css
+/* 오목 코너(Concave Corner): DOM 0개, radial-gradient 마스크 */
+.frame-border::before {
+  content: '';
+  position: absolute;
+  bottom: var(--frame-thickness);
+  left: var(--frame-thickness);
+  width: var(--frame-radius);
+  height: var(--frame-radius);
+  background: radial-gradient(
+    circle at 100% 0%,
+    transparent var(--frame-radius),
+    var(--color-frame) var(--frame-radius)
+  );
+}
+
+/* 줌 배율(110% 등) 시 서브픽셀 반올림 오차 1px 틈새 상쇄 */
+.action-block {
+  top: calc(var(--frame-thickness) - 1px);
+  padding-top: 1px;
+}
+```
+
+### 3.3 SSR 2열 Masonry의 결정론적 분배와 데드밴드 히스테리시스
+SSR 단계에서는 DOM 렌더링 높이를 측정할 수 없습니다. 이 프로젝트는 **"디자인을 제약하여 근사 모델이 참이 되도록 만드는"** 방식을 적용했습니다:
+
+- 썸네일 비율: 21:40 (`IMG_ASPECT = 21 / 40`) 고정
+- 텍스트 영역: 고정 라인 말줄임 (`NO_IMG_HEIGHT = 112px`)
+
+```ts
+// src/features/post-list/distribution.ts
+export const NO_IMG_HEIGHT = 112;
+export const IMG_ASPECT = 21 / 40;
+export const GAP = 20;
+
+export function cardWeight(hasImage: boolean, colWidth: number): number {
+  return hasImage ? colWidth * IMG_ASPECT + NO_IMG_HEIGHT : NO_IMG_HEIGHT;
+}
+
+export function distributeByWeight<T>(items: T[], colWidth: number, hasImage: (item: T) => boolean) {
+  const left: T[] = [], right: T[] = [];
+  let leftH = 0, rightH = 0;
+
+  for (const item of items) {
+    const w = cardWeight(hasImage(item), colWidth);
+    const diff = leftH - rightH;
+
+    // 데드밴드(Deadband): 미세한 높이차로 인한 좌우 진동 방지
+    if (diff > NO_IMG_HEIGHT) {
+      right.push(item);
+      rightH += w + GAP;
+    } else if (diff < -NO_IMG_HEIGHT) {
+      left.push(item);
+      leftH += w + GAP;
+    } else if (leftH <= rightH) {
+      left.push(item);
+      leftH += w + GAP;
+    } else {
+      right.push(item);
+      rightH += w + GAP;
+    }
+  }
+  return { left, right, leftWeight: leftH, rightWeight: rightH };
+}
+```
+
+모바일에서는 CSS의 `display: contents`와 `--post-order` 속성을 활용해 자바스크립트 재연산 없이 순수 CSS로 시간순 1열 정렬로 자동 전환됩니다.
+
+---
+
+## **4. 파서 및 빌드 파이프라인 아키텍처**
+
+### 4.1 CommonMark Type-6 HTML 블록과 `rehype-raw`
+마크다운 내 raw HTML(`<div class="row">...</div>`) 작성 시, CommonMark 명세에 따라 블록 내부에 **빈 줄(Blank Line)이 존재하면 Type-6 HTML 블록이 즉시 종료**되어 후속 태그가 마크다운 코드 블록으로 깨지는 현상이 발생합니다([CommonMark Spec §4.6](https://spec.commonmark.org/0.31.2/#html-blocks)).
+
+또한 Astro의 기본 파이프라인에서 raw HTML 내부의 `<img>` 태그는 remark 단계에서 AST `html` 노드(문자열)로 통과하여, `remark-cdn-images`(mdast `image` 전용)와 `rehype-image-wrapper`(hast `element` 전용)를 모두 우회해 CDN 404를 유발했습니다.
+
+```
+[Markdown Text] 
+   ↓ (remark-parse)
+[mdast: html 노드]  ← remark-cdn-images 우회
+   ↓ (remark-rehype)
+[hast: raw 노드]   ← rehype-image-wrapper 우회
+   ↓
+[404 CDN Error]
+```
+
+`astro.config.mjs`의 `rehypePlugins` 최상단에 `rehype-raw`를 배치하여 문자열 노드를 HAST `element` 노드로 파싱 복원함으로써 전체 이미지 파이프라인을 통일했습니다.
+
+### 4.2 GFM Footnotes 라벨의 목차 오염 방지 및 접근성 보존
+`mdast-util-to-hast`는 GFM 각주 렌더링 시 `<h2 class="sr-only" id="footnote-label">Footnotes</h2>`를 생성합니다. 이 `h2` 태그가 Astro TOC 수집기(`rehypeHeadingIds`)에 잡혀 사이드바 목차를 오염시키는 문제가 있었습니다.
+
+스크린리더의 `aria-describedby` 연결을 깨지 않기 위해 요소를 DOM에서 삭제하는 대신, 설정을 통해 `h2`를 `span`으로 변환하고 7개 언어별 라벨 번역을 빌드 타임에 주입했습니다:
+
+```javascript
+// astro.config.mjs
+processor: unified({
+  remarkRehype: {
+    footnoteLabelTagName: 'span', // h2 -> span 변환으로 TOC 오염 방지
+  },
+})
+```
+
+```javascript
+// src/plugins/rehype-footnote-tooltip.mjs
+visit(tree, 'element', (node) => {
+  if (node.properties?.id === 'footnote-label') {
+    node.children = [{ type: 'text', value: label }]; // 언어별 '각주', 'Footnotes' 등 주입
+  }
+});
+```
+
+### 4.3 정적 MPA에서 PWA 캐싱 우선권과 `NetworkFirst`
+`@vite-pwa/astro` 공식 통합은 Astro 5까지만 지원하므로, Astro 7 호환성을 위해 `src/integrations/astro-pwa.ts`로 빌드 통합을 직접 벤더링했습니다.
+
+Workbox에서 **Precache 라우트는 Runtime Caching 라우트보다 항상 우선 등록**됩니다. 만약 정적 MPA에서 HTML 파일을 `globPatterns`에 포함시켜 프리캐시하면, 서비스 워커는 HTML을 항상 `CacheFirst`로 서빙하여 배포 후에도 사용자가 영원히 구버전 페이지를 보게 됩니다.
+
+```typescript
+// astro.config.mjs
+workbox: {
+  // 불변 해시 자산만 프리캐시 (HTML은 엄격히 배제)
+  globPatterns: ['**/*.{js,css,svg,png,ico,woff,woff2}'],
+  navigateFallback: null,
+  runtimeCaching: [
+    {
+      // 페이지 네비게이션은 런타임 NetworkFirst로 서빙
+      urlPattern: ({ request }) => request.mode === 'navigate',
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'pages',
+        networkTimeoutSeconds: 3,
+        expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
+      },
+    },
+  ],
+}
+```
+
+---
+
+## **5. 검증 노트 (Fact-Check)**
+
+| 점검 항목 | 소스 코드 확인 결과 | 기술적 판정 |
+|---|---|---|
+| **`ogLocale` 대문자 변환 여부** | `src/utils/lang.ts:27`은 `${m.language}_${region}`으로 `.toUpperCase()`가 없음. | `Intl.Locale.maximize()`가 language는 소문자, region은 대문자(`ko_KR`, `zh_CN`)를 반환하므로 Facebook Open Graph 표준과 정확히 일치함. 주석(`"ZH_CN"`)이 부정확한 표현임. |
+| **사이트맵 네임스페이스 스키마** | `src/pages/sitemap.xml.ts:127`에서 `xmlns:xhtml="https://www.w3.org/1999/xhtml"` 사용. | `http://` 사용 시 Chromium XML 뷰어 파싱 크래시(crbug 580033) 방지 확인. |
+| **`math` 조건부 KaTeX 로드** | `src/content.config.ts` 및 `astro.config.mjs`의 `conditionalMath()` 플러그인. | 수식이 없는 대다수 포스트에서 불필요한 KaTeX CSS(~50KB) 번들 제외 확인. |
+
+---
+
+## **6. 결론: 기계를 위한 문서를 설계한다는 것**
+
+웹 엔지니어링에서 발생하는 까다로운 버그들의 본질은 사람이 아닌 **"기계(브라우저 렌더러, 파서 라이프사이클, 검색엔진 크롤러, 캐시 런타임)의 숨겨진 명세와 동작 휴리스틱"**을 이해하지 못했을 때 나타납니다.
+
+- 브라우저가 이미지 헤더를 스트리밍하는 방식을 이해했기에 CLS를 잡을 수 있었고,
+- Chromium 다크모드 필터의 페인트 경로 차이를 이해했기에 프레임 변색을 방지할 수 있었으며,
+- Workbox의 라우트 등록 우선순위를 파악했기에 배포 즉시 갱신되는 정적 MPA PWA를 구축할 수 있었습니다.
+
+문제를 덮기 위한 임시방편 셀렉터나 추가 래퍼를 덧대기보다, **기계가 동작하는 런타임 규칙을 정확히 파악하고 그에 맞춰 시스템 모델을 설계하는 것**이야말로 진정한 웹 아키텍처의 핵심입니다.
+-->

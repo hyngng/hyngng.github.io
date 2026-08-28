@@ -11,7 +11,7 @@ toc: true
 date: 2025-03-17 15:25:00 +0900
 last_modified_at: 2025-12-29 09:40:00 +0900
 
-lang: en
+lang: en-US
 ---
 
 ## **Class and Instance Variables Need to Be Distinguished**

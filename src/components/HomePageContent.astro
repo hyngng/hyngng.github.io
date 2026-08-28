@@ -1,9 +1,9 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../locales';
-import { defaultLocale } from '../locales';
 import { ALL_AUTHORS, getAuthor, type AuthorId } from '../settings/authors.settings';
-import { getSiteMeta } from '../settings/site.settings';
+import { getSiteMeta } from '../locales';
+import { localePath } from '../utils/posts';
 import Authors from './Authors.astro';
 import Hero from './Hero.astro';
 import PostListSection from './PostListSection.astro';
@@ -33,9 +33,7 @@ const mainAuthors = ALL_AUTHORS.map((author) => ({
   info: locale.authors.postCount(postCountByAuthor[author.id as AuthorId] || 0),
 }));
 
-const chunkBaseUrl = currentLocale === defaultLocale
-  ? '/posts/chunk'
-  : `/${currentLocale}/posts/chunk`;
+const chunkBaseUrl = `${localePath(currentLocale)}/posts/chunk`;
 ---
 
 <Hero title={siteMeta.title} description={siteMeta.description} />

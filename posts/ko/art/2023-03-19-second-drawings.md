@@ -16,7 +16,7 @@ toc: false
 date: 2023-03-19 15:24:00 +0900
 last_modified_at: 2023-03-26 15:24:00 +0900
 
-lang: ko
+lang: ko-KR
 ---
 
 ![230314-고민남](/drawing/230314-고민남.webp){: .rounded-10 .light .border }

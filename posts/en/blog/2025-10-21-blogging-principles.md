@@ -17,7 +17,7 @@ redirect_from:
     - /posts/blog-checkup-and-writing-credo/
     - /posts/blog-checkup-and-writing-principles/
 
-lang: en
+lang: en-US
 ---
 
 ## **Why Did I Start This Blog?**

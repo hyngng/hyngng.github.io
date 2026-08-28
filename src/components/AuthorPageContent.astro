@@ -1,8 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../locales';
-import { defaultLocale } from '../locales';
 import { type Author, AUTHOR_PREFIX } from '../settings/authors.settings';
+import { localePath } from '../utils/posts';
 import Hero from './Hero.astro';
 import PostListSection from './PostListSection.astro';
 import Search from './Search.astro';
@@ -16,9 +16,7 @@ interface Props {
 
 const { author, locale, currentLocale, posts } = Astro.props;
 
-const chunkBaseUrl = currentLocale === defaultLocale
-  ? `/${author.id}/chunk`
-  : `/${currentLocale}/${author.id}/chunk`;
+const chunkBaseUrl = `${localePath(currentLocale)}/${author.id}/chunk`;
 ---
 
 <Hero title={AUTHOR_PREFIX + author.name} description={author.description} />

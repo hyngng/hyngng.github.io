@@ -1,4 +1,5 @@
 ﻿---
+lang: es-ES
 image:
     path: /2025-07-12-canon-planning/preview-image.webp
     lqip: data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACwAQCdASoQAAgAAUAmJaQAAtrhz8SAAP7+iKQXo5XPAFYHsGXQIf86Ki+SWy2NwKTSw4qdpXZuAAAA
@@ -16,7 +17,6 @@ toc: true
 date: 2025-07-28 21:56:00 +0900
 last_modified_at: 2026-01-23 09:05:00 +0900
 
-lang: es
 ---
 
 ## **Introducción**

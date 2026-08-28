@@ -14,7 +14,7 @@ last_modified_at: 2025-12-29 07:29:00 +0900
 mermaid: true
 math: true
 
-lang: es
+lang: es-ES
 ---
 
 El algoritmo A* es un algoritmo de búsqueda en grafos para encontrar la ruta más corta entre dos puntos concretos. La característica de este algoritmo se puede resumir en una sola ecuación, donde $n$ es un nodo:

@@ -13,7 +13,7 @@ last_modified_at: 2026-04-20 15:05:00 +0900
 
 mermaid: true
 
-lang: fr
+lang: fr-FR
 ---
 
 ## **La déception du Sony A7C**

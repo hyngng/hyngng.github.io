@@ -4,6 +4,7 @@ import { z } from 'astro/zod';
 import { AUTHOR_IDS } from './settings/authors.settings';
 import { SITE } from './settings/site.settings';
 import { parseDateWithTimezone } from './utils/timezone';
+import { normalizeLang } from './utils/lang';
 import { isLocalAbsolutePath, toAbsoluteImageUrl } from './utils/cdn';
 
 const authorSchema = z
@@ -32,7 +33,16 @@ const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './posts' }),
   schema: z.object({
     title: z.string(),
-    lang: z.string().regex(/^[a-z]{2}$/, 'Language must be a 2-letter lowercase code (e.g. "en")'),
+    // Canonicalize to BCP 47 via the shared normalizer so `post.data.lang`
+    // always matches what the config-time scan (supportedLocales) produces.
+    lang: z.string().transform((v, ctx) => {
+      const normalized = normalizeLang(v);
+      if (!normalized) {
+        ctx.addIssue({ code: 'custom', message: 'Language must be a BCP 47 code (e.g. "ko-KR", "zh-CN")' });
+        return z.NEVER;
+      }
+      return normalized;
+    }),
     description: z.string().optional(),
     date: z.string().transform(v => parseDateWithTimezone(String(v), SITE.timezone)),
     last_modified_at: z.string().optional()

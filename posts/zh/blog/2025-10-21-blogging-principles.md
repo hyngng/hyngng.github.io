@@ -13,7 +13,7 @@ last_modified_at: 2026-05-25 16:20:00 +0900
 
 mermaid: true
 
-lang: zh
+lang: zh-CN
 ---
 
 ## **当初为何开始写博客**

@@ -16,7 +16,7 @@ mermaid: true
 redirect_from:
     - /posts/astp-devlog/
 
-lang: ko
+lang: ko-KR
 ---
 
 ## **자동주식거래기, ASTP**

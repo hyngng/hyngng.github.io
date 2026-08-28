@@ -1,6 +1,6 @@
 ﻿import type { APIContext } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { getPostLang, getPostSlug, getPostPath, getAuthorPath } from '../utils/posts';
+import { getPostLang, getPostSlug, getPostPath, getAuthorPath, localePath } from '../utils/posts';
 import { defaultLocale, availableLocales } from '../locales';
 import { getLocaleEntry } from '../settings/site.settings';
 
@@ -51,7 +51,7 @@ export async function GET({ request }: APIContext) {
   // ── 1. Language homepages (default locale = root) ─────
   const homepages = availableLocales.map(({ code }) => ({
     code,
-    href: code === defaultLocale ? `${origin}/` : `${origin}/${code}/`,
+    href: code === defaultLocale ? `${origin}/` : `${origin}${localePath(code)}/`,
   }));
 
   const homepageAlternates: Alternate[] = homepages.map(({ code, href }) => ({

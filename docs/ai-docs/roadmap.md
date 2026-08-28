@@ -348,5 +348,25 @@
     - 결과: `math: true`/`mermaid: true` 포스트만 해당 JS/CSS 로드, 미설정 포스트에서는 ~50KB(KaTeX) + ~1MB(mermaid) 로드 제거.
     - `remark-media-caption.mjs`: `visit` 콜백 미사용 `index` → `_index`로 변경으로 unused variable 경고 해소.
     - 검증: `npm run build` 성공, `npx astro check` 0 errors / 0 warnings / 0 hints. dist에서 `math: true` 포스트에 KaTeX CSS·mermaid 스크립트 존재, 미설정 포스트에서는 미존재 확인.
+  - [x] **포스트 언어 BCP-47 직 carrying + `LOCALE_REGISTRY` 제거 (2026-08)**
+    - 배경: 기존 `site.settings.ts`의 `LOCALE_REGISTRY`(하드코딩 매핑 + SEO `description` 보강)는 유지보수 부채. `lang`을 프론트매터에 full BCP-47(`ko-KR`, `zh-CN`)로 직접 carry하는 방향으로 재설계.
+    - 변경:
+      - `src/content.config.ts`: `lang` 스키마를 `normalizeLang()` transform으로 강화(`z.string().transform`이 BCP-47을 canonical로 정규화, 실패 시 build error).
+      - `site.settings.ts`: `LOCALE_REGISTRY` 완전 삭제. `deriveLocaleMeta(code)`(`Intl.Locale(code).maximize()` 기반 `bcp47`/`ogLocale`/`language`/`region` 파생)로 대체. `defaultLocale = 'ko-KR'`. `supportedLocales`는 빌드 시 `./posts` 스캔(`getFrontmatterLang()` 결과를 `normalizeLang()`로 정규화)으로 파생.
+      - `locales/index.ts`: `getSiteMeta`/`SiteLocaleMeta`를 여기로 이동(`getLocale(lang).description` 재사용). `Locale.description` 필드 추가(7개 로케일 파일). `availableLocales`는 `supportedLocales`에서 파생.
+      - `astro.config.mjs`: i18n `locales`를 객체 폼(`{ codes: [code], path }`)으로 변경 → `Astro.currentLocale`이 BCP-47(`codes[0]`)을 반환. `i18n.defaultLocale`은 라우팅용 짧은 `'ko'`, `site.settings.defaultLocale`은 로직용 `'ko-KR'`로 의도적 분리.
+      - URL 세그먼트는 `src/utils/locale-segments.ts`의 `segmentMap`(단일 진실 출처)에서 파생. `localePath(code)`가 이 맵을 조회, `[lang]` 라우트 `getStaticPaths`가 `localePath(code).slice(1)`로 `lang` param 생성.
+      - `Frame.astro`/`Head`/`BaseLayout`/`PostLayout`/`sitemap.xml.ts`/`llms.ts` 등 `getSiteMeta` import를 올바른 위치로 정정, `localePath`/`Astro.currentLocale` 사용으로 통일. 마이그레이션: 372개 포스트 프론트매터 `lang`을 BCP-47로 일괄 변환(2건 누락 `lang` 보강). `llms.ts`/테스트는 `LLMS_LOCALE='en-US'`로 갱신.
+    - 근본 원인 디버깅: 빌드 실패(`Missing parameter: lang`)는 `scanPostLangValues`가 `getFrontmatterLang()`의 소문자화된 값(`en-us`)을 대문자 리전 `[A-Z]{2}` regex로 거부해 `supportedLocales`가 `defaultLocale`만 남았기 때문. `deriveLocaleMeta()` 정규화로 해결.
+    - 검증: `npm run build` 성공(exit 0, 588 files, 7개 언어 372 pages Pagefind 인덱싱), `npx astro check` 0 errors, `npm test` 38 passed. `docs/ai-docs/configuration/locales.md`·`features/posts.md`를 신규 아키텍처로 갱신.
+  - [x] **URL 세그먼트 충돌 버그 수정 — `localePath`를 집합 기반 맵으로 전환 (2026-08)**
+    - 배경: `localePath(code)`가 `new Intl.Locale(c).language`로 region을 버려, `zh-CN`과 `zh-TW`가 모두 `/zh`로 충돌. 코드 하나만 보는 순수 함수로는 전역 유일성(injectivity)을 보장할 수 없음 — 이전 리뷰의 "정규화 단일점 붕괴"와 동일 계열의 결함이 URL 레이어에서 재발. `validate-routes.ts`의 `(lang, slug)` 키 검사도 canonical lang 기준이라 실제 URL 충돌을 원리적으로 탐지 불가.
+    - 변경:
+      - `src/utils/locale-segments.ts` 신설: `buildSegmentMap(supportedLocales, defaultLocale)`가 집합 전체를 보고 세그먼트 계산. language가 유일하면 짧은 코드(`en`), 같은 language가 둘 이상이면 full lowercased code(`zh-cn`,`zh-tw`)로 자동 승격. 충돌 잔존 시 빌드 타임 throw(fail loud). `segmentMap`(precomputed) + `localePath(code)`(맵 조회) 제공.
+      - `src/utils/posts.ts`: `localePath` 본문 제거, `./locale-segments` 재수출(기존 import 호환).
+      - `astro.config.mjs`: `i18n.locales`의 `path`가 `segmentMap` 사용(중복 `new Intl.Locale(code).language` 로직 제거).
+      - `src/integrations/validate-routes.ts`: 중복 키를 실제 출력 경로(`localePath(lang)` + slug) 기준으로 변경 → 검증 단위와 실제 충돌 단위 일치.
+      - `src/utils/locale-segments.test.ts` 신설(3 tests).
+    - 검증: `npm test` 47 passed, `npx astro check` 0 errors, `npm run build` exit 0. 회귀 테스트: `lang: zh-TW` 임시 포스트 추가 시 빌드 성공하고 `dist/zh-cn`+`dist/zh-tw` 생성·`dist/zh` 미생성 확인(충돌 없음), 임시 포스트 삭제 후 `zh-CN` 단독 시 다시 `/zh`로 복귀 확인. `docs/ai-docs/configuration/locales.md` 갱신(세그먼트 맵 단일점 + 알려진 구조적 부채 4종 기록).
 
 ## Option

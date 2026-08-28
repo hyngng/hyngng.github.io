@@ -52,7 +52,7 @@ describe('buildLlmsTxt', () => {
     expect(text).toContain('> Greetings 🔥');
     expect(text).toContain('Default language: ko-KR.');
     const availLine = text.match(/Available locales: ([^.]+)\./)![1];
-    for (const code of ['ko', 'en', 'ru', 'fr', 'es', 'ja', 'zh']) {
+    for (const code of ['ko-KR', 'en-US', 'ru-RU', 'fr-FR', 'es-ES', 'ja-JP', 'zh-CN']) {
       expect(availLine).toContain(code);
     }
     expect(text).toContain('## Sections\n');
@@ -124,7 +124,7 @@ describe('buildLlmsTxt', () => {
   it('excludes drafts and posts in other locales', () => {
     const text = build([
       mockPost(`${LLMS_LOCALE}/dev/2024-01-01-draft`, { draft: true }),
-      mockPost('ko/dev/2024-01-01-korean'),
+      mockPost('ko-KR/dev/2024-01-01-korean'),
     ]);
 
     expect(text).not.toContain('### hyngng.dev\n\n-');

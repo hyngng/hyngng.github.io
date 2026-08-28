@@ -1,6 +1,7 @@
 import type { Locale } from './index';
 
 const locale: Locale = {
+  description: '반갑습니다 🔥',
   frame: {
     lang: 'KO',
     langAria: '언어 선택',

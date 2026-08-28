@@ -14,7 +14,7 @@ last_modified_at: 2025-12-29 07:29:00 +0900
 mermaid: true
 math: true
 
-lang: en
+lang: en-US
 ---
 
 The A* algorithm is a graph search algorithm for finding the shortest path between two specific points. Its characteristics can be summarized in a single expression, where $n$ denotes a node:

@@ -13,7 +13,7 @@ last_modified_at: 2026-01-27 15:09:00 +0900
 
 mermaid: true
 
-lang: ja
+lang: ja-JP
 ---
 
 ## **はじめに**

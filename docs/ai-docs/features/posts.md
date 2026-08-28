@@ -61,13 +61,13 @@ Jekyll 시절의 구 URL 형식(`https://hyngng.github.io/posts/{slug}/`)으로 
 
 ## 언어 코드 추출
 
-포스트의 언어는 **프론트매터 `lang` 필드**가 단일 진실 출처입니다(`src/content.config.ts`에서 필수 2자리 코드로 검증). 폴더 경로는 언어를 결정하지 않습니다.
+포스트의 언어는 **프론트매터 `lang` 필드**가 단일 진실 출처이며, 값은 **full BCP-47 코드**(예: `ko-KR`, `zh-CN`)입니다(`src/content.config.ts`에서 BCP-47 형식으로 검증). 폴더 경로는 언어를 결정하지 않습니다.
 
-`src/utils/posts.ts`의 `getPostLang(post)` 함수가 `post.data.lang`을 반환합니다. 지원 언어 집합은 `site.settings.ts`의 `supportedLocales`로, 빌드 시 `./posts`를 스캔해 파생됩니다(중앙 목록 불필요).
+`src/utils/posts.ts`의 `getPostLang(post)` 함수가 `post.data.lang`(BCP-47)을 반환합니다. 지원 언어 집합은 `site.settings.ts`의 `supportedLocales`로, 빌드 시 `./posts`를 스캔해 파생됩니다(중앙 목록 불필요, `deriveLocaleMeta()`로 BCP-47 정규화).
 
 ```typescript
 // 예시
-getPostLang(post) // post.data.lang 반환 (예: 'ko', 'en')
+getPostLang(post) // post.data.lang 반환 (예: 'ko-KR', 'en-US')
 ```
 
 > 포스트는 프로젝트 루트 `posts/` 아래 어디에든 위치할 수 있습니다(`content.config.ts`의 `base: './posts'`). 폴더는 순수 조직용이며 예: `posts/ko/blog/2022-08-13-first-post.mdx`.
@@ -81,9 +81,9 @@ getPostLang(post) // post.data.lang 반환 (예: 'ko', 'en')
 ```typescript
 // 예시
 getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog')                    // '/blog/first-post/' 반환 (기본 언어)
-getPostPath('en/blog/2022-08-13-first-post.mdx', 'blog')                    // '/blog/first-post/' 반환 (currentLocale 미전달 → 기본 'ko')
-getPostPath('en/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/en/blog/first-post/' 반환
-getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/en/blog/first-post/' 반환 (id의 언어와 무관)
+getPostPath('en/blog/2022-08-13-first-post.mdx', 'blog')                    // '/blog/first-post/' 반환 (currentLocale 미전달 → 기본 'ko-KR')
+getPostPath('en/blog/2022-08-13-first-post.mdx', 'blog', 'en-US')             // '/en/blog/first-post/' 반환
+getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en-US')             // '/en/blog/first-post/' 반환 (id의 언어와 무관)
 ```
 
 ## Content Collection 경로
@@ -103,7 +103,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en')             // '/
 - `draft`: boolean, 기본값 `false`.
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
 - `start_with_ads`, `toc`: 이전 Jekyll frontmatter 호환용 선택 필드. `toc_sticky`는 TOC가 항상 sticky이므로 2026-08 스키마에서 제거됨.
-- `lang`: **필수**, 포스트 언어 코드 (2자리 소문자, 예: `ko`, `en`). 지원 언어는 이 값에서 빌드 시점에 파생되므로 중앙 목록 편집 불필요. 폴더 경로는 언어와 무관.
+  - `lang`: **필수**, 포스트 언어 코드 (full BCP-47, 예: `ko-KR`, `zh-CN`). 지원 언어는 이 값에서 빌드 시점에 파생되므로 중앙 목록 편집 불필요. 폴더 경로는 언어와 무관.
 - `math`: 선택(boolean), 수식(KaTeX) 사용 여부. `true`면 `PostLayout.astro`가 KaTeX CSS를 `<head>`에 주입.
 - `mermaid`: 선택(boolean), Mermaid 다이어그램 사용 여부. `true`면 `BaseLayout`이 `initMermaidThemeSync()`를 로드.
 - `og_image`: 선택, OG 이미지 절대 URL (`image.path`보다 우선).

@@ -21,7 +21,7 @@ last_modified_at: 2025-10-28 13:43:00 +0900
 redirect_from:
   - /look-back-review/
 
-lang: es
+lang: es-ES
 ---
 
 :::warning

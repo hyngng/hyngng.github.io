@@ -18,7 +18,7 @@ last_modified_at: 2026-06-25 15:26:00 +0900
 
 mermaid: true
 
-lang: zh
+lang: zh-CN
 ---
 
 ## **该写些什么呢**

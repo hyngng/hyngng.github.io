@@ -25,17 +25,19 @@ export function getPostSlug(id: string): string {
   return filename.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.(md|mdx)$/, '');
 }
 
+// URL segment mapping is owned by ./locale-segments (single source of truth
+// for locale code -> URL prefix). Re-exported here so existing imports from
+// posts.ts keep working.
+import { localePath } from './locale-segments';
+export { localePath };
+
 export function getPostPath(id: string, authorId: string | string[], currentLocale?: string): string {
   const primary = Array.isArray(authorId) ? authorId[0] : authorId;
-  const locale = currentLocale || DEFAULT_LOCALE;
-  const prefix = locale === DEFAULT_LOCALE ? '' : `/${locale}`;
-  return `${prefix}/${primary}/${getPostSlug(id)}/`;
+  return `${localePath(currentLocale)}/${primary}/${getPostSlug(id)}/`;
 }
 
 export function getAuthorPath(authorId: string, currentLocale?: string): string {
-  const locale = currentLocale || DEFAULT_LOCALE;
-  const prefix = locale === DEFAULT_LOCALE ? '' : `/${locale}`;
-  return `${prefix}/${authorId}/`;
+  return `${localePath(currentLocale)}/${authorId}/`;
 }
 
 export function getPostNumber(posts: CollectionEntry<'posts'>[], postId: string): number {

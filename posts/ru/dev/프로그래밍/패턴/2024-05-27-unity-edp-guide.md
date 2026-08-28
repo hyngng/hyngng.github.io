@@ -17,7 +17,7 @@ redirect_from:
     - /posts/event-driven-programming-on-unity/
     - /posts/unity-event-driven-guide/
 
-lang: ru
+lang: ru-RU
 ---
 
 ## **Введение**

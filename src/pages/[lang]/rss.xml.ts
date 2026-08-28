@@ -1,14 +1,13 @@
 import type { APIContext } from 'astro';
 import rss from '@astrojs/rss';
-import { getRssItems } from '../../utils/posts';
-import { getSiteMeta } from '../../settings/site.settings';
-import { availableLocales, defaultLocale } from '../../locales';
+import { getRssItems, localePath } from '../../utils/posts';
+import { getSiteMeta, availableLocales, defaultLocale } from '../../locales';
 
 export async function getStaticPaths() {
-  const locales = availableLocales.map(l => l.code).filter(lang => lang !== defaultLocale);
-  return locales.map((lang) => ({
-    params: { lang },
-    props: { lang },
+  const locales = availableLocales.map((l) => l.code).filter((code) => code !== defaultLocale);
+  return locales.map((code) => ({
+    params: { lang: localePath(code).slice(1) },
+    props: { lang: code },
   }));
 }
 

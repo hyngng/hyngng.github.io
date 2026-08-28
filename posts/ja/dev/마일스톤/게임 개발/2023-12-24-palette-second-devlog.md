@@ -18,7 +18,7 @@ last_modified_at: 2024-03-20 17:38:00 +0900
 
 mermaid: true
 
-lang: ja
+lang: ja-JP
 ---
 
 ## **開発を再開した理由**

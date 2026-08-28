@@ -11,7 +11,7 @@ toc: true
 date: 2024-09-21 19:10:00 +0900
 last_modified_at: 2025-10-16 13:03:00 +0900
 
-lang: ko
+lang: ko-KR
 ---
 
 <!--

@@ -16,7 +16,7 @@ toc: false
 date: 2022-08-25 14:38:00 +0900
 last_modified_at: 2026-07-02 15:50:00 +0900
 
-lang: ru
+lang: ru-RU
 ---
 
 ![200000-생존사람](/drawing/200000-생존사람.webp){: .rounded-10 .light .border }

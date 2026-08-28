@@ -16,7 +16,7 @@ toc: false
 date: 2026-07-01 13:37:00 +0900
 last_modified_at: 2026-07-02 15:21:00 +0900
 
-lang: es
+lang: es-ES
 ---
 
 Este es el segundo archivo de dibujos. En realidad tengo el doble o más de material del que subo, pero por razones de privacidad, redundancia de temas, vergüenza, etc., he eliminado la mayor parte y solo subo unos pocos seleccionados. Por cuestiones de coste, usé una cámara digital con posprocesado en lugar de un escáner, y hay ruido debido a las limitaciones en el control de la iluminación. Las explicaciones están enlazadas como notas al pie en los pies de foto para no interrumpir el flujo de lectura.

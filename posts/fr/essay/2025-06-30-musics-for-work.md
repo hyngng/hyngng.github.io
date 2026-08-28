@@ -13,7 +13,7 @@ last_modified_at: 2026-05-31 14:30:00 +0900
 
 mermaid: true
 
-lang: fr
+lang: fr-FR
 ---
 
 Écouter de la musique en travaillant peut nuire à une immersion totale, ce n'est donc pas bénéfique pour le travail cognitif. Pourtant, beaucoup de gens écoutent de la musique pendant leurs tâches, soit simplement pour combler le silence ambiant, soit pour la familiarité et le réconfort qu'elle apporte. Personnellement, je cherche de la musique pour ces raisons. Quand j'ai vraiment besoin d'efficacité pour du développement ou la rédaction d'articles de blog, je me tourne vers le bruit blanc, mais quand j'ai un peu de marge, je choisis les genres suivants.

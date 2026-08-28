@@ -6,9 +6,10 @@ import frFR from './fr-FR';
 import esES from './es-ES';
 import jaJP from './ja-JP';
 import zhCN from './zh-CN';
-import { supportedLocales, defaultLocale } from '../settings/site.settings';
+import { SITE, supportedLocales, defaultLocale } from '../settings/site.settings';
 
 export interface Locale {
+  description: string;
   frame: {
     lang: string;
     langAria: string;
@@ -79,13 +80,13 @@ export interface Locale {
 }
 
 const locales: Record<string, Locale> = {
-  ko: koKR,
-  en: enUS,
-  ru: ruRU,
-  fr: frFR,
-  es: esES,
-  ja: jaJP,
-  zh: zhCN,
+  'ko-KR': koKR,
+  'en-US': enUS,
+  'ru-RU': ruRU,
+  'fr-FR': frFR,
+  'es-ES': esES,
+  'ja-JP': jaJP,
+  'zh-CN': zhCN,
 };
 
 export { defaultLocale } from '../settings/site.settings';
@@ -103,6 +104,15 @@ export function getLocale(lang?: string): Locale {
 
 export function useLocale(Astro: AstroGlobal): Locale {
   return getLocale(Astro.currentLocale);
+}
+
+export interface SiteLocaleMeta {
+  title: string;
+  description: string;
+}
+
+export function getSiteMeta(lang?: string): SiteLocaleMeta {
+  return { title: SITE.title, description: getLocale(lang).description };
 }
 
 export { koKR, enUS, ruRU, frFR, esES, jaJP, zhCN };

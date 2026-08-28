@@ -17,7 +17,7 @@ last_modified_at: 2025-12-26 11:40:00 +0900
 
 mermaid: true
 
-lang: zh
+lang: zh-CN
 ---
 
 ## **前言**

@@ -18,7 +18,7 @@ last_modified_at: 2023-12-22 20:42:00 +0900
 
 mermaid: true
 
-lang: ja
+lang: ja-JP
 ---
 
 ## **ゲームを作る**

@@ -13,7 +13,7 @@ last_modified_at: 2026-06-25 15:21:00 +0900
 
 mermaid: true
 
-lang: en
+lang: en-US
 ---
 
 I feel dazed. The time that had been flowing slowly was suddenly all gone, and now I'm out of Yeonmugwan — the main administration building of the Army Training Center — writing from home.

@@ -13,7 +13,7 @@ last_modified_at: 2026-04-20 15:05:00 +0900
 
 mermaid: true
 
-lang: ru
+lang: ru-RU
 ---
 
 ## **Разочарование в Sony A7C**

@@ -1,7 +1,8 @@
 ---
-import { getSiteMeta } from "../settings/site.settings";
+import { getSiteMeta } from "../locales";
 import Button from "./Button.astro";
 import { getLocale, availableLocales, defaultLocale } from "../locales";
+import { localePath } from "../utils/posts";
 
 interface Props {
   authorId?: string;
@@ -14,15 +15,19 @@ const locale = getLocale(currentCode);
 const siteMeta = getSiteMeta(currentCode);
 const otherLocales = availableLocales.filter((l) => l.code !== currentCode);
 
-const homeUrl =
-  currentCode === defaultLocale ? "/" : `/${currentCode}/`;
+const currentSegment = localePath(currentCode).slice(1);
+const localeSegments = Object.fromEntries(
+  availableLocales.map((l) => [l.code, localePath(l.code).slice(1)]),
+);
+
+const homeUrl = currentCode === defaultLocale ? "/" : `/${currentSegment}/`;
 const rssUrl = authorId
   ? currentCode === defaultLocale
     ? `/${authorId}/rss.xml`
-    : `/${currentCode}/${authorId}/rss.xml`
+    : `/${currentSegment}/${authorId}/rss.xml`
   : currentCode === defaultLocale
     ? "/rss.xml"
-    : `/${currentCode}/rss.xml`;
+    : `/${currentSegment}/rss.xml`;
 ---
 
 <div class="fixed-actions">
@@ -62,8 +67,8 @@ const rssUrl = authorId
         class="lang-list"
         id="lang-list"
         aria-hidden="true"
-        data-locale-codes={availableLocales.map((l) => l.code).join(",")}
-        data-default-locale={defaultLocale}
+        data-current-segment={currentSegment}
+        data-locale-segments={JSON.stringify(localeSegments)}
       >
         {
           otherLocales.map((l) => (
@@ -302,10 +307,10 @@ const rssUrl = authorId
     if (!langToggle || !langList || !rightActionsInner) return;
 
     const langItems = langList.querySelectorAll(".lang-item");
-    const localeCodes = new Set(
-      langList.dataset.localeCodes?.split(",").filter(Boolean),
+    const currentSegment = langList.dataset.currentSegment || "";
+    const localeSegments = JSON.parse(
+      langList.dataset.localeSegments || "{}",
     );
-    const defaultLocale = langList.dataset.defaultLocale;
 
     const buttonSize =
       parseFloat(
@@ -321,16 +326,17 @@ const rssUrl = authorId
     let isOpen = false;
 
     function getLocalizedPath(langCode: string) {
+      const targetSegment = localeSegments[langCode] || "";
       const pathSegments = window.location.pathname
         .split("/")
         .filter(Boolean);
 
-      if (localeCodes.has(pathSegments[0])) {
+      if (currentSegment && pathSegments[0] === currentSegment) {
         pathSegments.shift();
       }
 
-      if (langCode !== defaultLocale) {
-        pathSegments.unshift(langCode);
+      if (targetSegment) {
+        pathSegments.unshift(targetSegment);
       }
 
       return `/${pathSegments.join("/")}${window.location.search}${window.location.hash}`;

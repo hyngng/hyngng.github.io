@@ -1,17 +1,17 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { ALL_AUTHORS, AUTHOR_PREFIX, getAuthor } from '../../../settings/authors.settings';
-import { getSiteMeta } from '../../../settings/site.settings';
-import { getPublishedPosts, getAuthorPath } from '../../../utils/posts';
+import { getSiteMeta } from '../../../locales';
+import { getPublishedPosts, getAuthorPath, localePath } from '../../../utils/posts';
 import { getLocale, availableLocales, defaultLocale } from '../../../locales';
 import AuthorPageContent from '../../../components/AuthorPageContent.astro';
 
 export async function getStaticPaths() {
-  const locales = availableLocales.map(l => l.code).filter(lang => lang !== defaultLocale);
+  const locales = availableLocales.map((l) => l.code).filter((code) => code !== defaultLocale);
   return ALL_AUTHORS.flatMap((author) =>
-    locales.map((lang) => ({
-      params: { lang, author: author.id },
-      props: { author: getAuthor(author.id, lang), lang },
+    locales.map((code) => ({
+      params: { lang: localePath(code).slice(1), author: author.id },
+      props: { author: getAuthor(author.id, code), lang: code },
     }))
   );
 }

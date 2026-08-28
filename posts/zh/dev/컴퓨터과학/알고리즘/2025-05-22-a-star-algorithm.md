@@ -14,7 +14,7 @@ last_modified_at: 2025-12-29 07:29:00 +0900
 mermaid: true
 math: true
 
-lang: zh
+lang: zh-CN
 ---
 
 A* 算法是一种用于寻找连接两个特定点的最短路径的图搜索算法。该算法的特性可以用一个公式概括，其中 $n$ 表示节点：

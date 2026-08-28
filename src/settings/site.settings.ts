@@ -5,58 +5,27 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { getFrontmatterLang } from '../utils/frontmatter-lang';
+import { deriveLocaleMeta, normalizeLang, type LocaleMeta } from '../utils/lang';
 
 // ── Locale (content-driven) ────────────────────
-// A post's language is its frontmatter `lang` (2-letter code, e.g. "en").
-// The set of supported languages is derived from the posts themselves: any
-// 2-letter `lang` present in a post makes that language naturally supported —
-// no central list to maintain. `LOCALE_REGISTRY` below is an *enrichment* map
-// (accurate BCP 47 / og:locale for known languages); it is NOT a gatekeeper.
-// Unknown languages fall back to a generic derivation in `getLocaleEntry`.
+// A post's language is its frontmatter `lang`, which is the full BCP 47 code
+// (e.g. "ko-KR", "zh-CN"). That code IS the source of truth for bcp47/region,
+// so no central registry is needed. The set of supported languages is derived
+// from the posts themselves: any `lang` present in a post makes that language
+// naturally supported — no central list to maintain. Structural fields
+// (bcp47/og:locale/region) are derived from the code via CLDR likely-subtags
+// (Intl.Locale().maximize()), which is locale-agnostic and future-proof.
+// Canonical normalization lives in `../utils/lang` (normalizeLang) so the
+// config-time scan and the content collection schema agree on one form.
 
 export type LocaleCode = string;
 
-export const defaultLocale: LocaleCode = 'ko';
+export const defaultLocale: LocaleCode = 'ko-KR';
 
-export interface LocaleRegistryEntry {
-  code: LocaleCode;
-  bcp47: string;
-  language: string;
-  region: string;
-  ogLocale: string;
-  description: string;
-}
-
-// Known languages with curated SEO metadata. Open to extension; absence here
-// only means a language gets a generic bcp47/ogLocale fallback.
-const LOCALE_REGISTRY_RAW = [
-  { bcp47: 'ko-KR', description: '반갑습니다 🔥' },
-  { bcp47: 'en-US', description: 'Greetings 🔥' },
-  { bcp47: 'ru-RU', description: 'Приветствую 🔥' },
-  { bcp47: 'fr-FR', description: 'Salutations 🔥' },
-  { bcp47: 'es-ES', description: 'Saludos 🔥' },
-  { bcp47: 'ja-JP', description: 'こんにちは 🔥' },
-  { bcp47: 'zh-CN', description: '你好 🔥' },
-] as const;
-
-export const LOCALE_REGISTRY: LocaleRegistryEntry[] = LOCALE_REGISTRY_RAW.map(
-  ({ bcp47, description }) => {
-    const intl = new Intl.Locale(bcp47);
-    const region = intl.region ?? '';
-    const code = intl.language;
-    return {
-      code,
-      bcp47,
-      language: intl.language,
-      region,
-      ogLocale: region ? `${intl.language}_${region}` : `${intl.language}_${intl.language.toUpperCase()}`,
-      description,
-    };
-  },
-);
-
-// Supported languages = default locale ∪ every 2-letter `lang` found in posts.
-// Scanned once at module load (build/dev/config time) from the posts directory.
+// Supported languages = default locale ∪ every valid `lang` found in posts.
+// Scanned once at module load (build/dev/config time) from the posts
+// directory. Uses normalizeLang() so the canonical BCP 47 here matches
+// exactly what the content collection schema produces.
 function scanPostLangValues(): Set<string> {
   const set = new Set<string>([defaultLocale]);
   const postsDir = path.resolve('posts');
@@ -66,9 +35,20 @@ function scanPostLangValues(): Set<string> {
       const full = path.join(dir, entry.name);
       if (entry.isDirectory()) { walk(full); continue; }
       if (!/\.(md|mdx)$/i.test(entry.name)) continue;
-      const raw = fs.readFileSync(full, 'utf8');
-      const lang = getFrontmatterLang(raw);
-      if (lang && /^[a-z]{2}$/.test(lang)) set.add(lang);
+      try {
+        const raw = fs.readFileSync(full, 'utf8');
+        const lang = getFrontmatterLang(raw);
+        if (lang !== undefined) {
+          const normalized = normalizeLang(lang);
+          if (normalized) {
+            set.add(normalized);
+          } else {
+            console.warn(`[scanPostLangValues] 지원하지 않는 lang 값 무시: "${lang}" (${path.relative(process.cwd(), full)})`);
+          }
+        }
+      } catch (err) {
+        console.warn(`[scanPostLangValues] frontmatter 읽기/파싱 실패, 건너뜀: ${path.relative(process.cwd(), full)}`, err);
+      }
     }
   };
   walk(postsDir);
@@ -77,26 +57,17 @@ function scanPostLangValues(): Set<string> {
 
 export const supportedLocales: string[] = [...scanPostLangValues()];
 
-export const defaultLocaleBcp47 = LOCALE_REGISTRY[0]!.bcp47;
+export const defaultLocaleBcp47 = deriveLocaleMeta(defaultLocale).bcp47;
 
-function genericLocaleEntry(lang: string): LocaleRegistryEntry {
-  return {
-    code: lang,
-    bcp47: lang,
-    language: lang,
-    region: '',
-    ogLocale: `${lang}_${lang.toUpperCase()}`,
-    description: LOCALE_REGISTRY[0]?.description ?? '',
-  };
-}
-
-export function getLocaleEntry(lang?: string): LocaleRegistryEntry {
-  if (lang) {
-    const found = LOCALE_REGISTRY.find((l) => l.code === lang || l.bcp47 === lang);
-    if (found) return found;
-    return genericLocaleEntry(lang);
+const localeEntryCache = new Map<string, LocaleMeta>();
+export function getLocaleEntry(lang?: string): LocaleMeta {
+  const key = lang || defaultLocale;
+  let entry = localeEntryCache.get(key);
+  if (!entry) {
+    entry = deriveLocaleMeta(key);
+    localeEntryCache.set(key, entry);
   }
-  return LOCALE_REGISTRY[0] ?? genericLocaleEntry(defaultLocale);
+  return entry;
 }
 
 export const SITE = {
@@ -183,16 +154,3 @@ export const SITE = {
   },
 
 } as const;
-
-export interface SiteLocaleMeta {
-  title: string;
-  description: string;
-}
-
-export function getSiteMeta(lang?: string): SiteLocaleMeta {
-  const entry = getLocaleEntry(lang);
-  return {
-    title: SITE.title,
-    description: entry.description,
-  };
-}

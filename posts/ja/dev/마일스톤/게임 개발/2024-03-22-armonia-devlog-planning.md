@@ -18,7 +18,7 @@ last_modified_at: 2024-04-30 18:58:00 +0900
 
 mermaid: true
 
-lang: ja
+lang: ja-JP
 ---
 
 ## **はじめに**

@@ -12,7 +12,7 @@ toc: true
 date: 2024-12-21 22:16:00 +0900
 last_modified_at: 2026-02-03 14:31:00 +0900
 
-lang: es
+lang: es-ES
 ---
 
 ## **Encontrar una cámara que sustituya al móvil**

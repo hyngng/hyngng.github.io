@@ -16,7 +16,7 @@ mermaid: true
 redirect_from:
     - /posts/singleton-pattern-on-unity/
 
-lang: es
+lang: es-ES
 ---
 
 ## **Introducción**

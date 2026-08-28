@@ -11,7 +11,7 @@ toc: true
 date: 2024-03-21 19:32:00 +0900
 last_modified_at: 2025-10-20 22:29:00 +0900
 
-lang: ru
+lang: ru-RU
 ---
 
 :::info

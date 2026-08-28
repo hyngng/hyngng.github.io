@@ -2,15 +2,15 @@ import type { CollectionEntry } from 'astro:content';
 import { ALL_AUTHORS, getAuthor, type AuthorId } from '../settings/authors.settings';
 import {
   SITE,
-  getSiteMeta,
   getLocaleEntry,
   defaultLocale,
   defaultLocaleBcp47,
   supportedLocales,
 } from '../settings/site.settings';
+import { getSiteMeta } from '../locales';
 import { getPostLang, getPostPath, getAuthorPath, extractExcerpt } from './posts';
 
-export const LLMS_LOCALE = 'en';
+export const LLMS_LOCALE = 'en-US';
 export const LLMS_MAX_POSTS_PER_AUTHOR = 10;
 export const LLMS_DESCRIPTION_MAX_LENGTH = 155;
 

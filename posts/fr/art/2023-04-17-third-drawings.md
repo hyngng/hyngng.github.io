@@ -16,7 +16,7 @@ toc: false
 date: 2023-04-17 15:24:00 +0900
 last_modified_at: 2023-04-26 20:55:00 +0900
 
-lang: fr
+lang: fr-FR
 ---
 
 ![230426-거꾸로매달림](/drawing/230426-거꾸로매달림.webp){: .rounded-10 .light .border }

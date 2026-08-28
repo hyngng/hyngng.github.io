@@ -1,6 +1,7 @@
 import type { Locale } from './index';
 
 const locale: Locale = {
+  description: 'こんにちは 🔥',
   frame: {
     lang: 'JA',
     langAria: '言語を選択',

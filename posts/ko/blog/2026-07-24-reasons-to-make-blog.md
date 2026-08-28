@@ -13,7 +13,7 @@ last_modified_at: 2026-08-08 21:09:00 +0900
 
 mermaid: true
 
-lang: ko
+lang: ko-KR
 ---
 
 ## **블로그를 만들었습니다**

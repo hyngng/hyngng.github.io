@@ -11,7 +11,7 @@ toc: true
 date: 2026-05-04 12:06:00 +0900
 last_modified_at: 2026-05-08 13:00:00 +0900
 
-lang: fr
+lang: fr-FR
 ---
 
 ## **Présentation du livre**
