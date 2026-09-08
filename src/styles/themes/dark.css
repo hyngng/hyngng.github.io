@@ -37,8 +37,13 @@
   --color-shimmer-highlight: #424242;
 
   /* ── 테마 토글 아이콘 ── */
-  #theme-icon-sun { display: none; }
-  #theme-icon-moon { display: inline; }
+  #theme-icon-sun {
+    display: none;
+  }
+
+  #theme-icon-moon {
+    display: inline;
+  }
 
   /* ── Border ── */
   --color-border: #495057;

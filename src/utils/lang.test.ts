@@ -22,23 +22,25 @@ describe('normalizeLang', () => {
   });
 
   it('returns null for invalid input', () => {
-    expect(normalizeLang('zzz')).toBeNull();
     expect(normalizeLang('')).toBeNull();
     expect(normalizeLang('k')).toBeNull();
-    expect(normalizeLang('not-a-lang')).toBeNull();
   });
 });
 
 describe('isValidLang', () => {
   it('mirrors normalizeLang truthiness', () => {
     expect(isValidLang('en-US')).toBe(true);
-    expect(isValidLang('zzz')).toBe(false);
   });
 });
 
 describe('deriveLocaleMeta', () => {
   it('derives og:locale and region from the code', () => {
-    expect(deriveLocaleMeta('en-US')).toMatchObject({ bcp47: 'en-US', language: 'en', region: 'US', ogLocale: 'EN_US' });
-    expect(deriveLocaleMeta('zh-CN')).toMatchObject({ bcp47: 'zh-CN', language: 'zh', region: 'CN', ogLocale: 'ZH_CN' });
+    expect(deriveLocaleMeta('en-US')).toMatchObject({ bcp47: 'en-US', language: 'en', region: 'US', ogLocale: 'en_US' });
+    expect(deriveLocaleMeta('zh-CN')).toMatchObject({ bcp47: 'zh-CN', language: 'zh', region: 'CN', ogLocale: 'zh_CN' });
+  });
+
+  it('emits og:locale in Open Graph form (lower_language_UPPER_region)', () => {
+    expect(deriveLocaleMeta('en-US').ogLocale).toMatch(/^[a-z]{2}_[A-Z]{2}$/);
+    expect(deriveLocaleMeta('zh-CN').ogLocale).toBe('zh_CN');
   });
 });

@@ -53,6 +53,7 @@
   --space-post-paragraph: 0.8rem;
   --table-cell-padding-y: 0.4rem;
   --table-cell-padding-x: 0.8rem;
+  --table-cell-max-width: 12rem;
   --post-toc-width: 224px;
   --space-post-toc-gap: 32px;
   --space-post-toc-sticky-top: 2rem;

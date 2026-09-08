@@ -153,4 +153,10 @@ export const SITE = {
     enabled: true,
   },
 
+  // ── LLMS ─────────────────────────────────────────────────
+
+  llms: {
+    locale: 'en-US',
+  },
+
 } as const;

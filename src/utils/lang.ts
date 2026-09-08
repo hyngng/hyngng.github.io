@@ -17,8 +17,8 @@ export interface LocaleMeta {
 }
 
 // Derive structural locale fields from a BCP 47 code via CLDR
-// likely-subtags. e.g. "zh" -> { bcp47: "zh-CN", ogLocale: "ZH_CN" },
-// "ko" -> "ko-KR". maximize() always resolves a region (e.g. "jbo" ->
+// likely-subtags. e.g. "zh" -> { bcp47: "zh-CN", ogLocale: "zh_CN" },
+// "ko" -> "ko-KR" (ogLocale "ko_KR"). maximize() always resolves a region (e.g. "jbo" ->
 // "jbo-001"), so ogLocale joins language_region with "_".
 export function deriveLocaleMeta(code: string): LocaleMeta {
   const m = new Intl.Locale(code).maximize();

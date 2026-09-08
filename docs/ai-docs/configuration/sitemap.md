@@ -38,15 +38,15 @@ const origin = new URL(request.url).origin;
 `<urlset>` 루트는 3개 네임스페이스를 선언함:
 
 ```xml
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="https://www.w3.org/1999/xhtml"
-        xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ```
 
 - `xhtml`: 다국어 alternate(`hreflang`)용
 - `image`: 구글 이미지 사이트맵 확장용
 
-**스키마 URL은 반드시 `https`를 사용할 것.** `http://www.w3.org/1999/xhtml`은 HTML/XHTML 네임스페이스와 동일한 URI로, Chromium/Firefox 내장 XML 뷰어가 `<xhtml:link>`를 HTML 파서로 처리하다 트리 렌더링에 실패하고 raw 텍스트로 폴백한다(콘솔: `Cannot read properties of null (reading 'childNodes')`). `https://` 스키마로 선언하면 뷰어가 XHTML 모드로 전환되지 않아 `xhtml:link`를 유지한 채 네이티브 트리 뷰가 복구된다 (알려진 Chromium 동작, [crbug 580033](https://bugs.chromium.org/p/chromium/issues/detail?id=580033), [adithya.dev](https://adithya.dev/xml-sitemap-is-rendering-as-plain-text/)).
+**스키마 URL은 반드시 `http`를 사용할 것.** 수정 전 `https://`로 선언되어 있었는데, 네임스페이스는 문자열 그대로 비교되는 식별자이므로 Google 공식 확장 문서(`http://www.sitemaps.org/schemas/sitemap/0.9`, `http://www.w3.org/1999/xhtml`, `http://www.google.com/schemas/sitemap-image/1.1`)와 정확히 일치해야 hreflang alternate와 image 확장을 인식한다. `http`로 선언할 경우 Chromium/Firefox 내장 XML 뷰어가 `<xhtml:link>`를 HTML/XHTML 파서로 처리해 트리 렌더링에 실패하고 raw 텍스트로 폴백할 수 있으나(알려진 Chromium 동작, [crbug 580033](https://bugs.chromium.org/p/chromium/issues/detail?id=580033)), 검색엔진 파싱에는 영향이 없고 Google 공식 스키마 일치가 더 우선이므로 `http`를 사용한다.
 
 ## 다국어 hreflang
 
@@ -56,7 +56,7 @@ const origin = new URL(request.url).origin;
 
 **각 `<url>`의 반복 나열은 스펙상 필수**: 7개 언어 번역 그룹 포스트의 sitemap은 번역본마다 `<url>`을 별도로 만들고, 각 `<url>`에 자기 자신을 포함한 전체 alternate(7개 hreflang + `x-default`)를 동일하게 반복한다. `<loc>`과 자기 자신을 가리키는 href만 다르고 나머지는 완전히 중복이라 "길어 보이지만", Google Sitemap 규칙("Create a separate `<url>` element for each URL", "Each `<url>` element must ... lists every alternate version of the page, including itself")과 상호 참조 지침("If two pages don't both point to each other, the tags will be ignored") 때문에 이 구조를 유지해야 한다. 한 곳에만 전체 목록을 두고 나머지에서 생략하면 양방향이 깨져 hreflang이 무시됨.
 
-**포스트**: `getPostSlug()`(파일명에서 날짜/확장자 제거)로 번역 그룹을 묶음. 그룹 내 번역본이 2개 이상일 때만 alternate 출력. 기본 로케일(ko) 버전이 존재하면 `hreflang="x-default"`도 함께 출력.
+**포스트**: `getPostSlug()`(파일명에서 날짜/확장자 제거)로 번역 그룹을 묶되, 콘텐츠 스키마상 slug 유일성이 전역으로 보장되지 않으므로 번역 그룹 키를 `${post.data.authors[0]}/${slug}`으로 잡아 같은 저자의 번역본끼리만 묶는다 (서로 다른 저자가 같은 slug를 쓰면 분리됨). 그룹 내 번역본이 2개 이상일 때만 alternate 출력. 기본 로케일(ko) 버전이 존재하면 `hreflang="x-default"`도 함께 출력.
 
 **포스트 페이지 `<head>`의 hreflang**: sitemap과 동일한 정책을 `PostLayout.astro`에서도 `<link rel="alternate" hreflang="...">`로 출력함 (번역본 전체 + 기본 로케일 존재 시 `x-default`, 자기 자신 포함). 포스트 `canonical`은 각 언어 버전이 자기 자신을 가리킴 (단일 정본을 두지 않는 번역 블로그 표준). 이중 `ko` 번역본이 없거나 번역본이 1개뿐인 포스트는 canonical만 있고 hreflang/x-default는 생략됨.
 

@@ -5,7 +5,7 @@ vi.mock('astro:content', () => ({
   getCollection: () => Promise.resolve([]),
 }));
 
-import { buildLlmsTxt, LLMS_LOCALE, LLMS_MAX_POSTS_PER_AUTHOR } from './llms';
+import { buildLlmsTxt, buildLlmsData, LLMS_LOCALE, LLMS_MAX_POSTS_PER_AUTHOR } from './llms';
 
 const ORIGIN = 'https://hyngng.github.io';
 
@@ -59,19 +59,19 @@ describe('buildLlmsTxt', () => {
     expect(text).toContain(`- [Home](${ORIGIN}/)`);
     expect(text).toContain(`- [RSS](${ORIGIN}/rss.xml)`);
     expect(text).toContain('## Authors\n');
-    expect(text).toContain(`- [hyngng.dev](${ORIGIN}/dev/): Recording programming and development experiences.`);
+    expect(text).toContain(`- [hyngng.dev](${ORIGIN}/en/dev/): Recording programming and development experiences.`);
   });
 
-  it('groups posts by primary author and links to the default locale post path', () => {
+  it('groups posts by primary author and links to the LLMS locale (en-US) post path', () => {
     const text = build([
       mockPost(`${LLMS_LOCALE}/dev/2024-01-01-hello`, { title: 'Hello' }),
       mockPost(`${LLMS_LOCALE}/essay/2024-01-02-thought`, { title: 'Thought', authors: ['essay'] }),
     ]);
 
     expect(text).toContain('### hyngng.dev\n');
-    expect(text).toContain(`- [Hello](${ORIGIN}/dev/hello/): `);
+    expect(text).toContain(`- [Hello](${ORIGIN}/en/dev/hello/): `);
     expect(text).toContain('### hyngng.essay\n');
-    expect(text).toContain(`- [Thought](${ORIGIN}/essay/thought/): `);
+    expect(text).toContain(`- [Thought](${ORIGIN}/en/essay/thought/): `);
   });
 
   it('caps post links per author at the configured maximum', () => {
@@ -100,8 +100,8 @@ describe('buildLlmsTxt', () => {
       }),
     ]);
 
-    expect(text).toContain('- [With desc](https://hyngng.github.io/dev/with-desc/): Explicit description.');
-    expect(text).toContain('- [No desc](https://hyngng.github.io/dev/no-desc/): First paragraph explaining');
+    expect(text).toContain('- [With desc](https://hyngng.github.io/en/dev/with-desc/): Explicit description.');
+    expect(text).toContain('- [No desc](https://hyngng.github.io/en/dev/no-desc/): First paragraph explaining');
   });
 
   it('appends an ellipsis only when the body excerpt is truncated', () => {
@@ -116,8 +116,8 @@ describe('buildLlmsTxt', () => {
       }),
     ]);
 
-    expect(text).toMatch(/- \[Long\]\(https:\/\/hyngng\.github\.io\/dev\/long\/\): .*\.\.\.$/m);
-    expect(text).toContain('- [Short](https://hyngng.github.io/dev/short/): A short body that fits within the limit.');
+    expect(text).toMatch(/- \[Long\]\(https:\/\/hyngng\.github\.io\/en\/dev\/long\/\): .*\.\.\.$/m);
+    expect(text).toContain('- [Short](https://hyngng.github.io/en/dev/short/): A short body that fits within the limit.');
     expect(text).not.toContain('within the limit...');
   });
 
@@ -129,5 +129,12 @@ describe('buildLlmsTxt', () => {
 
     expect(text).not.toContain('### hyngng.dev\n\n-');
     expect(text).not.toContain('- [ko/dev/2024-01-01-korean](');
+  });
+
+  it('builds data layer with locale-consistent (en-US) URLs', () => {
+    const doc = buildLlmsData({ origin: ORIGIN, posts: [mockPost(`${LLMS_LOCALE}/dev/2024-01-01-a`)] });
+    for (const a of doc.authors) expect(a.url).toContain('/en/');
+    const devSection = doc.authorSections.find((s) => s.name === 'hyngng.dev');
+    expect(devSection?.posts[0].url).toBe(`${ORIGIN}/en/dev/a/`);
   });
 });

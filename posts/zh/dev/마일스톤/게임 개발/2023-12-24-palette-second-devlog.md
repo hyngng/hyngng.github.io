@@ -313,7 +313,7 @@ void Purchase()
 
 :::tip
 您可以在 [Play Store](https://play.google.com/store/apps/details?id=com.payang.palette&hl=ko-KR) 下载试玩。
-::>
+:::
 
 至此，这个投入了大量心血和时间的项目结束了。花了大约半年的时间投入精力，看到应用上架的画面，百感交集，个人感受最深的有三点：
 

@@ -208,7 +208,7 @@
   - [x] `lang`/`locale` 통합 — `SITE.lang`을 BCP-47(`ko-KR`)로 통합, `locale` 필드 제거. `og:locale`은 `replace('-', '_')`로 변환
   - [x] Timezone 적용 — `z.coerce.date()` → `z.string().transform(parseDateWithTimezone)`으로 타임오프셋 없는 날짜에 `SITE.timezone` 기반 보정 자동 적용
   - [x] 본문 이미지 강제 16:9 종횡비 수정 — shimmer는 16:9 유지, `.img-wrapper.loaded`에서 `aspect-ratio: auto` + `object-fit: contain`으로 원본 비율 표시
-  - [x] 테이블 `th`/`td` 정렬 불일치 수정 — `article thead th`에 `text-align: left` 추가로 UA 기본 `center` 덮어씀
+  - [x] 테이블 열 너비(`--table-cell-max-width`) 및 스크롤 복구 — `article table`에 `width: max-content`, `min-width: 100%` 적용으로 콘텐츠 기반 열 너비 결정 및 가로 스크롤 트리거 보장, 셀(`th`, `td`)에 `max-width: var(--table-cell-max-width)`로 상한선 제한, 중복 border 제거
   - [x] Mermaid 다이어그램 중앙 정렬 — `article .mermaid`에 `text-align: center` + `margin: var(--block-margin)` 추가
   - [x] Mermaid 폰트 로딩 레이스 컨디션 수정 — `renderMermaid()`에 `await document.fonts.ready` 추가로 웹폰트 로드 완료 후 렌더링 보장
   - [x] Mermaid `line-height` 상속 격리 — `.mermaid`에 `line-height: normal`, `font-size: 16px` 리셋으로 `article`의 `line-height: 1.8` 상속 방지

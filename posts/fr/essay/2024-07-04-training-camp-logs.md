@@ -233,7 +233,7 @@ Le chef de groupe est passé voir les recrues ayant des problèmes de santé (sc
 
 Collation : biscuits Cookdas et canette 2%. J'ai reçu le schéma de démontage du fusil ce jour-là. Coucher à 21h à cause du programme canicule.
 
-::info
+:::info
 Anecdote du jour
 - La recrue qui voulait rentrer chez elle s'est calmée après une bonne nuit de sommeil.
 - Ayant été corrigé la veille pour le drill, il s'est appliqué et a reçu des points de récompense.
@@ -256,7 +256,7 @@ Après le déjeuner et la douche, nous avons eu une sieste de 14h à 16h. Au ré
 
 Collation : Pringles oignon-vinaigrette et Pocari Sweat.
 
-::info
+:::info
 Anecdote du jour
 - Le plus jeune du module a perdu à pierre-feuille-ciseaux et a dû faire les corvées : compter et emballer les plateaux-repas pour le lendemain.
 :::
@@ -275,7 +275,7 @@ De retour au module, nous avons rempli un questionnaire sur le soldat idéal, la
 
 Collation : gaufrettes à la fraise.
 
-::info
+:::info
 Anecdote du jour
 - La recrue qui voulait rentrer chez elle a été réconfortée par le chef de section.
 - Une rumeur circulait sur un module voisin où des intimidations avaient eu lieu.
@@ -306,7 +306,7 @@ Sur le chemin du retour, on nous a donné de la glace à mettre dans nos casques
 
 Collation : saucisson sec, biscuits et canette Milkis 250 ml.
 
-::info
+:::info
 Anecdote du jour
 - En jetant les ordures le soir, je me suis légèrement décollé l'ongle du pouce droit.
 :::
@@ -329,7 +329,7 @@ Après le dernier nettoyage, nous avons vu la vidéo sur les gaz chimiques que n
 
 La douche ce jour-là était particulièrement agréable.
 
-::info
+:::info
 Anecdote du jour
 - Un instructeur nous a refilé une glace du petit-déjeuner. En demandant au chef de groupe, ils ont tous réagi en reconnaissant la personne.
 - Quelqu'un versait du reste de soupe dans l'évier où on lavait les couverts.
@@ -348,7 +348,7 @@ Retour au module, sieste, puis vidéos sur les grenades et les premiers secours.
 
 Collation : Tartelettes fraise, saucisse Maxbong, Coca-Cola Zero.
 
-::info
+:::info
 Anecdote du jour
 - Un camarade s'est blessé à la cheville au retour du terrain. Le chef de groupe a temporisé, mais le chef de section est venu et a immédiatement organisé son transfert à l'hôpital. Applaudissements.
 :::
@@ -367,7 +367,7 @@ Le petit-déjeuner ce jour-là était le pire de tout le séjour.
 
 Collation : canette de 500 ml de Sikhye Birak.
 
-::info
+:::info
 Anecdote du jour
 - Un camarade avec un mal de dent est allé à l'hôpital et a eu un traitement de canal.
 :::
@@ -386,7 +386,7 @@ Pendant la sieste, je suis allé à l'infirmerie pour mon rhume. Beaucoup de mon
 
 Collation : Honey Butter Baguette et Monster Black.
 
-::info
+:::info
 Anecdote du jour
 - Il y avait un footballeur dans ma promotion, et il a terminé largement premier à la course.
 :::
@@ -411,7 +411,7 @@ Douche à l'eau froide malgré la promesse d'eau chaude.
 
 Coucher de 4h à 11h.
 
-::info
+:::info
 Anecdote du jour
 - Pendant la marche, tout le monde mettait le fusil dans le chargeur du sac. Beaucoup plus pratique.
 - La Grande Ourse était très visible grâce au ciel clair.
@@ -425,7 +425,7 @@ Réveil à 11h, déjeuner, puis récupération des gilets et sacs. Lavage du gil
 
 Tirage au sort pour les corvées de repas du lendemain. Mon module a perdu. Rien de spécial ensuite : temps libre, ménage, appel du soir.
 
-::info
+:::info
 Anecdote du jour
 - L'ambiance « on rentre enfin » commençait à se faire sentir.
 :::
@@ -442,7 +442,7 @@ Entraînement physique complémentaire pour les non-qualifiés à la course (squ
 
 Après le déjeuner, fin du film *Old Boy*.
 
-::info
+:::info
 Anecdote du jour
 - L'armée prépare 1,2 à 1,5 portion par personne — énorme gaspillage. Trois paquets de Cornflakes intacts ont été jetés.
 - Douche à l'eau chaude pour la première fois depuis longtemps. Simple bonheur.
@@ -458,7 +458,7 @@ Typhon : pluie et vent. Certains sont sortis sans poncho et se sont fait attrape
 
 Plus de formations majeures. Temps libre : rangement, lecture, snacks, films (*Les Visiteurs*, *Mademoiselle*, *Faust*).
 
-::info
+:::info
 Anecdote du jour
 - Un camarade aux cheveux longs risquait la coupe. Tout le module a convaincu le chef de groupe de le laisser tranquille. Il a terminé sans se faire couper les cheveux.
 :::
@@ -475,7 +475,7 @@ Après l'appel du soir, un sergent-chef a annoncé que c'était son dernier jour
 
 Collation : Pringles Smokey Barbecue et Monster White Zero Sugar.
 
-::info
+:::info
 Anecdote du jour
 - En sortant tard pour ranger les produits d'entretien, on a failli se faire enfermer dehors.
 - Un camarade a accroché une amulette météo pour éviter la pluie.
@@ -492,7 +492,7 @@ Conférence d'un docteur en études nord-coréennes sur « pourquoi la paix par 
 
 La lettre de réconciliation a été enterrée par le chef de section, qui a réuni la section : « La formation est finie et vous vous entretuez. Normalement, 6 d'entre vous seraient exclus. Mais je veux vous voir tous recevoir votre diplôme. Je vais étouffer l'affaire. »
 
-::info
+:::info
 Pendant ma garde, un instructeur m'a réprimandé pour avoir lu un livre.
 :::
 

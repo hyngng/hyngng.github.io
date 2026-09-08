@@ -41,30 +41,33 @@ function renderUrl(u: SitemapUrl): string {
   return lines.map((line) => `  ${line}`).join('\n');
 }
 
-export async function GET({ request }: APIContext) {
-  const origin = new URL(request.url).origin;
-  const allPosts = await getCollection('posts');
-  const posts = allPosts.filter(post => !post.data.draft);
+// 주어진 x-default 기본 링크를 대체 링크 목록 끝에 덧붙인 새 목록을 반환한다.
+function withDefaultAlternate(alternates: Alternate[], defaultHref: string): Alternate[] {
+  return [...alternates, { hreflang: 'x-default', href: defaultHref }];
+}
 
+// 홈페이지·작가·포스트 URL과 alternate를 계산해 SitemapUrl 배열만 반환하는 순수 함수다 (XML 무지).
+function buildSitemapEntries(input: { origin: string; posts: CollectionEntry<'posts'>[] }): SitemapUrl[] {
+  const { origin, posts } = input;
   const urls: SitemapUrl[] = [];
 
-  // ── 1. Language homepages (default locale = root) ─────
+  // ── Language homepages (default locale = root) ─────
   const homepages = availableLocales.map(({ code }) => ({
     code,
     href: code === defaultLocale ? `${origin}/` : `${origin}${localePath(code)}/`,
   }));
 
-  const homepageAlternates: Alternate[] = homepages.map(({ code, href }) => ({
+  const homepageAlternates = homepages.map(({ code, href }) => ({
     hreflang: bcp47(code),
     href,
   }));
-  homepageAlternates.push({ hreflang: 'x-default', href: `${origin}/` });
+  const homepageAlternatesWithDefault = withDefaultAlternate(homepageAlternates, `${origin}/`);
 
   for (const { href } of homepages) {
-    urls.push({ loc: href, alternates: homepageAlternates });
+    urls.push({ loc: href, alternates: homepageAlternatesWithDefault });
   }
 
-  // ── 2. Author index pages ─────────────────────────────
+  // ── Author index pages ─────────────────────────────
   const authorSet = new Set<string>();
   for (const post of posts) {
     const lang = getPostLang(post);
@@ -78,10 +81,11 @@ export async function GET({ request }: APIContext) {
     urls.push({ loc: `${origin}${getAuthorPath(author, lang)}` });
   }
 
-  // ── 3. Post pages (grouped by slug for hreflang) ──────
+  // ── Post pages (grouped by slug for hreflang) ──────
+  // 콘텐츠 스키마상 slug 유일성이 전역 보장되지 않으므로 author를 키에 포함해 번역본끼리만 묶는다.
   const postGroups = new Map<string, CollectionEntry<'posts'>[]>();
   for (const post of posts) {
-    const slug = getPostSlug(post.id);
+    const slug = `${post.data.authors[0]}/${getPostSlug(post.id)}`;
     const group = postGroups.get(slug) ?? [];
     group.push(post);
     postGroups.set(slug, group);
@@ -91,29 +95,26 @@ export async function GET({ request }: APIContext) {
     const alternates: Alternate[] = group.length > 1
       ? group.map((post) => {
           const lang = getPostLang(post);
-          return {
-            hreflang: bcp47(lang),
-            href: `${origin}${getPostPath(post.id, post.data.authors[0], lang)}`,
-          };
+          const path = getPostPath(post.id, post.data.authors[0], lang);
+          return { hreflang: bcp47(lang), href: `${origin}${path}` };
         })
       : [];
 
     if (alternates.length > 0) {
       const defaultPost = group.find((post) => getPostLang(post) === defaultLocale);
       if (defaultPost) {
-        alternates.push({
-          hreflang: 'x-default',
-          href: `${origin}${getPostPath(defaultPost.id, defaultPost.data.authors[0], defaultLocale)}`,
-        });
+        const defaultPath = getPostPath(defaultPost.id, defaultPost.data.authors[0], defaultLocale);
+        alternates.push({ hreflang: 'x-default', href: `${origin}${defaultPath}` });
       }
     }
 
     for (const post of group) {
       const lang = getPostLang(post);
+      const path = getPostPath(post.id, post.data.authors[0], lang);
       const lastmod = (post.data.last_modified_at || post.data.date).toISOString().split('T')[0];
       const image = post.data.og_image || post.data.image?.path;
       urls.push({
-        loc: `${origin}${getPostPath(post.id, post.data.authors[0], lang)}`,
+        loc: `${origin}${path}`,
         lastmod,
         ...(alternates.length > 0 && { alternates }),
         ...(image && { image }),
@@ -121,15 +122,25 @@ export async function GET({ request }: APIContext) {
     }
   }
 
-  // ── XML ────────────────────────────────────────────────
+  return urls;
+}
+
+// SitemapUrl[]를 받아 네임스페이스가 붙은 완성된 XML 문자열만 반환한다.
+function renderSitemapXml(urls: SitemapUrl[]): string {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="https://www.w3.org/1999/xhtml"
-        xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${urls.map(renderUrl).join('\n')}
 </urlset>`;
+  return sitemap;
+}
 
-  return new Response(sitemap, {
-    headers: { 'Content-Type': 'application/xml' }
+export async function GET({ request }: APIContext) {
+  const origin = new URL(request.url).origin;
+  const posts = (await getCollection('posts')).filter((p) => !p.data.draft);
+  const entries = buildSitemapEntries({ origin, posts });
+  return new Response(renderSitemapXml(entries), {
+    headers: { 'Content-Type': 'application/xml' },
   });
 }

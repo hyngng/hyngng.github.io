@@ -197,15 +197,20 @@ article pre code,
 
 /* 테이블 스타일 */
 article table {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   table-layout: auto;
   border-collapse: separate;
   border-spacing: 0;
   margin: 0;
+}
+
+/* ── 테이블 래퍼 ── */
+article .table-wrapper {
+  margin-bottom: 1.2rem;
+  overflow-x: auto;
   border: 1px solid var(--color-table-border);
   border-radius: var(--code-block-radius);
-  max-width: 100%;
-  overflow: hidden;
 }
 
 article thead {
@@ -216,6 +221,7 @@ article thead {
 article thead th,
 article td {
   padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
+  max-width: var(--table-cell-max-width);
 }
 
 article thead th {
@@ -234,12 +240,6 @@ article tbody tr {
 
 article tbody tr:last-child {
   border-bottom: none;
-}
-
-/* ── 테이블 래퍼 ── */
-article .table-wrapper {
-  margin-bottom: 1.2rem;
-  overflow-x: auto;
 }
 
 
