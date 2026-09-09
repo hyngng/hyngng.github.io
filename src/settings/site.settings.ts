@@ -3,9 +3,9 @@
 // └──────────────────────┘
 
 import fs from 'node:fs';
-import path from 'node:path';
 import { getFrontmatterLang } from '../utils/frontmatter-lang';
 import { deriveLocaleMeta, normalizeLang, type LocaleMeta } from '../utils/lang';
+import { listPostFiles } from '../utils/postFiles';
 
 // ── Locale (content-driven) ────────────────────
 // A post's language is its frontmatter `lang`, which is the full BCP 47 code
@@ -28,30 +28,22 @@ export const defaultLocale: LocaleCode = 'ko-KR';
 // exactly what the content collection schema produces.
 function scanPostLangValues(): Set<string> {
   const set = new Set<string>([defaultLocale]);
-  const postsDir = path.resolve('posts');
-  if (!fs.existsSync(postsDir)) return set;
-  const walk = (dir: string): void => {
-    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-      const full = path.join(dir, entry.name);
-      if (entry.isDirectory()) { walk(full); continue; }
-      if (!/\.(md|mdx)$/i.test(entry.name)) continue;
-      try {
-        const raw = fs.readFileSync(full, 'utf8');
-        const lang = getFrontmatterLang(raw);
-        if (lang !== undefined) {
-          const normalized = normalizeLang(lang);
-          if (normalized) {
-            set.add(normalized);
-          } else {
-            console.warn(`[scanPostLangValues] 지원하지 않는 lang 값 무시: "${lang}" (${path.relative(process.cwd(), full)})`);
-          }
+  for (const post of listPostFiles()) {
+    try {
+      const raw = fs.readFileSync(post.fullPath, 'utf8');
+      const lang = getFrontmatterLang(raw);
+      if (lang !== undefined) {
+        const normalized = normalizeLang(lang);
+        if (normalized) {
+          set.add(normalized);
+        } else {
+          console.warn(`[scanPostLangValues] 지원하지 않는 lang 값 무시: "${lang}" (${post.relativePath})`);
         }
-      } catch (err) {
-        console.warn(`[scanPostLangValues] frontmatter 읽기/파싱 실패, 건너뜀: ${path.relative(process.cwd(), full)}`, err);
       }
+    } catch (err) {
+      console.warn(`[scanPostLangValues] frontmatter 읽기/파싱 실패, 건너뜀: ${post.relativePath}`, err);
     }
-  };
-  walk(postsDir);
+  }
   return set;
 }
 

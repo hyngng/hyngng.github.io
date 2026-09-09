@@ -61,7 +61,8 @@ const { locale, currentLocale, authorId } = Astro.props;
     ) {
       if (!grid?.dataset.allPosts) return;
 
-      const chunkSize = parseInt(grid.dataset.chunkSize || '6', 10);
+      // Server always provides `data-chunk-size` (SITE.postsPerPage); fallback is defensive, kept manually in sync.
+      const chunkSize = parseInt(grid.dataset.chunkSize || '8', 10);
       const currentChunk = parseInt(grid.dataset.currentChunk || '1', 10);
 
       const chunksToLoad = new Set<number>();

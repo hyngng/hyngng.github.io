@@ -368,5 +368,12 @@
       - `src/integrations/validate-routes.ts`: 중복 키를 실제 출력 경로(`localePath(lang)` + slug) 기준으로 변경 → 검증 단위와 실제 충돌 단위 일치.
       - `src/utils/locale-segments.test.ts` 신설(3 tests).
     - 검증: `npm test` 47 passed, `npx astro check` 0 errors, `npm run build` exit 0. 회귀 테스트: `lang: zh-TW` 임시 포스트 추가 시 빌드 성공하고 `dist/zh-cn`+`dist/zh-tw` 생성·`dist/zh` 미생성 확인(충돌 없음), 임시 포스트 삭제 후 `zh-CN` 단독 시 다시 `/zh`로 복귀 확인. `docs/ai-docs/configuration/locales.md` 갱신(세그먼트 맵 단일점 + 알려진 구조적 부채 4종 기록).
+  - [x] **문서 정합성·계약 명세화·포스트 순회 중복 제거 리팩토링 (2026-09)**
+    - **A (routing.md 정합성)**: `docs/ai-docs/architecture/routing.md`의 dormant 기술을 실제 `astro.config.mjs` 및 `src/integrations/validate-routes.ts`(`astro:build:start` 훅) 실동작대로 갱신.
+    - **B (chunk 프리뷰 시드 계약)**: `src/utils/chunkEndpoint.ts`에 `PREVIEW_SEED_EXTRA = 1` 상수 도입 및 청크 payload 계약 주석 추가. `ChunkPostListBody.astro`에 계약 참조 주석 추가. `docs/ai-docs/features/chunk-loading.md`에 프리뷰 시드 계약 명세 섹션 추가.
+    - **C (chunkSize 폴백 정합)**: `Search.astro`의 fallback chunkSize를 레거시 `'6'`에서 `SITE.postsPerPage`인 `'8'`로 동기화 및 방어용 주석 추가.
+    - **D (posts 디렉토리 순회 DRY)**: 신규 `src/utils/postFiles.ts`(`listPostFiles()`) 유틸리티 작성(`node:fs`/`node:path`만 사용하여 config-time 로드 제약 만족). `site.settings.ts`(`scanPostLangValues`)와 `validate-routes.ts`(`getLangSlugPairs`)의 재귀 디렉토리 순회 중복 제거. `src/utils/postFiles.test.ts` 단위 테스트 작성. `docs/ai-docs/configuration/locales.md` 부채 항목 해결됨 처리.
+    - **E (검색 excerpt 제안 닫기)**: `docs/ai-docs/plans/search-excerpt-replacement.md` 상태를 "보류 / 미구현 (결정: 현행 Author 유지)"로 마감.
+    - **검증**: `npm test` 51 passed (8 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 성공 (589 pages + Pagefind 373 pages 인덱싱).
 
 ## Option

@@ -135,6 +135,19 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 | `--post-card-image-aspect-ratio` | `40/21` | 이미지 카드 종횡비 |
 | `--post-card-gap` | `16px` | 카드 간 간격 |
 
+### 청크 생성 및 프리뷰 시드 계약 (Preview Seed Contract)
+
+각 청크 페이지(`ChunkPostListBody`)는 현재 청크 포스트뿐만 아니라, **다음 청크의 첫 번째 포스트를 프리뷰 카드(`LoadMoreCard`)로 렌더링**하기 위한 시드 데이터가 필요하다.
+
+- **빌더 계약 (`getChunkStaticPaths` in `src/utils/chunkEndpoint.ts`)**:
+  `posts.slice(i * chunkSize, Math.min((i + 1) * chunkSize + PREVIEW_SEED_EXTRA, posts.length))`
+  청크 payload로 `chunkSize`개 외에 `PREVIEW_SEED_EXTRA`(=1)개의 추가 포스트를 함께 슬라이스하여 전달한다.
+- **렌더러 소비 (`ChunkPostListBody.astro`)**:
+  - `posts[chunkSize]`: 다음 청크의 첫 포스트(프리뷰 카드 시드)로 사용.
+  - `posts.slice(0, chunkSize)`: 현재 청크 화면에 렌더링할 포스트 목록.
+- **홈/작가 페이지 (`PostListSection.astro`)와의 차이**:
+  `PostListSection`은 전체 포스트 배열을 수신하여 `firstChunk = posts.slice(0, chunkSize)`, `nextPreviewPost = posts[chunkSize]`로 직접 참조하지만, 정적 청크 라우트는 최소 데이터만 빌드 산출물로 넘기기 위해 `chunkSize + PREVIEW_SEED_EXTRA` 슬라이스 계약을 준수한다.
+
 ## 로드 흐름 (`loadChunk`)
 
 ```

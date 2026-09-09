@@ -17,6 +17,12 @@ interface ChunkStaticPath {
   props: ChunkProps;
 }
 
+/**
+ * Extra post fetched beyond `chunkSize` to serve as the preview seed
+ * for the next chunk's LoadMoreCard without requiring a separate request.
+ */
+export const PREVIEW_SEED_EXTRA = 1;
+
 export async function getChunkStaticPaths(
   lang: string,
   chunkBaseUrl: string,
@@ -29,7 +35,9 @@ export async function getChunkStaticPaths(
   return Array.from({ length: chunkCount }, (_, i) => ({
     params: { n: String(i + 1) },
     props: {
-      posts: posts.slice(i * chunkSize, Math.min((i + 1) * chunkSize + 1, posts.length)),
+      // Chunk payload holds `chunkSize + PREVIEW_SEED_EXTRA` posts:
+      // `chunkSize` items for display + 1 trailing post as the preview seed for the next chunk.
+      posts: posts.slice(i * chunkSize, Math.min((i + 1) * chunkSize + PREVIEW_SEED_EXTRA, posts.length)),
       currentChunk: i + 1,
       totalChunks: chunkCount,
       chunkBaseUrl,

@@ -1,46 +1,37 @@
 import type { AstroIntegration } from 'astro';
 import fs from 'node:fs';
-import path from 'node:path';
 import { getFrontmatterLang } from '../utils/frontmatter-lang';
 import { normalizeLang } from '../utils/lang';
 import { localePath } from '../utils/locale-segments';
+import { listPostFiles } from '../utils/postFiles';
 import { ALL_AUTHORS } from '../settings/authors.settings';
 
-const POSTS_DIR = path.resolve('posts');
 const RESERVED_SLUGS = ['rss.xml', 'sitemap.xml', 'index', 'rss', 'sitemap', 'favicon.ico', 'robots.txt'];
 const RESERVED_AUTHOR_IDS = ['api', 'rss', 'sitemap', 'assets', 'admin', 'content', 'posts', 'authors'];
 
 // Collects (lang, slug) pairs from every post. Slug is the date-stripped
 // filename; lang is the frontmatter `lang`. Because the folder no longer
 // carries language, (lang, slug) must be unique to avoid route collisions.
-function getLangSlugPairs(dir = POSTS_DIR): Array<{ lang: string; slug: string; file: string }> {
+function getLangSlugPairs(): Array<{ lang: string; slug: string; file: string }> {
   const pairs: Array<{ lang: string; slug: string; file: string }> = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const entryPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      pairs.push(...getLangSlugPairs(entryPath));
-      continue;
-    }
-    const match = entry.name.match(/^\d{4}-\d{2}-\d{2}-(.+)\.(md|mdx)$/);
-    if (!match) continue;
-    const slug = match[1];
-    const raw = fs.readFileSync(entryPath, 'utf8');
+  for (const { fullPath, relativePath, slug } of listPostFiles()) {
+    const raw = fs.readFileSync(fullPath, 'utf8');
     let lang: string | null;
     try {
       lang = normalizeLang(getFrontmatterLang(raw) ?? '');
     } catch (err) {
       throw new Error(
-        `[Frontmatter Parse Error] Post "${path.relative(POSTS_DIR, entryPath)}" has invalid frontmatter YAML.`,
+        `[Frontmatter Parse Error] Post "${relativePath}" has invalid frontmatter YAML.`,
         { cause: err }
       );
     }
     if (!lang) {
       throw new Error(
-        `[Missing lang] Post "${path.relative(POSTS_DIR, entryPath)}" has no frontmatter \`lang\`. ` +
+        `[Missing lang] Post "${relativePath}" has no frontmatter \`lang\`. ` +
         `Language is required and must be a BCP 47 language tag (e.g. ko-KR, zh-CN).`
       );
     }
-    pairs.push({ lang, slug, file: path.relative(POSTS_DIR, entryPath) });
+    pairs.push({ lang, slug, file: relativePath });
   }
   return pairs;
 }

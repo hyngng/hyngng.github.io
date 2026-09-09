@@ -113,7 +113,7 @@ locale.relativeTime.today // "오늘 작성"
 ## 알려진 구조적 부채 (낮은 심각도)
 
 - **프론트매터 파서 이중 경로 — 해결됨**: config-time 스캔(`getFrontmatterLang`)과 Astro 콘텐츠 로더가 이제 **동일한 YAML 파서(gray-matter)**를 사용한다. 두 경로 모두 `normalizeLang`으로 같은 canonical form을 만들므로, 주석/앵커/별칭 등 예외 표현에서의 발산 가능성이 제거되었다. fs 스캔 자체는 config가 콘텐츠 컬렉션보다 먼저 도는 구조적 제약(Astro는 `astro.config.mjs`에서 `astro:content` 가상 모듈을 import할 수 없음) 때문에 여전히 불가피하다.
-- **`posts/` 순회 로직 중복**: `scanPostLangValues`(`site.settings.ts`)와 `getLangSlugPairs`(`validate-routes.ts`)가 각각 재귀 순회. 향후 `listPostFiles()` 유틸로 통합 권장.
+- **`posts/` 순회 로직 중복 — 해결됨**: `scanPostLangValues`(`site.settings.ts`)와 `getLangSlugPairs`(`validate-routes.ts`)의 파일 디렉토리 재귀 순회 로직을 `src/utils/postFiles.ts`(`listPostFiles()`) 공통 유틸리티로 통합했다. `astro:content` 가상 모듈에 의존하지 않고 `node:fs`와 `node:path`만 사용하여 config-time 로드 제약을 만족하며, 단일 파일 탐색 및 슬러그 추출 계약을 공유한다.
 - **`LANG_PARSE` 정규식 제거 — 해결됨**: 사전 검증 정규식(`/^[a-z]{2}(-[a-z]{4})?(-[a-z]{2})?$/i`)을 삭제했다. BCP 47 유효성은 이제 전적으로 `Intl.Locale` 생성자(ECMA-402)에 위임되며, `normalizeLang`이 `RangeError`를 잡아 `null`로 만든다. 덕분에 3자리 언어코드(`fil`, `yue`)와 숫자 region(`es-419`)도 정상 통과하며, 별도 유지보수 대상(정규식)이 사라졌다.
 - **타입 codegen 보류**: `LocaleCode`는 열린 `string`. 런타임 검증(`normalizeLang` + schema)이 빌드 타임에 invalid를 잡으므로 타입 레벨 강제는 우선순위 낮음.
 

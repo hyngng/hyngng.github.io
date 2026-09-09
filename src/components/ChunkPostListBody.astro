@@ -23,9 +23,12 @@ const {
 } = Astro.props;
 const prevChunk = currentChunk > 1 ? currentChunk - 1 : null;
 const chunkSize = SITE.postsPerPage;
+// Contract: `posts` contains up to `chunkSize + PREVIEW_SEED_EXTRA` items from `getChunkStaticPaths`.
+// Index `chunkSize` is the preview seed for the next chunk's LoadMoreCard.
 const nextPreviewPost = nextChunk ? posts[chunkSize] : undefined;
 const totalRemaining = nextChunk ? totalPosts - (currentChunk * chunkSize) : 0;
 const nextChunkCount = nextChunk ? Math.min(chunkSize, totalRemaining) : 0;
+// Display items for the current chunk, excluding the trailing preview seed.
 const chunkPosts = posts.slice(0, chunkSize);
 
 const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostColumns(chunkPosts, (currentChunk - 1) * chunkSize);
