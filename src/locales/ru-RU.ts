@@ -9,9 +9,12 @@ const locale: Locale = {
     rssAria: 'RSS',
   },
   authors: {
-    title: 'Авторы',
+    persona: 'Персоны',
+    otherPersona: 'Другие персоны',
     otherCount: (n: number) => `и ещё ${n} автор${n !== 1 ? (n < 5 ? 'а' : 'ов') : ''}`,
-    postCount: (n: number) => `${n} публикаций`,
+    personaCount: (n: number) => `Смотреть ${n} персон${n === 1 ? 'у' : n >= 2 && n <= 4 ? 'ы' : ''}`,
+    otherPersonaCount: (n: number) => `Смотреть ${n} друг${n === 1 ? 'ую персону' : n >= 2 && n <= 4 ? 'ие персоны' : 'их персон'}`,
+    closeAria: 'Закрыть',
   },
   posts: {
     title: 'Публикации',

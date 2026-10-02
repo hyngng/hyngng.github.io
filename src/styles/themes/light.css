@@ -6,6 +6,7 @@
   --color-bg-soft: #F1F1F1;
   --color-text: #2E2E2E;
   --color-heading: #2E2E2E;
+  --color-subtitle: var(--color-muted);
   --color-accent: #CA4519;
   --color-muted: #877575;
   --color-line: #877575;

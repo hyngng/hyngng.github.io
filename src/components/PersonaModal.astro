@@ -1,0 +1,309 @@
+---
+import { AUTHOR_PREFIX } from '../settings/authors.settings';
+import { getAuthorPath } from '../utils/posts';
+import Avatars from './Avatars.astro';
+
+interface PersonaAuthor {
+  id: string;
+  name: string;
+  avatar?: string;
+  description?: string;
+}
+
+interface Props {
+  modalId?: string;
+  title: string;
+  authors: PersonaAuthor[];
+  currentLocale: string;
+  closeAria: string;
+}
+
+const {
+  modalId = 'persona-modal',
+  title,
+  authors,
+  currentLocale,
+  closeAria,
+} = Astro.props;
+
+const titleId = `${modalId}-title`;
+---
+
+<dialog id={modalId} class="persona-modal" aria-labelledby={titleId}>
+  <div class="persona-modal-card">
+    <div class="persona-modal-header">
+      <h2 id={titleId} class="persona-modal-title">{title}</h2>
+      <button
+        type="button"
+        class="persona-modal-close"
+        aria-label={closeAria}
+        data-modal-close
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+          <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="persona-modal-body">
+      <ul class="persona-modal-list">
+        {authors.map((author) => (
+          <li class="persona-modal-item">
+            <a href={getAuthorPath(author.id, currentLocale)} class="persona-modal-link">
+              <Avatars src={author.avatar} class="persona-modal-avatar" />
+              <span class="persona-modal-info">
+                <span class="persona-modal-name">{AUTHOR_PREFIX}{author.name}</span>
+                {author.description && (
+                  <span class="persona-modal-desc">{author.description}</span>
+                )}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  let abortController: AbortController | undefined;
+
+  function initPersonaModals() {
+    abortController?.abort();
+    abortController = new AbortController();
+    const { signal } = abortController;
+
+    const dialogs = document.querySelectorAll<HTMLDialogElement>('.persona-modal');
+    if (dialogs.length === 0) return;
+
+    dialogs.forEach((dialog) => {
+      const dialogId = dialog.id;
+      const triggers = document.querySelectorAll<HTMLElement>(`[data-modal-target="${dialogId}"]`);
+      const closeButtons = dialog.querySelectorAll<HTMLElement>('[data-modal-close]');
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          dialog.showModal();
+          document.documentElement.classList.add('modal-open');
+        }, { signal });
+      });
+
+      closeButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          dialog.close();
+        }, { signal });
+      });
+
+      dialog.addEventListener('close', () => {
+        document.documentElement.classList.remove('modal-open');
+      }, { signal });
+
+      dialog.addEventListener('click', (event) => {
+        const rect = dialog.getBoundingClientRect();
+        const isInDialog = (
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width
+        );
+        if (!isInDialog) {
+          dialog.close();
+        }
+      }, { signal });
+    });
+  }
+
+  initPersonaModals();
+</script>
+
+<style>
+  .persona-modal {
+    padding: 0;
+    border: none;
+    background: transparent;
+    max-width: var(--persona-modal-width);
+    width: calc(100% - 2rem);
+    margin: auto;
+    border-radius: var(--post-card-radius);
+    box-shadow: 0 16px 48px var(--color-shadow);
+    color: var(--color-text);
+  }
+
+  .persona-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  @keyframes modal-fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .persona-modal[open] {
+    animation: modal-fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .persona-modal-card {
+    background-color: var(--color-bg);
+    border: var(--border-width) var(--border-style) var(--color-border);
+    border-radius: var(--post-card-radius);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .persona-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: var(--border-width) var(--border-style) var(--color-border);
+  }
+
+  .persona-modal-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-heading);
+  }
+
+  .persona-modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    color: var(--color-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .persona-modal-close:hover {
+    background-color: var(--color-accent);
+    color: var(--color-button-text);
+  }
+
+  .persona-modal-close:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+
+  .persona-modal-body {
+    padding: 0.5rem 0.5rem;
+    max-height: min(60vh, 420px);
+    overflow-y: auto;
+  }
+
+  .persona-modal-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .persona-modal-item {
+    margin: 0;
+  }
+
+  .persona-modal-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s ease;
+  }
+
+  .persona-modal-link:hover {
+    background-color: var(--color-bg-soft);
+  }
+
+  .persona-modal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .persona-modal-name {
+    font-size: var(--author-name-size);
+    font-weight: 700;
+    color: var(--color-heading);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.15s ease;
+  }
+
+  .persona-modal-link:hover .persona-modal-name {
+    color: var(--color-accent);
+  }
+
+  .persona-modal-desc {
+    font-size: var(--author-info-size);
+    font-weight: 400;
+    color: var(--color-muted);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 640px) {
+    .persona-modal {
+      margin: auto auto 0 auto;
+      width: 100%;
+      max-width: 100%;
+      border-radius: var(--post-card-radius) var(--post-card-radius) 0 0;
+    }
+
+    .persona-modal-card {
+      border-radius: var(--post-card-radius) var(--post-card-radius) 0 0;
+      border-bottom: none;
+      border-left: none;
+      border-right: none;
+      padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    }
+
+    @keyframes modal-slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .persona-modal[open] {
+      animation: modal-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .persona-modal[open] {
+      animation: none;
+    }
+  }
+</style>

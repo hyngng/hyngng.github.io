@@ -1,7 +1,8 @@
 import type { APIContext } from 'astro';
 import rss from '@astrojs/rss';
 import { getRssItems, localePath } from '../../utils/posts';
-import { getSiteMeta, availableLocales, defaultLocale } from '../../locales';
+import { availableLocales, defaultLocale } from '../../locales';
+import { getSiteMeta } from '../../utils/pageContext';
 
 export async function getStaticPaths() {
   const locales = availableLocales.map((l) => l.code).filter((code) => code !== defaultLocale);

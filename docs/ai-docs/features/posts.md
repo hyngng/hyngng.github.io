@@ -210,7 +210,7 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 **포스트 오버라이드 (PostLayout 슬롯):**
 - `og:title=post.data.title`, `og:description=post.data.description`, `og:type="article"`, `og:url=canonicalUrl`, `og:site_name=SITE.title`, `twitter:card=summary_large_image`, `twitter:title`, `twitter:description`
 - `fediverse:creator=작가별 social.fediverse` (없으면 `SITE.social.fediverse`로 폴백, 중복 제거)
-- `canonical` (자기 자신), `hreflang` alternate (같은 slug의 번역본 전체 + 기본 로케일 존재 시 `x-default`), `author` (작가명들), `article:published_time=post.data.date`, `article:modified_time=post.data.last_modified_at || date`, `twitter:site`, `twitter:creator` (작가별 social.twitter, 없으면 `SITE.social.twitter`로 폴백, `@` 프리픽스 자동 부여)
+- `canonical` (자기 자신), `hreflang` alternate (동일 작가의 같은 slug 번역본 전체 + 기본 로케일 존재 시 `x-default`), `author` (작가명들), `article:published_time=post.data.date`, `article:modified_time=post.data.last_modified_at || date`, `twitter:site`, `twitter:creator` (작가별 social.twitter, 없으면 `SITE.social.twitter`로 폴백, `@` 프리픽스 자동 부여)
 
 ### JSON-LD
 

@@ -9,9 +9,12 @@ const locale: Locale = {
     rssAria: 'RSS',
   },
   authors: {
-    title: '著者',
+    persona: 'ペルソナ',
+    otherPersona: '他のペルソナ',
     otherCount: (n: number) => `他${n}名の著者`,
-    postCount: (n: number) => `${n}件`,
+    personaCount: (n: number) => `${n}個のペルソナを見る`,
+    otherPersonaCount: (n: number) => `${n}個の他のペルソナを見る`,
+    closeAria: '閉じる',
   },
   posts: {
     title: '記事一覧',

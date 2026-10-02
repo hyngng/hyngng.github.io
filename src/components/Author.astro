@@ -1,7 +1,8 @@
-﻿---
+---
 import { getAuthorPath } from '../utils/posts';
 import { AUTHOR_PREFIX } from '../settings/authors.settings';
 import { defaultLocale } from '../locales';
+import Avatars from './Avatars.astro';
 
 interface Props {
   avatar?: string;
@@ -20,9 +21,7 @@ const authorHref = id ? getAuthorPath(id, currentLocale) : undefined;
 
 <article class={`author ${clickable && authorHref ? 'is-clickable' : ''}`}>
   {clickable && authorHref && <a href={authorHref} class="author-link"></a>}
-  <div class="author-avatar" aria-hidden={avatar ? 'false' : 'true'}>
-    {avatar && <img src={avatar} alt="" loading="lazy" decoding="async" onerror="this.remove()" />}
-  </div>
+  <Avatars src={avatar} class="author-avatar" />
   <div class="author-text">
     <span class:list={[truncate && 'author-name-truncate']}>{AUTHOR_PREFIX}{name}{nameSuffix && <span class="author-name-suffix">{nameSuffix}</span>}</span>
     {info && <p>{info}</p>}
@@ -40,15 +39,6 @@ const authorHref = id ? getAuthorPath(id, currentLocale) : undefined;
 
   .author.is-clickable {
     cursor: pointer;
-  }
-
-  .author-avatar {
-    width: var(--avatar-size);
-    height: var(--avatar-size);
-    border-radius: 50%;
-    background-color: var(--author-avatar-placeholder);
-    overflow: hidden;
-    flex: 0 0 auto;
   }
 
   .author.is-clickable:hover .author-text span {

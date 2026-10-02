@@ -1,18 +1,44 @@
 ---
-// Adsense ad unit. Not yet wired into any layout.
 import { SITE } from '../../../settings/site.settings';
 
-const { client, adSlot } = SITE.analytics.adsense;
+interface Props {
+  slot?: string;
+  class?: string;
+}
+
+const { slot: customSlot, class: className } = Astro.props;
+const client = SITE.analytics.adsense?.client;
+const adSlot = customSlot || SITE.analytics.adsense?.adSlot;
+
+const isConfigured = Boolean(client && adSlot && !client.includes('ca-pub-...'));
 ---
 
-<script is:inline async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`} crossorigin="anonymous"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client={client}
-     data-ad-slot={adSlot}
-     data-ad-format="auto"
-     data-full-width-responsive="true">
-</ins>
-<script is:inline>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+{isConfigured && (
+  <div class:list={['adsense-container', className]}>
+    <script
+      is:inline
+      async
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`}
+      crossorigin="anonymous"
+    />
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client={client}
+      data-ad-slot={adSlot}
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    />
+    <script is:inline>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+)}
+
+<style>
+  .adsense-container {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+  }
+</style>

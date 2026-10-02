@@ -20,19 +20,26 @@ export function createChunkLoader(
     clearTimeout(prefetchTimer);
   }
 
-  async function loadChunk(n: number) {
+  let popstateSeq = 0;
+
+  async function loadChunk(n: number, pushHistory: boolean = true, seq?: number) {
     if (isLoading || n > totalChunks) return;
+    if (seq !== undefined && seq !== popstateSeq) return;
     isLoading = true;
     try {
       const html = await fetchChunkHtml(chunkBaseUrl, n);
+      if (seq !== undefined && seq !== popstateSeq) return;
       const { cards, loadMore: newLoadMore } = parseChunkResponse(html);
       if (cards.length === 0) return;
+      if (seq !== undefined && seq !== popstateSeq) return;
 
       const animatedCards = controller.appendChunk({ cards, loadMore: newLoadMore });
 
       currentChunk = n;
       grid.dataset.currentChunk = String(currentChunk);
-      history.pushState({ chunk: currentChunk }, '', `?p=${currentChunk}`);
+      if (pushHistory) {
+        history.pushState({ chunk: currentChunk }, '', `?p=${currentChunk}`);
+      }
 
       animateNewCards(animatedCards);
       initPostCardImages();
@@ -49,17 +56,26 @@ export function createChunkLoader(
   }
 
   function handlePopState(e: PopStateEvent) {
+    const seq = ++popstateSeq;
     const state = e.state as { chunk?: number } | null;
-    if (state?.chunk) {
-      const target = state.chunk;
+    const target = state?.chunk ?? parseInt(new URLSearchParams(location.search).get('p') || '1', 10);
+
+    if (target <= currentChunk) {
       controller.restoreChunkCount(target);
       currentChunk = target;
       grid.dataset.currentChunk = String(currentChunk);
+    } else {
+      (async () => {
+        for (let i = currentChunk + 1; i <= target; i++) {
+          if (seq !== popstateSeq) break;
+          await loadChunk(i, false, seq);
+        }
+      })();
+    }
 
-      const activeInput = document.querySelector<HTMLInputElement>('.search-input');
-      if (activeInput?.value) {
-        activeInput.dispatchEvent(new Event('input'));
-      }
+    const activeInput = document.querySelector<HTMLInputElement>('.search-input');
+    if (activeInput?.value) {
+      activeInput.dispatchEvent(new Event('input'));
     }
   }
 
@@ -80,7 +96,7 @@ export function createChunkLoader(
     if (target > 1 && target <= totalChunks) {
       (async () => {
         for (let i = 2; i <= target; i++) {
-          await loadChunk(i);
+          await loadChunk(i, false);
         }
       })();
     }
@@ -109,6 +125,9 @@ export function createChunkLoader(
 
   const params = new URLSearchParams(location.search);
   const targetChunk = parseInt(params.get('p') || '1', 10);
+  if (!history.state || typeof (history.state as { chunk?: unknown }).chunk !== 'number') {
+    history.replaceState({ chunk: targetChunk }, '', location.href);
+  }
   if (targetChunk > 1) {
     loadInitial(targetChunk);
   }

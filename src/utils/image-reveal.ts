@@ -7,6 +7,8 @@
 // soon as the browser knows it. Browsers expose naturalWidth once the image
 // header arrives (during streaming), well before the full download finishes,
 // so the shimmer box is corrected early and smoothly instead of at load end.
+const MAX_POLL_FRAMES = 60;
+
 function syncAspectRatio(img: HTMLImageElement, target: HTMLElement): boolean {
   if (target.style.aspectRatio) return true;
   if (img.naturalWidth > 0 && img.naturalHeight > 0) {
@@ -17,10 +19,13 @@ function syncAspectRatio(img: HTMLImageElement, target: HTMLElement): boolean {
 }
 
 function pollAspectRatio(img: HTMLImageElement, target: HTMLElement): void {
+  let frames = 0;
   const tick = () => {
+    if (!img.isConnected) return;
     if (syncAspectRatio(img, target)) return;
     // Stop polling once the image settles without a usable ratio (error).
     if (img.complete && img.naturalWidth === 0) return;
+    if (++frames >= MAX_POLL_FRAMES) return;
     requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
@@ -48,11 +53,20 @@ function decodeAndMark(
     markLoaded();
   };
 
-  if (img.complete && img.naturalWidth > 0) {
-    showImage();
+  const handleError = () => {
+    target.classList.add('loaded', 'error');
+  };
+
+  if (img.complete) {
+    if (img.naturalWidth > 0) {
+      showImage();
+    } else {
+      handleError();
+    }
   } else {
     if (syncRatio) pollAspectRatio(img, target);
     img.addEventListener('load', showImage, { once: true });
+    img.addEventListener('error', handleError, { once: true });
   }
 }
 

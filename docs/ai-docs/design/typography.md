@@ -26,7 +26,7 @@
 이미지 실제 비율이 1:1이 아닐 때 로드 완료 시점에 박스가 급격히 리사이즈되어 레이아웃이 튀던 문제를 해소한다.
 
 - **원리**: 브라우저는 이미지 전체가 아니라 **헤더만 수신해도** `naturalWidth`/`naturalHeight`를 노출한다. 스트리밍 중 첫 패킷 도착 시점에 실제 비율을 알 수 있다.
-- **동작**: `image-reveal.ts`(`syncAspectRatio`/`pollAspectRatio`)가 `naturalWidth > 0`이 되는 순간 `.img-wrapper`에 인라인 `aspect-ratio: w/h`를 설정한다. rAF 폴링으로 감지하며, 실패(오류) 시 폴링을 중단한다.
+- **동작**: `image-reveal.ts`(`syncAspectRatio`/`pollAspectRatio`)가 `naturalWidth > 0`이 되는 순간 `.img-wrapper`에 인라인 `aspect-ratio: w/h`를 설정한다. rAF 폴링으로 감지하며, 화면 밖 `loading="lazy"` 이미지의 무한 폴링 방지를 위해 최대 60프레임(~1초)으로 제한하고 DOM 분리(`!img.isConnected`) 및 실패(`complete && naturalWidth === 0`) 시 폴링을 중단한다. 이미지 로드 실패 시 `loaded error` 클래스를 부여하여 엑박/alt 텍스트를 노출한다.
 - **전환 애니메이션**: `html[data-js] .img-wrapper`의 `transition: aspect-ratio 0.25s ease`로 16:9 → 실제 비율 변경을 부드럽게 모프한다. (`aspect-ratio`는 ratio 값 간 보간이 지원됨)
 - **충돌 없음**: 인라인 스타일이 `.img-wrapper.loaded { aspect-ratio: auto }` 클래스 규칙보다 우선하므로 로드 시 2차 변경이 없다.
 - **reduced-motion**: `@media (prefers-reduced-motion: reduce)`에서 transition 해제.

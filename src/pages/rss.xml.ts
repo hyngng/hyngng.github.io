@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
 import rss from '@astrojs/rss';
 import { getRssItems } from '../utils/posts';
-import { getSiteMeta } from '../locales';
+import { getSiteMeta } from '../utils/pageContext';
 import { defaultLocale } from '../locales';
 
 export async function GET({ request }: APIContext) {

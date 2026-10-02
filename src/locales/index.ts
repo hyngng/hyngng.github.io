@@ -6,7 +6,7 @@ import frFR from './fr-FR';
 import esES from './es-ES';
 import jaJP from './ja-JP';
 import zhCN from './zh-CN';
-import { SITE, supportedLocales, defaultLocale } from '../settings/site.settings';
+import { supportedLocales, defaultLocale } from '../settings/site.settings';
 
 export interface Locale {
   description: string;
@@ -17,9 +17,12 @@ export interface Locale {
     rssAria: string;
   };
   authors: {
-    title: string;
+    persona: string;
+    otherPersona: string;
     otherCount: (n: number) => string;
-    postCount: (n: number) => string;
+    personaCount: (n: number) => string;
+    otherPersonaCount: (n: number) => string;
+    closeAria: string;
   };
   posts: {
     title: string;
@@ -104,15 +107,6 @@ export function getLocale(lang?: string): Locale {
 
 export function useLocale(Astro: AstroGlobal): Locale {
   return getLocale(Astro.currentLocale);
-}
-
-export interface SiteLocaleMeta {
-  title: string;
-  description: string;
-}
-
-export function getSiteMeta(lang?: string): SiteLocaleMeta {
-  return { title: SITE.title, description: getLocale(lang).description };
 }
 
 export { koKR, enUS, ruRU, frFR, esES, jaJP, zhCN };

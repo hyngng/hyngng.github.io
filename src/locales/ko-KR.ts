@@ -9,9 +9,12 @@ const locale: Locale = {
     rssAria: 'RSS',
   },
   authors: {
-    title: '글쓴이',
+    persona: '페르소나',
+    otherPersona: '다른 페르소나',
     otherCount: (n: number) => `및 ${n}명의 글쓴이`,
-    postCount: (n: number) => `${n}개 글`,
+    personaCount: (n: number) => `${n}개 페르소나 보기`,
+    otherPersonaCount: (n: number) => `${n}개 다른 페르소나 보기`,
+    closeAria: '닫기',
   },
   posts: {
     title: '포스트',

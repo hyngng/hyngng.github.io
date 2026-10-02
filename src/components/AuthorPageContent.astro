@@ -1,9 +1,10 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../locales';
-import { type Author, AUTHOR_PREFIX } from '../settings/authors.settings';
+import { ALL_AUTHORS, AUTHOR_PREFIX, getAuthor, type Author } from '../settings/authors.settings';
 import { localePath } from '../utils/posts';
 import Hero from './Hero.astro';
+import PersonaModal from './PersonaModal.astro';
 import PostListSection from './PostListSection.astro';
 import Search from './Search.astro';
 
@@ -17,9 +18,33 @@ interface Props {
 const { author, locale, currentLocale, posts } = Astro.props;
 
 const chunkBaseUrl = `${localePath(currentLocale)}/${author.id}/chunk`;
+
+const otherPersonas = ALL_AUTHORS.filter((a) => a.id !== author.id).map((a) => {
+  const authorData = getAuthor(a.id, currentLocale);
+  return {
+    id: a.id,
+    name: a.name,
+    avatar: authorData.avatar,
+    description: authorData.description,
+  };
+});
 ---
 
-<Hero title={AUTHOR_PREFIX + author.name} description={author.description} />
+<Hero
+  title={AUTHOR_PREFIX + author.name}
+  description={author.description}
+  personaCountText={locale.authors.otherPersonaCount(otherPersonas.length)}
+  personaAvatars={otherPersonas.map((a) => a.avatar)}
+  personaTargetModalId="other-persona-modal"
+/>
+
+<PersonaModal
+  modalId="other-persona-modal"
+  title={locale.authors.otherPersona}
+  authors={otherPersonas}
+  currentLocale={currentLocale}
+  closeAria={locale.authors.closeAria}
+/>
 
 <div class="content-body-layout">
   <div class="search-mobile-wrapper">
@@ -30,4 +55,3 @@ const chunkBaseUrl = `${localePath(currentLocale)}/${author.id}/chunk`;
     <Search locale={locale} currentLocale={currentLocale} authorId={author.id} />
   </aside>
 </div>
-

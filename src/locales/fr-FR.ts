@@ -9,9 +9,12 @@ const locale: Locale = {
     rssAria: 'RSS',
   },
   authors: {
-    title: 'Auteurs',
+    persona: 'Persona',
+    otherPersona: 'Autres personas',
     otherCount: (n: number) => `et ${n} autre${n !== 1 ? 's' : ''} auteur${n !== 1 ? 's' : ''}`,
-    postCount: (n: number) => `${n} article${n !== 1 ? 's' : ''}`,
+    personaCount: (n: number) => `Voir ${n} persona${n > 1 ? 's' : ''}`,
+    otherPersonaCount: (n: number) => `Voir ${n} autre${n > 1 ? 's' : ''} persona${n > 1 ? 's' : ''}`,
+    closeAria: 'Fermer',
   },
   posts: {
     title: 'Articles',

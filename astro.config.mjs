@@ -90,10 +90,14 @@ export default defineConfig({
           ]
         },
         workbox: {
-          // Static MPA: precache only immutable hashed assets, never HTML.
-          // HTML precache would serve stale pages Cache-First until the SW
-          // updates, so navigation is handled by a NetworkFirst runtime route.
-          globPatterns: ['**/*.{js,css,svg,png,ico,woff,woff2}'],
+          // Static MPA: precache immutable hashed assets and chunk HTML fragments.
+          // General HTML pages are NOT precached so navigation is handled by
+          // NetworkFirst runtime route (stale prevention). Chunk HTML fragments
+          // are precached so progressive post loading works offline.
+          globPatterns: [
+            '**/*.{js,css,svg,png,ico,woff,woff2}',
+            '**/chunk/**/index.html',
+          ],
           navigateFallback: null,
           runtimeCaching: [
             {

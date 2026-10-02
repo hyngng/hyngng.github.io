@@ -27,7 +27,7 @@
 - `registerType: 'autoUpdate'` — 사용자에게 업데이트 프롬프트 없이 자동 갱신.
 - `injectRegister: null` — 물리 등록 파일(`registerSW.js`)을 자동 주입하지 않고 `Head.astro`에서 직접 핸들링.
 - `manifest` — `SITE.title`/`SITE.description` 기반 매니페스트 정의. 빌드 시 `manifest.webmanifest`로 생성된다.
-- `workbox.globPatterns` — 빌드된 **불변 해시 자산**(JS, CSS, SVG, PNG, ICO, WOFF/WOFF2)만 프리캐시 대상. HTML은 프리캐시하지 않는다.
+- `workbox.globPatterns` — 빌드된 **불변 해시 자산**(JS, CSS, SVG, PNG, ICO, WOFF/WOFF2) 및 **청크 HTML 조각**(`**/chunk/**/index.html`)이 프리캐시 대상. 일반 페이지 HTML은 프리캐시하지 않는다.
 - `workbox.navigateFallback: null` — 정적 MPA에서 SPA 폴백 비활성화.
 - `workbox.runtimeCaching` — 네비게이션(`request.mode === 'navigate'`) 요청을 `NetworkFirst`로 처리하는 런타임 라우트(`pages` 캐시, `networkTimeoutSeconds: 3`, 최대 100개·30일). 상세는 아래 [캐싱 전략](#캐싱-전략) 참조.
 
@@ -57,10 +57,11 @@
 
 ## 캐싱 전략
 
-커스텀 서비스 워커 작성 대신 `vite-plugin-pwa`의 기본 `generateSW` 전략을 사용하되, **HTML은 프리캐시하지 않고 네트워크 우선(NetworkFirst)으로 서빙**한다.
+커스텀 서비스 워커 작성 대신 `vite-plugin-pwa`의 기본 `generateSW` 전략을 사용하되, **일반 페이지 HTML은 프리캐시하지 않고 네트워크 우선(NetworkFirst)으로 서빙**하며, **청크 HTML 조각은 프리캐시**한다.
 
 - **불변 자산** (`js`, `css`, `svg`, `png`, `ico`, `woff/woff2`): 프리캐시(캐시 우선). 파일명에 해시가 포함되어 갱신 시 항상 최신 버전을 참조한다.
-- **HTML**: `globPatterns`에서 제외하고 `runtimeCaching`의 `NetworkFirst` 라우트(`pages` 캐시)로 처리. 매 네비게이션마다 네트워크에서 최신 HTML을 가져오므로, 서비스 워커가 갱신되기 전에도 **강제 새로고침 없이 새 콘텐츠가 즉시 반영**된다. 오프라인에서는 마지막 방문 시점의 HTML 사본으로 폴백한다.
+- **청크 HTML 조각** (`**/chunk/**/index.html`): 프리캐시(캐시 우선). 점진적 포스트 목록 로딩 시 `fetch()`로 가져오는 정적 조각이므로, Workbox 프리캐시에 포함하여 오프라인에서도 다음 청크 로딩이 중단 없이 동작한다.
+- **일반 HTML** (홈/작가/포스트 페이지): `globPatterns`에서 제외하고 `runtimeCaching`의 `NetworkFirst` 라우트(`pages` 캐시)로 처리. 매 네비게이션마다 네트워크에서 최신 HTML을 가져오므로, 서비스 워커가 갱신되기 전에도 **강제 새로고침 없이 새 콘텐츠가 즉시 반영**된다. 오프라인에서는 마지막 방문 시점의 HTML 사본으로 폴백한다.
 
 > 주의: HTML을 프리캐시에 유지한 채 `NetworkFirst` 라우트를 추가해도 소용없다. Workbox는 프리캐시 라우트를 먼저 등록하므로, 프리캐시에 HTML이 있으면 캐시 우선으로 먼저 응답해 런타임 라우트가 동작하지 않는다. 따라서 `globPatterns`에서 `html` 제외가 필수다.
 

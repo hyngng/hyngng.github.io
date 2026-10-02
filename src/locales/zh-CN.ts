@@ -9,9 +9,12 @@ const locale: Locale = {
     rssAria: 'RSS',
   },
   authors: {
-    title: '作者',
+    persona: '人格',
+    otherPersona: '其他人格',
     otherCount: (n: number) => `及另外 ${n} 位作者`,
-    postCount: (n: number) => `${n} 篇`,
+    personaCount: (n: number) => `查看${n}个人格`,
+    otherPersonaCount: (n: number) => `查看${n}个其他人格`,
+    closeAria: '关闭',
   },
   posts: {
     title: '文章',

@@ -1,15 +1,40 @@
-﻿---
+---
+import Avatars from './Avatars.astro';
+
 interface Props {
   title: string;
   description: string;
+  personaCountText?: string;
+  personaAvatars?: string[];
+  personaTargetModalId?: string;
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  personaCountText,
+  personaAvatars = [],
+  personaTargetModalId = 'persona-modal',
+} = Astro.props;
 ---
 
 <section class="content-shell hero" aria-labelledby="hero-title">
   <h1 id="hero-title">{title}</h1>
-  <p>{description}</p>
+  <div class="hero-desc-row">
+    <p class="hero-description">{description}</p>
+    {personaCountText && (
+      <button
+        type="button"
+        class="hero-personas-trigger"
+        aria-haspopup="dialog"
+        aria-controls={personaTargetModalId}
+        data-modal-target={personaTargetModalId}
+      >
+        <Avatars avatars={personaAvatars} loading="eager" />
+        {personaCountText}
+      </button>
+    )}
+  </div>
 </section>
 
 <style>
@@ -28,13 +53,57 @@ const { title, description } = Astro.props;
     text-rendering: geometricPrecision;
   }
 
-  p {
-    margin: var(--space-hero-title-description) 0 0;
+  .hero-desc-row {
+    margin-top: var(--space-hero-title-description);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .hero-description {
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
     color: var(--color-heading);
     font-size: var(--font-size-hero-description);
     line-height: var(--line-height-hero-description);
     font-weight: 400;
     letter-spacing: 0;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .hero-personas-trigger {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-family-base);
+    font-size: var(--author-name-size);
+    line-height: var(--line-height-hero-description);
+    font-weight: 400;
+    color: var(--color-heading);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .hero-personas-trigger:hover {
+    color: var(--color-accent);
+  }
+
+  .hero-personas-trigger:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
   @media (max-width: 960px) {
@@ -45,6 +114,12 @@ const { title, description } = Astro.props;
     h1 {
       font-size: var(--font-size-hero-title-mobile);
       line-height: var(--line-height-hero-title-mobile);
+    }
+
+    .hero-desc-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
     }
   }
 </style>

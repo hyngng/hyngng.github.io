@@ -101,8 +101,9 @@ locale.relativeTime.today // "오늘 작성"
 
 ## 역할 분담 (Single Source of Truth)
 
-- **`src/settings/site.settings.ts`**: 언어 파생 로직(`deriveLocaleMeta`, `supportedLocales` 스캔)과 유저 커스텀 메타데이터(블로그 타이틀, 설명 등)의 단일 진실 출처(SSOT). `getSiteMeta(lang)`(현재는 `src/locales/index.ts`에 위치)을 통해 언어별 설정 관리 및 `defaultLocale` 자동 Fallback 지원.
-- **`src/locales/`**: 유저가 수정할 필요 없는 시스템 고정 UI용 문자열(검색, 다음 글, 테마 변경 등) 엔진 영역.
+- **`src/settings/site.settings.ts`**: 언어 파생 로직(`deriveLocaleMeta`, `supportedLocales` 스캔)과 유저 커스텀 메타데이터(블로그 타이틀, 설명 등)의 단일 진실 출처(SSOT).
+- **`src/utils/pageContext.ts`**: `getSiteMeta(lang)` 및 레이아웃 파사드 `usePageContext(Astro)`를 제공하는 중립 유틸리티. `SITE.title`과 `getLocale(lang).description`을 결합하여 언어별 메타데이터를 구성하며, `pageContext` → `locales` → `site.settings` 단방향 의존성으로 순환 참조를 원천 차단함.
+- **`src/locales/`**: 유저가 수정할 필요 없는 시스템 고정 UI용 문자열(검색, 다음 글, 테마 변경 등) 순수 레지스트리 영역. `SITE`에 의존하지 않음.
 - **`posts/`**: 포스트 글 본문 콘텐츠. 언어는 프론트매터 `lang` 필드가 결정하며, 폴더 경로는 조직용입니다.
 
 ## 규칙

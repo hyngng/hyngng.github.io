@@ -278,9 +278,18 @@
     - 조사(부정적): `createMarkdownProcessor` 단독 재현에서 플러그인 조합 전부(rehypeRaw/KaTeX/imageWrapper/footnoteTooltip/tableWrapper/strip + remark 7종) 포함해도 `<!--` 보존. `hast-util-raw`의 파서 상태 기반 문자 유실 경로 존재하나 재현 불가 → 파이프라인 버그 아님.
     - 확정: Astro 7 캐시가 원인. 프로젝트 루트 `.astro/data-store.json`은 dev 모드, `node_modules/.astro/data-store.json`은 build 모드 캐시(`docs/ai-docs/development/build-cache.md` 참조). 이전 빈 span dist 산출물은 수정 전 렌더링이 캐시에 잔존한 것. `.astro` 삭제 후 클린 빌드 → 7개 언어 전부 `&#x3C;!--` 보존, dist 576개 HTML 전수 빈 첫 줄 span 0건.
     - 검증: `npm run build` 성공(575 pages), `npx astro check` 0 errors / 0 warnings. 임시 산출물(`shiki-test.mjs`, `pipeline-test.mjs`, `test-comment.astro`, `dist/test-comment`) 삭제 완료.
+  - [x] **청크 로딩 브라우저 뒤로 가기 복원 및 딥링크 히스토리 오염 해소 (P1)**
+    - 배경: 초기 페이지 진입 시 history state가 없어 브라우저 뒤로 가기 시 `e.state?.chunk`가 `undefined`로 평가되어 1페이지 상태로 DOM 카드가 복원되지 않고 2페이지 카드가 잔존함. 딥링크 `?p=3` 진입 시에도 중간 청크마다 `pushState`를 호출해 세션 히스토리가 불필요하게 오염됨. 또한 앞으로 가기 순차 로드 중 다시 뒤로 갈 때 `currentChunk` 미갱신으로 인한 조기 반환 및 비동기 완료 레이스 발생 가능.
+    - 해결: `loader.ts`에서 초기화 시점에 `history.replaceState({ chunk: initialChunk })`로 초기 히스토리를 명시 기록. 딥링크 로드(`loadInitial`) 시에는 `loadChunk(i, false)`로 호출하여 `pushState`를 건너뛰어 히스토리 스택 보존. `popstateSeq` 시퀀스 토큰을 도입해 비동기 청크 로드 및 DOM append 단계마다 최신 리비전을 검증하여 취소된 작업의 DOM 변이를 원천 차단하고, `target <= currentChunk` 시 `controller.restoreChunkCount(target)`로 초과 카드를 즉시 제거·복원하여 재진입 레이스 완전 해소.
+  - [x] **포스트 번역본 동일성과 라우트 충돌 검사 식별자 계약 일치 (P2)**
+    - 배경: 실제 생성 라우트는 `(lang, author, slug)`이나 `validate-routes.ts`는 `(lang, slug)`만 검사하여 타 작가의 동일 slug 작성을 차단했고, 반대로 `PostLayout.astro`는 `slug`만 보고 타 작가의 글을 `hreflang` 번역본으로 잘못 묶어 세 계층(`validate-routes`, `PostLayout`, `sitemap.xml`)의 계약이 불일치함.
+    - 해결: 콘텐츠 스키마(`content.config.ts`)의 `authors` 필드(`string | string[]`, 기본값 `['dev']`) 단일 규칙에 맞춰 `frontmatter-lang.ts`에 `getFrontmatterAuthor`를 구현하고, `validate-routes.ts`에서 실제 산출 경로 `${localePath(lang)}/${author}/${slug}`로 충돌을 검증하도록 수정. `PostLayout.astro`에서도 `p.data.authors[0] === currentAuthor && getPostSlug(p.id) === currentSlug`로 동일 작가의 글만 번역본으로 묶어 3개 계층의 계약을 일치시키고 테스트 계약 정합성 확보.
+  - [x] **청크 HTML의 Workbox 오프라인 프리캐시 PWA 구현 동기화 (P3)**
+    - 배경: `chunk-loading.md` 문서는 청크 URL이 Workbox 프리캐시에 들어가므로 오프라인 fetch가 가능하다고 명시했으나, `astro.config.mjs`의 `globPatterns`는 HTML을 전면 제외하여 오프라인에서 청크 fetch가 실패함.
+    - 해결: 사용자의 지침에 따라 코드를 문서 계약에 맞춤. `astro.config.mjs`의 `workbox.globPatterns`에 `**/chunk/**/index.html`을 추가하여, 일반 페이지 HTML은 `NetworkFirst` 최신성 정책을 유지하면서도 청크 HTML 조각은 Workbox 프리캐시를 통해 오프라인에서도 무한 스크롤/페이징이 가능하도록 구현 갱신 및 `pwa.md` 동기화.
   - [x] **shimmer 비율 보정: 16:9 폴백 + 헤더 기반 실제 비율 조기 적용 (레이아웃 점프 제거)**
     - 배경: `.img-wrapper`의 기본 `aspect-ratio: 16/9`와 실제 이미지 비율(균등 샘플 median 1.50, 범위 0.63~5.73)이 달라 로드 완료 시점에 박스가 갑자기 리사이즈되어 레이아웃이 튐.
-    - 해결: 브라우저가 이미지 헤더만 수신해도 `naturalWidth`/`naturalHeight`를 노출하는 특성을 이용해 `image-reveal.ts`(`syncAspectRatio`/`pollAspectRatio`)가 첫 패킷 도착(rAF 폴링) 시점에 `.img-wrapper`에 인라인 `aspect-ratio: w/h`를 설정 → `html[data-js] .img-wrapper`의 `transition: aspect-ratio 0.25s ease`로 16:9 → 실제 비율을 부드럽게 모프.
+    - 해결: 브라우저가 이미지 헤더만 수신해도 `naturalWidth`/`naturalHeight`를 노출하는 특성을 이용해 `image-reveal.ts`(`syncAspectRatio`/`pollAspectRatio`)가 첫 패킷 도착(rAF 폴링) 시점에 `.img-wrapper`에 인라인 `aspect-ratio: w/h`를 설정 → `html[data-js] .img-wrapper`의 `transition: aspect-ratio 0.25s ease`로 16:9 → 실제 비율을 부드럽게 모프. (화면 밖 lazy 이미지 무한 폴링 방지를 위한 60프레임 제한, `isConnected` 가드, `error` 이벤트 시 쉬머 해제 반영).
     - 폴백 비율은 **16:9 유지** (1:1 시도 후 사용자가 16:9로 환원 결정). 인라인 스타일이 `.img-wrapper.loaded { aspect-ratio: auto }`보다 우선이라 로드 시 2차 변경 없음. `prefers-reduced-motion: reduce`에서 transition 해제. 적용 범위는 본문 이미지(`.img-wrapper`)만 — 포스트 카드(`.post-card-image`, 40/21 고정)·LoadMoreCard는 제외 (사용자 결정).
     - 미채택 옵션: Range 요청으로 치수 선취득(B)·빌드 타임 치수 주입(C) — CDN·비용 대비 단순성에서 기각, 논의용으로만 정리.
     - 검증: `npm run build` 성공, `npx astro check` 0 errors / 0 warnings. 상세는 `docs/ai-docs/design/typography.md`의 Image Shimmer Loading 섹션 참조.
@@ -375,5 +384,61 @@
     - **D (posts 디렉토리 순회 DRY)**: 신규 `src/utils/postFiles.ts`(`listPostFiles()`) 유틸리티 작성(`node:fs`/`node:path`만 사용하여 config-time 로드 제약 만족). `site.settings.ts`(`scanPostLangValues`)와 `validate-routes.ts`(`getLangSlugPairs`)의 재귀 디렉토리 순회 중복 제거. `src/utils/postFiles.test.ts` 단위 테스트 작성. `docs/ai-docs/configuration/locales.md` 부채 항목 해결됨 처리.
     - **E (검색 excerpt 제안 닫기)**: `docs/ai-docs/plans/search-excerpt-replacement.md` 상태를 "보류 / 미구현 (결정: 현행 Author 유지)"로 마감.
     - **검증**: `npm test` 51 passed (8 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 성공 (589 pages + Pagefind 373 pages 인덱싱).
+  - [x] **getSiteMeta 중립 모듈 이동 및 레이아웃 파사드 도입 (2026-09)**
+    - **배경**: `getSiteMeta`가 `src/locales/index.ts`에 위치하여 `SITE.title`을 import함으로써 순수 번역 레지스트리와 사이트 설정 간의 경계가 모호했음. 레이아웃(`BaseLayout`, `PostLayout`)에서 `lang`, `locale`, `siteMeta`를 개별 import하고 중복 선언하는 보일러플레이트 존재.
+    - **구현**:
+      - `src/utils/pageContext.ts` 신규 생성: `getSiteMeta(lang?)`, `SiteLocaleMeta`, `usePageContext(Astro, opts?)` 파사드 구현.
+      - 의존성 단방향화: `pageContext` → `locales` → `site.settings`로 순환 종속성을 원천 방지하고, `locales/index.ts`에서 `SITE` import를 제거하여 순수 레지스트리화.
+      - 10개 파일의 `getSiteMeta` import 경로를 `pageContext.ts`로 갱신.
+      - `BaseLayout.astro` 및 `PostLayout.astro`에 `usePageContext` 파사드를 채택하여 보일러플레이트 제거.
+      - `src/utils/pageContext.test.ts` 단위 테스트 작성 (6 tests).
+    - **검증**: `npm test` 57 passed (9 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 성공. `docs/ai-docs/configuration/locales.md` 갱신.
+  - [x] **데스크톱 페르소나 (Persona) 사이드바 (2026-09)**
+    - 배경: >1280px 데스크톱에서 글쓴이 섹션이 오른쪽 검색 사이드바에 없어 검색창 아래 공간이 비어 있었음.
+    - 구현:
+      - `src/components/Persona.astro` 신규 — `{id, name, avatar?}[]` authors props, `locale.authors.persona` 제목, `getAuthorPath(id, currentLocale)` 작가 링크, TOC/MorePosts와 동일 CSS 토큰 재사용. 아바타(`@` 프리픽스 포함 이름) 좌측 배치 — CDN 아바타 22px(중앙 토큰 `--persona-avatar-size`, 소수점 없는 2의 배수) + `AUTHOR_PREFIX`(`@`) 적용, 작성일 정보 없음 (사용자 결정).
+      - `HomePageContent.astro`: `.search-sidebar` 내부를 `.search-sidebar-inner`(flex column)로 래핑해 `<Search>` 아래 `<Persona>` 렌더. 자식별 sticky는 기존 `.search-sidebar > *` 규칙으로 유지.
+      - `global.css`/테마: `--space-search-persona-gap: 2.75rem` + `--persona-avatar-size: 22px` + `--space-persona-title-avatar: 0.8rem` 토큰 및 `.search-sidebar-inner { display:flex; flex-direction:column; gap: var(--space-search-persona-gap) }`. >1280px에서 기존 인라인 `.authors`는 `@media (min-width: 1281px)` `display: none` (페르소나와 중복 방지). 961~1280px 인라인 글쓴이 유지, ≤960px 숨김 유지. `--space-persona-title-avatar`는 TOC/MorePosts의 텍스트 라인박스 리딩(~2.9px)을 아바타 기준으로 보정해 동일 시각 간격을 만드는 토큰.
+      - 사이드바/푸터 소형 블록 제목(`검색`·`목차`·`다른 글 더 보기`·`페르소나`) 색상을 통일 — 4개 컴포넌트 타이틀을 `--color-heading`(다크에서 밝은 고대비)/`--color-muted` 대신 역할 토큰 `--color-subtitle`(`var(--color-muted)`, 테마 light/dark 양쪽 정의)로 전환.
+      - 로케일: `authors.persona` 필드 7개 언어 추가 (ko '페르소나', en 'Personas', ja 'ペルソナ', zh-CN '人格', es 'Personas', ru 'Персоны', fr 'Persona'). fr 오타('Personnas') 수정 포함.
+      - 작가 페이지 '다른 페르소나': `Persona.astro`에 `title?` prop(기본 `locale.authors.persona`) 추가, `AuthorPageContent.astro`가 `.search-sidebar-inner`로 `<Search>` 아래에 `ALL_AUTHORS`에서 현재 작가 제외 항목을 `locale.authors.otherPersona`(7개 언어) 제목으로 렌더링. 기본/로케일 작가 페이지 공유.
+  - [x] **AdSense 본문 상단 광고 연동 (`start_with_ads`) (2026-09)**
+    - 배경: Jekyll 시절 `start_with_ads: true`인 포스트 본문 상단에 노출되던 애드센스 광고가 Astro 전환 후 미연결 상태로 남아있었음.
+    - 구현:
+      - `src/components/seo/analytics/Adsense.astro`: 설정 가드(`isConfigured`) 추가 및 `.adsense-container` 래퍼 스타일링.
+      - `src/layouts/PostLayout.astro`: `post.data.start_with_ads` 참일 때 본문(`.post-content`) 최상단에 `<aside class="post-ads-top" data-pagefind-ignore aria-label="advertisement"><Adsense /></aside>` 렌더링 및 하단 여백 스타일링.
+      - `README.md`의 AdSense 설명 갱신.
+  - [x] **SNS 스타일 Hero 페르소나 및 PersonaModal 리팩토링 (2026-10)**
+    - 배경: 데스크톱 사이드바 및 인라인에 분산되어 있던 페르소나 목록을 SNS(X/Threads/Instagram)의 프로필 팔로잉/팔로워 디자인을 모티브로 일원화.
+    - 구현:
+      - `Hero.astro`: description과 동일 행(`.hero-desc-row`)에 SNS 스타일의 메타 텍스트 링크(`.hero-personas-trigger`) 배치. description은 `flex: 1 1 auto; min-width: 0;`로 남은 너비에서 줄바꿈되며, 페르소나 링크는 우측에 고정되어 침범하지 않음. 모바일(≤960px)에서는 세로 스택(`flex-direction: column; gap: 0.5rem;`)으로 전환. 폰트 크기는 `--author-name-size: 14px`, 볼드 없이 일반 텍스트 및 띄어쓰기 없는 단일 텍스트(`5개 페르소나`). 호버 시 액센트 색상 전환.
+      - `PersonaModal.astro`: 웹 표준 HTML5 `<dialog>` 기반 네이티브 모달 컴포넌트 신설. 데스크톱에서는 화면 중앙 카드 모달(`--persona-modal-width: 400px`), 모바일(≤640px)에서는 바텀시트(Bottom Sheet) 인터랙션 적용. 배경 딤 및 블러(`backdrop-filter: blur(4px)`). 기존 디자인 시스템 토큰(`--avatar-size: 40px`, `--author-name-size: 14px`, `--author-info-size: 12px`, `--post-card-radius: 20px`)과 일원화.
+      - `HomePageContent.astro` / `AuthorPageContent.astro`: 기존 사이드바 및 인라인 페르소나 컴포넌트를 완전히 대체하고 Hero 하단 트리거 + PersonaModal로 단일화.
+      - 다국어: 7개 로케일(`ko-KR`, `en-US`, `ja-JP`, `zh-CN`, `es-ES`, `ru-RU`, `fr-FR`)에 `personaCount`, `otherPersonaCount`, `closeAria` 번역 함수 추가.
+      - 접근성 & 안정성: `aria-haspopup="dialog"`, `aria-controls`, `AbortController`를 통한 이벤트 리스너 누적 방지, `html.modal-open`을 통한 배경 스크롤 락.
+    - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 생성 완료. `docs/ai-docs/components/authors.md` 동기화.
+  - [x] **공통 아바타 컴포넌트 (`Avatars.astro`) 추출 및 책임 분리 리팩토링 (2026-10)**
+    - 배경: 여러 컴포넌트(`Author`, `PersonaModal`, `Hero`)에 분산되어 중복 정의되던 원형 아바타 마크업과 CSS, 그리고 `Hero`에 강결합되어 있던 아바타 스택(슬라이스, 겹침 음수 마진, 테두리 등) 세부 로직을 단일 책임 컴포넌트로 분리.
+    - 구현:
+      - `src/components/Avatars.astro` 신설: 단일 아바타 모드(`src`)와 다중 아바타 스택 모드(`avatars`, `limit=3`)를 유연하게 지원. 플레이스홀더 배경, 원형 마스킹, lazy/eager 로딩, onerror 제거 등 캡슐화.
+      - `src/styles/global.css`: 중앙 토큰 `--avatar-stack-size: 24px`, `--avatar-stack-overlap: 8px` 추가 (웹 관행 2의 배수 상수 및 매직 넘버 방지).
+      - `Hero.astro`: 인라인 아바타 스택 마크업 및 관련 CSS 4개 규칙, `slice(0, 3)` 계산 로직을 전부 제거하고 `<Avatars avatars={personaAvatars} loading="eager" />`로 간소화.
+      - `Author.astro` / `PersonaModal.astro`: 중복 아바타 마크업 및 CSS를 제거하고 `<Avatars src={...} />` 도입.
+    - 검증: `npm test` 61 passed (9 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 생성 완료. `docs/ai-docs/components/authors.md` 동기화.
+  - [x] **모바일 Frame 상단 탭 양쪽 하단 역방향 라운딩 (Concave Corner) 적용 (2026-10)**
+    - 배경: 모바일(≤960px)에서 화면 상단을 가로지르는 검은색 상단 바가 평평한 직사각형 형태로 렌더링되어 투박하고 단절감을 주던 문제 해소.
+    - 구현:
+      - `src/styles/global.css`: 중앙 토큰 `--frame-radius-mobile: 18px` 선언 (기존 24px의 0.75배 근처 2의 배수 웹 관행 상수).
+      - `src/components/Frame.astro`: `@media (max-width: 960px)`에서 `.fixed-actions`의 좌측 하단(`::before`)과 우측 하단(`::after`)에 `radial-gradient` 오목 곡선(concave corner) pseudo-element 배치.
+      - 검은색 상단 바가 화면 좌우 가장자리를 따라 아래로 자연스럽게 오목 곡선을 그리며 본문으로 이어져, 데스크톱의 프레임 곡선 아이덴티티를 모바일에서도 우아하게 계승.
+    - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 완료. `docs/ai-docs/design/frame-layout.md` 동기화.
+  - [x] **모바일 Frame sticky 헤더 전환 및 스크롤 오프셋 정합 (2026-10)**
+    - 구현: `Frame.astro` 모바일 미디어 쿼리에서 `.fixed-actions`를 `position: relative` → `position: sticky; top: 0;`로 전환. 문서 흐름 높이(48px)를 보존하면서도 스크롤 시 뷰포트 상단에 고정 유지.
+    - 스크롤 오프셋: 모바일 `:root`에 `--scroll-target-offset: var(--button-size)`(48px)를 복원 선언하여 TOC 앵커 링크 점프 시 헤딩이 sticky 헤더 뒤에 가려지지 않도록 정합.
+    - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 완료. `docs/ai-docs/design/frame-layout.md` 동기화.
+  - [x] **모바일 Frame 화면 하단 역방향 라운딩 (Concave Corner) 적용 (2026-10)**
+    - 배경: 상단 바와 더불어 화면 최하단 좌우 모서리에도 동일한 크기(18px)의 오목 곡선을 배치하여, 하단 바 없이 뷰포트 4개 모서리 전체가 유기적으로 둥글게 감싸지는 모바일 프레임 완성.
+    - 구현: `src/components/Frame.astro`에 모바일 전용 `.mobile-bottom-corners`(`position: fixed; bottom: 0; left: 0; right: 0; pointer-events: none;`) 추가 및 `::before`(좌측 하단, `circle at 100% 0%`), `::after`(우측 하단, `circle at 0% 0%`)로 18px radial-gradient 오목 곡선 렌더링. 데스크톱(>960px)에서는 `display: none`으로 완전 격리.
+    - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 완료. `docs/ai-docs/design/frame-layout.md` 동기화.
 
 ## Option

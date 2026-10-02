@@ -1,11 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../locales';
-import { ALL_AUTHORS, getAuthor, type AuthorId } from '../settings/authors.settings';
-import { getSiteMeta } from '../locales';
+import { ALL_AUTHORS, getAuthor } from '../settings/authors.settings';
+import { getSiteMeta } from '../utils/pageContext';
 import { localePath } from '../utils/posts';
-import Authors from './Authors.astro';
 import Hero from './Hero.astro';
+import PersonaModal from './PersonaModal.astro';
 import PostListSection from './PostListSection.astro';
 import Search from './Search.astro';
 
@@ -17,27 +17,35 @@ interface Props {
 
 const { locale, currentLocale, posts } = Astro.props;
 const siteMeta = getSiteMeta(currentLocale);
-const postCountByAuthor: Partial<Record<AuthorId, number>> = {};
 
-posts.forEach((post) => {
-  const authorIds = post.data.authors as AuthorId[];
-  for (const id of authorIds) {
-    postCountByAuthor[id] = (postCountByAuthor[id] || 0) + 1;
-  }
+const personaAuthors = ALL_AUTHORS.map((author) => {
+  const authorData = getAuthor(author.id, currentLocale);
+  return {
+    id: author.id,
+    name: author.name,
+    avatar: authorData.avatar,
+    description: authorData.description,
+  };
 });
-
-const mainAuthors = ALL_AUTHORS.map((author) => ({
-  id: author.id,
-  avatar: getAuthor(author.id, currentLocale).avatar,
-  name: author.name,
-  info: locale.authors.postCount(postCountByAuthor[author.id as AuthorId] || 0),
-}));
 
 const chunkBaseUrl = `${localePath(currentLocale)}/posts/chunk`;
 ---
 
-<Hero title={siteMeta.title} description={siteMeta.description} />
-<Authors authors={mainAuthors} />
+<Hero
+  title={siteMeta.title}
+  description={siteMeta.description}
+  personaCountText={locale.authors.personaCount(ALL_AUTHORS.length)}
+  personaAvatars={personaAuthors.map((a) => a.avatar)}
+  personaTargetModalId="persona-modal"
+/>
+
+<PersonaModal
+  modalId="persona-modal"
+  title={locale.authors.persona}
+  authors={personaAuthors}
+  currentLocale={currentLocale}
+  closeAria={locale.authors.closeAria}
+/>
 
 <div class="content-body-layout">
   <div class="search-mobile-wrapper">
@@ -48,4 +56,3 @@ const chunkBaseUrl = `${localePath(currentLocale)}/posts/chunk`;
     <Search locale={locale} currentLocale={currentLocale} />
   </aside>
 </div>
-

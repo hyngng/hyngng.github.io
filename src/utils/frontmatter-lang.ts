@@ -10,3 +10,15 @@ export function getFrontmatterLang(raw: string): string | undefined {
   const { data } = matter(raw);
   return typeof data.lang === 'string' ? data.lang : undefined;
 }
+
+export function getFrontmatterAuthor(raw: string): string {
+  const { data } = matter(raw);
+  const rawAuthors = data.authors;
+  if (Array.isArray(rawAuthors) && rawAuthors.length > 0 && typeof rawAuthors[0] === 'string' && rawAuthors[0].trim()) {
+    return rawAuthors[0].trim();
+  }
+  if (typeof rawAuthors === 'string' && rawAuthors.trim()) {
+    return rawAuthors.trim();
+  }
+  return 'dev';
+}

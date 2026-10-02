@@ -81,7 +81,7 @@ analytics: {
 - **Google Analytics**: `google.id` 설정 시 `<head>`에 gtag.js가 자동 삽입됩니다.
 - **Google Tag Manager**: `googleTagManager.id` 설정 시 `<head>`에 GTM 컨테이너 스크립트가 자동 삽입됩니다.
 - **GoatCounter**: `goatcounter.id` 설정 시 `<head>`에 트래킹 스크립트가 자동 삽입됩니다.
-- **AdSense**: `adsense.client`/`adsense.adSlot` 사용. `src/components/seo/analytics/Adsense.astro`로 분리되어 있으며 아직 레이아웃에 연결되지 않았습니다. AdSense 승인에는 `/ads.txt`가 필요하며 `public/ads.txt`에서 관리됩니다 (클라이언트 ID 변경 시 함께 수정).
+- **AdSense**: `adsense.client`/`adsense.adSlot` 사용. `src/components/seo/analytics/Adsense.astro` 컴포넌트로 포스트 레이아웃(`PostLayout.astro`) 본문 상단에 연결되어 있으며, 포스트 프론트매터의 `start_with_ads: true` 설정 시 조건부 노출됩니다. AdSense 승인에는 `/ads.txt`가 필요하며 `public/ads.txt`에서 관리됩니다 (클라이언트 ID 변경 시 함께 수정).
 
 각 도구는 `src/components/seo/analytics/` 아래에 컴포넌트로 분리되어 있으며, 값이 `undefined`면 로드되지 않습니다. 또한 분석 스크립트는 **프로덕션 빌드(`astro build`)에서만** 로드됩니다. (`import.meta.env.PROD` 게이트 — dev 서버에서 로드되지 않아 개발 중 콘솔 에러와 분석 트래픽 오염을 방지)
 

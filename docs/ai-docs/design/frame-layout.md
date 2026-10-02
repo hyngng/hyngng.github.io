@@ -49,18 +49,20 @@
 - 모바일에서는 `--button-size: 48px`, `--font-size-action: 20px`을 유지합니다. 전역 0.8배 스케일 다운에서 모바일 버튼은 접근성 최소 터치 타겟을 보존하기 위해 제외됩니다. 48px은 Material Design의 최소 터치 타겟 권장 크기(48×48dp)를 충족하며, Apple HIG(44×44pt)도 여유 있게 상회합니다.
 - 버튼 크기가 줄어들면 파생 변수(`--header-height`, `--frame-radius`)도 자동으로 따라 줄어듭니다.
 - 모바일 네이티브 스크롤바는 OS 설정에 따름.
-- 모바일에서 `.fixed-actions`는 `position: relative`로 오버라이드되어 문서 흐름에 포함되며, 페이지 최상단에 놓인 일반 헤더처럼 동작합니다. `height: var(--header-height)`로 흐름에서 48px을 차지하고, `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 유지합니다. 데스크톱은 `position: fixed`를 유지합니다.
+- 모바일에서 `.fixed-actions`는 `position: sticky; top: 0;`로 오버라이드되어 문서 흐름(in-flow, 48px 차지)을 유지하면서도 스크롤 시 화면 상단에 고정(sticky)됩니다. `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 유지합니다. 데스크톱은 `position: fixed`를 유지합니다.
 
-## 모바일 Frame 일반 요소화 (in-flow)
+## 모바일 Frame Sticky 헤더화
 
 ### 동작
-모바일(`max-width: 960px`)에서 `.fixed-actions`는 `position: relative`로 오버라이드되어 화면 상단 고정을 해제하고 **일반 문서 흐름**에 포함됩니다. 페이지 최상단에 놓인 일반 헤더처럼 동작하므로, 스크롤하면 콘텐츠와 함께 자연스럽게 위로 사라지고, 다시 최상단까지 올려야 나타납니다. 자동 숨김/표시 JS 로직이 없으며 CSS만으로 동작합니다.
+모바일(`max-width: 960px`)에서 `.fixed-actions`는 `position: sticky; top: 0;`로 렌더링되어 일반 문서 흐름에서 48px 높이를 정상적으로 차지하면서도, 사용자가 스크롤을 내릴 때 뷰포트 최상단에 지속적으로 고정됩니다. 복잡한 JS 스크롤 리스너 없이 순수 CSS로 안정적으로 고정되며, 언제든지 테마 토글, RSS, 언어 전환 및 홈 네비게이션이 가능합니다.
 
 ### 구현
-- **CSS** (`Frame.astro` 모바일 미디어쿼리): `.fixed-actions`에 `position: relative`만 오버라이드합니다. `height: var(--header-height)`(48px)로 흐름에서 높이를 차지하고, `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 그대로 유지하므로 배치가 깨지지 않습니다.
-- **JS 없음**: 기존 스크롤 연동 코드(`updateFrameOffset`, `scheduleFrameUpdate`, scroll/resize 리스너, rAF 스로틀, abort 시 `cancelAnimationFrame`, `--header-height` 읽기)와 `openLangList()`/`closeLangList()` 내 transform 처리(`updateFrameOffset()` 호출)를 모두 제거했습니다.
+- **CSS** (`Frame.astro` 모바일 미디어쿼리): `.fixed-actions`에 `position: sticky; top: 0;`를 적용합니다. `height: var(--header-height)`(48px)로 흐름에서 높이를 차지하므로 상단 본문 콘텐츠와 겹치지 않으며, `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 그대로 유지합니다.
+- **모바일 상단 양쪽 하단 역방향 라운딩(Concave Corner)**: 모바일 상단 바(`.fixed-actions`)의 좌측 하단과 우측 하단에 `::before`와 `::after` pseudo-element(`width: var(--frame-radius-mobile)`, `height: var(--frame-radius-mobile)`, `18px`)로 radial-gradient 오목 곡선을 렌더링합니다. 검은색 상단 바가 화면 좌우 가장자리를 따라 아래로 자연스럽게 오목 곡선이 흘러내리며 sticky 헤더와 함께 부드럽게 상단에 고정됩니다.
+- **모바일 화면 하단 역방향 라운딩(Concave Corner)**: 모바일 전용 `.mobile-bottom-corners`(`position: fixed; bottom: 0; left: 0; right: 0; pointer-events: none;`)의 `::before`(좌측 하단, `circle at 100% 0%`)와 `::after`(우측 하단, `circle at 0% 0%`)를 통해 화면 최하단 좌우 모서리에도 동일한 18px 크기의 오목 곡선을 렌더링합니다. 하단 바 없이 화면 4개 모서리가 유려한 concave 곡선으로 완벽하게 감싸지는 액자(Frame) 감성을 모바일에서도 완성합니다.
+- **스크롤 오프셋 정합 (`--scroll-target-offset`)**: sticky 헤더로 인해 TOC 앵커 링크나 딥링크 점프 시 본문 제목(`h2~h4`)이 헤더 뒤로 가려지지 않도록, 모바일 `:root`에 `--scroll-target-offset: var(--button-size)`(48px)를 선언하여 정확한 시각 오프셋을 보장합니다.
 - **데스크톱 전용 유지**: 데스크톱(>960px)은 `position: fixed` 그대로 화면 상단에 고정되어 항상 보입니다.
-- **언어 목록 / reduced-motion**: transform 조작이 없으므로 별도 처리 불필요. `lang-list`는 열린 상태에서도 헤더 안에 자연스럽게 표시됩니다.
+- **언어 목록 / reduced-motion**: `lang-list`는 열린 상태에서도 sticky 헤더 안에서 자연스럽게 표시됩니다.
 
 ## 스크롤 컨테이너 구조
 

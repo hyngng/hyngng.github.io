@@ -189,8 +189,11 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 ## URL 상태
 
 - `?p=3` → 3번째 청크까지 로드된 상태
-- `history.pushState` / `popstate` 이벤트 처리
-- 페이지 로드 시 URL의 `?p=` 파라미터 읽어서 해당 청크까지 순차 로드
+- `history.pushState` / `popstate` 이벤트 처리:
+  - 초기 진입 시 `history.replaceState({ chunk: initialChunk })`로 초기 상태를 기록하여 뒤로 가기 시 1페이지 상태로의 완벽한 복원을 보장.
+  - 브라우저 뒤로 가기(`target < currentChunk`): `controller.restoreChunkCount(target)`를 호출하여 초과 청크 카드를 제거하고 레이아웃 복원.
+  - 브라우저 앞으로 가기(`target > currentChunk`): 필요한 청크를 히스토리 push 없이(`pushHistory: false`) 순차 로드.
+- 페이지 로드 시 URL의 `?p=` 파라미터(딥링크)를 읽어 해당 청크까지 순차 로드하되, 중간 청크가 히스토리 스택을 오염시키지 않도록 `pushHistory: false`로 처리.
 
 ## 로케일
 

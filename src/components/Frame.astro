@@ -1,5 +1,5 @@
 ---
-import { getSiteMeta } from "../locales";
+import { getSiteMeta } from "../utils/pageContext";
 import Button from "./Button.astro";
 import { getLocale, availableLocales, defaultLocale } from "../locales";
 import { localePath } from "../utils/posts";
@@ -81,6 +81,7 @@ const rssUrl = authorId
     </div>
   </div>
 </div>
+<div class="mobile-bottom-corners" aria-hidden="true"></div>
 
 <style>
   /* ── Container ── */
@@ -258,14 +259,60 @@ const rssUrl = authorId
     bottom: calc(var(--frame-radius) * -1);
   }
 
+  /* ── Mobile bottom corners (desktop hidden) ── */
+  .mobile-bottom-corners {
+    display: none;
+  }
+
   /* ── Mobile ── */
   @media (max-width: 960px) {
     .fixed-actions {
-      position: relative;
+      position: sticky;
+      top: 0;
       background-color: var(--color-frame);
       height: var(--header-height);
       pointer-events: auto;
       max-width: 100vw;
+    }
+
+    .left-action,
+    .right-actions {
+      border-radius: 0;
+    }
+
+    .left-action::before,
+    .left-action::after,
+    .right-actions::before,
+    .right-actions::after {
+      display: none;
+    }
+
+    .fixed-actions::before,
+    .fixed-actions::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      width: var(--frame-radius-mobile);
+      height: var(--frame-radius-mobile);
+      pointer-events: none;
+    }
+
+    .fixed-actions::before {
+      left: 0;
+      background: radial-gradient(
+        circle at 100% 100%,
+        transparent var(--frame-radius-mobile),
+        var(--color-frame) var(--frame-radius-mobile)
+      );
+    }
+
+    .fixed-actions::after {
+      right: 0;
+      background: radial-gradient(
+        circle at 0 100%,
+        transparent var(--frame-radius-mobile),
+        var(--color-frame) var(--frame-radius-mobile)
+      );
     }
 
     .home-text {
@@ -287,6 +334,45 @@ const rssUrl = authorId
 
     .lang-item {
       transition: background-color 0.5s var(--transition-easing), color 0.5s var(--transition-easing);
+    }
+
+    .mobile-bottom-corners {
+      display: block;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .mobile-bottom-corners::before,
+    .mobile-bottom-corners::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: var(--frame-radius-mobile);
+      height: var(--frame-radius-mobile);
+      pointer-events: none;
+    }
+
+    .mobile-bottom-corners::before {
+      left: 0;
+      background: radial-gradient(
+        circle at 100% 0%,
+        transparent var(--frame-radius-mobile),
+        var(--color-frame) var(--frame-radius-mobile)
+      );
+    }
+
+    .mobile-bottom-corners::after {
+      right: 0;
+      background: radial-gradient(
+        circle at 0% 0%,
+        transparent var(--frame-radius-mobile),
+        var(--color-frame) var(--frame-radius-mobile)
+      );
     }
   }
 </style>

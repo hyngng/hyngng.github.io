@@ -5,7 +5,7 @@ import {
   defaultLocaleBcp47,
   supportedLocales,
 } from '../settings/site.settings';
-import { getSiteMeta } from '../locales';
+import { getSiteMeta } from './pageContext';
 import { getPostLang, getPostPath, getAuthorPath, extractExcerpt } from './posts';
 
 export const LLMS_LOCALE = SITE.llms.locale;

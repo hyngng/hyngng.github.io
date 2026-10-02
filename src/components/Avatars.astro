@@ -1,0 +1,93 @@
+---
+interface Props {
+  /** Single avatar image URL */
+  src?: string;
+  /** Multiple avatar image URLs (renders as an avatar stack) */
+  avatars?: (string | undefined)[];
+  /** Maximum number of avatars to render in stack mode (default: 3) */
+  limit?: number;
+  /** Avatar size in px (number) or CSS string (default: var(--avatar-stack-size) for stack, var(--avatar-size) for single) */
+  size?: number | string;
+  /** Image alternative text */
+  alt?: string;
+  /** Image loading mode (default: 'lazy') */
+  loading?: 'lazy' | 'eager';
+  /** Image decoding mode (default: 'async') */
+  decoding?: 'async' | 'sync' | 'auto';
+  /** Additional CSS class */
+  class?: string;
+}
+
+const {
+  src,
+  avatars,
+  limit = 3,
+  size,
+  alt = '',
+  loading = 'lazy',
+  decoding = 'async',
+  class: className,
+} = Astro.props;
+
+const isStack = Array.isArray(avatars);
+const stackList = isStack
+  ? avatars.filter((url): url is string => typeof url === 'string' && url.length > 0).slice(0, limit)
+  : [];
+
+const computedSize = size != null
+  ? (typeof size === 'number' ? `${size}px` : size)
+  : (isStack ? 'var(--avatar-stack-size)' : 'var(--avatar-size)');
+
+const sizeStyle = `--current-avatar-size: ${computedSize};`;
+---
+
+{isStack ? (
+  stackList.length > 0 && (
+    <span class:list={['avatar-stack', className]} style={sizeStyle} aria-hidden="true">
+      {stackList.map((itemSrc) => (
+        <span class="avatar-item avatar-stack-item">
+          <img src={itemSrc} alt="" loading={loading} decoding={decoding} onerror="this.remove()" />
+        </span>
+      ))}
+    </span>
+  )
+) : (
+  <span class:list={['avatar-item', className]} style={sizeStyle} aria-hidden={src ? 'false' : 'true'}>
+    {src && (
+      <img src={src} alt={alt} loading={loading} decoding={decoding} onerror="this.remove()" />
+    )}
+  </span>
+)}
+
+<style>
+  .avatar-item {
+    width: var(--current-avatar-size);
+    height: var(--current-avatar-size);
+    border-radius: 50%;
+    background-color: var(--author-avatar-placeholder);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .avatar-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .avatar-stack {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .avatar-stack-item {
+    border: 2px solid var(--color-bg);
+  }
+
+  .avatar-stack-item:not(:first-child) {
+    margin-left: calc(-1 * var(--avatar-stack-overlap, 8px));
+  }
+</style>
