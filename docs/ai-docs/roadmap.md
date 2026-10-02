@@ -440,5 +440,17 @@
     - 배경: 상단 바와 더불어 화면 최하단 좌우 모서리에도 동일한 크기(18px)의 오목 곡선을 배치하여, 하단 바 없이 뷰포트 4개 모서리 전체가 유기적으로 둥글게 감싸지는 모바일 프레임 완성.
     - 구현: `src/components/Frame.astro`에 모바일 전용 `.mobile-bottom-corners`(`position: fixed; bottom: 0; left: 0; right: 0; pointer-events: none;`) 추가 및 `::before`(좌측 하단, `circle at 100% 0%`), `::after`(우측 하단, `circle at 0% 0%`)로 18px radial-gradient 오목 곡선 렌더링. 데스크톱(>960px)에서는 `display: none`으로 완전 격리.
     - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 완료. `docs/ai-docs/design/frame-layout.md` 동기화.
+  - [x] **프로덕션 의존성 보안 취약점 조치 및 핵심 패키지 업그레이드 (2026-10)**
+    - 배경: CI 워크플로우의 `npm audit --omit=dev --audit-level=high` 단계에서 `astro <=7.2.7`(AVIF RCE 및 base path 우회 보안 권고) 및 전이 의존성(`nanoid`, `sharp`, `svgo`, `smol-toml`, `js-yaml`, `devalue`), `mermaid <=11.16.0`(프로토타입 오염/CSS 주입/DoS) 및 `dompurify <=3.4.12`로 인해 9건(critical 1, high 6, moderate 2)의 취약점이 감지되어 빌드가 중단됨. 단순 `npm audit fix` 실행 시 `@astrojs/mdx`의 고정 버전과 `astro`의 `peerOptional` 요구 충돌(`ERESOLVE`)로 자동 수정 불가.
+    - 해결:
+      - `package.json` 핵심 의존성 번들 업그레이드:
+        - `astro`: `^7.2.0` → `^7.3.5` (RCE 패치 및 보안 취약점 해소)
+        - `@astrojs/mdx`: `^7.0.5` → `^8.0.2` (astro 7.3+ 호환 및 peer 충돌 해소)
+        - `@astrojs/markdown-remark`: `^7.2.2` → `^7.3.1`
+        - `mermaid`: `^11.16.0` → `^11.17.2` (11.x 보안 패치 및 dompurify 최신 버전 동기화)
+        - `@astrojs/check`: `^0.9.9` → `^0.9.10`
+      - 전이 의존성 갱신: `dompurify`(3.4.16+), `postcss`(8.5.28+) 및 `nanoid`(3.3.18+) 정합.
+    - 검증: `npm audit --omit=dev --audit-level=high` 0 vulnerabilities 달성, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 61 passed, `npm run build` 589 pages 및 Pagefind 인덱싱 정상 완료.
 
 ## Option
+
