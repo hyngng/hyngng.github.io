@@ -16,17 +16,17 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.2.2",
-    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/markdown-remark": "^7.3.1",
+    "@astrojs/mdx": "^8.0.2",
     "@astrojs/rss": "^4.0.19",
-    "astro": "^7.2.0",
+    "astro": "^7.3.5",
     "gray-matter": "^4.0.3",
     "mdast-util-directive": "^3.1.0",
     "mdast-util-from-markdown": "^2.0.3",
     "mdast-util-gfm-table": "^2.0.0",
     "mdast-util-math": "^3.0.0",
     "mdast-util-to-string": "^4.0.0",
-    "mermaid": "^11.16.0",
+    "mermaid": "^11.17.2",
     "micromark-extension-directive": "^4.0.0",
     "micromark-extension-gfm-table": "^2.1.1",
     "micromark-extension-math": "^3.1.0",
@@ -39,7 +39,7 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
+    "@astrojs/check": "^0.9.10",
     "@types/qrcode": "^1.5.6",
     "pagefind": "^1.5.2",
     "typescript": "^6.0.0",
