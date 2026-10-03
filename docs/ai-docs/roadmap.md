@@ -428,17 +428,17 @@
   - [x] **모바일 Frame 상단 탭 양쪽 하단 역방향 라운딩 (Concave Corner) 적용 (2026-10)**
     - 배경: 모바일(≤960px)에서 화면 상단을 가로지르는 검은색 상단 바가 평평한 직사각형 형태로 렌더링되어 투박하고 단절감을 주던 문제 해소.
     - 구현:
-      - `src/styles/global.css`: 중앙 토큰 `--frame-radius-mobile: 18px` 선언 (기존 24px의 0.75배 근처 2의 배수 웹 관행 상수).
+      - `src/styles/global.css`: 중앙 토큰 `--frame-radius-mobile: 36px` 선언 (버튼 높이 대비 적절한 시각적 균형과 텍스트 여백을 확보하는 곡률).
       - `src/components/Frame.astro`: `@media (max-width: 960px)`에서 `.fixed-actions`의 좌측 하단(`::before`)과 우측 하단(`::after`)에 `radial-gradient` 오목 곡선(concave corner) pseudo-element 배치.
       - 검은색 상단 바가 화면 좌우 가장자리를 따라 아래로 자연스럽게 오목 곡선을 그리며 본문으로 이어져, 데스크톱의 프레임 곡선 아이덴티티를 모바일에서도 우아하게 계승.
     - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 완료. `docs/ai-docs/design/frame-layout.md` 동기화.
   - [x] **모바일 Frame sticky 헤더 전환 및 스크롤 오프셋 정합 (2026-10)**
     - 구현: `Frame.astro` 모바일 미디어 쿼리에서 `.fixed-actions`를 `position: relative` → `position: sticky; top: 0;`로 전환. 문서 흐름 높이(48px)를 보존하면서도 스크롤 시 뷰포트 상단에 고정 유지.
-    - 스크롤 오프셋: 모바일 `:root`에 `--scroll-target-offset: var(--button-size)`(48px)를 복원 선언하여 TOC 앵커 링크 점프 시 헤딩이 sticky 헤더 뒤에 가려지지 않도록 정합.
-    - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 완료. `docs/ai-docs/design/frame-layout.md` 동기화.
+    - 스크롤 오프셋 아키텍처: 모바일 `:root`에 `--scroll-target-offset: var(--button-size)`(48px)를 선언하고, `src/styles/typography.css`에 본문 내 모든 인페이지 앵커 타깃(헤딩 `h1~h6`, 각주 정의 `article .footnotes li`, 본문 각주 참조 `article [id^="user-content-fn"]`)의 `scroll-margin-top: var(--scroll-target-offset)`을 일원화하여 정의. `TOC.astro`는 UI 및 ScrollSpy 책무에만 집중하도록 컴포넌트 간 관심사를 깔끔히 분리.
+    - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 완료. `docs/ai-docs/design/frame-layout.md` 동기화.
   - [x] **모바일 Frame 화면 하단 역방향 라운딩 (Concave Corner) 적용 (2026-10)**
-    - 배경: 상단 바와 더불어 화면 최하단 좌우 모서리에도 동일한 크기(18px)의 오목 곡선을 배치하여, 하단 바 없이 뷰포트 4개 모서리 전체가 유기적으로 둥글게 감싸지는 모바일 프레임 완성.
-    - 구현: `src/components/Frame.astro`에 모바일 전용 `.mobile-bottom-corners`(`position: fixed; bottom: 0; left: 0; right: 0; pointer-events: none;`) 추가 및 `::before`(좌측 하단, `circle at 100% 0%`), `::after`(우측 하단, `circle at 0% 0%`)로 18px radial-gradient 오목 곡선 렌더링. 데스크톱(>960px)에서는 `display: none`으로 완전 격리.
+    - 배경: 상단 바와 더불어 화면 최하단 좌우 모서리에도 동일한 크기(36px)의 오목 곡선을 배치하여, 하단 바 없이 뷰포트 4개 모서리 전체가 유기적으로 둥글게 감싸지는 모바일 프레임 완성.
+    - 구현: `src/components/Frame.astro`에 모바일 전용 `.mobile-bottom-corners`(`position: fixed; bottom: 0; left: 0; right: 0; pointer-events: none;`) 추가 및 `::before`(좌측 하단, `circle at 100% 0%`), `::after`(우측 하단, `circle at 0% 0%`)로 36px radial-gradient 오목 곡선 렌더링. 데스크톱(>960px)에서는 `display: none`으로 완전 격리.
     - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 완료. `docs/ai-docs/design/frame-layout.md` 동기화.
   - [x] **프로덕션 의존성 보안 취약점 조치 및 핵심 패키지 업그레이드 (2026-10)**
     - 배경: CI 워크플로우의 `npm audit --omit=dev --audit-level=high` 단계에서 `astro <=7.2.7`(AVIF RCE 및 base path 우회 보안 권고) 및 전이 의존성(`nanoid`, `sharp`, `svgo`, `smol-toml`, `js-yaml`, `devalue`), `mermaid <=11.16.0`(프로토타입 오염/CSS 주입/DoS) 및 `dompurify <=3.4.12`로 인해 9건(critical 1, high 6, moderate 2)의 취약점이 감지되어 빌드가 중단됨. 단순 `npm audit fix` 실행 시 `@astrojs/mdx`의 고정 버전과 `astro`의 `peerOptional` 요구 충돌(`ERESOLVE`)로 자동 수정 불가.
