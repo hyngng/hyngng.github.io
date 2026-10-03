@@ -187,6 +187,11 @@
   - 테마별 `--color-tooltip-bg`, `--color-tooltip-text` 변수 사용 (light: `#1e1e1e/#fff`, dark: `#2a2a2e/#e0e0e0`).
   - `width: max-content`로 포함 블록(각주 번호 폭) 너비 제약 우회. `max-width: min(320px, 90vw)`로 상한 유지.
   - [x] **"Footnotes" h2 라벨 제거 및 로케일 번역**: `remark-rehype`가 생성하는 `<h2 class="sr-only" id="footnote-label">`를 옵션(`remarkRehype.footnoteLabelTagName: 'span'`)으로 `span`으로 전환해 TOC 오염(`rehypeHeadingIds`가 `tagName[0] !== 'h'` 제외) 해소 + 표준 `.sr-only` CSS(`global.css`)로 시각 숨김. 라벨 텍스트는 `rehype-footnote-tooltip.mjs`가 `file.history`의 `/posts/{lang}/` 경로로 로케일을 추정해 `getLocale(lang).footnote.label`로 교체 (7개 로케일 추가). DOM 제거를 하지 않는 이유(접근성: `aria-describedby` 연결 보존)는 `docs/ai-docs/features/footnotes.md`에 문서화. 검증: build 성공, astro check 0 errors, dist에서 7개 언어 span 라벨·TOC 미포함 확인.
+  - [x] **각주 반응형 인터랙션 분리 (모바일 모달 & 데스크톱 오프셋 보정)**:
+    - 데스크톱(≥961px): 호버/포커스 툴팁 유지, 각주 번호 클릭 시 하단 각주 목록으로 스크롤 이동(`scroll-margin-top: calc(var(--frame-thickness) + 1.5rem)`으로 상단 고정 프레임 테두리 가림 방지). 툴팁 내 불필요한 backref 화살표는 CSS로 숨김.
+    - 모바일(≤960px): 호버 툴팁 완전 숨김. 각주 번호 터치 시 하단 스크롤 대신 본문이 담긴 모달 창(`<dialog class="footnote-modal">`) 표시.
+    - 모달 개선: flex 컬럼 카드로 본문 영역만 스크롤되고 하단 닫기 버튼(`Locale.footnote.close` 7개 국어 지원)은 항상 고정. 본문 내 복귀 버튼(`a[data-footnote-backref]`) 터치 시 모달을 닫고 문서 하단 각주 정의(`#user-content-fn-{n}`)로 부드럽게 스크롤 이동 (나무위키 스타일). `PersonaModal`과 동일한 곡률, 깊은 그림자, 블러 백드롭, 부드러운 등장/퇴장 트랜지션 적용.
+    - 검증: `npm run build` 성공, `npx astro check` 0 errors. 상세는 `docs/ai-docs/features/footnotes.md` 참조.
   - [x] **본문 마크다운 하이퍼링크 재정의**: Jekyll 시절 구 URL(`https://hyngng.github.io/posts/{slug}/`) 하이퍼링크 235개를 현재 다국어 라우팅 규칙(`/{author}/{slug}/` 또는 `/{lang}/{author}/{slug}/`)에 맞춰 일괄 업데이트. 대상 언어에 포스트가 존재하는 항목만 변환, 앵커(#) 보존. 상세는 `docs/ai-docs/features/posts.md` 참조.
 - [ ] **PC 검색바 수직 위치 10px 하향 조정**
   - `.search-sidebar`의 `top: var(--posts-section-margin-top)` (80px) 대신 별도 토큰으로 10px 추가하여 포스트 영역 시작점보다 살짝 아래에 배치.

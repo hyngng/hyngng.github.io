@@ -46,6 +46,7 @@ const locale: Locale = {
   },
   footnote: {
     label: 'Notas al pie',
+    close: 'Cerrar',
   },
   footer: {
     rights: 'Todos los derechos reservados',

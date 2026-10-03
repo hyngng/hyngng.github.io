@@ -46,6 +46,7 @@ const locale: Locale = {
   },
   footnote: {
     label: '脚注',
+    close: '关闭',
   },
   footer: {
     rights: '保留部分权利',

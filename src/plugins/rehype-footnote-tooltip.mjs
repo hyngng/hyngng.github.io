@@ -54,13 +54,6 @@ export function rehypeFootnoteTooltip() {
 
       const cloned = structuredClone(original).map(toInlineSafe);
 
-      const lastBlock = cloned[cloned.length - 1];
-      if (lastBlock?.children) {
-        lastBlock.children = lastBlock.children.filter(
-          (child) => !(child.type === 'element' && child.properties?.dataFootnoteBackref !== undefined)
-        );
-      }
-
       const label = targetId.replace('user-content-fn-', '');
       const tooltipId = `fn-tooltip-${label}`;
       const tooltip = {

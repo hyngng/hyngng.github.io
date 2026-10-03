@@ -206,6 +206,131 @@ const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
     
     <Comments />
   </article>
+
+  <dialog class="footnote-modal" id="footnote-modal" aria-labelledby="footnote-modal-body">
+    <div class="footnote-modal-card" tabindex="-1">
+      <div class="footnote-modal-body" id="footnote-modal-body"></div>
+      <button class="footnote-modal-close" id="footnote-modal-close" type="button">
+        {locale.footnote.close}
+      </button>
+    </div>
+  </dialog>
+
+  <script>
+    const mq = window.matchMedia('(max-width: 960px)');
+    const modal = document.getElementById('footnote-modal') as HTMLDialogElement | null;
+    const body = document.getElementById('footnote-modal-body');
+    const closeBtn = document.getElementById('footnote-modal-close');
+
+    if (modal && body && closeBtn) {
+      const controller = new AbortController();
+      const { signal } = controller;
+      let currentTargetId = '';
+
+      const closeModal = () => {
+        if (!modal.open || modal.classList.contains('is-closing')) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          modal.close();
+          return;
+        }
+        modal.classList.add('is-closing');
+        modal.addEventListener(
+          'animationend',
+          () => {
+            modal.classList.remove('is-closing');
+            modal.close();
+          },
+          { once: true }
+        );
+      };
+
+      document.addEventListener(
+        'click',
+        (e) => {
+          const link = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[data-footnote-ref]');
+          if (!link || !mq.matches) return;
+
+          e.preventDefault();
+          const wrapper = link.closest('.footnote-ref-wrapper');
+          const tooltip = wrapper?.querySelector('.footnote-tooltip');
+          if (!tooltip) return;
+
+          currentTargetId = link.getAttribute('href') || '';
+          body.innerHTML = tooltip.innerHTML;
+          body.scrollTop = 0;
+
+          const backref = body.querySelector<HTMLAnchorElement>('a[data-footnote-backref]');
+          if (backref && currentTargetId) {
+            backref.setAttribute('href', currentTargetId);
+          }
+
+          modal.showModal();
+          body.scrollTop = 0;
+          document.documentElement.classList.add('modal-open');
+        },
+        { signal }
+      );
+
+      body.addEventListener(
+        'click',
+        (e) => {
+          const backref = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[data-footnote-backref]');
+          if (!backref) return;
+
+          e.preventDefault();
+          closeModal();
+          if (currentTargetId) {
+            const targetEl = document.querySelector(currentTargetId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+            history.pushState(null, '', currentTargetId);
+          }
+        },
+        { signal }
+      );
+
+      closeBtn.addEventListener('click', closeModal, { signal });
+
+      modal.addEventListener(
+        'cancel',
+        (e) => {
+          e.preventDefault();
+          closeModal();
+        },
+        { signal }
+      );
+
+      modal.addEventListener(
+        'click',
+        (event) => {
+          const card = modal.querySelector('.footnote-modal-card');
+          if (!card) return;
+          const rect = card.getBoundingClientRect();
+          const isInCard =
+            rect.top <= event.clientY &&
+            event.clientY <= rect.top + rect.height &&
+            rect.left <= event.clientX &&
+            event.clientX <= rect.left + rect.width;
+          if (!isInCard) {
+            closeModal();
+          }
+        },
+        { signal }
+      );
+
+      modal.addEventListener(
+        'close',
+        () => {
+          document.documentElement.classList.remove('modal-open');
+          body.scrollTop = 0;
+          body.innerHTML = '';
+          currentTargetId = '';
+        },
+        { signal }
+      );
+    }
+  </script>
 </BaseLayout>
 
 <style>

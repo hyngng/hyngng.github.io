@@ -46,6 +46,7 @@ const locale: Locale = {
   },
   footnote: {
     label: 'Notes de bas de page',
+    close: 'Fermer',
   },
   footer: {
     rights: 'Tous droits réservés',

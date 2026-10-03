@@ -46,6 +46,7 @@ const locale: Locale = {
   },
   footnote: {
     label: '脚注',
+    close: '閉じる',
   },
   footer: {
     rights: '一部の権利を保留',

@@ -46,6 +46,7 @@ const locale: Locale = {
   },
   footnote: {
     label: '각주',
+    close: '닫기',
   },
   footer: {
     rights: '일부 권리 보유',

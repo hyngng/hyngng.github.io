@@ -54,6 +54,7 @@ export interface Locale {
   };
   footnote: {
     label: string;
+    close: string;
   };
   footer: {
     rights: string;

@@ -46,6 +46,7 @@ const locale: Locale = {
   },
   footnote: {
     label: 'Сноски',
+    close: 'Закрыть',
   },
   footer: {
     rights: 'Все права защищены',

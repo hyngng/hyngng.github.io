@@ -474,7 +474,7 @@ html:not([data-js]) .img-wrapper img {
   }
 }
 
-/* ── Footnote Tooltip ── */
+/* ── Footnote Tooltip (Desktop ≥961px) ── */
 article {
   anchor-scope: all;
 }
@@ -499,24 +499,11 @@ article {
   text-align: left;
 }
 
-@media (max-width: 768px) {
-  .footnote-tooltip {
-    position: fixed;
-    bottom: max(12px, env(safe-area-inset-bottom));
-    left: 12px;
-    right: 12px;
-    width: auto;
-    max-width: none;
-    margin: 0;
-  }
-}
-
-@media (min-width: 769px) {
+@media (min-width: 961px) {
   .footnote-tooltip {
     position: absolute;
     width: max-content;
     max-width: 256px;
-
     bottom: 100%;
     left: 50%;
     translate: -50% 0;
@@ -532,11 +519,11 @@ article {
       translate: none;
     }
   }
-}
 
-.footnote-ref-wrapper:hover .footnote-tooltip,
-.footnote-ref-wrapper:focus-within .footnote-tooltip {
-  display: block;
+  .footnote-ref-wrapper:hover .footnote-tooltip,
+  .footnote-ref-wrapper:focus-within .footnote-tooltip {
+    display: block;
+  }
 }
 
 .footnote-tooltip .footnote-block {
@@ -552,7 +539,11 @@ article {
   margin-bottom: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+.footnote-tooltip a[data-footnote-backref] {
+  display: none;
+}
+
+@media (min-width: 961px) and (prefers-reduced-motion: no-preference) {
   .footnote-tooltip {
     animation: tooltip-fade-in 0.15s ease;
   }
@@ -570,6 +561,120 @@ article {
   }
 }
 
+/* ── Footnote Modal (Mobile ≤960px) ── */
+.footnote-modal {
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: var(--persona-modal-width, 400px);
+  width: calc(100% - 2rem);
+  margin: auto;
+  border-radius: var(--post-card-radius);
+  box-shadow: 0 16px 48px var(--color-shadow);
+  color: var(--color-text);
+  overflow: visible;
+}
+
+.footnote-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modal-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .footnote-modal[open] {
+    animation: modal-fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .footnote-modal.is-closing {
+    animation: modal-fade-out 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+.footnote-modal-card {
+  background-color: var(--color-bg);
+  border: var(--border-width) var(--border-style) var(--color-border);
+  border-radius: var(--post-card-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: min(65vh, 480px);
+  outline: none;
+}
+
+.footnote-modal-body {
+  padding: 1.15rem;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footnote-modal-body .footnote-block {
+  display: block;
+  margin: 0.5em 0;
+}
+
+.footnote-modal-body .footnote-block:first-child {
+  margin-top: 0;
+}
+
+.footnote-modal-body .footnote-block:last-child {
+  margin-bottom: 0;
+}
+
+.footnote-modal-body a[data-footnote-backref] {
+  color: var(--color-accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footnote-modal-close {
+  flex-shrink: 0;
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-top: var(--border-width) var(--border-style) var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-accent);
+  font-family: var(--font-family-base);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.footnote-modal-close:hover,
+.footnote-modal-close:active {
+  background-color: var(--color-accent);
+  color: var(--color-button-text);
+}
+
 /* ── In-Page Anchor Scroll Offset ── */
 article h1,
 article h2,
@@ -581,6 +686,14 @@ article .footnotes,
 article .footnotes li,
 article [id^="user-content-fn"] {
   scroll-margin-top: var(--scroll-target-offset);
+}
+
+@media (min-width: 961px) {
+  article .footnotes,
+  article .footnotes li,
+  article [id^="user-content-fn"] {
+    scroll-margin-top: calc(var(--frame-thickness) + 1.5rem);
+  }
 }
 
 /* ── Mermaid 다이어그램 ── */
