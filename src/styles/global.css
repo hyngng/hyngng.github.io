@@ -74,7 +74,7 @@
   --frame-thickness: 12px;
   --button-size: 56px;
   --frame-radius: calc(var(--button-size) / 2);
-  --frame-radius-mobile: 24px;
+  --frame-radius-mobile: 28px;
   --header-height: var(--button-size);
   --scroll-target-offset: var(--frame-thickness);
   --transition-duration: 0.1s;
@@ -161,7 +161,7 @@ body {
   :root {
     --frame-thickness: 0px;
     --frame-radius: 0px;
-    --frame-radius-mobile: 24px;
+    --frame-radius-mobile: 28px;
     --button-size: 48px;
     --font-size-action: 20px;
     --scroll-target-offset: var(--button-size);
