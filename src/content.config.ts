@@ -8,7 +8,7 @@ import { normalizeLang } from './utils/lang';
 import { isLocalAbsolutePath, toAbsoluteImageUrl } from './utils/cdn';
 
 const authorSchema = z
-  .union([z.enum(AUTHOR_IDS), z.array(z.enum(AUTHOR_IDS))])
+  .union([z.enum(AUTHOR_IDS), z.array(z.enum(AUTHOR_IDS)).min(1)])
   .transform(v => Array.isArray(v) ? v : [v])
   .default(['dev']);
 

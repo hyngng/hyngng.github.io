@@ -23,7 +23,7 @@ lang: es-ES
 
 ## **Introducción**
 
-Al terminar [la experiencia anterior](https://hyngng.github.io/posts/palette-developing/) y estar a punto de empezar un nuevo proyecto de Unity, volví a ver una película tranquila que había visto hacía 10 años y me puse a pensar sobre la influencia que tienen las experiencias. Una vez que mis pensamientos se ordenaron un poco, pensé que, así como una buena película se convierte en una buena experiencia, a mí también me gustaría crear algo así. Además, siempre tengo ganas de hacer y expresar cosas.
+Al terminar [la experiencia anterior](https://hyngng.github.io/es/dev/palette-second-devlog/) y estar a punto de empezar un nuevo proyecto de Unity, volví a ver una película tranquila que había visto hacía 10 años y me puse a pensar sobre la influencia que tienen las experiencias. Una vez que mis pensamientos se ordenaron un poco, pensé que, así como una buena película se convierte en una buena experiencia, a mí también me gustaría crear algo así. Además, siempre tengo ganas de hacer y expresar cosas.
 
 ![concept-art](/2024-03-22-armonia-devlog-planning/concept-art.webp){: .w-50 }
 *Boceto conceptual y planificación hechos mientras charlaba con un amigo*

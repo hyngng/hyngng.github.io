@@ -23,7 +23,7 @@ lang: fr-FR
 
 Je me souviens avoir été impressionné par la suspension de char, le viseur PIP (Picture-In-Picture) et les effets de grenade flash qu'avait implémentés [un YouTuber (Tooner)](https://www.youtube.com/@tooner/videos) quand j'étais enfant. Les vidéos étaient brutes et peu polies, et elles avaient généralement peu de vues, mais leur contenu était vraiment fascinant.
 
-Avec le temps, alors que j'avais du temps libre, ce YouTuber m'est revenu à l'esprit. Je voulais créer quelque chose sur ordinateur, et en revoyant ses vidéos une par une, j'ai eu envie de faire des choses similaires. En prenant son parcours comme modèle, j'ai passé deux semaines à utiliser Blender et Unity pour créer [mon premier jalon](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) à ma manière.
+Avec le temps, alors que j'avais du temps libre, ce YouTuber m'est revenu à l'esprit. Je voulais créer quelque chose sur ordinateur, et en revoyant ses vidéos une par une, j'ai eu envie de faire des choses similaires. En prenant son parcours comme modèle, j'ai passé deux semaines à utiliser Blender et Unity pour créer mon premier jalon à ma manière.
 
 ## **Blender**
 

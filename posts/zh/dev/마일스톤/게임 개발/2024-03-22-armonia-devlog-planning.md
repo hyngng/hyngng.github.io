@@ -23,7 +23,7 @@ lang: zh-CN
 
 ## **前言**
 
-结束[上一次的经验](https://hyngng.github.io/posts/palette-developing/)后，正打算开始新的 Unity 项目时，重新看了一部十年前看过的宁静电影，对经验所具有的影响力进行了思考。思路整理到一定程度后，我想，好的电影带来好的体验，我也想做那样的作品。平时也有想要制作和表达各种东西的心情。
+结束[上一次的经验](https://hyngng.github.io/zh/dev/palette-second-devlog/)后，正打算开始新的 Unity 项目时，重新看了一部十年前看过的宁静电影，对经验所具有的影响力进行了思考。思路整理到一定程度后，我想，好的电影带来好的体验，我也想做那样的作品。平时也有想要制作和表达各种东西的心情。
 
 ![concept-art](/2024-03-22-armonia-devlog-planning/concept-art.webp){: .w-50 }
 *和朋友闲聊时画的简易概念艺术兼策划*

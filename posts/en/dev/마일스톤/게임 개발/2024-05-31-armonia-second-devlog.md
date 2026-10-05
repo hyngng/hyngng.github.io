@@ -27,7 +27,7 @@ lang: en-US
 Continues from the [previous post](https://hyngng.github.io/en/dev/armonia-first-devlog/).
 :::
 
-This is the development log for my [fourth milestone](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/). I've summarized the results of another month of work. This month mainly focused on expanding the game's systems and content. The specifics of what was accomplished in this phase are as follows:
+This is the development log for my fourth milestone. I've summarized the results of another month of work. This month mainly focused on expanding the game's systems and content. The specifics of what was accomplished in this phase are as follows:
 
 - Game Systems
     - [x] Background object layering
@@ -50,7 +50,7 @@ This is the development log for my [fourth milestone](https://hyngng.github.io/c
 ![pigeon-digging](/2024-05-31-armonia-second-devlog/pigeon-digging.webp){: .dark .w-25 }
 *Pigeon pecking at the ground*
 
-I plan to keep adding keyframe-style animations. This time, I created an animation for the pigeon's pecking behavior. The animation itself is short, and more importantly, since I had [assets from before](https://hyngng.github.io/posts/armonia-developing-first/#animation-assets), there was none of the previous burden of having to find and observe pigeon videos to mimic their characteristics.
+I plan to keep adding keyframe-style animations. This time, I created an animation for the pigeon's pecking behavior. The animation itself is short, and more importantly, since I had [assets from before](https://hyngng.github.io/en/dev/armonia-first-devlog/#animation-assets), there was none of the previous burden of having to find and observe pigeon videos to mimic their characteristics.
 
 Similar to before, I created `DigState.cs` and linked it with the state pattern, so the behavior looks natural. The interaction triggers when the ground is touched while the pigeon is selected.
 

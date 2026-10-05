@@ -13,7 +13,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 
 ## 현재 라우팅 규칙
 
-이 프로젝트는 **기본 언어(ko)**와 **비기본 언어(en, ru, fr, es, ja, zh)**를 구분하여 포스트 페이지를 생성함.
+이 프로젝트는 설정된 기본 언어와 콘텐츠에서 파생한 비기본 언어를 구분하여 포스트 페이지를 생성함. 괄호 안 언어 코드는 현재 저장소의 예시이며 지원 목록을 제한하지 않음.
 
 ### 기본 언어 (ko)
 
@@ -98,7 +98,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en-US')             //
 - `description`: 선택.
 - `date`: 필수, `z.string().transform(parseDateWithTimezone)`으로 문자열 날짜를 타임존 보정하여 Date로 변환. 타임오프셋이 없는 날짜는 `SITE.timezone`(`Asia/Seoul`) 기준으로 보정됨.
 - `last_modified_at`: 선택, `date`와 동일한 타임존 보정 적용.
-- `authors`: `src/settings/authors.settings.ts`에 등록된 author ID(배열)으로 정규화, 기본값 `["dev"]`.
+- `authors`: `src/settings/authors.settings.ts`에 등록된 author ID(배열)으로 정규화. 명시할 경우 비어 있지 않아야 하며, 생략 시 기본값 `["dev"]`.
 - `categories`, `tags`: 배열, 기본값 `[]`.
 - `draft`: boolean, 기본값 `false`.
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
@@ -389,7 +389,7 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
   - **인라인 (≤1280px, 좌우 영역 부재 시)**:
     - `.post-more-posts-container`가 `position: static; width: 100%;`로 전환되어 `PostFooter` 아래에 인라인으로 렌더링된다.
     - 상단 간격은 `--space-post-comments-margin-top`(`3.2rem`)으로 설정되어, `포스트 메타데이터 ↔ 다른 글 더 보기` 사이의 간격과 `다른 글 더 보기 ↔ 댓글창(Comments)` 사이의 간격이 완벽히 동일하게 대칭을 이룬다.
-- **i18n**: 7개 언어 로케일(`ko-KR`, `en-US`, `ru-RU`, `fr-FR`, `es-ES`, `ja-JP`, `zh-CN`)의 `locale.morePosts.title`('다른 글 더 보기' 등) 및 `aria` 라벨을 지원한다.
+- **i18n**: `Locale` 인터페이스를 구현한 모든 자동 검색 로케일 모듈에서 `locale.morePosts.title` 및 `aria` 라벨을 제공한다. 현재 저장소에는 7개 로케일 모듈이 있다.
 
 ## 관련 문서
 

@@ -23,7 +23,7 @@ lang: es-ES
 
 Recuerdo que cuando era niño, vi con admiración cómo un [youtuber (Tooner)](https://www.youtube.com/@tooner/videos) implementaba la suspensión de un tanque, una mira PIP (Picture-In-Picture) o efectos de granada flash. Los vídeos eran crudos y toscos, y quizás por eso solían tener pocas visitas, pero su contenido era realmente fascinante.
 
-Con el tiempo, cuando tuve algo de tiempo libre, recordé a este youtuber. Justo cuando tenía ganas de crear algo con el ordenador, volví a ver uno a uno los vídeos de este youtuber y pensé que a mí también me gustaría hacer cosas así. Tomando como modelo su trayectoria, dediqué dos semanas a usar Blender y Unity para crear [mi primer hito](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) a mi manera.
+Con el tiempo, cuando tuve algo de tiempo libre, recordé a este youtuber. Justo cuando tenía ganas de crear algo con el ordenador, volví a ver uno a uno los vídeos de este youtuber y pensé que a mí también me gustaría hacer cosas así. Tomando como modelo su trayectoria, dediqué dos semanas a usar Blender y Unity para crear mi primer hito a mi manera.
 
 ## **Blender**
 

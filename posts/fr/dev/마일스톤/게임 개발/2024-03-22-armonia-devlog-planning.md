@@ -23,7 +23,7 @@ lang: fr-FR
 
 ## **Introduction**
 
-Alors que j'étais sur le point de commencer un nouveau projet Unity après avoir terminé [l'expérience précédente](https://hyngng.github.io/posts/palette-developing/), j'ai revu un film apaisant vu il y a dix ans et j'ai réfléchi à l'influence des expériences. Une fois mes idées clarifiées, j'ai pensé que tout comme un bon film laisse une bonne expérience, je voulais créer quelque chose de similaire. J'avais aussi envie de créer et d'exprimer diverses choses, comme d'habitude.
+Alors que j'étais sur le point de commencer un nouveau projet Unity après avoir terminé [l'expérience précédente](https://hyngng.github.io/fr/dev/palette-second-devlog/), j'ai revu un film apaisant vu il y a dix ans et j'ai réfléchi à l'influence des expériences. Une fois mes idées clarifiées, j'ai pensé que tout comme un bon film laisse une bonne expérience, je voulais créer quelque chose de similaire. J'avais aussi envie de créer et d'exprimer diverses choses, comme d'habitude.
 
 ![concept-art](/2024-03-22-armonia-devlog-planning/concept-art.webp){: .w-50 }
 *Concept art sommaire et planification griffonnés avec un ami*

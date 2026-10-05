@@ -61,7 +61,7 @@ lang: zh-CN
 
 为了评估网站性能，我使用Google提供的[PageSpeed Insights](https://pagespeed.web.dev/?utm_source=psi&utm_medium=redirect)进行了测试，结果在手机类别中显示性能较慢。查看附带的结果报告，在众多建议中有一条是降低图片文件大小，于是我对这部分进行了改进。
 
-我平时会将[偶尔画的画](https://hyngng.github.io/posts/fourth-drawing/)和[拍摄的照片](https://hyngng.github.io/posts/photos-of-gyemyo/)写成博客文章，这些图片平均规格为4000x3000，扩展名为`.png`或`.jpg`，画作大小约200KB~1MB，照片约1~3MB。其他文章中使用的图片也遵循这一规格，文件都不小。参考其他网站，发现很多都处理到了100KB以下的低文件大小，为使我的博客也达到类似的优化水平，进行了以下处理：
+我平时会将[偶尔画的画](https://hyngng.github.io/zh/art/fourth-drawings/)和[拍摄的照片](https://hyngng.github.io/posts/photos-of-gyemyo/)写成博客文章，这些图片平均规格为4000x3000，扩展名为`.png`或`.jpg`，画作大小约200KB~1MB，照片约1~3MB。其他文章中使用的图片也遵循这一规格，文件都不小。参考其他网站，发现很多都处理到了100KB以下的低文件大小，为使我的博客也达到类似的优化水平，进行了以下处理：
 
 1. 将图片尺寸缩小至1/4。4000x3000规格调整为2000x1500规格。
 2. 将`.gif`、`.jpg`、`.png`扩展名的文件经有损压缩编码为`.webp`格式。

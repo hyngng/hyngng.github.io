@@ -27,7 +27,7 @@ lang: fr-FR
 Suite de [l'article précédent](https://hyngng.github.io/fr/dev/armonia-devlog-planning/).
 :::
 
-Voici le rapport de développement de [mon quatrième jalon](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/) — un défi que je relève avec plaisir. J'avais besoin d'un point de contrôle à mi-parcours pour organiser mes notes, je résume donc ici ce que j'ai produit en environ un mois. Voici ce qui a été fait durant cette phase :
+Voici le rapport de développement de mon quatrième jalon — un défi que je relève avec plaisir. J'avais besoin d'un point de contrôle à mi-parcours pour organiser mes notes, je résume donc ici ce que j'ai produit en environ un mois. Voici ce qui a été fait durant cette phase :
 
 - Systèmes du jeu
 	- [x] Déplacement fluide de la caméra par toucher
@@ -82,7 +82,7 @@ En passant, le travail d'animation semble être le plus difficile. Contrairement
 
 ## **Développement**
 
-J'ai fait des efforts pour améliorer les points faibles de [l'expérience précédente](https://hyngng.github.io/posts/palette-developing/). Notamment, j'ai veillé aux principes SOLID pour ne pas perdre la maintenabilité du code. Dès qu'une classe me semblait devenir trop grande, je la divisais sans faute pour respecter le principe de responsabilité unique ; j'utilisais les modificateurs d'accès avec plus de prudence ; et plus en détail, j'ai activement utilisé les attributs de classe et `#region`.
+J'ai fait des efforts pour améliorer les points faibles de [l'expérience précédente](https://hyngng.github.io/fr/dev/palette-second-devlog/). Notamment, j'ai veillé aux principes SOLID pour ne pas perdre la maintenabilité du code. Dès qu'une classe me semblait devenir trop grande, je la divisais sans faute pour respecter le principe de responsabilité unique ; j'utilisais les modificateurs d'accès avec plus de prudence ; et plus en détail, j'ai activement utilisé les attributs de classe et `#region`.
 
 Ayant besoin de sauvegardes intermédiaires, j'ai aussi essayé [Unity Version Control (VCS)](https://www.plasticscm.com/), et c'était très pratique. Si on est familier avec GitHub, on s'adapte rapidement, et j'ai particulièrement apprécié de pouvoir télécharger mon travail à tout moment depuis l'interface Unity.
 

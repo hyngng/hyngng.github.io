@@ -149,7 +149,7 @@ public class EventManager : MonoBehaviour
 }
 ```
 
-这是使用委托的方法。为了让监听器对象也能使用部分方法，采用了[单例模式](https://hyngng.github.io/posts/singleton-pattern/)，事件通过 `enum` 定义。代码接近80行，但由5个独立方法组成，所以并不难。
+这是使用委托的方法。为了让监听器对象也能使用部分方法，采用了[单例模式](https://hyngng.github.io/zh/dev/singleton-on-unity/)，事件通过 `enum` 定义。代码接近80行，但由5个独立方法组成，所以并不难。
 
 - 委托与字段
 	- `OnEvent()`：用于注册事件监听器响应方法的委托。

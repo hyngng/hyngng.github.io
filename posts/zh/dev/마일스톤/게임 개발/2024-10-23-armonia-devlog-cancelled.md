@@ -21,7 +21,7 @@ lang: zh-CN
 ![gameplay](/2024-10-23-armonia-devlog-cancelled/gameplay.webp)
 *最新版本的游戏玩法*
 
-如果能早点整理就好了，但直到有了确信才现在写下来。行尽地是出于尝试新的编程模式和一点点新鲜表现手法的贪念而开始的项目，我曾投入到写了[三次开发记录](https://hyngng.github.io/tags/armonia/)的程度，也有一些开发成果，但最终开发还是中止了。
+如果能早点整理就好了，但直到有了确信才现在写下来。行尽地是出于尝试新的编程模式和一点点新鲜表现手法的贪念而开始的项目，我曾投入到写了三次开发记录的程度，也有一些开发成果，但最终开发还是中止了。
 
 ## **坦诚写下的反省书**
 
@@ -41,7 +41,7 @@ lang: zh-CN
 **详细内容可在 [GitHub](https://github.com/hyngng/unity-armonia) 上查看！**
 :::
 
-将[策划阶段编写的](https://hyngng.github.io/posts/armonia-planning/)简易 GDD 与实际开发的内容对比如下。未实现的事项以删除线标记。
+将[策划阶段编写的](https://hyngng.github.io/zh/dev/armonia-devlog-planning/)简易 GDD 与实际开发的内容对比如下。未实现的事项以删除线标记。
 
 - 基本说明
 	- [X] 名称：行尽地（英文：waybound）

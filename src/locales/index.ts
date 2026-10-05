@@ -1,12 +1,6 @@
 import type { AstroGlobal } from 'astro';
-import koKR from './ko-KR';
-import enUS from './en-US';
-import ruRU from './ru-RU';
-import frFR from './fr-FR';
-import esES from './es-ES';
-import jaJP from './ja-JP';
-import zhCN from './zh-CN';
 import { supportedLocales, defaultLocale } from '../settings/site.settings';
+import { normalizeLang } from '../utils/lang';
 
 export interface Locale {
   description: string;
@@ -83,15 +77,18 @@ export interface Locale {
   };
 }
 
-const locales: Record<string, Locale> = {
-  'ko-KR': koKR,
-  'en-US': enUS,
-  'ru-RU': ruRU,
-  'fr-FR': frFR,
-  'es-ES': esES,
-  'ja-JP': jaJP,
-  'zh-CN': zhCN,
-};
+const localeModules = import.meta.glob<{ default: Locale }>('./*-*.ts', { eager: true });
+const locales: Record<string, Locale> = {};
+for (const [path, module] of Object.entries(localeModules)) {
+  const filename = path.match(/^\.\/([^/]+)\.ts$/)?.[1];
+  const code = filename && normalizeLang(filename);
+  if (!code) continue;
+  if (locales[code]) throw new Error(`[locales] Duplicate UI locale module for "${code}"`);
+  locales[code] = module.default;
+}
+if (!locales[defaultLocale]) {
+  throw new Error(`[locales] Missing default UI locale module for "${defaultLocale}"`);
+}
 
 export { defaultLocale } from '../settings/site.settings';
 export { supportedLocales } from '../settings/site.settings';
@@ -102,12 +99,11 @@ export const availableLocales = supportedLocales.map((code) => ({
 }));
 
 export function getLocale(lang?: string): Locale {
-  if (lang && lang in locales) return locales[lang];
+  const code = lang && normalizeLang(lang);
+  if (code && locales[code]) return locales[code];
   return locales[defaultLocale];
 }
 
 export function useLocale(Astro: AstroGlobal): Locale {
   return getLocale(Astro.currentLocale);
 }
-
-export { koKR, enUS, ruRU, frFR, esES, jaJP, zhCN };

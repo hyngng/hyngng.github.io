@@ -23,7 +23,7 @@ lang: zh-CN
 
 小时候，我记得看过一位[叫做 Tooner 的 YouTuber](https://www.youtube.com/@tooner/videos) 实现的坦克悬挂系统、PIP（画中画）瞄准镜、闪光弹效果等，当时觉得很新颖。视频本身很原始粗糙，也许因此播放量普遍不多，但内容真的非常有趣。
 
-后来时间多出来的时候，我想起了这个 YouTuber。正想用电脑做点什么成果出来的时候，我重新一个接一个地看他的视频，觉得自己也想做那样的东西。于是以这位 YouTuber 的事迹为榜样，花了 2 周时间使用 Blender 和 Unity 制作了我自己的[第一个里程碑](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/)。
+后来时间多出来的时候，我想起了这个 YouTuber。正想用电脑做点什么成果出来的时候，我重新一个接一个地看他的视频，觉得自己也想做那样的东西。于是以这位 YouTuber 的事迹为榜样，花了 2 周时间使用 Blender 和 Unity 制作了我自己的第一个里程碑。
 
 ## **Blender**
 

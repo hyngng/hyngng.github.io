@@ -2,6 +2,10 @@
 
 이 파일은 프로젝트의 장기적인 계획과 미해결 작업을 관리합니다.
 
+- [ ] 코드 리뷰 후속 수정 계획
+  - [ ] 각주 툴팁 플러그인의 `aria-describedby` HAST 속성명을 확인하고, 기존 `footnote-label` 설명과 툴팁 ID를 중복 속성 없이 하나의 값으로 합친다. 빌드 HTML에서 중복 속성이 없고 두 ID가 함께 보존되는지 확인한다.
+  - [ ] 타임존 없는 날짜를 호스트 로컬 시간대와 locale-formatted 문자열 파싱에 의존하지 않도록 `SITE.timezone` 기준으로 파싱한다. UTC 및 비UTC 프로세스에서 같은 결과가 나오는지, 시간대 명시 날짜와 날짜 전용 입력을 함께 확인한다.
+
 - [ ] SEO 관련 작업
   - [x] **Robots.txt & Sitemap**: `request.url`에서 origin을 추출하여 동적 생성. `astro.config.mjs`의 `site: SITE.url` 설정으로 dev/prod 환경별 올바른 절대 URL 자동 반영.
   - **후속 (2026-08)**: sitemap.xml 스키마 URL(http → https) 변경으로 `xhtml:link`가 있어도 Chromium/Firefox에서 네이티브 XML 트리 뷰 렌더링 복구. 원인: `http://www.w3.org/1999/xhtml`이 HTML/XHTML과 동일 URI라 뷰어가 XHTML 모드 전환 후 트리 렌더링 실패(raw 텍스트 폴백, `childNodes` 크래시). 상세는 `sitemap.md` 참조.

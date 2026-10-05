@@ -1,6 +1,6 @@
 # FR 번역 이슈 목록
 
-## `posts/fr/essai/2024-07-04-training-camp-logs.md`
+## `posts/fr/essay/2024-07-04-training-camp-logs.md`
 
 ---
 
@@ -28,7 +28,7 @@ FR이 `encore`(아직도/여전히)를 추가했다. KO에는 '아직'이나 '�
 
 ---
 
-## `posts/fr/essai/2025-04-28-philosophical-reflections.md`
+## `posts/fr/essay/2025-04-28-philosophical-reflections.md`
 
 ---
 
@@ -56,7 +56,7 @@ FR이 `nature`를 사용하여 철학적 맥락에서 '본성/성질(inherent qu
 
 ---
 
-## `posts/fr/essai/2025-06-30-musics-for-work.md`
+## `posts/fr/essay/2025-06-30-musics-for-work.md`
 
 ---
 
@@ -76,7 +76,7 @@ FR은 이 문장을 KO의 '알아들을 수 없다는 점도 이유'에서 '그�
 
 ---
 
-## `posts/fr/essai/2025-09-25-camus-in-goryeo.md`
+## `posts/fr/essay/2025-09-25-camus-in-goryeo.md`
 
 ---
 
@@ -96,7 +96,7 @@ FR은 `北蕃人面獸心`을 `visage d'homme, cœur de bête des tribus du Nord
 
 ---
 
-## `posts/fr/essai/2026-03-12-sabok-logs.md`
+## `posts/fr/essay/2026-03-12-sabok-logs.md`
 
 ---
 
@@ -124,7 +124,7 @@ FR은 `percutantes`(강타하는/충격적인)를 사용했는데, KO의 `임팩
 
 ---
 
-## `posts/fr/essai/critiques-livres/2026-02-01-thoughts-on-art-of-war.md`
+## `posts/fr/essay/서평/2026-02-01-thoughts-on-art-of-war.md`
 
 ---
 
@@ -144,7 +144,7 @@ FR의 `confiance présupposée`(전제된 신뢰)는 KO의 `가정적인 신뢰`
 
 ---
 
-## `posts/fr/essai/critiques-livres/2026-05-04-thoughts-on-meditations.md`
+## `posts/fr/essay/서평/2026-05-04-thoughts-on-meditations.md`
 
 ---
 
@@ -172,7 +172,7 @@ FR은 `il faut l'être`(그렇게 되어야 한다)로 축약했는데, KO가 `�
 
 ---
 
-## `posts/fr/essai/critiques-livres/2026-05-15-thoughts-on-tao-te-ching.md`
+## `posts/fr/essay/서평/2026-05-15-thoughts-on-tao-te-ching.md`
 
 ---
 
@@ -192,7 +192,7 @@ FR은 KO의 단순한 `효도와 자애를 거부한다`를 `la piété filiale 
 
 ---
 
-## `posts/fr/essai/critiques-films/2023-11-26-2023-movies-review.md`
+## `posts/fr/essay/영화 리뷰/2023-11-26-2023-movies-review.md`
 
 ---
 
@@ -212,7 +212,7 @@ KO의 `유형`(type/genre)은 내용보다는 작품의 종류/범주를 의미�
 
 ---
 
-## `posts/fr/essai/critiques-films/2024-10-11-look-back-movie-review.md`
+## `posts/fr/essay/영화 리뷰/2024-10-11-look-back-movie-review.md`
 
 ---
 
@@ -232,7 +232,7 @@ FR 파일 38행이 파일의 끝인데, KO 본문(46-60행)에 해당하는 영�
 
 ---
 
-## `posts/fr/essai/critiques-films/2025-08-10-ballerina-movie-review.md`
+## `posts/fr/essay/영화 리뷰/2025-08-10-ballerina-movie-review.md`
 
 ---
 
@@ -252,7 +252,7 @@ FR이 `succès`(성공)로 단순화하면서 KO의 `인기를 얻을 수 있었
 
 ---
 
-## `posts/fr/essai/avis-produits/2024-09-21-akg-n5-hybrid-review.md`
+## `posts/fr/essay/제품 리뷰/2024-09-21-akg-n5-hybrid-review.md`
 
 ---
 
@@ -272,7 +272,7 @@ KO의 `브랜드 밸류`는 '브랜드가 가진 가치/명성'을 의미하는�
 
 ---
 
-## `posts/fr/essai/avis-produits/2024-12-21-sony-a7c-review.md`
+## `posts/fr/essay/제품 리뷰/2024-12-21-sony-a7c-review.md`
 
 ---
 
@@ -292,7 +292,7 @@ KO는 `(결과물이) 실망스러웠다`로 사물의 속성에 초점을 맞�
 
 ---
 
-## `posts/fr/essai/avis-produits/2026-01-05-fujifilm-x-e5-review.md`
+## `posts/fr/essay/제품 리뷰/2026-01-05-fujifilm-x-e5-review.md`
 
 ---
 

@@ -149,7 +149,7 @@ public class EventManager : MonoBehaviour
 }
 ```
 
-Une approche utilisant les délégués. On utilise également le [pattern singleton](https://hyngng.github.io/posts/singleton-pattern/) pour permettre aux objets listeners d'utiliser certaines méthodes, et les événements sont définis via `enum`. Le code fait près de 80 lignes, mais il n'est pas difficile car il se compose de 5 méthodes distinctes.
+Une approche utilisant les délégués. On utilise également le [pattern singleton](https://hyngng.github.io/fr/dev/singleton-on-unity/) pour permettre aux objets listeners d'utiliser certaines méthodes, et les événements sont définis via `enum`. Le code fait près de 80 lignes, mais il n'est pas difficile car il se compose de 5 méthodes distinctes.
 
 - Délégués et champs
 	- `OnEvent()` : délégué qui enregistre la méthode de réaction d'un listener à un événement.

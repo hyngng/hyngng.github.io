@@ -21,7 +21,7 @@ lang: fr-FR
 ![gameplay](/2024-10-23-armonia-devlog-cancelled/gameplay.webp)
 *Dernière version du gameplay*
 
-J'aurais aimé le dire plus tôt, mais c'est maintenant que j'en suis certain, alors j'écris. Waybound était un projet commencé par l'envie d'expérimenter de nouveaux patterns de programmation et une mise en scène un peu fraîche. J'y étais attaché au point d'écrire [trois rapports de développement](https://hyngng.github.io/tags/armonia/), et il y a eu quelques réalisations, mais en fin de compte, j'ai arrêté le développement.
+J'aurais aimé le dire plus tôt, mais c'est maintenant que j'en suis certain, alors j'écris. Waybound était un projet commencé par l'envie d'expérimenter de nouveaux patterns de programmation et une mise en scène un peu fraîche. J'y étais attaché au point d'écrire trois rapports de développement, et il y a eu quelques réalisations, mais en fin de compte, j'ai arrêté le développement.
 
 ## **Bilan honnête**
 
@@ -41,7 +41,7 @@ Finalement, ma motivation a chuté. Plutôt que de traîner sans véritable atta
 **Les détails sont disponibles sur [GitHub](https://github.com/hyngng/unity-armonia) !**
 :::
 
-Voici une comparaison entre le [GDD simplifié écrit en phase de planification](https://hyngng.github.io/posts/armonia-planning/) et ce qui a réellement été développé. Les éléments non implémentés sont barrés.
+Voici une comparaison entre le [GDD simplifié écrit en phase de planification](https://hyngng.github.io/fr/dev/armonia-devlog-planning/) et ce qui a réellement été développé. Les éléments non implémentés sont barrés.
 
 - Description générale
 	- [X] Nom : Waybound (행선지)

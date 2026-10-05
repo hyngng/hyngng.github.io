@@ -149,7 +149,7 @@ public class EventManager : MonoBehaviour
 }
 ```
 
-This approach uses delegates. It also utilizes the [Singleton pattern](https://hyngng.github.io/posts/singleton-pattern/) so that listener objects can use some methods, and events are defined using `enum`. Although the code is nearly 80 lines, it's not difficult since it's composed of 5 individual methods.
+This approach uses delegates. It also utilizes the [Singleton pattern](https://hyngng.github.io/en/dev/singleton-on-unity/) so that listener objects can use some methods, and events are defined using `enum`. Although the code is nearly 80 lines, it's not difficult since it's composed of 5 individual methods.
 
 - Delegate and Fields
 	- `OnEvent()`: A delegate that registers event reaction methods for event listeners.

@@ -23,7 +23,7 @@ lang: en-US
 
 I remember watching [a YouTuber (Tooner)](https://www.youtube.com/@tooner/videos) back when I was young, and being fascinated by the tank suspension, PIP (Picture-In-Picture) scope, flashbang effects, and other things they implemented. The videos themselves were raw and rough, and perhaps because of that they usually had low view counts, but the content was genuinely interesting.
 
-As time passed and I found myself with free time, I thought of this YouTuber again. I was in the mood to create something with a computer, and as I watched this YouTuber's videos one by one, I started wanting to make things like that too. Taking this YouTuber's path as a role model, I spent two weeks using Blender and Unity to create my own [first milestone](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/).
+As time passed and I found myself with free time, I thought of this YouTuber again. I was in the mood to create something with a computer, and as I watched this YouTuber's videos one by one, I started wanting to make things like that too. Taking this YouTuber's path as a role model, I spent two weeks using Blender and Unity to create my own first milestone.
 
 ## **Blender**
 

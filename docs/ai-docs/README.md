@@ -22,7 +22,7 @@
 - [Frame](./components/frame-layout.md) — Frame 컴포넌트, 오목한 모서리 구현, `data-js` 이미지 게이트, `astro:before-preparation` 테마 주입
 - [Button](./components/button.md) — Button 다형성 및 스타일링(`--button-size`, `--button-padding-*`)
 - [Hero](./components/hero.md) — Hero 컴포넌트(`HomePageContent.astro` → `getSiteMeta` 데이터 흐름)
-- [Authors](./components/authors.md) — Authors/Author 컴포넌트, `AUTHOR_PREFIX` 기반 경로
+- [Authors](./components/authors.md) — `PersonaModal` 작가 목록과 `Author.astro` 포스트 메타데이터 렌더링
 - [Footer](./components/footer.md) — Footer 컴포넌트
 
 ### Architecture (아키텍처)

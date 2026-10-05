@@ -26,7 +26,7 @@ lang: fr-FR
 Suite de [l'article précédent](https://hyngng.github.io/fr/dev/armonia-first-devlog/).
 :::
 
-Voici le rapport de développement de [mon quatrième jalon](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/). J'ai résumé le travail d'un mois supplémentaire. Ce mois-ci a principalement porté sur l'extension des systèmes et du contenu du jeu. Voici ce qui a été fait durant cette phase :
+Voici le rapport de développement de mon quatrième jalon. J'ai résumé le travail d'un mois supplémentaire. Ce mois-ci a principalement porté sur l'extension des systèmes et du contenu du jeu. Voici ce qui a été fait durant cette phase :
 
 - Systèmes du jeu
 	- [x] Hiérarchisation des objets de décor
@@ -49,7 +49,7 @@ Voici le rapport de développement de [mon quatrième jalon](https://hyngng.gith
 ![pigeon-digging](/2024-05-31-armonia-second-devlog/pigeon-digging.webp){: .dark .w-25 }
 *Pigeon picorant le sol*
 
-Je vais continuer à ajouter des animations au format keyframe. Cette fois, j'ai créé une animation pour le pigeon picorant le sol. La quantité d'animation étant courte et surtout grâce aux [assets déjà créés](https://hyngng.github.io/posts/armonia-developing-first/#cr%C3%A9ation-dassets), je n'ai pas eu à chercher d'autres vidéos de pigeons pour en trouver les caractéristiques et les imiter comme avant.
+Je vais continuer à ajouter des animations au format keyframe. Cette fois, j'ai créé une animation pour le pigeon picorant le sol. La quantité d'animation étant courte et surtout grâce aux [assets déjà créés](https://hyngng.github.io/fr/dev/armonia-first-devlog/#cr%C3%A9ation-dassets), je n'ai pas eu à chercher d'autres vidéos de pigeons pour en trouver les caractéristiques et les imiter comme avant.
 
 J'ai créé `DigState.cs` de manière similaire et l'ai relié au pattern state. Grâce à cela, le mouvement semble naturel. L'interaction se déclenche en touchant le sol quand le pigeon est sélectionné.
 

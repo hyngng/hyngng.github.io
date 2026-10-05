@@ -120,15 +120,9 @@ verification: {
 
 사용자에게 표시되는 모든 고정 문구는 `src/locales/` 폴더에서 관리됩니다.
 
-- `ko-KR.ts` — 한국어 (기본)
-- `en-US.ts` — 영어
-- `ru-RU.ts` — 러시아어
-- `fr-FR.ts` — 프랑스어
-- `es-ES.ts` — 스페인어
-- `ja-JP.ts` — 일본어
-- `zh-CN.ts` — 중국어
+- `{BCP-47}.ts` — 해당 로케일의 UI 문자열. 현재 파일은 자동 검색되며 별도 등록이 필요하지 않습니다.
 
-새 언어로 포스트를 작성하려면 프론트매터에 `lang: xx`만 설정하면 됩니다(중앙 목록 불필요). 사이트 크롬(UI)도 번역하려면 `src/locales/xx-XX.ts`를 추가하고 `src/locales/index.ts`에 등록하세요. 자세한 규칙은 `docs/ai-docs/configuration/locales.md`를 참고하세요.
+새 언어로 포스트를 작성하려면 프론트매터에 `lang: xx`만 설정하면 됩니다(중앙 목록 불필요). 사이트 크롬(UI)도 번역하려면 `src/locales/xx-XX.ts`를 추가하고 `Locale` 인터페이스를 구현하세요. 로케일 모듈은 자동 검색되므로 별도 목록 등록은 필요하지 않습니다. 자세한 규칙은 `docs/ai-docs/configuration/locales.md`를 참고하세요.
 
 ### 디자인 토큰
 

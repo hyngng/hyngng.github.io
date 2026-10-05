@@ -1,7 +1,7 @@
 import { visit } from 'unist-util-visit';
 import { getLocale } from '../locales/index';
 
-const LOCALE_FROM_PATH = /[\\/]posts[\\/]([a-z]{2})[\\/]/;
+const LOCALE_FROM_PATH = /[\\/]posts[\\/]([^\\/]+)[\\/]/;
 
 function localeLabel(file) {
   const path = file?.history?.[0] ?? '';

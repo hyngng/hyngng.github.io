@@ -98,7 +98,8 @@ const { locale, currentLocale, authorId } = Astro.props;
       const engine = await getSearchEngine(allPosts);
       if (currentSeq !== searchSeq) return;
 
-      const rawLocale = allInputs[0]?.dataset.locale || allInputs[0]?.dataset.defaultLocale || 'ko';
+      const rawLocale = allInputs[0]?.dataset.locale || allInputs[0]?.dataset.defaultLocale;
+      if (!rawLocale) throw new Error('Search locale metadata is missing');
       const lang = rawLocale;
       const authorId = allInputs[0]?.dataset.author || undefined;
 

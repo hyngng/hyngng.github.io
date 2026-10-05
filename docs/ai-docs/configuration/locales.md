@@ -5,14 +5,8 @@
 `src/locales/`에서 다국어 문자열을 관리함.
 
 파일:
-- `index.ts` - Locale 인터페이스 정의, 사용 가능한 언어 목록 및 `useLocale()` 함수 제공
-- `ko-KR.ts` - 한국어 (기본)
-- `en-US.ts` - 영어
-- `ru-RU.ts` - 러시아어
-- `fr-FR.ts` - 프랑스어
-- `es-ES.ts` - 스페인어
-- `ja-JP.ts` - 일본어
-- `zh-CN.ts` - 중국어
+- `index.ts` - Locale 인터페이스 정의, 언어 모듈 자동 검색 및 `useLocale()` 함수 제공
+- `{BCP-47}.ts` - 해당 언어의 UI 문자열 모듈. 파일은 `index.ts`에서 자동 검색됨.
 
 ## 사용 방법
 
@@ -32,8 +26,7 @@ locale.relativeTime.today // "오늘 작성"
 모든 언어 파일은 `Locale` 인터페이스를 구현해야 함. UI 크롬 번역을 추가할 때:
 
 1. `src/locales/xx-XX.ts` 생성
-2. `Locale` 인터페이스 구현
-3. `index.ts`의 `locales` 객체에 등록
+2. `Locale` 인터페이스 구현. `index.ts`가 `*-*.ts` 모듈을 자동 검색하므로 별도 등록은 하지 않음.
 
 > 포스트 콘텐츠 언어 지원은 포스트 `lang` 프론트매터만으로 동작하며 중앙 목록이 불필요합니다. 정확한 BCP-47/`og:locale` 구조 필드는 `Intl.Locale().maximize()` 기반의 `deriveLocaleMeta()`(`src/settings/site.settings.ts`)로 파생됩니다.
 
@@ -68,7 +61,7 @@ locale.relativeTime.today // "오늘 작성"
 
 타입 안전 계층:
 
-- `locales/index.ts`의 `locales`는 BCP-47 키(`'ko-KR'`, `'en-US'`, …)를 가진 `Record<string, Locale>`로 선언됩니다. `lang`에 대응하는 UI 번역 파일이 없으면 `getLocale(lang)`은 기본 로케일(`ko-KR`)로 fallback하여 크롬(네비/푸터/버튼)을 기본 언어로 렌더합니다(본문은 포스트 언어 그대로). 이는 의도된 동작입니다.
+- `locales/index.ts`는 `src/locales/*-*.ts`를 자동 검색해 정규화된 BCP-47 키를 가진 `Record<string, Locale>`을 만듭니다. 경로 세그먼트처럼 짧은 언어 코드도 `normalizeLang()`으로 정규화합니다. `lang`에 대응하는 UI 번역 파일이 없으면 `getLocale(lang)`은 기본 로케일로 fallback하여 크롬(네비/푸터/버튼)을 기본 언어로 렌더합니다(본문은 포스트 언어 그대로). 이는 의도된 동작입니다.
 - `LocaleCode`는 열린 `string` 타입입니다(폐쇄형 union 아님).
 
 주요 export:
@@ -86,10 +79,10 @@ locale.relativeTime.today // "오늘 작성"
 
 선택적 보강(원할 때만):
 
-2. 사이트 크롬(UI)도 번역하려면 `src/locales/xx-XX.ts` 생성 + `Locale` 인터페이스 구현 + `locales/index.ts`의 `locales` Record에 `'xx': xxYY` 등록. 미등록 시 크롬은 기본 언어로 폴백.
+2. 사이트 크롬(UI)도 번역하려면 `src/locales/xx-XX.ts`를 만들고 `Locale` 인터페이스를 구현합니다. 파일은 자동 검색되므로 별도 로케일 목록 등록은 없습니다. 번역 모듈이 없으면 크롬은 기본 언어로 폴백합니다.
 3. 정확한 SEO 메타(`bcp47`/`og:locale`)는 `deriveLocaleMeta()`가 `Intl.Locale`로 자동 파생하므로 별도 등록이 불필요합니다. (UI `description`은 `src/locales/xx-XX.ts`의 `Locale.description`에 있음.)
 
-`src/locales/index.ts`의 `availableLocales`(코드 + 번역 라벨)는 `supportedLocales`에서 파생되며, UI 번역이 없으면 코드 자체를 라벨로 표시합니다.
+`src/locales/index.ts`의 `availableLocales`(코드 + 번역 라벨)는 `supportedLocales`에서 파생되며, UI 번역이 없으면 코드 자체를 라벨로 표시합니다. 로케일 모듈은 파일 기반 자동 검색이므로 새 번역 파일을 중앙 레지스트리에 추가할 필요가 없습니다.
 
 ## i18n 라우팅 정책
 

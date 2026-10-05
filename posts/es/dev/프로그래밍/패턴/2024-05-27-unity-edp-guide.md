@@ -149,7 +149,7 @@ public class EventManager : MonoBehaviour
 }
 ```
 
-Es un enfoque que utiliza delegados. También emplea el [patrón singleton](https://hyngng.github.io/posts/singleton-pattern/) para que los objetos oyentes puedan usar algunos métodos, y los eventos se definen mediante `enum`. Aunque el código tiene casi 80 líneas, se compone de 5 métodos individuales, por lo que no es complicado.
+Es un enfoque que utiliza delegados. También emplea el [patrón singleton](https://hyngng.github.io/es/dev/singleton-on-unity/) para que los objetos oyentes puedan usar algunos métodos, y los eventos se definen mediante `enum`. Aunque el código tiene casi 80 líneas, se compone de 5 métodos individuales, por lo que no es complicado.
 
 - Delegados y campos
 	- `OnEvent()`: delegado que registra el método de reacción al evento del oyente.

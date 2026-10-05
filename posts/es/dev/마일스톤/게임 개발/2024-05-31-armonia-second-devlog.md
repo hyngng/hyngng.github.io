@@ -27,7 +27,7 @@ lang: es-ES
 Continúa desde [la entrada anterior](https://hyngng.github.io/es/dev/armonia-first-devlog/).
 :::
 
-Esta es la crónica de desarrollo de mi [cuarto hito](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/). He organizado los resultados de otro mes de trabajo. Este mes, el trabajo se centró principalmente en la expansión del sistema y el contenido del juego. En detalle, lo creado en esta fase es lo siguiente:
+Esta es la crónica de desarrollo de mi cuarto hito. He organizado los resultados de otro mes de trabajo. Este mes, el trabajo se centró principalmente en la expansión del sistema y el contenido del juego. En detalle, lo creado en esta fase es lo siguiente:
 
 - Sistema del juego
 	- [x] Estratificación de objetos de fondo
@@ -50,7 +50,7 @@ Esta es la crónica de desarrollo de mi [cuarto hito](https://hyngng.github.io/c
 ![pigeon-digging](/2024-05-31-armonia-second-devlog/pigeon-digging.webp){: .dark .w-25 }
 *Paloma picoteando el suelo*
 
-Seguiré añadiendo animaciones en formato de keyframes. En esta ocasión, creé una animación para la paloma con el fin de implementar la acción de picotear el suelo. La cantidad de animación era corta y, sobre todo, como ya tenía [activos creados anteriormente](https://hyngng.github.io/posts/armonia-developing-first/#%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EC%97%90%EC%85%8B), no tuve la presión de tener que buscar otros vídeos de palomas para encontrar sus características e imitarlas como antes.
+Seguiré añadiendo animaciones en formato de keyframes. En esta ocasión, creé una animación para la paloma con el fin de implementar la acción de picotear el suelo. La cantidad de animación era corta y, sobre todo, como ya tenía [activos creados anteriormente](https://hyngng.github.io/es/dev/armonia-first-devlog/#%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EC%97%90%EC%85%8B), no tuve la presión de tener que buscar otros vídeos de palomas para encontrar sus características e imitarlas como antes.
 
 De forma similar a la vez anterior, creé `DigState.cs` y lo vinculé con el patrón de estado, por lo que el movimiento se ve natural. La interacción se activa al tocar el suelo mientras se tiene seleccionada la paloma.
 

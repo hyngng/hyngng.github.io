@@ -23,7 +23,7 @@ lang: en-US
 
 ## **Introduction**
 
-After wrapping up my [previous experience](https://hyngng.github.io/posts/palette-developing/) and just as I was about to start a new Unity project, I rewatched a calm film I'd seen about ten years ago and started thinking about the influence experiences have. After organizing my thoughts a bit, I found myself wanting to create something like that — just as a good film leaves a lasting experience. I'd also had a general desire to make and express things anyway.
+After wrapping up my [previous experience](https://hyngng.github.io/en/dev/palette-second-devlog/) and just as I was about to start a new Unity project, I rewatched a calm film I'd seen about ten years ago and started thinking about the influence experiences have. After organizing my thoughts a bit, I found myself wanting to create something like that — just as a good film leaves a lasting experience. I'd also had a general desire to make and express things anyway.
 
 ![concept-art](/2024-03-22-armonia-devlog-planning/concept-art.webp){: .w-50 }
 *A rough concept art and plan drawn while chatting with a friend*

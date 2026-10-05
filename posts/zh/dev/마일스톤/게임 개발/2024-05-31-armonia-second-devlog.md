@@ -26,7 +26,7 @@ lang: zh-CN
 接[前一篇文章](https://hyngng.github.io/zh/dev/armonia-first-devlog/)。
 :::
 
-这是我的[第四个里程碑](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/)的开发记录。整理了又一个月的工作成果。这一个月的工作主要是扩展游戏系统和内容，具体在本阶段制作的内容如下。
+这是我的第四个里程碑的开发记录。整理了又一个月的工作成果。这一个月的工作主要是扩展游戏系统和内容，具体在本阶段制作的内容如下。
 
 - 游戏系统
 	- [x] 背景对象分层
@@ -49,7 +49,7 @@ lang: zh-CN
 ![pigeon-digging](/2024-05-31-armonia-second-devlog/pigeon-digging.webp){: .dark .w-25 }
 *啄地的鸽子*
 
-我们会继续添加关键帧格式的动画。这次为了给鸽子实现啄地动作，制作了动画。动画篇幅很短，而且最重要的是有[之前制作好的资源](https://hyngng.github.io/posts/armonia-developing-first/#%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EC%97%90%EC%85%8B)，所以没有像之前那样需要找其他鸽子视频观察特征来模仿的负担。
+我们会继续添加关键帧格式的动画。这次为了给鸽子实现啄地动作，制作了动画。动画篇幅很短，而且最重要的是有[之前制作好的资源](https://hyngng.github.io/zh/dev/armonia-first-devlog/#%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EC%97%90%EC%85%8B)，所以没有像之前那样需要找其他鸽子视频观察特征来模仿的负担。
 
 与之前类似，创建了 `DigState.cs` 并与状态模式联动，因此动作看起来很自然。交互的触发条件是在选中鸽子的情况下触摸地面。
 

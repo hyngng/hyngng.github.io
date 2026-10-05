@@ -27,7 +27,7 @@ lang: es-ES
 Continúa desde [la entrada anterior](https://hyngng.github.io/es/dev/armonia-devlog-planning/).
 :::
 
-Esta es la crónica de desarrollo de mi [cuarto hito](https://hyngng.github.io/categories/%EB%A7%88%EC%9D%BC%EC%8A%A4%ED%86%A4/), al que me enfrenté de nuevo porque me resultaba divertido. Necesitaba hacer un balance intermedio y organizar notas mientras desarrollaba, así que he resumido brevemente los resultados de aproximadamente un mes de trabajo. Lo creado en esta fase de desarrollo es lo siguiente:
+Esta es la crónica de desarrollo de mi cuarto hito, al que me enfrenté de nuevo porque me resultaba divertido. Necesitaba hacer un balance intermedio y organizar notas mientras desarrollaba, así que he resumido brevemente los resultados de aproximadamente un mes de trabajo. Lo creado en esta fase de desarrollo es lo siguiente:
 
 - Sistema del juego
 	- [x] Movimiento suave de la cámara mediante entrada táctil
@@ -82,7 +82,7 @@ Como nota al margen, creo que el trabajo relacionado con la animación es lo má
 
 ## **Proceso de desarrollo**
 
-Hubo un esfuerzo por mejorar los aspectos que [la experiencia anterior](https://hyngng.github.io/posts/palette-developing/) había dejado insatisfactorios. En particular, fui consciente de los principios SOLID para no descuidar la mantenibilidad del código. Cuando sentía que una clase se estaba haciendo demasiado grande, la dividía sin falta para cumplir con el principio de responsabilidad única, usaba con más cuidado las palabras clave de modificadores de acceso, y a un nivel más detallado, también utilicé activamente los atributos de clase y `#region`.
+Hubo un esfuerzo por mejorar los aspectos que [la experiencia anterior](https://hyngng.github.io/es/dev/palette-second-devlog/) había dejado insatisfactorios. En particular, fui consciente de los principios SOLID para no descuidar la mantenibilidad del código. Cuando sentía que una clase se estaba haciendo demasiado grande, la dividía sin falta para cumplir con el principio de responsabilidad única, usaba con más cuidado las palabras clave de modificadores de acceso, y a un nivel más detallado, también utilicé activamente los atributos de clase y `#region`.
 
 Pensando que necesitaba hacer copias de seguridad de vez en cuando, también probé [Unity Version Control (VCS)](https://www.plasticscm.com/) y me resultó muy cómodo. Si estás familiarizado con GitHub, te adaptas rápidamente, y en particular, me gustó que se puede subir el trabajo en cualquier momento desde la interfaz interna de Unity.
 

@@ -63,7 +63,7 @@ My focus wasn't so much on chasing top rankings as on fixing SEO warnings that s
 
 I measured page performance using Google's [PageSpeed Insights](https://pagespeed.web.dev/?utm_source=psi&utm_medium=redirect), and the mobile score was quite poor. The report listed many recommendations, including reducing image payload — so I tackled that.
 
-I often post [occasional drawings](https://hyngng.github.io/posts/fourth-drawing/) and [photos](https://hyngng.github.io/posts/photos-of-gyemyo/) as blog posts. These images average 4000x3000 pixels in `.png` or `.jpg` format, weighing 200 KB–1 MB for drawings and 1–3 MB for photos. Other post images followed similar specs, so they weren't lightweight either. Checking other sites, many optimize to under 100 KB, so I applied the following to reach a comparable level:
+I often post [occasional drawings](https://hyngng.github.io/en/art/fourth-drawings/) and [photos](https://hyngng.github.io/posts/photos-of-gyemyo/) as blog posts. These images average 4000x3000 pixels in `.png` or `.jpg` format, weighing 200 KB–1 MB for drawings and 1–3 MB for photos. Other post images followed similar specs, so they weren't lightweight either. Checking other sites, many optimize to under 100 KB, so I applied the following to reach a comparable level:
 
 1. Reduced image dimensions to 1/4. For 4000x3000, resized to 2000x1500.
 2. Lossy-compressed `.gif`, `.jpg`, and `.png` files and encoded them as `.webp`.
