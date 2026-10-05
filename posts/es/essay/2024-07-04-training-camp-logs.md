@@ -1,6 +1,6 @@
 ---
 title: "Bitácora de finalización del curso de 3 semanas para servicio complementario en el Campo de Entrenamiento de Nonsan, 2024"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 일상, 훈련소 일지]

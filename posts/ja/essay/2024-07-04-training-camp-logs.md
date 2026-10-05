@@ -1,6 +1,6 @@
 ---
 title: "2024年 論山訓練所 補充役 3週間課程 修了日誌"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 일상, 훈련소 일지]

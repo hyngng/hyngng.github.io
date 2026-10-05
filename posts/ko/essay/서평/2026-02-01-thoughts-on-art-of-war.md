@@ -1,6 +1,6 @@
 ---
 title: "손자병법: 세상의 모든 전략과 전술을 읽고"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 손자병법]

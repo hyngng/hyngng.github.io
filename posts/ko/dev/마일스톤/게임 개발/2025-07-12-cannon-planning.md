@@ -5,7 +5,7 @@ image:
     alt: "정말 오랜만이다!"
 
 title: "준비 경험 위주로 정리한 모바일 타워디펜스 컨셉 기획"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 기획, 개발일지]

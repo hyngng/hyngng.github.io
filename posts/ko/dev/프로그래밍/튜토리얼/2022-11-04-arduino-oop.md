@@ -1,6 +1,6 @@
 ---
 title: "아두이노에서 객체지향 활용하기"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 튜토리얼]
 tags: [프로그래밍, 튜토리얼, 아두이노, 객체지향]

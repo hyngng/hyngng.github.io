@@ -1,6 +1,6 @@
 ---
 title: "자기 자신에게 이르는 것들을 읽고"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 명상록, 50번째 글]

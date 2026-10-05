@@ -1,6 +1,6 @@
 ---
 title: "Métodos mágicos para controlar el comportamiento de objetos en Python"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 문법]
 tags: [프로그래밍, 문법, 파이썬, 매직 메서드]

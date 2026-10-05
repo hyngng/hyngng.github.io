@@ -1,4 +1,4 @@
-﻿import type { APIContext } from 'astro';
+import type { APIContext } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { getPostLang, getPostSlug, getPostPath, getAuthorPath, localePath } from '../utils/posts';
 import { defaultLocale, availableLocales } from '../locales';

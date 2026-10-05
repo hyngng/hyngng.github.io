@@ -5,7 +5,7 @@ image:
     alt: "짬짬이 찍어둔 점심식사 사진들"
 
 title: "1년 8개월간의 사회복무요원 근무 후기"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 사회복무요원]

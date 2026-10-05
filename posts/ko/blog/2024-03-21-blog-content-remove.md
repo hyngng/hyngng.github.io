@@ -1,6 +1,6 @@
 ---
 title: "깃허브 블로그에서 특정 태그 내용 제거하기"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 커스터마이징, Chirpy, Liquid]

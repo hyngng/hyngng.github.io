@@ -5,7 +5,7 @@ image:
     alt: Пример геймплея
     
 title: "'Cubic Survival' — разработка и процесс релиза"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, URP, 큐빅 서바이벌, 개발, 개발일지]

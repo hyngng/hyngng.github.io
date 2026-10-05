@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "디지털 드로잉 #5: 캐주얼 판타지 등등"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 신문, 총, 일상, 영수증]

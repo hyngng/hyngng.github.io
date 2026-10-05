@@ -1,6 +1,6 @@
 ---
 title: "Lectura del Lao Zi compilado por el profesor Lee Seok-myeong"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 도덕경]

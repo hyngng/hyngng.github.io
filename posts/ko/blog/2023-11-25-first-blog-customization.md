@@ -1,6 +1,6 @@
 ---
 title: "깃허브 블로그 템플릿 커스터마이징하기"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 커스텀, 커스터마이징, Chirpy, Liquid, SCSS]

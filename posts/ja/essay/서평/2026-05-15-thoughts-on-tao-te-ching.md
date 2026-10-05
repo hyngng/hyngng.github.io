@@ -1,6 +1,6 @@
 ---
 title: "李錫明教授が編んだ老子を読んで"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 도덕경]

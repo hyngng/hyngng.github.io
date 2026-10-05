@@ -5,7 +5,7 @@ image:
     alt: For thumbnail
 
 title: "Digital Drawing #5: Casual Fantasy and More"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 신문, 총, 일상, 영수증]

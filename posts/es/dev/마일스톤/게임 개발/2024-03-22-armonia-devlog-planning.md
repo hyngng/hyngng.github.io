@@ -5,7 +5,7 @@ image:
     alt: "Algo así"
 
 title: "'Waybound', planificación del juego"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, 행선지, 기획, 개발일지]

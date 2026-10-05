@@ -1,6 +1,6 @@
 ---
 title: "Неделя с AKG N5: обзор без фотографий"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

@@ -7,8 +7,8 @@ import {
 } from './jsonLd';
 import { getAuthorProfileUrls, type Author } from '../settings/authors.settings';
 
-function mockAuthor(social: Author['social']): Author {
-  return { id: 'dev', name: 'hyngng.dev', description: '', avatar: '', social };
+function mockAuthor(social: Author['social']): Pick<Author, 'social'> {
+  return { social };
 }
 
 describe('serializeJsonLd', () => {
@@ -48,7 +48,7 @@ describe('buildBreadcrumbJsonLd', () => {
   it('assigns 1-based positions in order', () => {
     const result = buildBreadcrumbJsonLd([
       { name: 'HYNGNG', url: 'https://hyngng.github.io/' },
-      { name: 'hyngng.dev', url: 'https://hyngng.github.io/dev/' },
+      { name: 'dev', url: 'https://hyngng.github.io/dev/' },
       { name: 'Hello', url: 'https://hyngng.github.io/dev/hello/' },
     ]);
 
@@ -82,7 +82,7 @@ describe('buildBlogPostingJsonLd', () => {
     const result = buildBlogPostingJsonLd({
       ...base,
       authors: [
-        { name: 'hyngng.dev', url: 'https://hyngng.github.io/dev/', sameAs: ['https://github.com/hyngng'] },
+        { name: 'dev', url: 'https://hyngng.github.io/dev/', sameAs: ['https://github.com/hyngng'] },
         { name: 'no-link', url: 'https://hyngng.github.io/art/', sameAs: [] },
       ],
     });
@@ -90,7 +90,7 @@ describe('buildBlogPostingJsonLd', () => {
     expect(result.author).toHaveLength(2);
     expect(result.author[0]).toEqual({
       '@type': 'Person',
-      name: 'hyngng.dev',
+      name: 'dev',
       url: 'https://hyngng.github.io/dev/',
       sameAs: ['https://github.com/hyngng'],
     });

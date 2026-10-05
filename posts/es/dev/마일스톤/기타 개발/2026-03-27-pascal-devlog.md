@@ -5,7 +5,7 @@ image:
     alt: "El nombre temporal del programa era 'Pascal'"
 
 title: "Retrospectiva del desarrollo de un editor PDF basado en WinUI 3"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발, WinUI 3, MVVM, XAML, C#]

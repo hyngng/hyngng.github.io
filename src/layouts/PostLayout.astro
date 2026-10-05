@@ -112,7 +112,7 @@ const jsonLd = buildBlogPostingJsonLd({
   dateModified: (post.data.last_modified_at || post.data.date).toISOString(),
   authors: authorsMeta.map(a => ({
     name: a.name,
-    url: new URL(getAuthorPath(a.id, lang), Astro.url.origin).toString(),
+    url: new URL(getAuthorPath(a.name, lang), Astro.url.origin).toString(),
     sameAs: getAuthorProfileUrls(a),
   })),
   inLanguage: getLocaleEntry(lang).bcp47,
@@ -169,7 +169,7 @@ const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
       <h1>{post.data.title}</h1>
       <div class="post-meta" aria-label="post metadata">
         {authorsMeta.map(a => (
-          <Author id={a.id} avatar={a.avatar} name={a.name} info={locale.posts.postNumber(a.postNumber)} />
+          <Author id={a.name} avatar={a.avatar} name={a.name} info={locale.posts.postNumber(a.postNumber)} />
         ))}
       </div>
     </header>

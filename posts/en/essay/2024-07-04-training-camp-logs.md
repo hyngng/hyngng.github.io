@@ -1,6 +1,6 @@
 ---
 title: "2024 Nonsan Training Camp Supplementary Service 3-Week Course Completion Log"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 일상, 훈련소 일지]

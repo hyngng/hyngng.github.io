@@ -71,8 +71,8 @@ export function validateRoutes(): AstroIntegration {
           seen.set(key, file);
         }
         for (const author of ALL_AUTHORS) {
-          if (RESERVED_AUTHOR_IDS.includes(author.id)) {
-            throw new Error(`[Reserved Author ID] "${author.id}" is a reserved route segment.`);
+          if (RESERVED_AUTHOR_IDS.includes(author.name)) {
+            throw new Error(`[Reserved Author ID] "${author.name}" is a reserved route segment.`);
           }
         }
         console.log('[validate-routes] OK — no conflicts');

@@ -1,6 +1,6 @@
 ---
 title: "사진 없이 작성한 AKG N5 일주일 사용기"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

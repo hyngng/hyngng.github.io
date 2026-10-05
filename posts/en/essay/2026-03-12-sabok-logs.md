@@ -5,7 +5,7 @@ image:
     alt: "Lunch photos taken here and there"
 
 title: "Review of 1 Year 8 Months as a Social Service Agent"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 사회복무요원]

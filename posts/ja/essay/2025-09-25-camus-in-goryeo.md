@@ -1,6 +1,6 @@
 ---
 title: "カミュの眼差しで見る12世紀高麗の外交路線"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 알베르 카뮈, 시지프 신화, 역사, 고려]

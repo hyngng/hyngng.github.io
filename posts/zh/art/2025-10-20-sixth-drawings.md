@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "数字绘画 #6：一周内画的东西"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림]

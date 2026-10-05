@@ -1,6 +1,6 @@
 ---
 title: "이석명 교수가 엮은 노자를 읽고"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 도덕경]

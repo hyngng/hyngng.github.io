@@ -5,7 +5,7 @@ image:
     alt: Para miniatura
 
 title: "Dibujo digital #2: Militar y huesos"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 비니, 광각, 총, 양뿔, 망토, 트래픽 콘]

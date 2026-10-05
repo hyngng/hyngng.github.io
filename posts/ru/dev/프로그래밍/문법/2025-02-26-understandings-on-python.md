@@ -1,6 +1,6 @@
 ---
 title: "Несколько вещей, которые я узнал, работая с Python"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 문법]
 tags: [프로그래밍, 문법]

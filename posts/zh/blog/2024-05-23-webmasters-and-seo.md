@@ -1,6 +1,6 @@
 ---
 title: 在GitHub博客注册站长工具并进行SEO优化
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, 웹마스터도구, SEO]

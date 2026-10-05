@@ -5,7 +5,7 @@ image:
     alt: "The one I like best"
 
 title: "Middle School Drawing Archive and Quick Review"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

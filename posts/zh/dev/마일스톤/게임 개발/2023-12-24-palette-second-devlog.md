@@ -5,7 +5,7 @@ image:
     alt: 示例游戏画面
     
 title: "'方块生存'，开发及发布过程"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, URP, 큐빅 서바이벌, 개발, 개발일지]

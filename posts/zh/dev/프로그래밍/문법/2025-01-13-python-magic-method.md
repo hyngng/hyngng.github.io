@@ -1,6 +1,6 @@
 ---
 title: "用于控制Python对象行为的魔法方法"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 문법]
 tags: [프로그래밍, 문법, 파이썬, 매직 메서드]

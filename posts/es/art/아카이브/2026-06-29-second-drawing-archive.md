@@ -5,7 +5,7 @@ image:
     alt: "El que más me gusta"
 
 title: "Archivo de dibujos de la ESO con reseña breve"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

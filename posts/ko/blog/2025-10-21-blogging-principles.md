@@ -1,6 +1,6 @@
 ---
 title: "3년차 블로그 소회와 나의 글쓰기 원칙"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, 웹마스터도구, 글쓰기, SEO, Chirpy]

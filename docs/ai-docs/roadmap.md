@@ -456,6 +456,10 @@
         - `@astrojs/check`: `^0.9.9` → `^0.9.10`
       - 전이 의존성 갱신: `dompurify`(3.4.16+), `postcss`(8.5.28+) 및 `nanoid`(3.3.18+) 정합.
     - 검증: `npm audit --omit=dev --audit-level=high` 0 vulnerabilities 달성, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 61 passed, `npm run build` 589 pages 및 Pagefind 인덱싱 정상 완료.
+  - [x] **작가 식별자 단일화 및 도메인명 중복 제거 (2026-10)**
+    - `art`/`dev` 같은 하나의 작가 값을 설정 키, 프론트매터, 디렉토리, URL 및 화면 표시에 동일하게 사용. `authors.settings.ts`에는 별도 `id`와 `name` 필드가 없음.
+    - 7개 언어 포스트와 라우트, RSS, 청크, 검색 필터, JSON-LD, llms.txt 및 문서를 새 단일 규칙으로 동기화.
+    - 검증: Astro 검사 0 errors / 0 warnings / 0 hints, 정적 빌드 589 pages. `/art/`, `/dev/`, `/dev/lavad-devlog/` 생성 확인.
 
 ## Option
 

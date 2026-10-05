@@ -8,8 +8,8 @@ import AuthorPageContent from '../../components/AuthorPageContent.astro';
 
 export async function getStaticPaths() {
   return ALL_AUTHORS.map((author) => ({
-    params: { author: author.id },
-    props: { author: getAuthor(author.id, defaultLocale) },
+    params: { author: author.name },
+    props: { author: getAuthor(author.name, defaultLocale) },
   }));
 }
 
@@ -18,13 +18,13 @@ const currentLocale = Astro.currentLocale || defaultLocale;
 const locale = useLocale(Astro);
 const origin = Astro.url.origin;
 
-const sortedPosts = await getPublishedPosts({ lang: currentLocale, authorId: author.id });
+const sortedPosts = await getPublishedPosts({ lang: currentLocale, authorId: author.name });
 const breadcrumbItems = [
   { name: getSiteMeta(currentLocale).title, url: new URL('/', origin).toString() },
-  { name: author.name, url: new URL(getAuthorPath(author.id), origin).toString() },
+  { name: author.name, url: new URL(getAuthorPath(author.name), origin).toString() },
 ];
 ---
 
-<BaseLayout lang={currentLocale} authorId={author.id} title={`${AUTHOR_PREFIX}${author.name}`} description={author.description} breadcrumbItems={breadcrumbItems}>
+<BaseLayout lang={currentLocale} authorId={author.name} title={`${AUTHOR_PREFIX}${author.name}`} description={author.description} breadcrumbItems={breadcrumbItems}>
   <AuthorPageContent author={author} locale={locale} currentLocale={currentLocale} posts={sortedPosts} />
 </BaseLayout>

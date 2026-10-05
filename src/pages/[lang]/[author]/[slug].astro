@@ -11,12 +11,12 @@ export async function getStaticPaths() {
   return allPosts.filter(post => !post.data.draft).flatMap(post => {
     const lang = getPostLang(post);
     if (lang === defaultLocale) return [];
-    const author = ALL_AUTHORS.find(a => a.id === post.data.authors[0]);
+    const author = ALL_AUTHORS.find(a => a.name === post.data.authors[0]);
     if (!author) return [];
     return [{
       params: {
         lang: localePath(lang).slice(1),
-        author: author.id,
+        author: author.name,
         slug: getPostSlug(post.id),
       },
       props: { post },

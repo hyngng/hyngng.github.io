@@ -1,6 +1,6 @@
 ---
 title: 깃허브 블로그 웹마스터도구 등록하고 SEO 최적화하기
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, 웹마스터도구, SEO]

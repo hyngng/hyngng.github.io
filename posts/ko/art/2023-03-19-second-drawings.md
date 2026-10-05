@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "디지털 드로잉 #2: 밀리터리와 뼈다귀"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 비니, 광각, 총, 양뿔, 망토, 트래픽 콘]

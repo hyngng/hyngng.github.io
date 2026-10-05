@@ -1,6 +1,6 @@
 ---
 title: "为GitHub博客添加多语言支持"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 다국어, jekyll-polyglot]

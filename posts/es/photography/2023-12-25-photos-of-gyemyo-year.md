@@ -5,7 +5,7 @@ image:
     alt: La foto del año es esta
     
 title: "[2023] Despidiendo el año Gyemyo"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [사진, 불멍, 지하철, 개수대, 구름, 감자튀김, 바닷가, 낙엽]

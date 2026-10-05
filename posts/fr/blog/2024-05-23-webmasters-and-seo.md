@@ -1,6 +1,6 @@
 ---
 title: "Inscrire son blog GitHub aux outils pour webmasters et optimiser son SEO"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, 웹마스터도구, SEO]

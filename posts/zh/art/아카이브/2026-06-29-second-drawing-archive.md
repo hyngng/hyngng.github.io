@@ -5,7 +5,7 @@ image:
     alt: "가장 마음에 드는 거"
 
 title: "初中时期绘画存档与简评"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

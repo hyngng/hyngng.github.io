@@ -1,6 +1,6 @@
 ---
 title: "Varias cosas que he aprendido al trabajar con Python"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 문법]
 tags: [프로그래밍, 문법]

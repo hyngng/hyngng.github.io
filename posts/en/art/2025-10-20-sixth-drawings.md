@@ -5,7 +5,7 @@ image:
     alt: For thumbnail
 
 title: "Digital Drawing #6: Things I Drew in a Week"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림]

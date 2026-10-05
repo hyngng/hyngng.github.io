@@ -19,9 +19,9 @@ const { locale, currentLocale, posts } = Astro.props;
 const siteMeta = getSiteMeta(currentLocale);
 
 const personaAuthors = ALL_AUTHORS.map((author) => {
-  const authorData = getAuthor(author.id, currentLocale);
+  const authorData = getAuthor(author.name, currentLocale);
   return {
-    id: author.id,
+    id: author.name,
     name: author.name,
     avatar: authorData.avatar,
     description: authorData.description,

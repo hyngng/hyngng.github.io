@@ -5,7 +5,7 @@ image:
     alt: "This year's photo is this one"
 
 title: "[2025] Color Grading and Aspect Ratio"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [근무지에서, 전봇대, 눈, 편의점, 아파트, 비, 지하철, 가을, 화분]

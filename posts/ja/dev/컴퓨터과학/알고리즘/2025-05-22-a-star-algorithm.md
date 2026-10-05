@@ -1,6 +1,6 @@
 ---
 title: "最短経路探索のためのA*アルゴリズム簡略整理"
-authors: ["dev"]
+authors: [dev]
 
 categories: [컴퓨터과학, 알고리즘]
 tags: [컴퓨터과학, 알고리즘]

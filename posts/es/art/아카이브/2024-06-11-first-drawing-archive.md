@@ -5,7 +5,7 @@ image:
     alt: Para miniatura
 
 title: "Archivo de dibujos de la época de primaria"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

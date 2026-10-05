@@ -1,6 +1,6 @@
 ---
 title: "GitHubブログに多言語サポートを追加する"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 다국어, jekyll-polyglot]

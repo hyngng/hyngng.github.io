@@ -5,7 +5,7 @@ image:
     alt: 올해의 사진은 요거
     
 title: "[2022] Un quotidien capturé avec ardeur"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [사진, 감자튀김, 복도, 친구, 눈, 벚꽃, 구름, 크레인]

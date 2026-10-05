@@ -5,7 +5,7 @@ image:
     alt: "本当に久しぶりだ！"
 
 title: "準備経験中心にまとめたモバイルタワーディフェンスコンセプト企画"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 기획, 개발일지]

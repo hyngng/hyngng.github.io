@@ -5,7 +5,7 @@ image:
     alt: "合間に撮っておいた昼食の写真たち"
 
 title: "1年8ヶ月の社会服務要員勤務の記録"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 사회복무요원]

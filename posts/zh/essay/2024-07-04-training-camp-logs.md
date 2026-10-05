@@ -1,6 +1,6 @@
 ---
 title: "2024年论山训练所补充役3周课程结业日志"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 일상, 훈련소 일지]

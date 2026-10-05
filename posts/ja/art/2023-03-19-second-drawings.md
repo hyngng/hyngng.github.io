@@ -5,7 +5,7 @@ image:
     alt: サムネイル用
 
 title: "デジタルドローイング #2: ミリタリーと骨"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 비니, 광각, 총, 양뿔, 망토, 트래픽 콘]

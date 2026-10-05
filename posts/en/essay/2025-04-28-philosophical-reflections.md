@@ -1,6 +1,6 @@
 ---
 title: "Recently Developing Humanities Perspectives"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 일상, 인문학, 다원주의, 일원주의, 아비투스, 역사, 고려, 사피엔스, 유교, 물고기는 존재하지 않는다]

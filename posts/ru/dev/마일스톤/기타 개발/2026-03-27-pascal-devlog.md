@@ -5,7 +5,7 @@ image:
     alt: "Временное название программы — 'Pascal'"
 
 title: "Ретроспектива разработки PDF-редактора на WinUI 3"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발, WinUI 3, MVVM, XAML, C#]

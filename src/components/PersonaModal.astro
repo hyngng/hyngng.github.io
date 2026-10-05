@@ -49,7 +49,7 @@ const titleId = `${modalId}-title`;
       <ul class="persona-modal-list">
         {authors.map((author) => (
           <li class="persona-modal-item">
-            <a href={getAuthorPath(author.id, currentLocale)} class="persona-modal-link">
+            <a href={getAuthorPath(author.name, currentLocale)} class="persona-modal-link">
               <Avatars src={author.avatar} class="persona-modal-avatar" />
               <span class="persona-modal-info">
                 <span class="persona-modal-name">{AUTHOR_PREFIX}{author.name}</span>

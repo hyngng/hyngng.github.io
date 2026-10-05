@@ -5,7 +5,7 @@ image:
     alt: 올해의 사진은 요거
 
 title: "[2025] Étalonnage et rapport d'écran"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [근무지에서, 전봇대, 눈, 편의점, 아파트, 비, 지하철, 가을, 화분]

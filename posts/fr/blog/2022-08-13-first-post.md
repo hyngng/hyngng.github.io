@@ -1,6 +1,6 @@
 ---
 title: "J'ai ouvert un blog !"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, Chirpy]

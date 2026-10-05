@@ -1,6 +1,6 @@
 ---
 title: "«Искусство войны»: о всех стратегиях и тактиках мира"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 손자병법]

@@ -5,7 +5,7 @@ image:
     alt: 요런 느낌으로
     
 title: "'행선지', 게임 기획하기"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, 행선지, 기획, 개발일지]

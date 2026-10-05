@@ -1,6 +1,6 @@
 ---
 title: "Читая «Дао дэ цзин» в переводе Ли Сокмёна"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 도덕경]

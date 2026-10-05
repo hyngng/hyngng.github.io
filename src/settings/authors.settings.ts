@@ -40,27 +40,23 @@ export function normalizeTwitterHandle(handle: string): string {
 }
 
 interface AuthorData {
-  id: string;
-  name: string;
   description: Partial<Record<string, string>>; // per-locale descriptions
   avatar: string;
   social: Social;
 }
 
-export type Author = Omit<AuthorData, 'description'> & { description: string };
+export type Author = Omit<AuthorData, 'description'> & { name: AuthorId; description: string };
 
 // ── Configuration ────────────────────────────────────────
 
 export const AUTHOR_PREFIX = '@';
 
 // ── Author map ───────────────────────────────────────────
-// Reference in frontmatter as: author: 'dev'
+// Reference in frontmatter by author ID, e.g. 'dev'
 
 export const AUTHORS = {
 
   art: {
-    id: 'art',
-    name: 'hyngng.art',
     avatar: 'avatar/hyngng-art.webp',
     social: {
       instagram: 'hyngng.art',
@@ -79,8 +75,6 @@ export const AUTHORS = {
   },
 
   photography: {
-    id: 'photography',
-    name: 'hyngng.photography',
     avatar: 'avatar/hyngng-photography.webp',
     social: {
       // fediverse: '@hyngng.essay@threads.net',
@@ -97,8 +91,6 @@ export const AUTHORS = {
   },
 
   dev: {
-    id: 'dev',
-    name: 'hyngng.dev',
     avatar: 'avatar/hyngng-dev.webp',
     social: {
       // email: 'dev@example.com',
@@ -118,8 +110,6 @@ export const AUTHORS = {
   },
 
   blog: {
-    id: 'blog',
-    name: 'hyngng.blog',
     avatar: 'avatar/hyngng-blog.webp',
     social: {
       // email: 'blog@example.com',
@@ -139,8 +129,6 @@ export const AUTHORS = {
   },
 
   essay: {
-    id: 'essay',
-    name: 'hyngng.essay',
     avatar: 'avatar/hyngng-essay.webp',
     social: {
       // fediverse: '@hyngng.essay@threads.net',
@@ -173,14 +161,18 @@ function resolveAuthorDescription(author: AuthorData, lang?: string): string {
   return descriptions[entry.bcp47] ?? descriptions[defaultLocaleBcp47] ?? '';
 }
 
-export function getAuthor(id: string, lang?: string): Author {
-  const author = AUTHORS[id as AuthorId];
-  if (!author) throw new Error(`Unknown author: "${id}"`);
+export function getAuthor(name: string, lang?: string): Author {
+  const author = AUTHORS[name as AuthorId];
+  if (!author) throw new Error(`Unknown author: "${name}"`);
   return {
     ...author,
+    name: name as AuthorId,
     avatar: resolveCdnPath(author.avatar),
     description: resolveAuthorDescription(author, lang),
   };
 }
 
-export const ALL_AUTHORS = Object.values(AUTHORS);
+export const ALL_AUTHORS = Object.entries(AUTHORS).map(([name, author]) => ({
+  ...author,
+  name: name as AuthorId,
+}));

@@ -1,6 +1,6 @@
 ---
 title: "On Object-Oriented Design and the SRP and DIP Principles"
-authors: ["dev", "essay"]
+authors: [dev, essay]
 
 categories: [프로그래밍, 아키텍처]
 tags: [프로그래밍, 아키텍처]

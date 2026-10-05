@@ -1,6 +1,6 @@
 ---
 title: "关于面向对象设计与SRP、DIP原则"
-authors: ["dev", "essay"]
+authors: [dev, essay]
 
 categories: [프로그래밍, 아키텍처]
 tags: [프로그래밍, 아키텍처]

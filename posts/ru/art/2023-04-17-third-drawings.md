@@ -5,7 +5,7 @@ image:
     alt: Для миниатюры
 
 title: "Цифровой рисунок #3: Поменяем формат рисования"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 기지개, 어안렌즈, 폰카]

@@ -5,7 +5,7 @@ image:
     alt: "Fotos de comidas que fui tomando en mis ratos libres"
 
 title: "Crónica de 1 año y 8 meses como servidor público social sustituto"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 사회복무요원]

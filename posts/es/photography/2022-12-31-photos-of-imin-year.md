@@ -5,7 +5,7 @@ image:
     alt: La foto del año es esta
     
 title: "[2022] La rutina que fotografié con esmero"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [사진, 감자튀김, 복도, 친구, 눈, 벚꽃, 구름, 크레인]

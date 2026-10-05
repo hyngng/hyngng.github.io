@@ -1,6 +1,6 @@
 ---
 title: "4 géneros musicales para escuchar cuando necesitas productividad"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [프로그래밍, 개발, 노래]

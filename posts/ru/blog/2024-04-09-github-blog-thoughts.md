@@ -1,6 +1,6 @@
 ---
 title: "Почему я использую GitHub-блог"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, 커스터마йзинг, Chirpy]

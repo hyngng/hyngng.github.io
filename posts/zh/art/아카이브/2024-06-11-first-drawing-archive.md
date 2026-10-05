@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "小学时期的绘画存档"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

@@ -5,7 +5,7 @@ image:
     alt: ゲームプレイ例
     
 title: "Unityで簡単な装甲車シューティングゲームを作る"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 개발, 개발일지]

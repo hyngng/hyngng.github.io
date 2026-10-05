@@ -67,17 +67,17 @@ export function buildLlmsData({ origin, posts }: LlmsTxtInput): LlmsDoc {
   }
 
   const authors: LlmsAuthor[] = ALL_AUTHORS.map((author) => {
-    const meta = getAuthor(author.id, locale);
+    const meta = getAuthor(author.name, locale);
     return {
       name: author.name,
-      url: `${origin}${getAuthorPath(author.id, locale)}`,
+      url: `${origin}${getAuthorPath(author.name, locale)}`,
       description: meta.description,
     };
   });
 
   const authorSections: LlmsAuthorSection[] = ALL_AUTHORS.map((author) => ({
     name: author.name,
-    posts: (postsByAuthor.get(author.id as AuthorId) ?? [])
+    posts: (postsByAuthor.get(author.name as AuthorId) ?? [])
       .slice(0, LLMS_MAX_POSTS_PER_AUTHOR)
       .map((post) => ({
         title: post.data.title,

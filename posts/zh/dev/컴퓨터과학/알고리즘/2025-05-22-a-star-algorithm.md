@@ -1,6 +1,6 @@
 ---
 title: "用于最短路径搜索的 A* 算法简要整理"
-authors: ["dev"]
+authors: [dev]
 
 categories: [컴퓨터과학, 알고리즘]
 tags: [컴퓨터과학, 알고리즘]

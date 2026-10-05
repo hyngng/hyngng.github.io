@@ -17,7 +17,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 
 ### 기본 언어 (ko)
 
-`content/ko/blog/2022-08-13-first-post.mdx`는 아래 URL로 생성됨.
+`posts/ko/blog/2022-08-13-first-post.mdx`는 아래 URL로 생성됨. 작가 값 `blog`는 디렉토리, 프론트매터, URL 및 화면 표시에 동일하게 사용함.
 
 ```text
 /blog/first-post/
@@ -36,7 +36,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 
 파일명 앞의 `yyyy-mm-dd-` 접두사는 `src/utils/posts.ts`의 `getPostSlug()`가 제거함.
 
-포스트 URL의 작가 세그먼트는 작가 ID `{authorId}` 형태다 (예: `/dev/{slug}/`). 작가 인덱스 페이지(`/{author}/`)와 동일하다.
+포스트 URL은 짧은 작가 ID(예: `/art/`)를 사용하고, 화면 표시도 `@art`로 통일한다. 이로써 사이트 도메인 `hyngng.github.io`와 작가 경로의 `hyngng` 반복을 피한다. 포스트 디렉토리 이름도 author 값과 동일하게 짧게 유지한다.
 
 URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능은 이 helper를 재사용해야 함. 라우트(`[author]/[slug].astro`)의 `params.author`도 `getAuthorPath()`를 통해 동일하게 조합한다.
 
@@ -70,11 +70,11 @@ Jekyll 시절의 구 URL 형식(`https://hyngng.github.io/posts/{slug}/`)으로 
 getPostLang(post) // post.data.lang 반환 (예: 'ko-KR', 'en-US')
 ```
 
-> 포스트는 프로젝트 루트 `posts/` 아래 어디에든 위치할 수 있습니다(`content.config.ts`의 `base: './posts'`). 폴더는 순수 조직용이며 예: `posts/ko/blog/2022-08-13-first-post.mdx`.
+> 포스트는 프로젝트 루트 `posts/` 아래 `posts/{lang}/{author}/` 구조로 둔다(`content.config.ts`의 `base: './posts'`). 폴더명과 프론트매터 `authors`의 값, URL은 동일한 author 값으로 생성한다.
 
 ## URL 생성
 
-`src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getAuthorPath(authorIds[0], currentLocale)`가 적용되어 작가 ID가 그대로 사용된다.
+`src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getAuthorPath(authorIds[0], currentLocale)`가 적용되어 짧은 작가 ID가 사용된다.
 
 `currentLocale`(= 포스트의 `lang`)을 전달하지 않으면 기본 로케일(`ko`)로 동작하여 `/ko/` 프리픽스 없이 URL을 생성함. 언어는 `id`가 아닌 `currentLocale`에서 온다.
 
@@ -98,7 +98,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en-US')             //
 - `description`: 선택.
 - `date`: 필수, `z.string().transform(parseDateWithTimezone)`으로 문자열 날짜를 타임존 보정하여 Date로 변환. 타임오프셋이 없는 날짜는 `SITE.timezone`(`Asia/Seoul`) 기준으로 보정됨.
 - `last_modified_at`: 선택, `date`와 동일한 타임존 보정 적용.
-- `authors`: `src/settings/authors.settings.ts`의 author id(배열)로 정규화, 기본값 `["dev"]`.
+- `authors`: `src/settings/authors.settings.ts`에 등록된 author ID(배열)으로 정규화, 기본값 `["dev"]`.
 - `categories`, `tags`: 배열, 기본값 `[]`.
 - `draft`: boolean, 기본값 `false`.
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
@@ -111,9 +111,9 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en-US')             //
 
 ## Author 호환
 
-이전 Jekyll frontmatter의 `author: [hyngng.dev]` 같은 배열 값은 `src/content.config.ts`에서 `dev`로 정규화함.
+이전 Jekyll frontmatter의 `author: [hyngng.dev]` 값은 현재 `authors: [dev]`로 지정한다. 화면에는 `@dev`로 표시한다.
 
-현재 등록된 author id는 `blog`, `dev`, `art`, `essay`, `photography` 5개임. `src/settings/authors.settings.ts`의 `getAuthor()` 함수는 미등록 author id가 들어오면 throw하여 빌드를 실패시킴. 복수 개를 등록하면 해당 글은 여러 author 인덱스에 동시에 노출됨(언어판별 간 일관 유지 필요).
+현재 등록된 author ID는 `blog`, `dev`, `art`, `essay`, `photography` 5개임. 화면 표시도 author 값 그대로 사용한다. `getAuthor()`는 미등록 ID가 들어오면 throw하여 빌드를 실패시킨다. 복수 ID를 등록하면 해당 글은 여러 작가 인덱스에 동시에 노출됨(언어판 간 일관 유지 필요).
 
 ## Jekyll 이전 호환
 

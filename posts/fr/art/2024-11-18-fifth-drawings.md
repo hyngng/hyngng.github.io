@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "Dessin numérique #5 : Fantasy décontractée et autres"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 신문, 총, 일상, 영수증]

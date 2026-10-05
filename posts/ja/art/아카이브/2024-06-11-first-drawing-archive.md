@@ -5,7 +5,7 @@ image:
     alt: サムネイル用
 
 title: "小学生時代の絵アーカイブ"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

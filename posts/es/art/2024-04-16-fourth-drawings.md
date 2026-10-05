@@ -5,7 +5,7 @@ image:
     alt: Para miniatura
 
 title: "Dibujo digital #4: 8 bocetos cotidianos"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]

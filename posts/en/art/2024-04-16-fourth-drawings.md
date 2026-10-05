@@ -5,7 +5,7 @@ image:
     alt: For thumbnail
 
 title: "Digital Drawing #4: 8 Everyday Sketches"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]

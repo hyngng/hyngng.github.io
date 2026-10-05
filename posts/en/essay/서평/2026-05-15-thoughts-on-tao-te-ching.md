@@ -1,6 +1,6 @@
 ---
 title: "Reading Professor Lee Seok-myeong's Annotated Lao Tzu"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 도덕경]

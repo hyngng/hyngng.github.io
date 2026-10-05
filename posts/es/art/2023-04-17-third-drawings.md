@@ -5,7 +5,7 @@ image:
     alt: Para miniatura
 
 title: "Dibujo digital #3: Cambiemos el formato de los dibujos"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 기지개, 어안렌즈, 폰카]

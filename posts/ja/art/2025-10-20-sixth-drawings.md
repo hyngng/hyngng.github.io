@@ -5,7 +5,7 @@ image:
     alt: サムネイル用
 
 title: "デジタルドローイング #6: 一週間で描いたもの"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림]

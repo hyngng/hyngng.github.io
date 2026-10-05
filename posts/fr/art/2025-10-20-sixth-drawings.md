@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "Dessin numérique #6 : Ce que j'ai dessiné en une semaine"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림]

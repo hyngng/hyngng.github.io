@@ -5,7 +5,7 @@ image:
     alt: "영화 〈발레리나〉의 한 장면"
 
 title: "발레리나: 존 윅 시리즈의 완성형 스핀오프"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 발레리나]

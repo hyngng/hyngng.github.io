@@ -5,7 +5,7 @@ image:
     alt: Para miniatura
 
 title: "Dibujo digital #1: Recopilación de garabatos de la época del instituto"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 사람, 총, 우비, 상자]

@@ -5,7 +5,7 @@ image:
     alt: サムネイル用
 
 title: "デジタルドローイング #3: 絵の形式を変えてみよう"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 기지개, 어안렌즈, 폰카]

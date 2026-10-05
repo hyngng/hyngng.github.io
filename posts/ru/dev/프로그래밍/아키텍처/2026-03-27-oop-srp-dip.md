@@ -1,6 +1,6 @@
 ---
 title: "Об объектно-ориентированном проектировании и принципах SRP, DIP"
-authors: ["dev", "essay"]
+authors: [dev, essay]
 
 categories: [프로그래밍, 아키텍처]
 tags: [프로그래밍, 아키텍처]

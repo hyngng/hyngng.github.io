@@ -5,7 +5,7 @@ image:
     alt: 開発中のプロトタイプ
     
 title: "「行先地」、1回目の中間開発記"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 행선지, 개발, 개발일지]

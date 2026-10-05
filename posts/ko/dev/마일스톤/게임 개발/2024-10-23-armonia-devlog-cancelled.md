@@ -1,6 +1,6 @@
 ---
 title: "'행선지', 개발은 여기까지로"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 행선지, 개발, 개발일지]

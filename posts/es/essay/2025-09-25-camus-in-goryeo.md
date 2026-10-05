@@ -1,6 +1,6 @@
 ---
 title: "La política exterior del Goryeo del siglo XII vista a través de la mirada de Camus"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 알베르 카뮈, 시지프 신화, 역사, 고려]

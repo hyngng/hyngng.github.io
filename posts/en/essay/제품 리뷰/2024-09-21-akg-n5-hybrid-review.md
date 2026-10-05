@@ -1,6 +1,6 @@
 ---
 title: "AKG N5 One-Week Review (Written Without Photos)"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

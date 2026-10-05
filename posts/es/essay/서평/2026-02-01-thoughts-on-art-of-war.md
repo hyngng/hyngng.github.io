@@ -1,6 +1,6 @@
 ---
 title: "El Arte de la Guerra: leyendo todas las estrategias y tácticas del mundo"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 손자병법]

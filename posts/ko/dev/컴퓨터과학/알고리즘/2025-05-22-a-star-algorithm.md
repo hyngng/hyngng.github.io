@@ -1,6 +1,6 @@
 ---
 title: "최단경로 탐색을 위한 A* 알고리즘 간략 정리"
-authors: ["dev"]
+authors: [dev]
 
 categories: [컴퓨터과학, 알고리즘]
 tags: [컴퓨터과학, 알고리즘]

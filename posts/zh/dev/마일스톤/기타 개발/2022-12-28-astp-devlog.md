@@ -1,6 +1,6 @@
 ---
 title: "用 Python 开发的基础自动股票交易机"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발, 프로그래밍, 파이썬, ASTP, 주식, 개발, 개발일지]

@@ -68,7 +68,7 @@ export async function getChunkRoutes(options: GetChunkRoutesOptions = {}): Promi
   // Routes without a `[lang]` segment emit the default locale ('' -> defaultLocale);
   // routes with `[lang]` emit only the non-default locales (default is unprefixed).
   const langCodes = langs.length > 0 ? langs : [''];
-  const authorIds = authors ? ALL_AUTHORS.map((a) => a.id) : [''];
+  const authorIds = authors ? ALL_AUTHORS.map((a) => a.name) : [''];
 
   const routes: ChunkRoute[] = [];
 

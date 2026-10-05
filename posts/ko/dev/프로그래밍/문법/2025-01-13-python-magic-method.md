@@ -1,6 +1,6 @@
 ---
 title: "파이썬 객체 동작 제어를 위한 매직 메서드"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 문법]
 tags: [프로그래밍, 문법, 파이썬, 매직 메서드]

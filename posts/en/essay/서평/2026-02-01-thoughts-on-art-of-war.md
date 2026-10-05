@@ -1,6 +1,6 @@
 ---
 title: "Reading The Art of War: All the Strategies and Tactics of the World"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 손자병법]

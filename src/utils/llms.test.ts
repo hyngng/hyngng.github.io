@@ -59,7 +59,7 @@ describe('buildLlmsTxt', () => {
     expect(text).toContain(`- [Home](${ORIGIN}/)`);
     expect(text).toContain(`- [RSS](${ORIGIN}/rss.xml)`);
     expect(text).toContain('## Authors\n');
-    expect(text).toContain(`- [hyngng.dev](${ORIGIN}/en/dev/): Recording programming and development experiences.`);
+    expect(text).toContain(`- [dev](${ORIGIN}/en/dev/): Recording programming and development experiences.`);
   });
 
   it('groups posts by primary author and links to the LLMS locale (en-US) post path', () => {
@@ -68,9 +68,9 @@ describe('buildLlmsTxt', () => {
       mockPost(`${LLMS_LOCALE}/essay/2024-01-02-thought`, { title: 'Thought', authors: ['essay'] }),
     ]);
 
-    expect(text).toContain('### hyngng.dev\n');
+    expect(text).toContain('### dev\n');
     expect(text).toContain(`- [Hello](${ORIGIN}/en/dev/hello/): `);
-    expect(text).toContain('### hyngng.essay\n');
+    expect(text).toContain('### essay\n');
     expect(text).toContain(`- [Thought](${ORIGIN}/en/essay/thought/): `);
   });
 
@@ -82,7 +82,7 @@ describe('buildLlmsTxt', () => {
       }),
     );
 
-    const section = build(posts).split('### hyngng.dev\n')[1];
+    const section = build(posts).split('### dev\n')[1];
     const bullets = section.split('\n').filter((line) => line.startsWith('- ['));
     expect(bullets).toHaveLength(LLMS_MAX_POSTS_PER_AUTHOR);
     expect(bullets[0]).toContain(`Post ${LLMS_MAX_POSTS_PER_AUTHOR + 5}`);
@@ -127,14 +127,14 @@ describe('buildLlmsTxt', () => {
       mockPost('ko-KR/dev/2024-01-01-korean'),
     ]);
 
-    expect(text).not.toContain('### hyngng.dev\n\n-');
+    expect(text).not.toContain('### dev\n\n-');
     expect(text).not.toContain('- [ko/dev/2024-01-01-korean](');
   });
 
   it('builds data layer with locale-consistent (en-US) URLs', () => {
     const doc = buildLlmsData({ origin: ORIGIN, posts: [mockPost(`${LLMS_LOCALE}/dev/2024-01-01-a`)] });
     for (const a of doc.authors) expect(a.url).toContain('/en/');
-    const devSection = doc.authorSections.find((s) => s.name === 'hyngng.dev');
+    const devSection = doc.authorSections.find((s) => s.name === 'dev');
     expect(devSection?.posts[0].url).toBe(`${ORIGIN}/en/dev/a/`);
   });
 });

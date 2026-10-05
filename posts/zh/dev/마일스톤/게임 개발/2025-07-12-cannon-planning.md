@@ -5,7 +5,7 @@ image:
     alt: "真是好久不见！"
 
 title: "以准备经验为主的移动端塔防概念策划"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 기획, 개발일지]

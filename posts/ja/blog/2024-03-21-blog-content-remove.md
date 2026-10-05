@@ -1,6 +1,6 @@
 ---
 title: "GitHubブログで特定タグの内容を除去する"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 커스터마이징, Chirpy, Liquid]

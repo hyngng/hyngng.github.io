@@ -1,6 +1,6 @@
 ---
 title: "Updating the GitHub Blog Theme"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [깃허브, 업데이트, Chirpy]

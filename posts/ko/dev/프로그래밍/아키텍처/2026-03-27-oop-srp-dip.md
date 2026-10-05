@@ -1,6 +1,6 @@
 ---
 title: "객체지향 설계와 SRP, DIP 원칙에 대해"
-authors: ["dev", "essay"]
+authors: [dev, essay]
 
 categories: [프로그래밍, 아키텍처]
 tags: [프로그래밍, 아키텍처]

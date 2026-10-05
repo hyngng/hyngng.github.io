@@ -1,6 +1,6 @@
 ---
 title: "À propos de la conception orientée objet et des principes SRP et DIP"
-authors: ["dev", "essay"]
+authors: [dev, essay]
 
 categories: [프로그래밍, 아키텍처]
 tags: [프로그래밍, 아키텍처]

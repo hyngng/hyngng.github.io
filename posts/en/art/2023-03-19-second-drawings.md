@@ -5,7 +5,7 @@ image:
     alt: For thumbnail
 
 title: "Digital Drawing #2: Military and Bones"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 비니, 광각, 총, 양뿔, 망토, 트래픽 콘]

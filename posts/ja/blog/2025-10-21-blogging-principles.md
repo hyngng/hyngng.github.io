@@ -1,6 +1,6 @@
 ---
 title: "3年目のブログ所感と私の文章執筆原則"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, 웹마스터도구, 글쓰기, SEO, Chirpy]

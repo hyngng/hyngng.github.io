@@ -1,6 +1,6 @@
 ---
 title: "파이썬을 다루면서 알게 된 점 몇 가지"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 문법]
 tags: [프로그래밍, 문법]

@@ -5,7 +5,7 @@ image:
     alt: "抽空拍的午餐照片"
 
 title: "1年8个月的社会服务要员工作后记"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 사회복무요원]

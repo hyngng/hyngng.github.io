@@ -5,7 +5,7 @@ image:
     alt: Вот она, фотография года
 
 title: "[2024] Честно говоря, довольно занятно"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [사진, 송도, 서울식물원, 아파트, 봄꽃, 덕수궁, 구름, 여름비, 카페, 맨드리아, 고드름]

@@ -1,6 +1,6 @@
 ---
 title: "Reading Meditations: Marcus Aurelius' To Himself"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 명상록, 50번째 글]

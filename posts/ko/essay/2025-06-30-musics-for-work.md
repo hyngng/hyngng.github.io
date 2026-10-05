@@ -1,6 +1,6 @@
 ---
 title: "생산성이 필요할 때 듣는 노래 장르 4선"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [프로그래밍, 개발, 노래]

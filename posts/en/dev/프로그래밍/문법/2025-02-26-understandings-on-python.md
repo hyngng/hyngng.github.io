@@ -1,6 +1,6 @@
 ---
 title: "A Few Things I Learned While Working with Python"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 문법]
 tags: [프로그래밍, 문법]

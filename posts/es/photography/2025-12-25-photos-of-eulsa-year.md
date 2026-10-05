@@ -5,7 +5,7 @@ image:
     alt: La foto del año es esta
 
 title: "[2025] Corrección de color y relación de aspecto"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [근무지에서, 전봇대, 눈, 편의점, 아파트, 비, 지하철, 가을, 화분]

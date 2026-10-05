@@ -1,6 +1,6 @@
 ---
 title: "블로그 디자인 철학과 설계 기조"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, Astro]

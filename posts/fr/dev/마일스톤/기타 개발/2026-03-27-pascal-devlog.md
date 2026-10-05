@@ -5,7 +5,7 @@ image:
     alt: "Le nom provisoire du programme était 'Pascal'"
 
 title: "Rétrospective sur le développement d'un éditeur PDF basé sur WinUI 3"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발, WinUI 3, MVVM, XAML, C#]

@@ -1,6 +1,6 @@
 ---
 title: "Journal de fin de stage de 3 semaines comme service complémentaire au centre d'entraînement de Nonsan, 2024"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 일상, 훈련소 일지]

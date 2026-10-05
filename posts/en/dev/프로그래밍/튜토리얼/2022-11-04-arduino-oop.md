@@ -1,6 +1,6 @@
 ---
 title: "Using Object-Oriented Programming in Arduino"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 튜토리얼]
 tags: [프로그래밍, 튜토리얼, 아두이노, 객체지향]

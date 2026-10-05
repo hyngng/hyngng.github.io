@@ -1,6 +1,6 @@
 ---
 title: "깃허브 블로그에 다국어 지원 추가하기"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 다국어, jekyll-polyglot]

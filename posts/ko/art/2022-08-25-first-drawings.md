@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "디지털 드로잉 #1: 고등학생 때 낙서 위주의 정리"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 사람, 총, 우비, 상자]

@@ -5,7 +5,7 @@ image:
     alt: Gameplay de ejemplo
     
 title: "Creando un juego de disparos con un vehículo blindado sencillo en Unity"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 개발, 개발일지]

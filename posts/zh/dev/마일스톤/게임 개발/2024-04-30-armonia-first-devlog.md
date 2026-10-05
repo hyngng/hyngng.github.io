@@ -5,7 +5,7 @@ image:
     alt: 正在开发的原型
     
 title: "'行尽地'，第一次开发中期记录"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 행선지, 개발, 개발일지]

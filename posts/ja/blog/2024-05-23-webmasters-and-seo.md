@@ -1,6 +1,6 @@
 ---
 title: GitHubブログをウェブマスターツールに登録してSEO最適化する
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, 웹마스터도구, SEO]

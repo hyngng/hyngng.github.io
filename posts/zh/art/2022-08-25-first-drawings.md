@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "数字绘画 #1：以高中时期涂鸦为主的整理"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 사람, 총, 우비, 상자]

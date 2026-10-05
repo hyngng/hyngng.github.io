@@ -5,7 +5,7 @@ image:
     alt: For thumbnail
 
 title: "Elementary School Drawing Archive"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

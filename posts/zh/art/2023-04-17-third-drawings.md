@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "数字绘画 #3：换个绘画形式吧"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 기지개, 어안렌즈, 폰카]

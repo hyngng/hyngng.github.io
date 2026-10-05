@@ -5,7 +5,7 @@ image:
     alt: 大概这种感觉
     
 title: "'行尽地'，游戏策划"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, 행선지, 기획, 개발일지]

@@ -1,6 +1,6 @@
 ---
 title: "Реализация и использование паттерна Singleton в Unity"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 패턴]
 tags: [프로그래밍, 프로그래밍 패턴, 유니티, C#, 싱글톤 패턴]

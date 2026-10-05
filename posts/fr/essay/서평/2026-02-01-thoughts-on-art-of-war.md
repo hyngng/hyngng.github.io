@@ -1,6 +1,6 @@
 ---
 title: "L'Art de la guerre : Toutes les stratégies et tactiques du monde"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 손자병법]

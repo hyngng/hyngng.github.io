@@ -5,7 +5,7 @@ image:
     alt: "This year's photo is this one"
 
 title: "[2023] Sending Off the Year of Gyemyo"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [사진, 불멍, 지하철, 개수대, 구름, 감자튀김, 바닷가, 낙엽]

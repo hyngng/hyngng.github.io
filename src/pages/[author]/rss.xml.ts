@@ -6,7 +6,7 @@ import { defaultLocale } from '../../locales';
 
 export async function getStaticPaths() {
   return ALL_AUTHORS.map((author) => ({
-    params: { author: author.id },
+    params: { author: author.name },
     props: { author },
   }));
 }
@@ -14,8 +14,8 @@ export async function getStaticPaths() {
 export async function GET(context: APIContext) {
   const origin = new URL(context.request.url).origin;
   const { author } = context.props;
-  const resolved = getAuthor(author.id, defaultLocale);
-  const items = await getRssItems({ lang: defaultLocale, authorId: author.id });
+  const resolved = getAuthor(author.name, defaultLocale);
+  const items = await getRssItems({ lang: defaultLocale, authorId: author.name });
 
   return rss({
     title: `${author.name} RSS`,

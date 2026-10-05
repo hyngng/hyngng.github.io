@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "디지털 드로잉 #6: 한 주 동안 그린 것들"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림]

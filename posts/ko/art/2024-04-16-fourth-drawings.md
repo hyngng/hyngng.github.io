@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "디지털 드로잉 #4: 일상적인 스케치 8장"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]

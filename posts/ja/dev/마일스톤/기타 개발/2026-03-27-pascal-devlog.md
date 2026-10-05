@@ -5,7 +5,7 @@ image:
     alt: "暫定的に使ったプログラム名は「Pascal」"
 
 title: "WinUI 3 ベース PDF 編集プログラム開発回顧"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발, WinUI 3, MVVM, XAML, C#]

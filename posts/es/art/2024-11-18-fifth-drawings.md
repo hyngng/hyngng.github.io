@@ -5,7 +5,7 @@ image:
     alt: Para miniatura
 
 title: "Dibujo digital #5: Fantasía casual y demás"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 신문, 총, 일상, 영수증]

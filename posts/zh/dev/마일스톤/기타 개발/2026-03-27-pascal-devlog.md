@@ -5,7 +5,7 @@ image:
     alt: "临时使用的程序名是'Pascal'"
 
 title: "基于 WinUI 3 的 PDF 编辑程序开发回顾"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발, WinUI 3, MVVM, XAML, C#]

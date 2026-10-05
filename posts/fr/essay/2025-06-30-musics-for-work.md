@@ -1,6 +1,6 @@
 ---
 title: "Quatre genres musicaux pour booster sa productivité"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [프로그래밍, 개발, 노래]

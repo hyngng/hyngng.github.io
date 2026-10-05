@@ -5,7 +5,7 @@ image:
     alt: 올해의 사진은 요거
 
 title: "[2024] 솔직히 좀 재밌음"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [사진, 송도, 서울식물원, 아파트, 봄꽃, 덕수궁, 구름, 여름비, 카페, 맨드리아, 고드름]

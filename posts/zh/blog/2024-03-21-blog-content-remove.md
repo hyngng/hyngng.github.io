@@ -1,6 +1,6 @@
 ---
 title: "在GitHub博客中删除特定标签内容"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 커스터마이징, Chirpy, Liquid]

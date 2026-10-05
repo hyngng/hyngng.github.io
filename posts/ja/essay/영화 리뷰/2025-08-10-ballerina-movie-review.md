@@ -5,7 +5,7 @@ image:
     alt: "映画『バレリーナ』の一場面"
 
 title: "バレリーナ：ジョン・ウィックシリーズの完成形スピンオフ"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 발레리나]

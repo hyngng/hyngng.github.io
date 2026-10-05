@@ -5,7 +5,7 @@ image:
     alt: 今年的照片是这张
 
 title: "[2025] 调色与画幅比例"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [근무지에서, 전봇대, 눈, 편의점, 아파트, 비, 지하철, 가을, 화분]

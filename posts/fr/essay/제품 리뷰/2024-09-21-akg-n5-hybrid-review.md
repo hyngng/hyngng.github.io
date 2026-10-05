@@ -1,6 +1,6 @@
 ---
 title: "Test de l'AKG N5 après une semaine d'utilisation (sans photos)"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

@@ -5,7 +5,7 @@ image:
     alt: "一番気に入っているもの"
 
 title: "中学生時代の絵アーカイブと簡単レビュー"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

@@ -1,6 +1,6 @@
 ---
 title: "需要生产力时听的推荐4种音乐类型"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [프로그래밍, 개발, 노래]

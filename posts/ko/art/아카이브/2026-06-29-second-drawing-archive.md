@@ -5,7 +5,7 @@ image:
     alt: "가장 마음에 드는 거"
 
 title: "중학생 시절 그림 아카이브와 간단 리뷰"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

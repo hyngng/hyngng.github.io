@@ -5,7 +5,7 @@ image:
     alt: "영화 〈룩 백〉의 한 장면"
 
 title: "생각했던 것보다 더 담백했던 영화, 룩 백"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 인문학, 룩 백]

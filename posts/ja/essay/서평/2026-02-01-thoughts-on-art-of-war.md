@@ -1,6 +1,6 @@
 ---
 title: "孫子兵法：世の中のすべての戦略と戦術を読んで"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 손자병법]

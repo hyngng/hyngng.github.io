@@ -1,6 +1,6 @@
 ---
 title: "Lecture du Tao Te King annoté par le professeur Lee Seok-myeong"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 도덕경]

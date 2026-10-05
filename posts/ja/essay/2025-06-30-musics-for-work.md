@@ -1,6 +1,6 @@
 ---
 title: "生産性が必要なときに聴く音楽ジャンル4選"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [프로그래밍, 개발, 노래]

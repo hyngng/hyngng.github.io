@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "Dessin numérique #1 : Gribouillages du lycée"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 사람, 총, 우비, 상자]

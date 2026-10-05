@@ -1,6 +1,6 @@
 ---
 title: "Basic Automated Stock Trading Program in Python"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 기타 개발]
 tags: [마일스톤, 기타 개발, 프로그래밍, 파이썬, ASTP, 주식, 개발, 개발일지]

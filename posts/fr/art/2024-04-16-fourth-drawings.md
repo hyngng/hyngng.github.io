@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "Dessin numérique #4 : 8 croquis du quotidien"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 의자, 패션, 요리, 여행, 자취방]

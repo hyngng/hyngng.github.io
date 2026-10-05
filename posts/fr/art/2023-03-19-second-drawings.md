@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "Dessin numérique #2 : Militaire et os"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 비니, 광각, 총, 양뿔, 망토, 트래픽 콘]

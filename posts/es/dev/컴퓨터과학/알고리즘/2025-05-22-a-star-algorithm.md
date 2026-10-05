@@ -1,6 +1,6 @@
 ---
 title: "Resumen conciso del algoritmo A* para la búsqueda de caminos más cortos"
-authors: ["dev"]
+authors: [dev]
 
 categories: [컴퓨터과학, 알고리즘]
 tags: [컴퓨터과학, 알고리즘]

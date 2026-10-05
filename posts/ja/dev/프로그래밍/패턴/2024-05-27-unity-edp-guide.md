@@ -1,6 +1,6 @@
 ---
 title: "Unityでイベント駆動型プログラミングを活用する"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 패턴]
 tags: [프로그래밍, 프로그래밍 패턴, 유니티, C#, 이벤트 주도적 프로그래밍]

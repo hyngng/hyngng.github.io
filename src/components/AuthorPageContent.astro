@@ -17,12 +17,12 @@ interface Props {
 
 const { author, locale, currentLocale, posts } = Astro.props;
 
-const chunkBaseUrl = `${localePath(currentLocale)}/${author.id}/chunk`;
+const chunkBaseUrl = `${localePath(currentLocale)}/${author.name}/chunk`;
 
-const otherPersonas = ALL_AUTHORS.filter((a) => a.id !== author.id).map((a) => {
-  const authorData = getAuthor(a.id, currentLocale);
+const otherPersonas = ALL_AUTHORS.filter((a) => a.name !== author.name).map((a) => {
+  const authorData = getAuthor(a.name, currentLocale);
   return {
-    id: a.id,
+    id: a.name,
     name: a.name,
     avatar: authorData.avatar,
     description: authorData.description,
@@ -48,10 +48,10 @@ const otherPersonas = ALL_AUTHORS.filter((a) => a.id !== author.id).map((a) => {
 
 <div class="content-body-layout">
   <div class="search-mobile-wrapper">
-    <Search locale={locale} currentLocale={currentLocale} authorId={author.id} />
+    <Search locale={locale} currentLocale={currentLocale} authorId={author.name} />
   </div>
   <PostListSection locale={locale} posts={posts} currentLocale={currentLocale} chunkBaseUrl={chunkBaseUrl} />
   <aside class="search-sidebar">
-    <Search locale={locale} currentLocale={currentLocale} authorId={author.id} />
+    <Search locale={locale} currentLocale={currentLocale} authorId={author.name} />
   </aside>
 </div>

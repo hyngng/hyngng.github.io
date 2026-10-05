@@ -5,7 +5,7 @@ image:
     alt: "Photos de déjeuner prises sur le vif"
 
 title: "Bilan de 20 mois comme agent du service public"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 사회복무요원]

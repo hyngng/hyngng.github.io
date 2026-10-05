@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "数字绘画 #5：休闲奇幻等等"
-authors: ["art"]
+authors: [art]
 
 categories: [그림]
 tags: [그림, 신문, 총, 일상, 영수증]

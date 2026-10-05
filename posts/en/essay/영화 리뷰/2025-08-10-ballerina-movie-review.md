@@ -5,7 +5,7 @@ image:
     alt: "A scene from the film Ballerina"
 
 title: "Ballerina: The Definitive Spin-Off of the John Wick Series"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 발레리나]

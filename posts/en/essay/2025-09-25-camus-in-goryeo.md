@@ -1,6 +1,6 @@
 ---
 title: "Goryeo's 12th Century Diplomatic Policy Through Camus's Eyes"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이]
 tags: [에세이, 알베르 카뮈, 시지프 신화, 역사, 고려]

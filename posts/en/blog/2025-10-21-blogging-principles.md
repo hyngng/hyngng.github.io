@@ -1,6 +1,6 @@
 ---
 title: "Three Years of Blogging and My Writing Principles"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, 웹마스터도구, 글쓰기, SEO, Chirpy]

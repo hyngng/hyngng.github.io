@@ -1,6 +1,6 @@
 ---
 title: "Impresiones de una semana con los AKG N5, escritas sin fotos"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 제품 리뷰]
 tags: [에세이, 제품 리뷰]

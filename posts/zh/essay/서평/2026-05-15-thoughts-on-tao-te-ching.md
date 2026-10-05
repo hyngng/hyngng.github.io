@@ -1,6 +1,6 @@
 ---
 title: "读李锡明教授编纂的《老子》有感"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 서평]
 tags: [에세이, 서평, 도덕경]

@@ -1,6 +1,6 @@
 ---
 title: "博客开张了！"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, Chirpy]

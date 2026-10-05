@@ -6,7 +6,7 @@ image:
 
 title: "思っていたより淡白だった映画、ルックバック"
 
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 인문학, 룩 백]

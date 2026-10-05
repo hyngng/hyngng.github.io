@@ -1,6 +1,6 @@
 ---
 title: "Supprimer le contenu de certaines balises sur son blog GitHub"
-authors: ["blog", "dev"]
+authors: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 커스터마이징, Chirpy, Liquid]

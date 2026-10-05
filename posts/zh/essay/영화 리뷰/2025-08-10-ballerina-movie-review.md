@@ -5,7 +5,7 @@ image:
     alt: "电影《芭蕾女杀手》的一个场景"
 
 title: "芭蕾女杀手：疾速追杀系列的完美衍生作"
-authors: ["essay"]
+authors: [essay]
 
 categories: [에세이, 영화 리뷰]
 tags: [에세이, 영화 리뷰, 발레리나]

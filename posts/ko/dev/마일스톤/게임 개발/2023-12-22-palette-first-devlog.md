@@ -5,7 +5,7 @@ image:
     alt: 예시 게임플레이
     
 title: "'큐빅 서바이벌', 구상 및 개발 과정"
-authors: ["dev"]
+authors: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, URP, 큐빅 서바이벌, 기획, 개발일지]

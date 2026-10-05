@@ -5,7 +5,7 @@ image:
     alt: "가장 마음에 드는 거"
 
 title: "Archive des dessins du collège avec petites notes"
-authors: ["art"]
+authors: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

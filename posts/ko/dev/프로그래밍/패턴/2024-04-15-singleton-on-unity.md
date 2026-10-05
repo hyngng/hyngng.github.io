@@ -1,6 +1,6 @@
 ---
 title: "유니티에서 싱글톤 패턴 구현하기, 활용하기"
-authors: ["dev"]
+authors: [dev]
 
 categories: [프로그래밍, 패턴]
 tags: [프로그래밍, 프로그래밍 패턴, 유니티, C#, 싱글톤 패턴]

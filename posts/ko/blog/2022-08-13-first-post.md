@@ -1,6 +1,6 @@
 ---
 title: "블로그 개설했습니다!"
-authors: ["blog"]
+authors: [blog]
 
 categories: [블로그]
 tags: [블로그, Chirpy]

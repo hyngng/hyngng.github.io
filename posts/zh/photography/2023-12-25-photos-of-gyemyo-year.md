@@ -5,7 +5,7 @@ image:
     alt: 今年的照片是这张
     
 title: "[2023] 送别癸卯年"
-authors: ["photography"]
+authors: [photography]
 
 categories: [사진, 연말 정산]
 tags: [사진, 불멍, 지하철, 개수대, 구름, 감자튀김, 바닷가, 낙엽]
