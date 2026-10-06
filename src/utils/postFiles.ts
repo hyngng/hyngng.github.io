@@ -10,10 +10,11 @@ export interface PostFileInfo {
   slug: string;
 }
 
-const POST_FILE_PATTERN = /^\d{4}-\d{2}-\d{2}-(.+)\.(md|mdx)$/;
+const POST_FILE_PATTERN = /^(?:\d{4}-\d{2}-\d{2}-)?(.+)\.(md|mdx)$/;
 
 /**
- * Recursively scans the posts directory and returns metadata for all published post files.
+ * Recursively scans the posts directory and returns metadata for every Markdown
+ * file accepted by the content loader, including files without a date prefix.
  * Uses only node:fs and node:path so it can be safely invoked at config/build time
  * without depending on `astro:content`.
  */

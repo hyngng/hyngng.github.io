@@ -13,7 +13,7 @@ function withCdnBase(path: string): string {
 export function shouldRewriteCdnUrl(url: string): boolean {
   if (!url) return false;
   if (url.startsWith('//')) return false;
-  if (/^https?:\/\//i.test(url)) return false;
+  if (/^[a-z][a-z\d+.-]*:/i.test(url)) return false;
   return true;
 }
 
@@ -28,6 +28,6 @@ export function toAbsoluteImageUrl(val?: string): string | undefined {
 
 export function resolveCdnPath(path?: string): string {
   if (!path || !path.trim()) return '';
-  if (/^https?:\/\//i.test(path)) return path;
+  if (path.startsWith('//') || /^[a-z][a-z\d+.-]*:/i.test(path)) return path;
   return withCdnBase(path);
 }

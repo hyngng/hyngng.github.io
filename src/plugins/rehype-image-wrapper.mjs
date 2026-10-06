@@ -12,6 +12,17 @@ function findNode(root, predicate) {
   return null;
 }
 
+function findNextSibling(root, target) {
+  if (!root.children) return null;
+  const index = root.children.indexOf(target);
+  if (index !== -1) return root.children[index + 1] || null;
+  for (const child of root.children) {
+    const sibling = findNextSibling(child, target);
+    if (sibling) return sibling;
+  }
+  return null;
+}
+
 function processFloats(tree) {
   visit(tree, 'element', (node) => {
     if (node.tagName !== 'span') return;
@@ -46,7 +57,7 @@ function processFloats(tree) {
       return;
     }
 
-    const nextP = pNode.next;
+    const nextP = findNextSibling(tree, pNode);
     if (nextP?.tagName === 'p') {
       const idx = nextP.children?.findIndex(
         c => c.type === 'element' && c.tagName === 'em',

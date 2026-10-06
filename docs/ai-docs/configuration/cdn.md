@@ -92,8 +92,10 @@ CDN URL 변환 로직을 `content.config.ts`와 `authors.settings.ts`가 공유�
 | 함수 | 용도 |
 |---|---|
 | `toAbsoluteImageUrl(val)` | 로컬 절대경로 → CDN URL 변환 (콘텐츠 스키마용) |
-| `resolveCdnPath(path)` | 상대경로/절대경로 → CDN URL 변환 (작가 아바타용) |
+| `resolveCdnPath(path)` | 로컬 상대경로/절대경로 → CDN URL 변환 (작가 아바타 및 미디어 지시어용). `http(s)`, protocol-relative, `data:` 등 URI scheme이 있는 URL은 원형 보존 |
 | `isLocalAbsolutePath(url)` | 로컬 절대경로 여부 판별 |
+
+`shouldRewriteCdnUrl()`도 로컬 경로만 재작성한다. `//host/path` 및 `data:image/...`처럼 로컬 파일 경로가 아닌 URL은 CDN base와 결합하지 않는다.
 
 ## 관련 파일
 

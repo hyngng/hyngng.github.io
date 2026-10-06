@@ -3,8 +3,14 @@
 이 파일은 프로젝트의 장기적인 계획과 미해결 작업을 관리합니다.
 
 - [ ] 코드 리뷰 후속 수정 계획
-  - [ ] 각주 툴팁 플러그인의 `aria-describedby` HAST 속성명을 확인하고, 기존 `footnote-label` 설명과 툴팁 ID를 중복 속성 없이 하나의 값으로 합친다. 빌드 HTML에서 중복 속성이 없고 두 ID가 함께 보존되는지 확인한다.
+  - [x] 각주 툴팁 플러그인의 `aria-describedby` HAST 속성명을 `ariaDescribedBy`로 맞춰 `footnote-label` 설명과 툴팁 ID를 단일 속성으로 병합한다.
   - [ ] 타임존 없는 날짜를 호스트 로컬 시간대와 locale-formatted 문자열 파싱에 의존하지 않도록 `SITE.timezone` 기준으로 파싱한다. UTC 및 비UTC 프로세스에서 같은 결과가 나오는지, 시간대 명시 날짜와 날짜 전용 입력을 함께 확인한다.
+  - [x] 청크 fetch 요청 순번을 클릭·딥링크·popstate 복원에 공유해 오래된 응답의 DOM 및 history 변경을 차단한다.
+  - [x] 언어 메뉴 닫힘 상태를 `inert`로 표현하고 `aria-expanded` 및 포커스 복원을 함께 관리한다.
+  - [x] float 이미지 캡션의 다음 문단을 HAST 부모의 `children`에서 찾아 제거하도록 수정한다.
+  - [x] CDN URL 변환에서 `data:` 등 URI scheme 및 protocol-relative URL을 로컬 경로로 오인하지 않도록 한다.
+  - [x] 라우트 검증 파일 탐색을 Astro 콘텐츠 로더와 동일한 전체 `.md`/`.mdx` 집합으로 확장한다.
+  - [x] 페르소나 모달 백드롭의 블러 필터를 제거하고 반투명 딤은 유지한다. 각주 모달의 블러 백드롭은 별도 디자인으로 유지한다.
 
 - [ ] SEO 관련 작업
   - [x] **Robots.txt & Sitemap**: `request.url`에서 origin을 추출하여 동적 생성. `astro.config.mjs`의 `site: SITE.url` 설정으로 dev/prod 환경별 올바른 절대 URL 자동 반영.

@@ -15,48 +15,59 @@ export function createChunkLoader(
   let isLoading = false;
 
   let prefetchTimer: ReturnType<typeof setTimeout>;
+  let activeLoad: Promise<void> | null = null;
+  let loadSeq = 0;
 
   function clearPrefetch() {
     clearTimeout(prefetchTimer);
   }
 
-  let popstateSeq = 0;
-
   async function loadChunk(n: number, pushHistory: boolean = true, seq?: number) {
-    if (isLoading || n > totalChunks) return;
-    if (seq !== undefined && seq !== popstateSeq) return;
+    const requestSeq = seq ?? ++loadSeq;
+    if (requestSeq !== loadSeq || n > totalChunks) return;
+    if (isLoading && activeLoad) {
+      await activeLoad;
+      if (requestSeq !== loadSeq || n <= currentChunk) return;
+    }
+
     isLoading = true;
+    const task = (async () => {
+      try {
+        const html = await fetchChunkHtml(chunkBaseUrl, n);
+        if (requestSeq !== loadSeq) return;
+        const { cards, loadMore: newLoadMore } = parseChunkResponse(html);
+        if (cards.length === 0 || requestSeq !== loadSeq) return;
+
+        const animatedCards = controller.appendChunk({ cards, loadMore: newLoadMore });
+
+        currentChunk = n;
+        grid.dataset.currentChunk = String(currentChunk);
+        if (pushHistory) {
+          history.pushState({ chunk: currentChunk }, '', `?p=${currentChunk}`);
+        }
+
+        animateNewCards(animatedCards);
+        initPostCardImages();
+
+        if (currentChunk >= totalChunks) {
+          const loadMore = grid.querySelector('.load-more-card') as HTMLElement | null;
+          if (loadMore) loadMore.hidden = true;
+        }
+      } catch (err) {
+        console.error('[chunk-load]', err);
+      }
+    })();
+    activeLoad = task;
     try {
-      const html = await fetchChunkHtml(chunkBaseUrl, n);
-      if (seq !== undefined && seq !== popstateSeq) return;
-      const { cards, loadMore: newLoadMore } = parseChunkResponse(html);
-      if (cards.length === 0) return;
-      if (seq !== undefined && seq !== popstateSeq) return;
-
-      const animatedCards = controller.appendChunk({ cards, loadMore: newLoadMore });
-
-      currentChunk = n;
-      grid.dataset.currentChunk = String(currentChunk);
-      if (pushHistory) {
-        history.pushState({ chunk: currentChunk }, '', `?p=${currentChunk}`);
-      }
-
-      animateNewCards(animatedCards);
-      initPostCardImages();
-
-      if (currentChunk >= totalChunks) {
-        const loadMore = grid.querySelector('.load-more-card') as HTMLElement | null;
-        if (loadMore) loadMore.hidden = true;
-      }
-    } catch (err) {
-      console.error('[chunk-load]', err);
+      await task;
     } finally {
+      if (activeLoad === task) activeLoad = null;
       isLoading = false;
     }
   }
 
   function handlePopState(e: PopStateEvent) {
-    const seq = ++popstateSeq;
+    const seq = ++loadSeq;
     const state = e.state as { chunk?: number } | null;
     const target = state?.chunk ?? parseInt(new URLSearchParams(location.search).get('p') || '1', 10);
 
@@ -66,8 +77,9 @@ export function createChunkLoader(
       grid.dataset.currentChunk = String(currentChunk);
     } else {
       (async () => {
+        if (activeLoad) await activeLoad;
         for (let i = currentChunk + 1; i <= target; i++) {
-          if (seq !== popstateSeq) break;
+          if (seq !== loadSeq) break;
           await loadChunk(i, false, seq);
         }
       })();
@@ -94,9 +106,11 @@ export function createChunkLoader(
 
   function loadInitial(target: number) {
     if (target > 1 && target <= totalChunks) {
+      const seq = ++loadSeq;
       (async () => {
         for (let i = 2; i <= target; i++) {
-          await loadChunk(i, false);
+          if (seq !== loadSeq) break;
+          await loadChunk(i, false, seq);
         }
       })();
     }

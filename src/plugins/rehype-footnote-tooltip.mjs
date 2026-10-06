@@ -70,8 +70,8 @@ export function rehypeFootnoteTooltip() {
         children: [node, tooltip],
       };
 
-      const existing = node.properties.ariaDescribedby;
-      node.properties.ariaDescribedby = existing ? `${existing} ${tooltipId}` : tooltipId;
+      const existing = node.properties.ariaDescribedBy;
+      node.properties.ariaDescribedBy = existing ? `${existing} ${tooltipId}` : tooltipId;
 
       parent.children[index] = wrapper;
     });

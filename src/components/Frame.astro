@@ -59,6 +59,8 @@ const rssUrl = authorId
       <Button
         variant="text"
         aria-label={locale.frame.langAria}
+        aria-expanded="false"
+        aria-controls="lang-list"
         id="lang-toggle"
       >
         {locale.frame.lang}
@@ -67,6 +69,7 @@ const rssUrl = authorId
         class="lang-list"
         id="lang-list"
         aria-hidden="true"
+        inert
         data-current-segment={currentSegment}
         data-locale-segments={JSON.stringify(localeSegments)}
       >
@@ -431,14 +434,19 @@ const rssUrl = authorId
     function openLangList() {
       isOpen = true;
       langList!.style.width = `${langItems.length * buttonSize}px`;
+      langList!.inert = false;
       langList!.setAttribute("aria-hidden", "false");
+      langToggle!.setAttribute("aria-expanded", "true");
       rightActionsInner!.classList.add("lang-open");
     }
 
     function closeLangList() {
       isOpen = false;
+      if (langList!.contains(document.activeElement)) langToggle!.focus();
       langList!.style.width = "0";
+      langList!.inert = true;
       langList!.setAttribute("aria-hidden", "true");
+      langToggle!.setAttribute("aria-expanded", "false");
       rightActionsInner!.classList.remove("lang-open");
     }
 

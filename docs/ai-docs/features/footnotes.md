@@ -85,14 +85,14 @@ processor: unified({
 
 ## 참고: `aria-describedby` 처리
 
-`rehype-footnote-tooltip.mjs`는 각주 참조 링크(`node`)의 `properties.ariaDescribedby`(hast 표준 속성명, 소문자 `b`)를 **일관되게 읽고 씁니다**.
+`rehype-footnote-tooltip.mjs`는 각주 참조 링크(`node`)의 `properties.ariaDescribedBy`를 읽고 씁니다. HAST 속성 이름은 `By`의 `B`를 대문자로 표기해야 직렬화 시 기존 `aria-describedby="footnote-label"` 값에 툴팁 ID를 덧붙인 단일 HTML 속성이 생성됩니다.
 
 ```js
-const existing = node.properties.ariaDescribedby;
-node.properties.ariaDescribedby = existing ? `${existing} ${tooltipId}` : tooltipId;
+const existing = node.properties.ariaDescribedBy;
+node.properties.ariaDescribedBy = existing ? `${existing} ${tooltipId}` : tooltipId;
 ```
 
-즉 플러그인과 라이브러리 간 대소문자 불일치는 발생하지 않습니다. 각주 라벨은 `id="footnote-label"`로, 툴팁은 `id="fn-tooltip-{n}"`으로 각각 고유한 참조 지점을 가지며, 참조 링크는 툴팁 `id`를 가리킵니다.
+각주 라벨은 `id="footnote-label"`, 툴팁은 `id="fn-tooltip-{n}"`을 가지며, 참조 링크의 단일 `aria-describedby` 값이 두 ID를 모두 가리킵니다.
 
 ## 각주 인터랙션 (반응형 전략)
 
@@ -107,7 +107,7 @@ node.properties.ariaDescribedby = existing ? `${existing} ${tooltipId}` : toolti
 - **고정 닫기 버튼 및 상단 스크롤 시작**: 모달 내부 카드를 flex 컬럼으로 구조화하여 각주 본문이 길어지더라도 본문 영역만 스크롤되고, 하단 닫기 버튼은 항상 뷰포트 하단에 고정 노출됨. 브라우저의 dialog focusing steps가 하단 버튼으로 떨어져 발생하는 자동 스크롤 다운을 방지하기 위해 카드에 `tabindex="-1"`을 지정하고 `body.scrollTop = 0`을 초기화하여 항상 본문 첫 줄부터 열림.
 - **상하좌우 여백 균일화**: 본문 영역(`.footnote-modal-body`)의 패딩을 1.15rem으로 균일하게 적용하여 상하좌우 여백의 시각적 대칭성을 확보.
 - **각주 본문 복귀 링크(Backref) 인라인 정합**: 본문 끝 복귀 버튼(`a[data-footnote-backref]`)에 인위적인 여백/마진 없이 본문 텍스트 바로 뒤에 자연스럽게 인라인으로 붙도록 유지. 복귀 링크 터치 시 모달을 닫고 문서 하단의 해당 각주 정의 위치(`#user-content-fn-{n}`)로 부드럽게 스크롤 이동 (나무위키 스타일 UX). 데스크톱 호버 툴팁에서는 해당 링크를 숨김(`display: none`).
-- **디자인 정합 (PersonaModal 일치)**: `PersonaModal`과 동일한 곡률(`var(--post-card-radius)`), 깊이감 있는 그림자(`0 16px 48px var(--color-shadow)`), 블러 백드롭(`backdrop-filter: blur(4px)`), 부드러운 등장/퇴장 애니메이션(`modal-fade-in` / `modal-fade-out`)을 공유. 상단 바나 X 버튼 없이 각주 본문과 하단 닫기 버튼만으로 구성된 미니멀 디자인 유지.
+- **모달 디자인**: 곡률(`var(--post-card-radius)`), 깊이감 있는 그림자(`0 16px 48px var(--color-shadow)`), 블러 백드롭(`backdrop-filter: blur(4px)`), 부드러운 등장/퇴장 애니메이션(`modal-fade-in` / `modal-fade-out`)을 사용한다. 페르소나 모달은 블러 없이 반투명 백드롭만 사용한다. 상단 바나 X 버튼 없이 각주 본문과 하단 닫기 버튼만으로 구성된 미니멀 디자인을 유지한다.
 - **닫기 인터랙션**: 모달 하단 닫기 버튼, 배경(backdrop) 터치, 또는 ESC 키 입력 시 퇴장 애니메이션과 함께 닫히며 내부 DOM 내용을 안전하게 정리함.
 - **이벤트 위임 & 누적 방지**: `PostLayout.astro`에서 `document` 수준의 이벤트 위임과 `AbortController`를 통해 단일 이벤트 리스너로 관리.
 - **다국어 지원**: 닫기 버튼 텍스트는 `Locale.footnote.close`를 통해 7개 언어로 지원 (ko=`닫기`, en=`Close`, ru=`Закрыть`, fr=`Fermer`, es=`Cerrar`, ja=`閉じる`, zh=`关闭`).

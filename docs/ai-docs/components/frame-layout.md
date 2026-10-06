@@ -100,21 +100,23 @@ fixed-actions (position: fixed; z-index: 100)
 ### HTML 구조
 
 ```astro
-<Button variant="text" id="lang-toggle" data-i18n="frame.lang">
+<Button variant="text" id="lang-toggle" aria-expanded="false" aria-controls="lang-list">
   {locale.frame.lang}
 </Button>
 
-<div class="lang-list" id="lang-list" aria-hidden="true"
-  data-locale-codes={allLocaleShortCodes.join(",")}
-  data-default-locale={defaultLocale}>
+<div class="lang-list" id="lang-list" aria-hidden="true" inert
+  data-current-segment={currentSegment}
+  data-locale-segments={JSON.stringify(localeSegments)}>
   {otherLocales.map((l) => (
     <button class="lang-item" data-lang={l.code}>{l.label}</button>
   ))}
 </div>
 ```
 
-- `data-locale-codes`: 전체 언어 코드 목록 (콤마 구분). JS에서 `Set`으로 변환하여 URL 파싱에 사용.
-- `data-default-locale`: 기본 언어 코드 (`'ko'`). URL에서 언어 세그먼트 제거/추가 기준.
+닫힌 메뉴는 `inert`로 탭 순서 및 보조 기술 상호작용에서 제외한다. 열고 닫을 때 버튼의 `aria-expanded`와 목록의 `aria-hidden`/`inert`를 함께 갱신하며, 목록 안에 포커스가 있을 때 닫히면 토글 버튼으로 포커스를 돌린다.
+
+- `data-current-segment`: 현재 언어의 URL 세그먼트. 기본 언어면 빈 문자열.
+- `data-locale-segments`: BCP 47 로케일과 URL 세그먼트의 JSON 매핑.
 
 ### 클릭 처리 로직
 
@@ -125,18 +127,18 @@ fixed-actions (position: fixed; z-index: 100)
 1. 사용자가 `.lang-item` 버튼 클릭
 2. `langCode` (`item.dataset.lang`) 읽기
 3. `getLocalizedPath()` 함수 호출:
-   - `#lang-list`의 `data-locale-codes`에서 전체 언어 코드 `Set` 생성
-   - `data-default-locale`에서 기본 언어 코드 읽기
-   - 현재 URL 경로 파싱, 기존 언어 세그먼트 제거 후 새 언어 코드 삽입
+   - `#lang-list`의 `data-locale-segments`에서 대상 로케일의 URL 세그먼트 조회
+   - `data-current-segment`와 현재 URL 경로를 사용해 기존 언어 세그먼트 제거
+   - 대상 언어가 기본 언어가 아니면 대상 세그먼트 삽입
 4. 새 경로 구성 후 `window.location.href`로 리다이렉트
 
 ### 언어 코드 전달 방식
 
 언어 코드는 `define:vars`나 전역 변수 대신 DOM 데이터 속성으로 전달됩니다:
 
-- `#lang-list` 요소의 `data-locale-codes` 속성에 전체 언어 코드를 콤마 구분으로 저장
-- `#lang-list` 요소의 `data-default-locale` 속성에 기본 언어 코드를 저장
-- JS에서 `dataset`을 통해 읽어 `Set`으로 변환 후 사용
+- `#lang-list` 요소의 `data-current-segment` 속성에 현재 URL 언어 세그먼트를 저장
+- `#lang-list` 요소의 `data-locale-segments` 속성에 로케일별 세그먼트 JSON을 저장
+- JS에서 `dataset`을 통해 읽어 현재 경로에서 세그먼트를 교체
 
 이 방식의 장점:
 - 전역 `window.__*` 변수 불필요

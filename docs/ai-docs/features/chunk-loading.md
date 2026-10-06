@@ -66,7 +66,7 @@ post-list의 모든 DOM 조작을 단일 controller가 소유한다:
 
 청크 fetch, prefetch, popstate를 처리한다:
 
-- `loadChunk(n)`: 청크 fetch → controller.appendChunk → history.pushState → animate
+- `loadChunk(n)`: 청크 fetch → 최신 요청인지 확인 → controller.appendChunk → history.pushState → animate. 클릭, 딥링크 복원, `popstate`는 요청 순번을 공유하며, 오래된 응답은 DOM과 히스토리를 변경하지 않는다. 새 popstate 복원은 이미 진행 중인 요청이 무효화되어 끝난 뒤 필요한 청크를 순서대로 로드한다.
 - prefetch: 스크롤 80% 도달 시 다음 청크 prefetch
 - popstate: controller.restoreChunkCount → search 재실행
 - 드래그 이벤트 blur 처리

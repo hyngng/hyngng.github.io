@@ -12,7 +12,7 @@
 - 캡션은 마크다운 `<em>` 문법으로 작성하지만, `remark-media-caption.mjs`가 remark 단계에서 미디어 + 인접 emphasis를 감지하여 `<figure class="media-figure"><figcaption>` 시맨틱으로 정규화합니다.
 - 변환은 mdast-util-to-hast의 표준 확장 메커니즘(`data.hName`)만 사용합니다 (`paragraph` → `figure`, `emphasis` → `figcaption`).
 - 캡션 CSS 선택자는 `article figure.media-figure > figcaption`입니다.
-- float 이미지(`:left`/`:right` 지시어 또는 `{ .left }` 클래스)는 figure로 변환되지 않으며, 캡션이 제거됩니다 (기존 `rehype-image-wrapper` `processFloats` 동작 유지).
+- float 이미지(`:left`/`:right` 지시어 또는 `{ .left }` 클래스)는 figure로 변환되지 않습니다. `processFloats`는 같은 문단의 뒤따르는 `<em>` 또는 부모의 다음 형제 문단에 있는 `<em>` 캡션을 제거합니다.
 - 이미지 DOM 구조나 캡션 문법을 바꾸면 `src/styles/typography.css`의 선택자와 이 DOM 계약을 함께 갱신해야 합니다.
 
 ## Image Shimmer Loading
