@@ -1,15 +1,15 @@
 import type { CollectionEntry } from 'astro:content';
-import { ALL_AUTHORS, getAuthor, type AuthorId } from '../settings/authors.settings';
+import { ALL_PERSONAS, getPersona, type PersonaId } from '../settings/personas.settings';
 import {
   SITE,
   defaultLocaleBcp47,
   supportedLocales,
 } from '../settings/site.settings';
 import { getSiteMeta } from './pageContext';
-import { getPostLang, getPostPath, getAuthorPath, extractExcerpt } from './posts';
+import { getPostLang, getPostPath, getPersonaPath, extractExcerpt } from './posts';
 
 export const LLMS_LOCALE = SITE.llms.locale;
-export const LLMS_MAX_POSTS_PER_AUTHOR = 10;
+export const LLMS_MAX_POSTS_PER_PERSONA = 10;
 export const LLMS_DESCRIPTION_MAX_LENGTH = 155;
 
 interface LlmsTxtInput {
@@ -23,13 +23,13 @@ interface LlmsPost {
   description: string;
 }
 
-interface LlmsAuthor {
+interface LlmsPersona {
   name: string;
   url: string;
   description: string;
 }
 
-interface LlmsAuthorSection {
+interface LlmsPersonaSection {
   name: string;
   posts: LlmsPost[];
 }
@@ -39,8 +39,8 @@ interface LlmsDoc {
   description: string;
   defaultLanguage: string;
   availableLocales: string[];
-  authors: LlmsAuthor[];
-  authorSections: LlmsAuthorSection[];
+  personas: LlmsPersona[];
+  personaSections: LlmsPersonaSection[];
 }
 
 // Pure data assembly. `locale` is the single source of truth for every URL so
@@ -58,30 +58,30 @@ export function buildLlmsData({ origin, posts }: LlmsTxtInput): LlmsDoc {
     (a, b) => b.data.date.getTime() - a.data.date.getTime(),
   );
 
-  const postsByAuthor = new Map<AuthorId, CollectionEntry<'posts'>[]>();
+  const postsByPersona = new Map<PersonaId, CollectionEntry<'posts'>[]>();
   for (const post of byDateDesc) {
-    const id = post.data.authors[0] as AuthorId;
-    const list = postsByAuthor.get(id);
+    const id = post.data.personas[0] as PersonaId;
+    const list = postsByPersona.get(id);
     if (list) list.push(post);
-    else postsByAuthor.set(id, [post]);
+    else postsByPersona.set(id, [post]);
   }
 
-  const authors: LlmsAuthor[] = ALL_AUTHORS.map((author) => {
-    const meta = getAuthor(author.name, locale);
+  const personas: LlmsPersona[] = ALL_PERSONAS.map((persona) => {
+    const meta = getPersona(persona.name, locale);
     return {
-      name: author.name,
-      url: `${origin}${getAuthorPath(author.name, locale)}`,
+      name: persona.name,
+      url: `${origin}${getPersonaPath(persona.name, locale)}`,
       description: meta.description,
     };
   });
 
-  const authorSections: LlmsAuthorSection[] = ALL_AUTHORS.map((author) => ({
-    name: author.name,
-    posts: (postsByAuthor.get(author.name as AuthorId) ?? [])
-      .slice(0, LLMS_MAX_POSTS_PER_AUTHOR)
+  const personaSections: LlmsPersonaSection[] = ALL_PERSONAS.map((persona) => ({
+    name: persona.name,
+    posts: (postsByPersona.get(persona.name as PersonaId) ?? [])
+      .slice(0, LLMS_MAX_POSTS_PER_PERSONA)
       .map((post) => ({
         title: post.data.title,
-        url: `${origin}${getPostPath(post.id, post.data.authors[0] as AuthorId, locale)}`,
+        url: `${origin}${getPostPath(post.id, post.data.personas[0] as PersonaId, locale)}`,
         description:
           post.data.description ||
           extractExcerpt(undefined, post.body, LLMS_DESCRIPTION_MAX_LENGTH, '...'),
@@ -93,8 +93,8 @@ export function buildLlmsData({ origin, posts }: LlmsTxtInput): LlmsDoc {
     description: siteMeta.description,
     defaultLanguage: defaultLocaleBcp47,
     availableLocales: supportedLocales,
-    authors,
-    authorSections,
+    personas,
+    personaSections,
   };
 }
 
@@ -117,14 +117,14 @@ function renderLlmsTxt(doc: LlmsDoc, origin: string): string {
   lines.push(`- [Home](${origin}/)`);
   lines.push(`- [RSS](${origin}/rss.xml)`);
   lines.push('');
-  lines.push('## Authors');
+  lines.push('## Personas');
   lines.push('');
 
-  for (const author of doc.authors) {
-    lines.push(`- [${author.name}](${author.url}): ${author.description}`);
+  for (const persona of doc.personas) {
+    lines.push(`- [${persona.name}](${persona.url}): ${persona.description}`);
   }
 
-  for (const section of doc.authorSections) {
+  for (const section of doc.personaSections) {
     lines.push('');
     lines.push(`### ${section.name}`);
     lines.push('');

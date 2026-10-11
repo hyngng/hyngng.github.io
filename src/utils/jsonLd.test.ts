@@ -5,9 +5,9 @@ import {
   buildBreadcrumbJsonLd,
   buildBlogPostingJsonLd,
 } from './jsonLd';
-import { getAuthorProfileUrls, type Author } from '../settings/authors.settings';
+import { getPersonaProfileUrls, type Persona } from '../settings/personas.settings';
 
-function mockAuthor(social: Author['social']): Pick<Author, 'social'> {
+function mockPersona(social: Persona['social']): Pick<Persona, 'social'> {
   return { social };
 }
 
@@ -71,7 +71,7 @@ describe('buildBlogPostingJsonLd', () => {
   };
 
   it('includes mainEntityOfPage pointing at the canonical url', () => {
-    const result = buildBlogPostingJsonLd({ ...base, authors: [] });
+    const result = buildBlogPostingJsonLd({ ...base, personas: [] });
 
     expect(result['@type']).toBe('BlogPosting');
     expect(result.url).toBe(base.url);
@@ -81,7 +81,7 @@ describe('buildBlogPostingJsonLd', () => {
   it('emits author url and sameAs when provided', () => {
     const result = buildBlogPostingJsonLd({
       ...base,
-      authors: [
+      personas: [
         { name: 'dev', url: 'https://hyngng.github.io/dev/', sameAs: ['https://github.com/hyngng'] },
         { name: 'no-link', url: 'https://hyngng.github.io/art/', sameAs: [] },
       ],
@@ -98,10 +98,10 @@ describe('buildBlogPostingJsonLd', () => {
   });
 });
 
-describe('getAuthorProfileUrls', () => {
+describe('getPersonaProfileUrls', () => {
   it('resolves every registered platform from the social map', () => {
-    const urls = getAuthorProfileUrls(
-      mockAuthor({
+    const urls = getPersonaProfileUrls(
+      mockPersona({
         github: 'hyngng',
         twitter: 'hyngng_dev',
         instagram: 'hyngng.art',
@@ -120,12 +120,12 @@ describe('getAuthorProfileUrls', () => {
   });
 
   it('skips unregistered keys and empty handles', () => {
-    const urls = getAuthorProfileUrls(mockAuthor({ email: 'dev@example.com', twitter: '', fediverse: 'not-a-handle' }));
+    const urls = getPersonaProfileUrls(mockPersona({ email: 'dev@example.com', twitter: '', fediverse: 'not-a-handle' }));
 
     expect(urls).toEqual([]);
   });
 
   it('returns an empty array when no social links exist', () => {
-    expect(getAuthorProfileUrls(mockAuthor({}))).toEqual([]);
+    expect(getPersonaProfileUrls(mockPersona({}))).toEqual([]);
   });
 });

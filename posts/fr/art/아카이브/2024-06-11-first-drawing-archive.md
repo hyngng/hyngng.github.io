@@ -5,7 +5,7 @@ image:
     alt: 썸네일용
 
 title: "Archive des dessins d'époque — école primaire"
-authors: [art]
+personas: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

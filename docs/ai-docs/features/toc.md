@@ -4,7 +4,7 @@
 
 Astro 정적 렌더링과 클라이언트 ScrollSpy 스크립트를 조합해 포스트 목차를 구현함.
 
-## `src/pages/[author]/[slug].astro`
+## `src/pages/[persona]/[slug].astro`
 
 - `render(post)`에서 `Content`와 `headings`를 함께 받음.
 - `headings`를 `PostLayout`에 전달함.

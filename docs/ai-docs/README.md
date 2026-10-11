@@ -22,11 +22,11 @@
 - [Frame](./components/frame-layout.md) — Frame 컴포넌트, 오목한 모서리 구현, `data-js` 이미지 게이트, `astro:before-preparation` 테마 주입
 - [Button](./components/button.md) — Button 다형성 및 스타일링(`--button-size`, `--button-padding-*`)
 - [Hero](./components/hero.md) — Hero 컴포넌트(`HomePageContent.astro` → `getSiteMeta` 데이터 흐름)
-- [Authors](./components/authors.md) — `PersonaModal` 작가 목록과 `Author.astro` 포스트 메타데이터 렌더링
+- [Personas](./components/personas.md) — `PersonaModal` 페르소나 목록과 `Persona.astro` 포스트 메타데이터 렌더링
 - [Footer](./components/footer.md) — Footer 컴포넌트
 
 ### Architecture (아키텍처)
-- [Routing](./architecture/routing.md) — URL 라우팅 아키텍처(`[lang]/[author]/[slug]`)
+- [Routing](./architecture/routing.md) — URL 라우팅 아키텍처(`[lang]/[persona]/[slug]`)
 - [Comment System](./architecture/comment-system.md) — Giscus 댓글 시스템
 
 ### Features (기능)
@@ -52,7 +52,7 @@
 
 ### Plans (보관/제안)
 - [Mobile Post List Layout Fix](./plans/mobile-post-list-layout-fix.md) — 모바일 배치 모듈 공통화 계획(상태: 구현 반영됨)
-- [Search Excerpt Replacement](./plans/search-excerpt-replacement.md) — 검색 excerpt를 Author 정보로 대체 제안(상태: **미구현**)
+- [Search Excerpt Replacement](./plans/search-excerpt-replacement.md) — 검색 excerpt를 Persona 정보로 대체 제안(상태: **미구현**)
 - [Load More Scroll Proximity Archive](./plans/load-more-scroll-proximity-archive.md) — Scroll Proximity 기반 load-more 설계(상태: **ScrollSpy 구현으로 대체되어 보관**)
 
 ## 문서 간 관계 (흐름)

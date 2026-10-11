@@ -1,6 +1,6 @@
 ---
 title: "Añadiendo soporte multilingüe a un blog de GitHub"
-authors: [blog, dev]
+personas: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 다국어, jekyll-polyglot]

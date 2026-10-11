@@ -39,7 +39,7 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
       data-chunk-base-url={chunkBaseUrl}
       data-locale={currentLocale}
       data-all-posts={JSON.stringify(posts.map(post => ({
-        path: getPostPath(post.id, post.data.authors, currentLocale),
+        path: getPostPath(post.id, post.data.personas, currentLocale),
         title: post.data.title,
         description: post.data.description || ''
       })))}

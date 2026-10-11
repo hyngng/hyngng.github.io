@@ -5,15 +5,15 @@ import ChunkPageLayout from '../../../layouts/ChunkPageLayout.astro';
 import ChunkPostListBody from '../../../components/ChunkPostListBody.astro';
 
 export async function getStaticPaths() {
-  return getChunkRoutes({ authors: true });
+  return getChunkRoutes({ personas: true });
 }
 
-const { author } = Astro.params;
+const { persona } = Astro.params;
 const { posts, currentChunk, totalChunks, chunkBaseUrl, totalPosts } = Astro.props;
 const currentLocale = Astro.currentLocale || defaultLocale;
 const locale = getLocale(currentLocale);
 const nextChunk = currentChunk < totalChunks ? currentChunk + 1 : null;
-const homePath = `/${author}/`;
+const homePath = `/${persona}/`;
 ---
 
 <ChunkPageLayout lang={currentLocale} title={`${locale.posts.title} - ${currentChunk}`}>

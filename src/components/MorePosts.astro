@@ -20,7 +20,7 @@ const { posts, lang = Astro.currentLocale } = Astro.props;
         {posts.map((post) => (
           <li class="more-posts-item">
             <a
-              href={getPostPath(post.id, post.data.authors[0], lang)}
+              href={getPostPath(post.id, post.data.personas[0], lang)}
               class="more-posts-link"
               title={post.data.title}
             >

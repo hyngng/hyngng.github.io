@@ -5,7 +5,7 @@ vi.mock('astro:content', () => ({
   getCollection: () => Promise.resolve([]),
 }));
 
-import { buildLlmsTxt, buildLlmsData, LLMS_LOCALE, LLMS_MAX_POSTS_PER_AUTHOR } from './llms';
+import { buildLlmsTxt, buildLlmsData, LLMS_LOCALE, LLMS_MAX_POSTS_PER_PERSONA } from './llms';
 
 const ORIGIN = 'https://hyngng.github.io';
 
@@ -14,7 +14,7 @@ function mockPost(
   overrides: {
     title?: string;
     date?: string;
-    authors?: string[];
+    personas?: string[];
     draft?: boolean;
     description?: string;
     body?: string;
@@ -26,7 +26,7 @@ function mockPost(
     data: {
       title: overrides.title ?? id,
       date: new Date(overrides.date ?? '2024-01-01T00:00:00Z'),
-      authors: overrides.authors ?? ['dev'],
+      personas: overrides.personas ?? ['dev'],
       draft: overrides.draft ?? false,
       description: overrides.description,
       body: overrides.body ?? '',
@@ -45,7 +45,7 @@ function build(posts: CollectionEntry<'posts'>[]) {
 }
 
 describe('buildLlmsTxt', () => {
-  it('emits title, hero description, default language and authors', () => {
+  it('emits title, hero description, default language and personas', () => {
     const text = build([mockPost(`${LLMS_LOCALE}/dev/2024-01-01-a`)]);
 
     expect(text).toContain('# HYNGNG\n');
@@ -58,14 +58,14 @@ describe('buildLlmsTxt', () => {
     expect(text).toContain('## Sections\n');
     expect(text).toContain(`- [Home](${ORIGIN}/)`);
     expect(text).toContain(`- [RSS](${ORIGIN}/rss.xml)`);
-    expect(text).toContain('## Authors\n');
+    expect(text).toContain('## Personas\n');
     expect(text).toContain(`- [dev](${ORIGIN}/en/dev/): Recording programming and development experiences.`);
   });
 
-  it('groups posts by primary author and links to the LLMS locale (en-US) post path', () => {
+  it('groups posts by primary persona and links to the LLMS locale (en-US) post path', () => {
     const text = build([
       mockPost(`${LLMS_LOCALE}/dev/2024-01-01-hello`, { title: 'Hello' }),
-      mockPost(`${LLMS_LOCALE}/essay/2024-01-02-thought`, { title: 'Thought', authors: ['essay'] }),
+      mockPost(`${LLMS_LOCALE}/essay/2024-01-02-thought`, { title: 'Thought', personas: ['essay'] }),
     ]);
 
     expect(text).toContain('### dev\n');
@@ -74,8 +74,8 @@ describe('buildLlmsTxt', () => {
     expect(text).toContain(`- [Thought](${ORIGIN}/en/essay/thought/): `);
   });
 
-  it('caps post links per author at the configured maximum', () => {
-    const posts = Array.from({ length: LLMS_MAX_POSTS_PER_AUTHOR + 5 }, (_, i) =>
+  it('caps post links per persona at the configured maximum', () => {
+    const posts = Array.from({ length: LLMS_MAX_POSTS_PER_PERSONA + 5 }, (_, i) =>
       mockPost(`${LLMS_LOCALE}/dev/2024-01-${String(i + 1).padStart(2, '0')}-post`, {
         title: `Post ${i + 1}`,
         date: `2024-01-${String(i + 1).padStart(2, '0')}T00:00:00Z`,
@@ -84,8 +84,8 @@ describe('buildLlmsTxt', () => {
 
     const section = build(posts).split('### dev\n')[1];
     const bullets = section.split('\n').filter((line) => line.startsWith('- ['));
-    expect(bullets).toHaveLength(LLMS_MAX_POSTS_PER_AUTHOR);
-    expect(bullets[0]).toContain(`Post ${LLMS_MAX_POSTS_PER_AUTHOR + 5}`);
+    expect(bullets).toHaveLength(LLMS_MAX_POSTS_PER_PERSONA);
+    expect(bullets[0]).toContain(`Post ${LLMS_MAX_POSTS_PER_PERSONA + 5}`);
   });
 
   it('falls back to body excerpt when description is missing', () => {
@@ -133,8 +133,8 @@ describe('buildLlmsTxt', () => {
 
   it('builds data layer with locale-consistent (en-US) URLs', () => {
     const doc = buildLlmsData({ origin: ORIGIN, posts: [mockPost(`${LLMS_LOCALE}/dev/2024-01-01-a`)] });
-    for (const a of doc.authors) expect(a.url).toContain('/en/');
-    const devSection = doc.authorSections.find((s) => s.name === 'dev');
+    for (const a of doc.personas) expect(a.url).toContain('/en/');
+    const devSection = doc.personaSections.find((s) => s.name === 'dev');
     expect(devSection?.posts[0].url).toBe(`${ORIGIN}/en/dev/a/`);
   });
 });

@@ -18,7 +18,7 @@ export async function getStaticPaths() {
   const currentSlugs = new Set<string>();
   for (const post of defaultPosts) {
     const slug = getPostSlug(post.id);
-    slugToTarget.set(slug, getPostPath(post.id, post.data.authors[0]));
+    slugToTarget.set(slug, getPostPath(post.id, post.data.personas[0]));
     currentSlugs.add(slug);
   }
 

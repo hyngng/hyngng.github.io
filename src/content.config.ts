@@ -1,14 +1,14 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { AUTHOR_IDS } from './settings/authors.settings';
+import { PERSONA_IDS } from './settings/personas.settings';
 import { SITE } from './settings/site.settings';
 import { parseDateWithTimezone } from './utils/timezone';
 import { normalizeLang } from './utils/lang';
 import { isLocalAbsolutePath, toAbsoluteImageUrl } from './utils/cdn';
 
-const authorSchema = z
-  .union([z.enum(AUTHOR_IDS), z.array(z.enum(AUTHOR_IDS)).min(1)])
+const personaSchema = z
+  .union([z.enum(PERSONA_IDS), z.array(z.enum(PERSONA_IDS)).min(1)])
   .transform(v => Array.isArray(v) ? v : [v])
   .default(['dev']);
 
@@ -47,7 +47,7 @@ const posts = defineCollection({
     date: z.string().transform(v => parseDateWithTimezone(String(v), SITE.timezone)),
     last_modified_at: z.string().optional()
       .transform(v => v ? parseDateWithTimezone(String(v), SITE.timezone) : undefined),
-    authors: authorSchema,
+    personas: personaSchema,
     categories: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),

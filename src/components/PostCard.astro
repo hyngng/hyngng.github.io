@@ -1,6 +1,6 @@
 ---
-import Author from "./Author.astro";
-import { getAuthor } from "../settings/authors.settings";
+import Persona from "./Persona.astro";
+import { getPersona } from "../settings/personas.settings";
 import { useLocale, defaultLocale } from "../locales";
 import { extractExcerpt } from "../utils/posts";
 import { getRelativeTime } from "../utils/relativeTime";
@@ -13,14 +13,14 @@ interface Props {
 }
 
 const { post, href, index = 0 } = Astro.props;
-const { title, date, authors: authorIds, image } = post.data;
+const { title, date, personas: personaIds, image } = post.data;
 const locale = useLocale(Astro);
 const excerpt = extractExcerpt(post.data.description, post.body);
 const relativeDate = getRelativeTime(date, locale);
 
-const primaryAuthor = getAuthor(authorIds[0], Astro.currentLocale || defaultLocale);
-const authorSuffix = authorIds.length > 1
-  ? ` ${locale.authors.otherCount(authorIds.length - 1)}`
+const primaryPersona = getPersona(personaIds[0], Astro.currentLocale || defaultLocale);
+const personaSuffix = personaIds.length > 1
+  ? ` ${locale.personas.otherPersonaSuffix(personaIds.length - 1)}`
   : undefined;
 ---
 
@@ -49,11 +49,11 @@ const authorSuffix = authorIds.length > 1
     <div class="post-card-content">
       <h3 class="post-card-title">{title}</h3>
       <div class="post-card-meta">
-        <div class="post-card-author">
-          <Author
-            avatar={primaryAuthor.avatar}
-            name={primaryAuthor.name}
-            nameSuffix={authorSuffix}
+        <div class="post-card-persona">
+          <Persona
+            avatar={primaryPersona.avatar}
+            name={primaryPersona.name}
+            nameSuffix={personaSuffix}
             info={relativeDate}
             clickable={false}
             truncate
@@ -106,7 +106,7 @@ const authorSuffix = authorIds.length > 1
     min-height: var(--avatar-size);
   }
 
-  .post-card-author {
+  .post-card-persona {
     width: fit-content;
     max-width: 100%;
   }
@@ -123,18 +123,18 @@ const authorSuffix = authorIds.length > 1
     overflow: hidden;
 
     color: var(--color-text);
-    font-size: var(--author-info-size);
+    font-size: var(--persona-info-size);
     line-height: calc(var(--avatar-size) / 2);
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .post-card-author,
+    .post-card-persona,
     .post-card-excerpt {
       transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
     }
 
-    .post-card:hover .post-card-author,
-    .post-card:focus-within .post-card-author {
+    .post-card:hover .post-card-persona,
+    .post-card:focus-within .post-card-persona {
       transform: translateY(-100%);
     }
 
@@ -193,7 +193,7 @@ const authorSuffix = authorIds.length > 1
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .post-card-author,
+    .post-card-persona,
     .post-card-excerpt {
       transition: none;
     }

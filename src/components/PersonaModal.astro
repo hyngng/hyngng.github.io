@@ -1,9 +1,9 @@
 ---
-import { AUTHOR_PREFIX } from '../settings/authors.settings';
-import { getAuthorPath } from '../utils/posts';
+import { PERSONA_PREFIX } from '../settings/personas.settings';
+import { getPersonaPath } from '../utils/posts';
 import Avatars from './Avatars.astro';
 
-interface PersonaAuthor {
+interface PersonaItem {
   id: string;
   name: string;
   avatar?: string;
@@ -13,7 +13,7 @@ interface PersonaAuthor {
 interface Props {
   modalId?: string;
   title: string;
-  authors: PersonaAuthor[];
+  personas: PersonaItem[];
   currentLocale: string;
   closeAria: string;
 }
@@ -21,7 +21,7 @@ interface Props {
 const {
   modalId = 'persona-modal',
   title,
-  authors,
+  personas,
   currentLocale,
   closeAria,
 } = Astro.props;
@@ -47,14 +47,14 @@ const titleId = `${modalId}-title`;
 
     <div class="persona-modal-body">
       <ul class="persona-modal-list">
-        {authors.map((author) => (
+        {personas.map((persona) => (
           <li class="persona-modal-item">
-            <a href={getAuthorPath(author.name, currentLocale)} class="persona-modal-link">
-              <Avatars src={author.avatar} class="persona-modal-avatar" />
+            <a href={getPersonaPath(persona.name, currentLocale)} class="persona-modal-link">
+              <Avatars src={persona.avatar} class="persona-modal-avatar" />
               <span class="persona-modal-info">
-                <span class="persona-modal-name">{AUTHOR_PREFIX}{author.name}</span>
-                {author.description && (
-                  <span class="persona-modal-desc">{author.description}</span>
+                <span class="persona-modal-name">{PERSONA_PREFIX}{persona.name}</span>
+                {persona.description && (
+                  <span class="persona-modal-desc">{persona.description}</span>
                 )}
               </span>
             </a>
@@ -244,7 +244,7 @@ const titleId = `${modalId}-title`;
   }
 
   .persona-modal-name {
-    font-size: var(--author-name-size);
+    font-size: var(--persona-name-size);
     font-weight: 700;
     color: var(--color-heading);
     white-space: nowrap;
@@ -258,7 +258,7 @@ const titleId = `${modalId}-title`;
   }
 
   .persona-modal-desc {
-    font-size: var(--author-info-size);
+    font-size: var(--persona-info-size);
     font-weight: 400;
     color: var(--color-muted);
     line-height: 1.4;

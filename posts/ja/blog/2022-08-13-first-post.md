@@ -1,6 +1,6 @@
 ---
 title: "ブログを開設しました！"
-authors: [blog]
+personas: [blog]
 
 categories: [블로그]
 tags: [블로그, Chirpy]

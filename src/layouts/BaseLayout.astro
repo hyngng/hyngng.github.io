@@ -3,14 +3,14 @@ import Footer from "../components/Footer.astro";
 import Frame from "../components/Frame.astro";
 import Head from "../components/Head.astro";
 import { SITE, getLocaleEntry } from "../settings/site.settings";
-import { normalizeTwitterHandle } from "../settings/authors.settings";
+import { normalizeTwitterHandle } from "../settings/personas.settings";
 import { buildBreadcrumbJsonLd, serializeJsonLd, type BreadcrumbItem } from "../utils/jsonLd";
 import { usePageContext } from "../utils/pageContext";
 
 import "../styles/global.css";
 interface Props {
   lang?: string;
-  authorId?: string;
+  personaId?: string;
   title?: string;
   description?: string;
   noindex?: boolean;
@@ -18,7 +18,7 @@ interface Props {
   enableMermaid?: boolean;
 }
 
-const { lang: propLang, authorId, title, description, noindex = false, breadcrumbItems = [], enableMermaid = false } = Astro.props;
+const { lang: propLang, personaId, title, description, noindex = false, breadcrumbItems = [], enableMermaid = false } = Astro.props;
 const { lang, siteMeta } = usePageContext(Astro, { lang: propLang });
 const pageTitle = title || siteMeta.title;
 const siteMetaDescription = description || siteMeta.description;
@@ -60,13 +60,7 @@ const twitterSite = SITE.social.twitter
   </Head>
   <body>
     <div class="viewport-container">
-      <Frame authorId={authorId} />
-      <div class="frame-border" aria-hidden="true">
-        <div class="frame-edge frame-edge-top"></div>
-        <div class="frame-edge frame-edge-bottom"></div>
-        <div class="frame-edge frame-edge-left"></div>
-        <div class="frame-edge frame-edge-right"></div>
-      </div>
+      <Frame personaId={personaId} />
       <div class="page-content">
         <main>
           <slot />
@@ -105,75 +99,6 @@ const twitterSite = SITE.social.twitter
     z-index: 0;
     background-color: var(--color-bg);
     pointer-events: none;
-  }
-
-  .frame-border {
-    position: fixed;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .frame-edge {
-    position: absolute;
-    background-color: var(--color-frame);
-  }
-
-  .frame-edge-top {
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--frame-thickness);
-  }
-
-  .frame-edge-bottom {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: var(--frame-thickness);
-  }
-
-  .frame-edge-left {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: var(--frame-thickness);
-  }
-
-  .frame-edge-right {
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: var(--frame-thickness);
-  }
-
-  .frame-border::before,
-  .frame-border::after {
-    content: "";
-    position: absolute;
-    width: var(--frame-radius);
-    height: var(--frame-radius);
-    pointer-events: none;
-  }
-
-  .frame-border::before {
-    bottom: var(--frame-thickness);
-    left: var(--frame-thickness);
-    background: radial-gradient(
-      circle at 100% 0%,
-      transparent var(--frame-radius),
-      var(--color-frame) var(--frame-radius)
-    );
-  }
-
-  .frame-border::after {
-    bottom: var(--frame-thickness);
-    right: var(--frame-thickness);
-    background: radial-gradient(
-      circle at 0% 0%,
-      transparent var(--frame-radius),
-      var(--color-frame) var(--frame-radius)
-    );
   }
 
   .page-content {

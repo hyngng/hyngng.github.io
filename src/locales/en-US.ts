@@ -8,10 +8,10 @@ const locale: Locale = {
     themeAria: 'Toggle theme',
     rssAria: 'RSS',
   },
-  authors: {
+  personas: {
     persona: 'Personas',
     otherPersona: 'Other Personas',
-    otherCount: (n: number) => `and ${n} more author${n !== 1 ? 's' : ''}`,
+    otherPersonaSuffix: (n: number) => `and ${n} more persona${n !== 1 ? 's' : ''}`,
     personaCount: (n: number) => `View ${n} Persona${n !== 1 ? 's' : ''}`,
     otherPersonaCount: (n: number) => `View ${n} Other Persona${n !== 1 ? 's' : ''}`,
     closeAria: 'Close',

@@ -1,6 +1,6 @@
 ---
 title: "Eliminando el contenido de etiquetas específicas en un blog de GitHub"
-authors: [blog, dev]
+personas: [blog, dev]
 
 categories: [블로그]
 tags: [블로그, 커스터마이징, Chirpy, Liquid]

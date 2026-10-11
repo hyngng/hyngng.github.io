@@ -8,10 +8,10 @@ const locale: Locale = {
     themeAria: '테마 전환',
     rssAria: 'RSS',
   },
-  authors: {
+  personas: {
     persona: '페르소나',
     otherPersona: '다른 페르소나',
-    otherCount: (n: number) => `및 ${n}명의 글쓴이`,
+    otherPersonaSuffix: (n: number) => `및 다른 페르소나 ${n}개`,
     personaCount: (n: number) => `${n}개 페르소나 보기`,
     otherPersonaCount: (n: number) => `${n}개 다른 페르소나 보기`,
     closeAria: '닫기',

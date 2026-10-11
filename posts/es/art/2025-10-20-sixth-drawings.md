@@ -5,7 +5,7 @@ image:
     alt: Para miniatura
 
 title: "Dibujo digital #6: Lo que dibujé en una semana"
-authors: [art]
+personas: [art]
 
 categories: [그림]
 tags: [그림]

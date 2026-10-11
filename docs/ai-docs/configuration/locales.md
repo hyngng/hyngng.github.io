@@ -67,7 +67,7 @@ locale.relativeTime.today // "오늘 작성"
 주요 export:
 
 - `defaultLocale` = `'ko-KR'` — BCP-47 기본 언어. 포스트 로직/UI 폴백의 단일 진실 출처. `locales/index.ts`가 재수출.
-- `defaultLocaleBcp47` = `deriveLocaleMeta(defaultLocale).bcp47` (`'ko-KR'`) — PWA 매니페스트 `lang`, 작가 로케일 폴백에 사용.
+- `defaultLocaleBcp47` = `deriveLocaleMeta(defaultLocale).bcp47` (`'ko-KR'`) — PWA 매니페스트 `lang`, 페르소나 로케일 폴백에 사용.
 - `supportedLocales` — BCP-47로 정규화된 `defaultLocale` ∪ 포스트에서 파생된 모든 `lang`. `astro.config.mjs`의 `i18n.locales`가 참조.
 - `getLocaleEntry(lang)` — code 또는 bcp47로 구조 필드(`bcp47`/`ogLocale`/…) 조회, 미등록 언어는 `deriveLocaleMeta()` 제네릭 폴백. `hreflang`/`og:locale`에 사용.
 

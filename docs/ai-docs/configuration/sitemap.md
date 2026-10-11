@@ -26,11 +26,11 @@ const origin = new URL(request.url).origin;
 |------|------|------------|
 | 루트 인덱스 | `https://hyngng.github.io/` | 없음 |
 | 언어별 인덱스 | `https://hyngng.github.io/en/` | 없음 |
-| 작가별 인덱스 | `https://hyngng.github.io/blog/` | 없음 |
+| 페르소나별 인덱스 | `https://hyngng.github.io/blog/` | 없음 |
 | 포스트 | `https://hyngng.github.io/blog/first-post/` | `last_modified_at` 또는 `date` |
 
 - 언어별 인덱스: 기본 로케일(ko)은 루트(`/`)와 겹므로 별도 항목 없음. 비기본 언어(`/en/` 등)만 포함.
-- 작가별 인덱스: 해당 작가의 포스트가 존재할 때만 포함. 빈 작가 페이지는 제외.
+- 페르소나별 인덱스: 해당 페르소나의 포스트가 존재할 때만 포함. 빈 페르소나 페이지는 제외.
 - 포스트: `draft: true`인 글은 제외.
 
 ## 네임스페이스
@@ -56,13 +56,13 @@ const origin = new URL(request.url).origin;
 
 **각 `<url>`의 반복 나열은 스펙상 필수**: 7개 언어 번역 그룹 포스트의 sitemap은 번역본마다 `<url>`을 별도로 만들고, 각 `<url>`에 자기 자신을 포함한 전체 alternate(7개 hreflang + `x-default`)를 동일하게 반복한다. `<loc>`과 자기 자신을 가리키는 href만 다르고 나머지는 완전히 중복이라 "길어 보이지만", Google Sitemap 규칙("Create a separate `<url>` element for each URL", "Each `<url>` element must ... lists every alternate version of the page, including itself")과 상호 참조 지침("If two pages don't both point to each other, the tags will be ignored") 때문에 이 구조를 유지해야 한다. 한 곳에만 전체 목록을 두고 나머지에서 생략하면 양방향이 깨져 hreflang이 무시됨.
 
-**포스트**: `getPostSlug()`(파일명에서 날짜/확장자 제거)로 번역 그룹을 묶되, 콘텐츠 스키마상 slug 유일성이 전역으로 보장되지 않으므로 번역 그룹 키를 `${post.data.authors[0]}/${slug}`으로 잡아 같은 저자의 번역본끼리만 묶는다 (서로 다른 저자가 같은 slug를 쓰면 분리됨). 그룹 내 번역본이 2개 이상일 때만 alternate 출력. 기본 로케일(ko) 버전이 존재하면 `hreflang="x-default"`도 함께 출력.
+**포스트**: `getPostSlug()`(파일명에서 날짜/확장자 제거)로 번역 그룹을 묶되, 콘텐츠 스키마상 slug 유일성이 전역으로 보장되지 않으므로 번역 그룹 키를 `${post.data.personas[0]}/${slug}`으로 잡아 같은 저자의 번역본끼리만 묶는다 (서로 다른 저자가 같은 slug를 쓰면 분리됨). 그룹 내 번역본이 2개 이상일 때만 alternate 출력. 기본 로케일(ko) 버전이 존재하면 `hreflang="x-default"`도 함께 출력.
 
 **포스트 페이지 `<head>`의 hreflang**: sitemap과 동일한 정책을 `PostLayout.astro`에서도 `<link rel="alternate" hreflang="...">`로 출력함 (번역본 전체 + 기본 로케일 존재 시 `x-default`, 자기 자신 포함). 포스트 `canonical`은 각 언어 버전이 자기 자신을 가리킴 (단일 정본을 두지 않는 번역 블로그 표준). 이중 `ko` 번역본이 없거나 번역본이 1개뿐인 포스트는 canonical만 있고 hreflang/x-default는 생략됨.
 
 **언어별 홈페이지**: 루트(`/`)와 각 언어 홈페이지(`/en/`, `/ru/`, ...)가 서로를 alternate로 참조하고, 루트(`/`)를 `x-default`로 지정. 홈페이지 `<head>`는 자기 자신 canonical만 출력 (hreflang은 sitemap에서만 관리).
 
-작가별 인덱스 페이지에는 hreflang을 적용하지 않음.
+페르소나별 인덱스 페이지에는 hreflang을 적용하지 않음.
 
 ## 이미지 (`image:image`)
 
@@ -78,7 +78,7 @@ const origin = new URL(request.url).origin;
 
 ## `<lastmod>` 규칙
 
-포스트에만 `<lastmod>`를 포함함. 단순 페이지(루트, 언어별, 작가별 index)에는 포함하지 않음.
+포스트에만 `<lastmod>`를 포함함. 단순 페이지(루트, 언어별, 페르소나별 index)에는 포함하지 않음.
 
 프론트매터의 `last_modified_at`이 있으면 사용, 없으면 `date`(게시 날짜) 사용. `YYYY-MM-DD` 형식.
 
@@ -86,10 +86,10 @@ const origin = new URL(request.url).origin;
 
 ```ts
 // 한국어(기본 로케일): 프리픽스 없음
-`/${author}/${slug}/`
+`/${persona}/${slug}/`
 
 // 비기본 언어: 언어 코드 프리픽스 포함
-`/${lang}/${author}/${slug}/`
+`/${lang}/${persona}/${slug}/`
 ```
 
 `getPostLang()`과 `getPostSlug()`은 `src/utils/posts.ts`에서 제공함.
@@ -123,9 +123,9 @@ RSS는 기본 언어(ko)는 접두사 없는 루트 경로, 비기본 언어는 
 |--------|------|------|
 | 루트 | `/rss.xml` | 기본 언어(ko) 포스트 |
 | 언어별 | `/[lang]/rss.xml` | 해당 언어 포스트 |
-| 작가별(기본 언어) | `/[author]/rss.xml` | 해당 작가 + 기본 언어 포스트 |
-| 작가별(비기본 언어) | `/[lang]/[author]/rss.xml` | 해당 작가 + 해당 언어 포스트 |
+| 페르소나별(기본 언어) | `/[persona]/rss.xml` | 해당 페르소나 + 기본 언어 포스트 |
+| 페르소나별(비기본 언어) | `/[lang]/[persona]/rss.xml` | 해당 페르소나 + 해당 언어 포스트 |
 
-`site` 필드는 `request.url` origin에서 동적 추출 (sitemap과 동일 원칙). Frame.astro의 RSS 버튼은 작가 페이지에서 작가별 RSS로, 그 외에서는 언어별 RSS로 링크됨. 기본 언어 작가 페이지는 `/[author]/rss.xml`(접두사 없음), 비기본 언어 작가 페이지는 `/[lang]/[author]/rss.xml`.
+`site` 필드는 `request.url` origin에서 동적 추출 (sitemap과 동일 원칙). Frame.astro의 RSS 버튼은 페르소나 페이지에서 페르소나별 RSS로, 그 외에서는 언어별 RSS로 링크됨. 기본 언어 페르소나 페이지는 `/[persona]/rss.xml`(접두사 없음), 비기본 언어 페르소나 페이지는 `/[lang]/[persona]/rss.xml`.
 
-아이템은 작가와 무관하게 날짜 내림차순(최신순)으로 정렬됨 — `getRssItems()`(`src/utils/posts.ts`)이 `queryPosts({ sort: 'desc' })`를 사용.
+아이템은 페르소나와 무관하게 날짜 내림차순(최신순)으로 정렬됨 — `getRssItems()`(`src/utils/posts.ts`)이 `queryPosts({ sort: 'desc' })`를 사용.

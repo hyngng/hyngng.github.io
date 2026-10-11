@@ -38,12 +38,12 @@
   --font-weight-post-title: 800;
   --line-height-post-title: 48px;
   --line-height-post-title-mobile: 36px;
-  --author-name-size: 14px;
-  --author-info-size: 12px;
+  --persona-name-size: 14px;
+  --persona-info-size: 12px;
   --space-hero-title-description: 6px;
   --space-section-title-content: 24px;
-  --space-author-avatar-text: 6px;
-  --space-author-name-info: 4px;
+  --space-persona-avatar-text: 6px;
+  --space-persona-name-info: 4px;
   --space-post-title-meta: 24px;
   --space-post-meta-list: 32px;
   --space-post-meta-content: 64px;
@@ -108,8 +108,8 @@
   --space-toc-depth-3: 0.8rem;
   --space-toc-depth-4: 1.6rem;
   --toc-link-font-size: 0.9rem;
-  --space-author-name-line-height: 20px;
-  --space-author-info-line-height: 16px;
+  --space-persona-name-line-height: 20px;
+  --space-persona-info-line-height: 16px;
   --space-hero-caption-gap: 0.4rem;
   --button-padding-x: 2rem;
 

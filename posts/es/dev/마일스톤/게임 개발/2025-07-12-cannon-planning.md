@@ -6,7 +6,7 @@ image:
     alt: "¡Cuánto tiempo!"
 
 title: "Planificación conceptual de un tower defense para móvil centrada en la experiencia de preparación"
-authors: [dev]
+personas: [dev]
 
 categories: [마일스톤, 게임 개발]
 tags: [마일스톤, 게임 개발, 유니티, C#, 기획, 개발일지]

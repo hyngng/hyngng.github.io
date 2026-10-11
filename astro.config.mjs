@@ -2,7 +2,7 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import { remarkCdnImages } from './src/plugins/remark-cdn-images.ts';
-import remarkDirective from 'remark-directive';
+import { markdownRemarkPlugins } from './src/utils/markdown-syntax.ts';
 import { remarkDirectives } from './src/plugins/remark-directives.mjs';
 import { remarkYoutube } from './src/plugins/remark-youtube.mjs';
 import { remarkVideo, remarkAudio } from './src/plugins/remark-media.mjs';
@@ -17,7 +17,6 @@ import { segmentMap } from './src/utils/locale-segments';
 import { validateRoutes } from './src/integrations/validate-routes';
 import astroPwa from './src/integrations/astro-pwa';
 
-import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkDeflist from 'remark-deflist';
 import { remarkImageAttributes } from './src/plugins/remark-image-attributes.mjs';
@@ -142,14 +141,14 @@ export default defineConfig({
       },
       remarkPlugins: [
         remarkImageAttributes,
-        remarkDirective,
+        markdownRemarkPlugins.directive,
         remarkDirectives,
         remarkYoutube,
         remarkVideo,
         remarkAudio,
         remarkMediaCaption,
         remarkCdnImages,
-        remarkMath,
+        markdownRemarkPlugins.math,
         conditionalMath,
         /** @type {any} */ (remarkDeflist)
       ],

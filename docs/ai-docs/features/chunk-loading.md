@@ -45,7 +45,7 @@ postsPerPage: 8,  // 한 번에 표시할 포스트 수
 | `loader.ts` | 청크 fetch, prefetch, History, popstate 처리 (`createChunkLoader`) |
 | `animate.ts` | 카드 등장 애니메이션 (`animateNewCards`) |
 | `image-init.ts` | 포스트 카드 이미지 초기화 (`initPostCardImages`) — `loaded` 클래스 추가로 shimmer fade-out |
-| `author-link.ts` | 모바일 카드 작가 링크 위임 (`initMobileAuthorLink`) — 문서 레벨 click 인터셉트 |
+| `persona-link.ts` | 모바일 카드 페르소나 링크 위임 (`initMobilePersonaLink`) — 문서 레벨 click 인터셉트 |
 | `registry.ts` | controller 전역 레지스트리 (`setController`, `requireController`) |
 | `index.ts` | 공개 API re-export |
 
@@ -122,10 +122,10 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 |---|---|---|
 | `src/pages/posts/chunk/[n].astro` | `/posts/chunk/{n}` | 기본 언어 홈 |
 | `src/pages/[lang]/posts/chunk/[n].astro` | `/{lang}/posts/chunk/{n}` | 다국어 홈 |
-| `src/pages/[author]/chunk/[n].astro` | `/{author}/chunk/{n}` | 기본 언어 작가 |
-| `src/pages/[lang]/[author]/chunk/[n].astro` | `/{lang}/{author}/chunk/{n}` | 다국어 작가 |
+| `src/pages/[persona]/chunk/[n].astro` | `/{persona}/chunk/{n}` | 기본 언어 페르소나 |
+| `src/pages/[lang]/[persona]/chunk/[n].astro` | `/{lang}/{persona}/chunk/{n}` | 다국어 페르소나 |
 
-각 청크 페이지는 독립 HTML로, SSR 2열 masonry로 렌더링된다. 검색·청크 로더 기능은 없다(홈/작가 페이지에서만 동작). 단, 모바일 작가 링크(`initMobileAuthorLink`)는 청크 페이지의 `ChunkPostListBody` 스크립트에서도 등록되어 홈/작가 페이지와 동일하게 작동한다.
+각 청크 페이지는 독립 HTML로, SSR 2열 masonry로 렌더링된다. 검색·청크 로더 기능은 없다(홈/페르소나 페이지에서만 동작). 단, 모바일 페르소나 링크(`initMobilePersonaLink`)는 청크 페이지의 `ChunkPostListBody` 스크립트에서도 등록되어 홈/페르소나 페이지와 동일하게 작동한다.
 
 ## CSS 변수
 
@@ -145,7 +145,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 - **렌더러 소비 (`ChunkPostListBody.astro`)**:
   - `posts[chunkSize]`: 다음 청크의 첫 포스트(프리뷰 카드 시드)로 사용.
   - `posts.slice(0, chunkSize)`: 현재 청크 화면에 렌더링할 포스트 목록.
-- **홈/작가 페이지 (`PostListSection.astro`)와의 차이**:
+- **홈/페르소나 페이지 (`PostListSection.astro`)와의 차이**:
   `PostListSection`은 전체 포스트 배열을 수신하여 `firstChunk = posts.slice(0, chunkSize)`, `nextPreviewPost = posts[chunkSize]`로 직접 참조하지만, 정적 청크 라우트는 최소 데이터만 빌드 산출물로 넘기기 위해 `chunkSize + PREVIEW_SEED_EXTRA` 슬라이스 계약을 준수한다.
 
 ## 로드 흐름 (`loadChunk`)
@@ -205,7 +205,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 | `loadMoreSub(total, remaining)` | 부 정보 (전체 대비 남은 수) | `전체 24편 중 16편 남음` |
 | `loadMoreHover(title, n)` | `aria-label`용 (접근성) | `{title} 외 8건` |
 
-`<Author>` 컴포넌트가 슬라이드업되어 다음 미리보기 글의 작가 정보를 표시하는 상태 전환은 **진입점 3개가 하나의 정의를 공유**한다: 마우스 `:hover`, 키보드 `:focus-within`, 그리고 모바일의 `.is-active`. 포인터 게이트(`(hover:hover)` 래퍼)는 없다 — 터치 스티키 호버는 탭이 곧 내비게이션이라 실효 리스크가 없고, 데스크톱 narrow 창에서도 호버가 정상 동작한다.
+`<Persona>` 컴포넌트가 슬라이드업되어 다음 미리보기 글의 페르소나 정보를 표시하는 상태 전환은 **진입점 3개가 하나의 정의를 공유**한다: 마우스 `:hover`, 키보드 `:focus-within`, 그리고 모바일의 `.is-active`. 포인터 게이트(`(hover:hover)` 래퍼)는 없다 — 터치 스티키 호버는 탭이 곧 내비게이션이라 실효 리스크가 없고, 데스크톱 narrow 창에서도 호버가 정상 동작한다.
 
 모바일 레이아웃(`MOBILE_QUERY`, ≤960px)에서는 호버 대신 **문서 최하단 도달**이 트리거다 (`src/features/post-list/load-more-preview.ts`):
 
@@ -214,7 +214,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 - 갱신 시점: scroll/resize(rAF 스로틀, 읽기→쓰기 순서) + `ResizeObserver(document.body)` + `MOBILE_QUERY` change(레이아웃 이탈 시 클래스 해제).
 - `prefers-reduced-motion: reduce`에서는 transition 차단으로 즉시 스왑된다(PC 호버와 동일 처리, JS 게이트 없음).
 - 탭은 기존과 동일하게 즉시 `loadChunk()` 실행 — 연출이 탭 실행을 지연하지 않는다.
-- 접근성: Author 정보는 DOM에 상시 존재하며, `<a>`의 `aria-label`(`loadMoreHover`)이 AT 접근 이름을 제공하므로 시각 상태와 무관하게 항상 접근 가능하다.
+- 접근성: Persona 정보는 DOM에 상시 존재하며, `<a>`의 `aria-label`(`loadMoreHover`)이 AT 접근 이름을 제공하므로 시각 상태와 무관하게 항상 접근 가능하다.
 
 스타일 배치 제약: `LoadMoreCard` 스타일은 **기본 → 상태 진입점 선택자 → reduced-motion** 순으로 배치한다. 과거 동일 특이도 정적 `filter`가 오버라이드 규칙보다 뒤에 선언되어 무효화됐던 사건이 있었다. 구 스크롤 근접 연출(`--lm-progress`, 125↔25px 비례)의 요구사항·운영 사건·코드는 `plans/load-more-scroll-proximity-archive.md`에 보존되어 있다.
 

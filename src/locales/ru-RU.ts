@@ -8,10 +8,10 @@ const locale: Locale = {
     themeAria: 'Смена темы',
     rssAria: 'RSS',
   },
-  authors: {
+  personas: {
     persona: 'Персоны',
     otherPersona: 'Другие персоны',
-    otherCount: (n: number) => `и ещё ${n} автор${n !== 1 ? (n < 5 ? 'а' : 'ов') : ''}`,
+    otherPersonaSuffix: (n: number) => `и ещё ${n} ${n === 1 ? 'персона' : n < 5 ? 'персоны' : 'персон'}`,
     personaCount: (n: number) => `Смотреть ${n} персон${n === 1 ? 'у' : n >= 2 && n <= 4 ? 'ы' : ''}`,
     otherPersonaCount: (n: number) => `Смотреть ${n} друг${n === 1 ? 'ую персону' : n >= 2 && n <= 4 ? 'ие персоны' : 'их персон'}`,
     closeAria: 'Закрыть',

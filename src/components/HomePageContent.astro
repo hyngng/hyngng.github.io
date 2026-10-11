@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../locales';
-import { ALL_AUTHORS, getAuthor } from '../settings/authors.settings';
+import { ALL_PERSONAS, getPersona } from '../settings/personas.settings';
 import { getSiteMeta } from '../utils/pageContext';
 import { localePath } from '../utils/posts';
 import Hero from './Hero.astro';
@@ -18,13 +18,13 @@ interface Props {
 const { locale, currentLocale, posts } = Astro.props;
 const siteMeta = getSiteMeta(currentLocale);
 
-const personaAuthors = ALL_AUTHORS.map((author) => {
-  const authorData = getAuthor(author.name, currentLocale);
+const personas = ALL_PERSONAS.map((persona) => {
+  const personaData = getPersona(persona.name, currentLocale);
   return {
-    id: author.name,
-    name: author.name,
-    avatar: authorData.avatar,
-    description: authorData.description,
+    id: persona.name,
+    name: persona.name,
+    avatar: personaData.avatar,
+    description: personaData.description,
   };
 });
 
@@ -34,17 +34,17 @@ const chunkBaseUrl = `${localePath(currentLocale)}/posts/chunk`;
 <Hero
   title={siteMeta.title}
   description={siteMeta.description}
-  personaCountText={locale.authors.personaCount(ALL_AUTHORS.length)}
-  personaAvatars={personaAuthors.map((a) => a.avatar)}
+  personaCountText={locale.personas.personaCount(ALL_PERSONAS.length)}
+  personaAvatars={personas.map((a) => a.avatar)}
   personaTargetModalId="persona-modal"
 />
 
 <PersonaModal
   modalId="persona-modal"
-  title={locale.authors.persona}
-  authors={personaAuthors}
+  title={locale.personas.persona}
+  personas={personas}
   currentLocale={currentLocale}
-  closeAria={locale.authors.closeAria}
+  closeAria={locale.personas.closeAria}
 />
 
 <div class="content-body-layout">

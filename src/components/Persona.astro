@@ -1,6 +1,6 @@
 ---
-import { getAuthorPath } from '../utils/posts';
-import { AUTHOR_PREFIX } from '../settings/authors.settings';
+import { getPersonaPath } from '../utils/posts';
+import { PERSONA_PREFIX } from '../settings/personas.settings';
 import { defaultLocale } from '../locales';
 import Avatars from './Avatars.astro';
 
@@ -16,50 +16,50 @@ interface Props {
 
 const { avatar, name, nameSuffix, info, id, clickable = true, truncate = false } = Astro.props;
 const currentLocale = Astro.currentLocale || defaultLocale;
-const authorHref = id ? getAuthorPath(id, currentLocale) : undefined;
+const personaHref = id ? getPersonaPath(id, currentLocale) : undefined;
 ---
 
-<article class={`author ${clickable && authorHref ? 'is-clickable' : ''}`}>
-  {clickable && authorHref && <a href={authorHref} class="author-link"></a>}
-  <Avatars src={avatar} class="author-avatar" />
-  <div class="author-text">
-    <span class:list={[truncate && 'author-name-truncate']}>{AUTHOR_PREFIX}{name}{nameSuffix && <span class="author-name-suffix">{nameSuffix}</span>}</span>
+<article class={`persona ${clickable && personaHref ? 'is-clickable' : ''}`}>
+  {clickable && personaHref && <a href={personaHref} class="persona-link"></a>}
+  <Avatars src={avatar} class="persona-avatar" />
+  <div class="persona-text">
+    <span class:list={[truncate && 'persona-name-truncate']}>{PERSONA_PREFIX}{name}{nameSuffix && <span class="persona-name-suffix">{nameSuffix}</span>}</span>
     {info && <p>{info}</p>}
   </div>
 </article>
 
 <style>
-  .author {
+  .persona {
     display: flex;
     align-items: center;
-    gap: var(--space-author-avatar-text);
+    gap: var(--space-persona-avatar-text);
     min-width: 0;
     position: relative;
   }
 
-  .author.is-clickable {
+  .persona.is-clickable {
     cursor: pointer;
   }
 
-  .author.is-clickable:hover .author-text span {
+  .persona.is-clickable:hover .persona-text span {
     color: var(--color-accent);
     text-decoration: underline;
   }
 
-  .author-link {
+  .persona-link {
     position: absolute;
     inset: 0;
     z-index: 1;
   }
 
-  .author-avatar img {
+  .persona-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  .author-text {
+  .persona-text {
     min-width: 0;
   }
 
@@ -67,30 +67,30 @@ const authorHref = id ? getAuthorPath(id, currentLocale) : undefined;
     display: block;
     margin: 0;
     color: var(--color-text);
-    font-size: var(--author-name-size);
-    line-height: var(--space-author-name-line-height);
+    font-size: var(--persona-name-size);
+    line-height: var(--space-persona-name-line-height);
     letter-spacing: 0;
     text-decoration: none;
   }
 
-  .author-name-truncate {
+  .persona-name-truncate {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .author-name-suffix {
+  .persona-name-suffix {
     display: inline;
     color: var(--color-muted);
-    font-size: var(--author-info-size);
-    line-height: var(--space-author-info-line-height);
+    font-size: var(--persona-info-size);
+    line-height: var(--space-persona-info-line-height);
   }
 
   p {
-    margin: var(--space-author-name-info) 0 0;
+    margin: var(--space-persona-name-info) 0 0;
     color: var(--color-heading);
-    font-size: var(--author-info-size);
-    line-height: var(--space-author-info-line-height);
+    font-size: var(--persona-info-size);
+    line-height: var(--space-persona-info-line-height);
     font-weight: 400;
     letter-spacing: 0;
   }

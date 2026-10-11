@@ -5,7 +5,7 @@ image:
     alt: Для миниатюры
 
 title: "Цифровой рисунок #6: Что нарисовал за неделю"
-authors: [art]
+personas: [art]
 
 categories: [그림]
 tags: [그림]

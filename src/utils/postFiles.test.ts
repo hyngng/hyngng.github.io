@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import path from 'node:path';
 import { listPostFiles } from './postFiles';
-import { getFrontmatterLang, getFrontmatterAuthor } from './frontmatter-lang';
+import { getFrontmatterLang, getFrontmatterPersona } from './frontmatter-lang';
 
 describe('listPostFiles', () => {
   it('returns valid post metadata for existing posts directory', () => {
@@ -26,7 +26,7 @@ describe('listPostFiles', () => {
   });
 });
 
-describe('frontmatter-lang & author extraction', () => {
+describe('frontmatter-lang & persona extraction', () => {
   it('extracts lang from frontmatter', () => {
     const raw = `---
 title: Test
@@ -36,29 +36,29 @@ Content`;
     expect(getFrontmatterLang(raw)).toBe('ko-KR');
   });
 
-  it('extracts primary author from authors array', () => {
+  it('extracts primary persona from personas array', () => {
     const raw = `---
 title: Test
-authors: [blog, dev]
+personas: [blog, dev]
 ---
 Content`;
-    expect(getFrontmatterAuthor(raw)).toBe('blog');
+    expect(getFrontmatterPersona(raw)).toBe('blog');
   });
 
-  it('extracts primary author from single authors string', () => {
+  it('extracts primary persona from single personas string', () => {
     const raw = `---
 title: Test
-authors: essay
+personas: essay
 ---
 Content`;
-    expect(getFrontmatterAuthor(raw)).toBe('essay');
+    expect(getFrontmatterPersona(raw)).toBe('essay');
   });
 
-  it('falls back to dev when author is omitted', () => {
+  it('falls back to dev when persona is omitted', () => {
     const raw = `---
 title: Test
 ---
 Content`;
-    expect(getFrontmatterAuthor(raw)).toBe('dev');
+    expect(getFrontmatterPersona(raw)).toBe('dev');
   });
 });

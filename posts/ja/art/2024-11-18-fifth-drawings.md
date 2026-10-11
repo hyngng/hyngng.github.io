@@ -5,7 +5,7 @@ image:
     alt: サムネイル用
 
 title: "デジタルドローイング #5: カジュアルファンタジーなど"
-authors: [art]
+personas: [art]
 
 categories: [그림]
 tags: [그림, 신문, 총, 일상, 영수증]

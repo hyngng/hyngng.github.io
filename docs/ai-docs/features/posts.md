@@ -7,7 +7,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 이 프로젝트는 아래 두 축으로 포스트 페이지를 생성함.
 
 - `src/content.config.ts`: `posts` content collection 등록. 현재 loader pattern은 `**/*.{md,mdx}`임.
-- `src/pages/[author]/[slug].astro` 및 `src/pages/[lang]/[author]/[slug].astro`: collection entry를 정적 경로로 변환.
+- `src/pages/[persona]/[slug].astro` 및 `src/pages/[lang]/[persona]/[slug].astro`: collection entry를 정적 경로로 변환.
 
 공식 문서 기준으로 content collections는 `defineCollection()`과 loader로 콘텐츠를 등록하고, 페이지는 `getStaticPaths()`에서 collection entry를 읽어 직접 생성함.
 
@@ -17,7 +17,7 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 
 ### 기본 언어 (ko)
 
-`posts/ko/blog/2022-08-13-first-post.mdx`는 아래 URL로 생성됨. 작가 값 `blog`는 디렉토리, 프론트매터, URL 및 화면 표시에 동일하게 사용함.
+`posts/ko/blog/2022-08-13-first-post.mdx`는 아래 URL로 생성됨. 페르소나 값 `blog`는 디렉토리, 프론트매터, URL 및 화면 표시에 동일하게 사용함.
 
 ```text
 /blog/first-post/
@@ -36,16 +36,16 @@ Astro는 Jekyll처럼 `content/`에 Markdown 파일을 넣는 것만으로 페�
 
 파일명 앞의 `yyyy-mm-dd-` 접두사는 `src/utils/posts.ts`의 `getPostSlug()`가 제거함.
 
-포스트 URL은 짧은 작가 ID(예: `/art/`)를 사용하고, 화면 표시도 `@art`로 통일한다. 이로써 사이트 도메인 `hyngng.github.io`와 작가 경로의 `hyngng` 반복을 피한다. 포스트 디렉토리 이름도 author 값과 동일하게 짧게 유지한다.
+포스트 URL은 짧은 페르소나 ID(예: `/art/`)를 사용하고, 화면 표시도 `@art`로 통일한다. 이로써 사이트 도메인 `hyngng.github.io`와 페르소나 경로의 `hyngng` 반복을 피한다. 포스트 디렉토리 이름도 persona 값과 동일하게 짧게 유지한다.
 
-URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능은 이 helper를 재사용해야 함. 라우트(`[author]/[slug].astro`)의 `params.author`도 `getAuthorPath()`를 통해 동일하게 조합한다.
+URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능은 이 helper를 재사용해야 함. 라우트(`[persona]/[slug].astro`)의 `params.persona`도 `getPersonaPath()`를 통해 동일하게 조합한다.
 
 ## 구 URL 리다이렉트 (`/posts/{slug}/`)
 
 이전 Jekyll 블로그의 URL 패턴 `/posts/{slug}/`를 보존하기 위해, 기본 언어(ko) 포스트에 한해 정적 리다이렉트 페이지를 생성한다.
 
 - 파일: `src/pages/posts/[slug].astro`
-- 동작: `/posts/{slug}/` → `/{authorId}/{slug}/`. `<head>` 최상단의 인라인 `<script is:inline>`(`location = absoluteTarget`)이 body 파싱 전 즉시 이동을 시작해 화면 깜빡임이 없다(`jekyll-redirect-from` 방식과 Unified/Astro 이전 완료). 0초 meta refresh는 JS 비활성화 폴백으로 병행.
+- 동작: `/posts/{slug}/` → `/{personaId}/{slug}/`. `<head>` 최상단의 인라인 `<script is:inline>`(`location = absoluteTarget`)이 body 파싱 전 즉시 이동을 시작해 화면 깜빡임이 없다(`jekyll-redirect-from` 방식과 Unified/Astro 이전 완료). 0초 meta refresh는 JS 비활성화 폴백으로 병행.
 - 타깃은 `Astro.site`를 기준으로 절대 URL로 변환(`new URL(target, Astro.site).toString()`).
 - SEO: 구글 검색 센터 기준 0초 meta refresh는 영구 리다이렉트로 처리되어 인덱스를 신 URL로 이전한다. `<link rel="canonical">`로 신 URL을 명시하고, 리다이렉트 페이지 자체는 `<meta name="robots" content="noindex">`로 인덱스에서 제외한다.
 - 대상: `draft`가 아닌 기본 언어(ko) 포스트만. 비기본 언어 포스트는 Jekyll 시절 `/posts/` 하위에 존재하지 않았으므로 제외.
@@ -55,8 +55,8 @@ URL 전체 경로는 `getPostPath()`가 생성함. sitemap과 RSS 같은 기능�
 ### 본문 내 마크다운 하이퍼링크 규격
 
 Jekyll 시절의 구 URL 형식(`https://hyngng.github.io/posts/{slug}/`)으로 작성된 본문 하이퍼링크는 현재 프로젝트의 다국어 라우팅 규칙에 맞춰 일괄 재정의됨:
-- **기본 언어 (ko)**: `https://hyngng.github.io/{author}/{slug}/`
-- **비기본 언어 (en, ru, fr, es, ja, zh)**: `https://hyngng.github.io/{lang}/{author}/{slug}/`
+- **기본 언어 (ko)**: `https://hyngng.github.io/{persona}/{slug}/`
+- **비기본 언어 (en, ru, fr, es, ja, zh)**: `https://hyngng.github.io/{lang}/{persona}/{slug}/`
 - 대상 포스트가 해당 언어 버전으로 존재하는 경우에만 언어 경로를 반영하며, 존재하지 않거나 무효한 슬러그인 경우 원본 링크를 유지하여 리다이렉트에 위임함. 앵커(#)가 포함된 링크도 그대로 보존됨.
 
 ## 언어 코드 추출
@@ -70,11 +70,11 @@ Jekyll 시절의 구 URL 형식(`https://hyngng.github.io/posts/{slug}/`)으로 
 getPostLang(post) // post.data.lang 반환 (예: 'ko-KR', 'en-US')
 ```
 
-> 포스트는 프로젝트 루트 `posts/` 아래 `posts/{lang}/{author}/` 구조로 둔다(`content.config.ts`의 `base: './posts'`). 폴더명과 프론트매터 `authors`의 값, URL은 동일한 author 값으로 생성한다.
+> 포스트는 프로젝트 루트 `posts/` 아래 `posts/{lang}/{persona}/` 구조로 둔다(`content.config.ts`의 `base: './posts'`). 폴더명과 프론트매터 `personas`의 값, URL은 동일한 persona 값으로 생성한다.
 
 ## URL 생성
 
-`src/utils/posts.ts`의 `getPostPath(id, authorId, currentLocale?)` 함수가 포스트 URL을 생성함. 작가 세그먼트에는 `getAuthorPath(authorIds[0], currentLocale)`가 적용되어 짧은 작가 ID가 사용된다.
+`src/utils/posts.ts`의 `getPostPath(id, personaId, currentLocale?)` 함수가 포스트 URL을 생성함. 페르소나 세그먼트에는 `getPersonaPath(personaIds[0], currentLocale)`가 적용되어 짧은 페르소나 ID가 사용된다.
 
 `currentLocale`(= 포스트의 `lang`)을 전달하지 않으면 기본 로케일(`ko`)로 동작하여 `/ko/` 프리픽스 없이 URL을 생성함. 언어는 `id`가 아닌 `currentLocale`에서 온다.
 
@@ -98,7 +98,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en-US')             //
 - `description`: 선택.
 - `date`: 필수, `z.string().transform(parseDateWithTimezone)`으로 문자열 날짜를 타임존 보정하여 Date로 변환. 타임오프셋이 없는 날짜는 `SITE.timezone`(`Asia/Seoul`) 기준으로 보정됨.
 - `last_modified_at`: 선택, `date`와 동일한 타임존 보정 적용.
-- `authors`: `src/settings/authors.settings.ts`에 등록된 author ID(배열)으로 정규화. 명시할 경우 비어 있지 않아야 하며, 생략 시 기본값 `["dev"]`.
+- `personas`: `src/settings/personas.settings.ts`에 등록된 persona ID(배열)으로 정규화. 명시할 경우 비어 있지 않아야 하며, 생략 시 기본값 `["dev"]`.
 - `categories`, `tags`: 배열, 기본값 `[]`.
 - `draft`: boolean, 기본값 `false`.
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
@@ -109,11 +109,11 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en-US')             //
 - `og_image`: 선택, OG 이미지 절대 URL (`image.path`보다 우선).
 - `redirect_from`: 선택(배열), 레거시 Jekyll URL 목록.
 
-## Author 호환
+## Persona 호환
 
-이전 Jekyll frontmatter의 `author: [hyngng.dev]` 값은 현재 `authors: [dev]`로 지정한다. 화면에는 `@dev`로 표시한다.
+이전 Jekyll frontmatter의 `author: [hyngng.dev]` 값은 현재 `personas: [dev]`로 옮긴다. 이후 포스트 frontmatter에서는 페르소나 분류를 `personas` 필드에 기록한다. 화면에는 `@dev`로 표시한다.
 
-현재 등록된 author ID는 `blog`, `dev`, `art`, `essay`, `photography` 5개임. 화면 표시도 author 값 그대로 사용한다. `getAuthor()`는 미등록 ID가 들어오면 throw하여 빌드를 실패시킨다. 복수 ID를 등록하면 해당 글은 여러 작가 인덱스에 동시에 노출됨(언어판 간 일관 유지 필요).
+현재 등록된 persona ID는 `blog`, `dev`, `art`, `essay`, `photography` 5개임. 화면 표시도 persona 값 그대로 사용한다. `getPersona()`는 미등록 ID가 들어오면 throw하여 빌드를 실패시킨다. 복수 ID를 등록하면 해당 글은 여러 페르소나 인덱스에 동시에 노출됨(언어판 간 일관 유지 필요).
 
 ## Jekyll 이전 호환
 
@@ -133,8 +133,8 @@ Astro Markdown은 Liquid를 실행하지 않으므로 그대로 두면 본문에
 
 - content width: `768px`.
   - title: `2rem`(32px), bold.
-- title과 author meta 사이: `24px`.
-- author meta와 본문 사이: `64px`.
+- title과 persona meta 사이: `24px`.
+- persona meta와 본문 사이: `64px`.
 - body: `16px / 1.8` (`typography.css`에서 `article`에 직접 부여).
 - 인라인 코드: 포인트 컬러(`--color-accent`)를 활용한 배경 및 여유로운 패딩 설계.
 - 테이블: 둥근 모서리(`10px`)와 깔끔한 테두리를 가진 카드 형태 레이아웃. `overflow: hidden`으로 `thead` 배경색이 라운딩 밖으로 삐져나오지 않도록 클리핑.
@@ -190,14 +190,14 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 `<head>` 내 동적 콘텐츠(OG 메타 태그, JSON-LD, KaTeX CSS 등)는 Astro의 `<slot>` 메커니즘으로 관리됨.
 
 - **`Head.astro`**: `<head>` 요소 내부에 기본 `<slot />`을 두어 자식 콘텐츠 삽입 가능하게 함.
-- **`BaseLayout.astro`**: `<Head>`에 자식으로 `<slot name="head">`를 전달. 포스트가 아닌 페이지(홈, 작가)에서는 이 슬롯의 기본값으로 전역 OG 태그(`og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card`, `fediverse:creator`)가 렌더링됨. `fediverse:creator`는 `SITE.social.fediverse`(`@hyngng.main@threads.net`)를 사용. `noindex` prop이 true면 `<meta name="robots" content="noindex">`를 넣고 canonical을 생략함 (404 페이지가 사용).
+- **`BaseLayout.astro`**: `<Head>`에 자식으로 `<slot name="head">`를 전달. 포스트가 아닌 페이지(홈, 페르소나)에서는 이 슬롯의 기본값으로 전역 OG 태그(`og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card`, `fediverse:creator`)가 렌더링됨. `fediverse:creator`는 `SITE.social.fediverse`(`@hyngng.main@threads.net`)를 사용. `noindex` prop이 true면 `<meta name="robots" content="noindex">`를 넣고 canonical을 생략함 (404 페이지가 사용).
 - **`PostLayout.astro`**: `<Fragment slot="head">`로 BaseLayout의 슬롯을 오버라이드하여 포스트 전용 OG 태그(`og:type="article"` 포함), JSON-LD, KaTeX CSS를 `<head>` 안에 주입.
 
 ### 동작 원리
 
 | 페이지 유형 | slot="head" 내용 | 결과 |
 |---|---|---|
-| 홈/작가 | 미사용 → 기본값 렌더링 | `og:title=SITE.title`, `og:type="website"` |
+| 홈/페르소나 | 미사용 → 기본값 렌더링 | `og:title=SITE.title`, `og:type="website"` |
 | 포스트 | PostLayout이 오버라이드 | `og:title=post.data.title`, `og:type="article"` |
 | 404 | 미사용 + `noindex` | `robots=noindex`, canonical 없음 |
 
@@ -209,19 +209,19 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 
 **포스트 오버라이드 (PostLayout 슬롯):**
 - `og:title=post.data.title`, `og:description=post.data.description`, `og:type="article"`, `og:url=canonicalUrl`, `og:site_name=SITE.title`, `twitter:card=summary_large_image`, `twitter:title`, `twitter:description`
-- `fediverse:creator=작가별 social.fediverse` (없으면 `SITE.social.fediverse`로 폴백, 중복 제거)
-- `canonical` (자기 자신), `hreflang` alternate (동일 작가의 같은 slug 번역본 전체 + 기본 로케일 존재 시 `x-default`), `author` (작가명들), `article:published_time=post.data.date`, `article:modified_time=post.data.last_modified_at || date`, `twitter:site`, `twitter:creator` (작가별 social.twitter, 없으면 `SITE.social.twitter`로 폴백, `@` 프리픽스 자동 부여)
+- `fediverse:creator=페르소나별 social.fediverse` (없으면 `SITE.social.fediverse`로 폴백, 중복 제거)
+- `canonical` (자기 자신), `hreflang` alternate (동일 페르소나의 같은 slug 번역본 전체 + 기본 로케일 존재 시 `x-default`), `<meta name="author">` (페르소나 표시명), `article:published_time=post.data.date`, `article:modified_time=post.data.last_modified_at || date`, `twitter:site`, `twitter:creator` (페르소나별 social.twitter, 없으면 `SITE.social.twitter`로 폴백, `@` 프리픽스 자동 부여)
 
 ### JSON-LD
 
 구조화 데이터 빌더는 `src/utils/jsonLd.ts`에 순수 함수로 모아 두고(`buildWebSiteJsonLd`, `buildBreadcrumbJsonLd`, `buildBlogPostingJsonLd`), 로직을 테스트하는 `src/utils/jsonLd.test.ts`가 함께 관리됨.
 
 - **안전한 직렬화**: `serializeJsonLd()`가 `JSON.stringify(data).replace(/</g, '\\u003c')`로 특수문자를 이스케이프 처리. 모든 JSON-LD 스크립트는 이 함수를 경유함.
-- **사이트 전역 `WebSite`** (`Head.astro`): BaseLayout을 쓰는 모든 페이지(홈/작가/포스트/404)에 주입. `name=SITE.title`, `description=getSiteMeta(lang).description`, `image=ogImage` 절대 URL. PostLayout이 head 슬롯을 오버라이드해도 유지됨.
+- **사이트 전역 `WebSite`** (`Head.astro`): BaseLayout을 쓰는 모든 페이지(홈/페르소나/포스트/404)에 주입. `name=SITE.title`, `description=getSiteMeta(lang).description`, `image=ogImage` 절대 URL. PostLayout이 head 슬롯을 오버라이드해도 유지됨.
   - **`SearchAction` 미포함** (사용자 결정): 사이트 자체 검색 UI(Pagefind)가 이미 제공되므로 구조화된 검색 액션은 중복으로 판단하여 제외. WebSite는 기본 필드(name/url/description/image)만 유지.
-- **`BlogPosting`** (`PostLayout.astro`): `headline`, `description`, `image`, `datePublished`, `dateModified`, `author`(Person 배열), `inLanguage`(BCP-47, `getLocaleEntry(lang).bcp47`), `url`, `mainEntityOfPage`(`WebPage`/@id=canonical). `image`는 `og_image`보다 썸네일(`image.path`)을 우선.
-- **`BreadcrumbList`**: 포스트 페이지는 Home → 작가 → 포스트 (PostLayout에서 직접 주입), 작가 페이지는 Home → 작가 (`BaseLayout`의 `breadcrumbItems` prop으로 전달). 작가 URL은 현재 페이지 로케일 경로 사용 (`getAuthorPath(id, lang)` — `PostCard`/`Author` 컴포넌트와 동일 규칙).
-- **author `sameAs` 파생** (`src/settings/authors.settings.ts`): 하드코딩 없이 `SOCIAL_PROFILE_URLS` 레지스트리로 핸들을 URL로 변환 (`github`→`github.com/`, `twitter`→`x.com/`, `instagram`→`instagram.com/`, `website`는 그대로, `fediverse` `@user@domain`→`https://domain/@user`). 미래의 새 SNS는 `Social` 인터페이스에 필드 추가 + 레지스트리에 항목 1줄 추가만으로 확장 가능.
+- **`BlogPosting`** (`PostLayout.astro`): `headline`, `description`, `image`, `datePublished`, `dateModified`, `author`(Schema.org 표준에 맞춘 Person 배열), `inLanguage`(BCP-47, `getLocaleEntry(lang).bcp47`), `url`, `mainEntityOfPage`(`WebPage`/@id=canonical). 앱의 `personas` 데이터가 표준 `author` 필드로 변환된다. `image`는 `og_image`보다 썸네일(`image.path`)을 우선.
+- **`BreadcrumbList`**: 포스트 페이지는 Home → 페르소나 → 포스트 (PostLayout에서 직접 주입), 페르소나 페이지는 Home → 페르소나 (`BaseLayout`의 `breadcrumbItems` prop으로 전달). 페르소나 URL은 현재 페이지 로케일 경로 사용 (`getPersonaPath(id, lang)` — `PostCard`/`Persona` 컴포넌트와 동일 규칙).
+- **persona `sameAs` 파생** (`src/settings/personas.settings.ts`): 하드코딩 없이 `SOCIAL_PROFILE_URLS` 레지스트리로 핸들을 URL로 변환 (`github`→`github.com/`, `twitter`→`x.com/`, `instagram`→`instagram.com/`, `website`는 그대로, `fediverse` `@user@domain`→`https://domain/@user`). 미래의 새 SNS는 `Social` 인터페이스에 필드 추가 + 레지스트리에 항목 1줄 추가만으로 확장 가능.
 
 ## Dev Server
 
@@ -241,7 +241,7 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 ## 포스트 청크 로딩
 
-홈/작가 페이지의 포스트 목록은 `postsPerPage`(기본 8개) 단위로 분할되어 로딩된다. 상세는 `docs/ai-docs/features/chunk-loading.md` 참조.
+홈/페르소나 페이지의 포스트 목록은 `postsPerPage`(기본 8개) 단위로 분할되어 로딩된다. 상세는 `docs/ai-docs/features/chunk-loading.md` 참조.
 
 ### 레이아웃
 
@@ -253,8 +253,8 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 |---|---|
 | `/posts/chunk/{n}` | 기본 언어 홈 청크 |
 | `/{lang}/posts/chunk/{n}` | 다국어 홈 청크 |
-| `/{author}/chunk/{n}` | 기본 언어 작가 청크 |
-| `/{lang}/{author}/chunk/{n}` | 다국어 작가 청크 |
+| `/{persona}/chunk/{n}` | 기본 언어 페르소나 청크 |
+| `/{lang}/{persona}/chunk/{n}` | 다국어 페르소나 청크 |
 
 ### SEO
 
@@ -316,7 +316,7 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 `micromark-extension-*`/`mdast-util-*` 6개 패키지는 `package.json`의 `dependencies`에 명시 등록되어 있다 (전이 의존성에 기대지 않음).
 
-> **E3 동기화 규칙**: `posts.ts`의 `countCharacters()`/`extractExcerpt()`가 사용하는 micromark 확장 목록은 `astro.config.mjs`의 `markdown.processor` remarkPlugins(렌더링)와 **수동으로 동기화**해야 한다. 새 마크다운 문법 플러그인(예: remark-xxx)을 추가하면 ① astro.config의 remarkPlugins, ② posts.ts의 `extensions`/`mdastExtensions`, ③ package.json dependencies, 이렇게 세 곳을 함께 갱신한다.
+`src/utils/markdown-syntax.ts`가 테이블·디렉티브·수식의 micromark/from-Markdown 확장과 렌더링용 remark 플러그인 연결을 함께 정의한다. `astro.config.mjs`는 이 모듈의 remark 플러그인 목록을 사용하고, `posts.ts`는 동일한 확장 정의에서 필요한 파서 옵션을 얻는다. Astro 기본 GFM 처리는 표 문법을 제공하므로 별도의 remark 플러그인을 중복 등록하지 않는다. 글자 수 계산만 수식 확장을 포함하며 excerpt는 기존처럼 표와 디렉티브만 사용한다. 새 문법 확장을 추가할 때는 이 모듈과 `package.json` 의존성을 갱신한다.
 
 ## 포스트 Excerpt 추출
 
@@ -348,33 +348,33 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 이 확장들이 없으면 테이블과 directive 블록이 paragraph로 분류되어 excerpt에 마크다운 원문이 노출된다.
 
-## 포스트 카드 작가 영역 (모바일 링크)
+## 포스트 카드 페르소나 영역 (모바일 링크)
 
-포스트 카드(`PostCard.astro`)는 전체가 단일 `<a class="post-card-link">`로 감싸져 있고, 작가 영역은 데스크톱에서 카드 호버 시 본문 excerpt로 전환된다. `<a>` 내부에 `<a>`를 넣는 것은 HTML 위반(파서가 바깥 링크를 끊어 카드 레이아웃이 깨짐)이므로, 모바일에서 작가 페이지로 이동시키기 위해 오버레이 링크 대신 JS 위임 이벤트를 사용한다.
+포스트 카드(`PostCard.astro`)는 전체가 단일 `<a class="post-card-link">`로 감싸져 있고, 페르소나 영역은 데스크톱에서 카드 호버 시 본문 excerpt로 전환된다. `<a>` 내부에 `<a>`를 넣는 것은 HTML 위반(파서가 바깥 링크를 끊어 카드 레이아웃이 깨짐)이므로, 모바일에서 페르소나 페이지로 이동시키기 위해 오버레이 링크 대신 JS 위임 이벤트를 사용한다.
 
 ### 동작
 
-- **모바일(≤960px, `isMobile()`)**: `.post-card-author` 영역 탭 → `data-author-href`로 이동 (첫 번째 작가 `authors[0]`의 페이지).
-- **히트 영역 제한**: `.post-card-author`는 `width: fit-content; max-width: 100%`로 콘텐츠 크기(아바타 + 이름/날짜)로 수축하므로, 탭 히트 영역 = 눈에 보이는 작가 콘텐츠 박스. 텍스트가 없는 빈 공간(카드 폭 우측 여백)은 카드 링크에 귀속되어 포스트를 연다.
-- **데스크톱(>960px)**: 기존대로 작가 영역 포함 카드 전체가 포스트를 연다. 호버 애니메이션(작가↔excerpt 전환)과 레이아웃은 변경 없음.
-- 다중 작가 포스트: 표시 중인 primary author(`authors[0]`) 페이지로 이동.
+- **모바일(≤960px, `isMobile()`)**: `.post-card-persona` 영역 탭 → `data-persona-href`로 이동 (첫 번째 페르소나 `personas[0]`의 페이지).
+- **히트 영역 제한**: `.post-card-persona`는 `width: fit-content; max-width: 100%`로 콘텐츠 크기(아바타 + 이름/날짜)로 수축하므로, 탭 히트 영역 = 눈에 보이는 페르소나 콘텐츠 박스. 텍스트가 없는 빈 공간(카드 폭 우측 여백)은 카드 링크에 귀속되어 포스트를 연다.
+- **데스크톱(>960px)**: 기존대로 페르소나 영역 포함 카드 전체가 포스트를 연다. 호버 애니메이션(페르소나↔excerpt 전환)과 레이아웃은 변경 없음.
+- 다중 페르소나 포스트: 표시 중인 primary persona(`personas[0]`) 페이지로 이동.
 
 ### 구현
 
-- `PostCard.astro`: `getAuthorPath(authorIds[0], currentLocale)`로 `data-author-href`를 `.post-card-author`에 주입.
-- `src/features/post-list/author-link.ts`의 `initMobileAuthorLink(signal)`: 문서 레벨 위임 `click` 리스너 등록 — `closest('.post-card-author')`로 탭 대상 감지 → `isMobile()` 가드 후 `e.preventDefault()`로 카드 링크 네비게이션 차단, `window.location.assign()`으로 이동.
-- 등록 지점: `PostListSection.astro` `init()`(AbortController 스코프)과 `ChunkPostListBody.astro`(청크 페이지). 카드가 렌더링되는 홈/작가/청크 페이지에서 동일 동작.
+- `PostCard.astro`: `getPersonaPath(personaIds[0], currentLocale)`로 `data-persona-href`를 `.post-card-persona`에 주입.
+- `src/features/post-list/persona-link.ts`의 `initMobilePersonaLink(signal)`: 문서 레벨 위임 `click` 리스너 등록 — `closest('.post-card-persona')`로 탭 대상 감지 → `isMobile()` 가드 후 `e.preventDefault()`로 카드 링크 네비게이션 차단, `window.location.assign()`으로 이동.
+- 등록 지점: `PostListSection.astro` `init()`(AbortController 스코프)과 `ChunkPostListBody.astro`(청크 페이지). 카드가 렌더링되는 홈/페르소나/청크 페이지에서 동일 동작.
 - 위임 방식이라 청크 로딩·검색으로 동적 추가된 카드에도 자동 적용.
 - 모바일 판정은 `src/features/post-list/layout.ts`의 `isMobile()`을 재사용. 브레이크포인트는 `MOBILE_QUERY`(`'(max-width: 960px)'`) 상수로 중앙 관리하므로 JS에서 중복 정의 없음.
 
 ## 다른 글 더 보기 (MorePosts)
 
-포스트 하단 메타데이터(`PostFooter`) 영역과 연계하여, 첫 번째 작가(`post.data.authors[0]`)의 시간순서상 가장 인접한 글 목록(최대 3개)을 SEO 내부 링크 및 탐색용으로 제공한다.
+포스트 하단 메타데이터(`PostFooter`) 영역과 연계하여, 첫 번째 페르소나(`post.data.personas[0]`)의 시간순서상 가장 인접한 글 목록(최대 3개)을 SEO 내부 링크 및 탐색용으로 제공한다.
 
 ### 동작 및 레이아웃 정책
 
 - **데이터 수집 (시간순 인접 탐색)**:
-  - 현재 포스트와 동일 언어(`lang`)의 발행 포스트 중, 첫 번째 작가(`post.data.authors[0]`)가 동일하고 현재 글을 제외한(`p.id !== post.id`) 글들을 대상으로 한다.
+  - 현재 포스트와 동일 언어(`lang`)의 발행 포스트 중, 첫 번째 페르소나(`post.data.personas[0]`)가 동일하고 현재 글을 제외한(`p.id !== post.id`) 글들을 대상으로 한다.
   - 단순 최신순이 아닌 **현재 포스트 작성일과의 시간 차이(`Math.abs(p.date - currentPost.date)`)가 가장 작은 3개 글**을 추출한다. (단순 최신순 추천 시 모든 글이 동일한 최신 글 3개만 추천하는 문제를 방지하고 촘촘한 내부 링크 네트워크를 형성).
   - 최종 렌더링 시에는 추출된 3개의 글을 최신순으로 정렬하여 일관된 목록 순서를 제공한다. 다른 글이 없으면 렌더링하지 않는다.
 - **스타일링 (`MorePosts.astro`)**:

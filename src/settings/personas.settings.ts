@@ -25,8 +25,8 @@ export const SOCIAL_PROFILE_URLS: Record<string, (handle: string) => string | un
   },
 };
 
-export function getAuthorProfileUrls(author: { social: Social }): string[] {
-  return Object.entries(author.social).flatMap(([key, handle]) => {
+export function getPersonaProfileUrls(persona: { social: Social }): string[] {
+  return Object.entries(persona.social).flatMap(([key, handle]) => {
     if (!handle) return [];
     const resolve = SOCIAL_PROFILE_URLS[key];
     if (!resolve) return [];
@@ -39,22 +39,22 @@ export function normalizeTwitterHandle(handle: string): string {
   return handle.startsWith('@') ? handle : `@${handle}`;
 }
 
-interface AuthorData {
+interface PersonaData {
   description: Partial<Record<string, string>>; // per-locale descriptions
   avatar: string;
   social: Social;
 }
 
-export type Author = Omit<AuthorData, 'description'> & { name: AuthorId; description: string };
+export type Persona = Omit<PersonaData, 'description'> & { name: PersonaId; description: string };
 
 // ── Configuration ────────────────────────────────────────
 
-export const AUTHOR_PREFIX = '@';
+export const PERSONA_PREFIX = '@';
 
-// ── Author map ───────────────────────────────────────────
-// Reference in frontmatter by author ID, e.g. 'dev'
+// ── Persona map ───────────────────────────────────────────
+// Reference in frontmatter by persona ID, e.g. 'dev'
 
-export const AUTHORS = {
+export const PERSONAS = {
 
   art: {
     avatar: 'avatar/hyngng-art.webp',
@@ -144,35 +144,35 @@ export const AUTHORS = {
     },
   },
 
-} satisfies Record<string, AuthorData>;
+} satisfies Record<string, PersonaData>;
 
 // ── Derived types ────────────────────────────────────────
 
-// Use in content collection schema: z.enum(AUTHOR_IDS)
-export type AuthorId = keyof typeof AUTHORS;
-export const AUTHOR_IDS = Object.keys(AUTHORS) as [AuthorId, ...AuthorId[]];
+// Use in content collection schema: z.enum(PERSONA_IDS)
+export type PersonaId = keyof typeof PERSONAS;
+export const PERSONA_IDS = Object.keys(PERSONAS) as [PersonaId, ...PersonaId[]];
 
 // ── Helpers ──────────────────────────────────────────────
 
-function resolveAuthorDescription(author: AuthorData, lang?: string): string {
-  const descriptions = author.description;
+function resolvePersonaDescription(persona: PersonaData, lang?: string): string {
+  const descriptions = persona.description;
   const entry = getLocaleEntry(lang);
 
   return descriptions[entry.bcp47] ?? descriptions[defaultLocaleBcp47] ?? '';
 }
 
-export function getAuthor(name: string, lang?: string): Author {
-  const author = AUTHORS[name as AuthorId];
-  if (!author) throw new Error(`Unknown author: "${name}"`);
+export function getPersona(name: string, lang?: string): Persona {
+  const persona = PERSONAS[name as PersonaId];
+  if (!persona) throw new Error(`Unknown persona: "${name}"`);
   return {
-    ...author,
-    name: name as AuthorId,
-    avatar: resolveCdnPath(author.avatar),
-    description: resolveAuthorDescription(author, lang),
+    ...persona,
+    name: name as PersonaId,
+    avatar: resolveCdnPath(persona.avatar),
+    description: resolvePersonaDescription(persona, lang),
   };
 }
 
-export const ALL_AUTHORS = Object.entries(AUTHORS).map(([name, author]) => ({
-  ...author,
-  name: name as AuthorId,
+export const ALL_PERSONAS = Object.entries(PERSONAS).map(([name, persona]) => ({
+  ...persona,
+  name: name as PersonaId,
 }));

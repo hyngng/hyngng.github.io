@@ -1,6 +1,6 @@
 import type { APIContext } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { getPostLang, getPostSlug, getPostPath, getAuthorPath, localePath } from '../utils/posts';
+import { getPostLang, getPostSlug, getPostPath, getPersonaPath, localePath } from '../utils/posts';
 import { defaultLocale, availableLocales } from '../locales';
 import { getLocaleEntry } from '../settings/site.settings';
 
@@ -46,7 +46,7 @@ function withDefaultAlternate(alternates: Alternate[], defaultHref: string): Alt
   return [...alternates, { hreflang: 'x-default', href: defaultHref }];
 }
 
-// 홈페이지·작가·포스트 URL과 alternate를 계산해 SitemapUrl 배열만 반환하는 순수 함수다 (XML 무지).
+// 홈페이지·페르소나·포스트 URL과 alternate를 계산해 SitemapUrl 배열만 반환하는 순수 함수다 (XML 무지).
 function buildSitemapEntries(input: { origin: string; posts: CollectionEntry<'posts'>[] }): SitemapUrl[] {
   const { origin, posts } = input;
   const urls: SitemapUrl[] = [];
@@ -67,25 +67,25 @@ function buildSitemapEntries(input: { origin: string; posts: CollectionEntry<'po
     urls.push({ loc: href, alternates: homepageAlternatesWithDefault });
   }
 
-  // ── Author index pages ─────────────────────────────
-  const authorSet = new Set<string>();
+  // ── Persona index pages ─────────────────────────────
+  const personaSet = new Set<string>();
   for (const post of posts) {
     const lang = getPostLang(post);
-    for (const authorId of post.data.authors) {
-      authorSet.add(`${lang}/${authorId}`);
+    for (const personaId of post.data.personas) {
+      personaSet.add(`${lang}/${personaId}`);
     }
   }
 
-  for (const key of authorSet) {
-    const [lang, author] = key.split('/');
-    urls.push({ loc: `${origin}${getAuthorPath(author, lang)}` });
+  for (const key of personaSet) {
+    const [lang, persona] = key.split('/');
+    urls.push({ loc: `${origin}${getPersonaPath(persona, lang)}` });
   }
 
   // ── Post pages (grouped by slug for hreflang) ──────
-  // 콘텐츠 스키마상 slug 유일성이 전역 보장되지 않으므로 author를 키에 포함해 번역본끼리만 묶는다.
+  // 콘텐츠 스키마상 slug 유일성이 전역 보장되지 않으므로 persona를 키에 포함해 번역본끼리만 묶는다.
   const postGroups = new Map<string, CollectionEntry<'posts'>[]>();
   for (const post of posts) {
-    const slug = `${post.data.authors[0]}/${getPostSlug(post.id)}`;
+    const slug = `${post.data.personas[0]}/${getPostSlug(post.id)}`;
     const group = postGroups.get(slug) ?? [];
     group.push(post);
     postGroups.set(slug, group);
@@ -95,7 +95,7 @@ function buildSitemapEntries(input: { origin: string; posts: CollectionEntry<'po
     const alternates: Alternate[] = group.length > 1
       ? group.map((post) => {
           const lang = getPostLang(post);
-          const path = getPostPath(post.id, post.data.authors[0], lang);
+          const path = getPostPath(post.id, post.data.personas[0], lang);
           return { hreflang: bcp47(lang), href: `${origin}${path}` };
         })
       : [];
@@ -103,14 +103,14 @@ function buildSitemapEntries(input: { origin: string; posts: CollectionEntry<'po
     if (alternates.length > 0) {
       const defaultPost = group.find((post) => getPostLang(post) === defaultLocale);
       if (defaultPost) {
-        const defaultPath = getPostPath(defaultPost.id, defaultPost.data.authors[0], defaultLocale);
+        const defaultPath = getPostPath(defaultPost.id, defaultPost.data.personas[0], defaultLocale);
         alternates.push({ hreflang: 'x-default', href: `${origin}${defaultPath}` });
       }
     }
 
     for (const post of group) {
       const lang = getPostLang(post);
-      const path = getPostPath(post.id, post.data.authors[0], lang);
+      const path = getPostPath(post.id, post.data.personas[0], lang);
       const lastmod = (post.data.last_modified_at || post.data.date).toISOString().split('T')[0];
       const image = post.data.og_image || post.data.image?.path;
       urls.push({

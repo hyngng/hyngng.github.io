@@ -2,7 +2,7 @@ import { normalizePath } from '../post-list/dom';
 
 export interface SearchContext {
   lang: string;
-  authorId?: string;
+  personaId?: string;
 }
 
 export interface SearchEngine {
@@ -60,7 +60,7 @@ class PagefindEngine implements SearchEngine {
     const result = await this.pagefind.search(query, {
       filters: {
         lang: ctx.lang,
-        ...(ctx.authorId ? { author: ctx.authorId } : {}),
+        ...(ctx.personaId ? { persona: ctx.personaId } : {}),
       },
     });
 
@@ -74,7 +74,7 @@ class PagefindEngine implements SearchEngine {
   }
 }
 
-// DOM fallback: 제목/설명만 필터. 작가 페이지의 data-all-posts는 이미 작가 스코프.
+// DOM fallback: 제목/설명만 필터. 페르소나 페이지의 data-all-posts는 이미 해당 페르소나 범위다.
 class DomFallbackEngine implements SearchEngine {
   constructor(private readonly allPosts: PostMeta[]) {}
 

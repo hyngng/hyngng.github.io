@@ -5,10 +5,10 @@ import { defaultLocale } from '../locales';
 interface Props {
   locale: Locale;
   currentLocale: string;
-  authorId?: string;
+  personaId?: string;
 }
 
-const { locale, currentLocale, authorId } = Astro.props;
+const { locale, currentLocale, personaId } = Astro.props;
 ---
 
 <aside class="search-container" aria-label={locale.search.aria}>
@@ -22,7 +22,7 @@ const { locale, currentLocale, authorId } = Astro.props;
       aria-label={locale.search.aria}
       data-locale={currentLocale}
       data-default-locale={defaultLocale}
-      data-author={authorId}
+      data-persona={personaId}
       autocomplete="off"
     />
   </div>
@@ -101,9 +101,9 @@ const { locale, currentLocale, authorId } = Astro.props;
       const rawLocale = allInputs[0]?.dataset.locale || allInputs[0]?.dataset.defaultLocale;
       if (!rawLocale) throw new Error('Search locale metadata is missing');
       const lang = rawLocale;
-      const authorId = allInputs[0]?.dataset.author || undefined;
+      const personaId = allInputs[0]?.dataset.persona || undefined;
 
-      const paths = await engine.search(query, { lang, authorId });
+      const paths = await engine.search(query, { lang, personaId });
       if (currentSeq !== searchSeq) return;
 
       await ensureChunksLoaded(controller, new Set(paths));

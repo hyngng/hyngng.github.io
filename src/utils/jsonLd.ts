@@ -1,4 +1,4 @@
-export interface JsonLdAuthor {
+export interface JsonLdPersona {
   name: string;
   url?: string;
   sameAs?: string[];
@@ -15,7 +15,7 @@ export interface BlogPostingData {
   image: string;
   datePublished: string;
   dateModified: string;
-  authors: JsonLdAuthor[];
+  personas: JsonLdPersona[];
   inLanguage: string;
   url: string;
 }
@@ -106,7 +106,7 @@ export function buildBlogPostingJsonLd({
   image,
   datePublished,
   dateModified,
-  authors,
+  personas,
   inLanguage,
   url,
 }: BlogPostingData): BlogPostingJsonLd {
@@ -118,11 +118,11 @@ export function buildBlogPostingJsonLd({
     image,
     datePublished,
     dateModified,
-    author: authors.map((a) => ({
+    author: personas.map((persona) => ({
       '@type': 'Person',
-      name: a.name,
-      ...(a.url ? { url: a.url } : {}),
-      ...(a.sameAs && a.sameAs.length > 0 ? { sameAs: a.sameAs } : {}),
+      name: persona.name,
+      ...(persona.url ? { url: persona.url } : {}),
+      ...(persona.sameAs && persona.sameAs.length > 0 ? { sameAs: persona.sameAs } : {}),
     })),
     inLanguage,
     url,

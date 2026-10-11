@@ -1,10 +1,10 @@
-# 검색 excerpt로 Author 정보 대체
+# 검색 excerpt로 Persona 정보 대체
 
-> **상태: 보류 / 미구현 (결정: 현행 Author 유지)** — 이 문서는 검토된 설계 제안서이며, 현재 동작(검색 결과 카드의 Author 정보 `.post-card-meta` 유지)을 보존하기로 결정되었습니다. 코드 변경 없이 현행 구조를 유지합니다.
+> **상태: 보류 / 미구현 (결정: 현행 Persona 유지)** — 이 문서는 검토된 설계 제안서이며, 현재 동작(검색 결과 카드의 Persona 정보 `.post-card-meta` 유지)을 보존하기로 결정되었습니다. 코드 변경 없이 현행 구조를 유지합니다.
 
 ## 목표
 
-Pagefind 검색 시 포스트 카드의 Author 영역(`.post-card-meta`)을 검색 결과 excerpt("왜 이 결과가 매칭됐는지"를 보여주는 본문 일부)로 동적 교체. 검색 비활성화 시 원본 Author 정보로 복원.
+Pagefind 검색 시 포스트 카드의 Persona 영역(`.post-card-meta`)을 검색 결과 excerpt("왜 이 결과가 매칭됐는지"를 보여주는 본문 일부)로 동적 교체. 검색 비활성화 시 원본 Persona 정보로 복원.
 
 ## 핵심 불변조건
 
@@ -34,7 +34,7 @@ searchWithPagefind(query):
   2a 단계만 실행 → 모든 .post-card-meta가 원본 복원. display 토글도 모두 보임. search-excerpt 클래스 제거.
 
 searchWithDOM(query): 변경 없음
-  원본대로 Author 유지, display만 토글
+  원본대로 Persona 유지, display만 토글
 ```
 
 ## 수정 파일 (2개)
@@ -128,7 +128,7 @@ async function searchWithPagefind(query: string) {
 - `PostCard.astro`: 불필요 (모듈 필요 없음, JavaScript가 순수히 class 조작)
 - `HomePageContent.astro`
 - `PostListSection.astro`
-- DOM fallback(`searchWithDOM`): 변경 없음. fallback 상황에선 excerpt가 없으니 그냥 Author 유지.
+- DOM fallback(`searchWithDOM`): 변경 없음. fallback 상황에선 excerpt가 없으니 그냥 Persona 유지.
 
 ## 추후 개선 가능
 
@@ -141,6 +141,6 @@ async function searchWithPagefind(query: string) {
 2. dist HTML에 `search-excerpt` 및 `<mark>` 포함된 excerpt가 생성되지 않음 (Pagefind JS가 검색 런타임에 삽입하는 내용이므로 dist HTML에는 보이지 않음)
 3. 브라우저에서 Pagefind 검색 시:
    - 검색 결과가 있으면 excerpt와 A, B 카테고리가 올바르게 표시되는지 확인
-   - 검색어 제거 시 원래 Author 정보 복원
+   - 검색어 제거 시 원래 Persona 정보 복원
    - 다크/라이트모드 일치
    - 그리드 높이 일정 (line-clamp 적용 확인)

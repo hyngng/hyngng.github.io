@@ -1,6 +1,6 @@
 ---
 title: "Quelques choses apprises en manipulant Python"
-authors: [dev]
+personas: [dev]
 
 categories: [프로그래밍, 문법]
 tags: [프로그래밍, 문법]

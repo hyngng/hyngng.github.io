@@ -5,10 +5,10 @@ import { getLocale, availableLocales, defaultLocale } from "../locales";
 import { localePath } from "../utils/posts";
 
 interface Props {
-  authorId?: string;
+  personaId?: string;
 }
 
-const { authorId } = Astro.props;
+const { personaId } = Astro.props;
 
 const currentCode = Astro.currentLocale || defaultLocale;
 const locale = getLocale(currentCode);
@@ -21,14 +21,21 @@ const localeSegments = Object.fromEntries(
 );
 
 const homeUrl = currentCode === defaultLocale ? "/" : `/${currentSegment}/`;
-const rssUrl = authorId
+const rssUrl = personaId
   ? currentCode === defaultLocale
-    ? `/${authorId}/rss.xml`
-    : `/${currentSegment}/${authorId}/rss.xml`
+    ? `/${personaId}/rss.xml`
+    : `/${currentSegment}/${personaId}/rss.xml`
   : currentCode === defaultLocale
     ? "/rss.xml"
     : `/${currentSegment}/rss.xml`;
 ---
+
+<div class="frame-border" aria-hidden="true">
+  <div class="frame-edge frame-edge-top"></div>
+  <div class="frame-edge frame-edge-bottom"></div>
+  <div class="frame-edge frame-edge-left"></div>
+  <div class="frame-edge frame-edge-right"></div>
+</div>
 
 <div class="fixed-actions">
   <div class="action-block left-action">
@@ -87,6 +94,77 @@ const rssUrl = authorId
 <div class="mobile-bottom-corners" aria-hidden="true"></div>
 
 <style>
+  /* ── Frame border mask ── */
+  .frame-border {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .frame-edge {
+    position: absolute;
+    background-color: var(--color-frame);
+  }
+
+  .frame-edge-top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--frame-thickness);
+  }
+
+  .frame-edge-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--frame-thickness);
+  }
+
+  .frame-edge-left {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--frame-thickness);
+  }
+
+  .frame-edge-right {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: var(--frame-thickness);
+  }
+
+  /* ── Bottom concave corners (desktop) ── */
+  .frame-border::before,
+  .frame-border::after {
+    content: "";
+    position: absolute;
+    width: var(--frame-radius);
+    height: var(--frame-radius);
+    pointer-events: none;
+  }
+
+  .frame-border::before {
+    bottom: var(--frame-thickness);
+    left: var(--frame-thickness);
+    background: radial-gradient(
+      circle at 100% 0%,
+      transparent var(--frame-radius),
+      var(--color-frame) var(--frame-radius)
+    );
+  }
+
+  .frame-border::after {
+    bottom: var(--frame-thickness);
+    right: var(--frame-thickness);
+    background: radial-gradient(
+      circle at 0% 0%,
+      transparent var(--frame-radius),
+      var(--color-frame) var(--frame-radius)
+    );
+  }
+
   /* ── Container ── */
   .fixed-actions {
     position: fixed;

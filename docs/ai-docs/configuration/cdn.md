@@ -61,11 +61,11 @@ Jekyll 시절 포스트의 `row`/`col-md-6` 2열 그리드는 `src/styles/typogr
 - **`public/` 정적 자산**: 파일 시스템이 직접 서비스. 라우터 개입 없음.
 - **MDX 이미지**: `remarkCdnImages` 및 `rehypeImageWrapper`가 CDN URL로 변환. 라우터와 무관.
 
-`onerror` 폴백 없이 CDN URL만 사용. 라우트 패턴(`[lang]/[author]/[slug]`)과 정적 자산이 절대 충돌하지 않는 구조.
+`onerror` 폴백 없이 CDN URL만 사용. 라우트 패턴(`[lang]/[persona]/[slug]`)과 정적 자산이 절대 충돌하지 않는 구조.
 
-## 작가 아바타 CDN 변환
+## 페르소나 아바타 CDN 변환
 
-`src/utils/cdn.ts`의 `resolveCdnPath()` 함수가 상대경로를 CDN URL로 자동 변환한다. `getAuthor()` 내부에서 호출되어 아바타 경로를 변환한다.
+`src/utils/cdn.ts`의 `resolveCdnPath()` 함수가 상대경로를 CDN URL로 자동 변환한다. `getPersona()` 내부에서 호출되어 아바타 경로를 변환한다.
 
 ```typescript
 resolveCdnPath('avatar/hyngng-white.webp')
@@ -87,12 +87,12 @@ image:
 
 ## 공유 유틸리티 (`src/utils/cdn.ts`)
 
-CDN URL 변환 로직을 `content.config.ts`와 `authors.settings.ts`가 공유한다:
+CDN URL 변환 로직을 `content.config.ts`와 `personas.settings.ts`가 공유한다:
 
 | 함수 | 용도 |
 |---|---|
 | `toAbsoluteImageUrl(val)` | 로컬 절대경로 → CDN URL 변환 (콘텐츠 스키마용) |
-| `resolveCdnPath(path)` | 로컬 상대경로/절대경로 → CDN URL 변환 (작가 아바타 및 미디어 지시어용). `http(s)`, protocol-relative, `data:` 등 URI scheme이 있는 URL은 원형 보존 |
+| `resolveCdnPath(path)` | 로컬 상대경로/절대경로 → CDN URL 변환 (페르소나 아바타 및 미디어 지시어용). `http(s)`, protocol-relative, `data:` 등 URI scheme이 있는 URL은 원형 보존 |
 | `isLocalAbsolutePath(url)` | 로컬 절대경로 여부 판별 |
 
 `shouldRewriteCdnUrl()`도 로컬 경로만 재작성한다. `//host/path` 및 `data:image/...`처럼 로컬 파일 경로가 아닌 URL은 CDN base와 결합하지 않는다.
@@ -103,7 +103,7 @@ CDN URL 변환 로직을 `content.config.ts`와 `authors.settings.ts`가 공유�
 - `src/utils/cdn.ts`: CDN URL 변환 공유 유틸리티
 - `src/plugins/remark-cdn-images.ts`: Markdown 이미지 URL 변환 (`shouldRewrite()`)
 - `src/plugins/rehype-image-wrapper.mjs`: HTML <img> 태그 CDN URL 변환 및 wrapper 주입 (`shouldRewrite()`)
-- `src/settings/authors.settings.ts`: `getAuthor()`에서 `resolveCdnPath()` 호출
+- `src/settings/personas.settings.ts`: `getPersona()`에서 `resolveCdnPath()` 호출
 - `astro.config.mjs`: Markdown processor 연결 (`rehypePlugins` 첫 항목의 `rehypeRaw`가 raw HTML 블록을 element로 파싱)
 
 ## 관련 문서

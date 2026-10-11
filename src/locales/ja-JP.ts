@@ -8,10 +8,10 @@ const locale: Locale = {
     themeAria: 'テーマを切り替える',
     rssAria: 'RSS',
   },
-  authors: {
+  personas: {
     persona: 'ペルソナ',
     otherPersona: '他のペルソナ',
-    otherCount: (n: number) => `他${n}名の著者`,
+    otherPersonaSuffix: (n: number) => `他${n}個のペルソナ`,
     personaCount: (n: number) => `${n}個のペルソナを見る`,
     otherPersonaCount: (n: number) => `${n}個の他のペルソナを見る`,
     closeAria: '閉じる',

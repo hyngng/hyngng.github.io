@@ -1,16 +1,11 @@
 import { type CollectionEntry, getCollection } from 'astro:content';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { toString } from 'mdast-util-to-string';
-import { gfmTable } from 'micromark-extension-gfm-table';
-import { gfmTableFromMarkdown } from 'mdast-util-gfm-table';
-import { directive } from 'micromark-extension-directive';
-import { directiveFromMarkdown } from 'mdast-util-directive';
-import { math } from 'micromark-extension-math';
-import { mathFromMarkdown } from 'mdast-util-math';
 import { visit } from 'unist-util-visit';
 import type { RootContent } from 'mdast';
 import { defaultLocale } from '../locales';
-import type { AuthorId } from '../settings/authors.settings';
+import type { PersonaId } from '../settings/personas.settings';
+import { getMarkdownSyntax } from './markdown-syntax';
 
 
 const DEFAULT_LOCALE = defaultLocale;
@@ -31,13 +26,13 @@ export function getPostSlug(id: string): string {
 import { localePath } from './locale-segments';
 export { localePath };
 
-export function getPostPath(id: string, authorId: string | string[], currentLocale?: string): string {
-  const primary = Array.isArray(authorId) ? authorId[0] : authorId;
+export function getPostPath(id: string, personaId: string | string[], currentLocale?: string): string {
+  const primary = Array.isArray(personaId) ? personaId[0] : personaId;
   return `${localePath(currentLocale)}/${primary}/${getPostSlug(id)}/`;
 }
 
-export function getAuthorPath(authorId: string, currentLocale?: string): string {
-  return `${localePath(currentLocale)}/${authorId}/`;
+export function getPersonaPath(personaId: string, currentLocale?: string): string {
+  return `${localePath(currentLocale)}/${personaId}/`;
 }
 
 export function getPostNumber(posts: CollectionEntry<'posts'>[], postId: string): number {
@@ -56,10 +51,7 @@ export function countCharacters(body: string = ''): number {
     // Kramdown attribute spans like {: .w-50 .right } — ':' distinguishes from directive attrs
     .replace(/\{\:\s*[^}]*\}/g, '');
 
-  const tree = fromMarkdown(preprocessed, {
-    extensions: [directive(), gfmTable(), math({ singleDollarTextMath: true })],
-    mdastExtensions: [directiveFromMarkdown(), gfmTableFromMarkdown(), mathFromMarkdown()],
-  });
+  const tree = fromMarkdown(preprocessed, getMarkdownSyntax({ includeMath: true }));
 
   let buffer = '';
   visit(tree, (node) => {
@@ -79,10 +71,7 @@ export function extractExcerpt(description: string | undefined, body: string | u
   if (description) return description;
   if (!body) return '';
 
-  const tree = fromMarkdown(body, {
-    extensions: [gfmTable(), directive()],
-    mdastExtensions: [gfmTableFromMarkdown(), directiveFromMarkdown()],
-  });
+  const tree = fromMarkdown(body, getMarkdownSyntax());
 
   const parts: string[] = [];
   for (const node of tree.children) {
@@ -104,13 +93,13 @@ export function extractExcerpt(description: string | undefined, body: string | u
 
 interface QueryPostsOptions {
   lang?: string;
-  authorId?: string;
+  personaId?: string;
   includeDraft?: boolean;
   sort?: 'asc' | 'desc' | 'none';
 }
 
 export async function queryPosts(options: QueryPostsOptions = {}): Promise<CollectionEntry<'posts'>[]> {
-  const { lang, authorId, includeDraft = false, sort = 'desc' } = options;
+  const { lang, personaId, includeDraft = false, sort = 'desc' } = options;
   const allPosts = await getCollection('posts');
 
   let posts = includeDraft ? allPosts : allPosts.filter(({ data }) => !data.draft);
@@ -119,8 +108,8 @@ export async function queryPosts(options: QueryPostsOptions = {}): Promise<Colle
     posts = posts.filter((post) => getPostLang(post) === lang);
   }
 
-  if (authorId) {
-    posts = posts.filter(({ data }) => data.authors.includes(authorId as AuthorId));
+  if (personaId) {
+    posts = posts.filter(({ data }) => data.personas.includes(personaId as PersonaId));
   }
 
   if (sort === 'desc') {
@@ -132,18 +121,18 @@ export async function queryPosts(options: QueryPostsOptions = {}): Promise<Colle
   return posts;
 }
 
-export async function getPublishedPosts(options: { lang?: string; authorId?: string } = {}): Promise<CollectionEntry<'posts'>[]> {
+export async function getPublishedPosts(options: { lang?: string; personaId?: string } = {}): Promise<CollectionEntry<'posts'>[]> {
   return queryPosts({ ...options, sort: 'desc' });
 }
 
-export async function getRssItems(options: { lang?: string; authorId?: AuthorId } = {}) {
-  const { lang, authorId } = options;
-  const posts = await queryPosts({ lang, authorId, sort: 'desc' });
+export async function getRssItems(options: { lang?: string; personaId?: PersonaId } = {}) {
+  const { lang, personaId } = options;
+  const posts = await queryPosts({ lang, personaId, sort: 'desc' });
 
   return posts.map((post) => ({
     title: post.data.title,
     pubDate: post.data.date,
     description: extractExcerpt(post.data.description, post.body) || undefined,
-    link: getPostPath(post.id, post.data.authors[0], lang),
+    link: getPostPath(post.id, post.data.personas[0], lang),
   }));
 }

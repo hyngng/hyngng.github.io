@@ -1,7 +1,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { getPublishedPosts, localePath } from './posts';
 import { SITE } from '../settings/site.settings';
-import { ALL_AUTHORS, type AuthorId } from '../settings/authors.settings';
+import { ALL_PERSONAS, type PersonaId } from '../settings/personas.settings';
 import { defaultLocale } from '../locales';
 
 interface ChunkProps {
@@ -26,9 +26,9 @@ export const PREVIEW_SEED_EXTRA = 1;
 export async function getChunkStaticPaths(
   lang: string,
   chunkBaseUrl: string,
-  authorId?: AuthorId,
+  personaId?: PersonaId,
 ): Promise<ChunkStaticPath[]> {
-  const posts = await getPublishedPosts({ lang, authorId });
+  const posts = await getPublishedPosts({ lang, personaId });
   const chunkSize = SITE.postsPerPage;
   const chunkCount = Math.ceil(posts.length / chunkSize);
 
@@ -54,31 +54,31 @@ export interface ChunkRoute {
 interface GetChunkRoutesOptions {
   /** Non-default language codes to emit. Omit for default-language-only routes. */
   langs?: string[];
-  /** Emit a route per author (posts routes stay false). */
-  authors?: boolean;
+  /** Emit a route per persona (posts routes stay false). */
+  personas?: boolean;
 }
 
 /**
  * Shared `getStaticPaths` builder for the four chunk routes:
  * `/posts/chunk/[n]`, `/[lang]/posts/chunk/[n]`,
- * `/[author]/chunk/[n]`, `/[lang]/[author]/chunk/[n]`.
+ * `/[persona]/chunk/[n]`, `/[lang]/[persona]/chunk/[n]`.
  */
 export async function getChunkRoutes(options: GetChunkRoutesOptions = {}): Promise<ChunkRoute[]> {
-  const { langs = [], authors = false } = options;
+  const { langs = [], personas = false } = options;
   // Routes without a `[lang]` segment emit the default locale ('' -> defaultLocale);
   // routes with `[lang]` emit only the non-default locales (default is unprefixed).
   const langCodes = langs.length > 0 ? langs : [''];
-  const authorIds = authors ? ALL_AUTHORS.map((a) => a.name) : [''];
+  const personaIds = personas ? ALL_PERSONAS.map((a) => a.name) : [''];
 
   const routes: ChunkRoute[] = [];
 
   for (const lang of langCodes) {
-    for (const authorId of authorIds) {
+    for (const personaId of personaIds) {
       const shortLang = lang ? localePath(lang).slice(1) : '';
-      const chunkBaseUrl = authorId
+      const chunkBaseUrl = personaId
         ? shortLang
-          ? `/${shortLang}/${authorId}/chunk`
-          : `/${authorId}/chunk`
+          ? `/${shortLang}/${personaId}/chunk`
+          : `/${personaId}/chunk`
         : shortLang
           ? `/${shortLang}/posts/chunk`
           : '/posts/chunk';
@@ -86,14 +86,14 @@ export async function getChunkRoutes(options: GetChunkRoutesOptions = {}): Promi
       const chunkPaths = await getChunkStaticPaths(
         lang || defaultLocale,
         chunkBaseUrl,
-        authorId ? (authorId as AuthorId) : undefined,
+        personaId ? (personaId as PersonaId) : undefined,
       );
 
       for (const p of chunkPaths) {
         routes.push({
           params: {
             ...(lang ? { lang: shortLang } : {}),
-            ...(authorId ? { author: authorId } : {}),
+            ...(personaId ? { persona: personaId } : {}),
             n: p.params.n,
           },
           props: p.props,

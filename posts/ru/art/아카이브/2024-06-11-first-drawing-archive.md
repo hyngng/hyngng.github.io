@@ -5,7 +5,7 @@ image:
     alt: Для миниатюры
 
 title: "Архив рисунков времён начальной школы"
-authors: [art]
+personas: [art]
 
 categories: [그림, 아카이브]
 tags: [그림, 아카이브]

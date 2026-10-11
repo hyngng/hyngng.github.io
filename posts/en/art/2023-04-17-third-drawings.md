@@ -5,7 +5,7 @@ image:
     alt: For thumbnail
 
 title: "Digital Drawing #3: Let's Change Up the Format"
-authors: [art]
+personas: [art]
 
 categories: [그림]
 tags: [그림, 드로잉, 기지개, 어안렌즈, 폰카]

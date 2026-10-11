@@ -1,6 +1,6 @@
 ---
 title: "4 жанра песен для работы, когда нужна продуктивность"
-authors: [essay]
+personas: [essay]
 
 categories: [에세이]
 tags: [프로그래밍, 개발, 노래]

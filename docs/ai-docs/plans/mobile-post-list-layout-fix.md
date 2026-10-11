@@ -70,8 +70,8 @@
 - `src/components/PostListSection.astro`
 - `src/pages/posts/chunk/[n].astro`
 - `src/pages/[lang]/posts/chunk/[n].astro`
-- `src/pages/[author]/chunk/[n].astro`
-- `src/pages/[lang]/[author]/chunk/[n].astro`
+- `src/pages/[persona]/chunk/[n].astro`
+- `src/pages/[lang]/[persona]/chunk/[n].astro`
 - `src/features/post-list/` (공통 배치 모듈 — `distribution.ts`, `layout.ts`, `append.ts` 등)
 
 작업:

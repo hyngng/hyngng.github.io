@@ -1,6 +1,6 @@
 ---
 title: "A Brief Summary of the A* Algorithm for Shortest Path Search"
-authors: [dev]
+personas: [dev]
 
 categories: [컴퓨터과학, 알고리즘]
 tags: [컴퓨터과학, 알고리즘]

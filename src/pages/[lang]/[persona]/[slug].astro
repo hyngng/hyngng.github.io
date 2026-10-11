@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import PostLayout from '../../../layouts/PostLayout.astro';
 import { getPostSlug, getPostLang, localePath } from '../../../utils/posts';
-import { ALL_AUTHORS } from '../../../settings/authors.settings';
+import { ALL_PERSONAS } from '../../../settings/personas.settings';
 import { defaultLocale } from '../../../locales';
 
 export async function getStaticPaths() {
@@ -11,12 +11,12 @@ export async function getStaticPaths() {
   return allPosts.filter(post => !post.data.draft).flatMap(post => {
     const lang = getPostLang(post);
     if (lang === defaultLocale) return [];
-    const author = ALL_AUTHORS.find(a => a.name === post.data.authors[0]);
-    if (!author) return [];
+    const persona = ALL_PERSONAS.find(a => a.name === post.data.personas[0]);
+    if (!persona) return [];
     return [{
       params: {
         lang: localePath(lang).slice(1),
-        author: author.name,
+        persona: persona.name,
         slug: getPostSlug(post.id),
       },
       props: { post },

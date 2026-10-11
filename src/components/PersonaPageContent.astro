@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../locales';
-import { ALL_AUTHORS, AUTHOR_PREFIX, getAuthor, type Author } from '../settings/authors.settings';
+import { ALL_PERSONAS, PERSONA_PREFIX, getPersona, type Persona } from '../settings/personas.settings';
 import { localePath } from '../utils/posts';
 import Hero from './Hero.astro';
 import PersonaModal from './PersonaModal.astro';
@@ -9,49 +9,49 @@ import PostListSection from './PostListSection.astro';
 import Search from './Search.astro';
 
 interface Props {
-  author: Author;
+  persona: Persona;
   locale: Locale;
   currentLocale: string;
   posts: CollectionEntry<'posts'>[];
 }
 
-const { author, locale, currentLocale, posts } = Astro.props;
+const { persona, locale, currentLocale, posts } = Astro.props;
 
-const chunkBaseUrl = `${localePath(currentLocale)}/${author.name}/chunk`;
+const chunkBaseUrl = `${localePath(currentLocale)}/${persona.name}/chunk`;
 
-const otherPersonas = ALL_AUTHORS.filter((a) => a.name !== author.name).map((a) => {
-  const authorData = getAuthor(a.name, currentLocale);
+const otherPersonas = ALL_PERSONAS.filter((a) => a.name !== persona.name).map((a) => {
+  const personaData = getPersona(a.name, currentLocale);
   return {
     id: a.name,
     name: a.name,
-    avatar: authorData.avatar,
-    description: authorData.description,
+    avatar: personaData.avatar,
+    description: personaData.description,
   };
 });
 ---
 
 <Hero
-  title={AUTHOR_PREFIX + author.name}
-  description={author.description}
-  personaCountText={locale.authors.otherPersonaCount(otherPersonas.length)}
+  title={PERSONA_PREFIX + persona.name}
+  description={persona.description}
+  personaCountText={locale.personas.otherPersonaCount(otherPersonas.length)}
   personaAvatars={otherPersonas.map((a) => a.avatar)}
   personaTargetModalId="other-persona-modal"
 />
 
 <PersonaModal
   modalId="other-persona-modal"
-  title={locale.authors.otherPersona}
-  authors={otherPersonas}
+  title={locale.personas.otherPersona}
+  personas={otherPersonas}
   currentLocale={currentLocale}
-  closeAria={locale.authors.closeAria}
+  closeAria={locale.personas.closeAria}
 />
 
 <div class="content-body-layout">
   <div class="search-mobile-wrapper">
-    <Search locale={locale} currentLocale={currentLocale} authorId={author.name} />
+    <Search locale={locale} currentLocale={currentLocale} personaId={persona.name} />
   </div>
   <PostListSection locale={locale} posts={posts} currentLocale={currentLocale} chunkBaseUrl={chunkBaseUrl} />
   <aside class="search-sidebar">
-    <Search locale={locale} currentLocale={currentLocale} authorId={author.name} />
+    <Search locale={locale} currentLocale={currentLocale} personaId={persona.name} />
   </aside>
 </div>

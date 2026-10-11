@@ -8,10 +8,10 @@ const locale: Locale = {
     themeAria: '切换主题',
     rssAria: 'RSS',
   },
-  authors: {
+  personas: {
     persona: '人格',
     otherPersona: '其他人格',
-    otherCount: (n: number) => `及另外 ${n} 位作者`,
+    otherPersonaSuffix: (n: number) => `及另外 ${n} 个人格`,
     personaCount: (n: number) => `查看${n}个人格`,
     otherPersonaCount: (n: number) => `查看${n}个其他人格`,
     closeAria: '关闭',

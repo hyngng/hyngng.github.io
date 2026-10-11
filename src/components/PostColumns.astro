@@ -43,7 +43,7 @@ const columns = [
       {column.items.map((item) => (
         <PostCard
           post={item.post}
-          href={getPostPath(item.post.id, item.post.data.authors, currentLocale)}
+          href={getPostPath(item.post.id, item.post.data.personas, currentLocale)}
           index={item.index}
         />
       ))}

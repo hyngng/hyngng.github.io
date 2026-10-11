@@ -41,7 +41,7 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
 <div
   class="posts-grid"
   data-all-posts={JSON.stringify(chunkPosts.map(p => ({
-    path: getPostPath(p.id, p.data.authors, currentLocale),
+    path: getPostPath(p.id, p.data.personas, currentLocale),
     title: p.data.title,
     description: p.data.description || '',
   })))}

@@ -198,18 +198,22 @@ html.dark .img-dark { display: block; }
 
 ### `remark-directives.mjs` (textDirective → `<span>`)
 
-textDirective를 `<span class="...">`로 변환합니다.
+내용이 있는 textDirective를 `<span class="...">`로 변환합니다. 이 프로젝트의 인라인 래퍼 문법은 `:left[내용]`처럼 라벨 내용을 요구합니다. remark-directive는 라벨이 없는 `:name`도 textDirective로 파싱할 수 있으므로, 자식 노드가 없는 후보는 directive로 렌더링하지 않고 원본 Markdown 구문을 텍스트로 보존합니다. 이 규칙은 숫자·시간·비율 같은 특정 문자열을 예외 처리하지 않고, 파서가 인식한 문법과 프로젝트에서 지원하는 래퍼 문법 사이의 경계를 처리합니다.
 
 **동작:**
 1. textDirective 노드를 순회
-2. 지시어 이름(`node.name`)을 클래스로 추출
-3. `{ }` 속성(`node.attributes`)을 클래스로 추출
-4. `data.hName = 'span'`, `data.hProperties = { class: '...' }` 설정
+2. 자식 노드가 없으면 `position` 범위의 원문을 text 노드로 복원
+3. 내용이 있는 노드는 지시어 이름(`node.name`)을 클래스로 추출
+4. `{ }` 속성(`node.attributes`)을 클래스로 추출
+5. `data.hName = 'span'`, `data.hProperties = { class: '...' }` 설정
 
 **출력 예시:**
 ```
 :left[![alt](src)]{ .w-50 .shadow }
 → <span class="left w-50 shadow"><img src="src" alt="alt" /></span>
+
+16:9 화면비와 12:30 시각
+→ 16:9 화면비와 12:30 시각
 ```
 
 ### `remark-youtube.mjs`

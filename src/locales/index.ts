@@ -10,10 +10,10 @@ export interface Locale {
     themeAria: string;
     rssAria: string;
   };
-  authors: {
+  personas: {
     persona: string;
     otherPersona: string;
-    otherCount: (n: number) => string;
+    otherPersonaSuffix: (n: number) => string;
     personaCount: (n: number) => string;
     otherPersonaCount: (n: number) => string;
     closeAria: string;

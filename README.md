@@ -61,7 +61,7 @@ npm run dev
 SNS/공유 메타데이터:
 
 - **`ogImage`** — 기본 OG 이미지(`public/default-og.webp`, 1200x630). 포스트에 별도 이미지가 없을 때 `og:image`/`twitter:image`로 사용됩니다.
-- **`social.fediverse`** — Fediverse 핸들(`@user@domain`). `fediverse:creator` meta로 출력됩니다. 포스트는 작가별 `social.fediverse`를 우선하고, 없으면 이 값으로 폴백합니다.
+- **`social.fediverse`** — Fediverse 핸들(`@user@domain`). `fediverse:creator` meta로 출력됩니다. 포스트는 페르소나별 `social.fediverse`를 우선하고, 없으면 이 값으로 폴백합니다.
 - **`resourceHints`** — 외부 CDN(jsdelivr/googletagmanager) preconnect 목록. `Head.astro`에서 `<link rel="preconnect">`로 조건부 출력됩니다.
 - `twitter:card`는 기본값 `summary_large_image`로 출력됩니다.
 
@@ -103,9 +103,9 @@ verification: {
 
 > Bing은 Google Search Console과 연동되는 구조라 별도 검증 설정이 필요 없으며, Daum은 별도로 처리되어 검증 대상에서 제외됩니다.
 
-### 작가 설정
+### 페르소나 설정
 
-`src/settings/authors.settings.ts`에서 작가 정보를 추가하거나 수정합니다. 포스트 프론트매터의 `authors` 필드와 매칭됩니다.
+`src/settings/personas.settings.ts`에서 페르소나 정보를 추가하거나 수정합니다. 포스트 프론트매터의 `personas` 필드와 연결됩니다. 검색·라우팅·화면 표시는 페르소나를 기준으로 하며, SEO 메타데이터처럼 표준이 `author`를 요구하는 출력은 렌더링 단계에서 변환합니다.
 
 ### 폰트 설정
 
@@ -130,7 +130,7 @@ verification: {
 
 ## 콘텐츠 작성
 
-포스트는 `posts/` 아래 `.md` 또는 `.mdx` 파일로 작성합니다 (예: `posts/ko/blog/2026-01-01-example.md`). 작가 값 `blog`는 폴더명과 프론트매터의 `authors` 값, URL, 화면의 `@blog` 표기에 공통으로 사용합니다. 파일명은 `YYYY-MM-DD-{slug}` 형식입니다. 언어는 **프론트매터 `lang` 필드**(2자리 코드, 예: `ko`, `en`, `ru`, `fr`, `es`, `ja`, `zh`)로 지정합니다. `lang` 값을 가진 포스트가 있으면 해당 언어가 자동 지원됩니다. 기본 언어(`ko`) 외 언어는 라우팅에서 `/en/`, `/ru/` 등 접두사가 붙습니다.
+포스트는 `posts/` 아래 `.md` 또는 `.mdx` 파일로 작성합니다 (예: `posts/ko/blog/2026-01-01-example.md`). 페르소나 값 `blog`는 폴더명과 프론트매터의 `personas` 값, URL, 화면의 `@blog` 표기에 공통으로 사용합니다. 파일명은 `YYYY-MM-DD-{slug}` 형식입니다. 언어는 **프론트매터 `lang` 필드**(2자리 코드, 예: `ko`, `en`, `ru`, `fr`, `es`, `ja`, `zh`)로 지정합니다. `lang` 값을 가진 포스트가 있으면 해당 언어가 자동 지원됩니다. 기본 언어(`ko`) 외 언어는 라우팅에서 `/en/`, `/ru/` 등 접두사가 붙습니다.
 
 ### 프론트매터 예시
 
@@ -138,7 +138,7 @@ verification: {
 ---
 title: 포스트 제목
 description: 간단한 설명
-authors: [blog]
+personas: [blog]
 date: 2026-01-01 12:00:00 +0900
 categories: [카테고리1, 카테고리2]
 tags: [태그1, 태그2]

@@ -2,6 +2,8 @@
 
 이 파일은 프로젝트의 장기적인 계획과 미해결 작업을 관리합니다.
 
+> **용어 기준**: 현재 콘텐츠 분류와 앱 내부 모델은 `persona`/`personas`를 사용한다. 레거시 Jekyll 입력의 `author`와 외부 표준 출력의 `author`만 이 이름을 유지한다. HTML `<meta name="author">`, Schema.org `BlogPosting.author`, RSS 저자 필드처럼 외부 표준의 출력 키는 표준에 맞춰 유지한다.
+
 - [ ] 코드 리뷰 후속 수정 계획
   - [x] 각주 툴팁 플러그인의 `aria-describedby` HAST 속성명을 `ariaDescribedBy`로 맞춰 `footnote-label` 설명과 툴팁 ID를 단일 속성으로 병합한다.
   - [ ] 타임존 없는 날짜를 호스트 로컬 시간대와 locale-formatted 문자열 파싱에 의존하지 않도록 `SITE.timezone` 기준으로 파싱한다. UTC 및 비UTC 프로세스에서 같은 결과가 나오는지, 시간대 명시 날짜와 날짜 전용 입력을 함께 확인한다.
@@ -11,6 +13,8 @@
   - [x] CDN URL 변환에서 `data:` 등 URI scheme 및 protocol-relative URL을 로컬 경로로 오인하지 않도록 한다.
   - [x] 라우트 검증 파일 탐색을 Astro 콘텐츠 로더와 동일한 전체 `.md`/`.mdx` 집합으로 확장한다.
   - [x] 페르소나 모달 백드롭의 블러 필터를 제거하고 반투명 딤은 유지한다. 각주 모달의 블러 백드롭은 별도 디자인으로 유지한다.
+  - [x] Markdown 렌더링과 excerpt/글자 수 계산의 파서 확장 정의를 `src/utils/markdown-syntax.ts`로 공유한다. Astro 기본 GFM은 유지하고 계산 목적별 확장 범위 차이를 보존한다.
+  - [x] 빈 인라인 directive 후보는 `position`의 원문 텍스트로 되돌려 일반 콜론 문자열이 렌더링 중 사라지지 않도록 한다.
 
 - [ ] SEO 관련 작업
   - [x] **Robots.txt & Sitemap**: `request.url`에서 origin을 추출하여 동적 생성. `astro.config.mjs`의 `site: SITE.url` 설정으로 dev/prod 환경별 올바른 절대 URL 자동 반영.
@@ -31,25 +35,25 @@
     - CDN/로컬 이미지 모두 적용. CLS 없음 (항상 16:9).
   - [x] **JSON-LD Schema**: `BlogPosting` 타입의 구조화된 데이터 적용 (`inLanguage` 포함).
   - [x] **JSON-LD 전체 확장 (2026-08)**:
-    - 사이트 전역 `WebSite` 스키마를 `Head.astro`에서 주입 (홈/작가/포스트/404 전체 커버. PostLayout의 head 슬롯 오버라이드와 무관하게 유지).
-    - `BlogPosting` 보강: `url`, `mainEntityOfPage`(WebPage/@id=canonical), author `url`(작가 페이지) + `sameAs`, `inLanguage`를 BCP-47(`ko-KR` 등)로 정규화.
-    - `BreadcrumbList`: 포스트(Home→작가→포스트)는 PostLayout, 작가(Home→작가)는 BaseLayout의 `breadcrumbItems` prop으로 주입.
-    - author `sameAs`는 `authors.settings.ts`의 `SOCIAL_PROFILE_URLS` 레지스트리로 핸들→URL 변환 (하드코딩 금지. 새 SNS는 `Social` 필드 + 레지스트리 항목 추가만으로 확장).
+    - 사이트 전역 `WebSite` 스키마를 `Head.astro`에서 주입 (홈/페르소나/포스트/404 전체 커버. PostLayout의 head 슬롯 오버라이드와 무관하게 유지).
+    - `BlogPosting` 보강: `url`, `mainEntityOfPage`(WebPage/@id=canonical), 표준 `author.url`(페르소나 페이지) + `sameAs`, `inLanguage`를 BCP-47(`ko-KR` 등)로 정규화.
+    - `BreadcrumbList`: 포스트(Home→페르소나→포스트)는 PostLayout, 페르소나(Home→페르소나)는 BaseLayout의 `breadcrumbItems` prop으로 주입.
+    - `BlogPosting.author.sameAs` 값은 `personas.settings.ts`의 `SOCIAL_PROFILE_URLS` 레지스트리에서 핸들→URL로 변환 (하드코딩 금지. 새 SNS는 `Social` 필드 + 레지스트리 항목 추가만으로 확장).
     - 빌더는 `src/utils/jsonLd.ts` 순수 함수(`buildWebSiteJsonLd`/`buildBreadcrumbJsonLd`/`buildBlogPostingJsonLd`/`serializeJsonLd`)로 분리, `jsonLd.test.ts`(9건)로 검증.
-    - 검증: `npm test` 38 passed, `npm run build` 성공, `npx astro check` 0 errors. dist에서 홈=WebSite, 작가=WebSite+BreadcrumbList, 포스트=WebSite+BlogPosting+BreadcrumbList 확인. 상세는 `posts.md` 참조.
+    - 검증: `npm test` 38 passed, `npm run build` 성공, `npx astro check` 0 errors. dist에서 홈=WebSite, 페르소나=WebSite+BreadcrumbList, 포스트=WebSite+BlogPosting+BreadcrumbList 확인. 상세는 `posts.md` 참조.
   - [x] **GoatCounter Analytics**: `analytics.goatCounter` 설정 시 `GoatCounter.astro` 컴포넌트가 `<head>`에 트래킹 스크립트를 조건부 삽입. `undefined`면 로드 안 됨.
   - [x] **Google Analytics**: `analytics.google.id` 설정 시 `GoogleAnalytics.astro`(`src/components/seo/analytics/`)가 `<head>`에 gtag.js를 조건부 삽입. `undefined`면 로드 안 됨.
   - [x] **Google Tag Manager**: `analytics.googleTagManager.id` 설정 시 `GoogleTagManager.astro`가 `<head>`에 GTM 컨테이너 스크립트를 조건부 삽입.
   - [x] **Webmaster Verification**: `WebmasterVerifications.astro`(`src/components/seo/webmasters_verifications/`)가 `verification` 객체를 `<head>`에서 `<meta name="...-site-verification">`로 조건부 출력 (google/yandex/baidu/naver/pinterest). Daum은 `SITE.verification.daum` 설정을 통해 `src/pages/robots.txt.ts`에서 PIN 코드를 `robots.txt`에 조건부 주입. Bing은 GSC 연동 구조라 별도 설정 불필요. `public/ads.txt`(AdSense 표준 형식)로 광고 도메인 검증 지원.
-  - [x] **fediverse:creator**: 포스트는 작가별 `social.fediverse` 핸들 우선, 없으면 `SITE.social.fediverse` 폴백(중복 제거). 비포스트 페이지는 `SITE.social.fediverse`(`@hyngng.main@threads.net`) 전역 출력. Threads/Fediverse 연동으로 게시글 귀속 확인.
+  - [x] **fediverse:creator**: 포스트는 페르소나별 `social.fediverse` 핸들 우선, 없으면 `SITE.social.fediverse` 폴백(중복 제거). 비포스트 페이지는 `SITE.social.fediverse`(`@hyngng.main@threads.net`) 전역 출력. Threads/Fediverse 연동으로 게시글 귀속 확인.
   - [x] **Resource Hints (preconnect)**: `SITE.resourceHints` 배열(SSOT) 기반으로 `Head.astro`에서 `preconnect` 조건부 출력. jsdelivr(이미지 CDN + KaTeX), googletagmanager(GTM). *(cdnjs는 2026-08 Font Awesome 제거 시 함께 삭제됨 — 아래 감사 후속 일괄 정리 2 참조)*
   - [x] **twitter:card summary_large_image 전환**: `BaseLayout`/`PostLayout` 모두 `summary` → `summary_large_image`. 기본 OG 이미지를 `default-og.webp`(1200x630)로 변경해 대형 카드 요건 충족.
   - [x] **canonical / hreflang / article / author / twitter 메타 보강** (Chirpy head 예시 모티브):
-    - canonical: 포스트는 각 언어 버전이 자기 자신, 일반 페이지(홈/작가)도 자기 자신. `og:url`과 통일.
+    - canonical: 포스트는 각 언어 버전이 자기 자신, 일반 페이지(홈/페르소나)도 자기 자신. `og:url`과 통일.
     - hreflang: `PostLayout`에서 같은 slug 번역본 전체를 `link rel="alternate" hreflang`으로 출력 (자기 자신 포함, 기본 로케일 버전 존재 시 `x-default`). sitemap.xml.ts의 hreflang 정책과 동일하게 유지.
     - article 메타: `article:published_time`(`date`), `article:modified_time`(`last_modified_at || date`).
-    - author 메타: `<meta name="author">`에 작가명 나열.
-    - twitter 메타: `twitter:title`/`twitter:description`/`twitter:site`(`SITE.social.twitter` 비어있을 때 생략)/`twitter:creator`(작가별 social.twitter 우선, `SITE.social.twitter` 폴백, `@` 프리픽스 자동 부여).
+    - author 메타: `<meta name="author">`에 페르소나 표시명을 나열.
+    - twitter 메타: `twitter:title`/`twitter:description`/`twitter:site`(`SITE.social.twitter` 비어있을 때 생략)/`twitter:creator`(페르소나별 social.twitter 우선, `SITE.social.twitter` 폴백, `@` 프리픽스 자동 부여).
     - 404 페이지: `noindex` prop 추가로 `robots=noindex` + canonical 생략.
     - site.settings.ts: `social.twitter: '' as string` — `as const`로 인한 리터럴 타입 고정이 truthy 분기에서 `never`로 좁혀지는 타입 에러 해소용 명시.
     - 검증: `npm run build` 성공, `astro check` 0 errors. dist에서 포스트(ko/en) canonical·hreflang·article·twitter·x-default, 홈 자기 canonical, 404 noindex 확인.
@@ -58,8 +62,8 @@
     - 검색 `h2` 중복 제거: `Search.astro`의 `.search-title`을 `<h2>` → `<p>`로 변경. 모바일 wrapper + 데스크 사이드바에 동일 레이블이 2회 렌더링되어 헤딩 중복·문서 아웃라인 오염이 발생했던 문제 해소 (`docs/ai-docs/features/search.md` 갱신).
     - 포스트 메타 description 자동 생성: `extractExcerpt()`에 `maxLength` 파라미터 추가(`META_DESCRIPTION_MAX_LENGTH = 155`). `PostLayout.astro`에서 본문 기반 excerpt로 `description`/`og:description`/`twitter:description`/JSON-LD `description` 채움. description 미기입 포스트(ko 54개 전수)의 사이트 전역 기본 메타 중복 폴백 제거. RSS(`getRssItems()`)에도 excerpt 적용.
     - title 브랜드 통일: `Head.astro` 기본 title `SITE.username`(`hyngng`) → `SITE.title`(`HYNGNG`). og:title과 불일치하던 문제 해소.
-    - 작가 페이지 타이틀·메타 고유화: `[author]/index.astro`, `[lang]/[author]/index.astro`에서 `title`(`@작가명`)과 `description`(작가별 로컬라이즈 설명) 전달. `BaseLayout`에 `description` prop 추가, og/twitter title은 페이지 타이틀 반영.
-    - 검증: `npm run build` 성공, `npx astro check` 0 errors, `npm test` 23 passed. dist에서 루트 h1=1/h2=2, 포스트 JSON-LD description 155자, 작가 페이지 `<title>@hyngng.dev</title>`, RSS 아이템별 description 확인.
+    - 페르소나 페이지 타이틀·메타 고유화: `[persona]/index.astro`, `[lang]/[persona]/index.astro`에서 `title`(`@페르소나명`)과 `description`(페르소나별 로컬라이즈 설명) 전달. `BaseLayout`에 `description` prop 추가, og/twitter title은 페이지 타이틀 반영.
+    - 검증: `npm run build` 성공, `npx astro check` 0 errors, `npm test` 23 passed. dist에서 루트 h1=1/h2=2, 포스트 JSON-LD description 155자, 페르소나 페이지 `<title>@hyngng.dev</title>`, RSS 아이템별 description 확인.
   - **검색 설정**: Google Search Console 등 주요 서치어드바이저 지원 구조 마련 (개인정보처리방침 안내 포함).
 - [x] 댓글 및 검색 기능
   - [x] **검색 기능**: Pagefind 도입 및 인덱싱 준비 (다국어 검색 분리 전략 적용).
@@ -68,9 +72,9 @@
     - [ ] Disqus 지원 확장 (향후 계획)
   - [x] **포스트 청크 로딩**: HTML 조각 기반 점진적 로딩 시스템.
     - `site.settings.ts`의 `postsPerPage`로 청크 크기 설정.
-    - 빌드 타임에 `.astro` 청크 페이지 생성 (`/posts/chunk/[n]`, `/[lang]/posts/chunk/[n]`, `/[author]/chunk/[n]`, `/[lang]/[author]/chunk/[n]`).
+    - 빌드 타임에 `.astro` 청크 페이지 생성 (`/posts/chunk/[n]`, `/[lang]/posts/chunk/[n]`, `/[persona]/chunk/[n]`, `/[lang]/[persona]/chunk/[n]`).
     - `chunkEndpoint.ts` 공통 유틸리티로 4개 라우트의 분할 로직 공통화. `totalPosts` prop 전달로 정확한 잔여 포스트 수 계산 지원.
-    - 홈/작가 페이지는 첫 청크만 렌더링, 다음 포스트 프리뷰 카드(`<a class="load-more-card">`)로 progressive enhancement.
+    - 홈/페르소나 페이지는 첫 청크만 렌더링, 다음 포스트 프리뷰 카드(`<a class="load-more-card">`)로 progressive enhancement.
     - JS 활성화 시: `fetch` → `DOMParser` → insertBefore + `.load-more-card` 교체 → `pushState` (URL 상태 반영).
     - `.posts-grid` 이벤트 위임으로 load-more 클릭 처리 (AbortController로 스코프 관리).
     - JS 비활성화 시: 청크 페이지 네비게이션 (홈/이전 링크 포함).
@@ -172,11 +176,11 @@
     - CSS 섹션 순서 재배치 (컨테이너 → 액션 블록 → 언어 목록 → 테마 아이콘 → concave corners → 모바일).
     - HTML 들여쓰기 및 버튼 태그 포맷 정리.
 - [x] RSS 생성
-  - `@astrojs/rss`로 라우트 기반 RSS 생성. 구조: 루트(`/rss.xml`), 언어별(`/[lang]/rss.xml`), 작가별(`/[author]/rss.xml` 기본 언어, `/[lang]/[author]/rss.xml` 비기본 언어). 기본 언어는 URL 슬러그 없음 규칙을 RSS에도 동일 적용.
+  - `@astrojs/rss`로 라우트 기반 RSS 생성. 구조: 루트(`/rss.xml`), 언어별(`/[lang]/rss.xml`), 페르소나별(`/[persona]/rss.xml` 기본 언어, `/[lang]/[persona]/rss.xml` 비기본 언어). 기본 언어는 URL 슬러그 없음 규칙을 RSS에도 동일 적용.
   - `SITE.title`, `SITE.description`을 RSS 메타데이터에 사용. `site` 필드는 `request.url` origin에서 동적 추출.
   - `posts` content collection 기준으로 RSS item을 수집.
-  - 포스트 collection schema의 `title`, `description`, `date`, `last_modified_at`, `author`, `tags`, `draft` 사용.
-  - Frame.astro RSS 버튼은 작가 페이지에서 작가별 RSS, 그 외에는 언어별 RSS로 링크됨 (`authorId` prop 사용).
+  - 포스트 collection schema의 `title`, `description`, `date`, `last_modified_at`, `personas`, `tags`, `draft` 사용.
+  - Frame.astro RSS 버튼은 페르소나 페이지에서 페르소나별 RSS, 그 외에는 언어별 RSS로 링크됨 (`personaId` prop 사용).
 - [x] 라이트/다크 모드 이미지 구분
   - `.md`: `![alt](url){.img-light}` 구문 → `remark-image-attributes.mjs` 플러그인이 `{.class}` 파싱 → `hProperties.className` 주입.
   - `.mdx`: `:img-light[...]` directive 구문 → `remark-directive-classes.mjs`가 처리.
@@ -202,24 +206,25 @@
     - 모바일(≤960px): 호버 툴팁 완전 숨김. 각주 번호 터치 시 하단 스크롤 대신 본문이 담긴 모달 창(`<dialog class="footnote-modal">`) 표시.
     - 모달 개선: flex 컬럼 카드로 본문 영역만 스크롤되고 하단 닫기 버튼(`Locale.footnote.close` 7개 국어 지원)은 항상 고정. 본문 내 복귀 버튼(`a[data-footnote-backref]`) 터치 시 모달을 닫고 문서 하단 각주 정의(`#user-content-fn-{n}`)로 부드럽게 스크롤 이동 (나무위키 스타일). `PersonaModal`과 동일한 곡률, 깊은 그림자, 블러 백드롭, 부드러운 등장/퇴장 트랜지션 적용.
     - 검증: `npm run build` 성공, `npx astro check` 0 errors. 상세는 `docs/ai-docs/features/footnotes.md` 참조.
-  - [x] **본문 마크다운 하이퍼링크 재정의**: Jekyll 시절 구 URL(`https://hyngng.github.io/posts/{slug}/`) 하이퍼링크 235개를 현재 다국어 라우팅 규칙(`/{author}/{slug}/` 또는 `/{lang}/{author}/{slug}/`)에 맞춰 일괄 업데이트. 대상 언어에 포스트가 존재하는 항목만 변환, 앵커(#) 보존. 상세는 `docs/ai-docs/features/posts.md` 참조.
+  - [x] **본문 마크다운 하이퍼링크 재정의**: Jekyll 시절 구 URL(`https://hyngng.github.io/posts/{slug}/`) 하이퍼링크 235개를 현재 다국어 라우팅 규칙(`/{persona}/{slug}/` 또는 `/{lang}/{persona}/{slug}/`)에 맞춰 일괄 업데이트. 대상 언어에 포스트가 존재하는 항목만 변환, 앵커(#) 보존. 상세는 `docs/ai-docs/features/posts.md` 참조.
 - [ ] **PC 검색바 수직 위치 10px 하향 조정**
   - `.search-sidebar`의 `top: var(--posts-section-margin-top)` (80px) 대신 별도 토큰으로 10px 추가하여 포스트 영역 시작점보다 살짝 아래에 배치.
   - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.
   - 모바일 검색(`.search-mobile-wrapper`)에는 영향 없음.
 - [ ] 완료된 작업 (사후 기록)
-  - [x] 모바일(≤960px) 루트 페이지 영역 낭비 제거 — 글쓴이(Authors) 섹션 숨김(`display: none`) 및 모바일 전용 접기/펼치기 토글(버튼+JS+CSS) 완전 삭제, `toggleAria` 로케일 필드 정리(7개 로케일). `PostListSection`의 `포스트` 섹션 제목 모바일 숨김 → 검색창이 카드 바로 위에 배치. `Search`는 모바일에서 제목과 입력창을 가로(flex row) 배치. 961~1280px 구간은 기존 유지.
-  - [x] 포스트 URL 구조 `-posts` 접미사 제거 및 롤백 (원래의 `/[author.id]/[slug]/` 구조로 복원). 리다이렉트(`src/pages/posts/[slug].astro`)는 `getPostPath()`를 재사용하므로 자동으로 신규 URL 경로로 반영됨.
+  - [x] Frame 컴포넌트 완전 캡슐화 (방향 A 리팩토링) — `BaseLayout.astro`에 분산되어 있던 사각형 테두리 마스크(`.frame-border`, 4개 `.frame-edge`, 하단 concave pseudo-element) 및 관련 CSS를 [Frame.astro](file:///c:/Users/kiw60/Desktop/hyngng/hyngng.github.io/src/components/Frame.astro)로 이전 통합. 외곽 프레임과 상하단 concave, 액션 바 일체를 `Frame.astro` 단일 컴포넌트로 캡슐화하여 단일 진실 출처(SSOT) 확립 및 BaseLayout과의 강결합 해소. 검증: `npm run build` 성공, `npx astro check` 0 errors.
+  - [x] 모바일(≤960px) 루트 페이지 영역 낭비 제거 — 페르소나(Personas) 섹션 숨김(`display: none`) 및 모바일 전용 접기/펼치기 토글(버튼+JS+CSS) 완전 삭제, `toggleAria` 로케일 필드 정리(7개 로케일). `PostListSection`의 `포스트` 섹션 제목 모바일 숨김 → 검색창이 카드 바로 위에 배치. `Search`는 모바일에서 제목과 입력창을 가로(flex row) 배치. 961~1280px 구간은 기존 유지.
+  - [x] 포스트 URL 구조 `-posts` 접미사 제거 및 롤백 (원래의 `/[persona.id]/[slug]/` 구조로 복원). 리다이렉트(`src/pages/posts/[slug].astro`)는 `getPostPath()`를 재사용하므로 자동으로 신규 URL 경로로 반영됨.
   - [x] URL 구조 재설계 및 콘텐츠 컬렉션 네이밍 (blog -> posts)
-  - [x] 모바일 글쓴이(Authors) 섹션 접기/펼치기 기능 추가 및 컴포넌트 간 여백 축소 (Hero, Authors, 검색창)
+  - [x] 모바일 페르소나(Personas) 섹션 접기/펼치기 기능 추가 및 컴포넌트 간 여백 축소 (Hero, Personas, 검색창)
   - [x] 404페이지 — NotFoundHero 컴포넌트(Hero 구조 기반) + 다국어(ko/en/ru/fr/es) 지원
-  - [x] Authors 섹션 상하 움직임 수정 — `global.css`에서 `margin-top`/`clip-path` 트랜지션 제거, 상하 위치 고정
+  - [x] Personas 섹션 상하 움직임 수정 — `global.css`에서 `margin-top`/`clip-path` 트랜지션 제거, 상하 위치 고정
   - [x] CDN 상대경로 지원 — `remark-cdn-images.ts`에 `shouldRewrite()` 함수 추가, 상대경로도 CDN URL로 변환
-  - [x] 작가 아바타 CDN 연동 — `authors.settings.ts`의 `getAuthor()`에서 `resolveAvatar()` 적용
+  - [x] 페르소나 아바타 CDN 연동 — `personas.settings.ts`의 `getPersona()`에서 `resolveAvatar()` 적용
   - [x] PostCard 이미지 초기화 모듈 분리 — `image-init.ts` 신규 생성, `loader.ts`의 `loadChunk()` 완료 시 호출
   - [x] img-dark/light CSS Specificity 수정 — `.img-wrapper.img-dark` 형태로 Specificity `(0,2,0)` 높여 `.img-wrapper` `(0,1,0)` 상회
   - [x] 콘텐츠 디렉토리 이동 — `src/content/` → `content/`, `content.config.ts` base 경로 변경
-  - [x] 홈 페이지 작가 아바타 미표시 수정 — `HomePageContent.astro`에서 `ALL_AUTHORS` 직접 순회 시 `getAuthor()` 호출로 `resolveAvatar()` 적용
+  - [x] 홈 페이지 페르소나 아바타 미표시 수정 — `HomePageContent.astro`에서 `ALL_PERSONAS` 직접 순회 시 `getPersona()` 호출로 `resolveAvatar()` 적용
   - [x] `lang`/`locale` 통합 — `SITE.lang`을 BCP-47(`ko-KR`)로 통합, `locale` 필드 제거. `og:locale`은 `replace('-', '_')`로 변환
   - [x] Timezone 적용 — `z.coerce.date()` → `z.string().transform(parseDateWithTimezone)`으로 타임오프셋 없는 날짜에 `SITE.timezone` 기반 보정 자동 적용
   - [x] 본문 이미지 강제 16:9 종횡비 수정 — shimmer는 16:9 유지, `.img-wrapper.loaded`에서 `aspect-ratio: auto` + `object-fit: contain`으로 원본 비율 표시
@@ -227,7 +232,7 @@
   - [x] Mermaid 다이어그램 중앙 정렬 — `article .mermaid`에 `text-align: center` + `margin: var(--block-margin)` 추가
   - [x] Mermaid 폰트 로딩 레이스 컨디션 수정 — `renderMermaid()`에 `await document.fonts.ready` 추가로 웹폰트 로드 완료 후 렌더링 보장
   - [x] Mermaid `line-height` 상속 격리 — `.mermaid`에 `line-height: normal`, `font-size: 16px` 리셋으로 `article`의 `line-height: 1.8` 상속 방지
-  - [x] CDN URL 처리 로직 통합 — `src/utils/cdn.ts` 공유 유틸리티 추출. `content.config.ts`와 `authors.settings.ts`의 중복 제거
+  - [x] CDN URL 처리 로직 통합 — `src/utils/cdn.ts` 공유 유틸리티 추출. `content.config.ts`와 `personas.settings.ts`의 중복 제거
   - [x] `site.settings.ts` (`siteConfig`)를 단일 진실 출처(SSOT)로 일원화하여 유저 커스텀 다국어 메타데이터 및 인삿말 관리 구축, 누락 시 `defaultLocale` Fallback (`getSiteMeta`) 적용
   - [x] 코드 리팩토링 — `site.settings.ts` 오탈자 주석 제거, `Frame.astro` 죽은 `data-i18n` 속성 제거 및 `allLocaleShortCodes` 간소화, `PostCard.astro` IIFE 패턴 제거, `typography.css` 미사용 border utility 12개 제거
   - [x] 헤더 상단 1px 간격 수정 — 줌 레벨에 따라 `.frame-border` border-top과 `.action-block` 경계 사이에 서브픽셀 반올림으로 생기는 1px 간격 제거. `.action-block`의 `top`을 `calc(var(--frame-thickness) - 1px)` + `padding-top: 1px`으로 1px 겹치게 수정 (콘텐츠 위치 유지, frame-layout.md 문서화). 좌우 경계(`.left-action`/`.right-actions`의 `left`/`right`)에도 동일한 1px 겹침 + padding 적용
@@ -235,7 +240,7 @@
   - [x] 보안/구조 감사 14개 항목 정리
     - [x] 환경변수·시크릿 하드코딩 점검 — 시크릿 노출 없음, 외부 리소스 설정 분리 유지
     - [x] 의존성 정리 — `@vite-pwa/astro` 제거, `vite-plugin-pwa` 기반 커스텀 `astro-pwa` 통합으로 전환. **사유**: `@vite-pwa/astro@1.2.0`의 `peerDependencies.astro`가 `^5.0.0`까지라 Astro 7 미지원(peer 충돌). 공식 통합의 핵심 로직(`generateSW` 플로우 + manifest URL 재작성)을 `src/integrations/astro-pwa.ts`로 벤더링하고 pwa-assets/experimental 기능은 제거. 상세는 `docs/ai-docs/features/pwa.md` 참조
-    - [x] 작가 시스템 — 첫 번째 작가 대표 구조로 통일
+    - [x] 페르소나 시스템 — 첫 번째 페르소나 대표 구조로 통일
     - [x] 빌드 경고 점검 — 미번역 포스트(`why-i-built-blog`)는 경고만 출력하고 빌드 진행
     - [x] 포스트 청크 로딩 시스템 점검 — 동작 보존 확인
     - [x] PWA — 커스텀 통합 유지, manifest/PWA/SW 정상 동작 확인
@@ -257,10 +262,10 @@
     - 검증: `astro check` 0 errors / 0 warnings / 0 hints 달성, 최종 빌드 성공.
   - [x] 감사(A~E) 후속 일괄 정리 (2026-08)
     - **A (실질 버그)**: `public/llms.txt` 생성 (Head.astro의 llms.txt 404 해소). `mermaidThemeSync.ts` — `ensureMermaidContainers()`+`roots.length===0` 체크를 `loadMermaid()` 앞으로 이동해 무다이어그램 페이지에서 mermaid(~1MB) import 차단. `.border-1`~`.border-5` 삭제(`.border`만 유지). `--color-shadow`(light/dark) + `.shadow` 유틸리티 추가. `NO_IMG_HEIGHT` 136→112로 CSS `--post-card-height-no-image`와 단일화.
-    - **B (DRY)**: `cdn.ts`에 `shouldRewriteCdnUrl()`/`rewriteToCdnUrl()` 추출 — `remark-cdn-images.ts`/`rehype-image-wrapper.mjs`의 중복 CDN 재작성 제거 (+ 테스트). `src/utils/image-reveal.ts` 공용 헬퍼 — `shimmer.ts`/`image-init.ts`의 decode→rAF→loaded 패턴 단일화. `ThemeInit.astro` — Head/ChunkPageLayout의 테마 IIFE 중복 제거. `getChunkRoutes({langs?, authors?})` 팩토리 — 4개 청크 라우트 통합. `PostColumns.astro` — PostListSection/ChunkPostListBody의 2열+LoadMoreCard 중복 제거. TOC.astro — parentH2/H3 재계산을 `closest('.toc-group')`으로 단순화.
+    - **B (DRY)**: `cdn.ts`에 `shouldRewriteCdnUrl()`/`rewriteToCdnUrl()` 추출 — `remark-cdn-images.ts`/`rehype-image-wrapper.mjs`의 중복 CDN 재작성 제거 (+ 테스트). `src/utils/image-reveal.ts` 공용 헬퍼 — `shimmer.ts`/`image-init.ts`의 decode→rAF→loaded 패턴 단일화. `ThemeInit.astro` — Head/ChunkPageLayout의 테마 IIFE 중복 제거. `getChunkRoutes({langs?, personas?})` 팩토리 — 4개 청크 라우트 통합. `PostColumns.astro` — PostListSection/ChunkPostListBody의 2열+LoadMoreCard 중복 제거. TOC.astro — parentH2/H3 재계산을 `closest('.toc-group')`으로 단순화.
     - **C (죽은 코드)**: `data-i18n` 13개 속성 제거 (클라이언트 리더 없음). `.clearfix` 제거 (float 정리는 `article::after`가 담당). `toc_sticky` 스키마·프론트매터 436개 제거 (TOC가 항상 sticky이므로. 1차 처리 372개는 손상 복구 시 `git checkout -- posts/`로 되돌아간 64개가 남았고, 2026-08 후속 세션에서 전수 436개 완료). `scripts/` 원타임 마이그레이션 잔재 6개 삭제. `posts/[slug].astro`의 `lang="ko"`+한국어 폴백 하드코딩 → `defaultLocaleBcp47`+`locale.redirect.fallbackLink`(로케일 7개 추가). **보존 결정**: `start_with_ads`/Adsense는 Jekyll 호환용으로 유지 — `Adsense.astro`는 아직 미연결 (연결 시 `site.settings.ts`의 `analytics.adsense` 사용, `public/ads.txt` 필요). `default-og.png`는 의도적이라 보존.
     - **D (의존성)**: `@astrojs/check`/`typescript`/`@types/qrcode` → devDependencies 이동. `micromark-extension-{gfm-table,directive,math}`+`mdast-util-{gfm-table,directive,math}` 6개를 dependencies에 명시 등록 (전이 의존성 제거). `markdown.processor: unified(...)`는 Astro 공식 권장 패턴임을 확인 — 유지. pagefind 이중 실행은 오탐 — `pagefindBuild()` 훅은 인덱싱하지 않고 postbuild CLI만 인덱싱.
-    - **E (아키텍처)**: README의 콘텐츠 구조(`posts/{lang}/{author}/`, `authors` 필드) 갱신. posts.md에 micromark 파서↔astro.config 플러그인 수동 동기화 규칙 문서화(E3). `relativeTime.ts`는 커스텀 "작성" 문구 유지를 위해 현행 유지(E2). `data-all-posts` 인라인 JSON은 청크 카드 DOM 검색 폴백으로 기능적이라 유지(E4).
+    - **E (아키텍처)**: README의 콘텐츠 구조(`posts/{lang}/{persona}/`, `personas` 필드) 갱신. posts.md에 micromark 파서↔astro.config 플러그인 수동 동기화 규칙 문서화(E3). `relativeTime.ts`는 커스텀 "작성" 문구 유지를 위해 현행 유지(E2). `data-all-posts` 인라인 JSON은 청크 카드 DOM 검색 폴백으로 기능적이라 유지(E4).
     - **F (버그 수정 및 캐시 문서화)**: `remark-media-caption.mjs` 방문자 콜백 3-arg 복구(`visit(tree, 'paragraph', (node, index, parent) => ...)` - 2-arg 사용 시 `parent`가 undefined가 되어 figure 변환이 전부 건너뛰어지는 이슈 해결). Astro 7의 Content Layer 캐시 구조(`dev` 모드는 프로젝트 루트 `.astro/data-store.json`, `build` 모드는 `node_modules/.astro/data-store.json`)와 dev 서버 캐시 무효화 절차를 `docs/ai-docs/development/build-cache.md`에 반영 및 검증 완료.
     - 검증: `npm run build` + `npx astro check` + `npm test` 성공. dev 서버(`localhost:4321`) 및 빌드 산출물(`dist`) 전수 media-figure/figcaption 정상 변환 확인.
   - [x] **raw HTML `<img>` CDN 변환 파이프라인 보강 (`rehype-raw` 도입)**
@@ -278,7 +283,7 @@
     - **스코프 결정**: `posts/` 확장자 없는 파일 75개 미발행은 의도된 상태 → 콘텐츠/glob 변경 없음(A1 제외). 나머지 수정은 승인.
     - **A2 (no-JS 이미지 게이트)**: `Head.astro`/`ChunkPageLayout.astro`가 셋팅만 하던 `dataset.js`를 소비. `typography.css` shimmer(`::after`)·`img{opacity:0}`와 `PostCard.astro` 카드 이미지를 `html[data-js]` 뒤로 게이트하고, `html:not([data-js])` 폴백으로 JS 없는 환경에서도 이미지 즉시 표시(`aspect-ratio:auto` + `height:auto`).
     - **A3 (KaTeX 조건부 로드)**: `content.config.ts`에 `math: z.boolean().optional()` 추가. `PostLayout.astro`에서 `post.data.math`일 때만 KaTeX CSS `<link>` 출력 (수식 있는 14개 파일은 이미 `math: true`라 그대로 동작, 나머지 페이지에서 ~50KB CSS 절약).
-    - **B (죽은 코드/에셋 삭제)**: `posts.count` 로케일 키(타입+7개 파일) 삭제, `PostCard`의 `data-title` 삭제(`data-path`/`data-index`는 Search가 사용하므로 유지), 빈 `src/lib/` 삭제, `getPostAuthorSegment`(identity 함수) 제거 후 3곳 `author.id` 직접 사용, 미참조 폰트 전수 삭제 — `public/fonts/Pretendard-1.3.9/`(62개), `public/fonts/Reddit_Mono/static/`(9개), `src/assets/fonts/Pretendard-1.3.9/`에서 astro.config의 Font API가 참조하는 5개 subset woff2 + LICENSE만 유지.
+    - **B (죽은 코드/에셋 삭제)**: `posts.count` 로케일 키(타입+7개 파일) 삭제, `PostCard`의 `data-title` 삭제(`data-path`/`data-index`는 Search가 사용하므로 유지), 빈 `src/lib/` 삭제, `getPostPersonaSegment`(identity 함수) 제거 후 3곳 `persona.id` 직접 사용, 미참조 폰트 전수 삭제 — `public/fonts/Pretendard-1.3.9/`(62개), `public/fonts/Reddit_Mono/static/`(9개), `src/assets/fonts/Pretendard-1.3.9/`에서 astro.config의 Font API가 참조하는 5개 subset woff2 + LICENSE만 유지.
     - **C (Font Awesome → 인라인 SVG)**: Head.astro의 cdnjs all.min.css(~600KB) 링크 제거, `site.settings.ts` cdnjs preconnect 제거. Frame.astro(home/sun/moon/rss)·Search.astro(magnifying-glass)를 `viewBox`+`<path>` 인라인 SVG(`fill="currentColor"`, `1em`)로 교체 — 테마 토글은 `#theme-icon-sun/moon` 엘리먼트 2개 + dark.css `display` 토글 유지. Admonition 아이콘(tip/info/warning/danger)은 `remark-directives.mjs`가 SVG를 직접 주입, `typography.css`의 FA `::before` 규칙 제거.
     - **D (중복 공용화)**: `distribution.ts`에 `distributePostColumns(posts, indexOffset)` 헬퍼 추가 — PostListSection/ChunkPostListBody의 `indexed`→`distributeByWeight`→`loadMoreInLeft` 중복 블록 통합. (Search 2회 렌더는 모바일/사이드바 반응형 패턴이라 기능적 — 현행 유지.)
     - **검증**: `npm run build` 성공(574 pages), `npx astro check` 0 errors, `npm test` 23 passed. dist 전수 확인 — cdnjs/FA 잔재 0, KaTeX CSS가 수식 포스트에만 존재, 프레임/admonition 인라인 SVG 렌더링 확인.
@@ -297,8 +302,8 @@
     - 배경: 초기 페이지 진입 시 history state가 없어 브라우저 뒤로 가기 시 `e.state?.chunk`가 `undefined`로 평가되어 1페이지 상태로 DOM 카드가 복원되지 않고 2페이지 카드가 잔존함. 딥링크 `?p=3` 진입 시에도 중간 청크마다 `pushState`를 호출해 세션 히스토리가 불필요하게 오염됨. 또한 앞으로 가기 순차 로드 중 다시 뒤로 갈 때 `currentChunk` 미갱신으로 인한 조기 반환 및 비동기 완료 레이스 발생 가능.
     - 해결: `loader.ts`에서 초기화 시점에 `history.replaceState({ chunk: initialChunk })`로 초기 히스토리를 명시 기록. 딥링크 로드(`loadInitial`) 시에는 `loadChunk(i, false)`로 호출하여 `pushState`를 건너뛰어 히스토리 스택 보존. `popstateSeq` 시퀀스 토큰을 도입해 비동기 청크 로드 및 DOM append 단계마다 최신 리비전을 검증하여 취소된 작업의 DOM 변이를 원천 차단하고, `target <= currentChunk` 시 `controller.restoreChunkCount(target)`로 초과 카드를 즉시 제거·복원하여 재진입 레이스 완전 해소.
   - [x] **포스트 번역본 동일성과 라우트 충돌 검사 식별자 계약 일치 (P2)**
-    - 배경: 실제 생성 라우트는 `(lang, author, slug)`이나 `validate-routes.ts`는 `(lang, slug)`만 검사하여 타 작가의 동일 slug 작성을 차단했고, 반대로 `PostLayout.astro`는 `slug`만 보고 타 작가의 글을 `hreflang` 번역본으로 잘못 묶어 세 계층(`validate-routes`, `PostLayout`, `sitemap.xml`)의 계약이 불일치함.
-    - 해결: 콘텐츠 스키마(`content.config.ts`)의 `authors` 필드(`string | string[]`, 기본값 `['dev']`) 단일 규칙에 맞춰 `frontmatter-lang.ts`에 `getFrontmatterAuthor`를 구현하고, `validate-routes.ts`에서 실제 산출 경로 `${localePath(lang)}/${author}/${slug}`로 충돌을 검증하도록 수정. `PostLayout.astro`에서도 `p.data.authors[0] === currentAuthor && getPostSlug(p.id) === currentSlug`로 동일 작가의 글만 번역본으로 묶어 3개 계층의 계약을 일치시키고 테스트 계약 정합성 확보.
+    - 배경: 실제 생성 라우트는 `(lang, persona, slug)`이나 `validate-routes.ts`는 `(lang, slug)`만 검사하여 타 페르소나의 동일 slug 작성을 차단했고, 반대로 `PostLayout.astro`는 `slug`만 보고 타 페르소나의 글을 `hreflang` 번역본으로 잘못 묶어 세 계층(`validate-routes`, `PostLayout`, `sitemap.xml`)의 계약이 불일치함.
+    - 해결: 콘텐츠 스키마(`content.config.ts`)의 `personas` 필드(`string | string[]`, 기본값 `['dev']`) 단일 규칙에 맞춰 `frontmatter-lang.ts`에 `getFrontmatterPersona`를 구현하고, `validate-routes.ts`에서 실제 산출 경로 `${localePath(lang)}/${persona}/${slug}`로 충돌을 검증하도록 수정. `PostLayout.astro`에서도 `p.data.personas[0] === currentPersona && getPostSlug(p.id) === currentSlug`로 동일 페르소나의 글만 번역본으로 묶어 3개 계층의 계약을 일치시키고 테스트 계약 정합성 확보.
   - [x] **청크 HTML의 Workbox 오프라인 프리캐시 PWA 구현 동기화 (P3)**
     - 배경: `chunk-loading.md` 문서는 청크 URL이 Workbox 프리캐시에 들어가므로 오프라인 fetch가 가능하다고 명시했으나, `astro.config.mjs`의 `globPatterns`는 HTML을 전면 제외하여 오프라인에서 청크 fetch가 실패함.
     - 해결: 사용자의 지침에 따라 코드를 문서 계약에 맞춤. `astro.config.mjs`의 `workbox.globPatterns`에 `**/chunk/**/index.html`을 추가하여, 일반 페이지 HTML은 `NetworkFirst` 최신성 정책을 유지하면서도 청크 HTML 조각은 Workbox 프리캐시를 통해 오프라인에서도 무한 스크롤/페이징이 가능하도록 구현 갱신 및 `pwa.md` 동기화.
@@ -309,10 +314,10 @@
     - 미채택 옵션: Range 요청으로 치수 선취득(B)·빌드 타임 치수 주입(C) — CDN·비용 대비 단순성에서 기각, 논의용으로만 정리.
     - 검증: `npm run build` 성공, `npx astro check` 0 errors / 0 warnings. 상세는 `docs/ai-docs/design/typography.md`의 Image Shimmer Loading 섹션 참조.
   - [x] **다른 글 더 보기 (MorePosts) 컴포넌트 및 반응형 레이아웃 구현**
-    - 배경: 카테고리가 없는 구조에서 첫 번째 작가(`authors[0]`)를 카테고리 역할로 활용하여, 포스트 하단에 시간순서상 가장 인접한 글 3개를 노출하는 내부 링크/SEO 컴포넌트 도입. (단순 최신순 대비 블로그 전역의 촘촘한 내부 링크망 형성 및 탐색성 개선).
+    - 배경: 카테고리가 없는 구조에서 첫 번째 페르소나(`personas[0]`)를 카테고리 역할로 활용하여, 포스트 하단에 시간순서상 가장 인접한 글 3개를 노출하는 내부 링크/SEO 컴포넌트 도입. (단순 최신순 대비 블로그 전역의 촘촘한 내부 링크망 형성 및 탐색성 개선).
     - 구현:
       - `MorePosts.astro`: TOC 토큰 기반 타이틀/리스트 스타일링, 마우스 호버 시 `--color-accent` 전환, 순수 정적 HTML/CSS 목록.
-      - `PostLayout.astro`: 첫 번째 작가 기준 현재 글 작성일과 시간 차이(`Math.abs(p.date - current.date)`)가 가장 작은 3개 글 필터링 후 최신순 렌더링.
+      - `PostLayout.astro`: 첫 번째 페르소나 기준 현재 글 작성일과 시간 차이(`Math.abs(p.date - current.date)`)가 가장 작은 3개 글 필터링 후 최신순 렌더링.
       - 데스크톱(>1280px): `.post-footer-container` 우측 사이드바(`position: absolute; left: 100%; top: 0; width: var(--post-toc-width); margin-left: var(--space-post-toc-gap);`)에 메타데이터(CC 라이선스 문구)와 동일한 Y축 높이로 나란히 렌더링.
       - 인라인/모바일(≤1280px): `position: static; width: 100%;`로 전환되어 `PostFooter` 아래에 인라인으로 렌더링되며, `--space-post-comments-margin-top`(`3.2rem`)을 통해 `메타데이터 ↔ 다른 글 더 보기` 간격과 `다른 글 더 보기 ↔ 댓글창` 간격을 대칭으로 일치.
       - i18n: 7개 언어 로케일에 `morePosts` 번역 객체 등록 완료.
@@ -324,23 +329,23 @@
       - `src/features/search/engine.ts` 신설 — `PagefindEngine`(정규) / `DomFallbackEngine`(dev 폴백) 중 세션당 1회 엔진 확정. 결과 혼합·잠정 렌더 폐기.
       - 검색 input `focus` 이벤트에서 pagefind 백그라운드 프리로드 → 첫 검색 지연(패스트패스가 존재했던 이유) 원천 제거.
       - `fetchSearchChunk`가 카드를 `display: none`으로 추가 → 청크 비매칭 카드 노출 원천 차단. `showSearchResults`는 검색당 1회만 호출.
-      - 작가 페이지 검색 범위 격리: `PostLayout`에 `data-pagefind-filter="author:<id>"` 다중 태깅, `Search`에 `authorId` prop 전달 → `filters: { lang, author }` 적용 (같은 언어 다른 작가 결과 배제).
+      - 페르소나 페이지 검색 범위 격리: `PostLayout`에 `data-pagefind-filter="persona:<id>"` 다중 태깅, `Search`에 `personaId` prop 전달 → `filters: { lang, persona }` 적용 (같은 언어 다른 페르소나 결과 배제).
     - 문서: `search.md` 요구사항 중심 재작성, `chunk-loading.md`의 `fetchSearchChunk` 숨김 append 반영.
-    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors, `npm test` 23 passed. headless Chromium 실측: 빌드된 pagefind 인덱스에서 검색·`lang`/`author` 필터 정상 동작 확인(같은 언어 타 작가 결과 제외, 다중 작가 포스트 포함, 본문 전용 검색어 히트), dist 산출물의 `data-pagefind-filter`와 결과 교차 검증. 플리커는 구조적으로 차단됨: 검색당 `showSearchResults` 1회(단일 커밋 지점), `searchSeq` 경합 가드, `fetchSearchChunk`의 숨김 append로 대기 중 그리드 변이 없음.
-  - [x] **포스트 카드 작가 영역 모바일 링크**
-    - 증상: 모바일에서 포스트 카드의 작가 영역을 눌러도 전체 카드 링크(`<a class="post-card-link">`)에 가로채져 포스트가 열림.
-    - 제약: `<a>` 중첩은 HTML 위반(파서가 바깥 링크를 끊어 카드 레이아웃이 깨짐) → `Author.astro`의 오버레이 링크 패턴을 카드에 재사용 불가.
-    - 해결: `PostCard.astro`에 `getAuthorPath(authorIds[0], currentLocale)`로 `data-author-href` 주입 + `PostListSection.astro` `init()`의 AbortController 스코프에서 문서 레벨 위임 `click` 리스너 — `closest('.post-card-author')` 감지, `isMobile()`(기존 960px 규약) 가드 후 `preventDefault()`로 카드 링크 차단 및 작가 페이지 이동. 위임 방식이라 동적 추가 카드(청크/검색)도 자동 적용. 데스크톱은 기존 동작(포스트 열기) 유지.
-    - 문서: `posts.md`의 '포스트 카드 작가 영역 (모바일 링크)' 섹션.
-  - [x] **모바일 LoadMoreCard 스크롤 근접 기반 Author 프리뷰 전환**
-    - 배경: PC `:hover` 슬라이드(텍스트→Author)는 모바일에서 재현 불가. touchstart 유예(≈220ms 지연), 아바타 배지 상시 노출, view() 타임라인 등 대안 검토 후 기각 — "문서 하단까지 남은 px 거리"를 트리거로 쓰는 방식이 새 제스처 충돌 없이 PC의 "다가감→전환" 서사와 대응.
-    - 구현: `src/features/post-list/load-more-preview.ts` 신설 — 잔여 거리가 `--load-more-reveal-start`(global.css 토큰, 125px) 이하가 되면 `--lm-progress`(0~1)를 연속 계산해 인라인 설정, `--load-more-reveal-end`(25px) 도달 시 전환 완료·Author 고정(최하단 도달 전 완료). rAF 스로틀 + 읽기→쓰기 순서로 리플로우 회피, `ResizeObserver(document.body)`로 청크 로드/이미지 reveal 대응, AbortController 스코프 정리.
-    - CSS: PC 호버 규칙을 `@media (hover: hover) and (pointer: fine)`로 스코프(동작 동일), 모바일은 `@media (hover: none)`에서 동일 transform/색상을 변수 구동(`color-mix`)으로 재사용 — keyframe 신규 없음. 양방향 복귀, 잔여 25px에서 Author 고정, 탭은 즉시 `loadChunk()`(연출이 실행을 지연하지 않음).
-    - 접근성: reduced-motion 시 변수 미설정(텍스트 고정), AT는 앵커 `aria-label`로 시각 상태와 무관하게 Author 정보 접근 가능.
+    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors, `npm test` 23 passed. headless Chromium 실측: 빌드된 pagefind 인덱스에서 검색·`lang`/`persona` 필터 정상 동작 확인(같은 언어 타 페르소나 결과 제외, 다중 페르소나 포스트 포함, 본문 전용 검색어 히트), dist 산출물의 `data-pagefind-filter`와 결과 교차 검증. 플리커는 구조적으로 차단됨: 검색당 `showSearchResults` 1회(단일 커밋 지점), `searchSeq` 경합 가드, `fetchSearchChunk`의 숨김 append로 대기 중 그리드 변이 없음.
+  - [x] **포스트 카드 페르소나 영역 모바일 링크**
+    - 증상: 모바일에서 포스트 카드의 페르소나 영역을 눌러도 전체 카드 링크(`<a class="post-card-link">`)에 가로채져 포스트가 열림.
+    - 제약: `<a>` 중첩은 HTML 위반(파서가 바깥 링크를 끊어 카드 레이아웃이 깨짐) → `Persona.astro`의 오버레이 링크 패턴을 카드에 재사용 불가.
+    - 해결: `PostCard.astro`에 `getPersonaPath(personaIds[0], currentLocale)`로 `data-persona-href` 주입 + `PostListSection.astro` `init()`의 AbortController 스코프에서 문서 레벨 위임 `click` 리스너 — `closest('.post-card-persona')` 감지, `isMobile()`(기존 960px 규약) 가드 후 `preventDefault()`로 카드 링크 차단 및 페르소나 페이지 이동. 위임 방식이라 동적 추가 카드(청크/검색)도 자동 적용. 데스크톱은 기존 동작(포스트 열기) 유지.
+    - 문서: `posts.md`의 '포스트 카드 페르소나 영역 (모바일 링크)' 섹션.
+  - [x] **모바일 LoadMoreCard 스크롤 근접 기반 Persona 프리뷰 전환**
+    - 배경: PC `:hover` 슬라이드(텍스트→Persona)는 모바일에서 재현 불가. touchstart 유예(≈220ms 지연), 아바타 배지 상시 노출, view() 타임라인 등 대안 검토 후 기각 — "문서 하단까지 남은 px 거리"를 트리거로 쓰는 방식이 새 제스처 충돌 없이 PC의 "다가감→전환" 서사와 대응.
+    - 구현: `src/features/post-list/load-more-preview.ts` 신설 — 잔여 거리가 `--load-more-reveal-start`(global.css 토큰, 125px) 이하가 되면 `--lm-progress`(0~1)를 연속 계산해 인라인 설정, `--load-more-reveal-end`(25px) 도달 시 전환 완료·Persona 고정(최하단 도달 전 완료). rAF 스로틀 + 읽기→쓰기 순서로 리플로우 회피, `ResizeObserver(document.body)`로 청크 로드/이미지 reveal 대응, AbortController 스코프 정리.
+    - CSS: PC 호버 규칙을 `@media (hover: hover) and (pointer: fine)`로 스코프(동작 동일), 모바일은 `@media (hover: none)`에서 동일 transform/색상을 변수 구동(`color-mix`)으로 재사용 — keyframe 신규 없음. 양방향 복귀, 잔여 25px에서 Persona 고정, 탭은 즉시 `loadChunk()`(연출이 실행을 지연하지 않음).
+    - 접근성: reduced-motion 시 변수 미설정(텍스트 고정), AT는 앵커 `aria-label`로 시각 상태와 무관하게 Persona 정보 접근 가능.
     - 검증: `npm run build` 성공(587 pages), `npx astro check` 0 errors / 0 warnings / 0 hints. dist CSS에서 `(hover:hover) and (pointer:fine)`/`(hover:none)`/`(prefers-reduced-motion:reduce)` 3종 미디어 쿼리 확인. 상세는 `chunk-loading.md` 참조.
-    - 검증: `npx astro check` 0 errors, `npm run build` 성공. headless Edge CDP E2E: 모바일(390px, `isMobileMedia=true`)은 작가 영역 클릭 → `/dev/`(작가 페이지), 타이틀 클릭 → 포스트. 데스크톱(1400px, `isMobileMedia=false`)은 작가 영역 클릭 → 포스트 (기존 동작 유지). 두 뷰포트 모두 기대 동작 일치.
-    - 보정(히트 영역): `.post-card-author`에 `width: fit-content` 적용으로 탭 히트 영역을 작가 콘텐츠 박스(아바타+이름/날짜)로 제한 — 텍스트 없는 빈 공간(우측 여백)은 카드 링크로 포스트가 열림. E2E 재검증: 모바일에서 아바타/이름 탭 → 작가 페이지, 빈 공간 탭 → 포스트.
-    - 보정(구조): 인라인 리스너를 `src/features/post-list/author-link.ts`의 `initMobileAuthorLink(signal)`로 추출하고, 960px 문자열을 `layout.ts`의 `MOBILE_QUERY` 상수로 중앙화(`isMobile`과 동일 소스). `ChunkPostListBody.astro`에서도 등록하여 청크 페이지(홈/작가 파생 뷰)까지 모바일 작가 링크 동작 일관화.
+    - 검증: `npx astro check` 0 errors, `npm run build` 성공. headless Edge CDP E2E: 모바일(390px, `isMobileMedia=true`)은 페르소나 영역 클릭 → `/dev/`(페르소나 페이지), 타이틀 클릭 → 포스트. 데스크톱(1400px, `isMobileMedia=false`)은 페르소나 영역 클릭 → 포스트 (기존 동작 유지). 두 뷰포트 모두 기대 동작 일치.
+    - 보정(히트 영역): `.post-card-persona`에 `width: fit-content` 적용으로 탭 히트 영역을 페르소나 콘텐츠 박스(아바타+이름/날짜)로 제한 — 텍스트 없는 빈 공간(우측 여백)은 카드 링크로 포스트가 열림. E2E 재검증: 모바일에서 아바타/이름 탭 → 페르소나 페이지, 빈 공간 탭 → 포스트.
+    - 보정(구조): 인라인 리스너를 `src/features/post-list/persona-link.ts`의 `initMobilePersonaLink(signal)`로 추출하고, 960px 문자열을 `layout.ts`의 `MOBILE_QUERY` 상수로 중앙화(`isMobile`과 동일 소스). `ChunkPostListBody.astro`에서도 등록하여 청크 페이지(홈/페르소나 파생 뷰)까지 모바일 페르소나 링크 동작 일관화.
     - 수정(실기기 미동작 해소): 모바일 활성 조건을 `(hover: none)` → `@media (max-width: 960px)`으로 변경 — 실기기가 `hover: hover`로 평가하면 모바일 블록이 아예 적용되지 않음(JS는 progress를 1까지 계산했으므로 CSS 게이트가 원인). 프로젝트 모바일 규약(`MOBILE_QUERY`, 960px)과 통일해 입력 장치 리포팅 의존 제거. 실기기 동작 확인.
     - 후속(이미지 전환): 미리보기 이미지도 같은 구간(125px→25px)에서 `brightness/opacity 0.9→1` 복원을 `--lm-progress`에 직결 — PC 호버와 동일한 시작·종료 값. grayscale 커튼 리프트는 시도 후 제거(사용자 결정: PC와의 일관성 우선).
     - 정리(원인 수정·구조화): 모바일 이미지 무반응의 실제 원인은 캐스케이드 순서 — 정적 `filter` 기본값이 동일 특이도 변수 구동 규칙보다 소스상 뒤에 선언되어 항상 덮어씀(grayscale 실험도 같은 위치라 처음부터 렌더링 무효였음). 스타일 섹션을 기본 → PC 호버 → 모바일 → reduced-motion 순으로 재배치하고 분리됐던 filter/transition 선언을 이미지 베이스 규칙에 병합해 순서 의존을 구조적으로 보장. 검증: astro check 0 errors, build 성공, 빌드 CSS에서 static < calc 구동 규칙 순서 확인.
@@ -350,19 +355,19 @@
     - 보존: 구 연출의 요구사항·운영 사건 3건·코드 스냅샷은 `plans/load-more-scroll-proximity-archive.md`.
     - 검증: astro check 0 errors / build 성공 / 빌드 CSS에서 `.is-active` 존재·`--lm-progress` 및 reveal 토큰 부재 확인.
     - 후속(모바일 무반응 수정): 초기 `BOTTOM_EPSILON_PX = 1`은 정수 반올림 잔여(실측 3px) 때문에 최하단에서도 절대 발화하지 않음 → 8으로 상향, CDP 재검증(바닥 부착/복귀). 데스크톱 무반응 보고는 버그 아님 — 바닥 트리거는 `MOBILE_QUERY` 게이트로 모바일 전용이 설계이며(사용자 확인), 데스크톱 호버는 순수 CSS로 정상.
-  - [x] **llms.txt 동적 생성** (사용자 결정: 영어 기본, 작가별 서브섹션, Hero description 재사용)
+  - [x] **llms.txt 동적 생성** (사용자 결정: 영어 기본, 페르소나별 서브섹션, Hero description 재사용)
     - 배경: `public/llms.txt`는 하드코딩된 정적 파일(감사 A 항목에서 404 해소용 생성) → 콘텐츠/설정과 이중 관리 문제.
     - 해결: `src/pages/llms.txt.ts` 동적 엔드포인트(robots/sitemap/rss와 동일 패턴, `request.url` origin 추출) + `src/utils/llms.ts`의 `buildLlmsTxt()` 순수 함수(테스트 가능).
-    - 구성: `# SITE.title` / `> getSiteMeta('en').description`(en Hero description) / 기본 언어 명시(`defaultLocaleBcp47` = ko-KR, 작성 사유 + `supportedLocales` 목록) / `## Sections`(Home·RSS) / `## Authors`(작가 5명, `getAuthor(id, 'en-US')` 로컬라이즈 설명) / 작가별 `### {author.name}` 서브섹션(`## Authors` 하위) — `authors[0]` 기준 그룹핑, 날짜 내림차순, 최대 10개, `post.data.description` 없으면 `extractExcerpt(..., 155)` 폴백(잘릴 때 `...` 부착 — `extractExcerpt`에 `truncationSuffix` 파라미터 추가, 기존 meta description/RSS 동작 불변). **본문 텍스트는 en 로케일로 작성하되 링크는 기본 로케일(ko) 경로**(`getPostPath`/`getAuthorPath`에 `defaultLocale` 전달) — 영어는 AI 동작 표준을 위한 것이며, 사이트 고유 URL은 `/en/` 프리픽스 없이 유지.
+    - 구성: `# SITE.title` / `> getSiteMeta('en').description`(en Hero description) / 기본 언어 명시(`defaultLocaleBcp47` = ko-KR, 작성 사유 + `supportedLocales` 목록) / `## Sections`(Home·RSS) / `## Personas`(페르소나 5명, `getPersona(id, 'en-US')` 로컬라이즈 설명) / 페르소나별 `### {persona.name}` 서브섹션(`## Personas` 하위) — `personas[0]` 기준 그룹핑, 날짜 내림차순, 최대 10개, `post.data.description` 없으면 `extractExcerpt(..., 155)` 폴백(잘릴 때 `...` 부착 — `extractExcerpt`에 `truncationSuffix` 파라미터 추가, 기존 meta description/RSS 동작 불변). **본문 텍스트는 en 로케일로 작성하되 링크는 기본 로케일(ko) 경로**(`getPostPath`/`getPersonaPath`에 `defaultLocale` 전달) — 영어는 AI 동작 표준을 위한 것이며, 사이트 고유 URL은 `/en/` 프리픽스 없이 유지.
     - `public/llms.txt` 삭제(dynamic route와 dist 충돌 방지). Head.astro의 `/llms.txt` 링크는 그대로 유효.
-    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors(기존 `remark-media-caption.mjs` unused `index` hint 1건은 사전 존재, 무관), `npm test` 29 passed(신규 `llms.test.ts` 6건 — 상한·그룹핑·excerpt 폴백·draft/locale 제외·잘림 `...` 부착/미부착). dist/llms.txt에서 작가별 10개 상한 및 잘린 설명 `...` 확인.
+    - 검증: `npm run build` 성공(574 pages), `npx astro check` 0 errors(기존 `remark-media-caption.mjs` unused `index` hint 1건은 사전 존재, 무관), `npm test` 29 passed(신규 `llms.test.ts` 6건 — 상한·그룹핑·excerpt 폴백·draft/locale 제외·잘림 `...` 부착/미부착). dist/llms.txt에서 페르소나별 10개 상한 및 잘린 설명 `...` 확인.
   - [x] **건강한 리팩토링 (2026-08, 동일 동작 보장)**
-    - twitter 핸들 `@` 프리픽스 정규화 DRY: `BaseLayout.astro`/`PostLayout.astro`의 `twitter:site`·`twitter:creator`에서 중복되던 `startsWith('@')` 삼항식을 `authors.settings.ts`의 `normalizeTwitterHandle()`로 단일화 (3곳 → 1개 헬퍼).
+    - twitter 핸들 `@` 프리픽스 정규화 DRY: `BaseLayout.astro`/`PostLayout.astro`의 `twitter:site`·`twitter:creator`에서 중복되던 `startsWith('@')` 삼항식을 `personas.settings.ts`의 `normalizeTwitterHandle()`로 단일화 (3곳 → 1개 헬퍼).
     - `remark-media-caption.mjs` 방문자 콜백의 미사용 `index` 파라미터 제거 → astro check **0 errors / 0 warnings / 0 hints** 달성 (llms.txt 항목에서 사전 존재로 기록했던 hint 1건 해소).
-    - `jsonLd.ts` 타입 재검토: `BreadcrumbItem`/`JsonLdAuthor`/`BlogPostingData`(입력)와 `*JsonLd` 반환 인터페이스(출력)는 형태가 달라 이중화가 아니므로 **변경하지 않음**. `llms.ts`도 정돈된 상태로 유지 (미니멀 수정 원칙).
+    - `jsonLd.ts` 타입 재검토: `BreadcrumbItem`/`JsonLdPersona`/`BlogPostingData`(입력)와 `*JsonLd` 반환 인터페이스(출력)는 형태가 달라 이중화가 아니므로 **변경하지 않음**. `llms.ts`도 정돈된 상태로 유지 (미니멀 수정 원칙).
     - 문서: `posts.md` JSON-LD 섹션에 **`SearchAction` 미포함 결정**(사용자 결정 — 사이트 검색 UI가 이미 존재하므로 중복 구조화 회피) 기록.
-    - 검토 중 발견·수정: `BreadcrumbList`/`BlogPosting`의 작가 URL이 `getAuthorPath()`에 `currentLocale`을 전달하지 않아 모든 로케일에서 기본(ko) 경로(`/dev/`)로 고정되던 문제 — `PostLayout.astro`·`[lang]/[author]/index.astro`에서 `getAuthorPath(id, lang)`으로 수정 (기존 `PostCard`/`Author` 컴포넌트 규칙과 일치). ko 페이지는 동일 경로라 영향 없음.
-    - 검증: `npm test` 38 passed, `npm run build` 성공, `npx astro check` 0 errors / 0 warnings / 0 hints. dist에서 `twitter:site`/`twitter:creator` 메타 바이트 동일 확인, en 포스트/작가 페이지 BreadcrumbList·author url이 `/en/dev/` 로케일 경로로 렌더링 확인.
+    - 검토 중 발견·수정: `BreadcrumbList`/`BlogPosting`의 페르소나 URL이 `getPersonaPath()`에 `currentLocale`을 전달하지 않아 모든 로케일에서 기본(ko) 경로(`/dev/`)로 고정되던 문제 — `PostLayout.astro`·`[lang]/[persona]/index.astro`에서 `getPersonaPath(id, lang)`으로 수정 (기존 `PostCard`/`Persona` 컴포넌트 규칙과 일치). ko 페이지는 동일 경로라 영향 없음.
+    - 검증: `npm test` 38 passed, `npm run build` 성공, `npx astro check` 0 errors / 0 warnings / 0 hints. dist에서 `twitter:site`/`twitter:creator` 메타 바이트 동일 확인, en 포스트/페르소나 페이지 BreadcrumbList·persona url이 `/en/dev/` 로케일 경로로 렌더링 확인.
   - [x] **Math/Mermaid 조건부 로딩 (2026-08)**
     - `astro.config.mjs`: `conditionalMath()` remark attacher 플러그인 추가. `math` 프론트매터가 `true`가 아닌 파일에서 `math`/`inlineMath` AST 노드를 raw 텍스트(`$...$`, `$$...$$`)로 복원하여 `rehypeKatex`가 처리할 노드가 없도록 함. `remarkMath` 뒤에 위치하여 remark 파싱 후 동작. unified `remarkPlugins`에 attacher 참조(`conditionalMath`)로 등록 (함수 호출 `conditionalMath()` 사용 시 unified가 transformer를 attacher로 오인해 `tree`가 `undefined`되어 런타임 에러 발생).
     - `content.config.ts`: `mermaid: z.boolean().optional()` 스키마 추가.
@@ -397,7 +402,7 @@
     - **B (chunk 프리뷰 시드 계약)**: `src/utils/chunkEndpoint.ts`에 `PREVIEW_SEED_EXTRA = 1` 상수 도입 및 청크 payload 계약 주석 추가. `ChunkPostListBody.astro`에 계약 참조 주석 추가. `docs/ai-docs/features/chunk-loading.md`에 프리뷰 시드 계약 명세 섹션 추가.
     - **C (chunkSize 폴백 정합)**: `Search.astro`의 fallback chunkSize를 레거시 `'6'`에서 `SITE.postsPerPage`인 `'8'`로 동기화 및 방어용 주석 추가.
     - **D (posts 디렉토리 순회 DRY)**: 신규 `src/utils/postFiles.ts`(`listPostFiles()`) 유틸리티 작성(`node:fs`/`node:path`만 사용하여 config-time 로드 제약 만족). `site.settings.ts`(`scanPostLangValues`)와 `validate-routes.ts`(`getLangSlugPairs`)의 재귀 디렉토리 순회 중복 제거. `src/utils/postFiles.test.ts` 단위 테스트 작성. `docs/ai-docs/configuration/locales.md` 부채 항목 해결됨 처리.
-    - **E (검색 excerpt 제안 닫기)**: `docs/ai-docs/plans/search-excerpt-replacement.md` 상태를 "보류 / 미구현 (결정: 현행 Author 유지)"로 마감.
+    - **E (검색 excerpt 제안 닫기)**: `docs/ai-docs/plans/search-excerpt-replacement.md` 상태를 "보류 / 미구현 (결정: 현행 Persona 유지)"로 마감.
     - **검증**: `npm test` 51 passed (8 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 성공 (589 pages + Pagefind 373 pages 인덱싱).
   - [x] **getSiteMeta 중립 모듈 이동 및 레이아웃 파사드 도입 (2026-09)**
     - **배경**: `getSiteMeta`가 `src/locales/index.ts`에 위치하여 `SITE.title`을 import함으로써 순수 번역 레지스트리와 사이트 설정 간의 경계가 모호했음. 레이아웃(`BaseLayout`, `PostLayout`)에서 `lang`, `locale`, `siteMeta`를 개별 import하고 중복 선언하는 보일러플레이트 존재.
@@ -409,14 +414,14 @@
       - `src/utils/pageContext.test.ts` 단위 테스트 작성 (6 tests).
     - **검증**: `npm test` 57 passed (9 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 성공. `docs/ai-docs/configuration/locales.md` 갱신.
   - [x] **데스크톱 페르소나 (Persona) 사이드바 (2026-09)**
-    - 배경: >1280px 데스크톱에서 글쓴이 섹션이 오른쪽 검색 사이드바에 없어 검색창 아래 공간이 비어 있었음.
+    - 배경: >1280px 데스크톱에서 페르소나 섹션이 오른쪽 검색 사이드바에 없어 검색창 아래 공간이 비어 있었음.
     - 구현:
-      - `src/components/Persona.astro` 신규 — `{id, name, avatar?}[]` authors props, `locale.authors.persona` 제목, `getAuthorPath(id, currentLocale)` 작가 링크, TOC/MorePosts와 동일 CSS 토큰 재사용. 아바타(`@` 프리픽스 포함 이름) 좌측 배치 — CDN 아바타 22px(중앙 토큰 `--persona-avatar-size`, 소수점 없는 2의 배수) + `AUTHOR_PREFIX`(`@`) 적용, 작성일 정보 없음 (사용자 결정).
+      - `src/components/Persona.astro` 신규 — `{id, name, avatar?}[]` personas props, `locale.personas.persona` 제목, `getPersonaPath(id, currentLocale)` 페르소나 링크, TOC/MorePosts와 동일 CSS 토큰 재사용. 아바타(`@` 프리픽스 포함 이름) 좌측 배치 — CDN 아바타 22px(중앙 토큰 `--persona-avatar-size`, 소수점 없는 2의 배수) + `PERSONA_PREFIX`(`@`) 적용, 작성일 정보 없음 (사용자 결정).
       - `HomePageContent.astro`: `.search-sidebar` 내부를 `.search-sidebar-inner`(flex column)로 래핑해 `<Search>` 아래 `<Persona>` 렌더. 자식별 sticky는 기존 `.search-sidebar > *` 규칙으로 유지.
-      - `global.css`/테마: `--space-search-persona-gap: 2.75rem` + `--persona-avatar-size: 22px` + `--space-persona-title-avatar: 0.8rem` 토큰 및 `.search-sidebar-inner { display:flex; flex-direction:column; gap: var(--space-search-persona-gap) }`. >1280px에서 기존 인라인 `.authors`는 `@media (min-width: 1281px)` `display: none` (페르소나와 중복 방지). 961~1280px 인라인 글쓴이 유지, ≤960px 숨김 유지. `--space-persona-title-avatar`는 TOC/MorePosts의 텍스트 라인박스 리딩(~2.9px)을 아바타 기준으로 보정해 동일 시각 간격을 만드는 토큰.
+      - `global.css`/테마: `--space-search-persona-gap: 2.75rem` + `--persona-avatar-size: 22px` + `--space-persona-title-avatar: 0.8rem` 토큰 및 `.search-sidebar-inner { display:flex; flex-direction:column; gap: var(--space-search-persona-gap) }`. >1280px에서 기존 인라인 `.personas`는 `@media (min-width: 1281px)` `display: none` (페르소나와 중복 방지). 961~1280px 인라인 페르소나 유지, ≤960px 숨김 유지. `--space-persona-title-avatar`는 TOC/MorePosts의 텍스트 라인박스 리딩(~2.9px)을 아바타 기준으로 보정해 동일 시각 간격을 만드는 토큰.
       - 사이드바/푸터 소형 블록 제목(`검색`·`목차`·`다른 글 더 보기`·`페르소나`) 색상을 통일 — 4개 컴포넌트 타이틀을 `--color-heading`(다크에서 밝은 고대비)/`--color-muted` 대신 역할 토큰 `--color-subtitle`(`var(--color-muted)`, 테마 light/dark 양쪽 정의)로 전환.
-      - 로케일: `authors.persona` 필드 7개 언어 추가 (ko '페르소나', en 'Personas', ja 'ペルソナ', zh-CN '人格', es 'Personas', ru 'Персоны', fr 'Persona'). fr 오타('Personnas') 수정 포함.
-      - 작가 페이지 '다른 페르소나': `Persona.astro`에 `title?` prop(기본 `locale.authors.persona`) 추가, `AuthorPageContent.astro`가 `.search-sidebar-inner`로 `<Search>` 아래에 `ALL_AUTHORS`에서 현재 작가 제외 항목을 `locale.authors.otherPersona`(7개 언어) 제목으로 렌더링. 기본/로케일 작가 페이지 공유.
+      - 로케일: `personas.persona` 필드 7개 언어 추가 (ko '페르소나', en 'Personas', ja 'ペルソナ', zh-CN '人格', es 'Personas', ru 'Персоны', fr 'Persona'). fr 오타('Personnas') 수정 포함.
+      - 페르소나 페이지 '다른 페르소나': `Persona.astro`에 `title?` prop(기본 `locale.personas.persona`) 추가, `PersonaPageContent.astro`가 `.search-sidebar-inner`로 `<Search>` 아래에 `ALL_PERSONAS`에서 현재 페르소나 제외 항목을 `locale.personas.otherPersona`(7개 언어) 제목으로 렌더링. 기본/로케일 페르소나 페이지 공유.
   - [x] **AdSense 본문 상단 광고 연동 (`start_with_ads`) (2026-09)**
     - 배경: Jekyll 시절 `start_with_ads: true`인 포스트 본문 상단에 노출되던 애드센스 광고가 Astro 전환 후 미연결 상태로 남아있었음.
     - 구현:
@@ -426,20 +431,20 @@
   - [x] **SNS 스타일 Hero 페르소나 및 PersonaModal 리팩토링 (2026-10)**
     - 배경: 데스크톱 사이드바 및 인라인에 분산되어 있던 페르소나 목록을 SNS(X/Threads/Instagram)의 프로필 팔로잉/팔로워 디자인을 모티브로 일원화.
     - 구현:
-      - `Hero.astro`: description과 동일 행(`.hero-desc-row`)에 SNS 스타일의 메타 텍스트 링크(`.hero-personas-trigger`) 배치. description은 `flex: 1 1 auto; min-width: 0;`로 남은 너비에서 줄바꿈되며, 페르소나 링크는 우측에 고정되어 침범하지 않음. 모바일(≤960px)에서는 세로 스택(`flex-direction: column; gap: 0.5rem;`)으로 전환. 폰트 크기는 `--author-name-size: 14px`, 볼드 없이 일반 텍스트 및 띄어쓰기 없는 단일 텍스트(`5개 페르소나`). 호버 시 액센트 색상 전환.
-      - `PersonaModal.astro`: 웹 표준 HTML5 `<dialog>` 기반 네이티브 모달 컴포넌트 신설. 데스크톱에서는 화면 중앙 카드 모달(`--persona-modal-width: 400px`), 모바일(≤640px)에서는 바텀시트(Bottom Sheet) 인터랙션 적용. 배경 딤 및 블러(`backdrop-filter: blur(4px)`). 기존 디자인 시스템 토큰(`--avatar-size: 40px`, `--author-name-size: 14px`, `--author-info-size: 12px`, `--post-card-radius: 20px`)과 일원화.
-      - `HomePageContent.astro` / `AuthorPageContent.astro`: 기존 사이드바 및 인라인 페르소나 컴포넌트를 완전히 대체하고 Hero 하단 트리거 + PersonaModal로 단일화.
+      - `Hero.astro`: description과 동일 행(`.hero-desc-row`)에 SNS 스타일의 메타 텍스트 링크(`.hero-personas-trigger`) 배치. description은 `flex: 1 1 auto; min-width: 0;`로 남은 너비에서 줄바꿈되며, 페르소나 링크는 우측에 고정되어 침범하지 않음. 모바일(≤960px)에서는 세로 스택(`flex-direction: column; gap: 0.5rem;`)으로 전환. 폰트 크기는 `--persona-name-size: 14px`, 볼드 없이 일반 텍스트 및 띄어쓰기 없는 단일 텍스트(`5개 페르소나`). 호버 시 액센트 색상 전환.
+      - `PersonaModal.astro`: 웹 표준 HTML5 `<dialog>` 기반 네이티브 모달 컴포넌트 신설. 데스크톱에서는 화면 중앙 카드 모달(`--persona-modal-width: 400px`), 모바일(≤640px)에서는 바텀시트(Bottom Sheet) 인터랙션 적용. 배경 딤 및 블러(`backdrop-filter: blur(4px)`). 기존 디자인 시스템 토큰(`--avatar-size: 40px`, `--persona-name-size: 14px`, `--persona-info-size: 12px`, `--post-card-radius: 20px`)과 일원화.
+      - `HomePageContent.astro` / `PersonaPageContent.astro`: 기존 사이드바 및 인라인 페르소나 컴포넌트를 완전히 대체하고 Hero 하단 트리거 + PersonaModal로 단일화.
       - 다국어: 7개 로케일(`ko-KR`, `en-US`, `ja-JP`, `zh-CN`, `es-ES`, `ru-RU`, `fr-FR`)에 `personaCount`, `otherPersonaCount`, `closeAria` 번역 함수 추가.
       - 접근성 & 안정성: `aria-haspopup="dialog"`, `aria-controls`, `AbortController`를 통한 이벤트 리스너 누적 방지, `html.modal-open`을 통한 배경 스크롤 락.
-    - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 생성 완료. `docs/ai-docs/components/authors.md` 동기화.
+    - 검증: `npm test` 61 passed, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 생성 완료. `docs/ai-docs/components/personas.md` 동기화.
   - [x] **공통 아바타 컴포넌트 (`Avatars.astro`) 추출 및 책임 분리 리팩토링 (2026-10)**
-    - 배경: 여러 컴포넌트(`Author`, `PersonaModal`, `Hero`)에 분산되어 중복 정의되던 원형 아바타 마크업과 CSS, 그리고 `Hero`에 강결합되어 있던 아바타 스택(슬라이스, 겹침 음수 마진, 테두리 등) 세부 로직을 단일 책임 컴포넌트로 분리.
+    - 배경: 여러 컴포넌트(`Persona`, `PersonaModal`, `Hero`)에 분산되어 중복 정의되던 원형 아바타 마크업과 CSS, 그리고 `Hero`에 강결합되어 있던 아바타 스택(슬라이스, 겹침 음수 마진, 테두리 등) 세부 로직을 단일 책임 컴포넌트로 분리.
     - 구현:
       - `src/components/Avatars.astro` 신설: 단일 아바타 모드(`src`)와 다중 아바타 스택 모드(`avatars`, `limit=3`)를 유연하게 지원. 플레이스홀더 배경, 원형 마스킹, lazy/eager 로딩, onerror 제거 등 캡슐화.
       - `src/styles/global.css`: 중앙 토큰 `--avatar-stack-size: 24px`, `--avatar-stack-overlap: 8px` 추가 (웹 관행 2의 배수 상수 및 매직 넘버 방지).
       - `Hero.astro`: 인라인 아바타 스택 마크업 및 관련 CSS 4개 규칙, `slice(0, 3)` 계산 로직을 전부 제거하고 `<Avatars avatars={personaAvatars} loading="eager" />`로 간소화.
-      - `Author.astro` / `PersonaModal.astro`: 중복 아바타 마크업 및 CSS를 제거하고 `<Avatars src={...} />` 도입.
-    - 검증: `npm test` 61 passed (9 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 생성 완료. `docs/ai-docs/components/authors.md` 동기화.
+      - `Persona.astro` / `PersonaModal.astro`: 중복 아바타 마크업 및 CSS를 제거하고 `<Avatars src={...} />` 도입.
+    - 검증: `npm test` 61 passed (9 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 생성 완료. `docs/ai-docs/components/personas.md` 동기화.
   - [x] **모바일 Frame 상단 탭 양쪽 하단 역방향 라운딩 (Concave Corner) 적용 (2026-10)**
     - 배경: 모바일(≤960px)에서 화면 상단을 가로지르는 검은색 상단 바가 평평한 직사각형 형태로 렌더링되어 투박하고 단절감을 주던 문제 해소.
     - 구현:
@@ -466,10 +471,10 @@
         - `@astrojs/check`: `^0.9.9` → `^0.9.10`
       - 전이 의존성 갱신: `dompurify`(3.4.16+), `postcss`(8.5.28+) 및 `nanoid`(3.3.18+) 정합.
     - 검증: `npm audit --omit=dev --audit-level=high` 0 vulnerabilities 달성, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 61 passed, `npm run build` 589 pages 및 Pagefind 인덱싱 정상 완료.
-  - [x] **작가 식별자 단일화 및 도메인명 중복 제거 (2026-10)**
-    - `art`/`dev` 같은 하나의 작가 값을 설정 키, 프론트매터, 디렉토리, URL 및 화면 표시에 동일하게 사용. `authors.settings.ts`에는 별도 `id`와 `name` 필드가 없음.
-    - 7개 언어 포스트와 라우트, RSS, 청크, 검색 필터, JSON-LD, llms.txt 및 문서를 새 단일 규칙으로 동기화.
-    - 검증: Astro 검사 0 errors / 0 warnings / 0 hints, 정적 빌드 589 pages. `/art/`, `/dev/`, `/dev/lavad-devlog/` 생성 확인.
+  - [ ] **페르소나 식별자 단일화 및 도메인명 중복 제거 (2026-10)**
+    - `art`/`dev` 같은 하나의 페르소나 값을 설정 키, 프론트매터, 디렉토리, URL 및 화면 표시에 동일하게 사용. `personas.settings.ts`에는 별도 `id`와 `name` 필드가 없음.
+    - 7개 언어 포스트와 라우트, RSS, 청크, 검색 필터, JSON-LD 입력, llms.txt 및 문서를 페르소나 용어로 동기화했다. 공개 URL과 표준 `persona` 출력 필드는 유지한다.
+    - 검증: `npm run build` 성공(592페이지, Pagefind 374페이지). `npx astro check`는 코드 검사 시작 전 `astro.config.mjs`의 `astro/config` import 오류로 중단되어 재검증이 필요하다.
 
 ## Option
 

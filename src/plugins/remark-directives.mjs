@@ -10,8 +10,22 @@ const ADMONITION_ICONS = {
 };
 
 export function remarkDirectives() {
-  return (tree) => {
-    visit(tree, 'textDirective', (node) => {
+  return (tree, file) => {
+    visit(tree, 'textDirective', (node, index, parent) => {
+      if (node.children.length === 0) {
+        const start = node.position?.start.offset;
+        const end = node.position?.end.offset;
+
+        if (index != null && parent && start != null && end != null && typeof file.value === 'string') {
+          parent.children[index] = {
+            type: 'text',
+            value: file.value.slice(start, end),
+            position: node.position,
+          };
+        }
+        return;
+      }
+
       const data = node.data || (node.data = {});
       const classes = [];
 
