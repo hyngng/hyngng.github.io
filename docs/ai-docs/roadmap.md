@@ -13,7 +13,7 @@
   - [x] CDN URL 변환에서 `data:` 등 URI scheme 및 protocol-relative URL을 로컬 경로로 오인하지 않도록 한다.
   - [x] 라우트 검증 파일 탐색을 Astro 콘텐츠 로더와 동일한 전체 `.md`/`.mdx` 집합으로 확장한다.
   - [x] 페르소나 모달 백드롭의 블러 필터를 제거하고 반투명 딤은 유지한다. 각주 모달의 블러 백드롭은 별도 디자인으로 유지한다.
-  - [x] Markdown 렌더링과 excerpt/글자 수 계산의 파서 확장 정의를 `src/utils/markdown-syntax.ts`로 공유한다. Astro 기본 GFM은 유지하고 계산 목적별 확장 범위 차이를 보존한다.
+  - [x] Markdown 렌더링과 excerpt/글자 수 계산의 파서 확장 정의를 `src/utils/markdown-syntax.ts`로 공유한다. 렌더링 GFM은 `remark-gfm`으로 명시 등록하고(`singleTilde: false`), excerpt/글자 수 계산은 GFM 취소선 확장 없이 계산 목적별 확장 범위 차이를 보존한다.
   - [x] 빈 인라인 directive 후보는 `position`의 원문 텍스트로 되돌려 일반 콜론 문자열이 렌더링 중 사라지지 않도록 한다.
 
 - [ ] SEO 관련 작업
@@ -202,16 +202,22 @@
   - `width: max-content`로 포함 블록(각주 번호 폭) 너비 제약 우회. `max-width: min(320px, 90vw)`로 상한 유지.
   - [x] **"Footnotes" h2 라벨 제거 및 로케일 번역**: `remark-rehype`가 생성하는 `<h2 class="sr-only" id="footnote-label">`를 옵션(`remarkRehype.footnoteLabelTagName: 'span'`)으로 `span`으로 전환해 TOC 오염(`rehypeHeadingIds`가 `tagName[0] !== 'h'` 제외) 해소 + 표준 `.sr-only` CSS(`global.css`)로 시각 숨김. 라벨 텍스트는 `rehype-footnote-tooltip.mjs`가 `file.history`의 `/posts/{lang}/` 경로로 로케일을 추정해 `getLocale(lang).footnote.label`로 교체 (7개 로케일 추가). DOM 제거를 하지 않는 이유(접근성: `aria-describedby` 연결 보존)는 `docs/ai-docs/features/footnotes.md`에 문서화. 검증: build 성공, astro check 0 errors, dist에서 7개 언어 span 라벨·TOC 미포함 확인.
   - [x] **각주 반응형 인터랙션 분리 (모바일 모달 & 데스크톱 오프셋 보정)**:
-    - 데스크톱(≥961px): 호버/포커스 툴팁 유지, 각주 번호 클릭 시 하단 각주 목록으로 스크롤 이동(`scroll-margin-top: calc(var(--frame-thickness) + 1.5rem)`으로 상단 고정 프레임 테두리 가림 방지). 툴팁 내 불필요한 backref 화살표는 CSS로 숨김.
+    - 데스크톱(≥961px): 호버 툴팁 유지 (복귀 시 툴팁 펼침 방지를 위해 `:focus-within` 제거 후 순수 `:hover`로 한정), 각주 번호 클릭 시 하단 각주 목록으로 스크롤 이동(`scroll-margin-top: calc(var(--frame-thickness) + 1.5rem)`으로 상단 고정 프레임 테두리 가림 방지). 툴팁 내 불필요한 backref 화살표는 CSS로 숨김.
     - 모바일(≤960px): 호버 툴팁 완전 숨김. 각주 번호 터치 시 하단 스크롤 대신 본문이 담긴 모달 창(`<dialog class="footnote-modal">`) 표시.
     - 모달 개선: flex 컬럼 카드로 본문 영역만 스크롤되고 하단 닫기 버튼(`Locale.footnote.close` 7개 국어 지원)은 항상 고정. 본문 내 복귀 버튼(`a[data-footnote-backref]`) 터치 시 모달을 닫고 문서 하단 각주 정의(`#user-content-fn-{n}`)로 부드럽게 스크롤 이동 (나무위키 스타일). `PersonaModal`과 동일한 곡률, 깊은 그림자, 블러 백드롭, 부드러운 등장/퇴장 트랜지션 적용.
     - 검증: `npm run build` 성공, `npx astro check` 0 errors. 상세는 `docs/ai-docs/features/footnotes.md` 참조.
+  - [x] **각주 데스크톱 툴팁 가독성 및 시인성 리팩토링**:
+    - 크기/간격 토큰 중앙화: `global.css`에 `--footnote-tooltip-*` 변수 추가(글자 크기 `0.875rem`, 행간 `1.6`, 패딩 `0.75rem 1rem`, 모서리 곡률 `var(--code-block-radius)` 등). 색상은 기존 테마 값 유지.
+    - 블록 규격 최적화: `min-width: 8rem`, `max-width: min(24rem, 80vw)`로 단어 쪼개짐을 방지하고 안정적인 칼럼 폭 확보, `max-height: min(20rem, 50vh)` 및 `scrollbar-width: thin`으로 스크롤바 의존도 최소화.
+    - 호버 및 스크롤바 최적화: 앵커에 밀착(`bottom: 100%; margin: 0;`) 배치하여 데드존 없이 마우스 이동 시 호버 안정 유지, `:focus-within` 제거로 backref 복귀 시 툴팁 펼침 방지. 가짜 overflow를 일으키던 `::after` 제거로 불필요한 스크롤바 원천 차단.
+    - 검증: `npm run build` 성공, `npx astro check` 0 errors.
   - [x] **본문 마크다운 하이퍼링크 재정의**: Jekyll 시절 구 URL(`https://hyngng.github.io/posts/{slug}/`) 하이퍼링크 235개를 현재 다국어 라우팅 규칙(`/{persona}/{slug}/` 또는 `/{lang}/{persona}/{slug}/`)에 맞춰 일괄 업데이트. 대상 언어에 포스트가 존재하는 항목만 변환, 앵커(#) 보존. 상세는 `docs/ai-docs/features/posts.md` 참조.
 - [ ] **PC 검색바 수직 위치 10px 하향 조정**
   - `.search-sidebar`의 `top: var(--posts-section-margin-top)` (80px) 대신 별도 토큰으로 10px 추가하여 포스트 영역 시작점보다 살짝 아래에 배치.
   - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.
   - 모바일 검색(`.search-mobile-wrapper`)에는 영향 없음.
 - [ ] 완료된 작업 (사후 기록)
+  - [x] GFM 단일 물결표 취소선 비활성화 — `gfm: false` + `remarkGfm({ singleTilde: false })`로 GFM을 직접 등록하고 `remark-gfm`을 `dependencies`에 명시. `1~2`, `10~11` 같은 범위 표기가 `<del>`로 깨지지 않도록 수정. `~~text~~` 취소선과 표·각주·task list·autolink는 유지. 검증: `npm run build`, `npx astro check`, `npm test`.
   - [x] Frame 컴포넌트 완전 캡슐화 (방향 A 리팩토링) — `BaseLayout.astro`에 분산되어 있던 사각형 테두리 마스크(`.frame-border`, 4개 `.frame-edge`, 하단 concave pseudo-element) 및 관련 CSS를 [Frame.astro](file:///c:/Users/kiw60/Desktop/hyngng/hyngng.github.io/src/components/Frame.astro)로 이전 통합. 외곽 프레임과 상하단 concave, 액션 바 일체를 `Frame.astro` 단일 컴포넌트로 캡슐화하여 단일 진실 출처(SSOT) 확립 및 BaseLayout과의 강결합 해소. 검증: `npm run build` 성공, `npx astro check` 0 errors.
   - [x] 모바일(≤960px) 루트 페이지 영역 낭비 제거 — 페르소나(Personas) 섹션 숨김(`display: none`) 및 모바일 전용 접기/펼치기 토글(버튼+JS+CSS) 완전 삭제, `toggleAria` 로케일 필드 정리(7개 로케일). `PostListSection`의 `포스트` 섹션 제목 모바일 숨김 → 검색창이 카드 바로 위에 배치. `Search`는 모바일에서 제목과 입력창을 가로(flex row) 배치. 961~1280px 구간은 기존 유지.
   - [x] 포스트 URL 구조 `-posts` 접미사 제거 및 롤백 (원래의 `/[persona.id]/[slug]/` 구조로 복원). 리다이렉트(`src/pages/posts/[slug].astro`)는 `getPostPath()`를 재사용하므로 자동으로 신규 URL 경로로 반영됨.
@@ -441,7 +447,7 @@
     - 배경: 여러 컴포넌트(`Persona`, `PersonaModal`, `Hero`)에 분산되어 중복 정의되던 원형 아바타 마크업과 CSS, 그리고 `Hero`에 강결합되어 있던 아바타 스택(슬라이스, 겹침 음수 마진, 테두리 등) 세부 로직을 단일 책임 컴포넌트로 분리.
     - 구현:
       - `src/components/Avatars.astro` 신설: 단일 아바타 모드(`src`)와 다중 아바타 스택 모드(`avatars`, `limit=3`)를 유연하게 지원. 플레이스홀더 배경, 원형 마스킹, lazy/eager 로딩, onerror 제거 등 캡슐화.
-      - `src/styles/global.css`: 중앙 토큰 `--avatar-stack-size: 24px`, `--avatar-stack-overlap: 8px` 추가 (웹 관행 2의 배수 상수 및 매직 넘버 방지).
+      - `src/styles/global.css`: 중앙 토큰 `--avatar-stack-size: 24px`, `--avatar-stack-overlap: 10px` (조밀한 스택 겹침을 위한 토큰화).
       - `Hero.astro`: 인라인 아바타 스택 마크업 및 관련 CSS 4개 규칙, `slice(0, 3)` 계산 로직을 전부 제거하고 `<Avatars avatars={personaAvatars} loading="eager" />`로 간소화.
       - `Persona.astro` / `PersonaModal.astro`: 중복 아바타 마크업 및 CSS를 제거하고 `<Avatars src={...} />` 도입.
     - 검증: `npm test` 61 passed (9 test files), `npx astro check` 0 errors / 0 warnings / 0 hints, `npm run build` 589 pages 생성 완료. `docs/ai-docs/components/personas.md` 동기화.

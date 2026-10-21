@@ -590,7 +590,7 @@ Anécdota del día
 - Como suponía, los instructores tenían todos 20 años (nacidos en 2004).
 :::
 
-## **Reflexiones después de la graduación**
+## **Lo que sentí tras la graduación**
 
 Aunque escrito parece un periodo corto, el entorno del campo de entrenamiento es tan diferente que la percepción del tiempo fue de más de tres semanas. Se siente con un peso similar al de haber pasado mes y medio o dos meses en la vida cotidiana. Desde que llegué a casa, el ambiente es tan pacífico y tranquilo que la vida en el campo me parece un poco irreal.
 

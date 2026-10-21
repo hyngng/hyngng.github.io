@@ -316,7 +316,16 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 `micromark-extension-*`/`mdast-util-*` 6개 패키지는 `package.json`의 `dependencies`에 명시 등록되어 있다 (전이 의존성에 기대지 않음).
 
-`src/utils/markdown-syntax.ts`가 테이블·디렉티브·수식의 micromark/from-Markdown 확장과 렌더링용 remark 플러그인 연결을 함께 정의한다. `astro.config.mjs`는 이 모듈의 remark 플러그인 목록을 사용하고, `posts.ts`는 동일한 확장 정의에서 필요한 파서 옵션을 얻는다. Astro 기본 GFM 처리는 표 문법을 제공하므로 별도의 remark 플러그인을 중복 등록하지 않는다. 글자 수 계산만 수식 확장을 포함하며 excerpt는 기존처럼 표와 디렉티브만 사용한다. 새 문법 확장을 추가할 때는 이 모듈과 `package.json` 의존성을 갱신한다.
+`src/utils/markdown-syntax.ts`가 테이블·디렉티브·수식의 micromark/from-Markdown 확장과 렌더링용 remark 플러그인 연결을 함께 정의한다. `astro.config.mjs`는 이 모듈의 remark 플러그인 목록을 사용하고, `posts.ts`는 동일한 확장 정의에서 필요한 파서 옵션을 얻는다. 글자 수 계산만 수식 확장을 포함하며 excerpt는 기존처럼 표와 디렉티브만 사용한다. 새 문법 확장을 추가할 때는 이 모듈과 `package.json` 의존성을 갱신한다.
+
+### GFM 취소선과 단일 물결표
+
+렌더링 파이프라인은 Astro 기본 GFM 등록(`gfm: true`)을 사용하지 않고, `gfm: false` + `[remarkGfm, { singleTilde: false }]`로 GFM을 직접 등록한다.
+
+- Astro가 사용하는 `micromark-extension-gfm-strikethrough`의 `singleTilde` 기본값은 `true`다. 이 경우 `새벽 1~2시 ... 10~11시`처럼 한 문단에 단일 `~`가 두 번 나오고 flanking 규칙을 만족하면 두 문자가 취소선 구분자로 짝지어져, 그 사이 전체가 `<del>`로 렌더링된다.
+- `singleTilde: false`에서는 `~~text~~`만 취소선이 되고, `1~2` 같은 범위 표기의 `~`는 문자 그대로 출력된다.
+- 표·각주·task list·autolink 등 나머지 GFM 기능은 그대로 유지된다. `remark-gfm`은 `dependencies`에 직접 등록되어 있다.
+- excerpt/글자 수 계산 파서(`markdown-syntax.ts`)는 GFM 취소선 확장을 포함하지 않으므로 이 설정의 영향을 받지 않는다.
 
 ## 포스트 Excerpt 추출
 

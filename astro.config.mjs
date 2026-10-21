@@ -19,6 +19,7 @@ import astroPwa from './src/integrations/astro-pwa';
 
 import rehypeKatex from 'rehype-katex';
 import remarkDeflist from 'remark-deflist';
+import remarkGfm from 'remark-gfm';
 import { remarkImageAttributes } from './src/plugins/remark-image-attributes.mjs';
 import { unified } from '@astrojs/markdown-remark';
 import { visit } from 'unist-util-visit';
@@ -136,10 +137,15 @@ export default defineConfig({
       theme: 'css-variables',
     },
     processor: unified({
+      // GFM is registered explicitly so `singleTilde` can be disabled:
+      // literal ranges like `1~2` must not be parsed as strikethrough.
+      // `~~text~~` remains the only strikethrough syntax.
+      gfm: false,
       remarkRehype: {
         footnoteLabelTagName: 'span',
       },
       remarkPlugins: [
+        [remarkGfm, { singleTilde: false }],
         remarkImageAttributes,
         markdownRemarkPlugins.directive,
         remarkDirectives,

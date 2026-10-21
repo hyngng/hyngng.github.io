@@ -516,7 +516,7 @@ Restitution des uniformes de sport, rangement des bagages. Dernier petit-déjeun
 
 Rassemblement devant le gymnase, cérémonie : hymne national, chant de l'armée. Photos de groupe avec le module — nous étions un groupe soudé. Adieux, retrouvailles avec la famille.
 
-## **Réflexions après la formation**
+## **Ce que j'ai ressenti après la formation**
 
 Bien que courte sur le papier, l'expérience au centre d'entraînement a semblé durer 1,5 à 2 mois par son intensité. De retour à la maison, l'ambiance paisible rendait la vie au centre irréelle.
 

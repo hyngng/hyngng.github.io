@@ -38,6 +38,7 @@ npm run dev
 | `@astrojs/markdown-remark` | Markdown 처리 |
 | `remark-math` + `rehype-katex` | 수학 수식 렌더링 (KaTeX) |
 | `remark-deflist` | 정의 목록(`<dl>`) 지원 |
+| `remark-gfm` | GFM 표·각주·task list·autolink (단일 `~` 취소선은 비활성) |
 
 ### 외부 CDN 리소스
 
@@ -150,6 +151,7 @@ tags: [태그1, 태그2]
 - **KaTeX 수식**: `$inline$` 또는 `$$block$$`
 - **Mermaid 다이어그램**: ` ```mermaid ` 코드 블록
 - **정의 목록**: 용어 아래 `: 설명` 형식
+- **GFM**: 표, 각주, task list, autolink. 취소선은 `~~text~~`만 지원하며, `~text~`는 취소선이 아니라 문자 그대로 출력됩니다.
 
 ## 크로스 플랫폼 참고사항
 

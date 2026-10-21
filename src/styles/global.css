@@ -26,7 +26,7 @@
   --content-width: 768px;
   --avatar-size: 40px;
   --avatar-stack-size: 24px;
-  --avatar-stack-overlap: 8px;
+  --avatar-stack-overlap: 10px;
   --hero-margin-top: 32px;
   --hero-margin-top-mobile: 32px;
   --post-margin-top: 32px;
@@ -112,6 +112,16 @@
   --space-persona-info-line-height: 16px;
   --space-hero-caption-gap: 0.4rem;
   --button-padding-x: 2rem;
+
+  /* ── Footnote Tooltip Tokens (Desktop) ── */
+  --footnote-tooltip-font-size: 0.875rem;
+  --footnote-tooltip-line-height: 1.6;
+  --footnote-tooltip-padding: 0.75rem 1rem;
+  --footnote-tooltip-min-width: 8rem;
+  --footnote-tooltip-max-width: min(24rem, 80vw);
+  --footnote-tooltip-max-height: min(20rem, 50vh);
+  --footnote-tooltip-radius: var(--code-block-radius);
+  --space-footnote-block: 0.4rem;
 
   /* ── Component Tokens ── */
   --footer-padding: 3.2rem;

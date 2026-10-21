@@ -474,27 +474,23 @@ html:not([data-js]) .img-wrapper img {
   }
 }
 
-/* ── Footnote Tooltip (Desktop ≥961px) ── */
-article {
-  anchor-scope: all;
-}
-
 .footnote-ref-wrapper {
   position: relative;
   display: inline-block;
-  anchor-name: --footnote-ref-anchor;
 }
 
 .footnote-tooltip {
   display: none;
-  max-height: 192px;
+  max-height: var(--footnote-tooltip-max-height);
   overflow-y: auto;
-  padding: 0.6em 0.8em;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  padding: var(--footnote-tooltip-padding);
   background: var(--color-post-inline-code-bg);
   color: var(--color-text);
-  font-size: 0.8rem;
-  line-height: 1.5;
-  border-radius: 5px;
+  font-size: var(--footnote-tooltip-font-size);
+  line-height: var(--footnote-tooltip-line-height);
+  border-radius: var(--footnote-tooltip-radius);
   z-index: 50;
   text-align: left;
 }
@@ -503,32 +499,22 @@ article {
   .footnote-tooltip {
     position: absolute;
     width: max-content;
-    max-width: 256px;
+    min-width: var(--footnote-tooltip-min-width);
+    max-width: var(--footnote-tooltip-max-width);
     bottom: 100%;
     left: 50%;
     translate: -50% 0;
-    margin-bottom: 5px;
+    margin: 0;
   }
 
-  @supports (anchor-name: --footnote-ref-anchor) {
-    .footnote-tooltip {
-      position-anchor: --footnote-ref-anchor;
-      position-area: top center;
-      position-try-fallbacks: flip-block, top left, top right;
-      margin: 0;
-      translate: none;
-    }
-  }
-
-  .footnote-ref-wrapper:hover .footnote-tooltip,
-  .footnote-ref-wrapper:focus-within .footnote-tooltip {
+  .footnote-ref-wrapper:hover .footnote-tooltip {
     display: block;
   }
 }
 
 .footnote-tooltip .footnote-block {
   display: block;
-  margin: 0.5em 0;
+  margin: var(--space-footnote-block) 0;
 }
 
 .footnote-tooltip .footnote-block:first-child {

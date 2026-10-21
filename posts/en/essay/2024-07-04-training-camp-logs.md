@@ -586,7 +586,7 @@ Anecdotes from this day
 - As I'd assumed from indirect information, the squad leaders were all born in 2004.
 :::
 
-## **Thoughts After Graduation**
+## **What I Felt After Graduation**
 
 Though it looks short when summarized in writing, the training camp environment was so different from everyday life that the felt duration was more than three weeks. It feels comparable in weight to spending a month and a half or two months in daily life. Since coming home, the atmosphere has been so peaceful and quiet that the training camp life feels almost surreal.
 

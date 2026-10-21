@@ -97,7 +97,12 @@ node.properties.ariaDescribedBy = existing ? `${existing} ${tooltipId}` : toolti
 ## 각주 인터랙션 (반응형 전략)
 
 ### 데스크톱 (≥961px)
-- **호버/포커스 툴팁**: 각주 참조(`a[data-footnote-ref]`) 위에 마우스 커서를 올리거나 키보드 포커스 시 `.footnote-tooltip`이 앵커 위치에 표시됨.
+- **호버 툴팁**: 각주 참조(`a[data-footnote-ref]`) 위에 마우스 커서를 올렸을 때(`.footnote-ref-wrapper:hover`) `.footnote-tooltip`이 앵커 위치에 표시됨. 하단 각주 본문의 복귀 화살표(backref)를 클릭해 본문으로 돌아왔을 때 타깃 포커스로 인해 각주 블록이 불필요하게 펼쳐져 본문을 가리는 현상을 방지하기 위해 순수 `:hover`로 트리거를 한정함.
+- **가독성 및 시인성 최적화 (토큰 중앙화)**:
+  - 폰트 크기 및 행간: `var(--footnote-tooltip-font-size)`(`0.875rem`) 및 `var(--footnote-tooltip-line-height)`(`1.6`)로 본문 보조 텍스트에 최적화된 시인성 확보.
+  - 패딩 및 곡률: `var(--footnote-tooltip-padding)`(`0.75rem 1rem`), `var(--footnote-tooltip-radius)`(`var(--code-block-radius)`)로 여유 있는 여백과 정돈된 모서리 제공.
+  - 블록 폭 및 높이: `min-width: 8rem`, `max-width: min(24rem, 80vw)`로 잦은 줄바꿈을 방지하고 이상적인 칼럼 폭 유지. `max-height: min(20rem, 50vh)` 및 `scrollbar-width: thin`으로 대부분의 각주를 스크롤 없이 전문 노출.
+  - 호버 안정성 및 스크롤바 최적화: 툴팁을 앵커 바로 위(`bottom: 100%; margin: 0;`)에 배치하여 데드존(공백)을 제거함으로써 마우스 이동 시 호버 상태가 안정적으로 유지됨. 자식 가상 요소의 외부 돌출로 인한 가짜 overflow를 제거하여 실제 내용 초과 시에만 스크롤바가 노출됨.
 - **클릭 스크롤 이동**: 각주 번호 클릭 시 문서 하단의 각주 정의 섹션으로 부드럽게 스크롤.
 - **프레임 오프셋 보정**: 화면 상단의 `Frame.astro` 테두리에 가려지지 않도록 `scroll-margin-top: calc(var(--frame-thickness) + 1.5rem)`을 부여하여 안정적인 시각적 가시성을 확보함.
 
