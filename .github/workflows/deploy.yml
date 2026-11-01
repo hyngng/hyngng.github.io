@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      - run: npm ci --include=dev
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
       - name: Type check
