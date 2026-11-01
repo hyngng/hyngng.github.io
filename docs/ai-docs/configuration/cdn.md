@@ -97,6 +97,12 @@ CDN URL 변환 로직을 `content.config.ts`와 `personas.settings.ts`가 공유
 
 `shouldRewriteCdnUrl()`도 로컬 경로만 재작성한다. `//host/path` 및 `data:image/...`처럼 로컬 파일 경로가 아닌 URL은 CDN base와 결합하지 않는다.
 
+## 이미지 최적화 제약
+
+- 원본 이미지는 별도 리소스 저장소(`hyngng.github.io.resources`)에 있고 빌드 시 jsDelivr URL로만 참조한다. 따라서 Astro 빌드에서 원본을 읽어 AVIF/WebP 변환, 리사이즈, `srcset` 생성 같은 이미지 파이프라인을 적용하지 않는다.
+- 현재 적용 범위는 CDN URL 변환, `img-wrapper`의 비율 유지, `loading="lazy"`(카드/본문), LQIP/OG 이미지 메타데이터다. 이미지 자체 최적화는 리소스 저장소에 WebP 원본을 두는 방식으로 관리한다.
+- GitHub Pages는 응답 헤더를 제어할 수 없으므로 이미지/CDN에 대한 CSP·SRI 정책도 제한된다. 자세한 내용은 [보안 헤더](./security.md)를 참고한다.
+
 ## 관련 파일
 
 - `src/settings/site.settings.ts`: `SITE.cdn.imageBaseUrl`

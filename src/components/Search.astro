@@ -46,6 +46,7 @@ const { locale, currentLocale, personaId } = Astro.props;
     const allInputs = document.querySelectorAll<HTMLInputElement>('.search-input');
     const grid = document.querySelector('.posts-grid') as HTMLElement | null;
     const allPosts = allPostsFromGrid(grid || document.createElement('div'));
+    const fallbackEl = document.querySelector<HTMLElement>('.posts-section .search-fallback');
 
     allInputs.forEach(input => {
       input.addEventListener('focus', () => {
@@ -89,6 +90,7 @@ const { locale, currentLocale, personaId } = Astro.props;
 
       if (!query) {
         searchSeq++;
+        if (fallbackEl) fallbackEl.hidden = true;
         controller.clearSearch();
         return;
       }
@@ -97,6 +99,7 @@ const { locale, currentLocale, personaId } = Astro.props;
 
       const engine = await getSearchEngine(allPosts);
       if (currentSeq !== searchSeq) return;
+      if (fallbackEl) fallbackEl.hidden = engine.mode !== 'dom';
 
       const rawLocale = allInputs[0]?.dataset.locale || allInputs[0]?.dataset.defaultLocale;
       if (!rawLocale) throw new Error('Search locale metadata is missing');
@@ -105,6 +108,7 @@ const { locale, currentLocale, personaId } = Astro.props;
 
       const paths = await engine.search(query, { lang, personaId });
       if (currentSeq !== searchSeq) return;
+      if (fallbackEl) fallbackEl.hidden = engine.mode !== 'dom';
 
       await ensureChunksLoaded(controller, new Set(paths));
       if (currentSeq !== searchSeq) return;

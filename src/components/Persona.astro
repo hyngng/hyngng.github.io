@@ -20,7 +20,7 @@ const personaHref = id ? getPersonaPath(id, currentLocale) : undefined;
 ---
 
 <article class={`persona ${clickable && personaHref ? 'is-clickable' : ''}`}>
-  {clickable && personaHref && <a href={personaHref} class="persona-link"></a>}
+  {clickable && personaHref && <a href={personaHref} class="persona-link" aria-label={`${PERSONA_PREFIX}${name}`}></a>}
   <Avatars src={avatar} class="persona-avatar" />
   <div class="persona-text">
     <span class:list={[truncate && 'persona-name-truncate']}>{PERSONA_PREFIX}{name}{nameSuffix && <span class="persona-name-suffix">{nameSuffix}</span>}</span>

@@ -104,7 +104,7 @@ getPostPath('ko/blog/2022-08-13-first-post.mdx', 'blog', 'en-US')             //
 - `image`: 선택, `imageSchema` (`path`, `lqip`, `alt`). `path`가 로컬 절대 경로(`/`로 시작)이면 CDN URL로 변환됨. `lqip`은 placeholder 이미지 (base64 또는 저해상도 URL).
 - `start_with_ads`, `toc`: 이전 Jekyll frontmatter 호환용 선택 필드. `toc_sticky`는 TOC가 항상 sticky이므로 2026-08 스키마에서 제거됨.
   - `lang`: **필수**, 포스트 언어 코드 (full BCP-47, 예: `ko-KR`, `zh-CN`). 지원 언어는 이 값에서 빌드 시점에 파생되므로 중앙 목록 편집 불필요. 폴더 경로는 언어와 무관.
-- `math`: 선택(boolean), 수식(KaTeX) 사용 여부. `true`면 `PostLayout.astro`가 KaTeX CSS를 `<head>`에 주입.
+- `math`: 선택(boolean), 수식(KaTeX) 사용 여부. `true`면 `PostLayout.astro`가 self-host된 `katex/dist/katex.min.css?url`을 `<head>`에 주입.
 - `mermaid`: 선택(boolean), Mermaid 다이어그램 사용 여부. `true`면 `BaseLayout`이 `initMermaidThemeSync()`를 로드.
 - `og_image`: 선택, OG 이미지 절대 URL (`image.path`보다 우선).
 - `redirect_from`: 선택(배열), 레거시 Jekyll URL 목록.
@@ -160,23 +160,25 @@ Astro Markdown은 Liquid를 실행하지 않으므로 그대로 두면 본문에
 ### 렌더링 파이프라인
 
 1. Astro 마크다운 파서가 `` ```mermaid `` 블록을 `<pre data-language="mermaid">`로 변환합니다 (Shiki는 mermaid 언어를 지원하지 않아 구문 강조 없이 통과).
-2. `initMermaidThemeSync()`가 페이지 로드 시 로컬 번들된 `mermaid` 패키지(`package.json`의 `^11.16.0`)를 `await import('mermaid')`로 동적으로 import합니다 (`astro.config.mjs`의 `optimizeDeps.include: ['mermaid']`로 사전 번들되어 dev-toolbar MIME 레이스도 방지).
-3. `ensureMermaidContainers()`가 `<pre>`를 `div.mermaid`로 교체하고, 원본 소스를 `data-mermaid-source` 속성에 저장합니다.
-4. `mermaid.run({ nodes })`가 `.mermaid:not([data-processed])` 요소를 찾아 SVG로 렌더링합니다.
+2. `initMermaidThemeSync()`가 즉시 `ensureMermaidContainers()`로 `<pre>`를 `div.mermaid`로 바꾸고 원본 소스를 `data-mermaid-source`에 저장한 뒤, `.mermaid:not([data-processed])`를 `IntersectionObserver`(`rootMargin: 200px`)로 관찰합니다. **뷰포트에 들어오기 전에는 `mermaid` 모듈을 import하지 않습니다.**
+3. 요소가 화면에 가까워지면 `pendingRoots`에 추가하고, `renderRoots()`가 `await import('mermaid')`로 로컬 번들(`package.json`의 `^12.2.0`)을 로드합니다.
+4. `document.fonts.ready` 후 `mermaid.run({ nodes })`로 SVG를 렌더링합니다. `astro.config.mjs`의 `optimizeDeps.include: ['mermaid']`로 dev 사전 번들도 유지합니다.
 
 ### 테마 동기화
 
-Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테마 전환이 SVG 내부 색상을 자동으로 업데이트하지 못합니다. 이 프로젝트는 **테마 변경 시 모든 다이어그램을 원본 마크다운으로 복원한 뒤 새 테마로 재렌더링**합니다.
+Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테마 전환이 SVG 내부 색상을 자동으로 업데이트하지 못합니다. 이 프로젝트는 **이미 렌더링된 다이어그램만 원본 마크다운으로 복원한 뒤 새 테마로 재렌더링**합니다.
 
-- `themeChange` 커스텀 이벤트 또는 `astro:page-load` 이벤트 발생 시 `refreshMermaid()` 호출
-- 모든 `.mermaid` 요소의 `data-processed`를 제거하고 `textContent`를 `data-mermaid-source`에서 복원
+- `themeChange` 이벤트 발생 시 `refreshMermaid()` 호출
+- `.mermaid[data-processed]` 요소의 `data-processed`를 제거하고 `textContent`를 `data-mermaid-source`에서 복원
+- 아직 렌더링되지 않은 요소는 `pendingRoots`에 남아 최신 테마로 렌더링
 - `renderRevision` 카운터로 동시에 발생한 여러 렌더 요청 중 최신만 반영
+- `astro:page-load` 이벤트에서는 `IntersectionObserver`를 재생성하고 미처리 `.mermaid` 요소를 다시 관찰합니다. `observe()`는 같은 요소에 중복 호출해도 안전하므로 별도 관찰 플래그를 두지 않습니다.
 
 ### 구현 참고
 
-- **`nodes` 파라미터 사용**: `mermaid.run({ querySelector })` 대신 `nodes: Array.from(roots)`를 사용하여 DOM 재쿼리 레이스를 방지합니다. mermaid v10의 `run()` API는 `querySelector`와 `nodes`를 모두 지원합니다.
-- **`data-processed` 속성**: mermaid 내부에서 렌더링 전에 `data-processed="true"`를 설정하고, 해당 속성이 있는 요소는 스킵합니다. therefore `refreshMermaid()`에서 이 속성을 제거해야 재렌더링이 가능합니다.
-- **CDN 로드**: `mermaid@10` 태그로 로드하며, 인스턴스를 캐싱하여 중복 로딩을 방지합니다.
+- **`nodes` 파라미터 사용**: `mermaid.run({ querySelector })` 대신 `nodes: Array<HTMLElement>`를 사용하여 DOM 재쿼리 레이스를 방지합니다. mermaid 12의 `run()` API도 `nodes`를 지원합니다.
+- **`data-processed` 속성**: mermaid 내부에서 렌더링 전에 `data-processed="true"`를 설정하고, 해당 속성이 있는 요소는 스킵합니다. 따라서 `refreshMermaid()`에서 이 속성을 제거해야 재렌더링이 가능합니다.
+- **로컬 번들**: Mermaid는 CDN이 아니라 npm 패키지를 런타임에 동적 import합니다. 다이어그램이 없는 페이지는 모듈을 내려받지 않습니다.
 
 ### 관련 파일
 
@@ -191,7 +193,7 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 
 - **`Head.astro`**: `<head>` 요소 내부에 기본 `<slot />`을 두어 자식 콘텐츠 삽입 가능하게 함.
 - **`BaseLayout.astro`**: `<Head>`에 자식으로 `<slot name="head">`를 전달. 포스트가 아닌 페이지(홈, 페르소나)에서는 이 슬롯의 기본값으로 전역 OG 태그(`og:title`, `og:description`, `og:type="website"`, `og:url`, `og:site_name`, `twitter:card`, `fediverse:creator`)가 렌더링됨. `fediverse:creator`는 `SITE.social.fediverse`(`@hyngng.main@threads.net`)를 사용. `noindex` prop이 true면 `<meta name="robots" content="noindex">`를 넣고 canonical을 생략함 (404 페이지가 사용).
-- **`PostLayout.astro`**: `<Fragment slot="head">`로 BaseLayout의 슬롯을 오버라이드하여 포스트 전용 OG 태그(`og:type="article"` 포함), JSON-LD, KaTeX CSS를 `<head>` 안에 주입.
+- **`PostLayout.astro`**: `<Fragment slot="head">`로 BaseLayout의 슬롯을 오버라이드하여 포스트 전용 OG 태그(`og:type="article"` 포함), JSON-LD, KaTeX CSS(Vite 로컬 asset)를 `<head>` 안에 주입.
 
 ### 동작 원리
 

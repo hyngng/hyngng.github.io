@@ -14,6 +14,7 @@ import Adsense from '../components/seo/analytics/Adsense.astro';
 import { countCharacters, extractExcerpt, META_DESCRIPTION_MAX_LENGTH, getPostNumber, getPostSlug, getPostLang, getPostPath, getPersonaPath } from '../utils/posts';
 import { buildBlogPostingJsonLd, buildBreadcrumbJsonLd, serializeJsonLd } from '../utils/jsonLd';
 import { usePageContext } from '../utils/pageContext';
+import katexCssUrl from 'katex/dist/katex.min.css?url';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -155,9 +156,7 @@ const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
     {fediverseCreators.map((handle) => (
       <meta name="fediverse:creator" content={handle} />
     ))}
-    {post.data.math && (
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous" />
-    )}
+    {post.data.math && <link rel="stylesheet" href={katexCssUrl} />}
     <script type="application/ld+json" is:inline set:html={jsonLdString} />
     <script type="application/ld+json" is:inline set:html={breadcrumbJsonLdString} />
   </Fragment>

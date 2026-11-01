@@ -5,14 +5,16 @@
 
 ## 초기화 (`ThemeInit.astro`)
 페이지 로드 시 FOUC를 방지하기 위해 `<head>` 내에서 인라인 스크립트가 실행됩니다.
-1. `localStorage.getItem('theme')`으로 사용자 선택 확인
+1. `localStorage.getItem('theme')`으로 사용자 선택 확인 (저장소 접근이 차단되면 무시)
 2. 저장된 값이 없으면 `window.matchMedia('(prefers-color-scheme: dark)')`로 OS 설정 확인
 3. `<html>`에 `dark` 또는 `light` 클래스 적용
+
+사생활 보호 모드나 저장소 차단 환경에서도 초기 테마가 깨지지 않도록 `getItem`을 `try/catch`로 감싼다.
 
 ## 테마 토글 (`src/utils/theme.ts`)
 `toggleTheme()` 함수가 다음을 수행합니다:
 1. `document.documentElement`의 `dark`/`light` 클래스를 토글
-2. `localStorage.setItem('theme', 'dark' | 'light')`로 사용자 선택을 persist
+2. `localStorage.setItem('theme', 'dark' | 'light')`로 사용자 선택을 persist (`setItem` 실패는 무시하고 현재 세션의 클래스 상태 유지)
 3. `themeChange` 커스텀 이벤트를 dispatch (Mermaid 테마 동기화, Giscus 등에서 수신)
 
 ## Frame 통합

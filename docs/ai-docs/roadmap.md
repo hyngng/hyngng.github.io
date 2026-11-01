@@ -6,7 +6,9 @@
 
 - [ ] 코드 리뷰 후속 수정 계획
   - [x] 각주 툴팁 플러그인의 `aria-describedby` HAST 속성명을 `ariaDescribedBy`로 맞춰 `footnote-label` 설명과 툴팁 ID를 단일 속성으로 병합한다.
-  - [ ] 타임존 없는 날짜를 호스트 로컬 시간대와 locale-formatted 문자열 파싱에 의존하지 않도록 `SITE.timezone` 기준으로 파싱한다. UTC 및 비UTC 프로세스에서 같은 결과가 나오는지, 시간대 명시 날짜와 날짜 전용 입력을 함께 확인한다.
+  - [x] 타임존 없는 날짜를 호스트 로컬 시간대와 locale-formatted 문자열 파싱에 의존하지 않도록 `SITE.timezone` 기준으로 파싱한다. UTC 및 비UTC 프로세스에서 같은 결과가 나오는지, 시간대 명시 날짜와 날짜 전용 입력을 함께 확인한다.
+    - 구현: `src/utils/timezone.ts`의 `parseDateWithTimezone()`이 offset 없는 ISO/date-only 입력을 `SITE.timezone` 기준으로 해석하고, DST 경계에서는 대상 날짜의 오프셋으로 재계산한다. `PostFooter.astro` 표시에도 `timeZone: SITE.timezone`을 명시했다.
+    - 검증: `src/utils/timezone.test.ts`에서 UTC/KST/뉴욕 DST와 date-only 입력을 검증했고, 현재 `npm test` 67 passed.
   - [x] 청크 fetch 요청 순번을 클릭·딥링크·popstate 복원에 공유해 오래된 응답의 DOM 및 history 변경을 차단한다.
   - [x] 언어 메뉴 닫힘 상태를 `inert`로 표현하고 `aria-expanded` 및 포커스 복원을 함께 관리한다.
   - [x] float 이미지 캡션의 다음 문단을 HAST 부모의 `children`에서 찾아 제거하도록 수정한다.
@@ -15,6 +17,16 @@
   - [x] 페르소나 모달 백드롭의 블러 필터를 제거하고 반투명 딤은 유지한다. 각주 모달의 블러 백드롭은 별도 디자인으로 유지한다.
   - [x] Markdown 렌더링과 excerpt/글자 수 계산의 파서 확장 정의를 `src/utils/markdown-syntax.ts`로 공유한다. 렌더링 GFM은 `remark-gfm`으로 명시 등록하고(`singleTilde: false`), excerpt/글자 수 계산은 GFM 취소선 확장 없이 계산 목적별 확장 범위 차이를 보존한다.
   - [x] 빈 인라인 directive 후보는 `position`의 원문 텍스트로 되돌려 일반 콜론 문자열이 렌더링 중 사라지지 않도록 한다.
+
+- [ ] 품질 감사 후속 수정 (2026-10) — P1-3 사용자 검토 대기
+  - [x] **P1-1 폰트/LCP**: `scripts/build-fonts.mjs`가 실제 사이트 글리프만 추출한 Pretendard 400/700 WOFF2 2개를 생성하도록 전환하고, `pretendard.css`·`Head.astro` preload·`global.css` 700 weight/폰트 스택을 연결했다. Lighthouse CLI(모바일, 분석 도구 차단)에서 Performance 93, LCP 3.3s를 측정했다. LCP 2.5s 이하 목표는 서드파티/네트워크 후속 최적화 과제로 남긴다.
+  - [x] **P1-2 접근성 이름/상태**: 모바일 홈 링크, 언어 버튼(레이블·Escape), Persona overlay, LoadMore, TOC `aria-current`, 모바일 섹션 제목의 접근성 이름/상태를 정리했다. Lighthouse Accessibility 95이며 유일한 실패 항목은 P1-3 color-contrast다.
+  - [ ] **P1-3 색 대비/opacity 토큰**: 사용자 직접 검토 범위로 남긴다. 이번 작업에서 관련 색상/opacity 토큰은 수정하지 않았다.
+  - [x] **P2 안정성/접근성**: offset 없는 날짜를 `SITE.timezone`으로 파싱·표시하고, YouTube iframe에 title을 추가했으며, CI에 production audit/check/test gate를 연결했다.
+  - [x] **P3 런타임/검색**: 테마 localStorage 예외 처리, Mermaid IntersectionObserver 지연 렌더 및 테마 변경 재렌더, KaTeX self-host, 오래된 `public/pagefind` 제거, 500→700 typography 정리, Pagefind 로드/초기화/검색 타임아웃과 DOM 폴백을 적용했다.
+  - [x] **P3 검색 언어 인덱스**: Pagefind 인덱스 키는 소문자(`ko-kr`)이고 필터 값은 BCP-47 표기(`ko-KR`)를 보존하므로, 첫 검색에서 `init(locale.toLowerCase())` 후 `filters: { lang: locale }`로 검색하도록 수정했다. 한국어/영어 페이지에서 실제 결과를 확인했다.
+  - [x] **P3 의존성/코드 품질**: Vitest 5, Mermaid 12, KaTeX 0.19로 정리하고 `gray-matter`를 `js-yaml`로 대체했으며 `posts.ts` 경고를 수정했다. ESLint/Prettier는 "품질 도구 영구 추가 금지" 제약에 따라 CI에 추가하지 않았다.
+  - [x] **이미지 파이프라인/보안 헤더 제약 문서화**: CDN 이미지 라우팅과 GitHub Pages 정적 호스팅 제약상 빌드 타임 이미지 최적화·HTTP 보안 헤더를 적용할 수 없는 범위를 `docs/ai-docs/configuration/cdn.md`와 `docs/ai-docs/configuration/security.md`에 기록했다.
 
 - [ ] SEO 관련 작업
   - [x] **Robots.txt & Sitemap**: `request.url`에서 origin을 추출하여 동적 생성. `astro.config.mjs`의 `site: SITE.url` 설정으로 dev/prod 환경별 올바른 절대 URL 자동 반영.

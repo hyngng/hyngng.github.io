@@ -37,11 +37,6 @@ const suffix =
 <a
   href={nextChunkUrl}
   class:list={["load-more-card", { "post-card--with-image": !!image }]}
-  role="button"
-  aria-label={locale.posts.loadMoreHover(
-    nextPreviewPost.data.title,
-    nextChunkCount,
-  )}
   style={`--post-order: ${loadMoreOrder}`}
 >
   {

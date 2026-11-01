@@ -3,5 +3,5 @@
 	font-weight: 200 900;
 	font-style: normal;
 	font-display: swap;
-	src: url('/fonts/Reddit_Mono/RedditMono-VariableFont_wght.ttf') format('truetype-variations');
+	src: url('/fonts/Reddit_Mono/RedditMono-VariableFont_wght.woff2') format('woff2-variations');
 }

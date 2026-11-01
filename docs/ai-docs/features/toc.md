@@ -25,6 +25,7 @@ Astro 정적 렌더링과 클라이언트 ScrollSpy 스크립트를 조합해 �
 - ScrollSpy는 화면 상단의 활성 기준선을 지난 마지막 heading을 현재 heading으로 선택함. 스크롤 이벤트는 `requestAnimationFrame`으로 묶어 한 프레임에 한 번만 계산함.
 - TOC 초기화가 다시 실행될 때 이전 스크롤·resize·hashchange 리스너와 예약된 animation frame은 `AbortController`로 정리함.
 - 활성 heading이 속한 그룹만 `.expanded`가 되어 하위 heading을 보여줌.
+- 활성 TH에는 `aria-current="location"`을 설정하고, 비활성 TH에서는 제거해 스크린 리더가 현재 위치를 알 수 있게 함.
 - TH 클릭 시 `pendingSlug`를 설정하여 목적지 도달 전까지 `render()`를 억제함. `computeActiveSlug()`의 계산 결과가 `pendingSlug`와 같아지는 순간 억제를 해제하고 실제 위치로 동기화함.
 - TH는 표준 hash 앵커로 PH를 이동시킴. 수동 `scrollTo()`를 사용하지 않아 클릭, hash 직접 진입, 뒤로가기 모두 같은 브라우저 스크롤 경로를 사용함.
 - heading의 `scroll-margin-top`은 `--scroll-target-offset`임. 데스크톱에서는 중앙 본문을 가리는 프레임 두께를 사용하고, 모바일에서는 고정 헤더가 없으므로 0임.

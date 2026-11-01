@@ -35,6 +35,7 @@ const locale: Locale = {
     monthsAgo: (n: number) => `${n}ヶ月前に投稿`,
     yearAgo: '1年前に投稿',
     yearsAgo: (n: number) => `${n}年前に投稿`,
+    inFuture: '公開予定',
   },
   toc: {
     title: '目次',
@@ -64,6 +65,7 @@ const locale: Locale = {
     title: '検索',
     placeholder: '記事を検索',
     empty: '検索結果が見つかりません。',
+    fallback: '検索インデックスを読み込めないため、タイトルと説明から検索します。',
     aria: '記事を検索',
   },
   notFound: {

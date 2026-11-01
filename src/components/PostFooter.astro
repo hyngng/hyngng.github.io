@@ -1,5 +1,6 @@
 ---
 import { getLocale } from '../locales';
+import { SITE } from '../settings/site.settings';
 import QRCode from 'qrcode';
 
 interface Props {
@@ -28,6 +29,7 @@ const formatDateTime = (date: Date) => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: SITE.timezone,
   });
   const iso = date.toISOString();
   const full = date.toLocaleString(locale.postFooter.dateLocale, {
@@ -37,6 +39,7 @@ const formatDateTime = (date: Date) => {
     hour: '2-digit',
     minute: '2-digit',
     timeZoneName: 'short',
+    timeZone: SITE.timezone,
   });
   return `<time datetime="${iso}" title="${full}">${display}</time>`;
 };

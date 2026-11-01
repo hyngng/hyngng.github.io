@@ -49,7 +49,7 @@ export function countCharacters(body: string = ''): number {
     // MDX comments (same pattern as extractExcerpt)
     .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
     // Kramdown attribute spans like {: .w-50 .right } — ':' distinguishes from directive attrs
-    .replace(/\{\:\s*[^}]*\}/g, '');
+    .replace(/\{:\s*[^}]*\}/g, '');
 
   const tree = fromMarkdown(preprocessed, getMarkdownSyntax({ includeMath: true }));
 

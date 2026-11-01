@@ -1,18 +1,20 @@
+@import "./pretendard.css";
 @import "./themes/light.css";
 @import "./themes/dark.css";
 @import "./typography.css";
 @import url("/fonts/Reddit_Mono/redditmono.css");
 
 :root {
+  --font-pretendard: 'Pretendard';
   /* ── Typography ───────────────────────── */
   --font-size-base: 12px;
   --font-size-action: 22px;
   --font-size-hero-title: 40px;
   --font-size-hero-title-mobile: 32px;
   --font-size-hero-description: 18px;
-  --font-family-base: var(--configured-font-family, 'Pretendard Variable', Inter, system-ui, sans-serif);
-  --font-family-code: 'Reddit Mono', 'Pretendard Variable', 'Pretendard', monospace;
-  --font-weight-hero-title: 800;
+  --font-family-base: var(--configured-font-family, var(--font-pretendard), Inter, system-ui, sans-serif);
+  --font-family-code: 'Reddit Mono', var(--font-pretendard), monospace;
+  --font-weight-hero-title: 700;
   --line-height-hero-title: 48px;
   --line-height-hero-title-mobile: 36px;
   --line-height-hero-description: 22px;
@@ -35,7 +37,7 @@
   --section-title-line-height: 28px;
   --font-size-post-title: 40px;
   --font-size-post-title-mobile: 32px;
-  --font-weight-post-title: 800;
+  --font-weight-post-title: 700;
   --line-height-post-title: 48px;
   --line-height-post-title-mobile: 36px;
   --persona-name-size: 14px;

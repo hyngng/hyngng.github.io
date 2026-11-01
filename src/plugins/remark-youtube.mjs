@@ -5,7 +5,7 @@ export function remarkYoutube() {
     visit(tree, 'leafDirective', (node) => {
       if (node.name !== 'youtube') return;
 
-      const { id } = node.attributes || {};
+      const { id, title } = node.attributes || {};
       if (!id) {
         console.warn('[remark-youtube] Missing id attribute');
         return;
@@ -20,6 +20,7 @@ export function remarkYoutube() {
           tagName: 'iframe',
           properties: {
             src: `https://www.youtube.com/embed/${id}`,
+            title: title || 'YouTube video player',
             frameborder: '0',
             allowfullscreen: true,
             loading: 'lazy'

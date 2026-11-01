@@ -35,6 +35,7 @@ const locale: Locale = {
     monthsAgo: (n: number) => `${n} months ago`,
     yearAgo: '1 year ago',
     yearsAgo: (n: number) => `${n} years ago`,
+    inFuture: 'Scheduled',
   },
   toc: {
     title: 'Contents',
@@ -64,6 +65,7 @@ const locale: Locale = {
     title: 'Search',
     placeholder: 'Search posts',
     empty: 'No results found.',
+    fallback: 'Search index unavailable; searching titles and descriptions.',
     aria: 'Search posts',
   },
   notFound: {

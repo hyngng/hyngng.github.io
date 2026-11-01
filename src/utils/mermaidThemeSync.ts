@@ -3,6 +3,9 @@ import type { Mermaid } from 'mermaid';
 let mermaidInstance: Mermaid | null = null;
 let mermaidAbortController: AbortController | undefined;
 let renderRevision = 0;
+let observer: IntersectionObserver | null = null;
+const pendingRoots = new Set<HTMLElement>();
+let flushScheduled = false;
 
 async function loadMermaid(): Promise<Mermaid> {
   if (!mermaidInstance) {
@@ -32,36 +35,89 @@ function ensureMermaidContainers(): void {
   });
 }
 
-async function renderMermaid(theme: 'dark' | 'default', revision: number): Promise<void> {
+function scheduleFlush(): void {
+  if (flushScheduled) return;
+  flushScheduled = true;
+  window.requestAnimationFrame(() => {
+    flushScheduled = false;
+    void flushPending();
+  });
+}
+
+function observeMermaidRoots(): void {
   ensureMermaidContainers();
 
-  const roots = document.querySelectorAll<HTMLElement>('.mermaid:not([data-processed])');
+  const roots = Array.from(
+    document.querySelectorAll<HTMLElement>('.mermaid:not([data-processed])'),
+  );
   if (roots.length === 0) return;
 
-  // Import the ~1MB mermaid module only when a diagram actually needs rendering.
+  if (!('IntersectionObserver' in window)) {
+    roots.forEach((root) => pendingRoots.add(root));
+    scheduleFlush();
+    return;
+  }
+
+  observer ??= new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer?.unobserve(entry.target);
+        pendingRoots.add(entry.target as HTMLElement);
+      }
+      scheduleFlush();
+    },
+    { rootMargin: '200px 0px' },
+  );
+
+  roots.forEach((root) => observer?.observe(root));
+}
+
+async function renderRoots(
+  roots: HTMLElement[],
+  theme: 'dark' | 'default',
+  revision: number,
+): Promise<void> {
+  if (roots.length === 0) return;
+
+  const mermaidPromise = loadMermaid();
   if ('fonts' in document) {
     await document.fonts.ready;
   }
 
-  const mermaid = await loadMermaid();
-  if (revision !== renderRevision) return;
+  const mermaid = await mermaidPromise;
+  if (revision !== renderRevision) {
+    roots.forEach((root) => pendingRoots.add(root));
+    scheduleFlush();
+    return;
+  }
 
   mermaid.initialize({ startOnLoad: false, theme });
 
   try {
-    await mermaid.run({ nodes: Array.from(roots) });
+    await mermaid.run({ nodes: roots });
+    roots.forEach((root) => root.setAttribute('data-processed', '1'));
   } catch (error) {
     console.error('Failed to render mermaid diagrams:', error);
   }
 }
 
+async function flushPending(): Promise<void> {
+  if (pendingRoots.size === 0) return;
+  const roots = Array.from(pendingRoots);
+  pendingRoots.clear();
+  await renderRoots(roots, currentTheme(), renderRevision);
+}
+
 async function refreshMermaid(revision: number): Promise<void> {
-  const all = document.querySelectorAll<HTMLElement>('.mermaid[data-mermaid-source]');
-  for (const el of all) {
+  const rendered = Array.from(
+    document.querySelectorAll<HTMLElement>('.mermaid[data-processed]'),
+  );
+  for (const el of rendered) {
     el.removeAttribute('data-processed');
     el.textContent = el.getAttribute('data-mermaid-source') || '';
   }
-  await renderMermaid(currentTheme(), revision);
+  await renderRoots(rendered, currentTheme(), revision);
 }
 
 export function initMermaidThemeSync(): void {
@@ -69,15 +125,29 @@ export function initMermaidThemeSync(): void {
   mermaidAbortController = new AbortController();
   const { signal } = mermaidAbortController;
 
-  const handler = async (): Promise<void> => {
+  observer?.disconnect();
+  observer = null;
+  pendingRoots.clear();
+
+  const onThemeChange = (): void => {
     const revision = ++renderRevision;
-    await refreshMermaid(revision);
+    void refreshMermaid(revision);
   };
 
-  window.addEventListener('themeChange', handler, { signal });
-  window.addEventListener('astro:page-load', handler, { signal });
+  const onPageLoad = (): void => {
+    renderRevision++;
+    observeMermaidRoots();
+  };
+
+  window.addEventListener('themeChange', onThemeChange, { signal });
+  window.addEventListener('astro:page-load', onPageLoad, { signal });
 
   if (document.readyState !== 'loading') {
-    handler();
+    onPageLoad();
+  } else {
+    document.addEventListener('DOMContentLoaded', onPageLoad, {
+      signal,
+      once: true,
+    });
   }
 }

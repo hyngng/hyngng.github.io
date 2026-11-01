@@ -35,6 +35,7 @@ const locale: Locale = {
     monthsAgo: (n: number) => `${n}개월 전 작성`,
     yearAgo: '1년 전 작성',
     yearsAgo: (n: number) => `${n}년 전 작성`,
+    inFuture: '게시 예정',
   },
   toc: {
     title: '목차',
@@ -64,6 +65,7 @@ const locale: Locale = {
     title: '검색',
     placeholder: '포스트 검색',
     empty: '검색 결과가 없습니다.',
+    fallback: '검색 인덱스를 불러오지 못해 제목과 설명으로 검색합니다.',
     aria: '포스트 검색',
   },
   notFound: {

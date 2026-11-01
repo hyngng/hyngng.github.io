@@ -22,6 +22,7 @@ npm run dev
 | :--- | :--- |
 | `npm install` | 의존성 설치 |
 | `npm run dev` | 로컬 개발 서버 시작 (`localhost:4321`) |
+| `npm run fonts` | 사이트에서 쓰는 글자만 남긴 Pretendard 서브셋 재생성 |
 | `npm run build` | 프로덕션 빌드 (`./dist/`) |
 | `npm run preview` | 빌드 결과 로컬 미리보기 |
 | `npm run check` | 타입 검사 (`astro check`) |
@@ -34,22 +35,30 @@ npm run dev
 | 패키지 | 용도 |
 | :--- | :--- |
 | `astro` | 정적 사이트 생성 프레임워크 |
-| `@astrojs/mdx` | MDX 콘텐츠 지원 |
-| `@astrojs/markdown-remark` | Markdown 처리 |
-| `remark-math` + `rehype-katex` | 수학 수식 렌더링 (KaTeX) |
+| `@astrojs/mdx` / `@astrojs/markdown-remark` | MDX·Markdown 처리 |
+| `@astrojs/rss` | RSS 피드 생성 |
+| `js-yaml` | 프론트매터 YAML 파싱 (`gray-matter` 대체) |
+| `remark-math` + `rehype-katex` + `katex` | 수학 수식 렌더링 및 self-host CSS |
+| `mermaid` | 다이어그램 렌더링 (뷰포트 진입 시 동적 import) |
 | `remark-deflist` | 정의 목록(`<dl>`) 지원 |
 | `remark-gfm` | GFM 표·각주·task list·autolink (단일 `~` 취소선은 비활성) |
+| `remark-directive` / `mdast-util-*` / `micromark-extension-*` | directive·표·수식 AST 확장 |
+| `rehype-raw` / `unist-util-visit` | raw HTML 복원 및 AST 순회 |
+| `qrcode` | 포스트 하단 QR 코드 |
 
-### 외부 CDN 리소스
+### 외부 리소스
 
-다음 리소스는 빌드 타임이 아닌 런타임(브라우저)에서 CDN을 통해 로드됩니다. 오프라인 환경이나 네트워크 제한이 있는 경우 대체 방안이 필요합니다.
+코드와 폰트는 런타임 CDN에 의존하지 않습니다.
 
-| 리소스 | CDN | 용도 |
+| 리소스 | 위치 | 용도 |
 | :--- | :--- | :--- |
-| KaTeX 0.16.10 CSS | cdn.jsdelivr.net | 수식 스타일 (수식 있는 포스트만 로드) |
-| Mermaid 11 | 로컬 번들(npm `mermaid@^11.16.0`) | 다이어그램 렌더링 (런타임 동적 `import('mermaid')`, CDN 아님) |
+| Pretendard 1.3.9 | self-host (`public/fonts/Pretendard/`) | 400/700 사이트 전용 서브셋 |
+| Reddit Mono | self-host (`public/fonts/Reddit_Mono/`) | 코드 블록용 WOFF2 variable font |
+| KaTeX 0.19 CSS·폰트 | Vite 로컬 asset (`katex/dist/katex.min.css?url`) | 수식 있는 포스트만 로드 |
+| Mermaid 12 | 로컬 npm 번들 | 다이어그램 (IntersectionObserver 지연 렌더) |
+| 포스트 이미지 | jsDelivr CDN (`SITE.cdn.imageBaseUrl`) | `src/plugins`/`src/utils/cdn.ts`에서 URL 변환 |
 
-> 런타임 CDN(preconnect 힌트)은 `Head.astro`에서, KaTeX CSS `<link>`는 `PostLayout.astro`에서, 이미지 CDN URL 변환은 `src/plugins`/`src/utils/cdn.ts`에서 각각 관리됩니다.
+> `Head.astro`의 preconnect는 이미지 CDN과 분석 도구용입니다. 폰트·KaTeX·Mermaid는 빌드 산출물 또는 로컬 번들에서 제공됩니다.
 
 ## 커스터마이징
 
@@ -110,12 +119,18 @@ verification: {
 
 ### 폰트 설정
 
-폰트는 Astro 내장 Fonts API를 사용하여 관리됩니다:
+Pretendard는 self-host하며 **400/700 두 weight만** 사용합니다. 빌드 전 `scripts/build-fonts.mjs`가 포스트·로케일·컴포넌트에서 실제 사용하는 문자를 모아 full WOFF2 원본을 사이트 전용 서브셋으로 만듭니다. 결과 파일은 `public/fonts/Pretendard/`에 생성되고 `Head.astro`에서 preload됩니다.
 
-- **`astro.config.mjs`** — `fonts` 옵션에서 로컬 폰트 variant와 CSS 변수명을 설정합니다
-- **`src/settings/site.settings.ts`** — `fonts.baseStack`에서 최종 적용할 폰트 패밀리 이름을 지정합니다
+- **`src/assets/fonts/Pretendard-1.3.9/full/`** — 서브셋 생성용 원본과 라이선스
+- **`src/styles/pretendard.css`** — 400/700 `@font-face`
+- **`src/settings/site.settings.ts`** — `fonts.baseStack`에서 `var(--font-pretendard)` 사용
+- **`npm run fonts`** — 서브셋 수동 재생성 (`predev`/`prebuild`에서 자동 실행)
 
-로컬 폰트 파일은 `src/assets/fonts/`에 배치합니다.
+코드용 Reddit Mono는 `public/fonts/Reddit_Mono/`의 WOFF2 variable font를 사용합니다. 자세한 구조는 `docs/ai-docs/typography/fonts.md`를 참고하세요.
+
+### 보안 헤더
+
+이 사이트는 GitHub Pages에 배포되므로 CSP, HSTS, `X-Frame-Options` 같은 응답 헤더를 저장소 설정만으로 지정할 수 없습니다. 현재는 외부 스크립트를 `site.settings.ts`에서 명시적으로 켜고, 의존성 감사(`npm audit --omit=dev --audit-level=high`)를 CI에서 수행하는 범위까지 적용했습니다. 헤더 정책은 Cloudflare/Netlify 등 헤더 제어가 가능한 호스팅으로 이전할 때 적용해야 합니다. 상세는 `docs/ai-docs/configuration/security.md`를 참고하세요.
 
 ### 다국어
 

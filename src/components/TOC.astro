@@ -136,7 +136,13 @@ for (const heading of filteredHeadings) {
     const render = (slug: string) => {
       tocLinks.forEach((link) => {
         const href = link.getAttribute("href")?.substring(1);
-        link.classList.toggle("active", href === slug);
+        const isActive = href === slug;
+        link.classList.toggle("active", isActive);
+        if (isActive) {
+          link.setAttribute("aria-current", "location");
+        } else {
+          link.removeAttribute("aria-current");
+        }
       });
 
       const activeLink = tocLinks.find(

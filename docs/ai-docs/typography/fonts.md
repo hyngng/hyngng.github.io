@@ -2,53 +2,47 @@
 
 ## 현재 상태
 
-Astro 내장 Fonts API를 사용하여 폰트를 선언하고 로드합니다.
+Pretendard 1.3.9를 self-host하고, 빌드 시 사이트에서 실제로 쓰는 글자만 남긴 WOFF2 서브셋을 생성한다.
 
-### `astro.config.mjs`
+- 사용 weight: `400`(본문), `700`(제목/강조). 기존 `800` 참조는 `700`으로 통일했다.
+- 생성 결과: `public/fonts/Pretendard/Pretendard-Regular.woff2`, `Pretendard-Bold.woff2` (각 약 116 KiB).
+- `src/styles/pretendard.css`는 두 개의 `@font-face`만 선언한다. unicode-range 92개를 나열하던 동적 서브셋 CSS는 제거했다.
+- `Head.astro`에서 400/700 두 파일을 preload한다.
+- 코드용 Reddit Mono는 TTF variable font를 WOFF2로 변환해 `public/fonts/Reddit_Mono/`에서 로드한다. 코드가 있는 화면에서만 필요하므로 preload하지 않는다.\n- 새 로케일을 추가할 때는 `scripts/build-fonts.mjs`의 `addIntlText()` 로케일 목록에도 추가해 해당 언어의 날짜 표시 글리프가 서브셋에 포함되게 한다.
 
-Astro config 내에 `fonts` 옵션을 추가하여 사용할 로컬 폰트의 variant 목록과 생성될 CSS 변수명을 설정합니다.
+### 파일 구조
 
-```js
-import { defineConfig, fontProviders } from 'astro/config';
+| 경로 | 역할 |
+|---|---|
+| `src/assets/fonts/Pretendard-1.3.9/full/Pretendard-Regular.woff2` | 400 서브셋 생성 원본 |
+| `src/assets/fonts/Pretendard-1.3.9/full/Pretendard-Bold.woff2` | 700 서브셋 생성 원본 |
+| `src/assets/fonts/Pretendard-1.3.9/LICENSE.txt` | Pretendard 라이선스 |
+| `scripts/build-fonts.mjs` | 사이트 텍스트 수집 + `subset-font` 실행 |
+| `public/fonts/Pretendard/*.woff2` | 빌드 산출물(개발 서버용으로 저장소에도 커밋) |
+| `src/styles/pretendard.css` | `@font-face` 선언 |
+| `public/fonts/Reddit_Mono/RedditMono-VariableFont_wght.woff2` | 코드 폰트 |
+| `public/fonts/Reddit_Mono/redditmono.css` | 코드 폰트 `@font-face` |
 
-export default defineConfig({
-  // ...
-  fonts: [
-    {
-      provider: fontProviders.local(),
-      name: "Pretendard",
-      cssVariable: "--font-pretendard",
-      options: {
-        variants: [
-          { weight: 300, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-Light.subset.woff2"] },
-          { weight: 400, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-Regular.subset.woff2"] },
-          { weight: 500, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-Medium.subset.woff2"] },
-          { weight: 600, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-SemiBold.subset.woff2"] },
-          { weight: 700, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-Bold.subset.woff2"] },
-        ],
-      },
-    },
-  ],
-});
-```
+## 빌드 파이프라인
+
+`scripts/build-fonts.mjs`는 다음 순서로 동작한다.
+
+1. `posts/**/*.{md,mdx}`와 `src/**/*.{ts,astro,mjs,css}`에서 문자를 수집한다.
+2. 7개 로케일의 `Intl.DateTimeFormat` 출력(날짜·시간대 이름)과 ASCII/공백 기본 문자를 추가한다.
+3. full WOFF2 원본을 `subset-font`(harfbuzz wasm)로 서브셋해 `public/fonts/Pretendard/`에 쓴다.
+
+`package.json`에서 `predev`와 `prebuild`가 `npm run fonts`를 실행하므로 개발 서버와 배포 빌드 모두 최신 글자 집합을 사용한다. 콘텐츠에 새 글자가 추가되면 다음 `npm run dev`/`npm run build`에서 자동 반영된다. 생성 파일은 개발 서버가 바로 사용할 수 있도록 저장소에 포함한다.
 
 ### `src/components/Head.astro`
 
-Astro 내장 `<Font />` 컴포넌트를 사용하여 헤더에서 최적화 및 preload 처리를 일임하도록 구현했습니다.
-
 ```astro
----
-import { Font } from 'astro:assets';
----
-<head>
-    <Font cssVariable="--font-pretendard" preload />
-    <!-- ... -->
-</head>
+<link rel="preload" href="/fonts/Pretendard/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="/fonts/Pretendard/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 ```
 
 ### `src/settings/site.settings.ts`
 
-`SITE.fonts.baseStack`에서 생성된 CSS 변수 `--font-pretendard`를 폰트 스택 최상단에 배치합니다.
+`SITE.fonts.baseStack`에서 `--font-pretendard`를 폰트 스택 최상단에 배치한다.
 
 ```ts
   fonts: {
@@ -78,5 +72,7 @@ Mermaid 다이어그램의 `line-height: 16px` 설정 및 코드블록의 `pre.m
 
 ## 이전 구조 (폐기됨)
 
-1. `site.settings.ts`에 `preloads`/`faces` 객체를 주입하고 `Head.astro`에서 `@font-face` 문자열을 동적 생성하는 루프 방식 (폐기)
-2. `src/styles/fonts.css`에서 직접 `@font-face` 및 상대경로 참조로 로드하는 방식 (폐기 - CLS 방지 및 최적화 폴백을 위해 Astro 내장 Fonts API로 교체됨)
+1. Astro 내장 Fonts API(`fonts` config + `<Font preload>`)로 400/700 전체 서브셋(약 525 KiB)을 preload하던 방식 — 모바일 LCP를 지배해 제거.
+2. unicode-range 92개 × 400/700/800 동적 서브셋(276파일, 약 3.5MB)을 `public/fonts/Pretendard/`에 두던 방식 — 첫 화면에서 22개 폰트 요청이 발생해 제거.
+3. `site.settings.ts`에 `preloads`/`faces` 객체를 주입하고 `Head.astro`에서 `@font-face` 문자열을 동적 생성하는 루프 방식 (폐기)
+4. `src/styles/fonts.css`에서 직접 `@font-face` 및 상대경로 참조로 로드하는 방식 (폐기)

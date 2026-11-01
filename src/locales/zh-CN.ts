@@ -35,6 +35,7 @@ const locale: Locale = {
     monthsAgo: (n: number) => `${n} 个月前发布`,
     yearAgo: '1 年前发布',
     yearsAgo: (n: number) => `${n} 年前发布`,
+    inFuture: '计划发布',
   },
   toc: {
     title: '目录',
@@ -64,6 +65,7 @@ const locale: Locale = {
     title: '搜索',
     placeholder: '搜索文章',
     empty: '未找到相关结果。',
+    fallback: '无法加载搜索索引，正在按标题和描述搜索。',
     aria: '搜索文章',
   },
   notFound: {

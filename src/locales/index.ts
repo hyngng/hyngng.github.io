@@ -37,6 +37,7 @@ export interface Locale {
     monthsAgo: (n: number) => string;
     yearAgo: string;
     yearsAgo: (n: number) => string;
+    inFuture: string;
   };
   toc: {
     title: string;
@@ -66,6 +67,7 @@ export interface Locale {
     title: string;
     placeholder: string;
     empty: string;
+    fallback: string;
     aria: string;
   };
   notFound: {

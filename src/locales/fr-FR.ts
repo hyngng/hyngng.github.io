@@ -35,6 +35,7 @@ const locale: Locale = {
     monthsAgo: (n: number) => `Il y a ${n} mois`,
     yearAgo: 'Il y a 1 an',
     yearsAgo: (n: number) => `Il y a ${n} ans`,
+    inFuture: 'Programmé',
   },
   toc: {
     title: 'Sommaire',
@@ -64,6 +65,7 @@ const locale: Locale = {
     title: 'Recherche',
     placeholder: 'Rechercher des articles',
     empty: 'Aucun résultat.',
+    fallback: "Index de recherche indisponible ; recherche dans les titres et descriptions.",
     aria: 'Rechercher des articles',
   },
   notFound: {

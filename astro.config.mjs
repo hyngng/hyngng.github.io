@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import { remarkCdnImages } from './src/plugins/remark-cdn-images.ts';
 import { markdownRemarkPlugins } from './src/utils/markdown-syntax.ts';
@@ -186,20 +186,4 @@ export default defineConfig({
     },
   },
 
-  fonts: [
-    {
-      provider: fontProviders.local(),
-      name: "Pretendard",
-      cssVariable: "--font-pretendard",
-      options: {
-        variants: [
-          { weight: 300, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-Light.subset.woff2"] },
-          { weight: 400, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-Regular.subset.woff2"] },
-          { weight: 500, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-Medium.subset.woff2"] },
-          { weight: 600, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-SemiBold.subset.woff2"] },
-          { weight: 700, style: "normal", src: ["./src/assets/fonts/Pretendard-1.3.9/web/static/woff2-subset/Pretendard-Bold.subset.woff2"] },
-        ],
-      },
-    },
-  ],
 });

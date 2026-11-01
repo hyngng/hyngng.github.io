@@ -2,7 +2,6 @@
 import { SITE, defaultLocale, getLocaleEntry } from '../settings/site.settings';
 import { getSiteMeta } from '../utils/pageContext';
 import { buildWebSiteJsonLd, serializeJsonLd } from '../utils/jsonLd';
-import { Font } from 'astro:assets';
 import GoatCounter from './seo/analytics/GoatCounter.astro';
 import GoogleAnalytics from './seo/analytics/GoogleAnalytics.astro';
 import GoogleTagManager from './seo/analytics/GoogleTagManager.astro';
@@ -32,6 +31,8 @@ const webSiteJsonLd = serializeJsonLd(
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script is:inline>document.documentElement.dataset.js='true'</script>
     <meta name="language" content={languageCode} />
+    <link rel="preload" href="/fonts/Pretendard/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/Pretendard/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <title>{title}</title>
     <script type="application/ld+json" is:inline set:html={webSiteJsonLd} />
     <ThemeInit />
@@ -56,7 +57,6 @@ const webSiteJsonLd = serializeJsonLd(
         <link rel="preconnect" href={hint.origin} crossorigin={hint.crossorigin ? 'anonymous' : undefined} />
       ))
     }
-    <Font cssVariable="--font-pretendard" preload={[{ weight: 400 }, { weight: 700 }]} />
     <style set:html={`:root{--configured-font-family:${SITE.fonts.baseStack};}`} />
     <GoogleAnalytics />
     <GoogleTagManager />

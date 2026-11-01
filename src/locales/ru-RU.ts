@@ -35,6 +35,7 @@ const locale: Locale = {
     monthsAgo: (n: number) => `${n} месяцев назад`,
     yearAgo: '1 год назад',
     yearsAgo: (n: number) => `${n} лет назад`,
+    inFuture: 'Запланировано',
   },
   toc: {
     title: 'Содержание',
@@ -64,6 +65,7 @@ const locale: Locale = {
     title: 'Поиск',
     placeholder: 'Искать публикации',
     empty: 'Ничего не найдено.',
+    fallback: 'Индекс поиска недоступен; поиск по заголовкам и описаниям.',
     aria: 'Поиск публикаций',
   },
   notFound: {

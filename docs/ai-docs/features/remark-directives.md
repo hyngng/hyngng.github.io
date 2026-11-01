@@ -218,12 +218,12 @@ html.dark .img-dark { display: block; }
 
 ### `remark-youtube.mjs`
 
-`::youtube{id="..."}` leafDirective를 YouTube iframe으로 변환합니다.
+`::youtube{id="..."}` leafDirective를 YouTube iframe으로 변환합니다. `title` 속성을 지정하면 iframe의 accessible name으로 사용하고, 생략하면 `YouTube video player`를 넣습니다.
 
 **출력 예시:**
 ```
-::youtube{id="dQw4w9WgXcQ"}
-→ <div class="video-embed"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" ...></iframe></div>
+::youtube{id="dQw4w9WgXcQ" title="영상 제목"}
+→ <div class="video-embed"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="영상 제목" ...></iframe></div>
 ```
 
 **캡션:** 바로 다음 줄에 `*캡션*`을 작성하면 `<figure class="media-figure"><div class="video-embed">…</div><figcaption>…</figcaption></figure>`로 변환됩니다 (빈 줄 허용).

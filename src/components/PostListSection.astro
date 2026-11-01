@@ -60,6 +60,9 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
       />
     </div>
   )}
+  <p class="search-fallback post-preview-state" role="status" hidden>
+    {locale.search.fallback}
+  </p>
   <p class="search-empty post-preview-state" role="status" aria-live="polite" hidden>
     {locale.search.empty}
   </p>
@@ -113,7 +116,15 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
 
   @media (max-width: 960px) {
     .section-title {
-      display: none;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .posts-section {
