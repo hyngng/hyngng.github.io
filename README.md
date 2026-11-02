@@ -104,7 +104,6 @@ verification: {
   google: undefined,   // Google Search Console
   yandex: undefined,   // Yandex Webmaster
   baidu: undefined,    // Baidu Webmaster
-  naver: undefined,    // Naver Search Advisor
   pinterest: '...',    // Pinterest
 },
 ```
