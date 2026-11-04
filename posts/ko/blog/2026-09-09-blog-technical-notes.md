@@ -54,7 +54,7 @@ lang: ko-KR
 
 CSS는 접해본 경험이 적어 지금도 다루는 것이 익숙하지는 않지만 LLM의 도움으로 개념의 구현 방법을 적절히 찾을 수 있었습니다. 다만 여기서 `background`를 사용하는 것은 AI의 보조를 떠나서 제가 의도적으로 작성한 것인데, 이유를 남겨두고 싶습니다.
 
-![samsung-browser-tablet](/2026-08-24-blog-technical/samsung-browser-tablet.png)
+![samsung-browser-tablet](/2026-08-24-blog-technical-notes/samsung-browser-tablet.webp)
 *삼성 브라우저는 다크 모드에서 위와 같은 화면을 보여줬음*
 
 모바일 삼성 브라우저가 다크모드 환경에서 웹 CSS를 강제로 조정하는 문제가 있었습니다. 그리고 그 결과로 이 테마의 디자인 핵심 요소인 프레임이 회색으로 나타나는 문제를 겪었습니다. 실험해보니 color-scheme 메타 태그로도 피할 수 없는 문제였는데, 삼성 측도 기반 브라우저인 크로미움 측도 관련 문서를 제공하지 않았고 다만 [삼성의 자사 공식 개발자 블로그](https://developer.samsung.com/samsunginternet/blog/en-us/2020/12/15/dark-mode-in-samsung-internet)에서 "웹 개발자의 동의 없이 페이지 색상에 자체 변환을 적용해 다크 테마로 전환할 수 있다"라는 내용을 찾은 것이 전부였습니다.
