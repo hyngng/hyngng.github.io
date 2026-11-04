@@ -48,7 +48,7 @@ AI 시대에서 사람은 점점 웹을 읽지 않습니다. 브라우저 자체
 
 ### **네비게이션 프레임**
 
-![frame](/2026-09-09-blog-design-concept/frame-2.png)
+![frame](/2026-09-08-blog-design-concept/frame-2.png)
 *네비게이션 프레임*
 
 이 테마의 프레임은 그림, 사진 분야의 트릭을 웹에 적용한 결과입니다. 두 분야는 사람의 시선을 주제로 유도하기 위한 전략으로 색상대비, 채도대비, 프레임 효과 등을 사용합니다. 보통 그림의 전략은 그림에서, 사진의 전략은 사진에서 소비되지만 사실 둘은 서로 바꿔 써도 된다, 또 바꿔 써도 되는 만큼 웹에도 쓸 수 있다는 것이 제 생각입니다. 그렇게 만들어진 프레임에 오늘날 블로그 테마가 제공하는 다크&라이트 모드 제어, RSS, 언어 변경 등의 기초기능을 버튼으로 통합했고, 모서리를 라운딩으로 보완해 네비게이션 영역을 만들었습니다.
@@ -64,8 +64,8 @@ AI 시대에서 사람은 점점 웹을 읽지 않습니다. 브라우저 자체
 
 ### **포스트, 더 보기 카드**
 
-![load-more-light](/2026-09-09-blog-design-concept/load-more-light-3.png){: .light }
-![load-more-dark](/2026-09-09-blog-design-concept/load-more-dark-3.png){: .dark }
+![load-more-light](/2026-09-08-blog-design-concept/load-more-light-3.png){: .light }
+![load-more-dark](/2026-09-08-blog-design-concept/load-more-dark-3.png){: .dark }
 *더 보기 버튼, 평상시의 카드, 마우스 호버링시의 카드*
 
 더 보기 버튼은 페이지네이션의 대안입니다. 페이지네이션은 으레 인쇄물, 문서와 같이 콘텐츠 묶음을 주소화하고, 각 주소마다 번호를 부여합니다. 이런 행정적 접근의 장점은 동작이 안정적이라는 것이고, 단점은 사용 경험이 딱딱하게 느껴질 수 있다는 겁니다. 더 보기 버튼은 후자를 개선하기 위한 접근입니다.
@@ -81,8 +81,8 @@ AI 시대에서 사람은 점점 웹을 읽지 않습니다. 브라우저 자체
 
 ### **글 메타데이터**
 
-![metadata-light](/2026-09-09-blog-design-concept/metadata-light.png){: .light }
-![metadata-dark](/2026-09-09-blog-design-concept/metadata-dark.png){: .dark }
+![metadata-light](/2026-09-08-blog-design-concept/metadata-light.png){: .light }
+![metadata-dark](/2026-09-08-blog-design-concept/metadata-dark.png){: .dark }
 *포스트 하단으로 이동한 메타데이터*
 
 개인적으로 좋아하는 변경점입니다. 사용자는 이미 글을 선택해서 읽으러 들어왔는데, 거기서 메타데이터를 또 보여주는 것은 어색하다는 생각에서 출발해 만들어졌습니다. 메타데이터 자체는 글 신뢰도와 SEO의 관점에서 명시되어야 하지만 그 위치가 글 상단일 이유는 크게 없다는 생각입니다.
@@ -93,8 +93,8 @@ AI 시대에서 사람은 점점 웹을 읽지 않습니다. 브라우저 자체
 
 ### **강조 색상**
 
-![accents-light](/2026-09-09-blog-design-concept/accents-light-2.png){: .light }
-![accents-dark](/2026-09-09-blog-design-concept/accents-dark-2.png){: .dark }
+![accents-light](/2026-09-08-blog-design-concept/accents-light-2.png){: .light }
+![accents-dark](/2026-09-08-blog-design-concept/accents-dark-2.png){: .dark }
 *강조는 오렌지 색상*
 
 이 테마는 무채색으로 차분한 분위기를 조성하는 것을 기본으로 하지만 사용자의 눈길을 끄는 신호이자 상호작용한 웹요소를 어필하기 위한 목적으로 딱 한 가지 유채색을 배치합니다. TOC의 활성화 헤더, 일부 버튼, 하이퍼링크 등에 적용됩니다. 테마 분위기가 너무 지루하게 느껴지지 않도록 방지하는 역할도 합니다.
@@ -105,22 +105,22 @@ AI 시대에서 사람은 점점 웹을 읽지 않습니다. 브라우저 자체
 
 ### **만들다 만 다른 테마**
 
-![old-theme-prototype](/2026-09-09-blog-design-concept/old-theme-2.png)
+![old-theme-prototype](/2026-09-08-blog-design-concept/old-theme-2.png)
 *중간고사 2주 전, 빠르게 만든 홈페이지 프로토타입 디자인*
 
-![archive-1](/2026-09-09-blog-design-concept/archive-1.webp)
+![archive-1](/2026-09-08-blog-design-concept/archive-1.webp)
 *메인 페이지 동작. 도메인 분리 원칙만 간단히 구현함*
 
-![archive-2](/2026-09-09-blog-design-concept/archive-2.webp)
+![archive-2](/2026-09-08-blog-design-concept/archive-2.webp)
 *작가 페이지 동작. 배너, 태그 기반 필터링을 특징으로 함*
 
 ### **미실현된 아이디어**
 
-![other-functions-light](/2026-09-09-blog-design-concept/other-functions-light.png){: .light }
-![other-functions-dark](/2026-09-09-blog-design-concept/other-functions-dark.png){: .dark }
+![other-functions-light](/2026-09-08-blog-design-concept/other-functions-light.png){: .light }
+![other-functions-dark](/2026-09-08-blog-design-concept/other-functions-dark.png){: .dark }
 *배경 톤을 조절하는 색온도 슬라이더, 폰트를 변경하는 커스텀 버튼*
 
-![post-card-experiments](/2026-09-09-blog-design-concept/post-card-experiments-1.png)
+![post-card-experiments](/2026-09-08-blog-design-concept/post-card-experiments-1.png)
 *마음에 드는 포스트 카드를 만들기까지*
 
 - 카메라 보정 경험은 더 적극적으로 반영될 예정이었습니다. 틸앤오렌지나 모노크롬, 트리아딕/테트라딕과 같은 컬러그레이딩 기법을 적용하기, 포스트 카드의 미리보기 이미지에 대해 톤곡선, 색감 조정 정보를 포함된 프로파일을 따라 표시하기, 시간에 따라 길이, 진하기가 달라지는 그림자를 모든 웹 요소에 대해 적용하기 등의 아이디어가 있었습니다. 첫인상만 강렬할 뿐 금방 질릴 것 같아 실현하지는 않았습니다.
@@ -179,8 +179,8 @@ AI 시대에서 사람은 점점 웹을 읽지 않습니다. 브라우저 자체
 
 ## **이외에 차용한 것**
 
-![contents-area-light](/2026-09-09-blog-design-concept/contents-area-light2.png){: .light }
-![contents-area-dark](/2026-09-09-blog-design-concept/contents-area-dark2.png){: .dark }
+![contents-area-light](/2026-09-08-blog-design-concept/contents-area-light2.png){: .light }
+![contents-area-dark](/2026-09-08-blog-design-concept/contents-area-dark2.png){: .dark }
 *콘텐츠 비율*
 
 - 960px의 중앙 본문 영역
