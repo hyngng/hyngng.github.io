@@ -234,6 +234,6 @@ PC: --button-size = 56px → 56 × 3 = 168px
 
 ## 관련 문서
 
-- [Frame 컴포넌트](../components/frame-layout.md) — 실제 구현 및 JS 스크립트(`astro:before-preparation` 테마 주입 등)
+- [Frame 컴포넌트](../components/frame-layout.md) — 실제 구현 및 JS 스크립트(언어 스위처, 테마 토글)
 - [Chunk Loading](../features/chunk-loading.md) — 카드 가로 채움 배치 알고리즘
 - [Typography](./typography.md) — 본문 표현 원칙

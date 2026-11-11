@@ -181,49 +181,13 @@ const suffix =
   }
 
   /* ── LoadMoreCard Image ── */
+  /* Geometry, LQIP (::before) and img fade-in rules are shared with
+     PostCard — see the .post-card-image block in global.css. Only the
+     dimmed-until-hover filter state lives here. */
 
   .load-more-card .post-card-image {
-    position: relative;
-    aspect-ratio: var(--post-card-image-aspect-ratio);
-    background-color: var(--color-border);
-    background-size: cover;
-    background-position: center;
-    border-radius: var(--post-card-image-radius);
-    overflow: hidden;
-    transform: translateZ(0);
-    transition: filter 0.35s ease;
     filter: brightness(0.9) opacity(0.9);
-  }
-
-  .load-more-card .post-card-image::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: var(--lqip-url);
-    background-size: cover;
-    background-position: center;
-    opacity: 1;
-    transition: opacity 0.35s ease;
-  }
-
-  .load-more-card .post-card-image:has(img.loaded)::before {
-    opacity: 0;
-  }
-
-  .load-more-card .post-card-image img {
-    position: relative;
-    z-index: 1;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    border-radius: inherit;
-  }
-
-  html[data-js] .load-more-card .post-card-image img.loaded {
-    opacity: 1;
+    transition: filter 0.35s ease;
   }
 
   .load-more-card:hover .post-card-image,
@@ -238,10 +202,6 @@ const suffix =
     .load-more-hover,
     .load-more-card .load-more-hover span,
     .load-more-card .load-more-hover p {
-      transition: none;
-    }
-
-    .load-more-card .post-card-image img {
       transition: none;
     }
   }

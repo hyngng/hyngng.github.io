@@ -140,7 +140,6 @@ export function initMermaidThemeSync(): void {
   };
 
   window.addEventListener('themeChange', onThemeChange, { signal });
-  window.addEventListener('astro:page-load', onPageLoad, { signal });
 
   if (document.readyState !== 'loading') {
     onPageLoad();

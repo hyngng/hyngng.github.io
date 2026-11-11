@@ -2,7 +2,7 @@
 article,
 .post-preview-state {
   color: var(--color-text);
-  max-width: 768px;
+  max-width: var(--content-width);
   font-size: 16px;
   line-height: 1.8;
   word-break: break-all;
@@ -701,8 +701,8 @@ article .mermaid svg {
 }
 
 /* ── Admonitions ──
- * Icon: position absolute (left: 1rem, top: 1rem), layout flow에서 분리.
- * Body: padding-left: 3rem으로 아이콘 영역 확보, 본문은 흐름대로 렌더링.
+ * Icon: position absolute (left: 0.8rem, top: 0.8rem), layout flow에서 분리.
+ * Body: 좌측 padding 2.4rem으로 아이콘 영역 확보 (아이콘 0.8rem + 여백), 본문은 흐름대로 렌더링.
  * Content overrides: 첫/마지스트 자식 마진 제거 + 리스트 마진만 축소.
  * (틀만 바꾸고 내용물은 존중 — 내부 마크다운 요소는 기본값 따름)
  */

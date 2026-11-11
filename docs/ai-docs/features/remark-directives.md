@@ -104,7 +104,7 @@ remark-directive는 AST 파싱만 하고 HTML 변환은 하지 않습니다:
 ```
 
 **구조:**
-- `.admonition` — `position: relative` 컨테이너 (좌측 `padding-left: 3rem`으로 아이콘 영역 확보)
+- `.admonition` — `position: relative` 컨테이너 (좌측 padding `2.4rem`으로 아이콘 영역 확보: 아이콘 0.8rem + 여백)
 - `.admonition-icon` — `position: absolute` (레이아웃 흐름에서 분리). 타입별 인라인 SVG (`aria-hidden="true"`, `fill: currentColor`)
 - `.admonition-body` — 본문 래퍼 (기본 블록 레이아웃, 추가 스타일 불필요)
 - 타입: `tip` (lightbulb), `info` (circle-info), `warning` (triangle-exclamation), `danger` (circle-exclamation) — `ADMONITION_ICONS` 인라인 SVG

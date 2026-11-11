@@ -172,7 +172,7 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 - `.mermaid[data-processed]` 요소의 `data-processed`를 제거하고 `textContent`를 `data-mermaid-source`에서 복원
 - 아직 렌더링되지 않은 요소는 `pendingRoots`에 남아 최신 테마로 렌더링
 - `renderRevision` 카운터로 동시에 발생한 여러 렌더 요청 중 최신만 반영
-- `astro:page-load` 이벤트에서는 `IntersectionObserver`를 재생성하고 미처리 `.mermaid` 요소를 다시 관찰합니다. `observe()`는 같은 요소에 중복 호출해도 안전하므로 별도 관찰 플래그를 두지 않습니다.
+- `initMermaidThemeSync()`는 문서 로드 시 1회 호출되어 `IntersectionObserver`를 생성하고 미처리 `.mermaid` 요소를 관찰합니다. `observe()`는 같은 요소에 중복 호출해도 안전하므로 별도 관찰 플래그를 두지 않습니다. (ClientRouter/ViewTransitions 미사용 — 향후 도입 시 재초기화 훅이 필요함)
 
 ### 구현 참고
 
@@ -270,7 +270,7 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 - `image.lqip`가 존재할 경우, `.post-card-image`에 `--lqip-url` CSS 변수를 주입한다.
 - `::before` 의사 요소가 LQIP 이미지를 배경(`background-image`)으로 미리 표시한다 (블러 필터 없음).
-- `img` 원본 이미지는 초기 `opacity: 0` 상태로 숨겨져 있다.
+- `img` 원본 이미지는 `html[data-js]`가 있을 때만 `opacity: 0`으로 숨겨진다 (JS 없이 로드 시 이미지 즉시 표시 — `global.css` 공통 블록의 `html[data-js]` 게이트).
 - Client-side Script (`image-init.ts`)가 `img.decode()`를 완료하면 `.loaded` 클래스를 주입한다.
 - `.loaded`가 부여되면:
   - 원본 `img`가 `opacity: 1`로 0.35초간 페이드인된다.
@@ -282,8 +282,9 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 | 파일 | 역할 |
 |---|---|
-| `src/components/PostCard.astro` | 일반 포스트 카드 (LQIP `::before` -> 원본 `img` 페이드인) |
-| `src/components/LoadMoreCard.astro` | 더 보기 버튼 카드 (동일한 LQIP -> 원본 `img` 구조 + 호버 밝기/투명도 효과) |
+| `src/styles/global.css` | `.post-card-image` 공통 블록 (기하/LQIP `::before`/`img` 페이드인 — PostCard와 LoadMoreCard의 SSOT) |
+| `src/components/PostCard.astro` | 일반 포스트 카드 (공통 블록 재사용) |
+| `src/components/LoadMoreCard.astro` | 더 보기 버튼 카드 (공통 블록 + dim/hover 밝기 필터) |
 | `src/features/post-list/image-init.ts` | `img.decode()` 성공 후 `.loaded` 클래스 추가 처리 |
 
 ## 포스트 글자수 집계

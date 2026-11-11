@@ -46,7 +46,11 @@ const rssUrl = personaId
   </div>
 
   <div class="action-block right-actions">
-    <div class="right-actions-inner" id="right-actions-inner">
+    <div
+      class="right-actions-inner"
+      id="right-actions-inner"
+      style={`--lang-list-width: calc(var(--button-size) * ${otherLocales.length})`}
+    >
       <Button
         variant="icon"
         aria-label={locale.frame.themeAria}
@@ -237,6 +241,7 @@ const rssUrl = personaId
   .right-actions-inner.lang-open .lang-list {
     opacity: 1;
     pointer-events: auto;
+    width: var(--lang-list-width);
   }
 
   .lang-item {
@@ -479,17 +484,6 @@ const rssUrl = personaId
       langList.dataset.localeSegments || "{}",
     );
 
-    const buttonSize =
-      parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue(
-          "--button-size",
-        ),
-      ) || 72;
-    rightActionsInner.style.setProperty(
-      "--lang-list-width",
-      `${langItems.length * buttonSize}px`,
-    );
-
     let isOpen = false;
 
     function getLocalizedPath(langCode: string) {
@@ -511,7 +505,6 @@ const rssUrl = personaId
 
     function openLangList() {
       isOpen = true;
-      langList!.style.width = `${langItems.length * buttonSize}px`;
       langList!.inert = false;
       langList!.setAttribute("aria-hidden", "false");
       langToggle!.setAttribute("aria-expanded", "true");
@@ -521,7 +514,6 @@ const rssUrl = personaId
     function closeLangList() {
       isOpen = false;
       if (langList!.contains(document.activeElement)) langToggle!.focus();
-      langList!.style.width = "0";
       langList!.inert = true;
       langList!.setAttribute("aria-hidden", "true");
       langToggle!.setAttribute("aria-expanded", "false");
@@ -581,12 +573,6 @@ const rssUrl = personaId
         { signal },
       );
     });
-
-    document.addEventListener(
-      "astro:before-preparation",
-      () => closeLangList(),
-      { signal },
-    );
 
     if (themeToggle) {
       themeToggle.addEventListener(

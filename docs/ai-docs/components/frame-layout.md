@@ -120,7 +120,7 @@ fixed-actions (position: fixed; z-index: 100)
 
 ### 클릭 처리 로직
 
-`Frame.astro`는 초기 문서 로드 시 `initFrame()`을 한 번 호출해 이벤트 리스너를 등록합니다. Astro ClientRouter(ViewTransitions)가 활성화되어 있더라도 `astro:after-swap` 재초기화는 두지 않고, 대신 `astro:before-preparation` 리스너에서 언어 목록을 닫도록 합니다 (`AbortController`로 리스너 스코프 관리).
+`Frame.astro`는 초기 문서 로드 시 `initFrame()`을 한 번 호출해 이벤트 리스너를 등록합니다. ClientRouter(ViewTransitions)는 미사용이므로 라우터 이벤트 훅(`astro:before-preparation` 등)은 두지 않습니다. 전체 페이지 로드마다 프레임 상태가 초기화되며, 리스너는 `AbortController`로 스코프 관리됩니다. (향후 ClientRouter 도입 시 내비게이션 전 언어 목록 닫기 훅 재검토 필요)
 
 #### 언어 변경 흐름
 
@@ -199,6 +199,17 @@ fixed-actions (position: fixed; z-index: 100)
   touch-action: pan-x;
 }
 ```
+
+### 언어 목록 너비의 단일 소스 (SSR CSS 변수)
+
+언어 목록의 너비는 JS 측정/설정 없이 **SSR이 렌더 시점에 결정**합니다:
+
+1. `Frame.astro` SSR이 `.right-actions-inner`에 `style="--lang-list-width: calc(var(--button-size) * {언어 개수})"`를 인라인으로 부여 (언어 개수 = `availableLocales - 1`)
+2. CSS `.right-actions-inner.lang-open`이 `width: calc(var(--button-size) * 3 + var(--lang-list-width, 0px))`로 확장
+3. CSS `.right-actions-inner.lang-open .lang-list`가 `width: var(--lang-list-width)`로 열림 (`width: 0` 기본값에서 transition)
+4. JS는 `lang-open` 클래스 토글과 `inert`/`aria-hidden` 상태만 관리
+
+`--button-size`가 미디어 쿼리로 56px↔48px 전환되므로 `calc`가 이를 자동 추적하며, 별도의 `getComputedStyle` 측정이나 inline `style.width` 조작은 없습니다.
 
 ### 모바일 언어 목록 스크롤
 

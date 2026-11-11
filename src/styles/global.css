@@ -173,7 +173,6 @@ body {
   :root {
     --frame-thickness: 0px;
     --frame-radius: 0px;
-    --frame-radius-mobile: 28px;
     --button-size: 48px;
     --font-size-action: 20px;
     --scroll-target-offset: var(--button-size);
@@ -323,6 +322,62 @@ html.modal-open {
 
 .chunk-page .posts-columns {
   padding: 0 var(--chunk-grid-padding);
+}
+
+/* ── Post Card Image (shared: PostCard & LoadMoreCard) ──
+   LQIP placeholder on ::before, original img fades in on .loaded.
+   Hidden-until-loaded is gated behind html[data-js] (set in Head.astro):
+   without JS the image must show immediately. */
+
+.post-card-image {
+  position: relative;
+  aspect-ratio: var(--post-card-image-aspect-ratio);
+  background-color: var(--color-border);
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--post-card-image-radius);
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.post-card-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--lqip-url);
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.post-card-image:has(img.loaded)::before {
+  opacity: 0;
+}
+
+.post-card-image img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.35s ease;
+  border-radius: inherit;
+}
+
+html[data-js] .post-card-image img {
+  opacity: 0;
+}
+
+html[data-js] .post-card-image img.loaded {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card-image img {
+    transition: none;
+  }
 }
 
 /* ── Bootstrap-style Utility Classes ── */

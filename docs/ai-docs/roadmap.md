@@ -489,9 +489,17 @@
         - `@astrojs/check`: `^0.9.9` → `^0.9.10`
       - 전이 의존성 갱신: `dompurify`(3.4.16+), `postcss`(8.5.28+) 및 `nanoid`(3.3.18+) 정합.
     - 검증: `npm audit --omit=dev --audit-level=high` 0 vulnerabilities 달성, `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 61 passed, `npm run build` 589 pages 및 Pagefind 인덱싱 정상 완료.
-  - [ ] **페르소나 식별자 단일화 및 도메인명 중복 제거 (2026-10)**
+  - [x] **페르소나 식별자 단일화 및 도메인명 중복 제거 (2026-10)**
     - `art`/`dev` 같은 하나의 페르소나 값을 설정 키, 프론트매터, 디렉토리, URL 및 화면 표시에 동일하게 사용. `personas.settings.ts`에는 별도 `id`와 `name` 필드가 없음.
     - 7개 언어 포스트와 라우트, RSS, 청크, 검색 필터, JSON-LD 입력, llms.txt 및 문서를 페르소나 용어로 동기화했다. 공개 URL과 표준 `persona` 출력 필드는 유지한다.
-    - 검증: `npm run build` 성공(592페이지, Pagefind 374페이지). `npx astro check`는 코드 검사 시작 전 `astro.config.mjs`의 `astro/config` import 오류로 중단되어 재검증이 필요하다.
+    - 검증: `npm run build` 성공(592페이지, Pagefind 374페이지). `npx astro check` 재검증 완료 — 0 errors / 0 warnings / 0 hints (2026-11).
+  - [x] **코드 건강 리뷰 리팩토링: no-JS 이미지 버그·중복 CSS·죽은 리스너 정리 (2026-11)**
+    - **no-JS 이미지 게이트 버그 수정**: `LoadMoreCard.astro`의 `img { opacity: 0 }`이 `html[data-js]`로 게이트되지 않아 JS 비활성 환경에서 프리뷰 이미지가 영구 비노출되던 버그. PostCard/typography.css와 동일한 `html[data-js]` 게이트 계약으로 통일.
+    - **PostCard ↔ LoadMoreCard 이미지 CSS 중복 제거**: 기하·LQIP `::before`·`img` 페이드인 규칙(~40줄)을 `src/styles/global.css`의 `.post-card-image` 공통 블록으로 통합(SSOT). `LoadMoreCard`의 dim/hover 밝기 필터(`brightness(0.9) opacity(0.9)` → `1/1`)는 컴포넌트에 유지.
+    - **Frame 언어 목록 너비 메커니즘 단일화**: JS `getComputedStyle(--button-size)` 측정(잘못된 fallback `|| 72` 포함), `--lang-list-width` setProperty, inline `style.width` 조작 3중 구조 제거. SSR이 `--lang-list-width: calc(var(--button-size) * N)` 인라인 부여, CSS `.lang-open` 규칙이 유일하게 너비 제어. JS는 클래스 토글과 `inert`/`aria-hidden`만 담당.
+    - **죽은 라우터 리스너 제거**: ClientRouter(ViewTransitions) 미사용으로 발화하지 않는 `astro:page-load` 리스너 2건(`PostCard.astro` 이미지 init, `mermaidThemeSync.ts`)과 `astro:before-preparation` 리스너(`Frame.astro` 언어 목록 닫기) 제거. 기존 `astro:after-swap` 리스너 제거 전례와 동일 기준.
+    - **하드코딩/중복 정리**: `PostLayout.astro` 각주 모달 `'(max-width: 960px)'` → `features/post-list/layout.ts`의 `MOBILE_QUERY` 상수 import. `typography.css` `article max-width: 768px` → `var(--content-width)` 토큰. `global.css` 모바일 블록의 `--frame-radius-mobile: 28px` dead override(`:root`와 동일) 제거. admonition 주석의 잘못된 수치(1rem/3rem → 실제 0.8rem/2.4rem) 정정.
+    - 문서 동기화: `posts.md`(이미지 아키텍처 SSOT/게이트), `frame-layout.md`(컴포넌트/디자인), `README.md`, `remark-directives.md`.
+    - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 67 passed (10 files), `npm run build` 595페이지 + Pagefind 375페이지 정상. dist 산출물에서 `html[data-js]` 게이트, `--frame-radius-mobile` 단일 선언, 라우터 이벤트 잔존 0건 확인.
 
 ## Option
