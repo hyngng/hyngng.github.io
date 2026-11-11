@@ -14,6 +14,7 @@ import { rehypeStripComments } from './src/plugins/rehype-strip-comments.mjs';
 import { rehypeFootnoteTooltip } from './src/plugins/rehype-footnote-tooltip.mjs';
 import { SITE, defaultLocale, defaultLocaleBcp47, supportedLocales } from './src/settings/site.settings';
 import { segmentMap } from './src/utils/locale-segments';
+import { pwaCachePrefix } from './src/utils/pwa-cache';
 import { validateRoutes } from './src/integrations/validate-routes';
 import astroPwa from './src/integrations/astro-pwa';
 
@@ -90,25 +91,47 @@ export default defineConfig({
           ]
         },
         workbox: {
-          // Static MPA: precache immutable hashed assets and chunk HTML fragments.
-          // General HTML pages are NOT precached so navigation is handled by
-          // NetworkFirst runtime route (stale prevention). Chunk HTML fragments
-          // are precached so progressive post loading works offline.
+          // Chirpy-style Cache-First model (see docs/ai-docs/features/pwa.md).
+          // Precache immutable hashed assets, chunk HTML fragments (offline
+          // post loading) and the home pages (the offline entry points for
+          // every locale). General HTML pages and CDN images are cached at
+          // runtime; the build-stamped cache names below make stale content
+          // impossible — a new deployment gets a fresh cache namespace, and
+          // astro-pwa.ts wipes the previous build's caches on activation.
           globPatterns: [
             '**/*.{js,css,svg,png,ico,woff,woff2}',
             '**/chunk/**/index.html',
+            'index.html',
+            ...supportedLocales
+              .filter((code) => code !== defaultLocale)
+              .map((code) => `${segmentMap.get(code) ?? new Intl.Locale(code).language}/index.html`),
           ],
+          // generateSW serializes `cacheId` as workbox-core's cache name
+          // prefix, so the precache cache becomes `<stamp>-precache-v2-*`.
+          cacheId: pwaCachePrefix,
           navigateFallback: null,
           runtimeCaching: [
             {
-              // Serve HTML network-first so content is always fresh without a
-              // hard reload; offline falls back to the last visited copy.
+              // Chirpy-mirror: HTML is Cache-First so revisits load instantly
+              // and work offline. Freshness comes from the build-stamped
+              // cache name, not from network revalidation.
               urlPattern: ({ request }) => request.mode === 'navigate',
-              handler: 'NetworkFirst',
+              handler: 'CacheFirst',
               options: {
-                cacheName: 'pages',
-                networkTimeoutSeconds: 3,
-                expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
+                cacheName: `${pwaCachePrefix}-pages`,
+                expiration: { maxEntries: 100 },
+                cacheableResponse: { statuses: [0, 200] },
+              },
+            },
+            {
+              // CDN images are opaque responses; cache them so they render
+              // from disk instead of re-downloading on every reload.
+              urlPattern: ({ request }) => request.destination === 'image',
+              handler: 'CacheFirst',
+              options: {
+                cacheName: `${pwaCachePrefix}-images`,
+                expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 30 },
+                cacheableResponse: { statuses: [0, 200] },
               },
             },
           ],

@@ -1,10 +1,12 @@
-import type { AstroConfig, AstroIntegration } from 'astro';
+import type { AstroConfig, AstroIntegration, AstroIntegrationLogger } from 'astro';
 import type { Plugin, ResolvedConfig } from 'vite';
 import type { OutputBundle } from 'rollup';
 import type { VitePWAOptions, VitePluginPWAAPI } from 'vite-plugin-pwa';
 import { VitePWA } from 'vite-plugin-pwa';
 import type { ManifestTransform } from 'workbox-build';
 import { fileURLToPath } from 'node:url';
+import { readFile, writeFile } from 'node:fs/promises';
+import { pwaCacheRoot, pwaCacheStamp } from '../utils/pwa-cache';
 
 interface PwaContext {
   api: VitePluginPWAAPI | undefined;
@@ -79,16 +81,49 @@ function astroPwa(options: Partial<VitePWAOptions> = {}): AstroIntegration {
         }
         updateConfig({ vite: { plugins } });
       },
-      'astro:build:done': async () => {
+      'astro:build:done': async ({ dir, logger }) => {
         if (ctx.previewOrSync) return;
         ctx.doBuild = true;
         const api = ctx.api;
         if (api && !api.disabled) {
           await api.generateSW();
+          await appendStaleCacheCleanup(dir, logger);
         }
       },
     },
   };
+}
+
+// Workbox's own cleanupOutdatedCaches() only deletes caches whose name
+// contains "-precache-", so build-stamped runtime caches (`-pages`,
+// `-images`) would accumulate forever. Chirpy solves this with an activate
+// handler that deletes every cache not belonging to the current build; this
+// snippet mirrors that and is appended to the generated sw.js after
+// generation. The unstamped "pages" cache from before cache stamping was
+// introduced is deleted as well (one-time migration).
+const staleCacheCleanupSnippet = `
+;(function(){
+var root=${JSON.stringify(pwaCacheRoot)},stamp=${JSON.stringify(pwaCacheStamp)};
+self.addEventListener("activate",function(event){
+event.waitUntil(caches.keys().then(function(keys){
+var stale=keys.filter(function(key){
+if(key==="pages")return true;
+return key.indexOf(root)===0&&key.indexOf("-"+stamp+"-")===-1;
+});
+return Promise.all(stale.map(function(key){return caches.delete(key);}));
+}));
+});
+})();
+`;
+
+async function appendStaleCacheCleanup(dir: URL, logger: AstroIntegrationLogger) {
+  const swPath = fileURLToPath(new URL('sw.js', dir));
+  const sw = await readFile(swPath, 'utf8').catch(() => undefined);
+  if (!sw) {
+    logger.warn('[astro-pwa] sw.js not found; skipped stale-cache cleanup injection');
+    return;
+  }
+  await writeFile(swPath, sw + staleCacheCleanupSnippet);
 }
 
 function createManifestTransform(

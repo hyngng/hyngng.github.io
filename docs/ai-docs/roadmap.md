@@ -501,5 +501,14 @@
     - **하드코딩/중복 정리**: `PostLayout.astro` 각주 모달 `'(max-width: 960px)'` → `features/post-list/layout.ts`의 `MOBILE_QUERY` 상수 import. `typography.css` `article max-width: 768px` → `var(--content-width)` 토큰. `global.css` 모바일 블록의 `--frame-radius-mobile: 28px` dead override(`:root`와 동일) 제거. admonition 주석의 잘못된 수치(1rem/3rem → 실제 0.8rem/2.4rem) 정정.
     - 문서 동기화: `posts.md`(이미지 아키텍처 SSOT/게이트), `frame-layout.md`(컴포넌트/디자인), `README.md`, `remark-directives.md`.
     - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 67 passed (10 files), `npm run build` 595페이지 + Pagefind 375페이지 정상. dist 산출물에서 `html[data-js]` 게이트, `--frame-radius-mobile` 단일 선언, 라우터 이벤트 잔존 0건 확인.
+  - [x] **PWA 캐싱 Chirpy 모방 리팩토링: 스탬프 캐시명 + Cache-First (2026-11)**
+    - 배경: ① 새로고침마다 CDN 이미지가 재다운로드됨(SW에 이미지 캐싱 라우트 부재) ② 오프라인에서 홈·미방문 페이지가 열리지 않음(navigateFallback 없음 + 홈 미프리캐시). Jekyll Chirpy의 캐시 모델("전부 Cache-First + 빌드 시각 스탬프 캐시명")을 모방해 해결.
+    - 구현:
+      - `src/utils/pwa-cache.ts` 신설: 모듈 로드 시점(빌드 프로세스당 1회)의 `Date.now()` 스탬프로 `pwaCachePrefix = hyngng-<스탬프>`를 export. `astro.config.mjs`(캐시명)와 `astro-pwa.ts`(정리)가 같은 모듈 인스턴스를 공유해 양쪽 스탬프 항상 일치.
+      - `astro.config.mjs`: `workbox.cacheId: pwaCachePrefix` (generateSW가 `setCacheNameDetails({prefix})`로 직렬화, precache 캐시명 `hyngng-<스탬프>-precache-v2-*`), navigate 런타임 라우트 NetworkFirst→**CacheFirst**(`-pages`, `cacheableResponse [0,200]`, maxEntries 100), 이미지 **CacheFirst** 라우트 신설(`-images`, maxEntries 300·30일, opaque 응답 대응), `globPatterns`에 홈 페이지 추가(`index.html` + 로케일 세그먼트별 `index.html`, `supportedLocales × segmentMap` 파생).
+      - `astro-pwa.ts`: `astro:build:done`에서 `api.generateSW()` 직후 구캐시 정리 스니펫을 `sw.js`에 append. Workbox `cleanupOutdatedCaches()`는 `-precache-` 포함 캐시만 정리하므로 스탬프 런타임 캐시는 누적되는데, Chirpy의 activate 핸들러(현재 스탬프가 아닌 모든 캐시 삭제)를 모방해 해결. 구형 무스탬프 `pages` 캐시도 마이그레이션 삭제.
+    - 효과: 재방문 페이지·이미지는 네트워크 없이 캐시에서 즉시 표시, 오프라인에서 홈(전 로케일)·청크·방문 페이지 동작, 배포 시 캐시 전면 교체로 stale 불가능. 미방문 페이지의 오프라인 실패는 Chirpy와 동일 수준 한계로 유지.
+    - 문서 동기화: `pwa.md` 캐싱 전략 계약을 Chirpy 모델로 갱신(기존 "HTML 프리캐시 금지 + NetworkFirst" 불변식 폐기 명시). `chunk-loading.md` SW 섹션은 청크 fetch가 여전히 precache 라우트로 응답하므로 변경 불필요.
+    - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 67 passed (10 files), `npm run build` 정상. dist/sw.js 실측 — 캐시명 3종 스탬프 일치, CacheFirst 2 라우트, precache 292 엔트리(홈 7 로케일 포함), activate 정리 스니펫 존재.
 
 ## Option
