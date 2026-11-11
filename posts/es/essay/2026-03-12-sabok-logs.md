@@ -159,7 +159,7 @@ print(sum(map(int, input().split())))
     - Escritorios llenos de polvo, teléfonos sonando cada 10 minutos, insultos y gritos, ese olor rancio característico.
     - Señores de 50 o 60 años que, después de ir al baño, me tendían la mano para saludar sin lavársela.
     - El fuerte olor a tabaco que desprendían los fumadores de toda condición.
-    - Y otros etcéteras.txt (215 GB)
+    - Y otros etcéteras.txt (205 GB)
 
 ## **Para terminar**
 

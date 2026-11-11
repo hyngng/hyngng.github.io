@@ -158,7 +158,7 @@ print(sum(map(int, input().split())))
 	- Dusty desks, phone ringing every 10 minutes, curses and shouting, distinctive musty smell.
 	- 50-60 year old men offering handshakes with unwashed hands after using the restroom.
 	- Thick cigarette smoke from various smokers.
-	- Etc, etc, etc.txt (215GB)
+	- Etc, etc, etc.txt (205GB)
 
 ## **Closing**
 

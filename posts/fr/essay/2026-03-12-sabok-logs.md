@@ -158,7 +158,7 @@ print(sum(map(int, input().split())))
   - Un bureau poussiéreux, une sonnerie de téléphone toutes les 10 minutes, des insultes et des cris, une odeur caractéristique de renfermé.
   - Des hommes de 50-60 ans qui me serraient la main après être allés aux toilettes sans se laver.
   - La forte odeur de tabac émanant de fumeurs de toutes sortes.
-  - Etc.txt (215 Go)
+  - Etc.txt (205 Go)
 
 ## **Conclusion**
 
