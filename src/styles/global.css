@@ -374,6 +374,18 @@ html.modal-open {
   background-image: var(--lqip-url);
   background-size: cover;
   background-position: center;
+  /* Reveal the LQIP only when the image is genuinely slow to arrive.
+     A cached image paints within the first few frames — before the delay
+     elapses — so reloads never flash the blurry placeholder; the img
+     (z-index above) covers it the moment it is decoded. */
+  opacity: 0;
+  animation: post-card-lqip-in 0.15s ease 0.25s forwards;
+}
+
+@keyframes post-card-lqip-in {
+  to {
+    opacity: 1;
+  }
 }
 
 .post-card-image img {

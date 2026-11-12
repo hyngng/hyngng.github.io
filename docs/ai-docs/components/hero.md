@@ -50,6 +50,6 @@ Figma 파일 `BLOGGING`의 `메인 페이지 - 라이트` Frame 기준.
 
 - `h1`: `--font-size-hero-title-mobile` (`20px`/700) / `--line-height-hero-title-mobile` (`24px`)
 - `.hero-description`: `--font-size-hero-description-mobile` (`13px`) / `--line-height-hero-description-mobile` (`18px`)
-- 블록 리듬 (X 프로필 헤더 기준): Hero 상단 여백 `16px` → name→description `8px` → description→트리거 `12px` (`.hero-desc-row` gap `0.75rem`)
+- 블록 리듬 (X 프로필 헤더 기준): Hero 상단 여백 `16px` → name→description `8px` → description→트리거 `16px` (`.hero-desc-row` gap `1rem`, 사용자 지정으로 확대)
 - `.hero-personas-trigger` ("n개 페르소나 보기"): bio와 동일 라인 (`var(--font-size-hero-description-mobile)`, `13px`) + 로컬 아바타 스택 축소/밀착 — `--avatar-stack-size: 20px`, `--avatar-stack-overlap: 12px` (스택 아바타당 노출 폭 8px)
 - 검색창과의 간격은 `global.css`의 `.search-mobile-wrapper { margin-top: 1rem }` (≤960px, `16px`) — X의 팔로워 행→알약 버튼 간격 리듬. 트리거가 검색창 바로 위에 위치.

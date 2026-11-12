@@ -84,6 +84,16 @@ Chirpy(Jekyll 테마)의 캐시 모델을 모방한다: **전부 Cache-First + �
 
 범위: `image-reveal.ts` 자체는 포스트 본문 shimmer용으로 유지 (본문 이미지는 페이지 진입이라 shimmer가 자연스럽다). 후속으로 플래시가 남으면 lqip 크로스페이드만 별도 검토.
 
+### 후속: lqip 지연 표시 (2026-11)
+
+reveal 제거 후 실기기(Samsung Internet)에서 여전히 짧은 깜빡임 보고. 배포 사이트 실측으로 최신 빌드+reveal 제거 확인(카드 썸네일 SW 캐시 히트 ~22ms, transferSize 0) → 남은 깜빡임은 **캐시 히트여도 디코드~페인트 공백(수십~수백 ms) 동안 lqip가 그려졌다 벗겨지는** 렌더링 타이밍 문제.
+
+해결(수정만, 로직 추가 0건): `.post-card-image::before`(lqip)를 `opacity: 0` 기본값으로 바꾸고 `animation: post-card-lqip-in 0.15s ease 0.25s forwards`로 **0.25초 뒤에만 등장**. 캐시 히트 이미지는 250ms 내에 페인트되어 lqip를 통과하지 않으므로(편테인트되면 img가 z-index로 덮음) 새로고침 시 lqip 플래시가 원천 소멸. 느린 네트워크에서만 0.25초 후 placeholder가 나타나는 의도된 폴백. 아울러 `PostCard.astro` img의 `decoding="async"` 제거(auto로 브라우저가 즉시 디코드 가능).
+
+검증: 배포 사이트 브라우저 실측 — description/트리거 13px 동일, reveal opacity 규칙 부재, SW 캐시 `hyngng-<stamp>-*` 활성. 로컬 preview에서 카드 썸네일 22ms·아바타 14-28ms 캐시 서빙.
+
+참고(브라우저 설정): Samsung Internet 다크 모드의 "이미지 어둡게" 설정이 켜져 있으면 이미지 로드 완료 시점마다 밝기 변화(브라우저 레벨)가 발생할 수 있다 — 사이트 코드로 제어 불가, 설정에서 확인 필요.
+
 ### 캐시 스탬핑 (Chirpy의 `chirpy-{timestamp}` 모방)
 
 Cache-First는 캐시가 절대 stale이면 안 된다는 전제로 성립한다. 이를 보장하는 장치가 **빌드 스탬프 캐시명**이다:
