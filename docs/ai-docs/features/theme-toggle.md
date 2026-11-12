@@ -23,3 +23,29 @@
 - 테마 무관 상수(예: `--color-button-text: #ffffff` — Frame의 버튼 텍스트는 항상 흰색으로 고정)는 `src/styles/global.css`의 `:root`에 두어 중복 정의를 피합니다.
 - 테마별 소프트 배경 토큰 `--color-bg-soft`(light: `#F1F1F1`, dark: `#2a2a2e`)를 테마 파일에 정의하며, 인라인 코드/코드 블럭(`--astro-code-background`)/테이블 헤드/아바타 placeholder/admonition(다크의 포스트 카드 포함) 배경이 이를 참조하여 반복 색상값을 제거합니다.
 - 다크 모드 스타일은 `<html>` 요소의 `dark` 클래스 선택자를 통해 적용됩니다. (`html.dark .some-class` 형태)
+
+## Samsung Internet 강제 다크 모드 (브라우저 레벨 색상 변환)
+
+Samsung Internet은 브라우저 설정의 다크 모드가 켜지면 사이트의 선언(`color-scheme`, `prefers-color-scheme`)과 무관하게 **렌더링 직전에 모든 요소 색상을 요소 유형별 루미넌스 대역으로 강제 압축**한다. 필터는 렌더 단계에서 적용되므로 `getComputedStyle`은 원본 값을 반환하고, JS로 야간 모드 적용 여부를 감지할 수 없다.
+
+| 요소 유형 | 매핑 대역 (루미넌스) |
+|---|---|
+| `html` 배경 | 0.03–0.08 |
+| 모든 CSS 배경 | 0.03–0.12 |
+| 테두리 | 0.27–0.33 |
+| box-shadow | 0.28–0.33 |
+| 텍스트 | 0.29–1.0 (역전) |
+
+- 라이트 테마의 페이지 배경(`#F7F7F7`, 루미넌스 ≈0.97)과 포스트 카드 배경(`#EDEDED`, ≈0.85)은 같은 대역으로 스케일 다운되어 차이가 대역 폭(0.09) 비율로 압축 → 카드 경계가 사실상 소실된다. 이는 색상 지정 방식(`background` vs `background-color`)과 **무관**하며, Samsung 변환 결과에 맞춘 색 재지정은 다른 모든 브라우저의 라이트모드 디자인을 해친다.
+- Chromium 계열 표준 옵트아웃(`<meta name="color-scheme" content="only light">`, Chrome 공식)은 Samsung Internet 기본 설정에서 무시된다(MDN browser-compat-data [#17408](https://github.com/mdn/browser-compat-data/issues/17408)/[#29347](https://github.com/mdn/browser-compat-data/issues/29347), 2022–2026 지속 보고). 설정(웹 페이지 보기 → 다크 모드 → "웹 콘텐츠 강제 다크 모드" 끄기)에서만 해제된다.
+- 게다가 이 사이트는 자체 다크 테마를 제공하므로 `only light` 선언 자체가 부적합하다.
+
+### 구현된 우회 (`data-samsung` + inset ring)
+
+Samsung 필터는 배경을 어두운 대역(0.03–0.12)으로 눌러 담지만 **테두리/box-shadow는 그보다 훨씬 밝은 대역(0.27–0.33)으로 매핑**한다. 이 대역 차이를 이용해 카드 경계를 복원한다:
+
+1. `ThemeInit.astro`: UA에 `SamsungBrowser`가 포함되면 paint 전에 `<html data-samsung>` 플래그를 부여한다 (테마 클래스 토글과 동일 인라인 스크립트).
+2. `global.css`: `html[data-samsung]:not(.dark) .post-card, .load-more-card`에 `box-shadow: inset 0 0 0 1px var(--color-border)` 링을 부여한다. Samsung 강제 다크에서 링(`#dee2e6`)은 ~0.31 루미넌스로 매핑되어 카드 배경(~0.11) 위에 뚜렷한 경계가 되고, 일반 라이트 렌더링에서는 카드 배경 위에 거의 보이지 않는 미세한 1px 링으로 남는다.
+3. `:not(.dark)` 스코프: 사이트 자체 다크 테마(토큰이 이미 어둡게 설계됨)에는 개입하지 않는다. Samsung 강제 다크는 `prefers-color-scheme`을 light로 보고하므로 사이트는 라이트 테마로 렌더링되며, 링은 이 경우에만 적용된다.
+4. `border`가 아닌 inset ring인 이유: 카드에 전역 `box-sizing: border-box` 리셋이 없어 1px border는 요소 크기를 2px 키워 masonry 그리드에 영향을 준다. inset ring은 레이아웃 영향 없이 `border-radius`를 따라간다.
+5. 한계: 야간 모드 on/off를 감지할 수 없으므로 Samsung 브라우저의 라이트 모드 사용자에게도 미세한 링이 함께 적용된다(의도된 최소 침입).

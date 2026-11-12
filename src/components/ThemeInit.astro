@@ -1,6 +1,8 @@
 ---
 // Applies the theme before first paint to avoid a flash of the wrong color
 // scheme. Checks localStorage first, then falls back to OS preference.
+// Also flags Samsung Internet, whose forced dark mode needs a CSS
+// workaround (see docs/ai-docs/features/theme-toggle.md).
 ---
 
 <script is:inline>
@@ -17,5 +19,13 @@
     const el = document.documentElement;
     el.classList.toggle('dark', isDark);
     el.classList.toggle('light', !isDark);
+    // Samsung Internet applies its own luminance-compressing dark mode to
+    // the rendered page regardless of the site's theme declarations, and
+    // getComputedStyle still reports the original colors, so the effect
+    // cannot be detected at runtime. Flag the browser by UA instead so CSS
+    // can restore card boundaries with elements that survive the filter.
+    if (/SamsungBrowser/.test(navigator.userAgent)) {
+      el.dataset.samsung = '';
+    }
   })();
 </script>
