@@ -522,5 +522,11 @@
     - 색상 차용 (후속): 다크 테마 `--color-bg` `#202023`→`#1b1b1e`(Chirpy `--main-bg`), `--color-post-card-bg` `var(--color-bg-soft)`→`#1e1e1e`(Chirpy `--card-bg`). 라이트 테마는 무변경. `--color-bg-soft`(#2a2a2e)는 코드블록·표 헤드·어드모니션·아바타 placeholder에 그대로 사용되며, 카드가 bg-soft 재사용을 끊어 다크 모드에서 카드 위 인라인 코드 등이 미묘한 대비를 갖게 됨.
     - 문서 동기화: `theme-toggle.md`의 롤백 섹션을 최종 해결책으로 갱신(Chirpy 무대응 사실관계 + 차용 구조 + 라이트에서 링이 사실상 보이지 않는 근거).
     - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 통과, `npm run build` 후 dist CSS에 `--color-card-shadow` 규칙 포함 확인. 실기기(Samsung Internet 강제 다크) 육안 확인은 배포 후 사용자 몫.
+  - [x] **프레임 edge depth: Chirpy `--card-shadow` 드롭 레이어 차용 (2026-11)**
+    - 배경: 카드 경계 차용(`--color-card-shadow`)과 동일 메커니즘을 프레임에 확장. 프레임 4개 edge + 데스크톱 헤더 블록이 콘텐츠 쪽으로 방향성 드롭 섀도를 던져 프레임이 elevated 레이어로 읽히게 하고, 강제 다크에서 box-shadow가 밝은 대역(0.28–0.33)으로 매핑되어 검은 프레임–콘텐츠 경계를 보존한다.
+    - 구현: 테마에 `--color-frame-shadow` 토큰 신설(Chirpy 드롭 값 그대로 — 라이트 `rgb(104 104 104 / 5%)`, 다크 `rgb(21 21 21 / 72%)`). `Frame.astro`에서 4개 `.frame-edge`에 방향별(`0 2px 6px`/`0 -2px 6px`/`2px 0 6px`/`-2px 0 6px`) 섀도, 데스크톱 `.action-block`에 하방 섀도. 모바일은 sticky 헤더(`.fixed-actions`)가 섀도를 소유하고 블록·edge 섀도는 `none`(모바일은 프레임 자체가 제거되어 0높이/0폭 edge의 box-shadow 잔광 방지).
+    - 헤어라인 링 레이어는 의도적 제외: box-shadow 링은 직선이라 concave fillet(radial-gradient) 곡면 위를 가로지르는 깨짐이 생김(검은 배경 위 15% 링은 오히려 더 도드라짐). 확장하려면 fillet gradient에 arc stop 필요 — `frame-layout.md`에 방법 기록.
+    - 문서 동기화: `frame-layout.md`에 "Frame Edge Depth" 섹션 신설(토큰표·모바일 스코핑·링 제외 사유·Samsung 보조 효과), `theme-toggle.md`에 프레임 확장 한 줄 추가.
+    - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 67 passed, `npm run build` 후 dist CSS에서 edge 방향 섀도·action-block 섀도·모바일 sticky 헤더 섀도·모바일 `box-shadow:none` 오버라이드 모두 확인.
 
 ## Option

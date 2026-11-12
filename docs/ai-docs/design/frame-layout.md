@@ -37,6 +37,20 @@
 | `--header-height` | `var(--button-size)` = `56px` (모바일: `48px`) | 상단 헤더 높이 |
 | `--content-width` | `768px` | 콘텐츠 영역 최대 폭 |
 
+## Frame Edge Depth (Chirpy --card-shadow drop layer 차용)
+
+프레임 4개 edge와 데스크톱 헤더 블록(`.left-action`/`.right-actions`)이 콘텐츠 쪽으로 방향성 드롭 섀도를 던져, 프레임이 페이지 위의 elevated 레이어로 읽히도록 한다. 색상은 카드 경계와 동일하게 Chirpy의 `--card-shadow` 드롭 레이어 값을 그대로 토큰화한 것이다:
+
+| 토큰 | 라이트 | 다크 |
+|---|---|---|
+| `--color-frame-shadow` | `rgb(104 104 104 / 5%)` | `rgb(21 21 21 / 72%)` |
+
+- 방향성 기하(`0 2px 6px` 등)는 `Frame.astro`의 각 edge 규칙에 두고, 색상만 테마 토큰으로 분리한다.
+- 데스크톱 헤더 블록(`.action-block`)은 아래 방향 섀도를 가지며, 모바일에서는 sticky 헤더(`.fixed-actions`)가 섀도를 대신 소유한다(블록 섀도는 `none`으로 이중 방지).
+- **모바일에서 프레임 자체가 제거**되므로(`global.css`에서 `--frame-thickness: 0px`) 4개 edge의 섀도도 모바일 미디어쿼리에서 `none` 처리한다. 0높이/0폭 요소도 box-shadow는 렌더링되므로 제거가 필요하다.
+- **헤어라인 링 레이어는 의도적으로 제외**했다. box-shadow 링은 직선인데 프레임 하단 모서리는 concave fillet(radial-gradient)으로 곡선이므로, 링이 검은 fillet 위를 직선으로 가로지르는 깨짐이 생긴다(검은 배경 위 15% 밝은 링은 라이트 콘텐츠 위보다 오히려 더 잘 보인다). 링까지 원할 경우 fillet gradient에 arc stop(`transparent calc(r-1px), ring calc(r-1px), ring r, frame r`)을 추가하는 확장이 필요하다.
+- **Samsung Internet 강제 다크 보조 효과**: box-shadow는 강제 다크의 렌더 필터에서 배경(0.03–0.12)보다 밝은 대역(0.28–0.33)으로 매핑되므로, 강제 다크에서 검은 프레임과 콘텐츠 사이 경계가 밝은 섀도 밴드로 보존된다. 포스트 카드(`--color-card-shadow`)와 동일한 메커니즘이다 (`theme-toggle.md` 참조).
+
 ## Side Content Fade
 
 데스크톱에서 중앙 콘텐츠 폭 바깥의 좌우 영역은 `BaseLayout.astro`의 `.content-side-fade`(하단)와 `.content-side-fade-top`(상단)이 배경색으로 fade됨. 중앙 본문은 mask에서 제외되어 영향을 받지 않으며, TOC처럼 본문 외곽에 배치되는 콘텐츠는 위치나 길이와 무관하게 동일한 경계에서 자연스럽게 사라짐. 상하단 모두 `mask-image`로 중앙 콘텐츠 영역(768px)을 투명 처리하여 본문에는 영향 없음.

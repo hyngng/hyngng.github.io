@@ -111,11 +111,19 @@ const rssUrl = personaId
     background-color: var(--color-frame);
   }
 
+  /* ── Frame edge depth (borrowed from Chirpy's --card-shadow drop layer) ──
+     Each edge casts a soft shadow inward so the frame reads as an elevated
+     layer over the page. Drop layer only: a hairline box-shadow ring is
+     straight-lined and would visibly cross the concave corner fillets,
+     which are painted as radial gradients. Colors: --color-frame-shadow.
+     Box-shadows map into Samsung forced dark's brighter band, preserving
+     the frame boundary there. See docs/ai-docs/design/frame-layout.md. */
   .frame-edge-top {
     top: 0;
     left: 0;
     right: 0;
     height: var(--frame-thickness);
+    box-shadow: 0 2px 6px var(--color-frame-shadow);
   }
 
   .frame-edge-bottom {
@@ -123,6 +131,7 @@ const rssUrl = personaId
     left: 0;
     right: 0;
     height: var(--frame-thickness);
+    box-shadow: 0 -2px 6px var(--color-frame-shadow);
   }
 
   .frame-edge-left {
@@ -130,6 +139,7 @@ const rssUrl = personaId
     bottom: 0;
     left: 0;
     width: var(--frame-thickness);
+    box-shadow: 2px 0 6px var(--color-frame-shadow);
   }
 
   .frame-edge-right {
@@ -137,6 +147,7 @@ const rssUrl = personaId
     bottom: 0;
     right: 0;
     width: var(--frame-thickness);
+    box-shadow: -2px 0 6px var(--color-frame-shadow);
   }
 
   /* ── Bottom concave corners (desktop) ── */
@@ -186,6 +197,7 @@ const rssUrl = personaId
     padding-top: 1px;
     height: var(--header-height);
     background-color: var(--color-frame);
+    box-shadow: 0 2px 6px var(--color-frame-shadow);
     pointer-events: auto;
     display: flex;
     align-items: center;
@@ -357,6 +369,9 @@ const rssUrl = personaId
       top: 0;
       background-color: var(--color-frame);
       height: var(--header-height);
+      /* Sticky header casts the edge shadow itself; the inner action
+         blocks are disabled below to avoid doubling it. */
+      box-shadow: 0 2px 6px var(--color-frame-shadow);
       pointer-events: auto;
       max-width: 100vw;
     }
@@ -364,6 +379,16 @@ const rssUrl = personaId
     .left-action,
     .right-actions {
       border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* Mobile removes the frame (--frame-thickness: 0px in global.css);
+       0-sized edges would still paint their blurred box-shadow. */
+    .frame-edge-top,
+    .frame-edge-bottom,
+    .frame-edge-left,
+    .frame-edge-right {
+      box-shadow: none;
     }
 
     .left-action::before,

@@ -50,6 +50,9 @@
     rgb(104 104 104 / 5%) 0 2px 6px 0,
     rgb(211 209 209 / 15%) 0 0 0 1px;
 
+  /* ── Frame edge depth (Chirpy --card-shadow drop layer, same values) ── */
+  --color-frame-shadow: rgb(104 104 104 / 5%);
+
   /* ── Admonitions ── */
   --color-admonition-bg: var(--color-bg-soft);
 }
