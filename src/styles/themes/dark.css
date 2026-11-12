@@ -60,11 +60,6 @@
     rgb(21 21 21 / 72%) 0 6px 18px 0,
     rgb(137 135 135 / 24%) 0 0 0 1px;
 
-  /* ── Frame edge boundary (same Chirpy structure as --color-card-shadow) ── */
-  --color-frame-shadow:
-    rgb(21 21 21 / 72%) 0 6px 18px 0,
-    rgb(137 135 135 / 24%) 0 0 0 1px;
-
   /* ── Admonitions ── */
   --color-admonition-bg: var(--color-bg-soft);
 }

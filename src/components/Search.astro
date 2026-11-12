@@ -155,6 +155,9 @@ const { locale, currentLocale, personaId } = Astro.props;
     height: var(--search-bar-height);
     padding: 0 var(--search-bar-padding-x);
     background-color: var(--color-post-card-bg);
+    /* Same Chirpy boundary as post cards: the bg tint is not enough under
+       Samsung Internet forced dark, the shadow band keeps the edge. */
+    box-shadow: var(--color-card-shadow);
     border-radius: 20px;
     box-sizing: border-box;
   }

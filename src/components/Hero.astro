@@ -116,10 +116,23 @@ const {
       line-height: var(--line-height-hero-title-mobile);
     }
 
+    .hero-description {
+      font-size: var(--font-size-hero-description-mobile);
+      line-height: var(--line-height-hero-description-mobile);
+    }
+
     .hero-desc-row {
       flex-direction: column;
       align-items: flex-start;
       gap: 0.5rem;
+    }
+
+    /* Follower-row scale, like the count row sitting above the pill
+       buttons on X/Bluesky profiles. The avatar stack inherits the
+       smaller --avatar-stack-size from this element. */
+    .hero-personas-trigger {
+      font-size: 0.75rem;
+      --avatar-stack-size: 20px;
     }
   }
 </style>

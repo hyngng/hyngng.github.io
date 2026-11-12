@@ -523,10 +523,20 @@
     - 문서 동기화: `theme-toggle.md`의 롤백 섹션을 최종 해결책으로 갱신(Chirpy 무대응 사실관계 + 차용 구조 + 라이트에서 링이 사실상 보이지 않는 근거).
     - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 통과, `npm run build` 후 dist CSS에 `--color-card-shadow` 규칙 포함 확인. 실기기(Samsung Internet 강제 다크) 육안 확인은 배포 후 사용자 몫.
 
-  - [x] **Frame 바에 Chirpy 그림자 경계 적용 (2026-11)**
-    - `light.css`/`dark.css`에 `--color-frame-shadow` 토큰 신설(카드 차용과 동일한 Chirpy `--card-shadow` 값), `Frame.astro`의 `.frame-edge` 4바에 `box-shadow: var(--color-frame-shadow)` 적용 — 드롭 섀도 + 헤어라인 링 구조로 프레임이 콘텐츠 위에 살짝 떠 있는 느낌. 라이트/다크 양쪽 테마 적용.
-    - 모바일(`max-width: 960px`)에서는 제외: `--frame-thickness: 0px`로 바가 소멸해도 0×0 요소에 box-shadow blur는 렌더링되므로 `box-shadow: none` 명시.
-    - concave 코너(radial-gradient pseudo)에는 미적용 — 사각 halo 방지.
-    - 문서 동기화: `frame-layout.md`에 CSS 변수 표 항목 + 전용 섹션 추가.
+  - [x] **Frame 바에 Chirpy 그림자 경계 적용 (2026-11, 이후 롤백)**
+    - 시도: `6039e686`(방향별 드롭 섀도) → `0c6355c8`(카드와 동일한 Chirpy 2겹 구조 — 드롭 섀도 + 헤어라인 링)로 두 차례 적용.
+    - 롤백 사유: 헤어라인 링(`0 0 0 1px`)이 concave 코너 fillet(radial-gradient)을 가로지르며 코너 shape가 깨지는 것이 실기기에서 육안 확인됨. 프레임은 카드와 달리 곡률이 있는 마감이어서 직선 box-shadow 링과 충돌함. 카드와 달리 Samsung 강제 다크 대응상 프레임은 `background-color` 단색이라 원래 안전(Chirpy 포스트의 `background-color` 교훈과 동일).
+    - 롤백 내용: `.frame-edge` box-shadow 제거, `light.css`/`dark.css`의 `--color-frame-shadow` 토큰 제거(소비자 0건). `frame-layout.md`의 전용 섹션·변수 표 항목 제거.
+    - 교훈: 프레임 바에 그림자를 다시 시도한다면 **드롭 섀도만** 가능(링은 코너 곡선과 충돌 확정). 코너 pseudo(radial-gradient)는 사각 box-shadow를 그릴 수 없어 링/섀도와 형태가 어긋난다.
+
+  - [x] **검색창에 카드 그림자 경계 적용 (2026-11)**
+    - `Search.astro`의 `.search-bar`에 `box-shadow: var(--color-card-shadow)` 적용 — 포스트 카드와 동일한 Chirpy `--card-shadow` 구조(드롭 섀도 + 헤어라인 링). 모바일 웹에서 카드 효과가 잘 보인다는 피드백에 따라 데스크톱 사이드바/모바일 인라인 공통으로 적용.
+    - 문서 동기화: `search.md`의 Design & Color Tokens에 경계 토큰 추가.
+
+  - [x] **모바일 Hero 축소 + 트리거-검색창 부착 (2026-11)**
+    - X/Bluesky 프로필 헤더 스케일 기준으로 축소: 표시 이름 20px/24px, bio 15px/20px — `global.css`의 `--font-size-hero-title-mobile`(32px→20px), `--font-size-hero-description-mobile`/`--line-height-hero-description-mobile` 신설, `--line-height-hero-title-mobile`(36px→24px).
+    - "n개 페르소나 보기" 트리거: `Hero.astro` 모바일 규칙에서 `font-size: 0.75rem` + `--avatar-stack-size: 20px` 로컬 오버라이드 — X/Bluesky의 팔로잉&팔로워 행 스케일.
+    - 트리거를 검색창 바로 위에 부착: `global.css`에 `@media (max-width: 960px) { .search-mobile-wrapper { margin-top: 0.5rem } }` 추가(기존 `--posts-section-margin-top` 40px 대체).
+    - 문서 동기화: `hero.md`에 모바일 토큰·스케일 섹션, `search.md`의 모바일 레이아웃 간격 설명 갱신.
 
 ## Option

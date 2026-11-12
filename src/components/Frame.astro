@@ -109,10 +109,6 @@ const rssUrl = personaId
   .frame-edge {
     position: absolute;
     background-color: var(--color-frame);
-    /* Soft drop shadow + hairline ring, mirroring the post-card boundary
-       (--color-card-shadow, borrowed from Chirpy). The blur halo falls
-       inward over the content so the frame floats instead of cutting it. */
-    box-shadow: var(--color-frame-shadow);
   }
 
   .frame-edge-top {
@@ -356,12 +352,6 @@ const rssUrl = personaId
 
   /* ── Mobile ── */
   @media (max-width: 960px) {
-    /* Frame bars collapse to 0px (--frame-thickness), but a 0-size element
-       would still paint the shadow blur, so it is explicitly cleared. */
-    .frame-edge {
-      box-shadow: none;
-    }
-
     .fixed-actions {
       position: sticky;
       top: 0;

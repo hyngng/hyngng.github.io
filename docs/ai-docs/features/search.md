@@ -86,7 +86,8 @@ focus ──▶ getSearchEngine() 프리로드 (멤모이즈, 세션당 1회 엔
 
 The Search component uses existing design tokens defined in the theme system (`light.css` / `dark.css`):
 - **Search Title**: `var(--color-muted)` (maps to `#877575` in light mode)
-- **Search Bar Container Background**: `var(--color-post-card-bg)` (maps to `#EDEDED` in light mode, `#2a2a2e` in dark mode)
+- **Search Bar Container Background**: `var(--color-post-card-bg)` (maps to `#EDEDED` in light mode, `#1e1e1e` in dark mode)
+- **Search Bar Boundary**: `box-shadow: var(--color-card-shadow)` — the same Chirpy-derived boundary (`--card-shadow` structure: soft drop shadow + hairline ring) already applied to post cards. The background tint alone is not enough under Samsung Internet forced dark, so the shadow band keeps the edge visible.
 - **Search Input Text**: `var(--color-text)`
 - **Search Icon**: `var(--color-muted)`
 
@@ -96,7 +97,7 @@ The Search component uses existing design tokens defined in the theme system (`l
 - **Mobile (≤1280px)**: The sidebar is hidden via `.search-sidebar { display: none }`. An inline search bar (`.search-mobile-wrapper`) is rendered directly above the post list in the central area. The `.search-title` (`검색` label) is hidden (`display: none`) since the label only appears in the desktop sidebar, and `.search-bar` expands to `width: 100%`.
 - **Heading semantics**: `.search-title` is a `<p>` (not a heading). The same label renders twice in the DOM (mobile wrapper + desktop sidebar, one hidden via CSS) to support viewport switching, so a heading would create duplicate `<h2>` headings on every page and pollute the document outline.
 - **Tablet (961–1280px)**: `.search-mobile-wrapper` is absolutely positioned (`right: 0`) against the `position: relative` `.content-body-layout`, so the search bar is vertically centered on the `포스트` section-title row and right-aligned to the content column edge. Its vertical offset is derived from tokens: `top: calc(var(--posts-section-margin-top) + (var(--section-title-line-height) - var(--search-bar-height)) / 2)`. The `.search-bar` width follows the wrapper's `var(--search-bar-width)`.
-- **Mobile (≤960px)**: On the root page the `Personas` section is hidden and the `포스트` section title (`.section-title` in `PostListSection`) is visually hidden rather than removed from the accessibility tree. The search sits directly above the post cards. The border-radius stays `20px` (unlike the `12px` post cards). The gap between the search bar and the post list is `--space-search-posts-gap` (`16px`, applied as `.posts-section` margin-top on mobile), while the gap above the search (`--posts-section-margin-top`, `40px` on mobile) is unchanged.
+- **Mobile (≤960px)**: On the root page the `Personas` section is hidden and the `포스트` section title (`.section-title` in `PostListSection`) is visually hidden rather than removed from the accessibility tree. The search sits directly above the post cards. The border-radius stays `20px` (unlike the `12px` post cards). The gap between the search bar and the post list is `--space-search-posts-gap` (`16px`, applied as `.posts-section` margin-top on mobile), while the gap above the search is tightened to `0.5rem` (`.search-mobile-wrapper` margin-top override) so the search bar sits right under the hero personas trigger — mirroring the follower row that sits above the pill buttons on X/Bluesky profiles.
 - **Query Sync**: Multiple search inputs synchronize their values when the user types, ensuring the search state is preserved during viewport resize or orientation changes.
 
 ## Search-Controller Integration

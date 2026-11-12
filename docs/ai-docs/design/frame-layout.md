@@ -36,16 +36,6 @@
 | `--frame-radius` | `calc(var(--button-size) / 2)` = `28px` | 콘텐츠 영역의 오목한 곡선 반경 |
 | `--header-height` | `var(--button-size)` = `56px` (모바일: `48px`) | 상단 헤더 높이 |
 | `--content-width` | `768px` | 콘텐츠 영역 최대 폭 |
-| `--color-frame-shadow` | Chirpy `--card-shadow` 차용 (라이트: `rgb(104 104 104 / 5%) 0 2px 6px 0, rgb(211 209 209 / 15%) 0 0 0 1px` / 다크: `rgb(21 21 21 / 72%) 0 6px 18px 0, rgb(137 135 135 / 24%) 0 0 0 1px`) | 프레임 바의 드롭 섀도 + 헤어라인 링. `light.css`/`dark.css` 정의 |
-
-## 프레임 바 그림자 (Chirpy `--card-shadow` 구조 차용)
-
-`.frame-edge` 4개 바에 `box-shadow: var(--color-frame-shadow)`를 적용한다 (`Frame.astro`). 포스트 카드 경계(`--color-card-shadow`)와 동일한 Chirpy 2겹 구조 — 미세 드롭 섀도 + 헤어라인 링(0 0 0 1px spread) — 으로, 프레임이 콘텐츠를 자르는 하드 라인이 아니라 살짝 떠 있는 느낌을 준다.
-
-- box-shadow blur는 모든 방향으로 퍼지므로 각 바의 안쪽 면(콘텐츠 방향)에 수 px의 은은한 halo가 생긴다. 바끼리 겹치는 코너에서는 검은 바 위에 그려져 시각적으로 소멸한다.
-- 헤어라인 링은 바의 바깥쪽(뷰포트 가장자리)에서는 클리핑되어 보이지 않고, 안쪽 면에 1px로 그려진다. 라이트 링은 15% 알파로 거의 보이지 않지만 Samsung Internet 강제 다크에서 box-shadow가 밝은 대역으로 매핑되어 프레임 경계가 보존된다 (theme-toggle.md 참조).
-- 모바일(`max-width: 960px`)에서는 `--frame-thickness: 0px`로 바가 소멸하지만 **0×0 요소에도 box-shadow blur는 렌더링되므로**, 미디어쿼리에서 `box-shadow: none`으로 명시 해제한다.
-- 하단 concave 코너(`.frame-border::before/::after` radial-gradient)에는 그림자를 적용하지 않는다 — 사각 box-shadow가 사각 halo를 만들기 때문이며, halo가 수 px 수준이라 시각적 불연속은 없다.
 
 ## Side Content Fade
 
