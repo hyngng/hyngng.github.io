@@ -40,12 +40,8 @@ Samsung Internet은 브라우저 설정의 다크 모드가 켜지면 사이트�
 - Chromium 계열 표준 옵트아웃(`<meta name="color-scheme" content="only light">`, Chrome 공식)은 Samsung Internet 기본 설정에서 무시된다(MDN browser-compat-data [#17408](https://github.com/mdn/browser-compat-data/issues/17408)/[#29347](https://github.com/mdn/browser-compat-data/issues/29347), 2022–2026 지속 보고). 설정(웹 페이지 보기 → 다크 모드 → "웹 콘텐츠 강제 다크 모드" 끄기)에서만 해제된다.
 - 게다가 이 사이트는 자체 다크 테마를 제공하므로 `only light` 선언 자체가 부적합하다.
 
-### 구현된 우회 (`data-samsung` + inset ring)
+### 우회 시도와 롤백
 
-Samsung 필터는 배경을 어두운 대역(0.03–0.12)으로 눌러 담지만 **테두리/box-shadow는 그보다 훨씬 밝은 대역(0.27–0.33)으로 매핑**한다. 이 대역 차이를 이용해 카드 경계를 복원한다:
+Samsung 필터는 배경을 어두운 대역(0.03–0.12)으로 눌러 담지만 **테두리/box-shadow는 그보다 훨씬 밝은 대역(0.27–0.33)으로 매핑**한다. 이를 이용해 UA 스니핑(`SamsungBrowser` → `<html data-samsung>` 플래그)으로 `html[data-samsung]:not(.dark)` 카드에 `box-shadow: inset 0 0 0 1px var(--color-border)` 링을 부여하는 우회를 적용했으나, **롤백되었다**(2026-11 — 사용자 결정). 현재 코드베이스에 Samsung 대응 코드는 없으며, 위 메커니즘 분석만 남아 이후 재시도를 방지한다.
 
-1. `ThemeInit.astro`: UA에 `SamsungBrowser`가 포함되면 paint 전에 `<html data-samsung>` 플래그를 부여한다 (테마 클래스 토글과 동일 인라인 스크립트).
-2. `global.css`: `html[data-samsung]:not(.dark) .post-card, .load-more-card`에 `box-shadow: inset 0 0 0 1px var(--color-border)` 링을 부여한다. Samsung 강제 다크에서 링(`#dee2e6`)은 ~0.31 루미넌스로 매핑되어 카드 배경(~0.11) 위에 뚜렷한 경계가 되고, 일반 라이트 렌더링에서는 카드 배경 위에 거의 보이지 않는 미세한 1px 링으로 남는다.
-3. `:not(.dark)` 스코프: 사이트 자체 다크 테마(토큰이 이미 어둡게 설계됨)에는 개입하지 않는다. Samsung 강제 다크는 `prefers-color-scheme`을 light로 보고하므로 사이트는 라이트 테마로 렌더링되며, 링은 이 경우에만 적용된다.
-4. `border`가 아닌 inset ring인 이유: 카드에 전역 `box-sizing: border-box` 리셋이 없어 1px border는 요소 크기를 2px 키워 masonry 그리드에 영향을 준다. inset ring은 레이아웃 영향 없이 `border-radius`를 따라간다.
-5. 한계: 야간 모드 on/off를 감지할 수 없으므로 Samsung 브라우저의 라이트 모드 사용자에게도 미세한 링이 함께 적용된다(의도된 최소 침입).
+- 만약 재시도한다면: inset ring은 레이아웃 영향이 없고(border 대비 — 전역 border-box 리셋 부재), 필터가 box-shadow를 밝은 대역으로 매핑해 강제 다크에서만 경계가 살아난다는 점이 유효한 레버다. 야간 모드 on/off 감지가 불가하므로 Samsung 라이트 모드 사용자에게도 링이 함께 적용되는 한계는 그대로다.

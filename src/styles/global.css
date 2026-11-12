@@ -324,19 +324,6 @@ html.modal-open {
   padding: 0 var(--chunk-grid-padding);
 }
 
-/* ── Samsung Internet forced dark workaround ──
-   Samsung Internet's dark mode compresses every background into one narrow
-   dark band at render time, erasing the subtle bg difference between the
-   page and post cards (its forced dark ignores color-scheme declarations).
-   A 1px inset ring maps into the browser's brighter border/shadow band
-   instead, restoring card boundaries in forced dark while staying nearly
-   invisible in regular light rendering. The site's own dark theme is
-   excluded. See docs/ai-docs/features/theme-toggle.md. */
-html[data-samsung]:not(.dark) .post-card,
-html[data-samsung]:not(.dark) .load-more-card:not([hidden]) {
-  box-shadow: inset 0 0 0 1px var(--color-border);
-}
-
 /* ── Post Card Image (shared: PostCard & LoadMoreCard) ──
    LQIP placeholder on ::before, original img fades in on .loaded.
    Hidden-until-loaded is gated behind html[data-js] (set in Head.astro):

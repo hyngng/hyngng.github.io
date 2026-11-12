@@ -510,13 +510,10 @@
     - 효과: 재방문 페이지·이미지는 네트워크 없이 캐시에서 즉시 표시, 오프라인에서 홈(전 로케일)·청크·방문 페이지 동작, 배포 시 캐시 전면 교체로 stale 불가능. 미방문 페이지의 오프라인 실패는 Chirpy와 동일 수준 한계로 유지.
     - 문서 동기화: `pwa.md` 캐싱 전략 계약을 Chirpy 모델로 갱신(기존 "HTML 프리캐시 금지 + NetworkFirst" 불변식 폐기 명시). `chunk-loading.md` SW 섹션은 청크 fetch가 여전히 precache 라우트로 응답하므로 변경 불필요.
     - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 67 passed (10 files), `npm run build` 정상. dist/sw.js 실측 — 캐시명 3종 스탬프 일치, CacheFirst 2 라우트, precache 292 엔트리(홈 7 로케일 포함), activate 정리 스니펫 존재.
-  - [x] **Samsung Internet 강제 다크 모드 카드 경계 복원 (2026-11)**
+  - [x] **Samsung Internet 강제 다크 모드 카드 경계 복원 (2026-11, 이후 롤백)**
     - 배경: Android 다크모드 설정 시 Samsung Internet이 사이트 선언(`color-scheme`, `prefers-color-scheme`)과 무관하게 렌더링 직전 모든 색상을 요소 유형별 루미넌스 대역으로 강제 압축 → 페이지 배경(`#F7F7F7`)과 카드 배경(`#EDEDED`)이 같은 어두운 대역(0.03–0.12)으로 눌려 담겨 카드 경계 소실. 표준 옵트아웃(`color-scheme: only light`)은 Samsung 기본 설정에서 무시됨(MDN BCD #17408/#29347, 2022–2026 미해결) + 자체 다크 테마 보유로 선언 자체가 부적합 + 렌더 단계 필터라 JS 감지 불가.
-    - 구현:
-      - `ThemeInit.astro`: UA에 `SamsungBrowser` 포함 시 paint 전에 `<html data-samsung>` 플래그 부여.
-      - `global.css`: `html[data-samsung]:not(.dark) .post-card, .load-more-card`에 `box-shadow: inset 0 0 0 1px var(--color-border)` 링. Samsung 필터는 테두리/box-shadow를 배경보다 훨씬 밝은 대역(0.27–0.33)으로 매핑하므로 강제 다크에서 카드 경계가 복원되고, 일반 라이트 렌더링에서는 거의 보이지 않는 미세 링으로 남는다. `border` 대신 inset ring인 이유는 전역 border-box 리셋 부재로 1px border가 masonry 그리드 크기를 2px 밀기 때문.
-      - 색상 재지정 아님: 라이트/다크 토큰은 변경 없음(사용자 요구 — 현 디자인 유지). 브라우저별 우회 플래그 + 대역이 다른 기존 토큰(`--color-border`) 활용.
-    - 문서 동기화: `theme-toggle.md`에 Samsung 강제 다크 메커니즘(루미넌스 대역표)·옵트아웃 불가 근거·우회 구현·한계(라이트모드 Samsung 사용자에게도 미세 링) 기록.
-    - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 통과, `npm run build` 후 dist 산출물에 `data-samsung` 플래그 스크립트와 inset ring 규칙 포함 확인. 실기기(Samsung Internet 강제 다크) 육안 확인은 배포 후 사용자 몫.
+    - 시도 후 롤백: `ThemeInit.astro`의 `SamsungBrowser` UA 스니핑 플래그 + `global.css`의 `box-shadow: inset 0 0 0 1px var(--color-border)` 카드 링(Samsung 필터는 테두리/box-shadow를 배경보다 밝은 대역 0.27–0.33으로 매핑하는 점 활용)을 적용했으나, 카드 테두리 접근이 마음에 들지 않아 **전면 롤백**(사용자 결정). 코드베이스에 Samsung 대응 코드는 남지 않음.
+    - 문서: `theme-toggle.md`에 메커니즘 분석(루미넌스 대역표)·옵트아웃 불가 근거·롤백 기록 유지 — 재시도 낭비 방지 및 레버 정보 보존.
+    - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 통과, `npm run build` 후 dist 산출물에 Samsung 우회 코드 잔존 0건 확인.
 
 ## Option
