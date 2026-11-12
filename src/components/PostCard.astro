@@ -40,6 +40,7 @@ const personaSuffix = personaIds.length > 1
           <img
             src={image.path}
             alt={image.alt}
+            loading="lazy"
             decoding="async"
           />
         </div>
@@ -144,8 +145,10 @@ const personaSuffix = personaIds.length > 1
   }
 
   /* ── Image ── */
-  /* Geometry, LQIP (::before) and img fade-in rules are shared with
-     LoadMoreCard — see the .post-card-image block in global.css. */
+  /* Geometry and LQIP (::before) rules are shared with LoadMoreCard —
+     see the .post-card-image block in global.css. The img paints over the
+     LQIP as soon as it is decoded; no reveal animation (it re-ran on every
+     reload and read as flicker). */
 
   @media (prefers-reduced-motion: reduce) {
     .post-card-persona,
@@ -154,9 +157,3 @@ const personaSuffix = personaIds.length > 1
     }
   }
 </style>
-
-<script>
-  import { initPostCardImages } from '../features/post-list/image-init';
-
-  initPostCardImages();
-</script>

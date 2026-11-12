@@ -549,5 +549,6 @@
   - 원인: `loading="lazy"`가 이미지 요청을 레이아웃 이후로 미뤄 첫 페인트에 이미지 부재가 필연. SW 캐시 히트는 수십 ms이므로 eager면 첫 페인트 전 준비 가능.
   - 해결 (제거 우선): `PostCard.astro` 썸네일에서 `loading="lazy"` 제거 — 신규 코드 추가 0건. 실기기에서 여전히 플래시가 남으면(사용자 확인 필요) 다음 단계로 lqip 크로스페이드만 검토.
   - 문서: `pwa.md`에 원인 분석·해결 기록.
+  - **[후속, 최종 해결]** lazy 제거로도 미해결(모바일·PC 공통 재현) → 진단 결과 지배적 원인은 **카드 이미지 reveal 애니메이션**: `html[data-js]` 하 img 강제 `opacity: 0` + `image-init.ts`의 decode→2×rAF→`.loaded` → img/lqip 0.35s 크로스페이드가 매 새로고침마다 재생(SW 캐시 히트와 무관). lazy는 원복(시행착오 롤백). 최종 해결 = 전부 제거: `image-init.ts` 파일 삭제, 호출부 3곳(`PostCard.astro` script/loader.ts/controller.ts) 제거, `append.ts`의 `.loaded` 핵 제거, `global.css`의 카드 img opacity·transition·`:has(img.loaded)` 규칙 제거. `image-reveal.ts`는 본문 shimmer용으로 유지. 문서: `pwa.md` 갱신, `chunk-loading.md`에서 image-init 참조 제거.
 
 ## Option

@@ -43,11 +43,6 @@ export function appendChunkItems(
 
   const appended = cards.slice(1);
 
-  const firstCardImg = cards[0].querySelector('.post-card-image img');
-  if (firstCardImg) {
-    firstCardImg.classList.add('loaded');
-  }
-
   currentLoadMore?.replaceWith(cards[0]);
   distributeCards(columns, leftCol, rightCol, appended);
   if (nextLoadMore) {

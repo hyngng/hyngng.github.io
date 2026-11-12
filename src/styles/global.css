@@ -374,12 +374,6 @@ html.modal-open {
   background-image: var(--lqip-url);
   background-size: cover;
   background-position: center;
-  opacity: 1;
-  transition: opacity 0.35s ease;
-}
-
-.post-card-image:has(img.loaded)::before {
-  opacity: 0;
 }
 
 .post-card-image img {
@@ -389,22 +383,7 @@ html.modal-open {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.35s ease;
   border-radius: inherit;
-}
-
-html[data-js] .post-card-image img {
-  opacity: 0;
-}
-
-html[data-js] .post-card-image img.loaded {
-  opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .post-card-image img {
-    transition: none;
-  }
 }
 
 /* ── Bootstrap-style Utility Classes ── */

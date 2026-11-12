@@ -66,15 +66,23 @@ Chirpy(Jekyll 테마)의 캐시 모델을 모방한다: **전부 Cache-First + �
 - **일반 HTML** (페르소나/포스트 페이지): `CacheFirst` 런타임 라우트(`-pages` 캐시, `cacheableResponse: [0, 200]`). 재방문 시 네트워크 없이 즉시 표시되며 오프라인에서도 열린다. 미방문 페이지는 캐시에 없으므로 오프라인에서 실패한다 — Chirpy와 동일한 수준의 한계다.
 - **이미지** (`request.destination === 'image'`): `CacheFirst` 런타임 라우트(`-images` 캐시, `cacheableResponse: [0, 200]`, 최대 300개·30일). jsDelivr CDN 이미지(`max-age=604800` + CORS `*`)는 opaque 응답으로 저장되어 새로고침마다 재다운로드되지 않는다.
 
-### 카드 이미지 깜빡임과 lazy 제거 (2026-11)
+### 카드 이미지 깜빡임 — reveal 애니메이션 제거 (2026-11)
 
-증상: 모바일(Samsung Internet)에서 새로고침할 때마다 카드 이미지가 lqip→본 이미지로 전환되며 깜빡임. 단, **네트워크를 차단해도 이미지가 렌더링됨** = CacheFirst 캐시는 정상 동작 중이며 재다운로드가 아니다.
+증상: 모바일(Samsung Internet)·PC 공통으로 새로고침할 때마다 카드 이미지가 lqip→본 이미지로 전환되며 깜빡임. 단, **네트워크를 차단해도 이미지가 렌더링됨** = CacheFirst 캐시는 정상 동작 중이며 재다운로드가 아니다.
 
-원인: 깜빡임은 캐시 문제가 아니라 **로드 시작 타이밍** 문제다. `loading="lazy"`는 이미지 요청을 레이아웃 완료 이후로 강제 지연시키므로 첫 페인트에 이미지가 늦을 수밖에 없어 lqip 플래시가 필연이었다. SW 캐시 히트는 수십 ms면 끝나므로, 요청을 파싱 시점부터 시작하는 eager라면 첫 페인트 전에 이미지가 준비될 수 있다.
+원인: 캐시가 아니라 **카드 이미지 reveal 애니메이션이 매 새로고침마다 재생**되는 것. `html[data-js] .post-card-image img { opacity: 0 }`이 캐시 여부와 무관하게 모든 img를 숨기고, `image-init.ts`(→`image-reveal.ts`)가 load→`img.decode()`→2×rAF→`.loaded` 부여 후 img 0→1 + lqip 1→0을 **0.35초 크로스페이드**했다. SW 캐시 히트가 수십 ms로 끝나도 사용자는 매번 lqip + 약 400~500ms의 페이드를 보게 된다 (PC·모바일 동일).
 
-해결 (제거 우선 원칙): `PostCard.astro`의 카드 썸네일에서 `loading="lazy"`를 **제거**했다 (기본 eager). 새 코드 추가 없이 속성 제거만으로 해결을 시도하는 접근. 청크당 카드 ~8개의 webp 썸네일이므로 전부 eager여도 비용이 작고, SW `-images` 캐시로 재방문 시 네트워크 비용은 0이다.
+시행착오(롤백됨): 1차로 카드 썸네일 `loading="lazy"`를 제거했으나 깜빡임 해소에 불충분(지배적 원인은 페이드) → lazy를 원복. lazy 자체는 유효(뷰포트 밖 썸네일 대역폭 절약).
 
-후속 (보류): eager로도 실기기에서 플래시가 남으면 다음 단계는 이미지 로드 완료 시 lqip 위 크로스페이드 — 필요 시에만 추가.
+해결 (제거 우선 원칙 — 전부 제거, 추가 코드 0건):
+
+- `src/features/post-list/image-init.ts` 파일 삭제 + 호출부 3곳 제거 (`PostCard.astro` script 블록, `loader.ts`, `controller.ts`)
+- `append.ts`의 첫 카드 img에 `.loaded`를 즉시 부여하던 핵 제거
+- `global.css`: `html[data-js] .post-card-image img { opacity: 0 }`, `img.loaded { opacity: 1 }`, `:has(img.loaded)::before { opacity: 0 }` 및 카드 img의 `transition: opacity` 제거
+
+결과 동작: 캐시 히트(새로고침) 시 이미지가 디코드 완료 즉시 1프레임에 페인트 — lqip는 img(`z-index: 1`)가 덮으며 자연 소멸, 깜빡임 소멸. 느린 네트워크 첫 방문에서는 lqip → 다운로드 완료 시점 하드컷(X 등 SNS·대부분 블로그 방식).
+
+범위: `image-reveal.ts` 자체는 포스트 본문 shimmer용으로 유지 (본문 이미지는 페이지 진입이라 shimmer가 자연스럽다). 후속으로 플래시가 남으면 lqip 크로스페이드만 별도 검토.
 
 ### 캐시 스탬핑 (Chirpy의 `chirpy-{timestamp}` 모방)
 
