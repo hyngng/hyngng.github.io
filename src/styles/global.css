@@ -324,6 +324,19 @@ html.modal-open {
   padding: 0 var(--chunk-grid-padding);
 }
 
+/* ── Post card boundary (borrowed from Chirpy's --card-shadow) ──
+   Card separation relies on a bg tint (#F7F7F7 vs #EDEDED) that Samsung
+   Internet's forced dark mode compresses into one dark band, erasing the
+   boundary. Chirpy solves the same constraint without browser branching:
+   a near-invisible drop shadow plus a hairline ring in light, a soft glow
+   plus a light hairline in dark. Box-shadows map into the browser's
+   brighter shadow band in forced dark, so the boundary survives. Theme
+   colors stay untouched. See docs/ai-docs/features/theme-toggle.md. */
+.post-card,
+.load-more-card:not([hidden]) {
+  box-shadow: var(--color-card-shadow);
+}
+
 /* ── Post Card Image (shared: PostCard & LoadMoreCard) ──
    LQIP placeholder on ::before, original img fades in on .loaded.
    Hidden-until-loaded is gated behind html[data-js] (set in Head.astro):

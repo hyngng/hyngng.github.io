@@ -40,8 +40,12 @@ Samsung Internet은 브라우저 설정의 다크 모드가 켜지면 사이트�
 - Chromium 계열 표준 옵트아웃(`<meta name="color-scheme" content="only light">`, Chrome 공식)은 Samsung Internet 기본 설정에서 무시된다(MDN browser-compat-data [#17408](https://github.com/mdn/browser-compat-data/issues/17408)/[#29347](https://github.com/mdn/browser-compat-data/issues/29347), 2022–2026 지속 보고). 설정(웹 페이지 보기 → 다크 모드 → "웹 콘텐츠 강제 다크 모드" 끄기)에서만 해제된다.
 - 게다가 이 사이트는 자체 다크 테마를 제공하므로 `only light` 선언 자체가 부적합하다.
 
-### 우회 시도와 롤백
+### 해결: Chirpy식 카드 그림자 경계 (2026-11)
 
-Samsung 필터는 배경을 어두운 대역(0.03–0.12)으로 눌러 담지만 **테두리/box-shadow는 그보다 훨씬 밝은 대역(0.27–0.33)으로 매핑**한다. 이를 이용해 UA 스니핑(`SamsungBrowser` → `<html data-samsung>` 플래그)으로 `html[data-samsung]:not(.dark)` 카드에 `box-shadow: inset 0 0 0 1px var(--color-border)` 링을 부여하는 우회를 적용했으나, **롤백되었다**(2026-11 — 사용자 결정). 현재 코드베이스에 Samsung 대응 코드는 없으며, 위 메커니즘 분석만 남아 이후 재시도를 방지한다.
+먼저 UA 스니핑(`SamsungBrowser` → `<html data-samsung>` 플래그)으로 카드에 `box-shadow: inset 0 0 0 1px var(--color-border)` 링을 부여하는 우회를 시도했으나 라이트 렌더링에서 링이 눈에 띄어 **롤백**했다. 이후 Chirpy 테마의 카드 경계 구조를 차용해 최종 해결했다:
 
-- 만약 재시도한다면: inset ring은 레이아웃 영향이 없고(border 대비 — 전역 border-box 리셋 부재), 필터가 box-shadow를 밝은 대역으로 매핑해 강제 다크에서만 경계가 살아난다는 점이 유효한 레버다. 야간 모드 on/off 감지가 불가하므로 Samsung 라이트 모드 사용자에게도 링이 함께 적용되는 한계는 그대로다.
+- Chirpy 테마 자체는 Samsung 대응 코드가 전혀 없다(라이트 모드에 `color-scheme` 선언조차 없음). 카드가 강제 다크에서 무사한 이유는 경계를 배경색 대비(페이지·카드 모두 흰색)가 아닌 `--card-shadow` 그림자로 표현하기 때문이다.
+- Chirpy의 `--card-shadow`는 드롭 섀도 + **헤어라인 링 box-shadow**(`0 0 0 1px`)의 2겹 구조다. box-shadow는 Samsung 필터에서 배경(0.03–0.12)보다 훨씬 밝은 대역(0.28–0.33)으로 매핑되므로 강제 다크에서도 경계가 살아남는다. 브라우저 분기 없이 모든 환경에서 동작한다.
+- Vignette 적용: 테마 파일에 `--color-card-shadow` 토큰을 신설하고(Chirpy 값 그대로 — 라이트 `rgb(104 104 104 / 5%) 0 2px 6px 0, rgb(211 209 209 / 15%) 0 0 0 1px`, 다크 `rgb(21 21 21 / 72%) 0 6px 18px 0, rgb(137 135 135 / 24%) 0 0 0 1px`), `global.css`에서 `.post-card` / `.load-more-card`에 `box-shadow: var(--color-card-shadow)`를 적용한다. 두 테마의 색상 시스템(페이지 배경 / 카드 배경 2색 구조)은 변경하지 않는다.
+- 라이트 렌더링에서 링은 15% 알파라 카드 배경(#EDEDED) 위 합성 시 채널당 ±5 수준의 차이로 사실상 보이지 않는다(롤백된 불투명 `#dee2e6` 링보다 훨씬 미세). spread ring은 레이아웃에 영향이 없고 `border-radius`를 따라간다.
+- 다크 모드에도 동일 구조를 적용한다(Chirpy 다크도 같은 구조). 사이트 자체 다크 테마가 Samsung 강제 다크로 렌더링될 때도 배경 대비는 같은 방식으로 압축되므로, 그림자 경계가 양쪽 모두에서 경계를 보존한다.

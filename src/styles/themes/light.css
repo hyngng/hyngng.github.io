@@ -45,6 +45,11 @@
   /* ── Shadow ── */
   --color-shadow: rgba(0, 0, 0, 0.15);
 
+  /* ── Post card boundary (borrowed from Chirpy's --card-shadow) ── */
+  --color-card-shadow:
+    rgb(104 104 104 / 5%) 0 2px 6px 0,
+    rgb(211 209 209 / 15%) 0 0 0 1px;
+
   /* ── Admonitions ── */
   --color-admonition-bg: var(--color-bg-soft);
 }

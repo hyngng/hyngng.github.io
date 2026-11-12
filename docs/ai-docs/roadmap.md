@@ -515,5 +515,11 @@
     - 시도 후 롤백: `ThemeInit.astro`의 `SamsungBrowser` UA 스니핑 플래그 + `global.css`의 `box-shadow: inset 0 0 0 1px var(--color-border)` 카드 링(Samsung 필터는 테두리/box-shadow를 배경보다 밝은 대역 0.27–0.33으로 매핑하는 점 활용)을 적용했으나, 카드 테두리 접근이 마음에 들지 않아 **전면 롤백**(사용자 결정). 코드베이스에 Samsung 대응 코드는 남지 않음.
     - 문서: `theme-toggle.md`에 메커니즘 분석(루미넌스 대역표)·옵트아웃 불가 근거·롤백 기록 유지 — 재시도 낭비 방지 및 레버 정보 보존.
     - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 통과, `npm run build` 후 dist 산출물에 Samsung 우회 코드 잔존 0건 확인.
+  - [x] **Samsung Internet 강제 다크 카드 경계: Chirpy 그림자 구조 차용 (2026-11)**
+    - 배경: 앞선 항목의 UA 스니핑 inset ring 우회는 라이트 렌더링에서 링이 눈에 띄어 롤백됨. 이후 Chirpy 테마 자체가 이 문제를 어떻게 다루는지 전수 조사.
+    - Chirpy 조사 결과: 테마 자체에는 Samsung 대응 코드가 전혀 없음 — `color-scheme` 선언은 다크 mixin(`color-scheme: dark`)과 disqus 위젯뿐, 라이트 모드·head에 선언 없음. 다크 모드 구조(`prefers-color-scheme` + `data-mode` + matchMedia)도 Samsung의 matchMedia 왜곡(light 보고)에 동일하게 노출. 카드가 무사한 것은 구조적 우연: `--main-bg: white` / `--card-bg: white`로 배경 대비에 의존하지 않고 `.post-preview`가 `box-shadow: var(--card-shadow)`로만 경계를 표현.
+    - 구현 (Chirpy 차용): 테마 파일에 `--color-card-shadow` 토큰 신설(Chirpy `--card-shadow` 값 그대로 — 라이트: 미세 드롭 섀도 `rgb(104 104 104 / 5%) 0 2px 6px 0` + 헤어라인 링 `rgb(211 209 209 / 15%) 0 0 0 1px`, 다크: 글로우 `rgb(21 21 21 / 72%) 0 6px 18px 0` + 헤어라인 링 `rgb(137 135 135 / 24%) 0 0 0 1px`). `global.css`에서 `.post-card` / `.load-more-card:not([hidden])`에 `box-shadow: var(--color-card-shadow)` 적용. 페이지/카드 2색 토큰은 무변경, 브라우저 분기(UA 스니핑) 없음 — box-shadow는 Samsung 필터에서 배경보다 밝은 대역(0.28–0.33)으로 매핑되어 강제 다크(라이트 테마 변환·자체 다크 테마 양쪽)에서 경계 보존.
+    - 문서 동기화: `theme-toggle.md`의 롤백 섹션을 최종 해결책으로 갱신(Chirpy 무대응 사실관계 + 차용 구조 + 라이트에서 링이 사실상 보이지 않는 근거).
+    - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 통과, `npm run build` 후 dist CSS에 `--color-card-shadow` 규칙 포함 확인. 실기기(Samsung Internet 강제 다크) 육안 확인은 배포 후 사용자 몫.
 
 ## Option
