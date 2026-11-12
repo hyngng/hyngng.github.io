@@ -1,7 +1,9 @@
 .dark {
   color-scheme: dark;
   /* ── 기본 컬러 ── */
-  --color-bg: #202023;
+  /* Page bg and card bg are borrowed from Chirpy's dark palette
+     (--main-bg / --card-bg); see docs/ai-docs/features/theme-toggle.md. */
+  --color-bg: #1b1b1e;
   --color-bg-soft: #2a2a2e;
   --color-text: #AFB0B1;
   --color-heading: #CACACA;
@@ -32,7 +34,7 @@
   /* ── 컴포넌트 ── */
   --color-table-border: #333;
   --color-table-head-bg: var(--color-bg-soft);
-  --color-post-card-bg: var(--color-bg-soft);
+  --color-post-card-bg: #1e1e1e; /* Chirpy --card-bg */
   --persona-avatar-placeholder: var(--color-bg-soft);
   --color-shimmer: #303030;
   --color-shimmer-highlight: #424242;

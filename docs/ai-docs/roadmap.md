@@ -519,6 +519,7 @@
     - 배경: 앞선 항목의 UA 스니핑 inset ring 우회는 라이트 렌더링에서 링이 눈에 띄어 롤백됨. 이후 Chirpy 테마 자체가 이 문제를 어떻게 다루는지 전수 조사.
     - Chirpy 조사 결과: 테마 자체에는 Samsung 대응 코드가 전혀 없음 — `color-scheme` 선언은 다크 mixin(`color-scheme: dark`)과 disqus 위젯뿐, 라이트 모드·head에 선언 없음. 다크 모드 구조(`prefers-color-scheme` + `data-mode` + matchMedia)도 Samsung의 matchMedia 왜곡(light 보고)에 동일하게 노출. 카드가 무사한 것은 구조적 우연: `--main-bg: white` / `--card-bg: white`로 배경 대비에 의존하지 않고 `.post-preview`가 `box-shadow: var(--card-shadow)`로만 경계를 표현.
     - 구현 (Chirpy 차용): 테마 파일에 `--color-card-shadow` 토큰 신설(Chirpy `--card-shadow` 값 그대로 — 라이트: 미세 드롭 섀도 `rgb(104 104 104 / 5%) 0 2px 6px 0` + 헤어라인 링 `rgb(211 209 209 / 15%) 0 0 0 1px`, 다크: 글로우 `rgb(21 21 21 / 72%) 0 6px 18px 0` + 헤어라인 링 `rgb(137 135 135 / 24%) 0 0 0 1px`). `global.css`에서 `.post-card` / `.load-more-card:not([hidden])`에 `box-shadow: var(--color-card-shadow)` 적용. 페이지/카드 2색 토큰은 무변경, 브라우저 분기(UA 스니핑) 없음 — box-shadow는 Samsung 필터에서 배경보다 밝은 대역(0.28–0.33)으로 매핑되어 강제 다크(라이트 테마 변환·자체 다크 테마 양쪽)에서 경계 보존.
+    - 색상 차용 (후속): 다크 테마 `--color-bg` `#202023`→`#1b1b1e`(Chirpy `--main-bg`), `--color-post-card-bg` `var(--color-bg-soft)`→`#1e1e1e`(Chirpy `--card-bg`). 라이트 테마는 무변경. `--color-bg-soft`(#2a2a2e)는 코드블록·표 헤드·어드모니션·아바타 placeholder에 그대로 사용되며, 카드가 bg-soft 재사용을 끊어 다크 모드에서 카드 위 인라인 코드 등이 미묘한 대비를 갖게 됨.
     - 문서 동기화: `theme-toggle.md`의 롤백 섹션을 최종 해결책으로 갱신(Chirpy 무대응 사실관계 + 차용 구조 + 라이트에서 링이 사실상 보이지 않는 근거).
     - 검증: `npx astro check` 0 errors / 0 warnings / 0 hints, `npm test` 통과, `npm run build` 후 dist CSS에 `--color-card-shadow` 규칙 포함 확인. 실기기(Samsung Internet 강제 다크) 육안 확인은 배포 후 사용자 몫.
 
