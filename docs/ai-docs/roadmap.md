@@ -543,7 +543,8 @@
   - 1차 적용(트리거 12px·아바타 20px)이 "무작정 작게"라 X 팔로워 행 디자인과 불일치 — 실기기 스크린샷 비교로 간격·크기 리듬이 다름 확인.
   - 정합화: 트리거 `0.75rem`+아바타 20px 오버라이드 제거 → `var(--font-size-hero-description-mobile)` (15px, X 팔로워 행=bio 라인) + 기본 아바타 스택 24px. 블록 리듬을 X 프로필 헤더 기준으로 재조정: Hero 상단 32px→16px, name→bio 6px→8px(≤960px :root 오버라이드), description→트리거 8px→12px, 트리거→검색창 8px→16px.
   - **[2차 축소, 사용자 지정]** 15px/20px도 크다고 판단 → description/트리거 `13px`/`18px`로 추가 축소, 트리거 아바타 스택 재축소·밀착(`--avatar-stack-size: 20px`, `--avatar-stack-overlap: 12px` — 아바타당 노출 폭 8px). X bio보다 작은 사용자 고유 스케일.
-  - **[3차 조정]** 배포 사이트 실측으로 description·트리거 모두 13px 동일 확인 — 토큰 추가 축소는 사용자가 철회("동일 크기 유지"). description→트리거 간격 12px→**16px**(`.hero-desc-row` gap `1rem`) 확대.
+  - **[3차 조정]** 배포 사이트 실측으로 description·트리거 모두 13px 동일 확인 — 토큰 추가 축소는 사용자가 철회("동일 크기 유지"). description→트리거 간격 12px→16px.
+  - **[4차 조정, 사용자 지정]** description↔트리거 간격 16px→**32px**(`.hero-desc-row` gap `2rem`, 2배) 확대, name↔description 간격 8px→**4px**(`--space-hero-title-description` 모바일 오버라이드) 밀착.
   - 문서: `hero.md` 모바일 스케일 섹션 전면 갱신, `search.md` 간격 설명 갱신.
 
 - [x] **카드 이미지 깜빡임 — lazy 제거 (2026-11)**
@@ -552,6 +553,7 @@
   - 해결 (제거 우선): `PostCard.astro` 썸네일에서 `loading="lazy"` 제거 — 신규 코드 추가 0건. 실기기에서 여전히 플래시가 남으면(사용자 확인 필요) 다음 단계로 lqip 크로스페이드만 검토.
   - 문서: `pwa.md`에 원인 분석·해결 기록.
   - **[후속, 최종 해결]** lazy 제거로도 미해결(모바일·PC 공통 재현) → 진단 결과 지배적 원인은 **카드 이미지 reveal 애니메이션**: `html[data-js]` 하 img 강제 `opacity: 0` + `image-init.ts`의 decode→2×rAF→`.loaded` → img/lqip 0.35s 크로스페이드가 매 새로고침마다 재생(SW 캐시 히트와 무관). lazy는 원복(시행착오 롤백). 최종 해결 = 전부 제거: `image-init.ts` 파일 삭제, 호출부 3곳(`PostCard.astro` script/loader.ts/controller.ts) 제거, `append.ts`의 `.loaded` 핵 제거, `global.css`의 카드 img opacity·transition·`:has(img.loaded)` 규칙 제거. `image-reveal.ts`는 본문 shimmer용으로 유지. 문서: `pwa.md` 갱신, `chunk-loading.md`에서 image-init 참조 제거.
-  - **[후속 2]** reveal 제거 후에도 실기기에서 짧은 깜빡임 → 배포 사이트 실측(최신 빌드 확인, 썸네일 캐시 히트 ~22ms)으로 lqip 노출 타이밍 문제로 특정 → **lqip 지연 표시**(`opacity: 0` + `animation .15s .25s forwards` — 캐시 히트는 250ms 내 페인트되어 lqip를 통과하지 않음) + 카드 img `decoding="async"` 제거. 상세는 `pwa.md` 참조.
+  - **[후속 2]** reveal 제거 후에도 실기기에서 짧은 깜빡임 → 배포 사이트 실측(최신 빌드 확인, 썸네일 캐시 히트 ~22ms)으로 lqip 노출 타이밍 문제로 특정 → lqip 지연 표시 + `decoding="async"` 제거 적용.
+  - **[전면 롤백, 사용자 지시]** 모든 수정 시도(reveal 제거, lazy 제거/원복, lqip 지연, decoding 제거)를 걷어내고 `66a35955` 시점 원래 구조로 복원: `image-init.ts`·reveal 애니메이션·`append.ts` 핵·`decoding="async"` 모두 복원. 진단 지식(SW 캐시 정상 22ms 히트, Samsung "이미지 어둡게" 설정 유력 후보, dev 서버는 PWA 비활성)은 `pwa.md`에 기록 보존. 재시도 시 브라우저 설정·실기기 실측부터.
 
 ## Option

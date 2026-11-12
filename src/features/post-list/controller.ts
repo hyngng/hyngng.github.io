@@ -3,7 +3,7 @@ import { collectCards, findColumns, normalizePath, allPostsFromGrid, sortByIndex
 import { relayoutGrid } from './layout';
 import { appendChunkItems, distributeCards } from './append';
 import { distributeByWeight, GAP } from './distribution';
-
+import { initPostCardImages } from './image-init';
 import { fetchChunkHtml } from './chunk-repository';
 
 export function createPostListController(grid: HTMLElement): PostListController {
@@ -125,6 +125,7 @@ export function createPostListController(grid: HTMLElement): PostListController 
         card.style.display = 'none';
         searchTagged.add(card);
       });
+      initPostCardImages();
     },
 
     relayout() {

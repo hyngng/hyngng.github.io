@@ -183,8 +183,8 @@ body {
     --posts-section-margin-top: 40px;
     --space-search-posts-gap: 16px;
     --post-card-radius: 12px;
-    /* X/Bluesky profile-header rhythm: name → bio gap */
-    --space-hero-title-description: 8px;
+    /* Tighter name → description gap on mobile, like an SNS profile header */
+    --space-hero-title-description: 4px;
   }
 }
 
@@ -374,18 +374,12 @@ html.modal-open {
   background-image: var(--lqip-url);
   background-size: cover;
   background-position: center;
-  /* Reveal the LQIP only when the image is genuinely slow to arrive.
-     A cached image paints within the first few frames — before the delay
-     elapses — so reloads never flash the blurry placeholder; the img
-     (z-index above) covers it the moment it is decoded. */
-  opacity: 0;
-  animation: post-card-lqip-in 0.15s ease 0.25s forwards;
+  opacity: 1;
+  transition: opacity 0.35s ease;
 }
 
-@keyframes post-card-lqip-in {
-  to {
-    opacity: 1;
-  }
+.post-card-image:has(img.loaded)::before {
+  opacity: 0;
 }
 
 .post-card-image img {
@@ -395,7 +389,22 @@ html.modal-open {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity 0.35s ease;
   border-radius: inherit;
+}
+
+html[data-js] .post-card-image img {
+  opacity: 0;
+}
+
+html[data-js] .post-card-image img.loaded {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card-image img {
+    transition: none;
+  }
 }
 
 /* ── Bootstrap-style Utility Classes ── */

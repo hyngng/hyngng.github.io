@@ -66,33 +66,21 @@ Chirpy(Jekyll 테마)의 캐시 모델을 모방한다: **전부 Cache-First + �
 - **일반 HTML** (페르소나/포스트 페이지): `CacheFirst` 런타임 라우트(`-pages` 캐시, `cacheableResponse: [0, 200]`). 재방문 시 네트워크 없이 즉시 표시되며 오프라인에서도 열린다. 미방문 페이지는 캐시에 없으므로 오프라인에서 실패한다 — Chirpy와 동일한 수준의 한계다.
 - **이미지** (`request.destination === 'image'`): `CacheFirst` 런타임 라우트(`-images` 캐시, `cacheableResponse: [0, 200]`, 최대 300개·30일). jsDelivr CDN 이미지(`max-age=604800` + CORS `*`)는 opaque 응답으로 저장되어 새로고침마다 재다운로드되지 않는다.
 
-### 카드 이미지 깜빡임 — reveal 애니메이션 제거 (2026-11)
+### 카드 이미지 깜빡임 — 수정 시도 후 전면 롤백 (2026-11)
 
-증상: 모바일(Samsung Internet)·PC 공통으로 새로고침할 때마다 카드 이미지가 lqip→본 이미지로 전환되며 깜빡임. 단, **네트워크를 차단해도 이미지가 렌더링됨** = CacheFirst 캐시는 정상 동작 중이며 재다운로드가 아니다.
+증상: 모바일(Samsung Internet)·PC 공통으로 새로고침할 때마다 카드 이미지가 lqip→본 이미지로 전환되며 짧게 깜빡임. 단, **네트워크를 차단해도 이미지가 렌더링됨** = CacheFirst 캐시는 정상 동작 중이며 재다운로드가 아님.
 
-원인: 캐시가 아니라 **카드 이미지 reveal 애니메이션이 매 새로고침마다 재생**되는 것. `html[data-js] .post-card-image img { opacity: 0 }`이 캐시 여부와 무관하게 모든 img를 숨기고, `image-init.ts`(→`image-reveal.ts`)가 load→`img.decode()`→2×rAF→`.loaded` 부여 후 img 0→1 + lqip 1→0을 **0.35초 크로스페이드**했다. SW 캐시 히트가 수십 ms로 끝나도 사용자는 매번 lqip + 약 400~500ms의 페이드를 보게 된다 (PC·모바일 동일).
+진단 사실 (롤백 후에도 유효한 지식):
 
-시행착오(롤백됨): 1차로 카드 썸네일 `loading="lazy"`를 제거했으나 깜빡임 해소에 불충분(지배적 원인은 페이드) → lazy를 원복. lazy 자체는 유효(뷰포트 밖 썸네일 대역폭 절약).
+- SW 캐시는 정상: 배포 사이트 실측에서 카드 썸네일 ~22ms·아바타 14~28ms, `transferSize: 0` (캐시 히트).
+- 카드 이미지 reveal 애니메이션(`html[data-js]` 하 img `opacity: 0` → `image-init.ts`의 decode→2×rAF→`.loaded` → img/lqip 0.35s 크로스페이드)와 lqip 즉시 노출이 깜빡임의 유력 후보였으나, reveal 제거·lqip 250ms 지연 표시 등 일련의 수정 후에도 실기기에서 깜빡임 지속.
+- Samsung Internet 다크 모드의 "이미지 어둡게" 설정이 켜져 있으면 이미지 로드 완료 시점마다 브라우저 레벨의 밝기 변화가 발생할 수 있다 — 사이트 코드로 제어 불가, 설정 확인 필요.
+- dev 서버(`npm run dev`)는 PWA가 비활성(`import.meta.env.PROD` 가드)이므로 dev에서의 깜빡임은 캐시 부재+재검증으로 원래 존재 — 검증은 `npm run preview` 또는 배포 사이트로.
 
-해결 (제거 우선 원칙 — 전부 제거, 추가 코드 0건):
+사용자 지시에 따라 **깜빡임 관련 수정 코드를 전면 롤백**해 원래 구조로 복원했다:
 
-- `src/features/post-list/image-init.ts` 파일 삭제 + 호출부 3곳 제거 (`PostCard.astro` script 블록, `loader.ts`, `controller.ts`)
-- `append.ts`의 첫 카드 img에 `.loaded`를 즉시 부여하던 핵 제거
-- `global.css`: `html[data-js] .post-card-image img { opacity: 0 }`, `img.loaded { opacity: 1 }`, `:has(img.loaded)::before { opacity: 0 }` 및 카드 img의 `transition: opacity` 제거
-
-결과 동작: 캐시 히트(새로고침) 시 이미지가 디코드 완료 즉시 1프레임에 페인트 — lqip는 img(`z-index: 1`)가 덮으며 자연 소멸, 깜빡임 소멸. 느린 네트워크 첫 방문에서는 lqip → 다운로드 완료 시점 하드컷(X 등 SNS·대부분 블로그 방식).
-
-범위: `image-reveal.ts` 자체는 포스트 본문 shimmer용으로 유지 (본문 이미지는 페이지 진입이라 shimmer가 자연스럽다). 후속으로 플래시가 남으면 lqip 크로스페이드만 별도 검토.
-
-### 후속: lqip 지연 표시 (2026-11)
-
-reveal 제거 후 실기기(Samsung Internet)에서 여전히 짧은 깜빡임 보고. 배포 사이트 실측으로 최신 빌드+reveal 제거 확인(카드 썸네일 SW 캐시 히트 ~22ms, transferSize 0) → 남은 깜빡임은 **캐시 히트여도 디코드~페인트 공백(수십~수백 ms) 동안 lqip가 그려졌다 벗겨지는** 렌더링 타이밍 문제.
-
-해결(수정만, 로직 추가 0건): `.post-card-image::before`(lqip)를 `opacity: 0` 기본값으로 바꾸고 `animation: post-card-lqip-in 0.15s ease 0.25s forwards`로 **0.25초 뒤에만 등장**. 캐시 히트 이미지는 250ms 내에 페인트되어 lqip를 통과하지 않으므로(편테인트되면 img가 z-index로 덮음) 새로고침 시 lqip 플래시가 원천 소멸. 느린 네트워크에서만 0.25초 후 placeholder가 나타나는 의도된 폴백. 아울러 `PostCard.astro` img의 `decoding="async"` 제거(auto로 브라우저가 즉시 디코드 가능).
-
-검증: 배포 사이트 브라우저 실측 — description/트리거 13px 동일, reveal opacity 규칙 부재, SW 캐시 `hyngng-<stamp>-*` 활성. 로컬 preview에서 카드 썸네일 22ms·아바타 14-28ms 캐시 서빙.
-
-참고(브라우저 설정): Samsung Internet 다크 모드의 "이미지 어둡게" 설정이 켜져 있으면 이미지 로드 완료 시점마다 밝기 변화(브라우저 레벨)가 발생할 수 있다 — 사이트 코드로 제어 불가, 설정에서 확인 필요.
+- 복원: `PostCard.astro`(img `loading="lazy"` + `decoding="async"` + `initPostCardImages` script 블록), `image-init.ts` 파일, `loader.ts`/`controller.ts` 호출부, `append.ts`의 `.loaded` 핵, `global.css`의 reveal 규칙(img `opacity: 0`/`.loaded`/`:has(img.loaded)::before`/`transition`/reduced-motion) — 모두 커밋 `66a35955` 시점 상태.
+- 재시도한다면: 원인은 캐시가 아닌 렌더링 타이밍 쪽이므로, Samsung 기기에서 lqip 노출 시간·"이미지 어둡게" 설정·SW 콜드 스타트를 먼저 실측하는 방향.
 
 ### 캐시 스탬핑 (Chirpy의 `chirpy-{timestamp}` 모방)
 
