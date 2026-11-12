@@ -542,6 +542,7 @@
 - [x] **모바일 Hero X/Bluesky 메트릭 정합화 (2026-11, 후속)**
   - 1차 적용(트리거 12px·아바타 20px)이 "무작정 작게"라 X 팔로워 행 디자인과 불일치 — 실기기 스크린샷 비교로 간격·크기 리듬이 다름 확인.
   - 정합화: 트리거 `0.75rem`+아바타 20px 오버라이드 제거 → `var(--font-size-hero-description-mobile)` (15px, X 팔로워 행=bio 라인) + 기본 아바타 스택 24px. 블록 리듬을 X 프로필 헤더 기준으로 재조정: Hero 상단 32px→16px, name→bio 6px→8px(≤960px :root 오버라이드), description→트리거 8px→12px, 트리거→검색창 8px→16px.
+  - **[2차 축소, 사용자 지정]** 15px/20px도 크다고 판단 → description/트리거 `13px`/`18px`로 추가 축소, 트리거 아바타 스택 재축소·밀착(`--avatar-stack-size: 20px`, `--avatar-stack-overlap: 12px` — 아바타당 노출 폭 8px). X bio보다 작은 사용자 고유 스케일.
   - 문서: `hero.md` 모바일 스케일 섹션 전면 갱신, `search.md` 간격 설명 갱신.
 
 - [x] **카드 이미지 깜빡임 — lazy 제거 (2026-11)**

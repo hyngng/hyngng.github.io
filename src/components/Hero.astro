@@ -127,11 +127,12 @@ const {
       gap: 0.75rem;
     }
 
-    /* X/Bluesky follower-row scale: 15px like the bio line, with the
-       default 24px avatar stack. Sits above the search bar the way the
-       follower row sits above the pill buttons. */
+    /* X/Bluesky follower-row scale: same line as the bio (13px), with a
+       tighter avatar stack (20px heads, 8px advance per stacked avatar). */
     .hero-personas-trigger {
       font-size: var(--font-size-hero-description-mobile);
+      --avatar-stack-size: 20px;
+      --avatar-stack-overlap: 12px;
     }
   }
 </style>

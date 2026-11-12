@@ -14,14 +14,14 @@
      (display name 20px, bio/description 15px). */
   --font-size-hero-title-mobile: 20px;
   --font-size-hero-description: 18px;
-  --font-size-hero-description-mobile: 15px;
+  --font-size-hero-description-mobile: 13px;
   --font-family-base: var(--configured-font-family, var(--font-pretendard), Inter, system-ui, sans-serif);
   --font-family-code: 'Reddit Mono', var(--font-pretendard), monospace;
   --font-weight-hero-title: 700;
   --line-height-hero-title: 48px;
   --line-height-hero-title-mobile: 24px;
   --line-height-hero-description: 22px;
-  --line-height-hero-description-mobile: 20px;
+  --line-height-hero-description-mobile: 18px;
   --font-size-post-h1: 2rem;
   --font-size-post-h2: 1.8rem;
   --font-size-post-h3: 1.6rem;
