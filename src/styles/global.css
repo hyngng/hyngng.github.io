@@ -34,7 +34,7 @@
   --avatar-stack-size: 24px;
   --avatar-stack-overlap: 10px;
   --hero-margin-top: 32px;
-  --hero-margin-top-mobile: 32px;
+  --hero-margin-top-mobile: 16px;
   --post-margin-top: 32px;
   --post-header-width: 736px;
   --section-title-size: 22px;
@@ -183,6 +183,8 @@ body {
     --posts-section-margin-top: 40px;
     --space-search-posts-gap: 16px;
     --post-card-radius: 12px;
+    /* X/Bluesky profile-header rhythm: name → bio gap */
+    --space-hero-title-description: 8px;
   }
 }
 
@@ -256,10 +258,10 @@ html.modal-open {
 }
 
 /* Mobile: keep the search bar right under the hero personas trigger,
-   like the follower row sitting above the pill buttons on X/Bluesky. */
+   like the pill buttons sitting under the follower row on X/Bluesky. */
 @media (max-width: 960px) {
   .search-mobile-wrapper {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
 }
 

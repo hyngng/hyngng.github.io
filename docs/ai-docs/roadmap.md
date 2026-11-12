@@ -539,4 +539,15 @@
     - 트리거를 검색창 바로 위에 부착: `global.css`에 `@media (max-width: 960px) { .search-mobile-wrapper { margin-top: 0.5rem } }` 추가(기존 `--posts-section-margin-top` 40px 대체).
     - 문서 동기화: `hero.md`에 모바일 토큰·스케일 섹션, `search.md`의 모바일 레이아웃 간격 설명 갱신.
 
+- [x] **모바일 Hero X/Bluesky 메트릭 정합화 (2026-11, 후속)**
+  - 1차 적용(트리거 12px·아바타 20px)이 "무작정 작게"라 X 팔로워 행 디자인과 불일치 — 실기기 스크린샷 비교로 간격·크기 리듬이 다름 확인.
+  - 정합화: 트리거 `0.75rem`+아바타 20px 오버라이드 제거 → `var(--font-size-hero-description-mobile)` (15px, X 팔로워 행=bio 라인) + 기본 아바타 스택 24px. 블록 리듬을 X 프로필 헤더 기준으로 재조정: Hero 상단 32px→16px, name→bio 6px→8px(≤960px :root 오버라이드), description→트리거 8px→12px, 트리거→검색창 8px→16px.
+  - 문서: `hero.md` 모바일 스케일 섹션 전면 갱신, `search.md` 간격 설명 갱신.
+
+- [x] **카드 이미지 깜빡임 — lazy 제거 (2026-11)**
+  - 증상: 모바일에서 새로고침마다 카드 이미지 lqip→본 이미지 전환 깜빡임. 오프라인에서도 이미지 렌더링 확인 → SW CacheFirst 캐시는 정상, 재다운로드 아님.
+  - 원인: `loading="lazy"`가 이미지 요청을 레이아웃 이후로 미뤄 첫 페인트에 이미지 부재가 필연. SW 캐시 히트는 수십 ms이므로 eager면 첫 페인트 전 준비 가능.
+  - 해결 (제거 우선): `PostCard.astro` 썸네일에서 `loading="lazy"` 제거 — 신규 코드 추가 0건. 실기기에서 여전히 플래시가 남으면(사용자 확인 필요) 다음 단계로 lqip 크로스페이드만 검토.
+  - 문서: `pwa.md`에 원인 분석·해결 기록.
+
 ## Option

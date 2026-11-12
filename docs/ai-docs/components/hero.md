@@ -41,14 +41,15 @@ Figma 파일 `BLOGGING`의 `메인 페이지 - 라이트` Frame 기준.
 - `--line-height-hero-description`
 - `--line-height-hero-description-mobile` (모바일: `20px`)
 - `--hero-margin-top`
-- `--space-hero-title-description`
-- `--hero-margin-top-mobile` (모바일 breakpoint에서 `--hero-margin-top`을 오버라이드하는 용도로 사용)
+- `--space-hero-title-description` (모바일 ≤960px에서 `8px`으로 오버라이드 — X의 name→bio 간격)
+- `--hero-margin-top-mobile` (`16px` — 모바일 breakpoint에서 `--hero-margin-top`을 오버라이드)
 
 ## 모바일 스케일
 
-`@media (max-width: 960px)`에서 Hero 전체가 X/Bluesky 프로필 헤더 스케일로 축소된다 (`Hero.astro`):
+`@media (max-width: 960px)`에서 Hero 전체가 X/Bluesky 프로필 헤더 메트릭을 따른다 (`Hero.astro`):
 
-- `h1`: `--font-size-hero-title-mobile` (`20px`) / `--line-height-hero-title-mobile` (`24px`)
+- `h1`: `--font-size-hero-title-mobile` (`20px`/700) / `--line-height-hero-title-mobile` (`24px`)
 - `.hero-description`: `--font-size-hero-description-mobile` (`15px`) / `--line-height-hero-description-mobile` (`20px`)
-- `.hero-personas-trigger` ("n개 페르소나 보기"): `font-size: 0.75rem` + `--avatar-stack-size: 20px` 로컬 오버라이드 — X/Bluesky 프로필의 팔로워 행(팔로잉&팔로워 수치 행) 스케일. 아바타 스택은 이 요소의 로컬 토큰을 상속해 함께 축소된다.
-- 검색창과의 간격은 `global.css`의 `.search-mobile-wrapper { margin-top: 0.5rem }` (≤960px)로 붙인다 — 트리거 바로 아래 검색창 배치.
+- 블록 리듬 (X 프로필 헤더 기준): Hero 상단 여백 `16px` → name→description `8px` → description→트리거 `12px` (`.hero-desc-row` gap `0.75rem`)
+- `.hero-personas-trigger` ("n개 페르소나 보기"): X의 팔로워 행(팔로잉&팔로워 수치 행) 스케일 — `font-size: var(--font-size-hero-description-mobile)` (`15px`, bio와 동일 라인) + 기본 `--avatar-stack-size` (`24px`) 유지. 별도 축소 오버라이드 없음.
+- 검색창과의 간격은 `global.css`의 `.search-mobile-wrapper { margin-top: 1rem }` (≤960px, `16px`) — X의 팔로워 행→알약 버튼 간격 리듬. 트리거가 검색창 바로 위에 위치.
