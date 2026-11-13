@@ -168,6 +168,7 @@
   - `--font-size-action`: 28px → 20px (버튼 축소 비율과 일관성 유지)
   - 파생 변수(--header-height, --frame-radius, lang-list width 등)는 CSS 변수 체인으로 자동 반영
   - JS의 `getComputedStyle(--button-size)`도 CSS 변수 변경을 자동 추적하므로 별도 처리 불필요
+  - **[후속 축소 (2026-11-13)]** 모바일 버튼 48px→**44px**, 아이콘 폰트 20px→**18px** (사용자 확정값 — Apple HIG 최소 터치 타겟 44pt 충족). `--frame-radius-mobile`(concave 코너 28px)은 유지. `global.css` 모바일 블록만 수정(토큰 2값), 파생 변수는 자동 반영. 문서: `frame-layout.md` 전체 수치 갱신.
   - [x] 포스트 카드 라운딩을 PC에서는 현행대로, 그러나 모바일에서는 16px정도로 별도로 렌더링되도록 만들기.
   - [x] **LoadMoreCard 미리보기 이미지 표시 및 점진적 로딩 구조 통일**
     - `nextPreviewPost`에 이미지가 있을 때 `.post-card-image` 영역에 원본 이미지 렌더링.

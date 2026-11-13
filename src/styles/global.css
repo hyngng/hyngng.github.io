@@ -177,8 +177,8 @@ body {
   :root {
     --frame-thickness: 0px;
     --frame-radius: 0px;
-    --button-size: 48px;
-    --font-size-action: 20px;
+    --button-size: 44px;
+    --font-size-action: 18px;
     --scroll-target-offset: var(--button-size);
     --posts-section-margin-top: 40px;
     --space-search-posts-gap: 16px;

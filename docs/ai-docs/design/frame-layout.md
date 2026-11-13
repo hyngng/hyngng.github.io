@@ -31,10 +31,10 @@
 | 변수 | 값 | 설명 |
 |---|---|---|
 | `--frame-thickness` | `12px` | 프레임 테두리 두께 |
-| `--button-size` | `56px` (모바일: `48px`) | 헤더 내 버튼 크기 (헤더 높이이기도 함). 전역 0.8배 스케일 다운에서 모바일 버튼은 접근성 최소 터치 타겟을 보존하기 위해 48px 유지 |
-| `--font-size-action` | `22px` (모바일: `20px`) | 버튼 내 아이콘/텍스트 폰트 크기. 버튼 축소 비율에 맞춰 함께 축소됨 |
+| `--button-size` | `56px` (모바일: `44px`) | 헤더 내 버튼 크기 (헤더 높이이기도 함). 모바일은 44px로 축소 (Apple HIG 최소 터치 타겟 44×44pt 충족) |
+| `--font-size-action` | `22px` (모바일: `18px`) | 버튼 내 아이콘/텍스트 폰트 크기. 버튼 축소 비율에 맞춰 함께 축소됨 |
 | `--frame-radius` | `calc(var(--button-size) / 2)` = `28px` | 콘텐츠 영역의 오목한 곡선 반경 |
-| `--header-height` | `var(--button-size)` = `56px` (모바일: `48px`) | 상단 헤더 높이 |
+| `--header-height` | `var(--button-size)` = `56px` (모바일: `44px`) | 상단 헤더 높이 |
 | `--content-width` | `768px` | 콘텐츠 영역 최대 폭 |
 
 ## Side Content Fade
@@ -46,21 +46,21 @@
 ## 반응형 처리
 - `@media (max-width: 960px)`에서 `--frame-thickness: 0px`, `--frame-radius: 0px`으로 오버라이드하여 프레임을 제거합니다.
 - 모바일에서는 `::before`와 `.frame-border` 모두 `inset: 0`이 되어, 패널이 전체 화면을 덮고 마스크가 비활성화됩니다.
-- 모바일에서는 `--button-size: 48px`, `--font-size-action: 20px`을 유지합니다. 전역 0.8배 스케일 다운에서 모바일 버튼은 접근성 최소 터치 타겟을 보존하기 위해 제외됩니다. 48px은 Material Design의 최소 터치 타겟 권장 크기(48×48dp)를 충족하며, Apple HIG(44×44pt)도 여유 있게 상회합니다.
+- 모바일에서는 `--button-size: 44px`, `--font-size-action: 18px`을 적용합니다. Apple HIG의 최소 터치 타겟 권장 크기(44×44pt)를 충족하며, 화면 공간을 더 확보합니다.
 - 버튼 크기가 줄어들면 파생 변수(`--header-height`, `--frame-radius`)도 자동으로 따라 줄어듭니다.
 - 모바일 네이티브 스크롤바는 OS 설정에 따름.
-- 모바일에서 `.fixed-actions`는 `position: sticky; top: 0;`로 오버라이드되어 문서 흐름(in-flow, 48px 차지)을 유지하면서도 스크롤 시 화면 상단에 고정(sticky)됩니다. `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 유지합니다. 데스크톱은 `position: fixed`를 유지합니다.
+- 모바일에서 `.fixed-actions`는 `position: sticky; top: 0;`로 오버라이드되어 문서 흐름(in-flow, 44px 차지)을 유지하면서도 스크롤 시 화면 상단에 고정(sticky)됩니다. `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 유지합니다. 데스크톱은 `position: fixed`를 유지합니다.
 
 ## 모바일 Frame Sticky 헤더화
 
 ### 동작
-모바일(`max-width: 960px`)에서 `.fixed-actions`는 `position: sticky; top: 0;`로 렌더링되어 일반 문서 흐름에서 48px 높이를 정상적으로 차지하면서도, 사용자가 스크롤을 내릴 때 뷰포트 최상단에 지속적으로 고정됩니다. 복잡한 JS 스크롤 리스너 없이 순수 CSS로 안정적으로 고정되며, 언제든지 테마 토글, RSS, 언어 전환 및 홈 네비게이션이 가능합니다.
+모바일(`max-width: 960px`)에서 `.fixed-actions`는 `position: sticky; top: 0;`로 렌더링되어 일반 문서 흐름에서 44px 높이를 정상적으로 차지하면서도, 사용자가 스크롤을 내릴 때 뷰포트 최상단에 지속적으로 고정됩니다. 복잡한 JS 스크롤 리스너 없이 순수 CSS로 안정적으로 고정되며, 언제든지 테마 토글, RSS, 언어 전환 및 홈 네비게이션이 가능합니다.
 
 ### 구현
-- **CSS** (`Frame.astro` 모바일 미디어쿼리): `.fixed-actions`에 `position: sticky; top: 0;`를 적용합니다. `height: var(--header-height)`(48px)로 흐름에서 높이를 차지하므로 상단 본문 콘텐츠와 겹치지 않으며, `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 그대로 유지합니다.
+- **CSS** (`Frame.astro` 모바일 미디어쿼리): `.fixed-actions`에 `position: sticky; top: 0;`를 적용합니다. `height: var(--header-height)`(44px)로 흐름에서 높이를 차지하므로 상단 본문 콘텐츠와 겹치지 않으며, `.left-action`/`.right-actions`(`position: absolute`)의 containing block 역할을 그대로 유지합니다.
 - **모바일 상단 양쪽 하단 역방향 라운딩(Concave Corner)**: 모바일 상단 바(`.fixed-actions`)의 좌측 하단과 우측 하단에 `::before`와 `::after` pseudo-element(`width: var(--frame-radius-mobile)`, `height: var(--frame-radius-mobile)`, `28px`)로 radial-gradient 오목 곡선을 렌더링합니다. 검은색 상단 바가 화면 좌우 가장자리를 따라 아래로 자연스럽게 오목 곡선이 흘러내리며 sticky 헤더와 함께 부드럽게 상단에 고정됩니다.
 - **모바일 화면 하단 역방향 라운딩(Concave Corner)**: 모바일 전용 `.mobile-bottom-corners`(`position: fixed; bottom: 0; left: 0; right: 0; pointer-events: none;`)의 `::before`(좌측 하단, `circle at 100% 0%`)와 `::after`(우측 하단, `circle at 0% 0%`)를 통해 화면 최하단 좌우 모서리에도 동일한 28px 크기의 오목 곡선을 렌더링합니다. 하단 바 없이 화면 4개 모서리가 유려한 concave 곡선으로 완벽하게 감싸지는 액자(Frame) 감성을 모바일에서도 완성합니다.
-- **스크롤 오프셋 정합 (`--scroll-target-offset`)**: sticky 헤더로 인해 본문 각주(Footnotes 정의 및 본문 역참조), TOC 앵커 링크나 딥링크 점프 시 대상 요소(헤딩 `h1~h6`, 각주 `article .footnotes li`, 본문 각주 링크 `article [id^="user-content-fn"]` 등)가 헤더 뒤로 가려지지 않도록, `src/styles/typography.css`에 본문 내 모든 인페이지 앵커 타깃의 `scroll-margin-top: var(--scroll-target-offset)`을 일원화하여 선언하고 모바일 `:root`에 `--scroll-target-offset: var(--button-size)`(48px)를 선언하여 정확한 시각 오프셋을 보장합니다. TOC 컴포넌트(`TOC.astro`)는 UI 및 ScrollSpy 책무에만 집중하도록 분리되었습니다.
+- **스크롤 오프셋 정합 (`--scroll-target-offset`)**: sticky 헤더로 인해 본문 각주(Footnotes 정의 및 본문 역참조), TOC 앵커 링크나 딥링크 점프 시 대상 요소(헤딩 `h1~h6`, 각주 `article .footnotes li`, 본문 각주 링크 `article [id^="user-content-fn"]` 등)가 헤더 뒤로 가려지지 않도록, `src/styles/typography.css`에 본문 내 모든 인페이지 앵커 타깃의 `scroll-margin-top: var(--scroll-target-offset)`을 일원화하여 선언하고 모바일 `:root`에 `--scroll-target-offset: var(--button-size)`(44px)를 선언하여 정확한 시각 오프셋을 보장합니다. TOC 컴포넌트(`TOC.astro`)는 UI 및 ScrollSpy 책무에만 집중하도록 분리되었습니다.
 - **데스크톱 전용 유지**: 데스크톱(>960px)은 `position: fixed` 그대로 화면 상단에 고정되어 항상 보입니다.
 - **언어 목록 / reduced-motion**: `lang-list`는 열린 상태에서도 sticky 헤더 안에서 자연스럽게 표시됩니다.
 
