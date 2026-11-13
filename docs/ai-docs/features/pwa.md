@@ -82,22 +82,21 @@ Chirpy(Jekyll 테마)의 캐시 모델을 모방한다: **전부 Cache-First + �
 - 복원: `PostCard.astro`(img `loading="lazy"` + `decoding="async"` + `initPostCardImages` script 블록), `image-init.ts` 파일, `loader.ts`/`controller.ts` 호출부, `append.ts`의 `.loaded` 핵, `global.css`의 reveal 규칙(img `opacity: 0`/`.loaded`/`:has(img.loaded)::before`/`transition`/reduced-motion) — 모두 커밋 `66a35955` 시점 상태.
 - 재시도한다면: 원인은 캐시가 아닌 렌더링 타이밍 쪽이므로, Samsung 기기에서 lqip 노출 시간·"이미지 어둡게" 설정·SW 콜드 스타트를 먼저 실측하는 방향.
 
-### 아바타 깜빡임 — blur-up placeholder (2026-11, 최종 해결)
+### 아바타 깜빡임 — blur-up 적용 후 전면 롤백 (2026-11)
 
 증상 재특정: 사용자가 보는 "이미지 깜빡임"의 주체는 **아바타**(카드 persona 아바타, 히어로 'n개 페르소나 보기' 옆 스택)였다. 카드 썸네일이 아니었다 — 그동안의 lqip 크로스페이드 수정들이 실패한 이유.
 
-원인 (실측):
+진단 사실 (롤백 후에도 유효한 지식):
 
 - 아바타는 placeholder 이미지 없이 단색 배경(`--persona-avatar-placeholder`) + `loading="lazy"` + `decoding="async"`.
 - SW 웜 캐시 히트는 0~47ms이지만 **콜드 스타트 시 ~210ms** 실측. Samsung 모바일은 SW를 공격적으로 suspend하므로 새로고침마다 콜드일 확률이 높다.
 - 구조: 새로고침 → 첫 paint에 **단색 placeholder 원** → (layout 이후 lazy fetch → SW 라운드트립) → 이미지 도착 → 팝. eager여도 요청이 HTML 파싱 후에 시작되므로 race를 이긴다고 보장할 수 없다 (히어로 스택은 이미 eager인데도 증상 존재).
 
-해결 — Medium/Next.js(`blurDataURL`)/Hugo와 동일한 **blur-up + 인라인 data URI LQIP**:
+적용했던 해결(Medium/Next.js `blurDataURL`/Hugo와 동일한 blur-up + 인라인 data URI LQIP) — **사용자 지시로 전면 롤백**:
 
-- `scripts/build-avatar-lqip.mjs`: 페르소나 아바타를 CDN에서 내려 20×20 webp(quality 35, ~0.2KB)로 축소, data URI를 `src/generated/avatar-lqip.json`으로 생성. `predev`/`prebuild`(`npm run avatar-lqip`)에서 실행, fetch 실패 시 기존 값 재사용(빌드 미중단). JSON은 커밋(오프라인 빌드 가능).
-- `Avatars.astro`: placeholder가 있으면 `src=data URI` + `data-real-src=실제 URL` + wrapper `.blur`; 없으면 기존처럼 직접 src. lqip 있으면 `onerror="this.remove()"` 생략.
-- `src/utils/avatar-swap.ts` (`initAvatarSwap`): 같은 `<img>` 요소 안에서 src를 실제 URL로 교체, `load` 시 `.blur` 제거(filter: blur(8px)), `error` 시 data URI 복원(빈 원 방지). 초기 로드는 `Avatars.astro` script, 추가 카드는 `loader.ts`/`controller.ts`가 호출.
-- 효과: placeholder가 **네트워크 의존 없이 첫 paint에 (흐린) 이미지로 그려짐** — SW 콜드 스타트 race가 구조적으로 사라짐. Chirpy 대비 우위: Chirpy는 사이드바 아바타 1개뿐이라 안티패턴이 노출되지 않았을 뿐, 같은 race 구조를 가진다.
+- 삭제: `scripts/build-avatar-lqip.mjs`(아바타 20×20 webp data URI 생성 → `src/generated/avatar-lqip.json`), `src/utils/avatar-swap.ts`(same-element src 교체 + blur 해제), `package.json`의 `avatar-lqip` 스크립트 연결, `Avatars.astro`의 lqip 렌더링·`.blur` CSS·init script, `loader.ts`/`controller.ts`의 `initAvatarSwap()` 호출.
+- `Avatars.astro` 등 모두 커밋 `b056f629` 시점 상태로 복원 (직접 src + `onerror="this.remove()"`).
+- 재시도한다면: 위 진단 사실과 `git log`의 blur-up 커밋(`826b3973`) 참조. race를 구조적으로 제거하는 유일한 방법은 첫 paint에 이미지가 그려지는 것(인라인 placeholder)이다.
 
 ### 본문 이미지 shimmer — 수정 시도 후 롤백 (2026-11)
 

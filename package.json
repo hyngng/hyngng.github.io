@@ -6,11 +6,10 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "predev": "npm run fonts && npm run avatar-lqip",
+    "predev": "npm run fonts",
     "dev": "astro dev",
     "fonts": "node scripts/build-fonts.mjs",
-    "avatar-lqip": "node scripts/build-avatar-lqip.mjs",
-    "prebuild": "npm run fonts && npm run avatar-lqip && node -e \"require('node:fs').rmSync('public/pagefind',{recursive:true,force:true})\"",
+    "prebuild": "npm run fonts && node -e \"require('node:fs').rmSync('public/pagefind',{recursive:true,force:true})\"",
     "build": "astro build",
     "postbuild": "pagefind --site dist --output-path dist/pagefind",
     "preview": "astro preview",

@@ -4,7 +4,6 @@ import { relayoutGrid } from './layout';
 import { appendChunkItems, distributeCards } from './append';
 import { distributeByWeight, GAP } from './distribution';
 import { initPostCardImages } from './image-init';
-import { initAvatarSwap } from '../../utils/avatar-swap';
 import { fetchChunkHtml } from './chunk-repository';
 
 export function createPostListController(grid: HTMLElement): PostListController {
@@ -127,7 +126,6 @@ export function createPostListController(grid: HTMLElement): PostListController 
         searchTagged.add(card);
       });
       initPostCardImages();
-      initAvatarSwap(cards);
     },
 
     relayout() {

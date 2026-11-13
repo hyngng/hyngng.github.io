@@ -23,7 +23,6 @@ npm run dev
 | `npm install` | 의존성 설치 |
 | `npm run dev` | 로컬 개발 서버 시작 (`localhost:4321`) |
 | `npm run fonts` | 사이트에서 쓰는 글자만 남긴 Pretendard 서브셋 재생성 |
-| `npm run avatar-lqip` | 페르소나 아바타의 초소형 인라인 placeholder(webp data URI) 재생성 (`predev`/`prebuild`에서 자동 실행) |
 | `npm run build` | 프로덕션 빌드 (`./dist/`) |
 | `npm run preview` | 빌드 결과 로컬 미리보기 |
 | `npm run check` | 타입 검사 (`astro check`) |
@@ -127,10 +126,6 @@ Pretendard는 self-host하며 **400/700 두 weight만** 사용합니다. 빌드 
 - **`npm run fonts`** — 서브셋 수동 재생성 (`predev`/`prebuild`에서 자동 실행)
 
 코드용 Reddit Mono는 `public/fonts/Reddit_Mono/`의 WOFF2 variable font를 사용합니다. 자세한 구조는 `docs/ai-docs/typography/fonts.md`를 참고하세요.
-
-### 아바타 placeholder
-
-페르소나 아바타는 CDN 외부 이미지라 새로고침 시 서비스워커 콜드 스타트 동안 빈 placeholder 원이 노출될 수 있습니다. 이를 막기 위해 `scripts/build-avatar-lqip.mjs`가 각 아바타를 20×20 webp(~0.2KB)로 축소해 data URI로 인라인하고, 렌더 시 흐린 placeholder를 첫 paint에 표시한 뒤 JS(`src/utils/avatar-swap.ts`)가 같은 `<img>` 요소에서 실제 URL로 교체합니다(blur-up 방식). 생성 파일은 `src/generated/avatar-lqip.json`이며 커밋되어 있어 오프라인 빌드도 동작합니다. 아바타를 추가·교체하면 `npm run avatar-lqip`로 재생성하세요(`predev`/`prebuild`에서 자동 실행).
 
 ### 보안 헤더
 
