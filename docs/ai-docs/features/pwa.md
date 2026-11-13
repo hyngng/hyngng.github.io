@@ -99,9 +99,9 @@ Chirpy(Jekyll 테마)의 캐시 모델을 모방한다: **전부 Cache-First + �
 - `src/utils/avatar-swap.ts` (`initAvatarSwap`): 같은 `<img>` 요소 안에서 src를 실제 URL로 교체, `load` 시 `.blur` 제거(filter: blur(8px)), `error` 시 data URI 복원(빈 원 방지). 초기 로드는 `Avatars.astro` script, 추가 카드는 `loader.ts`/`controller.ts`가 호출.
 - 효과: placeholder가 **네트워크 의존 없이 첫 paint에 (흐린) 이미지로 그려짐** — SW 콜드 스타트 race가 구조적으로 사라짐. Chirpy 대비 우위: Chirpy는 사이드바 아바타 1개뿐이라 안티패턴이 노출되지 않았을 뿐, 같은 race 구조를 가진다.
 
-### 본문 이미지 shimmer — 캐시 히트 미재생 (2026-11)
+### 본문 이미지 shimmer — 수정 시도 후 롤백 (2026-11)
 
-`image-reveal.ts`의 complete 경로(`img.complete && naturalWidth > 0`)는 기존 decode()→2×rAF 후 `.loaded`를 부여해 새로고침마다 shimmer가 짧게 재생됐다. Chirpy는 complete면 즉시 cover를 제거한다. 변경: complete 경로는 **즉시 `.loaded`** (syncRatio면 aspect-ratio 동기화는 유지). shimmer는 **실제 다운로드가 진행 중일 때만** 재생된다(로드 이벤트 경로는 decode→rAF→페이드 유지).
+사용자 관찰("새로고침 시 본문 이미지의 shimmer 재생")에 대해 `image-reveal.ts`의 complete 경로(`img.complete`)에서 decode→2×rAF를 생략하고 즉시 `.loaded`를 부여해 캐시 히트 시 shimmer 미재생으로 만드는 수정을 적용했으나, **사용자 지시로 롤백** — complete 경로는 원래 동작(decode→2×rAF→`.loaded`)으로 복원. shimmer는 현행 유지: `img.complete` 여부와 무관하게 decode·rAF를 거친 뒤 페이드인.
 
 ### 카드 썸네일 lqip (현행 유지)
 

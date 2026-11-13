@@ -59,12 +59,7 @@ function decodeAndMark(
 
   if (img.complete) {
     if (img.naturalWidth > 0) {
-      // Already loaded (browser/SW cache hit or a fetch that finished
-      // before init): show it immediately. No decode() or rAF round-trip,
-      // so a reload never replays the placeholder animation — it only
-      // plays while a real download is in progress.
-      if (syncRatio) syncAspectRatio(img, target);
-      target.classList.add('loaded');
+      showImage();
     } else {
       handleError();
     }
