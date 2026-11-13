@@ -9,7 +9,7 @@ start_with_ads: true
 toc: true
 
 date: 2025-10-21 11:06:00 +0900
-last_modified_at: 2026-05-25 16:20:00 +0900
+last_modified_at: 2026-11-13 13:11:00 +0900
 
 mermaid: true
 
@@ -37,7 +37,7 @@ xychart-beta
     bar [2, 10, 2, 5, 3, 3, 3, 3]
 ```
 
-Le nombre d'articles que j'ai écrits depuis l'année dernière, regroupés par bimestre, se présente comme ci-dessus. Depuis la création du blog, je me suis demandé à quelle fréquence je devais écrire. L'année dernière, je m'étais implicitement fixé un objectif d'un article toutes les deux semaines, et j'ai même écrit 4 à 5 articles par mois à certains moments. Mais j'ai dû trouver un compromis sur la fréquence de publication pour les raisons suivantes. Ce n'est pas parce qu'il y a beaucoup d'articles que le blog est plus riche. Plus la dépendance au blog augmente, plus il devient difficile de se concentrer sur sa vie réelle, et plus l'objectif de publication est élevé, plus il est difficile d'écrire des articles de qualité.
+Le nombre d'articles que j'ai écrits depuis l'année dernière, regroupés par trimestre, se présente comme ci-dessus. Depuis la création du blog, je me suis demandé à quelle fréquence je devais écrire. L'année dernière, je m'étais implicitement fixé un objectif d'un article toutes les deux semaines, et j'ai même écrit 4 à 5 articles par mois à certains moments. Mais j'ai dû trouver un compromis sur la fréquence de publication pour les raisons suivantes. Ce n'est pas parce qu'il y a beaucoup d'articles que le blog est plus riche. Plus la dépendance au blog augmente, plus il devient difficile de se concentrer sur sa vie réelle, et plus l'objectif de publication est élevé, plus il est difficile d'écrire des articles de qualité.
 
 Depuis 2025, je maintiens une fréquence d'un article par mois, avec seulement une différence selon qu'il tombe en début ou en fin de mois. Ce n'est pas une règle absolue, mais après avoir maintenu ce rythme pendant environ un an, j'ai trouvé un bon équilibre entre une vie quotidienne chargée et le blog. Douze articles par an, ce n'est pas négligeable, et je pense que c'est un niveau tenable à long terme. Sauf circonstance particulière, les nouveaux articles continueront probablement à ce rythme à l'avenir.
 

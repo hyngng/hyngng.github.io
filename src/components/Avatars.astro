@@ -1,4 +1,6 @@
 ---
+import lqipMap from '../generated/avatar-lqip.json';
+
 interface Props {
   /** Single avatar image URL */
   src?: string;
@@ -39,22 +41,46 @@ const computedSize = size != null
   : (isStack ? 'var(--avatar-stack-size)' : 'var(--avatar-size)');
 
 const sizeStyle = `--current-avatar-size: ${computedSize};`;
+
+// Blur-up: when a tiny inline placeholder exists for this URL (built by
+// scripts/build-avatar-lqip.mjs), render it as the initial src and hand
+// the real URL to the swap script (avatar-swap.ts). Without a placeholder
+// the img keeps its direct src and the pre-existing behavior.
+interface LqipMap { urls?: string[]; sources?: Record<string, string> }
+const LQIP = lqipMap as LqipMap;
+function lqipFor(url: string | undefined): string | undefined {
+  return url ? LQIP.sources?.[url] : undefined;
+}
 ---
 
 {isStack ? (
   stackList.length > 0 && (
     <span class:list={['avatar-stack', className]} style={sizeStyle} aria-hidden="true">
       {stackList.map((itemSrc) => (
-        <span class="avatar-item avatar-stack-item">
-          <img src={itemSrc} alt="" loading={loading} decoding={decoding} onerror="this.remove()" />
+        <span class:list={['avatar-item avatar-stack-item', { blur: !!lqipFor(itemSrc) }]}>
+          <img
+            src={lqipFor(itemSrc) ?? itemSrc}
+            data-real-src={lqipFor(itemSrc) ? itemSrc : undefined}
+            alt=""
+            loading={loading}
+            decoding={decoding}
+            onerror={lqipFor(itemSrc) ? undefined : 'this.remove()'}
+          />
         </span>
       ))}
     </span>
   )
 ) : (
-  <span class:list={['avatar-item', className]} style={sizeStyle} aria-hidden={src ? 'false' : 'true'}>
+  <span class:list={['avatar-item', className, { blur: !!lqipFor(src) }]} style={sizeStyle} aria-hidden={src ? 'false' : 'true'}>
     {src && (
-      <img src={src} alt={alt} loading={loading} decoding={decoding} onerror="this.remove()" />
+      <img
+        src={lqipFor(src) ?? src}
+        data-real-src={lqipFor(src) ? src : undefined}
+        alt={alt}
+        loading={loading}
+        decoding={decoding}
+        onerror={lqipFor(src) ? undefined : 'this.remove()'}
+      />
     )}
   </span>
 )}
@@ -90,4 +116,16 @@ const sizeStyle = `--current-avatar-size: ${computedSize};`;
   .avatar-stack-item:not(:first-child) {
     margin-left: calc(-1 * var(--avatar-stack-overlap, 10px));
   }
+
+  /* Blur-up: soften the upscaled inline placeholder until the real
+     avatar has been swapped in (avatar-swap.ts removes the class). */
+  .avatar-item.blur img {
+    filter: blur(8px);
+  }
 </style>
+
+<script>
+  import { initAvatarSwap } from '../utils/avatar-swap';
+
+  initAvatarSwap();
+</script>

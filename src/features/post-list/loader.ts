@@ -2,6 +2,7 @@ import { type PostListController } from './types';
 import { parseChunkResponse } from './dom';
 import { animateNewCards } from './animate';
 import { initPostCardImages } from './image-init';
+import { initAvatarSwap } from '../../utils/avatar-swap';
 import { fetchChunkHtml } from './chunk-repository';
 
 export function createChunkLoader(
@@ -48,6 +49,7 @@ export function createChunkLoader(
 
         animateNewCards(animatedCards);
         initPostCardImages();
+        initAvatarSwap(animatedCards);
 
         if (currentChunk >= totalChunks) {
           const loadMore = grid.querySelector('.load-more-card') as HTMLElement | null;

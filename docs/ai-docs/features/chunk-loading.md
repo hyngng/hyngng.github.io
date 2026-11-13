@@ -45,6 +45,7 @@ postsPerPage: 8,  // 한 번에 표시할 포스트 수
 | `loader.ts` | 청크 fetch, prefetch, History, popstate 처리 (`createChunkLoader`) |
 | `animate.ts` | 카드 등장 애니메이션 (`animateNewCards`) |
 | `image-init.ts` | 포스트 카드 이미지 초기화 (`initPostCardImages`) — `loaded` 클래스 추가로 lqip fade-out |
+| `avatar-swap.ts` (utils) | 아바타 blur-up 교체 (`initAvatarSwap`) — data URI placeholder → 실제 URL same-element 교체. 청크 추가 시 loader/controller가 호출 |
 | `persona-link.ts` | 모바일 카드 페르소나 링크 위임 (`initMobilePersonaLink`) — 문서 레벨 click 인터셉트 |
 | `registry.ts` | controller 전역 레지스트리 (`setController`, `requireController`) |
 | `index.ts` | 공개 API re-export |
@@ -159,7 +160,8 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 6. history.pushState({ chunk: n }, '', `?p=${n}`)
 7. animateNewCards(animatedCards) — staggered opacity fade-in
 8. initPostCardImages() — 새로 로드된 카드의 이미지 lqip fade-in 초기화
-9. 마지막 청크이면 .load-more-card 숨김 (hidden)
+9. initAvatarSwap() — 새로 로드된 카드의 아바타 blur-up 교체 (data URI → 실제 URL)
+10. 마지막 청크이면 .load-more-card 숨김 (hidden)
 ```
 
 ### 카드 등장 애니메이션

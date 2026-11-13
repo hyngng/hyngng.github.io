@@ -9,7 +9,7 @@ start_with_ads: true
 toc: true
 
 date: 2025-10-21 11:06:00 +0900
-last_modified_at: 2026-05-25 16:20:00 +0900
+last_modified_at: 2026-11-13 13:11:00 +0900
 
 mermaid: true
 
@@ -37,7 +37,7 @@ xychart-beta
     bar [2, 10, 2, 5, 3, 3, 3, 3]
 ```
 
-Si resumo la cantidad de artículos escritos desde el año pasado hasta ahora, en periodos de dos meses, queda como se muestra arriba. La verdad es que desde que abrí el blog me he preguntado con qué frecuencia debía escribir. El año pasado me fijé implícitamente el objetivo de un artículo cada dos semanas, y llegué a escribir 4 o 5 artículos al mes, pero tuve que hacer concesiones en la frecuencia de publicación por las siguientes razones. No se trata de que cuantos más artículos, más nutrido esté el blog. Cuanto mayor es la dependencia del blog, más difícil resulta concentrarse en la vida real, y cuanto mayor es el objetivo de publicación, más difícil resulta escribir artículos de calidad.
+Si resumo la cantidad de artículos escritos desde el año pasado hasta ahora, en periodos de tres meses, queda como se muestra arriba. La verdad es que desde que abrí el blog me he preguntado con qué frecuencia debía escribir. El año pasado me fijé implícitamente el objetivo de un artículo cada dos semanas, y llegué a escribir 4 o 5 artículos al mes, pero tuve que hacer concesiones en la frecuencia de publicación por las siguientes razones. No se trata de que cuantos más artículos, más nutrido esté el blog. Cuanto mayor es la dependencia del blog, más difícil resulta concentrarse en la vida real, y cuanto mayor es el objetivo de publicación, más difícil resulta escribir artículos de calidad.
 
 En 2025, solo varía si es a principios de mes o no, pero mantengo una frecuencia de un artículo al mes. Esto también es un patrón implícito, por lo que no es necesario cumplirlo estrictamente, pero tras mantener este ritmo durante aproximadamente un año, he podido alternar adecuadamente entre la vida cotidiana ocupada y el blog. Considerando que 12 artículos al año no es una cantidad pequeña, creo que este nivel es sostenible a largo plazo, y a menos que haya una ocasión especial, probablemente los nuevos artículos seguirán subiendo con este ritmo.
 

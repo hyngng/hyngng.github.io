@@ -9,7 +9,7 @@ start_with_ads: true
 toc: true
 
 date: 2025-10-21 11:06:00 +0900
-last_modified_at: 2026-05-25 16:20:00 +0900
+last_modified_at: 2026-11-13 13:11:00 +0900
 
 mermaid: true
 
@@ -41,7 +41,7 @@ xychart-beta
     bar [2, 10, 2, 5, 3, 3, 3, 3]
 ```
 
-Summarizing posts written since last year in two-month intervals yields the above. Since launching the blog, I've wrestled with how often to write. Last year I implicitly aimed for one post every two weeks, and actually hit 4–5 posts a month at times, but compromised on frequency for these reasons: more posts don't automatically make a blog richer. The more dependent I became on the blog, the harder it was to focus on my actual life, and higher output targets made quality harder to sustain.
+Summarizing posts written since last year in three-month intervals yields the above. Since launching the blog, I've wrestled with how often to write. Last year I implicitly aimed for one post every two weeks, and actually hit 4–5 posts a month at times, but compromised on frequency for these reasons: more posts don't automatically make a blog richer. The more dependent I became on the blog, the harder it was to focus on my actual life, and higher output targets made quality harder to sustain.
 
 Since 2025, I've kept a rhythm of roughly one post a month — whether early or late in the month. It's an implicit pattern, not a hard rule, but sustaining this pace for about a year has let me move between a busy life and the blog comfortably. Twelve posts a year isn't few; I consider this a sustainable long-term level, and barring special circumstances, new posts will likely keep appearing at this tempo.
 
