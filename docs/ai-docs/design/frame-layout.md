@@ -23,6 +23,7 @@
 0   ::before — 밝은 패널 배경
 1   .page-content — 스크롤 콘텐츠
 2   .frame-border — 프레임 바깥 검은 마스크 (4개 .frame-edge + concave pseudo-element, pointer-events: none)
+      └ 커서 팔로우 도트: .follow-clip-red (z:1) → .follow-clip-yellow (z:2) → concave pseudo (z:3)
 100 .fixed-actions — 버튼 + concave (pseudo-element)
 ```
 
@@ -231,6 +232,35 @@ PC: --button-size = 56px → 56 × 3 = 168px
 모바일에서 `.right-actions-inner.lang-open`의 너비는 `calc(100vw + var(--button-size) * 2)`로 확장됩니다. `.right-actions`가 `position: absolute; right: 0`에 고정되어 있으므로, 확장된 너비만큼 **왼쪽으로** 뻗어나갑니다. 처음 두 버튼(테마, RSS)이 뷰포트 밖으로 밀려나고, 언어 토글이 뷰포트 좌측 끝에 위치합니다.
 
 `.fixed-actions`의 `max-width: 100vw`가 문서 너비가 뷰포트를 초과해도 헤더가 뷰포트 폭을 넘지 않도록 합니다. 이를 통해 가로 스크롤 발생 시에도 우측 버튼이 화면 밖으로 밀려나지 않습니다.
+
+## Frame 커서 팔로우 도트 (Cursor-Follow Dots)
+
+데스크톱에서 프레임 베즐 위를 따라다니는 장식 요소.
+
+### 동작
+- 원형 도형 2개가 커서의 X/Y 좌표를 중심으로 이동합니다 (`translate3d` 직접 대응, lerp 없음).
+- **빨강 도트** (아래층): `clip-path` polygon으로 상단 + 좌측 베즐 밴드에서만 보임.
+- **노랑 도트** (위층): 하단 + 우측 밴드에서만 보임. 반투명(테마별 opacity 토큰).
+- 도트 크기 = `--frame-thickness` (12px). `.frame-border` 내부에 렌더링되므로 `pointer-events: none`을 상속하며 스크롤/클릭을 방해하지 않습니다.
+- concave corner pseudo(`::before`/`::after`, `z-index: 3`)가 도트(z: 1/2) 위에 그려져, 베즐 재질이 도트를 가리는 물리적 오클루전을 유지합니다.
+- `mouseleave`(문서 루트) 시 도트를 숨기고, 첫 `mousemove`에서 다시 표시합니다. 초기 상태는 `visibility: hidden`입니다.
+
+### 게이팅
+- `(hover: hover) and (pointer: fine)` 미충족(터치 기기) → JS 초기화 스킵 + 모바일 미디어쿼리에서 `.follow-clip { display: none }`.
+- `prefers-reduced-motion: reduce` → JS 초기화 스킵.
+- 모바일은 `--frame-thickness: 0px`이므로 도트 크기와 클립 영역이 자동으로 0이 됩니다.
+
+### 테마 토큰 (`src/styles/themes/*.css`)
+
+| 토큰 | 라이트 | 다크 | 설명 |
+|---|---|---|---|
+| `--color-frame-follow-red` | `#B70216` | `#D54E30` | 빨강(아래층) 도트 |
+| `--color-frame-follow-yellow` | `#E6AA1E` | `#FFCD46` | 노랑(위층) 도트 |
+| `--frame-follow-yellow-opacity` | `0.4` | `0.45` | 노랑층 불투명도 |
+
+### 구현 위치
+- DOM/CSS/JS: `src/components/Frame.astro` (`.follow-clip`/`.follow-dot`, `initFollowDots()`)
+- 이벤트는 기존 `frameAbortController`의 signal로 스코프 관리 (리스너 누수 방지).
 
 ## 관련 문서
 
