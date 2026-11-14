@@ -247,7 +247,7 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 ### 레이아웃
 
-데스크톱(>960px)에서는 2컬럼 masonry 레이아웃을 사용한다. `distributeByWeight()` 유틸리티가 이미지 유무에 따른 가중치(2.5:1)로 좌/우 컬럼에 분배한다. 모바일(≤960px)에서는 단일 컬럼으로 전환된다.
+단일 컨테이너 CSS Grid + 행 단위 span 방식의 masonry를 사용한다 (`src/features/post-list/masonry.ts`의 `updateSpans`/`watchSpans`). 카드는 최신순으로 단일 `.posts-columns`에 렌더링되어 **DOM = 탭 포커스 순서 = 최신순**이며, 데스크톱(>960px)에서는 `repeat(2, 1fr)` + `grid-auto-rows: 2px` + `row dense` auto-placement가 위=최근 원칙을 유지한 채 2열 masonry를 만든다. 모바일(≤960px)은 `grid-template-columns: 1fr`로 1열 전환된다. JS 비활성화 시 `data-masonry-js` 미부착 → flex 단일 스택 폴백. 상세는 `chunk-loading.md`의 "Masonry 레이아웃 (grid-span)" 참조.
 
 ### 라우트 구조
 
@@ -362,22 +362,14 @@ Astro에서 content collection이 `.mdx` entry를 인식하려면 `@astrojs/mdx`
 
 ## 포스트 카드 페르소나 영역 (모바일 링크)
 
-포스트 카드(`PostCard.astro`)는 전체가 단일 `<a class="post-card-link">`로 감싸져 있고, 페르소나 영역은 데스크톱에서 카드 호버 시 본문 excerpt로 전환된다. `<a>` 내부에 `<a>`를 넣는 것은 HTML 위반(파서가 바깥 링크를 끊어 카드 레이아웃이 깨짐)이므로, 모바일에서 페르소나 페이지로 이동시키기 위해 오버레이 링크 대신 JS 위임 이벤트를 사용한다.
+포스트 카드(`PostCard.astro`)는 전체가 단일 `<a class="post-card-link">`로 감싸져 있고, 페르소나 영역은 데스크톱에서 카드 호버 시 본문 excerpt로 전환된다. `<a>` 내부에 `<a>`를 넣는 것은 HTML 위반이므로, 페르소나 영역에는 **JS 없이 CSS 오버레이 앵커**를 사용한다.
 
 ### 동작
 
-- **모바일(≤960px, `isMobile()`)**: `.post-card-persona` 영역 탭 → `data-persona-href`로 이동 (첫 번째 페르소나 `personas[0]`의 페이지).
-- **히트 영역 제한**: `.post-card-persona`는 `width: fit-content; max-width: 100%`로 콘텐츠 크기(아바타 + 이름/날짜)로 수축하므로, 탭 히트 영역 = 눈에 보이는 페르소나 콘텐츠 박스. 텍스트가 없는 빈 공간(카드 폭 우측 여백)은 카드 링크에 귀속되어 포스트를 연다.
-- **데스크톱(>960px)**: 기존대로 페르소나 영역 포함 카드 전체가 포스트를 연다. 호버 애니메이션(페르소나↔excerpt 전환)과 레이아웃은 변경 없음.
+- `PostCard.astro`의 `.post-card-persona`에 `Persona` 컴포넌트가 `clickable`로 렌더링되고, `Persona.astro`는 `personaHref`(`getPersonaPath(personaIds[0], currentLocale)`)가 있을 때 `<a class="persona-link">`(`position: absolute; inset: 0`)를 출력해 페르소나 영역을 커버한다.
+- 페르소나 영역 탭/클릭 → 페르소나 페이지(첫 번째 페르소나)로 이동. 영역 밖(카드 나머지) → 카드 링크(포스트)로 이동.
+- 히트 영역 = `.persona` 콘텐츠 박스(아바타 + 이름/날짜). 오버레이 방식이라 청크 로딩·검색으로 동적 추가된 카드에도 자동 적용.
 - 다중 페르소나 포스트: 표시 중인 primary persona(`personas[0]`) 페이지로 이동.
-
-### 구현
-
-- `PostCard.astro`: `getPersonaPath(personaIds[0], currentLocale)`로 `data-persona-href`를 `.post-card-persona`에 주입.
-- `src/features/post-list/persona-link.ts`의 `initMobilePersonaLink(signal)`: 문서 레벨 위임 `click` 리스너 등록 — `closest('.post-card-persona')`로 탭 대상 감지 → `isMobile()` 가드 후 `e.preventDefault()`로 카드 링크 네비게이션 차단, `window.location.assign()`으로 이동.
-- 등록 지점: `PostListSection.astro` `init()`(AbortController 스코프)과 `ChunkPostListBody.astro`(청크 페이지). 카드가 렌더링되는 홈/페르소나/청크 페이지에서 동일 동작.
-- 위임 방식이라 청크 로딩·검색으로 동적 추가된 카드에도 자동 적용.
-- 모바일 판정은 `src/features/post-list/layout.ts`의 `isMobile()`을 재사용. 브레이크포인트는 `MOBILE_QUERY`(`'(max-width: 960px)'`) 상수로 중앙 관리하므로 JS에서 중복 정의 없음.
 
 ## 다른 글 더 보기 (MorePosts)
 

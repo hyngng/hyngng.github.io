@@ -101,6 +101,12 @@
     - 서비스 워커 프리캐시와 정상 상호작용 확인 (Network 탭 미표시 = 정상).
     - "프리뷰 카드 클릭 시 네비게이션" 버그 보고 → 조사 결과 오탐 확정 (SW 캐시 히트를 네비게이션으로 오인).
     - 불필요 코드 정리: `astro:after-swap` 리스너 제거 (ViewTransitions 미사용), 전역 `abortController` 제거.
+  - [x] **grid-span masonry 전환 — 탭 포커스 순서 = 최신순 (2026-11)**:
+    - 배경: 구 SSR 2열 분배(`distribution.ts` 인터리브: 좌[1,3,5]/우[2,4,6])에서는 DOM=열 우선이라 데스크톱 탭 포커스가 1→3→5→2→4→6으로 이동하는 접근성 문제. masonry(열별 쌓기)는 같은 열 카드가 같은 부모에 있어야 하므로, "masonry + 위=최근 원칙 + 탭 최신순"의 동시 충족은 순수 CSS로 불가 — 단일 컨테이너 CSS Grid + 행 span 방식이 유일 해법.
+    - 구조: 카드를 최신순으로 단일 `.posts-columns`에 렌더(DOM=탭=최신순). `data-masonry-js` 부착 시 `repeat(2, 1fr)` + `grid-auto-rows: 2px` + `row dense` Grid로 전환하고, 각 카드에 실측 높이+gap을 2px 단위로 환산한 `grid-row: span N` 부여. `row dense` auto-placement가 "가장 먼저 비는 자리"부터 채우므로 시작 행의 단조성이 "위=최근"을 수학적으로 보장(구 `minCol`과 동일 의미). 모바일은 `grid-template-columns: 1fr` 미디어 쿼리만(`order` 핵·DOM 재구성 삭제), no-JS는 flex 단일 스택 폴백.
+    - span 부여 시점: ① `PostColumns.astro` `is:inline` pre-paint 스크립트(파싱 중 동기 실행, CLS 최소화) ② `masonry.ts`의 `watchSpans()`(resize/mq change 디바운스 + `document.fonts.ready`) ③ 동적 변경(append/검색/해제/popstate) 시 `updateSpans()`.
+    - 삭제: `distribution.ts`+테스트, `layout.ts`, `append.ts`의 `minCol`/`distributeCards`, `--post-order` CSS 핵. 카드 높이는 결정론적(no-image 112px 고정, image = `aspect 40/21`×열폭+112)이라 실측 재계측은 폰트/리사이즈 보정 역할.
+    - 검증: `npm run build` 성공(595 pages), `npx astro check` 0 errors, `npm test` 62 passed(삭제 테스트 반영). 브라우저 실측 — 탭 순서=최신순 순차, 2열 페어 배치·단조성·간격(16px+반올림 ≤2px), 모바일 1열, load-more append(9→17)·span 부여, 검색 필터 리플로우·해제 복원, 청크 페이지 indexOffset, 콘솔 에러 0, 리사이즈 재계측 동작 확인. 문서: `chunk-loading.md`/`posts.md`/`search.md` 갱신.
   - [x] **포스트 목록 DOM 구조 통합 리팩토링**
     - 모바일에서 포스트 카드 간격이 0이 되는 버그의 근본 원인: 서버 HTML이 데스크 2열 구조(leftPosts/rightPosts)를 강제하고, JS가 DOM 소유권을 분산시킴.
     - 해결: `src/scripts/post-layout.ts` 공유 모듈 생성 (`collectPostItems`/`layoutPosts`). 모바일 정본은 시간순 단일 목록, 데스크 2열 배치는 progressive enhancement로 전환.
@@ -229,6 +235,18 @@
   - `.search-sidebar`의 `top: var(--posts-section-margin-top)` (80px) 대신 별도 토큰으로 10px 추가하여 포스트 영역 시작점보다 살짝 아래에 배치.
   - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.
   - 모바일 검색(`.search-mobile-wrapper`)에는 영향 없음.
+- [x] **크로스 다큐먼트 View Transition 도입 — 페이지 전환 시 hover 트랜지션 끊김 해소 (2026-11)**:
+  - 배경: MPA 풀 리로드(ClientRouter 미사용)에서 링크 클릭 시 이전 문서의 hover accent 상태가 즉시 소멸하고, 새 문서에서는 첫 mousemove 전까지 `:hover`가 적용되지 않는(브라우저 규칙) 이중 끊김 발생. Frame 버튼 orbit 발광 계획의 선행 조건.
+  - 구현: `global.css` 상단에 `@view-transition { navigation: auto; }` 옵트인 한 줄. same-origin MPA 네비게이션에서 이전 문서 스냅샷(accent 점등 상태) → 새 문서(base) 크로스페이드로 실질적 "점진 전환" 제공. CSS 단독, JS 없음.
+  - 폴백: Firefox 미지원 시 현행 동작(자연 폴백), `prefers-reduced-motion`은 UA가 자동 스킵. same-document 테마 전환과 무관.
+  - 검증: `npm run build` 성공(595 pages), `npx astro check` 0 errors, dist CSS 룰 존재 + 브라우저 `@view-transition { navigation: auto; }` 파싱 확인(`CSSViewTransitionRule` 지원). 실제 네비게이션 크로스페이드 동작 사용자 확인 완료.
+  - 한계 수용 (사용자 결정, 2026-11): 클릭은 커서를 움직이지 않으므로 새 문서에서 mousemove가 발생하지 않아 정지 포인터 hover가 재적용되지 않음(브라우저 규칙) — CSS만으로 해결 불가. hover 프루브 JS(C안)·ClientRouter+persist(B안) 검토했으나 실사용 영향이 작다고 판단해 개선 없이 A안 유지. 커서를 조금만 움직이면 즉시 재점등됨.
+- [ ] **Frame 버튼 orbit 발광 (계획 보관, 2026-11)**
+  - 컨셉: 버튼 주변에 orbit 경계 범위(예: ~56px)를 두고, 커서가 범위 내로 들어오면 **커서에서 버튼 가장자리까지 최근접점**부터 accent-color가 약하게 발광(radial-gradient spread). 접근할수록 강해지고, 호버 도달 시 버튼 전체가 accent-color로 발광하는 점진 램프. 기존 hover의 이분법(끔/켬)을 근접도 기반 연속 피드백으로 확장 — Frame 커서 팔로우 도트와 같은 "기구부가 커서를 감지한다" 서명의 확장.
+  - 기술 접근: 근접도·최근접점은 포인터 좌표가 필요해 CSS 단독 불가 → JS는 좌표 계산만, 렌더는 CSS 위임. `initFollowDots()`와 같은 패턴으로 `initButtonOrbit(signal)` — mousemove rAF 스로틀(같은 이벤트 소스 공유), orbit 반경 밖 스킵, 가장 가까운 버튼 1개만 갱신. 버튼에 `--glow-x/--glow-y`(rounded-rect clamp + 코너 원호 보정), `--glow-strength`(거리 반비례 0..1) 기록 → CSS `::after` radial-gradient + `opacity: var(--glow-strength)`. 종점은 `:hover`, 키보드는 `:focus-visible` = 전체 발광.
+  - 게이트: `hover: hover and (pointer: fine)` 미충족(터치)·`prefers-reduced-motion` 시 초기화 스킵 (follow dots 규약 재사용). 토큰: `--frame-orbit-*`(라이트/다크 alpha·반경 분리, 하드코딩 금지).
+  - 결정 필요: 기존 hover 배경 유지 여부 vs orbit 발광으로 대체, 라이트 모드 강도, 적용 버튼 범위(언어 버튼 열림 상태 충돌 검토).
+  - 전제 조건 검토: ~~해소됨 (2026-11)~~ — 크로스 다큐먼트 View Transition(`@view-transition { navigation: auto; }`) 도입으로 페이지 전환 끊김 해소. orbit 구현 시 이전 문서 스냅샷이 발광 상태를 이어받아 전환되므로 추가 대응 불필요.
 - [ ] 완료된 작업 (사후 기록)
   - [x] **Frame 커서 팔로우 도트** — 데스크톱에서 커서를 따라다니는 원형 도형 2개를 프레임 베즐에 추가. 빨강 도트(아래층)는 상단+좌측 밴드, 노랑 도트(위층)는 하단+우측 밴드에서만 `clip-path` polygon으로 표시되며 크기는 `--frame-thickness`(12px). 색과 노랑층 불투명도는 테마 토큰(`--color-frame-follow-red/yellow`, `--frame-follow-yellow-opacity`)으로 관리 — 라이트 `#B70216`/`#E6AA1E`/0.4, 다크 `#D54E30`/`#FFCD46`/0.45. concave corner pseudo에 `z-index: 3`을 부여해 베즐 재질이 도트를 오클루드. 터치 기기(`hover: hover and (pointer: fine)` 미충족)와 `prefers-reduced-motion`에서는 JS 초기화 스킵, 모바일에서는 `.follow-clip` 표시 자체를 비활성화. 이벤트는 `frameAbortController` signal로 스코프 관리. 구현: `Frame.astro`(DOM/CSS/`initFollowDots()`), 토큰: `light.css`/`dark.css`. 상세는 `frame-layout.md` 참조. 검증: `npm run build` 성공(595 pages), `npx astro check` 0 errors.
   - [x] GFM 단일 물결표 취소선 비활성화 — `gfm: false` + `remarkGfm({ singleTilde: false })`로 GFM을 직접 등록하고 `remark-gfm`을 `dependencies`에 명시. `1~2`, `10~11` 같은 범위 표기가 `<del>`로 깨지지 않도록 수정. `~~text~~` 취소선과 표·각주·task list·autolink는 유지. 검증: `npm run build`, `npx astro check`, `npm test`.
@@ -558,5 +576,16 @@
   - **[후속 2]** reveal 제거 후에도 실기기에서 짧은 깜빡임 → 배포 사이트 실측(최신 빌드 확인, 썸네일 캐시 히트 ~22ms)으로 lqip 노출 타이밍 문제로 특정 → lqip 지연 표시 + `decoding="async"` 제거 적용.
   - **[전면 롤백, 사용자 지시]** 모든 수정 시도(reveal 제거, lazy 제거/원복, lqip 지연, decoding 제거)를 걷어내고 `66a35955` 시점 원래 구조로 복원: `image-init.ts`·reveal 애니메이션·`append.ts` 핵·`decoding="async"` 모두 복원. 진단 지식(SW 캐시 정상 22ms 히트, Samsung "이미지 어둡게" 설정 유력 후보, dev 서버는 PWA 비활성)은 `pwa.md`에 기록 보존. 재시도 시 브라우저 설정·실기기 실측부터.
   - **[원인 재특정 (2026-11-13)]** 사용자 정정: 깜빡임의 주체는 **아바타**(카드 persona·히어로 스택)였고 카드 썸네일이 아니었음 — 그동안 수정이 실패한 이유 설명됨. Chirpy 참조 프로젝트 비교·실측으로 원인 확정: 아바타는 placeholder 원 + lazy/async라 **첫 paint에 단색 원 → 이미지 도착 후 팝**, SW 콜드 스타트(~210ms 실측)는 eager로도 이길 수 없는 race. blur-up 해결(Medium/Next.js `blurDataURL`식 인라인 data URI placeholder + same-element 교체)과 `image-reveal.ts` complete 경로 즉시 `.loaded` 변경(shimmer 캐시 히트 미재생)을 적용했으나, **두 건 모두 사용자 지시로 전면 롤백** — `b056f629` 시점 구조로 복원(`scripts/build-avatar-lqip.mjs`, `src/generated/avatar-lqip.json`, `src/utils/avatar-swap.ts` 삭제 등). 진단 지식은 `pwa.md`에 보존, 재시도 시 blur-up 커밋(`826b3973`) 참조.
+
+- [x] **PostCard 호버 excerpt 하단 간격 보정 (2026-11, 이후 롤백)**
+  - 증상: 카드 호버 시 persona가 위로 사라지고 excerpt가 올라올 때, 텍스트 바닥이 카드 하단에서 좌우 패딩보다 멀어 보임.
+  - 시도: excerpt를 메타 영역 바닥에 고정(`display: flex; align-items: flex-end`) + line-height 축소(신규 토큰 `--post-card-line-excerpt: 1rem`) + 2줄 clamp(`-webkit-box`)를 내부 `<span>`으로 이관.
+  - 롤백 사유: 사용자 판단 — 기하 보정으로도 시각적 불균형이 해소되지 않아 원 구조(`line-height: calc(var(--avatar-size) / 2)`, clamp를 excerpt 자체에 적용) 복원. 토큰 제거(소비자 0건 확인).
+  - **롤백 후 남는 진단 지식**:
+    - 기하 실측(브라우저 getBoundingClientRect + Range): 보정 적용 시 텍스트 박스 바닥→카드 하단 = 20.0px vs 좌우 패딩 19.2px로 박스 기준 정렬은 정상화됨. 즉 레이아웃 패딩은 원래 문제가 아니었음.
+    - 진짜 원인은 **렌더링 불변량**: 글리프 잉크 바닥은 line-box 바닥보다 ~2px 위에 있음(Pretendard 12px에서 half-leading ~1px + descent 여유). 잉크 기준 하단 간격 ~22px vs 좌우 19.2px → 12px 글자에서 상대적으로 크게 인지됨.
+    - 인지 요인 추가: 아바타 상태의 40px 원(강한 에지)과 hover 시 작고 밝은 텍스트(약한 에지)의 대비로, 동일 여백이라도 텍스트 상태에서 공백이 더 크게 보이는 착시 성분.
+    - 배포 사이트(hyngng.github.io)는 언제나 수정 전 빌드를 서빙하므로, 화면 확인 시 로컬(4321 dev / 4322 preview)과 배포본을 구분해야 함 — 이번 문제의 혼선 요인 중 하나.
+    - 재시도 시 주의: 광학 보정(텍스트를 2px 하강)은 아바타 원의 하단 에지 정렬을 깨뜨려 권장하지 않음. 측정은 line-box rect가 아니라 canvas `measureText`의 `actualBoundingBox`로 잉크 기준을 잡을 것.
 
 ## Option

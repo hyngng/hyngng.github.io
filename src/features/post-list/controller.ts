@@ -1,8 +1,7 @@
 import { type PostListController, type PostListConfig, type ChunkPayload } from './types';
-import { collectCards, findColumns, normalizePath, allPostsFromGrid, sortByIndex, parseChunkResponse } from './dom';
-import { relayoutGrid } from './layout';
-import { appendChunkItems, distributeCards } from './append';
-import { distributeByWeight, GAP } from './distribution';
+import { collectCards, findColumns, normalizePath, allPostsFromGrid, parseChunkResponse } from './dom';
+import { appendChunkItems } from './append';
+import { updateSpans } from './masonry';
 import { initPostCardImages } from './image-init';
 import { fetchChunkHtml } from './chunk-repository';
 
@@ -27,7 +26,7 @@ export function createPostListController(grid: HTMLElement): PostListController 
     },
 
     async showSearchResults(paths: string[]) {
-      const { columns, leftCol, rightCol, loadMore } = findColumns(grid);
+      const { columns, loadMore } = findColumns(grid);
       if (!columns) return;
 
       const matchedSet = new Set(paths.map(normalizePath));
@@ -46,23 +45,8 @@ export function createPostListController(grid: HTMLElement): PostListController 
       const emptyEl = document.querySelector<HTMLElement>('.posts-section .search-empty');
       if (emptyEl) emptyEl.hidden = visibleCount > 0;
 
-      if (visibleCount === 0) return;
-      if (!leftCol || !rightCol) return;
-      const visibleCards = allCards.filter(c => c.style.display !== 'none');
-      const sorted = sortByIndex(visibleCards);
-
-      const columnsWidth = columns.getBoundingClientRect().width;
-      const gap = parseFloat(getComputedStyle(columns).gap) || GAP;
-      const colWidth = (columnsWidth - gap) / 2;
-
-      const { left: leftCards, right: rightCards } = distributeByWeight(
-        sorted,
-        colWidth,
-        el => el.classList.contains('post-card--with-image'),
-      );
-
-      leftCards.forEach(card => leftCol.appendChild(card));
-      rightCards.forEach(card => rightCol.appendChild(card));
+      // Hidden cards carry no spans; newly visible ones need measuring.
+      if (visibleCount > 0) updateSpans(columns);
     },
 
     clearSearch() {
@@ -83,7 +67,7 @@ export function createPostListController(grid: HTMLElement): PostListController 
         loadMore.hidden = config.currentChunk >= config.totalChunks;
       }
 
-      relayoutGrid(columns);
+      updateSpans(columns);
     },
 
     restoreChunkCount(target: number) {
@@ -106,7 +90,7 @@ export function createPostListController(grid: HTMLElement): PostListController 
         }
       }
 
-      if (columns) relayoutGrid(columns);
+      if (columns) updateSpans(columns);
     },
 
     async fetchSearchChunk(n: number) {
@@ -116,9 +100,14 @@ export function createPostListController(grid: HTMLElement): PostListController 
       searchLoadedChunks.add(n);
       const { cards } = parseChunkResponse(html);
       if (cards.length === 0) return;
-      const { columns, leftCol, rightCol } = findColumns(grid);
+      const { columns } = findColumns(grid);
       if (!columns) return;
-      distributeCards(columns, leftCol, rightCol, cards);
+      const fragment = document.createDocumentFragment();
+      for (const card of cards) fragment.appendChild(card);
+      columns.appendChild(fragment);
+      // Spans are assigned while the cards are still visible; they are then
+      // hidden in the same task, so no intermediate paint happens.
+      updateSpans(columns);
       // 검색용 카드는 숨김 상태로만 추가한다. 최종 showSearchResults의
       // 단일 커밋에서 매칭 카드만 표시되어, 비매칭 카드가 잠깐 노출되지 않는다.
       cards.forEach(card => {
@@ -130,7 +119,7 @@ export function createPostListController(grid: HTMLElement): PostListController 
 
     relayout() {
       const { columns } = findColumns(grid);
-      if (columns) relayoutGrid(columns);
+      if (columns) updateSpans(columns);
     },
 
     destroy() {

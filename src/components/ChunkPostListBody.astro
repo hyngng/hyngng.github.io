@@ -4,7 +4,6 @@ import type { Locale } from '../locales';
 import PostColumns from './PostColumns.astro';
 import { getPostPath } from '../utils/posts';
 import { SITE } from '../settings/site.settings';
-import { distributePostColumns } from '../features/post-list/distribution';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];
@@ -30,8 +29,6 @@ const totalRemaining = nextChunk ? totalPosts - (currentChunk * chunkSize) : 0;
 const nextChunkCount = nextChunk ? Math.min(chunkSize, totalRemaining) : 0;
 // Display items for the current chunk, excluding the trailing preview seed.
 const chunkPosts = posts.slice(0, chunkSize);
-
-const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostColumns(chunkPosts, (currentChunk - 1) * chunkSize);
 ---
 
 <nav class="chunk-nav">
@@ -47,32 +44,22 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
   })))}
 >
   <PostColumns
-    {leftPosts}
-    {rightPosts}
-    {loadMoreInLeft}
+    posts={chunkPosts}
+    indexOffset={(currentChunk - 1) * chunkSize}
     showLoadMore={!!nextChunk && !!nextPreviewPost}
     nextChunkUrl={nextChunk ? `${chunkBaseUrl}/${nextChunk}` : chunkBaseUrl}
     {nextPreviewPost}
     {nextChunkCount}
     {totalPosts}
     {totalRemaining}
-    loadMoreOrder={chunkPosts.length}
     {locale}
     {currentLocale}
   />
 </div>
 
 <script>
-  import { relayoutGrid, needsRelayout } from '../features/post-list';
-  const grid = document.querySelector('.posts-grid') as HTMLElement;
-  if (grid) {
-    const columns = grid.querySelector('.posts-columns') as HTMLElement;
-    if (columns && needsRelayout(columns)) {
-      try {
-        relayoutGrid(columns);
-      } catch (error) {
-        console.error('[chunk-page] layout failed', error);
-      }
-    }
-  }
+  import { watchSpans } from '../features/post-list';
+
+  const columns = document.querySelector('.posts-grid .posts-columns') as HTMLElement | null;
+  if (columns) watchSpans(columns);
 </script>

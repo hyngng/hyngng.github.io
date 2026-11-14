@@ -5,21 +5,20 @@ HTML 조각 기반의 점진적 포스트 로딩 시스템. 빌드 타임에 정
 ## 아키텍처 개요
 
 ```
-초기 렌더링: PostListSection이 SSR 2열 masonry HTML 생성
-     │         ─ `.posts-columns[data-layout="masonry"]`
-     │         ─ 좌/우 `.posts-col`에 distributeByWeight() 분배
-     │         ─ 각 카드: `style="--post-order: ${index}"`
+초기 렌더링: PostListSection이 최신순 단일 `.posts-columns` 컨테이너 생성
+     │         ─ 카드는 DOM 순서 = 최신순 (탭 포커스 순서와 일치)
+     │         ─ PostColumns의 `is:inline` pre-paint 스크립트가 실측 높이 기반
+     │           `grid-row: span N` 부여 + `data-masonry-js` 속성 부착
      │
-     ├─ desktop(>960px): SSR masonry 그대로 표시, JS init 스킵
+     ├─ desktop(>960px): CSS Grid `repeat(2, 1fr)` + row dense auto-placement
+     │     → 가장 먼저 비는 자리(=더 위쪽)부터 채워 masonry 유지
      │
-     ├─ mobile(≤960px): JS hydration 후 relayout()
-     │     → display:contents + order:var(--post-order) → data-layout="flow"
-     │     → flat DOM, order:0 (DOM 순서)
+     ├─ mobile(≤960px): `grid-template-columns: 1fr` (미디어 쿼리만으로 전환)
      │
      ├─ 프리뷰 카드 클릭 → createChunkLoader → loadChunk()
-     │     → fetch → DOMParser → appendChunkItems → pushState
+     │     → fetch → DOMParser → appendChunkItems → updateSpans → pushState
      │
-     ├─ JS OFF: 네비게이션 → 청크 페이지 (CSS masonry/order로 시간순 표시)
+     ├─ JS OFF: 네비게이션 → 청크 페이지 (data-masonry-js 없이 flex 단일 스택 표시)
      │
      └─ 스크롤 80% → prefetch(nextChunkUrl)
 ```
@@ -38,9 +37,8 @@ postsPerPage: 8,  // 한 번에 표시할 포스트 수
 |---|---|
 | `types.ts` | 공유 타입 정의 (`PostListConfig`, `PostListController`, `ChunkPayload`) |
 | `dom.ts` | DOM 유틸리티 (`parseChunkResponse`, `collectCards`, `findColumns`, `normalizePath`, `assertInvariant`) |
-| `distribution.ts` | 공유 분배 알고리즘 (`distributeByWeight`, `cardWeight`, `SSR_COL_WIDTH`, `GAP`) |
-| `layout.ts` | 반응형 masonry 레이아웃 (`restoreMobileFlow`, `buildDesktopColumns`, `relayoutGrid`) |
-| `append.ts` | 증분 카드 배치 (`appendChunkItems`) — mobile flow guard 포함 |
+| `masonry.ts` | grid-span masonry 엔진 (`updateSpans`, `watchSpans`, `MOBILE_QUERY`) — 실측 높이 → 2px 행 span 부여·재계측 |
+| `append.ts` | 증분 카드 배치 (`appendChunkItems`) — load-more 교체 + 단일 컨테이너 append + span 부여 |
 | `controller.ts` | 단일 상태 소유자 (`createPostListController`) |
 | `loader.ts` | 청크 fetch, prefetch, History, popstate 처리 (`createChunkLoader`) |
 | `animate.ts` | 카드 등장 애니메이션 (`animateNewCards`) |
@@ -55,12 +53,12 @@ post-list의 모든 DOM 조작을 단일 controller가 소유한다:
 
 | 메서드 | 역할 |
 |---|---|
-| `appendChunk(payload)` | 청크 카드 증분 배치 (load-more 교체 + 새 카드 삽입) |
-| `showSearchResults(paths)` | 검색 결과 필터링 (매칭 카드만 표시, load-more 숨김, empty 상태) |
-| `clearSearch()` | 검색 해제 (추가된 카드 제거, 모든 원본 카드 표시, masonry 복원) |
+| `appendChunk(payload)` | 청크 카드 증분 배치 (load-more 교체 + 새 카드 삽입 + span 부여) |
+| `showSearchResults(paths)` | 검색 결과 필터링 (`display` 토글, load-more 숨김, empty 상태, 표시 카드 span 재계측) |
+| `clearSearch()` | 검색 해제 (추가된 카드 제거, 모든 원본 카드 표시, span 재계측) |
 | `restoreChunkCount(target)` | popstate 시 이전 청크 수로 복원 |
-| `relayout()` | 현재 viewport에 맞춰 masonry 재배치 |
-| `fetchSearchChunk(n)` | 검색 전용 청크 fetch + parse + **숨김(`display: none`) 카드** 삽입 |
+| `relayout()` | 현재 viewport에 맞춰 span 재계측 |
+| `fetchSearchChunk(n)` | 검색 전용 청크 fetch + parse + **숨김(`display: none`) 카드** 삽입 (숨김 전 span 선계산) |
 
 ### loader (`createChunkLoader`)
 
@@ -71,50 +69,31 @@ post-list의 모든 DOM 조작을 단일 controller가 소유한다:
 - popstate: controller.restoreChunkCount → search 재실행
 - 드래그 이벤트 blur 처리
 
-## Masonry 레이아웃
+## Masonry 레이아웃 (grid-span)
 
-포스트 목록은 2컬럼 masonry 레이아웃을 사용한다. 공유 분배 알고리즘(`distribution.ts`)이 서버와 클라이언트에서 동일한 로직으로 카드를 분배한다.
+포스트 목록은 단일 컨테이너 CSS Grid + 행 단위 span 방식의 2컬럼 masonry를 사용한다.
 
-### SSR 2열 masonry
+**배경**: 구 방식(SSR 좌/우 `.posts-col` 분배)은 DOM이 열 우선이라 데스크톱에서 탭 포커스가 1→3→5→2→4→6 순서로 이동하는 접근성 문제가 있었다. masonry(열별 쌓기)는 같은 열 카드가 같은 부모에 있어야 하므로 순수 CSS로는 "masonry + 위=최근 원칙 + 탭 최신순"을 동시에 만들 수 없고, grid-span 방식이 유일한 해법이다.
 
-초기 HTML은 서버에서 2열로 렌더링된다. `__post_order`가 할당된 카드들(변수명 `weightedPosts`)을 `distributeByWeight()`로 좌/우 `.posts-col`에 분배한다. 각 PostCard에 `style="--post-order: ${index}"`가 추가된다.
+### 동작
 
-데스크톱(>960px)에서는 SSR HTML이 그대로 2열 masonry로 표시된다. JS 초기화 시 `relayout()`을 스킵한다. 모바일(≤960px)에서는 `display: contents` + `order: var(--post-order)` CSS가 SSR 2열을 시간순으로 재배열한다.
+- 카드는 최신순으로 단일 `.posts-columns`에 렌더링된다. **DOM = 탭 포커스 = 최신순**.
+- `data-masonry-js` 속성이 있으면 `.posts-columns`가 Grid(`repeat(2, 1fr)`, `grid-auto-rows: 2px`, `row dense`)로 전환된다. 없으면 flex 단일 스택(no-JS/pre-span 폴백).
+- 각 카드에 `grid-row: span N`(N = 실측 높이 + `--post-card-gap`을 2px 단위로 환산)을 부여하면, `row dense` auto-placement가 항상 "가장 먼저 비는 자리(=더 위쪽)"부터 채우므로 **k번째 카드의 시작 행은 항상 k-1번째 카드 이상** — "위에 있을수록 최근" 원칙이 수학적으로 보장된다. 구 분배 알고리즘의 `minCol` 동작과 동일한 의미.
+- 모바일(≤960px)은 `grid-template-columns: 1fr` 미디어 쿼리만으로 1열 전환된다 (`order` 핵·DOM 재구성 없음).
 
-### data-layout 상태
+### span 부여 시점
 
-`data-layout` 속성이 masonry/flow 두 상태를 관리한다:
+1. **SSR 직후(페인트 전)**: `PostColumns.astro`의 `is:inline` pre-paint 스크립트가 파싱 중 동기 실행되어 실측 높이 기반 span을 설정 (CLS 최소화).
+2. **hydration 후**: `watchSpans()`(PostListSection/ChunkPostListBody)가 resize·`MOBILE_QUERY` change(디바운스 120ms)·`document.fonts.ready` 재계측을 등록.
+3. **동적 변경**: `appendChunkItems`/`showSearchResults`/`clearSearch`/`restoreChunkCount`가 `updateSpans()`를 호출. 검색으로 숨겨진 카드는 `offsetParent === null`로 스킵되며 다시 표시될 때 재계측된다.
 
-| data-layout | 용도 | 모바일 CSS | JS 역할 |
-|---|---|---|---|
-| `masonry` | SSR 초기 상태 + desktop | `display:contents; order:var(--post-order)` | 없음 (SSR-only) |
-| `flow` | mobile hydration 후 | `order:0` (DOM 순서) | `restoreMobileFlow()`로 전환 |
-
-모바일 초기화 흐름: `isMobile()` → `controller.relayout()` → `restoreMobileFlow()` (flat DOM, `data-layout='flow'`)
-
-### 레이아웃 트리거
-
-`relayoutGrid(columns, grid)` 함수가 다음 시점에 호출된다:
-
-1. **모바일 페이지 로드**: `restoreMobileFlow()`로 flow 전환 (desktop은 SSR masonry 스킵)
-2. **미디어 쿼리 변경**: `(max-width: 960px)` 변화 감지
-3. **popstate**: 브라우저 뒤/앞 네비게이션 시 `controller.restoreChunkCount()` 내부에서 호출
-4. **검색 해제**: `controller.clearSearch()` 내부에서 호출
-
-`loadChunk()`는 `relayoutGrid`를 호출하지 않는다. 새로 로드된 카드만 기존 컬럼에 증분 추가한다 (appendChunkItems).
-
-### `appendChunkItems` 증분 배치
-
-1. 현재 `.load-more-card`를 첫 번째 새 카드로 교체 (`replaceWith`)
-2. 나머지 새 카드를 더 짧은 컬럼에 append (데스크톱: offsetHeight 비교 / 모바일: grid에 직접 append)
-3. **모바일 flow guard**: 모바일에서 `data-layout !== 'flow'`이면 `relayoutGrid()` 후 append (모바일 masonry → flow 전환 누락 방지)
-4. 새 `.load-more-card`를 더 짧은 컬럼에 배치
+카드 높이는 결정론적(이미지 없음 112px 고정 / 이미지 = `aspect-ratio 40/21` × 열폭 + 112)이라 실측 재계측은 폰트 로드·리사이즈 시 보정 역할이고, 2px 행 단위 반올림 오차는 ≤2px다.
 
 ### Dev invariant 검사
 
-dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한다:
-- `.posts-col` 요소가 없어야 함 (flow는 flat list)
-- `.load-more-card`는 최대 1개, 마지막 자식이어야 함
+dev 모드에서 `assertInvariant()`가 DOM 구조를 검증한다:
+- `.load-more-card`는 최대 1개, 컨테이너의 마지막 자식이어야 함 (탭 순서상 마지막)
 
 ## 청크 페이지 (4라우트)
 
@@ -125,7 +104,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 | `src/pages/[persona]/chunk/[n].astro` | `/{persona}/chunk/{n}` | 기본 언어 페르소나 |
 | `src/pages/[lang]/[persona]/chunk/[n].astro` | `/{lang}/{persona}/chunk/{n}` | 다국어 페르소나 |
 
-각 청크 페이지는 독립 HTML로, SSR 2열 masonry로 렌더링된다. 검색·청크 로더 기능은 없다(홈/페르소나 페이지에서만 동작). 단, 모바일 페르소나 링크(`initMobilePersonaLink`)는 청크 페이지의 `ChunkPostListBody` 스크립트에서도 등록되어 홈/페르소나 페이지와 동일하게 작동한다.
+각 청크 페이지는 독립 HTML로, 최신순 단일 컨테이너 + pre-paint span 부여를 통해 데스크톱에서 2열 masonry로 렌더링된다. 검색·청크 로더 기능은 없다(홈/페르소나 페이지에서만 동작). 단, 모바일 페르소나 링크(`initMobilePersonaLink`)와 `watchSpans()`는 청크 페이지의 `ChunkPostListBody` 스크립트에서도 등록되어 홈/페르소나 페이지와 동일하게 작동한다.
 
 ## CSS 변수
 
@@ -154,8 +133,8 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 1. fetch(${chunkBaseUrl}/${n})
 2. DOMParser → .post-card 추출
 3. appendChunkItems: 현재 .load-more-card → 첫 번째 새 카드로 교체
-4. 나머지 새 카드를 더 짧은 컬럼에 append (mobile flow guard 체크)
-5. 새 .load-more-card를 더 짧은 컬럼에 배치
+4. 나머지 새 카드 + 새 .load-more-card를 컨테이너 끝에 순서대로 append
+5. updateSpans() — 새 카드에 grid-row span 부여
 6. history.pushState({ chunk: n }, '', `?p=${n}`)
 7. animateNewCards(animatedCards) — staggered opacity fade-in
 8. initPostCardImages() — 새로 로드된 카드의 이미지 lqip fade-in 초기화
@@ -183,7 +162,7 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 프리뷰 카드는 실제 `<a>` 링크다 (`LoadMoreCard.astro`로 추출):
 
 - **JS 활성화**: `preventDefault()` → `fetch` → `DOMParser` → 카드 삽입 → `pushState`
-- **JS 비활성화**: 청크 페이지로 네비게이션 (CSS masonry/order로 시간순 표시)
+- **JS 비활성화**: 청크 페이지로 네비게이션 (data-masonry-js 미부착 → flex 단일 스택, 최신순 표시)
 - `.posts-grid` 이벤트 위임으로 load-more 클릭 처리 (AbortController로 스코프 관리)
 
 ## URL 상태
@@ -226,5 +205,5 @@ dev 모드에서 `assertInvariant()`가 flow 상태의 DOM 구조를 검증한�
 
 - [Post routing & i18n](./posts.md) — 청크 라우트 구조, 포스트 카드 이미지 아키텍처, `data-all-posts` 메타
 - [Frame 컴포넌트](../components/frame-layout.md) / [Frame 설계](../design/frame-layout.md) — Frame 컨테이너 내 배치
-- [Search](./search.md) — 검색 시 숨김 카드 추가·`distributeByWeight` 재분배 재사용
+- [Search](./search.md) — 검색 시 숨김 카드 추가·`controller` 재사용
 - [PWA](./pwa.md) — 서비스 워커 프리캐시와 청크 응답

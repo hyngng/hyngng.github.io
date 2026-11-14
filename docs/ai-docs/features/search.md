@@ -110,11 +110,10 @@ The Search component uses existing design tokens defined in the theme system (`l
 | `clearSearch()` | 검색 해제 (추가 카드 제거, 원본 표시, load-more 복원, masonry) |
 | `fetchSearchChunk(n)` | 청크 fetch + **숨김(`display: none`) 카드** 추가 (pagination 상태 불변) |
 
-`showSearchResults`는 레이아웃에 무관하게 동작한다: 카드 필터링(`display: none`), load-more 숨김,
-empty 상태 토글은 공통으로 수행하고, `distributeByWeight` 2열 재분배는 `.posts-col`(masonry/데스크톱)이
-존재할 때만 실행한다. 모바일 flow 레이아웃(`data-layout="flow"`, `.posts-col` 없음)에서는
-`findColumns`의 `leftCol`/`rightCol`이 `null`이 되므로 재분배를 건너뛰고 필터링 결과를 DOM 순서 그대로
-유지한다.
+`showSearchResults`는 레이아웃에 무관하게 동작한다: 카드 필터링(`display` 토글), load-more 숨김,
+empty 상태 토글로 커밋한 뒤 `updateSpans()`로 표시 카드의 grid-row span을 재계측한다. 숨겨진 카드는
+`offsetParent === null`로 span 계산에서 스킵되며, 다시 표시될 때(`clearSearch` 등) 재계측된다.
+필터링만으로 masonry(auto-placement)가 자동 리플로우되므로 별도 재분배 로직은 없다.
 
 ## Search-Chunk Integration
 
@@ -136,6 +135,6 @@ Pagefind는 빌드 시 전체 포스트를 인덱스하지만, DOM에는 현재 
 
 ## 관련 문서
 
-- [Chunk Loading](./chunk-loading.md) — `controller`/`distributeByWeight`/`fetchSearchChunk` 재사용
+- [Chunk Loading](./chunk-loading.md) — `controller`/`updateSpans`/`fetchSearchChunk` 재사용
 - [Post routing & i18n](./posts.md) — `data-all-posts` 메타 소스, 포스트 카드 구조
 - [Locales](../configuration/locales.md) — `data-locale`/`data-default-locale` 언어 필터

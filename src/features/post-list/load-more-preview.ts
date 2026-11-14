@@ -1,4 +1,4 @@
-import { MOBILE_QUERY } from './layout';
+import { MOBILE_QUERY } from './masonry';
 
 // Integer-rounded scroll metrics leave a few px of residual at true bottom
 // (measured 3px); 8px absorbs rounding across device pixel ratios.

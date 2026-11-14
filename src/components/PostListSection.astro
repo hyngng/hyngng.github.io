@@ -4,7 +4,6 @@ import type { Locale } from '../locales';
 import PostColumns from './PostColumns.astro';
 import { getPostPath } from '../utils/posts';
 import { SITE } from '../settings/site.settings';
-import { distributePostColumns } from '../features/post-list/distribution';
 
 interface Props {
   locale: Locale;
@@ -21,8 +20,6 @@ const hasMore = totalChunks > 1;
 const nextPreviewPost = hasMore ? posts[chunkSize] : undefined;
 const totalRemaining = hasMore ? posts.length - chunkSize : 0;
 const nextChunkCount = hasMore ? Math.min(chunkSize, totalRemaining) : 0;
-
-const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostColumns(firstChunk, 0);
 ---
 
 <section class="posts-section">
@@ -45,16 +42,13 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
       })))}
     >
       <PostColumns
-        {leftPosts}
-        {rightPosts}
-        {loadMoreInLeft}
+        posts={firstChunk}
         showLoadMore={hasMore && !!nextPreviewPost}
         nextChunkUrl={`${chunkBaseUrl}/2`}
         {nextPreviewPost}
         {nextChunkCount}
         totalPosts={posts.length}
         {totalRemaining}
-        loadMoreOrder={firstChunk.length}
         {locale}
         {currentLocale}
       />
@@ -69,7 +63,7 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
 </section>
 
 <script>
-  import { createPostListController, setController, needsRelayout, createChunkLoader, initLoadMorePreview, MOBILE_QUERY } from '../features/post-list';
+  import { createPostListController, setController, createChunkLoader, initLoadMorePreview, watchSpans } from '../features/post-list';
 
   let abortController: AbortController | undefined;
 
@@ -84,13 +78,8 @@ const { left: leftPosts, right: rightPosts, loadMoreInLeft } = distributePostCol
     const controller = createPostListController(grid);
     setController(controller);
 
-    const columns = grid.querySelector('.posts-columns');
-    if (needsRelayout(columns as HTMLElement | null)) {
-      controller.relayout();
-    }
-
-    const mq = window.matchMedia(MOBILE_QUERY);
-    mq.addEventListener('change', () => controller.relayout(), { signal });
+    const columns = grid.querySelector('.posts-columns') as HTMLElement | null;
+    if (columns) watchSpans(columns, signal);
 
     createChunkLoader(grid, controller, signal);
     initLoadMorePreview(grid, signal);

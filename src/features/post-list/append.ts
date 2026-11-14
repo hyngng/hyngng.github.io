@@ -1,23 +1,5 @@
-import { isMobile as checkMobile, relayoutGrid } from './layout';
 import { findColumns } from './dom';
-
-export function minCol(a: HTMLElement, b: HTMLElement): HTMLElement {
-  return a.offsetHeight <= b.offsetHeight ? a : b;
-}
-
-export function distributeCards(
-  columns: HTMLElement,
-  leftCol: HTMLElement | null,
-  rightCol: HTMLElement | null,
-  cards: HTMLElement[],
-): void {
-  const mobile = checkMobile();
-  if (mobile || !leftCol || !rightCol) {
-    cards.forEach(card => columns.appendChild(card));
-    return;
-  }
-  cards.forEach(card => minCol(leftCol, rightCol).appendChild(card));
-}
+import { updateSpans } from './masonry';
 
 export function appendChunkItems(
   grid: HTMLElement,
@@ -26,20 +8,8 @@ export function appendChunkItems(
 ): HTMLElement[] {
   if (cards.length === 0) return [];
 
-  let { columns, leftCol, rightCol, loadMore: currentLoadMore } = findColumns(grid);
+  const { columns, loadMore: currentLoadMore } = findColumns(grid);
   if (!columns) return [];
-
-  const mobile = checkMobile();
-
-  if (mobile && columns.dataset.layout !== 'flow') {
-    relayoutGrid(columns);
-    const fresh = findColumns(grid);
-    if (!fresh.columns) return [];
-    columns = fresh.columns;
-    leftCol = fresh.leftCol;
-    rightCol = fresh.rightCol;
-    currentLoadMore = fresh.loadMore;
-  }
 
   const appended = cards.slice(1);
 
@@ -48,15 +18,14 @@ export function appendChunkItems(
     firstCardImg.classList.add('loaded');
   }
 
+  // The load-more card is the container's last child; the chunk's first card
+  // takes its place and the rest follow, keeping recency DOM order intact.
   currentLoadMore?.replaceWith(cards[0]);
-  distributeCards(columns, leftCol, rightCol, appended);
-  if (nextLoadMore) {
-    if (mobile || !leftCol || !rightCol) {
-      columns.appendChild(nextLoadMore);
-    } else {
-      minCol(leftCol, rightCol).appendChild(nextLoadMore);
-    }
-  }
+  const fragment = document.createDocumentFragment();
+  for (const el of appended) fragment.appendChild(el);
+  columns.appendChild(fragment);
+  if (nextLoadMore) columns.appendChild(nextLoadMore);
 
+  updateSpans(columns);
   return appended;
 }

@@ -12,7 +12,6 @@ interface Props {
   nextChunkCount: number;
   totalPosts: number;
   totalRemaining: number;
-  loadMoreOrder: number;
   locale: Locale;
 }
 
@@ -22,7 +21,6 @@ const {
   nextChunkCount,
   totalPosts,
   totalRemaining,
-  loadMoreOrder,
   locale,
 } = Astro.props;
 const { image } = nextPreviewPost.data;
@@ -37,7 +35,6 @@ const suffix =
 <a
   href={nextChunkUrl}
   class:list={["load-more-card", { "post-card--with-image": !!image }]}
-  style={`--post-order: ${loadMoreOrder}`}
 >
   {
     image && (

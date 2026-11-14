@@ -4,6 +4,14 @@
 @import "./typography.css";
 @import url("/fonts/Reddit_Mono/redditmono.css");
 
+/* Opt in to cross-document view transitions (same-origin MPA navigations).
+   On click, the outgoing document's snapshot (e.g. a button mid hover-glow)
+   cross-fades into the fresh document instead of cutting instantly. Skipped
+   automatically where unsupported (Firefox) or for reduced-motion users. */
+@view-transition {
+  navigation: auto;
+}
+
 :root {
   --font-pretendard: 'Pretendard';
   /* ── Typography ───────────────────────── */
@@ -281,56 +289,35 @@ html.modal-open {
   color: var(--color-accent);
 }
 
+/* ── Post list layout: single-container grid masonry ──
+   Cards render in recency (DOM) order, so keyboard focus follows the
+   reading order. The stacked flow below is the no-JS / pre-span fallback;
+   the masonry grid activates once spans are assigned (data-masonry-js, set
+   inline before first paint — see PostColumns and features/post-list/masonry).
+   Auto-placement fills the earliest gap, which keeps "higher on the page =
+   more recent" while tabbing stays sequential. */
 .posts-columns {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--post-card-gap);
   width: 100%;
   min-width: 0;
 }
 
-.posts-columns>.posts-col {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--post-card-gap);
-}
-
-.posts-columns[data-layout='flow'] {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.posts-columns[data-layout='flow']>.posts-col {
-  display: contents;
+.posts-columns[data-masonry-js] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 2px;
+  grid-auto-flow: row dense;
+  column-gap: var(--post-card-gap);
+  row-gap: 0;
+  align-items: start;
 }
 
 @media (max-width: 960px) {
-  .posts-columns[data-layout='masonry'] {
-    flex-direction: column;
-  }
-
-  .posts-columns[data-layout='masonry']>.posts-col {
-    display: contents;
-  }
-
-  .posts-columns[data-layout='masonry'] .posts-col>.post-card,
-  .posts-columns[data-layout='masonry'] .posts-col>.load-more-card {
-    order: var(--post-order);
-    width: 100%;
-  }
-
-  .posts-columns[data-layout='flow'] {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .posts-columns[data-layout='flow']>.post-card,
-  .posts-columns[data-layout='flow']>.load-more-card {
-    order: 0;
-    width: 100%;
+  .posts-columns[data-masonry-js] {
+    grid-template-columns: 1fr;
   }
 }
 

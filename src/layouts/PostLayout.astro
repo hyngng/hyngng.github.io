@@ -216,7 +216,7 @@ const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
   </dialog>
 
   <script>
-    import { MOBILE_QUERY } from '../features/post-list/layout';
+    import { MOBILE_QUERY } from '../features/post-list';
 
     const mq = window.matchMedia(MOBILE_QUERY);
     const modal = document.getElementById('footnote-modal') as HTMLDialogElement | null;
