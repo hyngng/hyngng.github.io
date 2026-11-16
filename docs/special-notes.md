@@ -301,7 +301,7 @@
 
 ## 6. 의도적인 미지원·제약
 
-- SPA/View Transitions를 쓰지 않는다. 포스트 목록의 청크 로딩은 점진적 향상(progressive enhancement)이며, JS가 없으면 일반 페이지 이동으로 폴백한다.
+- swup(SPA 컨테이너 전환, Fuwari 전략)을 도입했다 (2026-11). `<main>` 컨테이너만 교체되며 JS가 없으면 일반 페이지 이동으로 폴백한다. swup 네비게이션은 뒤로/앞으로(popstate)도 처리하고, 청크 히스토리 state(`?p=`)는 swup 마킹(`source: 'swup'`)을 보존하도록 merge한다.
 - sitemap은 단일 XML이며 XSL 뷰를 제공하지 않는다.
 - JSON-LD에 `SearchAction`을 넣지 않는다.
 - 댓글은 Giscus만 지원한다. Utterances/Disqus는 로드맵의 향후 항목이다.

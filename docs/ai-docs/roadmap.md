@@ -235,18 +235,28 @@
   - `.search-sidebar`의 `top: var(--posts-section-margin-top)` (80px) 대신 별도 토큰으로 10px 추가하여 포스트 영역 시작점보다 살짝 아래에 배치.
   - 포스트 영역(`.posts-section`의 `margin-top`)은 변경하지 않음.
   - 모바일 검색(`.search-mobile-wrapper`)에는 영향 없음.
-- [x] **크로스 다큐먼트 View Transition 도입 — 페이지 전환 시 hover 트랜지션 끊김 해소 (2026-11)**:
+- [x] **크로스 다큐먼트 View Transition 도입 — 페이지 전환 시 hover 트랜지션 끊김 해소 (2026-11, ~~이후 swup으로 대체~~)**:
   - 배경: MPA 풀 리로드(ClientRouter 미사용)에서 링크 클릭 시 이전 문서의 hover accent 상태가 즉시 소멸하고, 새 문서에서는 첫 mousemove 전까지 `:hover`가 적용되지 않는(브라우저 규칙) 이중 끊김 발생. Frame 버튼 orbit 발광 계획의 선행 조건.
   - 구현: `global.css` 상단에 `@view-transition { navigation: auto; }` 옵트인 한 줄. same-origin MPA 네비게이션에서 이전 문서 스냅샷(accent 점등 상태) → 새 문서(base) 크로스페이드로 실질적 "점진 전환" 제공. CSS 단독, JS 없음.
   - 폴백: Firefox 미지원 시 현행 동작(자연 폴백), `prefers-reduced-motion`은 UA가 자동 스킵. same-document 테마 전환과 무관.
   - 검증: `npm run build` 성공(595 pages), `npx astro check` 0 errors, dist CSS 룰 존재 + 브라우저 `@view-transition { navigation: auto; }` 파싱 확인(`CSSViewTransitionRule` 지원). 실제 네비게이션 크로스페이드 동작 사용자 확인 완료.
   - 한계 수용 (사용자 결정, 2026-11): 클릭은 커서를 움직이지 않으므로 새 문서에서 mousemove가 발생하지 않아 정지 포인터 hover가 재적용되지 않음(브라우저 규칙) — CSS만으로 해결 불가. hover 프루브 JS(C안)·ClientRouter+persist(B안) 검토했으나 실사용 영향이 작다고 판단해 개선 없이 A안 유지. 커서를 조금만 움직이면 즉시 재점등됨.
+  - **상태 갱신 (2026-11): 이 전략은 롤백됨.** 사용자 요청으로 Fuwari 방식(swup)으로 교체 — 아래 swup 항목 참조. `@view-transition` 규칙은 `global.css`에서 제거됨.
+- [x] **swup 기반 페이지 전환 도입 (Fuwari 전략, 2026-11)**:
+  - 배경: cross-document View Transition(위 항목)은 크로스페이드는 제공하지만 페이지 로딩이 전환 뒤에 격리됨 — 프레임 크롬의 언어 패널 접힘 같은 크롬 애니메이션이 로딩 동안 멈춘 것처럼 보임. Fuwari는 swup으로 본문 컨테이너만 교체하고 navbar/프레임은 DOM에 그대로 유지해 크롬 애니메이션이 로딩과 병렬로 live 재생됨.
+  - 구현: `@swup/astro` v1.8 통합(`astro.config.mjs`) — `theme:false`, `animationClass:'transition-swup-'`, `containers:['main']`, `globalInstance:true`, `ignore:['/posts/']`(구 URL 리다이렉트 스텁), `morph:['.fixed-actions']`(프레임 크롬 locale 갱신). `global.css`: swup 페이드 CSS(`html.is-changing .transition-swup-fade` / `html.is-animating … opacity:0`) + reduced-motion 가드. `<main class="transition-swup-fade">`.
+  - 라이프사이클: `@swup/astro`가 `astro:before-swap`/`astro:after-swap`/`astro:page-load`를 디스패치하므로 콘텐츠 스크립트 재초기화는 기존 Astro 이벤트 패턴 그대로 사용 (`PostListSection`/`Search`/`TOC`/`PostCard`/`PersonaModal`/`PostLayout` 각주 모달/shimmer/mermaid).
+  - Frame: 프레임은 `<main>` 밖이라 스왑 대상 아님 → `initFrame()` 1회 실행. 언어 클릭을 `#right-actions-inner` 위임으로 변경(morph 후에도 리스너 유지), `swup:visit:start`에서 패널 close(접힘이 스왑을 관통해 병렬 재생), `astro:after-swap`에서 포스트 번역 가능 언어 disabled 재적용, `getLocalizedPath`는 클릭 시점 dataset 읽기 + trailing slash 보존. RSS·LoadMoreCard·구 `/posts/`는 `data-no-swup`/ignore로 풀 로드.
+  - **버그 수정 — 청크 로더가 swup 히스토리 state를 파괴**: swup은 popstate를 `state.source==='swup'` 엔트리만 자체 처리(`skipPopStateHandling`). `loader.ts`가 초기화 시 `history.replaceState({chunk:n})`로 state를 덮어써 swup 마킹이 지워져 뒤로/앞으로가 콘텐츠 교체 없이 URL만 바뀜 → `{ ...history.state, chunk }` merge로 수정.
+  - 애널리틱스: swup 네비는 문서를 다시 로드하지 않으므로 `Head.astro`에 PROD 전용 `astro:page-load` 훅으로 GoatCounter `count()` + gtag `page_view` 재발화.
+  - 검증: `npm run build` 성공, `npx astro check` 0 errors. 브라우저 자동화(백그라운드 탭)로 SPA 전환/마커 유지/morph 크롬 갱신/RSS href/언어 전환(쿼리 보존)/`history:popstate` 발화/콘솔 에러 0 확인. **백그라운드 탭은 swup의 rAF 대기(`animatePageIn`)가 정지되어 visit이 멈추는 라이브러리 특성이 있음 — 시각 전환·TOC 앵커 스크롤 등 애니메이션은 사용자 포그라운드 확인 필요.**
+  - 패키지 직렬화 버그 주의: `@swup/astro`의 `deserialise` reviver는 **문자열 2개짜리 배열 옵션을 마지막 원소로 붕괴**시킴 → `morph: ['#a','#b']` 같은 2요소 배열 옵션은 사용 불가. 문자열 1개 배열(공통 부모 selector)로 우회.
 - [ ] **Frame 버튼 orbit 발광 (계획 보관, 2026-11)**
   - 컨셉: 버튼 주변에 orbit 경계 범위(예: ~56px)를 두고, 커서가 범위 내로 들어오면 **커서에서 버튼 가장자리까지 최근접점**부터 accent-color가 약하게 발광(radial-gradient spread). 접근할수록 강해지고, 호버 도달 시 버튼 전체가 accent-color로 발광하는 점진 램프. 기존 hover의 이분법(끔/켬)을 근접도 기반 연속 피드백으로 확장 — Frame 커서 팔로우 도트와 같은 "기구부가 커서를 감지한다" 서명의 확장.
   - 기술 접근: 근접도·최근접점은 포인터 좌표가 필요해 CSS 단독 불가 → JS는 좌표 계산만, 렌더는 CSS 위임. `initFollowDots()`와 같은 패턴으로 `initButtonOrbit(signal)` — mousemove rAF 스로틀(같은 이벤트 소스 공유), orbit 반경 밖 스킵, 가장 가까운 버튼 1개만 갱신. 버튼에 `--glow-x/--glow-y`(rounded-rect clamp + 코너 원호 보정), `--glow-strength`(거리 반비례 0..1) 기록 → CSS `::after` radial-gradient + `opacity: var(--glow-strength)`. 종점은 `:hover`, 키보드는 `:focus-visible` = 전체 발광.
   - 게이트: `hover: hover and (pointer: fine)` 미충족(터치)·`prefers-reduced-motion` 시 초기화 스킵 (follow dots 규약 재사용). 토큰: `--frame-orbit-*`(라이트/다크 alpha·반경 분리, 하드코딩 금지).
   - 결정 필요: 기존 hover 배경 유지 여부 vs orbit 발광으로 대체, 라이트 모드 강도, 적용 버튼 범위(언어 버튼 열림 상태 충돌 검토).
-  - 전제 조건 검토: ~~해소됨 (2026-11)~~ — 크로스 다큐먼트 View Transition(`@view-transition { navigation: auto; }`) 도입으로 페이지 전환 끊김 해소. orbit 구현 시 이전 문서 스냅샷이 발광 상태를 이어받아 전환되므로 추가 대응 불필요.
+  - 전제 조건 검토: ~~해소됨 (2026-11)~~ — swup 전환 도입으로 크로스 다큐먼트 VT는 롤백됨(위 항목 참조). swup은 크롬을 DOM에 유지하므로 프레임 버튼의 hover 상태가 페이지 전환에도 그대로 남아 있음 — orbit 구현 시 전환 끊김 문제 없음.
 - [ ] 완료된 작업 (사후 기록)
   - [x] **Frame 커서 팔로우 도트** — 데스크톱에서 커서를 따라다니는 원형 도형 2개를 프레임 베즐에 추가. 빨강 도트(아래층)는 상단+좌측 밴드, 노랑 도트(위층)는 하단+우측 밴드에서만 `clip-path` polygon으로 표시되며 크기는 `--frame-thickness`(12px). 색과 노랑층 불투명도는 테마 토큰(`--color-frame-follow-red/yellow`, `--frame-follow-yellow-opacity`)으로 관리 — 라이트 `#B70216`/`#E6AA1E`/0.4, 다크 `#D54E30`/`#FFCD46`/0.45. concave corner pseudo에 `z-index: 3`을 부여해 베즐 재질이 도트를 오클루드. 터치 기기(`hover: hover and (pointer: fine)` 미충족)와 `prefers-reduced-motion`에서는 JS 초기화 스킵, 모바일에서는 `.follow-clip` 표시 자체를 비활성화. 이벤트는 `frameAbortController` signal로 스코프 관리. 구현: `Frame.astro`(DOM/CSS/`initFollowDots()`), 토큰: `light.css`/`dark.css`. 상세는 `frame-layout.md` 참조. 검증: `npm run build` 성공(595 pages), `npx astro check` 0 errors.
   - [x] GFM 단일 물결표 취소선 비활성화 — `gfm: false` + `remarkGfm({ singleTilde: false })`로 GFM을 직접 등록하고 `remark-gfm`을 `dependencies`에 명시. `1~2`, `10~11` 같은 범위 표기가 `<del>`로 깨지지 않도록 수정. `~~text~~` 취소선과 표·각주·task list·autolink는 유지. 검증: `npm run build`, `npx astro check`, `npm test`.

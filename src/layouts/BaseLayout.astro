@@ -62,7 +62,7 @@ const twitterSite = SITE.social.twitter
     <div class="viewport-container">
       <Frame personaId={personaId} />
       <div class="page-content">
-        <main>
+        <main class="transition-swup-fade">
           <slot />
         </main>
         <Footer />
@@ -74,11 +74,15 @@ const twitterSite = SITE.social.twitter
       <script>
         import { initMermaidThemeSync } from '../utils/mermaidThemeSync';
         initMermaidThemeSync();
+        // Mermaid diagrams in swup-swapped content need re-scanning per view.
+        document.addEventListener('astro:page-load', initMermaidThemeSync);
       </script>
     )}
     <script>
       import { initShimmer } from '../utils/shimmer';
       initShimmer();
+      // Shimmer placeholders in swup-swapped content need re-init per view.
+      document.addEventListener('astro:page-load', initShimmer);
     </script>
   </body>
 </html>

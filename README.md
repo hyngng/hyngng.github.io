@@ -37,6 +37,7 @@ npm run dev
 | `astro` | 정적 사이트 생성 프레임워크 |
 | `@astrojs/mdx` / `@astrojs/markdown-remark` | MDX·Markdown 처리 |
 | `@astrojs/rss` | RSS 피드 생성 |
+| `@swup/astro` | swup 기반 페이지 전환 (SPA 스타일 `<main>` 컨테이너 교체, Fuwari 전략) |
 | `js-yaml` | 프론트매터 YAML 파싱 (`gray-matter` 대체) |
 | `remark-math` + `rehype-katex` + `katex` | 수학 수식 렌더링 및 self-host CSS |
 | `mermaid` | 다이어그램 렌더링 (뷰포트 진입 시 동적 import) |

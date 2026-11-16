@@ -159,4 +159,6 @@ const personaSuffix = personaIds.length > 1
   import { initPostCardImages } from '../features/post-list/image-init';
 
   initPostCardImages();
+  // Swup replaces <main> on every visit; re-init against the fresh content.
+  document.addEventListener('astro:page-load', initPostCardImages);
 </script>

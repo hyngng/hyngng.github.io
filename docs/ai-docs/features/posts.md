@@ -172,7 +172,7 @@ Mermaid는 렌더링 완료 후 SVG로 고정되므로, CSS 클래스 기반 테
 - `.mermaid[data-processed]` 요소의 `data-processed`를 제거하고 `textContent`를 `data-mermaid-source`에서 복원
 - 아직 렌더링되지 않은 요소는 `pendingRoots`에 남아 최신 테마로 렌더링
 - `renderRevision` 카운터로 동시에 발생한 여러 렌더 요청 중 최신만 반영
-- `initMermaidThemeSync()`는 문서 로드 시 1회 호출되어 `IntersectionObserver`를 생성하고 미처리 `.mermaid` 요소를 관찰합니다. `observe()`는 같은 요소에 중복 호출해도 안전하므로 별도 관찰 플래그를 두지 않습니다. (ClientRouter/ViewTransitions 미사용 — 향후 도입 시 재초기화 훅이 필요함)
+- `initMermaidThemeSync()`는 문서 로드 시 1회 호출되어 `IntersectionObserver`를 생성하고 미처리 `.mermaid` 요소를 관찰합니다. `observe()`는 같은 요소에 중복 호출해도 안전하므로 별도 관찰 플래그를 두지 않습니다. swup이 `<main>`을 교체할 때마다 `astro:page-load`로 재초기화되어 새 컨텐츠의 다이어그램을 관찰합니다 (`BaseLayout.astro`).
 
 ### 구현 참고
 

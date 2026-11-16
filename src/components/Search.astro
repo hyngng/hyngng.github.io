@@ -133,6 +133,8 @@ const { locale, currentLocale, personaId } = Astro.props;
   }
 
   initSearch();
+  // Swup replaces <main> on every visit; re-init against the fresh content.
+  document.addEventListener('astro:page-load', initSearch);
 </script>
 
 <style>

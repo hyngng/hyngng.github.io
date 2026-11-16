@@ -114,6 +114,8 @@ const titleId = `${modalId}-title`;
   }
 
   initPersonaModals();
+  // Swup replaces <main> on every visit; re-init against the fresh content.
+  document.addEventListener('astro:page-load', initPersonaModals);
 </script>
 
 <style>

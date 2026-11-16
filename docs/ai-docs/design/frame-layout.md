@@ -83,6 +83,20 @@
 - `TOC.astro`: TH는 표준 hash 앵커로 이동하며, `scroll-margin-top`과 같은 기준선으로 현재 PH를 선택함
 - `PostListSection.astro`: `window.addEventListener('scroll', ...)` + `document.scrollingElement`의 `scrollTop / (scrollHeight - clientHeight)`로 스크롤 위치 계산
 
+## swup 페이지 전환과 프레임 (Fuwari 전략)
+
+페이지 전환은 `@swup/astro`가 처리하며 **`<main>` 컨텐츠 컨테이너만 교체**합니다. 프레임(`Frame.astro`의 `.fixed-actions`, `.frame-border`)은 `<main>` 밖에 있어 스왑 대상이 아니며, 이 때문에 프레임 크롬의 애니메이션(언어 패널 접힘 등)은 페이지 로딩/전환과 병렬로 live 재생됩니다. 세부 계약:
+
+1. **초기화 1회**: `initFrame()`은 문서당 1회 실행됩니다(스왑으로 다시 불리지 않음). 모든 리스너는 `frameAbortController` signal로 스코프 관리됩니다.
+2. **이벤트 위임**: 언어 항목 클릭은 `#right-actions-inner`(morph 대상 컨테이너 자체)에 위임합니다. morphdom이 컨테이너 노드 자체는 재사용하므로 위임 리스너가 살아남고, 하위 버튼이 교체되어도 위임이 처리합니다.
+3. **morph 크롬 갱신**: swup의 `SwupMorphPlugin`이 `astro.config.mjs`의 `morph: ['.fixed-actions']` 설정으로, 새 페이지 문서에서 홈 버튼 href/aria-label, RSS href, 언어 패널 dataset(`current-segment`, `locale-segments`), `--lang-list-width`를 덮어써 갱신합니다. **주의**: `@swup/astro`의 옵션 직렬화 버그(문자열 2개짜리 배열이 마지막 원소로 붕괴) 때문에 morph 옵션은 문자열 1개 배열만 안전합니다 — 두 액션 블록의 공통 부모 `.fixed-actions`를 통째로 morph하는 것으로 우회. morphdom은 id 있는 노드(`theme-toggle`, `right-actions-inner`)를 재사용하므로 그 노드의 리스너도 보존됩니다.
+4. **라이프사이클 훅**:
+   - `swup:visit:start`: 언어 패널이 열려 있으면 `closeLangList()` — 접힘 애니메이션이 스왑을 관통해 병렬 재생.
+   - `astro:after-swap`: `updateDisabledLangItems()` 재적용 — morph가 SSR 기본(enabled) 상태로 되돌리기 때문에, 새 `<main>`의 `.post` dataset(`available-locales`) 기반으로 disabled를 다시 계산.
+   - 언어 클릭: `getLocalizedPath()`는 **클릭 시점**에 dataset을 읽고(morph 갱신 반영), `window.swup.navigate(url)`로 전환(폴백 `location.href`). trailing slash를 보존해 카노니컬 URL로 이동.
+5. **풀 로드 예외**: RSS 버튼(`data-no-swup`)은 브라우저 다운로드 동작 보호, 구 `/posts/<slug>/` 경로는 swup ignore — 둘 다 풀 로드로 처리됩니다.
+6. **애널리틱스**: swup 네비는 문서를 다시 로드하지 않으므로 `Head.astro`의 PROD 전용 `astro:page-load` 훅이 GoatCounter/gtag page view를 재발화합니다.
+
 ## (Historical) Bug Fix: Language Switching Design Flaw
 
 > **참고**: 이 섹션은 이전에 작성된 기록용 문서다. 현재 코드에서는 전역 `window.__*` 변수를 사용하지 않으며, 언어 전환은 `Frame.astro`의 `getLocalizedPath()` 함수가 `#lang-list`의 `data-locale-codes` / `data-default-locale` DOM 속성을 읽어 `pathSegments` 기반으로 처리한다.

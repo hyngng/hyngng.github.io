@@ -4,12 +4,24 @@
 @import "./typography.css";
 @import url("/fonts/Reddit_Mono/redditmono.css");
 
-/* Opt in to cross-document view transitions (same-origin MPA navigations).
-   On click, the outgoing document's snapshot (e.g. a button mid hover-glow)
-   cross-fades into the fresh document instead of cutting instantly. Skipped
-   automatically where unsupported (Firefox) or for reduced-motion users. */
-@view-transition {
-  navigation: auto;
+/* Swup content fade (Fuwari pattern, see astro.config.mjs). Swup adds
+   `is-changing` for the whole visit and `is-animating` while the outgoing
+   content animates; removing `is-animating` after the swap is what plays
+   the fade-in. Only <main> carries the animation class — the frame chrome
+   outside it stays fully live during the visit. */
+html.is-changing .transition-swup-fade {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+html.is-animating .transition-swup-fade {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-changing .transition-swup-fade {
+    transition: none;
+  }
 }
 
 :root {

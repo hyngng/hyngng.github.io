@@ -230,6 +230,8 @@ for (const heading of filteredHeadings) {
   }
 
   initTOC();
+  // Swup replaces <main> on every visit; re-init against the fresh content.
+  document.addEventListener("astro:page-load", initTOC);
 </script>
 
 <style>

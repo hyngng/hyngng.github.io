@@ -38,7 +38,7 @@ const rssUrl = personaId
 </div>
 
 <div class="fixed-actions">
-  <div class="action-block left-action">
+  <div class="action-block left-action" id="home-action">
     <Button as="a" href={homeUrl} variant="title" aria-label={siteMeta.title}>
       <span class="home-text">{siteMeta.title}</span>
       <svg class="home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
@@ -64,6 +64,7 @@ const rssUrl = personaId
         href={rssUrl}
         variant="icon"
         aria-label={locale.frame.rssAria}
+        data-no-swup
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M0 64C0 46.3 14.3 32 32 32c229.8 0 416 186.2 416 416c0 17.7-14.3 32-32 32s-32-14.3-32-32C384 253.6 226.4 96 32 96C14.3 96 0 81.7 0 64zM0 416a64 64 0 1 1 128 0A64 64 0 1 1 0 416zM32 160c159.1 0 288 128.9 288 288c0 17.7-14.3 32-32 32s-32-14.3-32-32c0-123.7-100.3-224-224-224c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
       </Button>
@@ -478,15 +479,15 @@ const rssUrl = personaId
 
     if (!langToggle || !langList || !rightActionsInner) return;
 
-    const langItems = langList.querySelectorAll(".lang-item");
-    const currentSegment = langList.dataset.currentSegment || "";
-    const localeSegments = JSON.parse(
-      langList.dataset.localeSegments || "{}",
-    );
-
     let isOpen = false;
 
     function getLocalizedPath(langCode: string) {
+      // Read the dataset at call time: swup's morph refreshes it after each
+      // navigation, and the closure must never serve stale values.
+      const currentSegment = langList!.dataset.currentSegment || "";
+      const localeSegments = JSON.parse(
+        langList!.dataset.localeSegments || "{}",
+      );
       const targetSegment = localeSegments[langCode] || "";
       const pathSegments = window.location.pathname
         .split("/")
@@ -500,7 +501,13 @@ const rssUrl = personaId
         pathSegments.unshift(targetSegment);
       }
 
-      return `/${pathSegments.join("/")}${window.location.search}${window.location.hash}`;
+      // Preserve the trailing slash so the navigation matches the canonical
+      // directory URL instead of relying on a server redirect.
+      const trailingSlash =
+        pathSegments.length > 0 && window.location.pathname.endsWith("/")
+          ? "/"
+          : "";
+      return `/${pathSegments.join("/")}${trailingSlash}${window.location.search}${window.location.hash}`;
     }
 
     function openLangList() {
@@ -550,29 +557,67 @@ const rssUrl = personaId
       { signal },
     );
 
-    const postEl = document.querySelector<HTMLElement>(".post");
-    const availableLocales = postEl?.dataset.availableLocales?.split(",") || [];
+    // Delegated to the stable chrome container (never swapped by swup), and
+    // the language code is read at click time because swup's morph rewrites
+    // the item buttons' dataset after every navigation.
+    rightActionsInner.addEventListener(
+      "click",
+      (e) => {
+        const item = (e.target as HTMLElement).closest<HTMLElement>(
+          ".lang-item",
+        );
+        if (!item || item.getAttribute("aria-disabled") === "true") return;
+        const langCode = item.dataset.lang;
+        if (!langCode) return;
+        const url = getLocalizedPath(langCode);
+        if (window.swup) {
+          window.swup.navigate(url);
+        } else {
+          window.location.href = url;
+        }
+      },
+      { signal },
+    );
 
-    langItems.forEach((item) => {
-      const langCode = (item as HTMLElement).dataset.lang;
+    // Close the list when any swup navigation starts while it is open, so the
+    // collapse runs live — in parallel with the outgoing content fade and the
+    // fetch — through the content swap (the chrome is never swapped).
+    document.addEventListener(
+      "swup:visit:start",
+      () => {
+        if (isOpen) closeLangList();
+      },
+      { signal },
+    );
 
-      if (
-        langCode &&
-        availableLocales.length > 0 &&
-        !availableLocales.includes(langCode)
-      ) {
-        (item as HTMLButtonElement).disabled = true;
-      }
-
-      item.addEventListener(
-        "click",
-        () => {
-          if (!langCode) return;
-          window.location.href = getLocalizedPath(langCode);
-        },
-        { signal },
-      );
+    // Re-apply the per-post disabled states: swup's morph restores the
+    // SSR-rendered (enabled) items, and the availability of a post's
+    // translations lives in the freshly swapped main content.
+    const updateDisabledLangItems = () => {
+      const postEl = document.querySelector<HTMLElement>(".post");
+      const availableLocales =
+        postEl?.dataset.availableLocales?.split(",").filter(Boolean) || [];
+      langList!
+        .querySelectorAll<HTMLElement>(".lang-item")
+        .forEach((item) => {
+          const langCode = item.dataset.lang;
+          const unavailable =
+            langCode != null &&
+            availableLocales.length > 0 &&
+            !availableLocales.includes(langCode);
+          if (unavailable) {
+            item.setAttribute("aria-disabled", "true");
+            (item as HTMLButtonElement).disabled = true;
+          } else {
+            item.removeAttribute("aria-disabled");
+            (item as HTMLButtonElement).disabled = false;
+          }
+        });
+    };
+    document.addEventListener("astro:after-swap", updateDisabledLangItems, {
+      signal,
     });
+    updateDisabledLangItems();
 
     if (themeToggle) {
       themeToggle.addEventListener(

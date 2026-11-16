@@ -218,12 +218,14 @@ const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
   <script>
     import { MOBILE_QUERY } from '../features/post-list';
 
-    const mq = window.matchMedia(MOBILE_QUERY);
-    const modal = document.getElementById('footnote-modal') as HTMLDialogElement | null;
-    const body = document.getElementById('footnote-modal-body');
-    const closeBtn = document.getElementById('footnote-modal-close');
+    function initFootnoteModal() {
+      const mq = window.matchMedia(MOBILE_QUERY);
+      const modal = document.getElementById('footnote-modal') as HTMLDialogElement | null;
+      const body = document.getElementById('footnote-modal-body');
+      const closeBtn = document.getElementById('footnote-modal-close');
 
-    if (modal && body && closeBtn) {
+      if (!modal || !body || !closeBtn) return;
+
       const controller = new AbortController();
       const { signal } = controller;
       let currentTargetId = '';
@@ -331,6 +333,10 @@ const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
         { signal }
       );
     }
+
+    initFootnoteModal();
+    // Swup replaces <main> on every visit; re-init against the fresh content.
+    document.addEventListener('astro:page-load', initFootnoteModal);
   </script>
 </BaseLayout>
 

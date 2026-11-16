@@ -51,6 +51,25 @@ const webSiteJsonLd = serializeJsonLd(
         registerSW({ immediate: true });
       </script>
     )}
+    {import.meta.env.PROD && (
+      <script>
+        // Tracker scripts only count the initial document load; re-emit a
+        // page view for every swup navigation (astro:page-load is dispatched
+        // by @swup/astro after each visit).
+        document.addEventListener('astro:page-load', () => {
+          const w = window as typeof window & {
+            goatcounter?: { count?: (options?: object) => void };
+            gtag?: (...args: unknown[]) => void;
+          };
+          const path = `${location.pathname}${location.search}`;
+          w.goatcounter?.count?.({ path, title: document.title });
+          w.gtag?.('event', 'page_view', {
+            page_title: document.title,
+            page_path: location.pathname,
+          });
+        });
+      </script>
+    )}
     <meta name="theme-color" content="#0a0a0a" />
     {
       SITE.resourceHints.map((hint) => (

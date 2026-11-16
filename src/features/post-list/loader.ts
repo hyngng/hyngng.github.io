@@ -139,8 +139,12 @@ export function createChunkLoader(
 
   const params = new URLSearchParams(location.search);
   const targetChunk = parseInt(params.get('p') || '1', 10);
+  // Merge the chunk state instead of overwriting it: swup marks its own
+  // history entries with `source: 'swup'` and ignores popstate events for
+  // anything else, so clobbering the record would silently disable
+  // back/forward navigation for swup pages.
   if (!history.state || typeof (history.state as { chunk?: unknown }).chunk !== 'number') {
-    history.replaceState({ chunk: targetChunk }, '', location.href);
+    history.replaceState({ ...history.state, chunk: targetChunk }, '', location.href);
   }
   if (targetChunk > 1) {
     loadInitial(targetChunk);

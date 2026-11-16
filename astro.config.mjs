@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import swup from '@swup/astro';
 import { remarkCdnImages } from './src/plugins/remark-cdn-images.ts';
 import { markdownRemarkPlugins } from './src/utils/markdown-syntax.ts';
 import { remarkDirectives } from './src/plugins/remark-directives.mjs';
@@ -58,6 +59,32 @@ export default defineConfig({
   integrations: [
     mdx(),
     validateRoutes(),
+    // Fuwari-style page transitions (see docs/ai-docs/design/frame-layout.md):
+    // only the <main> content container is swapped; the frame chrome stays
+    // live, so its animations run through the swap untouched.
+    swup({
+      theme: false,
+      animationClass: 'transition-swup-',
+      containers: ['main'],
+      smoothScrolling: true,
+      cache: true,
+      preload: true,
+      accessibility: true,
+      updateHead: true,
+      updateBodyClass: false,
+      globalInstance: true,
+      // Legacy /posts/<slug>/ documents are pure redirect stubs without a
+      // <main> container; let the browser load them fully.
+      ignore: ['/posts/'],
+      // Refresh the locale-dependent frame chrome (labels, hrefs, dataset)
+      // from the next page without re-binding its listeners. @swup/astro's
+      // option serialiser collapses any two-element string array into its
+      // last item (deserialise reviver bug), so we morph the single common
+      // parent instead of the two action blocks. morphdom reuses nodes by
+      // id, so the delegation container and the theme toggle keep their
+      // listeners.
+      morph: ['.fixed-actions'],
+    }),
     ...(SITE.pwa.enabled ? [
       astroPwa({
         registerType: 'autoUpdate',
