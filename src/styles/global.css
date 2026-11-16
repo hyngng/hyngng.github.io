@@ -11,7 +11,7 @@
    outside it stays fully live during the visit. */
 html.is-changing .transition-swup-fade {
   opacity: 1;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.175s ease;
 }
 
 html.is-animating .transition-swup-fade {
