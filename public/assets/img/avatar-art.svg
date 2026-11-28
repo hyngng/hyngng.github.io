@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Art persona">
+  <rect width="256" height="256" rx="128" fill="#e8d5c4"/>
+  <circle cx="128" cy="128" r="84" fill="#b45f3f"/>
+  <text x="128" y="154" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="104" fill="#fff">A</text>
+</svg>

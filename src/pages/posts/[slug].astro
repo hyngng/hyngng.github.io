@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import { getPostSlug, getPostLang, getPostPath } from '../../utils/posts';
+import { defaultLocale, useLocale } from '../../locales';
+import { getLocaleEntry } from '../../settings/site.settings';
+
+// Preserves the Jekyll-era URL scheme `/posts/{slug}/` by redirecting to the
+// current post URL. Google treats a 0s meta refresh as a permanent redirect.
+// Also handles legacy `redirect_from` frontmatter paths.
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+
+  const defaultPosts = posts.filter(
+    (post) => !post.data.draft && getPostLang(post) === defaultLocale,
+  );
+
+  const slugToTarget = new Map<string, string>();
+  const currentSlugs = new Set<string>();
+  for (const post of defaultPosts) {
+    const slug = getPostSlug(post.id);
+    slugToTarget.set(slug, getPostPath(post.id, post.data.personas[0]));
+    currentSlugs.add(slug);
+  }
+
+  const paths: Array<{ params: { slug: string }; props: { target: string } }> = [];
+  const usedRedirectSlugs = new Set<string>();
+
+  for (const slug of currentSlugs) {
+    paths.push({ params: { slug }, props: { target: slugToTarget.get(slug)! } });
+  }
+
+  for (const post of posts) {
+    if (!post.data.redirect_from) continue;
+
+    for (const redirectPath of post.data.redirect_from) {
+      const redirectSlug = redirectPath.replace(/^\/?posts\//, '').replace(/\/+$/, '');
+      const target = slugToTarget.get(getPostSlug(post.id));
+      if (
+        redirectSlug &&
+        target &&
+        !currentSlugs.has(redirectSlug) &&
+        !usedRedirectSlugs.has(redirectSlug)
+      ) {
+        usedRedirectSlugs.add(redirectSlug);
+        paths.push({ params: { slug: redirectSlug }, props: { target } });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { target } = Astro.props;
+const absoluteTarget = Astro.site ? new URL(target, Astro.site).toString() : target;
+const locale = useLocale(Astro);
+const lang = getLocaleEntry(Astro.currentLocale).bcp47;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <link rel="canonical" href={absoluteTarget} />
+  <script is:inline define:vars={{ absoluteTarget }}>location = absoluteTarget;</script>
+  <meta http-equiv="refresh" content={`0;url=${absoluteTarget}`} />
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+  <a href={absoluteTarget}>{locale.redirect.fallbackLink}</a>
+</body>
+</html>

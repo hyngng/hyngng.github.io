@@ -1,0 +1,435 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
+import { SITE, getLocaleEntry } from '../settings/site.settings';
+import { getPersona, getPersonaProfileUrls, normalizeTwitterHandle } from '../settings/personas.settings';
+import Persona from '../components/Persona.astro';
+import BaseLayout from './BaseLayout.astro';
+import PostFooter from '../components/PostFooter.astro';
+import Comments from '../components/Comments.astro';
+import TOC from '../components/TOC.astro';
+import MorePosts from '../components/MorePosts.astro';
+import Adsense from '../components/seo/analytics/Adsense.astro';
+import { countCharacters, extractExcerpt, META_DESCRIPTION_MAX_LENGTH, getPostNumber, getPostSlug, getPostLang, getPostPath, getPersonaPath } from '../utils/posts';
+import { buildBlogPostingJsonLd, buildBreadcrumbJsonLd, serializeJsonLd } from '../utils/jsonLd';
+import { usePageContext } from '../utils/pageContext';
+import katexCssUrl from 'katex/dist/katex.min.css?url';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  headings?: MarkdownHeading[];
+}
+
+const { lang, locale, siteMeta, defaultLocale } = usePageContext(Astro);
+const { post, headings = [] } = Astro.props;
+const tocHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 4);
+const shouldShowToc = post.data.toc !== false && tocHeadings.length > 0;
+
+const allPublishedPosts = await getCollection('posts', ({ data }) => !data.draft);
+const allPublishedPostsInLang = allPublishedPosts.filter(p => getPostLang(p) === lang);
+
+const primaryPersonaId = post.data.personas[0];
+const currentPostTime = post.data.date.getTime();
+const morePosts = allPublishedPostsInLang
+  .filter(p => p.id !== post.id && p.data.personas.includes(primaryPersonaId))
+  .sort((a, b) => {
+    const diffA = Math.abs(a.data.date.getTime() - currentPostTime);
+    const diffB = Math.abs(b.data.date.getTime() - currentPostTime);
+    if (diffA !== diffB) return diffA - diffB;
+    return b.data.date.getTime() - a.data.date.getTime();
+  })
+  .slice(0, 3)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const shouldShowMorePosts = morePosts.length > 0;
+
+const personasMeta = post.data.personas.map(id => {
+  const persona = getPersona(id, lang);
+  const postsForPersona = allPublishedPostsInLang.filter(p => p.data.personas.includes(id));
+  const postNumber = getPostNumber(postsForPersona, post.id);
+  return {
+    ...persona,
+    postNumber,
+  };
+});
+
+const characterCount = countCharacters(post.body);
+const postDescription = extractExcerpt(post.data.description, post.body, META_DESCRIPTION_MAX_LENGTH) || siteMeta.description;
+
+const fediverseCreators = [
+  ...new Set(
+    personasMeta
+      .map((a) => a.social?.fediverse || SITE.social.fediverse)
+      .filter((handle): handle is string => Boolean(handle))
+  ),
+];
+
+const currentSlug = getPostSlug(post.id);
+const currentPersona = post.data.personas[0];
+const postTranslations = allPublishedPosts
+  .filter(p => p.data.personas[0] === currentPersona && getPostSlug(p.id) === currentSlug)
+  .map(p => {
+    const lang = getPostLang(p);
+    return {
+      lang,
+      href: new URL(getPostPath(p.id, p.data.personas[0], lang), Astro.url.origin).toString(),
+    };
+  });
+const availableLocalesForPost = postTranslations.map(t => t.lang);
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).toString();
+
+const hreflangAlternates = postTranslations.map(t => ({
+  hreflang: getLocaleEntry(t.lang).bcp47,
+  href: t.href,
+}));
+if (postTranslations.length > 1) {
+  const defaultTranslation = postTranslations.find(t => t.lang === defaultLocale);
+  if (defaultTranslation) {
+    hreflangAlternates.push({ hreflang: 'x-default', href: defaultTranslation.href });
+  }
+}
+
+const twitterCreators = [
+  ...new Set(
+    personasMeta
+      .map((a) => a.social?.twitter || SITE.social.twitter)
+      .filter((handle): handle is string => Boolean(handle))
+  ),
+].map(normalizeTwitterHandle);
+const twitterSite = SITE.social.twitter
+  ? normalizeTwitterHandle(SITE.social.twitter)
+  : undefined;
+
+const ogImageUrl = post.data.og_image
+  || post.data.image?.path
+  || new URL(SITE.ogImage, Astro.url.origin).toString();
+const jsonLdImage = post.data.image?.path || ogImageUrl;
+const jsonLd = buildBlogPostingJsonLd({
+  title: post.data.title,
+  description: postDescription,
+  image: jsonLdImage,
+  datePublished: post.data.date.toISOString(),
+  dateModified: (post.data.last_modified_at || post.data.date).toISOString(),
+  personas: personasMeta.map(a => ({
+    name: a.name,
+    url: new URL(getPersonaPath(a.name, lang), Astro.url.origin).toString(),
+    sameAs: getPersonaProfileUrls(a),
+  })),
+  inLanguage: getLocaleEntry(lang).bcp47,
+  url: canonicalUrl,
+});
+const jsonLdString = serializeJsonLd(jsonLd);
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+  { name: siteMeta.title, url: new URL('/', Astro.url.origin).toString() },
+  { name: getPersona(primaryPersonaId, lang).name, url: new URL(getPersonaPath(primaryPersonaId, lang), Astro.url.origin).toString() },
+  { name: post.data.title, url: canonicalUrl },
+]);
+const breadcrumbJsonLdString = serializeJsonLd(breadcrumbJsonLd);
+---
+
+    <BaseLayout lang={lang} title={post.data.title} enableMermaid={post.data.mermaid}>
+  <Fragment slot="head">
+    <meta name="description" content={postDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    {hreflangAlternates.map((alt) => (
+      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+    ))}
+    <meta name="author" content={personasMeta.map((a) => a.name).join(', ')} />
+    <meta property="og:title" content={post.data.title} />
+    <meta property="og:description" content={postDescription} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteMeta.title} />
+    <meta property="og:locale" content={getLocaleEntry(lang).ogLocale} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="article:published_time" content={post.data.date.toISOString()} />
+    <meta property="article:modified_time" content={(post.data.last_modified_at || post.data.date).toISOString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={post.data.title} />
+    <meta name="twitter:description" content={postDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {twitterSite && <meta name="twitter:site" content={twitterSite} />}
+    {twitterCreators.map((handle) => (
+      <meta name="twitter:creator" content={handle} />
+    ))}
+    {fediverseCreators.map((handle) => (
+      <meta name="fediverse:creator" content={handle} />
+    ))}
+    {post.data.math && <link rel="stylesheet" href={katexCssUrl} />}
+    <script type="application/ld+json" is:inline set:html={jsonLdString} />
+    <script type="application/ld+json" is:inline set:html={breadcrumbJsonLdString} />
+  </Fragment>
+  <article class="content-shell post" data-available-locales={availableLocalesForPost.join(',')} data-pagefind-filter={`lang:${lang}`}>
+    {post.data.personas.map(id => (
+      <span hidden data-pagefind-filter={`persona:${id}`}></span>
+    ))}
+    <header class="post-header">
+      <h1>{post.data.title}</h1>
+      <div class="post-meta" aria-label="post metadata">
+        {personasMeta.map(a => (
+          <Persona id={a.name} avatar={a.avatar} name={a.name} info={locale.posts.postNumber(a.postNumber)} />
+        ))}
+      </div>
+    </header>
+
+    <div class="post-body-container">
+      <article class="post-content" data-pagefind-body>
+        {post.data.start_with_ads && (
+          <aside class="post-ads-top" data-pagefind-ignore aria-label="advertisement">
+            <Adsense />
+          </aside>
+        )}
+        <slot />
+      </article>
+      {shouldShowToc && (
+        <aside class="post-toc-container">
+          <TOC headings={tocHeadings} />
+        </aside>
+      )}
+    </div>
+
+    <div class="post-footer-container">
+      <PostFooter 
+        publishDate={post.data.date} 
+        updateDate={post.data.last_modified_at} 
+        characterCount={characterCount} 
+        lang={lang}
+      />
+      {shouldShowMorePosts && (
+        <aside class="post-more-posts-container">
+          <MorePosts posts={morePosts} lang={lang} />
+        </aside>
+      )}
+    </div>
+    
+    <Comments />
+  </article>
+
+  <dialog class="footnote-modal" id="footnote-modal" aria-labelledby="footnote-modal-body">
+    <div class="footnote-modal-card" tabindex="-1">
+      <div class="footnote-modal-body" id="footnote-modal-body"></div>
+      <button class="footnote-modal-close" id="footnote-modal-close" type="button">
+        {locale.footnote.close}
+      </button>
+    </div>
+  </dialog>
+
+  <script>
+    import { MOBILE_QUERY } from '../features/post-list';
+
+    function initFootnoteModal() {
+      const mq = window.matchMedia(MOBILE_QUERY);
+      const modal = document.getElementById('footnote-modal') as HTMLDialogElement | null;
+      const body = document.getElementById('footnote-modal-body');
+      const closeBtn = document.getElementById('footnote-modal-close');
+
+      if (!modal || !body || !closeBtn) return;
+
+      const controller = new AbortController();
+      const { signal } = controller;
+      let currentTargetId = '';
+
+      const closeModal = () => {
+        if (!modal.open || modal.classList.contains('is-closing')) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          modal.close();
+          return;
+        }
+        modal.classList.add('is-closing');
+        modal.addEventListener(
+          'animationend',
+          () => {
+            modal.classList.remove('is-closing');
+            modal.close();
+          },
+          { once: true }
+        );
+      };
+
+      document.addEventListener(
+        'click',
+        (e) => {
+          const link = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[data-footnote-ref]');
+          if (!link || !mq.matches) return;
+
+          e.preventDefault();
+          const wrapper = link.closest('.footnote-ref-wrapper');
+          const tooltip = wrapper?.querySelector('.footnote-tooltip');
+          if (!tooltip) return;
+
+          currentTargetId = link.getAttribute('href') || '';
+          body.innerHTML = tooltip.innerHTML;
+          body.scrollTop = 0;
+
+          const backref = body.querySelector<HTMLAnchorElement>('a[data-footnote-backref]');
+          if (backref && currentTargetId) {
+            backref.setAttribute('href', currentTargetId);
+          }
+
+          modal.showModal();
+          body.scrollTop = 0;
+          document.documentElement.classList.add('modal-open');
+        },
+        { signal }
+      );
+
+      body.addEventListener(
+        'click',
+        (e) => {
+          const backref = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[data-footnote-backref]');
+          if (!backref) return;
+
+          e.preventDefault();
+          closeModal();
+          if (currentTargetId) {
+            const targetEl = document.querySelector(currentTargetId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+            history.pushState(null, '', currentTargetId);
+          }
+        },
+        { signal }
+      );
+
+      closeBtn.addEventListener('click', closeModal, { signal });
+
+      modal.addEventListener(
+        'cancel',
+        (e) => {
+          e.preventDefault();
+          closeModal();
+        },
+        { signal }
+      );
+
+      modal.addEventListener(
+        'click',
+        (event) => {
+          const card = modal.querySelector('.footnote-modal-card');
+          if (!card) return;
+          const rect = card.getBoundingClientRect();
+          const isInCard =
+            rect.top <= event.clientY &&
+            event.clientY <= rect.top + rect.height &&
+            rect.left <= event.clientX &&
+            event.clientX <= rect.left + rect.width;
+          if (!isInCard) {
+            closeModal();
+          }
+        },
+        { signal }
+      );
+
+      modal.addEventListener(
+        'close',
+        () => {
+          document.documentElement.classList.remove('modal-open');
+          body.scrollTop = 0;
+          body.innerHTML = '';
+          currentTargetId = '';
+        },
+        { signal }
+      );
+    }
+
+    initFootnoteModal();
+    // Swup replaces <main> on every visit; re-init against the fresh content.
+    document.addEventListener('astro:page-load', initFootnoteModal);
+  </script>
+</BaseLayout>
+
+<style>
+  .post {
+    margin-top: var(--post-margin-top);
+    color: var(--color-text);
+  }
+
+  .post-header {
+    max-width: var(--post-header-width);
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--color-heading);
+    font-size: var(--font-size-post-title);
+    line-height: var(--line-height-post-title);
+    font-weight: var(--font-weight-post-title);
+    letter-spacing: 0;
+    text-rendering: geometricPrecision;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-post-meta-list);
+    margin-top: var(--space-post-title-meta);
+  }
+
+  .post-body-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: var(--space-post-meta-content);
+  }
+
+  .post-content {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .post-ads-top {
+    margin-bottom: var(--space-section-title-content);
+    width: 100%;
+  }
+
+  .post-toc-container {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    bottom: 0;
+    width: var(--post-toc-width);
+    margin-left: var(--space-post-toc-gap);
+  }
+
+  .post-toc-container > :global(*) {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-post-toc-sticky-top));
+  }
+
+  .post-footer-container {
+    position: relative;
+    margin-top: var(--post-footer-margin-top);
+    margin-bottom: var(--post-footer-margin-bottom);
+  }
+
+  .post-more-posts-container {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: var(--post-toc-width);
+    margin-left: var(--space-post-toc-gap);
+  }
+
+  @media (max-width: 1280px) {
+    .post-toc-container {
+      display: none;
+    }
+
+    .post-more-posts-container {
+      position: static;
+      width: 100%;
+      margin-left: 0;
+      margin-top: var(--space-post-comments-margin-top);
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 960px) {
+    h1 {
+      font-size: var(--font-size-post-title-mobile);
+      line-height: var(--line-height-post-title-mobile);
+    }
+  }
+</style>

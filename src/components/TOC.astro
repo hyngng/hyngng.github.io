@@ -1,0 +1,359 @@
+---
+import type { MarkdownHeading } from "astro";
+import { useLocale } from "../locales";
+
+interface Props {
+  headings: MarkdownHeading[];
+  title?: string;
+}
+
+const locale = useLocale(Astro);
+const { headings, title = locale.toc.title } = Astro.props;
+const filteredHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+
+interface TocSubgroup {
+  heading: MarkdownHeading;
+  children: MarkdownHeading[];
+}
+
+interface TocGroup {
+  heading: MarkdownHeading;
+  subgroups: TocSubgroup[];
+}
+
+const tocGroups: TocGroup[] = [];
+
+for (const heading of filteredHeadings) {
+  if (heading.depth === 2 || tocGroups.length === 0) {
+    tocGroups.push({ heading, subgroups: [] });
+    continue;
+  }
+
+  const lastGroup = tocGroups[tocGroups.length - 1];
+
+  if (heading.depth === 3) {
+    lastGroup.subgroups.push({ heading, children: [] });
+    continue;
+  }
+
+  if (heading.depth === 4 && lastGroup.subgroups.length > 0) {
+    lastGroup.subgroups[lastGroup.subgroups.length - 1].children.push(heading);
+  }
+}
+---
+
+{
+  tocGroups.length > 0 && (
+    <nav class="toc-container" aria-label={locale.toc.aria}>
+      <h2 class="toc-title">
+        {title}
+      </h2>
+      <div class="toc-scroll">
+        <ul class="toc-list">
+          {tocGroups.map((group) => (
+            <li class="toc-group" data-slug={group.heading.slug}>
+              <a href={`#${group.heading.slug}`} class="toc-link toc-link-root" title={group.heading.text}>
+                {group.heading.text}
+              </a>
+              {group.subgroups.length > 0 && (
+                <ul class="toc-sublist">
+                  {group.subgroups.map((subgroup) => (
+                    <li class="toc-subgroup" data-slug={subgroup.heading.slug}>
+                      <a
+                        href={`#${subgroup.heading.slug}`}
+                        class="toc-link toc-link-sub"
+                        title={subgroup.heading.text}
+                      >
+                        {subgroup.heading.text}
+                      </a>
+                      {subgroup.children.length > 0 && (
+                        <ul class="toc-subsublist">
+                          {subgroup.children.map((heading) => (
+                            <li
+                              class="toc-item depth-4"
+                              data-slug={heading.slug}
+                            >
+                              <a href={`#${heading.slug}`} class="toc-link" title={heading.text}>
+                                {heading.text}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  )
+}
+
+<script>
+  let tocController: AbortController | undefined;
+
+  function initTOC() {
+    const headings = Array.from(
+      document.querySelectorAll(
+        ".post-content h2, .post-content h3, .post-content h4",
+      ),
+    );
+    const tocLinks = Array.from(document.querySelectorAll(".toc-link"));
+    const tocGroups = Array.from(document.querySelectorAll(".toc-group"));
+    const tocSubgroups = Array.from(document.querySelectorAll(".toc-subgroup"));
+
+    if (tocController) {
+      tocController.abort();
+      tocController = undefined;
+    }
+
+    const controller = new AbortController();
+    tocController = controller;
+    const { signal } = controller;
+
+    if (headings.length === 0) return;
+
+    const getActivationLine = () => {
+      const scrollMarginTop = getComputedStyle(headings[0]).scrollMarginTop;
+      return parseFloat(scrollMarginTop) || 0;
+    };
+
+    const computeActiveSlug = () => {
+      const activationLine = getActivationLine();
+      let activeSlug = headings[0].getAttribute("id") || "";
+
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top > activationLine + 1) break;
+        activeSlug = heading.getAttribute("id") || activeSlug;
+      }
+
+      return activeSlug;
+    };
+
+    const render = (slug: string) => {
+      tocLinks.forEach((link) => {
+        const href = link.getAttribute("href")?.substring(1);
+        const isActive = href === slug;
+        link.classList.toggle("active", isActive);
+        if (isActive) {
+          link.setAttribute("aria-current", "location");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+
+      const activeLink = tocLinks.find(
+        (link) => link.getAttribute("href")?.substring(1) === slug,
+      );
+
+      const activeGroupEl = activeLink?.closest<HTMLElement>(".toc-group") || null;
+      tocGroups.forEach((group) => {
+        group.classList.toggle("expanded", group === activeGroupEl);
+      });
+
+      const activeSubgroupEl = activeLink?.closest<HTMLElement>(".toc-subgroup") || null;
+      tocSubgroups.forEach((subgroup) => {
+        subgroup.classList.toggle("expanded", subgroup === activeSubgroupEl);
+      });
+    };
+
+    let pendingSlug: string | null = null;
+    let pendingTimeout: number | undefined;
+
+    const clearPending = () => {
+      pendingSlug = null;
+      if (pendingTimeout !== undefined) {
+        window.clearTimeout(pendingTimeout);
+        pendingTimeout = undefined;
+      }
+    };
+
+    const updateActiveHeading = () => {
+      const activeSlug = computeActiveSlug();
+
+      if (pendingSlug !== null && activeSlug !== pendingSlug) {
+        return;
+      }
+      if (pendingSlug !== null) clearPending();
+
+      render(activeSlug);
+    };
+
+    tocLinks.forEach((link) => {
+      link.addEventListener(
+        "click",
+        () => {
+          const destSlug = link.getAttribute("href")?.substring(1);
+          if (!destSlug) return;
+
+          pendingSlug = destSlug;
+          render(destSlug);
+
+          if (pendingTimeout !== undefined) window.clearTimeout(pendingTimeout);
+          pendingTimeout = window.setTimeout(() => {
+            clearPending();
+            render(computeActiveSlug());
+          }, 1000);
+        },
+        { signal },
+      );
+    });
+
+    let animationFrame: number | undefined;
+    const scheduleActiveHeadingUpdate = () => {
+      if (animationFrame !== undefined) return;
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = undefined;
+        updateActiveHeading();
+      });
+    };
+
+    window.addEventListener("scroll", scheduleActiveHeadingUpdate, {
+      passive: true,
+      signal,
+    });
+    window.addEventListener("resize", scheduleActiveHeadingUpdate, { signal });
+    window.addEventListener("hashchange", scheduleActiveHeadingUpdate, {
+      signal,
+    });
+    signal.addEventListener("abort", () => {
+      if (animationFrame !== undefined)
+        window.cancelAnimationFrame(animationFrame);
+      if (pendingTimeout !== undefined)
+        window.clearTimeout(pendingTimeout);
+    });
+
+    updateActiveHeading();
+  }
+
+  initTOC();
+  // Swup replaces <main> on every visit; re-init against the fresh content.
+  document.addEventListener("astro:page-load", initTOC);
+</script>
+
+<style>
+  .toc-container li {
+    margin: 0;
+  }
+
+  .toc-container {
+    width: 100%;
+  }
+
+  .toc-title {
+    margin: 0 0 var(--toc-title-list-gap) 0;
+    font-size: var(--post-card-font-title);
+    font-weight: 700;
+    color: var(--color-subtitle);
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--toc-item-gap);
+  }
+
+  .toc-group {
+    line-height: 1.4;
+  }
+
+  .toc-subgroup {
+    line-height: 1.4;
+  }
+
+  .toc-sublist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--toc-item-gap);
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-3px);
+    overflow: hidden;
+    pointer-events: none;
+    margin-top: 0;
+    transition:
+      max-height 180ms ease,
+      opacity 180ms ease,
+      transform 180ms ease,
+      margin-top 180ms ease;
+  }
+
+  .toc-group.expanded .toc-sublist {
+    max-height: 800px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    margin-top: var(--toc-item-gap);
+  }
+
+  .toc-subsublist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--toc-item-gap);
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-3px);
+    overflow: hidden;
+    pointer-events: none;
+    margin-top: 0;
+    transition:
+      max-height 180ms ease,
+      opacity 180ms ease,
+      transform 180ms ease,
+      margin-top 180ms ease;
+  }
+
+  .toc-subgroup.expanded .toc-subsublist {
+    max-height: 800px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    margin-top: var(--toc-item-gap);
+  }
+
+  .toc-link-sub {
+    padding-left: var(--space-toc-depth-3);
+  }
+
+  .toc-item.depth-4 {
+    padding-left: var(--space-toc-depth-4);
+  }
+
+  .toc-link {
+    display: block;
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: var(--toc-link-font-size);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition:
+      color 0.2s ease,
+      font-weight 0.2s ease;
+  }
+
+  .toc-link-root {
+    font-weight: 400;
+  }
+
+  .toc-link:hover {
+    color: var(--color-heading);
+  }
+
+  .toc-link.active {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+</style>

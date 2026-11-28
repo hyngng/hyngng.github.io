@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../locales';
+import PostColumns from './PostColumns.astro';
+import { getPostPath } from '../utils/posts';
+import { SITE } from '../settings/site.settings';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  currentChunk: number;
+  chunkBaseUrl: string;
+  totalPosts: number;
+  nextChunk: number | null;
+  homePath: string;
+  locale: Locale;
+  currentLocale: string;
+}
+
+const {
+  posts, currentChunk, chunkBaseUrl, totalPosts,
+  nextChunk, homePath, locale, currentLocale,
+} = Astro.props;
+const prevChunk = currentChunk > 1 ? currentChunk - 1 : null;
+const chunkSize = SITE.postsPerPage;
+// Contract: `posts` contains up to `chunkSize + PREVIEW_SEED_EXTRA` items from `getChunkStaticPaths`.
+// Index `chunkSize` is the preview seed for the next chunk's LoadMoreCard.
+const nextPreviewPost = nextChunk ? posts[chunkSize] : undefined;
+const totalRemaining = nextChunk ? totalPosts - (currentChunk * chunkSize) : 0;
+const nextChunkCount = nextChunk ? Math.min(chunkSize, totalRemaining) : 0;
+// Display items for the current chunk, excluding the trailing preview seed.
+const chunkPosts = posts.slice(0, chunkSize);
+---
+
+<nav class="chunk-nav">
+  {prevChunk && <a href={`${chunkBaseUrl}/${prevChunk}`}>{locale.posts.chunkPrev}</a>}
+  <a href={homePath}>{locale.posts.chunkHome}</a>
+</nav>
+<div
+  class="posts-grid"
+  data-all-posts={JSON.stringify(chunkPosts.map(p => ({
+    path: getPostPath(p.id, p.data.personas, currentLocale),
+    title: p.data.title,
+    description: p.data.description || '',
+  })))}
+>
+  <PostColumns
+    posts={chunkPosts}
+    indexOffset={(currentChunk - 1) * chunkSize}
+    showLoadMore={!!nextChunk && !!nextPreviewPost}
+    nextChunkUrl={nextChunk ? `${chunkBaseUrl}/${nextChunk}` : chunkBaseUrl}
+    {nextPreviewPost}
+    {nextChunkCount}
+    {totalPosts}
+    {totalRemaining}
+    {locale}
+    {currentLocale}
+  />
+</div>
+
+<script>
+  import { watchSpans } from '../features/post-list';
+
+  const columns = document.querySelector('.posts-grid .posts-columns') as HTMLElement | null;
+  if (columns) watchSpans(columns);
+</script>

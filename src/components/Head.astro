@@ -1,0 +1,84 @@
+---
+import { SITE, defaultLocale, getLocaleEntry } from '../settings/site.settings';
+import { getSiteMeta } from '../utils/pageContext';
+import { buildWebSiteJsonLd, serializeJsonLd } from '../utils/jsonLd';
+import GoatCounter from './seo/analytics/GoatCounter.astro';
+import GoogleAnalytics from './seo/analytics/GoogleAnalytics.astro';
+import GoogleTagManager from './seo/analytics/GoogleTagManager.astro';
+import WebmasterVerifications from './seo/webmasters_verifications/WebmasterVerifications.astro';
+import ThemeInit from './ThemeInit.astro';
+
+interface Props {
+  title?: string;
+  lang?: string;
+}
+
+const { title = SITE.title, lang = defaultLocale } = Astro.props;
+const languageCode = getLocaleEntry(lang).code;
+const siteMeta = getSiteMeta(lang);
+const webSiteJsonLd = serializeJsonLd(
+  buildWebSiteJsonLd({
+    url: new URL('/', Astro.url.origin).toString(),
+    name: siteMeta.title,
+    description: siteMeta.description,
+    image: new URL(SITE.ogImage, Astro.url.origin).toString(),
+  }),
+);
+---
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>document.documentElement.dataset.js='true'</script>
+    <meta name="language" content={languageCode} />
+    <link rel="preload" href="/fonts/Pretendard/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/Pretendard/Pretendard-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <title>{title}</title>
+    <script type="application/ld+json" is:inline set:html={webSiteJsonLd} />
+    <ThemeInit />
+    <WebmasterVerifications />
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicons/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png" />
+    <link rel="alternate" type="text/markdown" title="LLM-friendly version" href="/llms.txt" />
+    {import.meta.env.PROD && SITE.pwa.enabled && (
+      <link rel="manifest" href="/manifest.webmanifest" />
+    )}
+    {import.meta.env.PROD && SITE.pwa.enabled && (
+      <script>
+        import { registerSW } from 'virtual:pwa-register';
+        registerSW({ immediate: true });
+      </script>
+    )}
+    {import.meta.env.PROD && (
+      <script>
+        // Tracker scripts only count the initial document load; re-emit a
+        // page view for every swup navigation (astro:page-load is dispatched
+        // by @swup/astro after each visit).
+        document.addEventListener('astro:page-load', () => {
+          const w = window as typeof window & {
+            goatcounter?: { count?: (options?: object) => void };
+            gtag?: (...args: unknown[]) => void;
+          };
+          const path = `${location.pathname}${location.search}`;
+          w.goatcounter?.count?.({ path, title: document.title });
+          w.gtag?.('event', 'page_view', {
+            page_title: document.title,
+            page_path: location.pathname,
+          });
+        });
+      </script>
+    )}
+    <meta name="theme-color" content="#0a0a0a" />
+    {
+      SITE.resourceHints.map((hint) => (
+        <link rel="preconnect" href={hint.origin} crossorigin={hint.crossorigin ? 'anonymous' : undefined} />
+      ))
+    }
+    <style set:html={`:root{--configured-font-family:${SITE.fonts.baseStack};}`} />
+    <GoogleAnalytics />
+    <GoogleTagManager />
+    <GoatCounter />
+    <slot />
+</head>

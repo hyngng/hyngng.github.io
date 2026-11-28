@@ -1,0 +1,634 @@
+---
+import { getSiteMeta } from "../utils/pageContext";
+import Button from "./Button.astro";
+import { getLocale, availableLocales, defaultLocale } from "../locales";
+import { localePath } from "../utils/posts";
+
+interface Props {
+  personaId?: string;
+}
+
+const { personaId } = Astro.props;
+
+const currentCode = Astro.currentLocale || defaultLocale;
+const locale = getLocale(currentCode);
+const siteMeta = getSiteMeta(currentCode);
+const otherLocales = availableLocales.filter((l) => l.code !== currentCode);
+
+const currentSegment = localePath(currentCode).slice(1);
+const localeSegments = Object.fromEntries(
+  availableLocales.map((l) => [l.code, localePath(l.code).slice(1)]),
+);
+
+const homeUrl = currentCode === defaultLocale ? "/" : `/${currentSegment}/`;
+const rssUrl = personaId
+  ? currentCode === defaultLocale
+    ? `/${personaId}/rss.xml`
+    : `/${currentSegment}/${personaId}/rss.xml`
+  : currentCode === defaultLocale
+    ? "/rss.xml"
+    : `/${currentSegment}/rss.xml`;
+---
+
+<div class="frame-border" aria-hidden="true">
+  <div class="frame-edge frame-edge-top"></div>
+  <div class="frame-edge frame-edge-bottom"></div>
+  <div class="frame-edge frame-edge-left"></div>
+  <div class="frame-edge frame-edge-right"></div>
+</div>
+
+<div class="fixed-actions">
+  <div class="action-block left-action" id="home-action">
+    <Button as="a" href={homeUrl} variant="title" aria-label={siteMeta.title}>
+      <span class="home-text">{siteMeta.title}</span>
+      <svg class="home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
+    </Button>
+  </div>
+
+  <div class="action-block right-actions">
+    <div
+      class="right-actions-inner"
+      id="right-actions-inner"
+      style={`--lang-list-width: calc(var(--button-size) * ${otherLocales.length})`}
+    >
+      <Button
+        variant="icon"
+        aria-label={locale.frame.themeAria}
+        id="theme-toggle"
+      >
+        <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391l-19.9 107.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.2c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121l19.9-107.9c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1l90.3-62.3c4.5-3.1 10.2-3.7 15.2-1.6zM256 352a96 96 0 1 0 0-192 96 96 0 1 0 0 192z"/></svg>
+        <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M223.5 32C100 32 0 132.3 0 256.5S100 481 223.5 481c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>
+      </Button>
+      <Button
+        as="a"
+        href={rssUrl}
+        variant="icon"
+        aria-label={locale.frame.rssAria}
+        data-no-swup
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M0 64C0 46.3 14.3 32 32 32c229.8 0 416 186.2 416 416c0 17.7-14.3 32-32 32s-32-14.3-32-32C384 253.6 226.4 96 32 96C14.3 96 0 81.7 0 64zM0 416a64 64 0 1 1 128 0A64 64 0 1 1 0 416zM32 160c159.1 0 288 128.9 288 288c0 17.7-14.3 32-32 32s-32-14.3-32-32c0-123.7-100.3-224-224-224c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+      </Button>
+      <Button
+        variant="text"
+        aria-label={`${locale.frame.lang} — ${locale.frame.langAria}`}
+        aria-expanded="false"
+        aria-controls="lang-list"
+        id="lang-toggle"
+      >
+        {locale.frame.lang}
+      </Button>
+      <div
+        class="lang-list"
+        id="lang-list"
+        aria-hidden="true"
+        inert
+        data-current-segment={currentSegment}
+        data-locale-segments={JSON.stringify(localeSegments)}
+      >
+        {
+          otherLocales.map((l) => (
+            <button class="lang-item" data-lang={l.code}>
+              {l.label}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mobile-bottom-corners" aria-hidden="true"></div>
+
+<style>
+  /* ── Frame border mask ── */
+  .frame-border {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .frame-edge {
+    position: absolute;
+    background-color: var(--color-frame);
+  }
+
+  .frame-edge-top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--frame-thickness);
+  }
+
+  .frame-edge-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--frame-thickness);
+  }
+
+  .frame-edge-left {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--frame-thickness);
+  }
+
+  .frame-edge-right {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: var(--frame-thickness);
+  }
+
+  /* ── Bottom concave corners (desktop) ── */
+  .frame-border::before,
+  .frame-border::after {
+    content: "";
+    position: absolute;
+    width: var(--frame-radius);
+    height: var(--frame-radius);
+    pointer-events: none;
+  }
+
+  .frame-border::before {
+    bottom: var(--frame-thickness);
+    left: var(--frame-thickness);
+    background: radial-gradient(
+      circle at 100% 0%,
+      transparent var(--frame-radius),
+      var(--color-frame) var(--frame-radius)
+    );
+  }
+
+  .frame-border::after {
+    bottom: var(--frame-thickness);
+    right: var(--frame-thickness);
+    background: radial-gradient(
+      circle at 0% 0%,
+      transparent var(--frame-radius),
+      var(--color-frame) var(--frame-radius)
+    );
+  }
+
+  /* ── Container ── */
+  .fixed-actions {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  /* ── Action blocks ── */
+  .action-block {
+    position: absolute;
+    top: calc(var(--frame-thickness) - 1px);
+    padding-top: 1px;
+    height: var(--header-height);
+    background-color: var(--color-frame);
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .left-action {
+    left: calc(var(--frame-thickness) - 1px);
+    padding-left: 1px;
+    border-bottom-right-radius: var(--frame-radius);
+  }
+
+  .right-actions {
+    right: calc(var(--frame-thickness) - 1px);
+    padding-right: 1px;
+    border-bottom-left-radius: var(--frame-radius);
+  }
+
+  /* ── Right actions inner (buttons + lang-list) ── */
+  .right-actions-inner {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: calc(var(--button-size) * 3);
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .right-actions-inner.lang-open {
+    width: calc(var(--button-size) * 3 + var(--lang-list-width, 0px));
+  }
+
+  /* ── Language list ── */
+  .lang-list {
+    display: flex;
+    align-items: center;
+    width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: calc(
+      100vw - var(--button-size) * 3 - var(--frame-thickness) * 2
+    );
+    opacity: 0;
+    transition:
+      width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.25s ease;
+    pointer-events: none;
+    scrollbar-width: none;
+  }
+
+  .lang-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .right-actions-inner.lang-open .lang-list {
+    opacity: 1;
+    pointer-events: auto;
+    width: var(--lang-list-width);
+  }
+
+  .lang-item {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-size);
+    height: var(--button-size);
+    background: transparent;
+    color: var(--color-button-text);
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-action);
+    font-weight: 700;
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color var(--transition-duration) var(--transition-easing),
+      color var(--transition-duration) var(--transition-easing);
+  }
+
+  .lang-item:disabled {
+    color: var(--color-muted);
+    cursor: not-allowed;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lang-item:hover:not(:disabled) {
+      background-color: var(--color-accent);
+    }
+  }
+
+  .lang-item:active:not(:disabled) {
+    background-color: var(--color-accent);
+    transition: background-color 0s;
+  }
+
+  /* ── Home icon (desktop hidden, mobile visible) ── */
+  .home-icon {
+    display: none;
+  }
+
+  /* ── Theme toggle icons ── */
+  #theme-icon-sun {
+    display: inline;
+  }
+
+  #theme-icon-moon {
+    display: none;
+  }
+
+  /* ── Concave corners (pseudo-elements) ── */
+  .left-action::before,
+  .left-action::after,
+  .right-actions::before,
+  .right-actions::after {
+    content: "";
+    position: absolute;
+    width: var(--frame-radius);
+    height: var(--frame-radius);
+    pointer-events: none;
+  }
+
+  .left-action::before,
+  .left-action::after {
+    background: radial-gradient(
+      circle at 100% 100%,
+      transparent var(--frame-radius),
+      var(--color-frame) var(--frame-radius)
+    );
+  }
+
+  .right-actions::before,
+  .right-actions::after {
+    background: radial-gradient(
+      circle at 0 100%,
+      transparent var(--frame-radius),
+      var(--color-frame) var(--frame-radius)
+    );
+  }
+
+  .left-action::before {
+    right: calc(var(--frame-radius) * -1);
+    top: 0;
+  }
+
+  .left-action::after {
+    left: 0;
+    bottom: calc(var(--frame-radius) * -1);
+  }
+
+  .right-actions::before {
+    left: calc(var(--frame-radius) * -1);
+    top: 0;
+  }
+
+  .right-actions::after {
+    right: 0;
+    bottom: calc(var(--frame-radius) * -1);
+  }
+
+  /* ── Mobile bottom corners (desktop hidden) ── */
+  .mobile-bottom-corners {
+    display: none;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 960px) {
+    .fixed-actions {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-frame);
+      height: var(--header-height);
+      pointer-events: auto;
+      max-width: 100vw;
+    }
+
+    .left-action,
+    .right-actions {
+      border-radius: 0;
+    }
+
+    .left-action::before,
+    .left-action::after,
+    .right-actions::before,
+    .right-actions::after {
+      display: none;
+    }
+
+    .fixed-actions::before,
+    .fixed-actions::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      width: var(--frame-radius-mobile);
+      height: var(--frame-radius-mobile);
+      pointer-events: none;
+    }
+
+    .fixed-actions::before {
+      left: 0;
+      background: radial-gradient(
+        circle at 100% 100%,
+        transparent var(--frame-radius-mobile),
+        var(--color-frame) var(--frame-radius-mobile)
+      );
+    }
+
+    .fixed-actions::after {
+      right: 0;
+      background: radial-gradient(
+        circle at 0 100%,
+        transparent var(--frame-radius-mobile),
+        var(--color-frame) var(--frame-radius-mobile)
+      );
+    }
+
+    .home-text {
+      display: none;
+    }
+
+    .home-icon {
+      display: inline;
+    }
+
+    .right-actions-inner.lang-open {
+      width: calc(100vw + var(--button-size) * 2);
+    }
+
+    .lang-list {
+      max-width: calc(100vw - var(--button-size));
+      touch-action: pan-x;
+    }
+
+    .lang-item {
+      transition: background-color 0.5s var(--transition-easing), color 0.5s var(--transition-easing);
+    }
+
+    .mobile-bottom-corners {
+      display: block;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .mobile-bottom-corners::before,
+    .mobile-bottom-corners::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: var(--frame-radius-mobile);
+      height: var(--frame-radius-mobile);
+      pointer-events: none;
+    }
+
+    .mobile-bottom-corners::before {
+      left: 0;
+      background: radial-gradient(
+        circle at 100% 0%,
+        transparent var(--frame-radius-mobile),
+        var(--color-frame) var(--frame-radius-mobile)
+      );
+    }
+
+    .mobile-bottom-corners::after {
+      right: 0;
+      background: radial-gradient(
+        circle at 0% 0%,
+        transparent var(--frame-radius-mobile),
+        var(--color-frame) var(--frame-radius-mobile)
+      );
+    }
+  }
+</style>
+
+<script>
+  let frameAbortController: AbortController | undefined;
+
+  function initFrame() {
+    frameAbortController?.abort();
+    frameAbortController = new AbortController();
+    const { signal } = frameAbortController;
+
+    const themeToggle = document.getElementById("theme-toggle");
+    const langToggle = document.getElementById("lang-toggle");
+    const langList = document.getElementById("lang-list");
+    const rightActionsInner = document.getElementById("right-actions-inner");
+
+    if (!langToggle || !langList || !rightActionsInner) return;
+
+    let isOpen = false;
+
+    function getLocalizedPath(langCode: string) {
+      // Read the dataset at call time: swup's morph refreshes it after each
+      // navigation, and the closure must never serve stale values.
+      const currentSegment = langList!.dataset.currentSegment || "";
+      const localeSegments = JSON.parse(
+        langList!.dataset.localeSegments || "{}",
+      );
+      const targetSegment = localeSegments[langCode] || "";
+      const pathSegments = window.location.pathname
+        .split("/")
+        .filter(Boolean);
+
+      if (currentSegment && pathSegments[0] === currentSegment) {
+        pathSegments.shift();
+      }
+
+      if (targetSegment) {
+        pathSegments.unshift(targetSegment);
+      }
+
+      // Preserve the trailing slash so the navigation matches the canonical
+      // directory URL instead of relying on a server redirect.
+      const trailingSlash =
+        pathSegments.length > 0 && window.location.pathname.endsWith("/")
+          ? "/"
+          : "";
+      return `/${pathSegments.join("/")}${trailingSlash}${window.location.search}${window.location.hash}`;
+    }
+
+    function openLangList() {
+      isOpen = true;
+      langList!.inert = false;
+      langList!.setAttribute("aria-hidden", "false");
+      langToggle!.setAttribute("aria-expanded", "true");
+      rightActionsInner!.classList.add("lang-open");
+    }
+
+    function closeLangList() {
+      isOpen = false;
+      if (langList!.contains(document.activeElement)) langToggle!.focus();
+      langList!.inert = true;
+      langList!.setAttribute("aria-hidden", "true");
+      langToggle!.setAttribute("aria-expanded", "false");
+      rightActionsInner!.classList.remove("lang-open");
+    }
+
+    langToggle.addEventListener(
+      "click",
+      (e) => {
+        e.stopPropagation();
+        isOpen ? closeLangList() : openLangList();
+      },
+      { signal },
+    );
+
+    document.addEventListener(
+      "click",
+      (e) => {
+        if (isOpen && !rightActionsInner.contains(e.target as Node | null)) {
+          closeLangList();
+        }
+      },
+      { signal },
+    );
+
+    document.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Escape" && isOpen) {
+          e.preventDefault();
+          closeLangList();
+        }
+      },
+      { signal },
+    );
+
+    // Delegated to the stable chrome container (never swapped by swup), and
+    // the language code is read at click time because swup's morph rewrites
+    // the item buttons' dataset after every navigation.
+    rightActionsInner.addEventListener(
+      "click",
+      (e) => {
+        const item = (e.target as HTMLElement).closest<HTMLElement>(
+          ".lang-item",
+        );
+        if (!item || item.getAttribute("aria-disabled") === "true") return;
+        const langCode = item.dataset.lang;
+        if (!langCode) return;
+        const url = getLocalizedPath(langCode);
+        if (window.swup) {
+          window.swup.navigate(url);
+        } else {
+          window.location.href = url;
+        }
+      },
+      { signal },
+    );
+
+    // Close the list when any swup navigation starts while it is open, so the
+    // collapse runs live — in parallel with the outgoing content fade and the
+    // fetch — through the content swap (the chrome is never swapped).
+    document.addEventListener(
+      "swup:visit:start",
+      () => {
+        if (isOpen) closeLangList();
+      },
+      { signal },
+    );
+
+    // Re-apply the per-post disabled states: swup's morph restores the
+    // SSR-rendered (enabled) items, and the availability of a post's
+    // translations lives in the freshly swapped main content.
+    const updateDisabledLangItems = () => {
+      const postEl = document.querySelector<HTMLElement>(".post");
+      const availableLocales =
+        postEl?.dataset.availableLocales?.split(",").filter(Boolean) || [];
+      langList!
+        .querySelectorAll<HTMLElement>(".lang-item")
+        .forEach((item) => {
+          const langCode = item.dataset.lang;
+          const unavailable =
+            langCode != null &&
+            availableLocales.length > 0 &&
+            !availableLocales.includes(langCode);
+          if (unavailable) {
+            item.setAttribute("aria-disabled", "true");
+            (item as HTMLButtonElement).disabled = true;
+          } else {
+            item.removeAttribute("aria-disabled");
+            (item as HTMLButtonElement).disabled = false;
+          }
+        });
+    };
+    document.addEventListener("astro:after-swap", updateDisabledLangItems, {
+      signal,
+    });
+    updateDisabledLangItems();
+
+    if (themeToggle) {
+      themeToggle.addEventListener(
+        "click",
+        () => {
+          import("../utils/theme").then(({ toggleTheme }) => toggleTheme());
+        },
+        { signal },
+      );
+    }
+  }
+
+  initFrame();
+</script>
