@@ -1,0 +1,756 @@
+
+article,
+.post-preview-state {
+  color: var(--color-text);
+  max-width: var(--content-width);
+  font-size: 16px;
+  line-height: 1.8;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+article> :first-child,
+.post-preview-state> :first-child {
+  margin-top: 0;
+}
+
+article> :last-child,
+.post-preview-state> :last-child {
+  margin-bottom: 0;
+}
+
+
+article p,
+.post-preview-state p {
+  margin: var(--space-post-paragraph) 0;
+}
+
+article a {
+  color: var(--color-accent);
+}
+
+article a:not(sup a) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+article sup a {
+  text-decoration: none;
+}
+
+article strong {
+  font-weight: 700;
+}
+
+/* 리스트 스타일 */
+article ol,
+article ul {
+  margin: var(--space-post-paragraph) 0;
+  padding-left: 1rem;
+  /* 20px */
+}
+
+article ol {
+  list-style-type: decimal;
+}
+
+article ul {
+  list-style-type: disc;
+}
+
+/* li 요소에 명시적 간격 */
+article li {
+  margin: 0.25rem 0;
+  padding-left: 0.25rem;
+}
+
+/* li 내부 단일 문단은 간격 책임 없음, 간격은 li 마진이 담당 */
+article li > p {
+  margin: 0;
+}
+
+/* 드물게 한 li에 여러 문단이 들어갈 때만 문단 간 최소 간격 */
+article li > p + p {
+  margin-top: 0.4rem;
+}
+
+/* 중첩 리스트는 부모 li 간격에 의존하도록 margin 조정 */
+article li ol,
+article li ul {
+  margin: 0.5rem 0;
+  padding-left: 1.25rem;
+}
+
+/* ── 태스크 리스트 (To-Do List) ── */
+article ul.contains-task-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+article ul.contains-task-list ul.contains-task-list {
+  padding-left: 1rem;
+}
+
+article .task-list-item {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+article .task-list-item input[type="checkbox"] {
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+article hr {
+  border-color: var(--color-line);
+  border-top-width: 1px;
+  margin: calc(var(--space-post-paragraph) * 2) 0;
+}
+
+/* 인용문 */
+article blockquote {
+  color: var(--color-blockquote-text);
+  border-left: 0.1rem solid var(--color-blockquote-bar);
+  margin: 0.8rem 0;
+  padding-left: 0.8rem;
+}
+
+/* 제목 (Headings) */
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+article h1 {
+  margin: var(--space-post-heading-body) 0 0.8rem;
+  font-size: var(--font-size-post-h1);
+}
+
+article h2 {
+  margin: var(--space-post-heading-body-h2) 0 var(--space-post-heading-body-h2-bottom);
+  font-size: var(--font-size-post-h2);
+}
+
+article h3 {
+  margin: var(--space-post-heading-body) 0 0.8rem;
+  font-size: var(--font-size-post-h3);
+}
+
+article h4 {
+  margin: var(--space-post-heading-body) 0 0.8rem;
+  font-size: var(--font-size-post-h4);
+}
+
+article h5 {
+  margin: var(--space-post-heading-body) 0 0.8rem;
+  font-size: var(--font-size-post-h5);
+}
+
+article h6 {
+  margin: var(--space-post-heading-body) 0 0.8rem;
+  font-size: var(--font-size-post-h6);
+}
+
+/* 코드 블록 및 인라인 코드 */
+article code,
+.post-preview-state code {
+  color: var(--color-text);
+  font-family: var(--font-family-code);
+  font-weight: 400;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  background: var(--color-post-inline-code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: var(--inline-code-radius);
+}
+
+article pre,
+.post-preview-state pre {
+  color: var(--color-text);
+  font-family: var(--font-family-code);
+  background-color: var(--color-post-inline-code-bg);
+  padding: var(--block-padding);
+  border-radius: var(--block-radius);
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  margin: var(--block-margin);
+}
+
+article pre code,
+.post-preview-state pre code {
+  display: inline;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* 테이블 스타일 */
+article table {
+  width: max-content;
+  min-width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+}
+
+/* ── 테이블 래퍼 ── */
+article .table-wrapper {
+  margin-bottom: 1.2rem;
+  overflow-x: auto;
+  border: 1px solid var(--color-table-border);
+  border-radius: var(--code-block-radius);
+}
+
+article thead {
+  background-color: var(--color-table-head-bg);
+  border-bottom: 1px solid var(--color-table-border);
+}
+
+article thead th,
+article td {
+  padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
+  max-width: var(--table-cell-max-width);
+}
+
+article thead th {
+  font-weight: 700;
+  color: var(--color-heading);
+  text-align: left;
+}
+
+article td {
+  color: var(--color-text);
+}
+
+article tbody tr {
+  border-bottom: 1px solid var(--color-table-border);
+}
+
+article tbody tr:last-child {
+  border-bottom: none;
+}
+
+
+.post-preview-state {
+  margin-top: 0;
+  margin-bottom: var(--space-post-paragraph);
+}
+
+
+article p:has(img) {
+  margin: 0;
+}
+
+/* 미디어 figure — 상하 대칭 마진 */
+article figure.media-figure {
+  margin: var(--space-image-caption-margin) 0;
+}
+
+/* 이미지 중앙 정렬 + 너비 */
+article p:has(img) img {
+  display: block;
+  margin-inline: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 지시어 span 래퍼 — inline 높이 문제 방지 */
+article p:has(img)>span,
+article figure.media-figure>span {
+  display: block;
+  margin-inline: auto;
+}
+
+/* 캡션 */
+article figure.media-figure>figcaption {
+  display: block;
+  margin-top: var(--space-caption-gap);
+  color: var(--color-muted);
+  text-align: center;
+  font-size: 0.8rem;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+/* Legacy grid (Jekyll-era raw HTML) — row/col-md-6
+   Parsed by rehype-raw; CDN/loading handled by rehype-image-wrapper.
+   IMPORTANT: keep each .row block free of blank lines — a blank line
+   ends the CommonMark type-6 HTML block and splits the markup. */
+article .row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-image-grid-gap);
+  margin: var(--space-image-caption-margin) 0;
+}
+
+@media (max-width: 960px) {
+  article .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Light/Dark Mode Images */
+.img-wrapper.img-light,
+.img-wrapper.light {
+  display: block !important;
+}
+
+.img-wrapper.img-dark,
+.img-wrapper.dark {
+  display: none !important;
+}
+
+html.dark .img-wrapper.img-light,
+html.dark .img-wrapper.light {
+  display: none !important;
+}
+
+html.dark .img-wrapper.img-dark,
+html.dark .img-wrapper.dark {
+  display: block !important;
+}
+
+/* Video Embed — YouTube iframe */
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin: var(--block-margin);
+}
+
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+article::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Video Embed — 로컬 mp4/webm (native <video>) */
+article .video-native {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 432px;
+  margin: var(--block-margin);
+  background: #000;
+}
+
+/* 미디어 figure 내부의 비디오 — figure가 마진을 담당 */
+article figure.media-figure>.video-native,
+article figure.media-figure>.video-embed {
+  margin: 0;
+}
+
+/* Audio Embed — 로컬 mp3/ogg/wav (native <audio>) */
+article .audio-native {
+  display: block;
+  width: 100%;
+  margin: var(--block-margin);
+}
+
+/* 미디어 figure 내부의 오디오 — figure가 마진을 담당 */
+article figure.media-figure>.audio-native {
+  margin: 0;
+}
+
+/* ── Shimmer Image Loading ── */
+
+.img-wrapper {
+  position: relative;
+  /* Fallback until the image header is read (image-reveal.ts overwrites this
+     with the real ratio via inline style once naturalWidth is available). */
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  display: block;
+}
+
+/* Animate the ratio correction (16:9 fallback → real image ratio) instead of
+   an abrupt jump. Only meaningful when JS sets the inline aspect-ratio. */
+html[data-js] .img-wrapper {
+  transition: aspect-ratio 0.25s ease;
+}
+
+/* Shimmer on ::after — above img, visible throughout loading.
+   Gated behind html[data-js] (set in Head.astro): without JS the image
+   must show immediately instead of staying invisible behind the shimmer. */
+html[data-js] .img-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+      var(--color-shimmer) 25%,
+      var(--color-shimmer-highlight) 50%,
+      var(--color-shimmer) 75%);
+  background-size: 200% 100%;
+  animation: shimmer-anim 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Fade out shimmer once image loads */
+html[data-js] .img-wrapper.loaded::after {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+html[data-js] .img-wrapper.loaded {
+  aspect-ratio: auto;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+/* Error state: do nothing — shimmer continues indefinitely so the
+   user sees the gradient animation over the browser's broken-image icon. */
+html[data-js] .img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+html[data-js] .img-wrapper.loaded img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  opacity: 1;
+}
+
+/* No-JS fallback: show the full image without shimmer */
+html:not([data-js]) .img-wrapper {
+  aspect-ratio: auto;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+html:not([data-js]) .img-wrapper img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  opacity: 1;
+}
+
+@keyframes shimmer-anim {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-js] .img-wrapper::after {
+    animation: none;
+  }
+
+  html[data-js] .img-wrapper {
+    transition: none;
+  }
+}
+
+.footnote-ref-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.footnote-tooltip {
+  display: none;
+  max-height: var(--footnote-tooltip-max-height);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  padding: var(--footnote-tooltip-padding);
+  background: var(--color-post-inline-code-bg);
+  color: var(--color-text);
+  font-size: var(--footnote-tooltip-font-size);
+  line-height: var(--footnote-tooltip-line-height);
+  border-radius: var(--footnote-tooltip-radius);
+  z-index: 50;
+  text-align: left;
+}
+
+@media (min-width: 961px) {
+  .footnote-tooltip {
+    position: absolute;
+    width: max-content;
+    min-width: var(--footnote-tooltip-min-width);
+    max-width: var(--footnote-tooltip-max-width);
+    bottom: 100%;
+    left: 50%;
+    translate: -50% 0;
+    margin: 0;
+  }
+
+  .footnote-ref-wrapper:hover .footnote-tooltip {
+    display: block;
+  }
+}
+
+.footnote-tooltip .footnote-block {
+  display: block;
+  margin: var(--space-footnote-block) 0;
+}
+
+.footnote-tooltip .footnote-block:first-child {
+  margin-top: 0;
+}
+
+.footnote-tooltip .footnote-block:last-child {
+  margin-bottom: 0;
+}
+
+.footnote-tooltip a[data-footnote-backref] {
+  display: none;
+}
+
+@media (min-width: 961px) and (prefers-reduced-motion: no-preference) {
+  .footnote-tooltip {
+    animation: tooltip-fade-in 0.15s ease;
+  }
+
+  @keyframes tooltip-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(3px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ── Footnote Modal (Mobile ≤960px) ── */
+.footnote-modal {
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: var(--persona-modal-width, 400px);
+  width: calc(100% - 2rem);
+  margin: auto;
+  border-radius: var(--post-card-radius);
+  box-shadow: 0 16px 48px var(--color-shadow);
+  color: var(--color-text);
+  overflow: visible;
+}
+
+.footnote-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modal-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .footnote-modal[open] {
+    animation: modal-fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .footnote-modal.is-closing {
+    animation: modal-fade-out 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+.footnote-modal-card {
+  background-color: var(--color-bg);
+  border: var(--border-width) var(--border-style) var(--color-border);
+  border-radius: var(--post-card-radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: min(65vh, 480px);
+  outline: none;
+}
+
+.footnote-modal-body {
+  padding: 1.15rem;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footnote-modal-body .footnote-block {
+  display: block;
+  margin: 0.5em 0;
+}
+
+.footnote-modal-body .footnote-block:first-child {
+  margin-top: 0;
+}
+
+.footnote-modal-body .footnote-block:last-child {
+  margin-bottom: 0;
+}
+
+.footnote-modal-body a[data-footnote-backref] {
+  color: var(--color-accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.footnote-modal-close {
+  flex-shrink: 0;
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-top: var(--border-width) var(--border-style) var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-accent);
+  font-family: var(--font-family-base);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.footnote-modal-close:hover,
+.footnote-modal-close:active {
+  background-color: var(--color-accent);
+  color: var(--color-button-text);
+}
+
+/* ── In-Page Anchor Scroll Offset ── */
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6,
+article .footnotes,
+article .footnotes li,
+article [id^="user-content-fn"] {
+  scroll-margin-top: var(--scroll-target-offset);
+}
+
+@media (min-width: 961px) {
+  article .footnotes,
+  article .footnotes li,
+  article [id^="user-content-fn"] {
+    scroll-margin-top: calc(var(--frame-thickness) + 1.5rem);
+  }
+}
+
+/* ── Mermaid 다이어그램 ── */
+article .mermaid {
+  margin: var(--block-margin);
+  text-align: center;
+  overflow-x: auto;
+  line-height: normal;
+  font-size: 12px;
+}
+
+article .mermaid * {
+  line-height: normal;
+}
+
+article .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Admonitions ──
+ * Icon: position absolute (left: 0.8rem, top: 0.8rem), layout flow에서 분리.
+ * Body: 좌측 padding 2.4rem으로 아이콘 영역 확보 (아이콘 0.8rem + 여백), 본문은 흐름대로 렌더링.
+ * Content overrides: 첫/마지스트 자식 마진 제거 + 리스트 마진만 축소.
+ * (틀만 바꾸고 내용물은 존중 — 내부 마크다운 요소는 기본값 따름)
+ */
+.admonition {
+  position: relative;
+  margin: var(--space-post-paragraph) 0;
+  padding: 0.8rem 1rem 0.8rem 2.4rem;
+  border-radius: var(--code-block-radius);
+  background: var(--color-admonition-bg);
+}
+
+.admonition-icon {
+  position: absolute;
+  left: 0.8rem;
+  top: 0.8rem;
+  width: 1rem;
+  height: calc(1em * 1.8);
+  /* article line-height(1.8)와 자동 동기화 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admonition-icon svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: currentColor;
+}
+
+.admonition-body> :first-child {
+  margin-top: 0;
+}
+
+.admonition-body> :last-child {
+  margin-bottom: 0;
+}
+
+.admonition-body p {
+  margin: 0;
+}
+
+.admonition-body p+p {
+  margin-top: 0.4rem;
+}
+
+.admonition-body blockquote {
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: inherit;
+}

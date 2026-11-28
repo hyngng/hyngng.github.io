@@ -1,0 +1,191 @@
+---
+import Footer from "../components/Footer.astro";
+import Frame from "../components/Frame.astro";
+import Head from "../components/Head.astro";
+import { SITE, getLocaleEntry } from "../settings/site.settings";
+import { normalizeTwitterHandle } from "../settings/personas.settings";
+import { buildBreadcrumbJsonLd, serializeJsonLd, type BreadcrumbItem } from "../utils/jsonLd";
+import { usePageContext } from "../utils/pageContext";
+
+import "../styles/global.css";
+interface Props {
+  lang?: string;
+  personaId?: string;
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  breadcrumbItems?: BreadcrumbItem[];
+  enableMermaid?: boolean;
+}
+
+const { lang: propLang, personaId, title, description, noindex = false, breadcrumbItems = [], enableMermaid = false } = Astro.props;
+const { lang, siteMeta } = usePageContext(Astro, { lang: propLang });
+const pageTitle = title || siteMeta.title;
+const siteMetaDescription = description || siteMeta.description;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).toString();
+const defaultOgImageUrl = new URL(SITE.ogImage, Astro.url.origin).toString();
+const breadcrumbJsonLdString = breadcrumbItems.length > 0
+  ? serializeJsonLd(buildBreadcrumbJsonLd(breadcrumbItems))
+  : undefined;
+const twitterSite = SITE.social.twitter
+  ? normalizeTwitterHandle(SITE.social.twitter)
+  : undefined;
+---
+
+<html lang={lang}>
+  <Head title={title} lang={lang}>
+    <slot name="head">
+      <meta name="description" content={siteMetaDescription} />
+      {noindex && <meta name="robots" content="noindex" />}
+      {!noindex && <link rel="canonical" href={canonicalUrl} />}
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={siteMetaDescription} />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:site_name" content={siteMeta.title} />
+      <meta property="og:locale" content={getLocaleEntry(lang).ogLocale} />
+      <meta property="og:image" content={defaultOgImageUrl} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={pageTitle} />
+      <meta name="twitter:description" content={siteMetaDescription} />
+      <meta name="twitter:image" content={defaultOgImageUrl} />
+      {twitterSite && <meta name="twitter:site" content={twitterSite} />}
+      {SITE.social.fediverse && (
+        <meta name="fediverse:creator" content={SITE.social.fediverse} />
+      )}
+      {breadcrumbJsonLdString && (
+        <script type="application/ld+json" is:inline set:html={breadcrumbJsonLdString} />
+      )}
+    </slot>
+  </Head>
+  <body>
+    <div class="viewport-container">
+      <Frame personaId={personaId} />
+      <div class="page-content">
+        <main class="transition-swup-fade">
+          <slot />
+        </main>
+        <Footer />
+      </div>
+      <div class="content-side-fade" aria-hidden="true"></div>
+      <div class="content-side-fade-top" aria-hidden="true"></div>
+    </div>
+    {enableMermaid && (
+      <script>
+        import { initMermaidThemeSync } from '../utils/mermaidThemeSync';
+        initMermaidThemeSync();
+        // Mermaid diagrams in swup-swapped content need re-scanning per view.
+        document.addEventListener('astro:page-load', initMermaidThemeSync);
+      </script>
+    )}
+    <script>
+      import { initShimmer } from '../utils/shimmer';
+      initShimmer();
+      // Shimmer placeholders in swup-swapped content need re-init per view.
+      document.addEventListener('astro:page-load', initShimmer);
+    </script>
+  </body>
+</html>
+
+<style>
+  .viewport-container {
+    position: relative;
+    min-height: 100svh;
+    padding: 0;
+    box-sizing: border-box;
+    isolation: isolate;
+  }
+
+  .viewport-container::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-color: var(--color-bg);
+    pointer-events: none;
+  }
+
+  .page-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: calc(100svh - var(--frame-thickness) * 2);
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+    padding-top: calc(var(--header-height) + var(--layout-padding));
+    padding-left: var(--layout-padding);
+    padding-right: var(--layout-padding);
+    padding-bottom: var(--layout-padding);
+  }
+
+  .content-side-fade,
+  .content-side-fade-top {
+    display: none;
+  }
+
+  @media (min-width: 1281px) {
+    .content-side-fade,
+    .content-side-fade-top {
+      --content-side-mask-boundary: calc((100% - var(--content-width)) / 2);
+
+      position: fixed;
+      right: var(--frame-thickness);
+      left: var(--frame-thickness);
+      z-index: 1;
+      display: block;
+      height: var(--frame-radius);
+      pointer-events: none;
+      background: var(--color-bg);
+    }
+
+    .content-side-fade {
+      bottom: var(--frame-thickness);
+      mask-image: linear-gradient(
+        to right,
+        #000 0,
+        #000 var(--content-side-mask-boundary),
+        transparent var(--content-side-mask-boundary),
+        transparent calc(100% - var(--content-side-mask-boundary)),
+        #000 calc(100% - var(--content-side-mask-boundary)),
+        #000 100%
+      ), linear-gradient(to bottom, transparent, #000);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+    }
+
+    .content-side-fade-top {
+      top: var(--frame-thickness);
+      mask-image: linear-gradient(
+        to right,
+        #000 0,
+        #000 var(--content-side-mask-boundary),
+        transparent var(--content-side-mask-boundary),
+        transparent calc(100% - var(--content-side-mask-boundary)),
+        #000 calc(100% - var(--content-side-mask-boundary)),
+        #000 100%
+      ), linear-gradient(to top, transparent, #000);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .viewport-container {
+      min-height: auto;
+    }
+
+    .page-content {
+      min-height: auto;
+    }
+
+    main {
+      padding-top: var(--layout-padding-mobile);
+      padding-left: var(--layout-padding-mobile);
+      padding-right: var(--layout-padding-mobile);
+    }
+  }
+</style>

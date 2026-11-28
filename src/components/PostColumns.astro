@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../locales';
+import PostCard from './PostCard.astro';
+import LoadMoreCard from './LoadMoreCard.astro';
+import { getPostPath } from '../utils/posts';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  /** Recency index of the first card (chunk pages continue across chunks). */
+  indexOffset?: number;
+  showLoadMore: boolean;
+  nextChunkUrl: string;
+  nextPreviewPost?: CollectionEntry<'posts'>;
+  nextChunkCount: number;
+  totalPosts: number;
+  totalRemaining: number;
+  locale: Locale;
+  currentLocale: string;
+}
+
+const {
+  posts, indexOffset = 0, showLoadMore, nextChunkUrl, nextPreviewPost,
+  nextChunkCount, totalPosts, totalRemaining, locale, currentLocale,
+} = Astro.props;
+---
+
+<div class="posts-columns">
+  {posts.map((post, i) => (
+    <PostCard
+      post={post}
+      href={getPostPath(post.id, post.data.personas, currentLocale)}
+      index={indexOffset + i}
+    />
+  ))}
+  {showLoadMore && nextPreviewPost && (
+    <LoadMoreCard
+      nextChunkUrl={nextChunkUrl}
+      nextPreviewPost={nextPreviewPost}
+      nextChunkCount={nextChunkCount}
+      totalPosts={totalPosts}
+      totalRemaining={totalRemaining}
+      locale={locale}
+    />
+  )}
+</div>
+
+<script is:inline>
+  /* Assign grid-row spans before first paint so the masonry grid needs no
+     second layout pass; no-JS visitors keep the plain stacked flow. Runs
+     synchronously during parsing, so layout and CSS are already available
+     (inline scripts wait for pending stylesheets). */
+  (function () {
+    for (const columns of document.querySelectorAll('.posts-columns')) {
+      columns.setAttribute('data-masonry-js', '');
+      const gap = parseFloat(getComputedStyle(columns).columnGap) || 0;
+      for (const card of columns.querySelectorAll(':scope > .post-card, :scope > .load-more-card')) {
+        const h = card.getBoundingClientRect().height;
+        card.style.gridRow = 'span ' + Math.max(1, Math.ceil((h + gap + 0.5) / 2));
+      }
+    }
+  })();
+</script>

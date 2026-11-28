@@ -1,0 +1,210 @@
+---
+import type { Locale } from '../locales';
+import { defaultLocale } from '../locales';
+
+interface Props {
+  locale: Locale;
+  currentLocale: string;
+  personaId?: string;
+}
+
+const { locale, currentLocale, personaId } = Astro.props;
+---
+
+<aside class="search-container" aria-label={locale.search.aria}>
+  <p class="search-title">{locale.search.title}</p>
+  <div class="search-bar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+    <input
+      type="search"
+      class="search-input"
+      placeholder={locale.search.placeholder}
+      aria-label={locale.search.aria}
+      data-locale={currentLocale}
+      data-default-locale={defaultLocale}
+      data-persona={personaId}
+      autocomplete="off"
+    />
+  </div>
+</aside>
+
+<script>
+  import { requireController, normalizePath, allPostsFromGrid } from '../features/post-list';
+  import { getSearchEngine } from '../features/search/engine';
+
+  let abortController: AbortController | undefined;
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  let searchSeq = 0;
+
+  function initSearch() {
+    abortController?.abort();
+    abortController = new AbortController();
+    const { signal } = abortController;
+
+    if (!document.querySelector('.search-container')) return;
+
+    const allInputs = document.querySelectorAll<HTMLInputElement>('.search-input');
+    const grid = document.querySelector('.posts-grid') as HTMLElement | null;
+    const allPosts = allPostsFromGrid(grid || document.createElement('div'));
+    const fallbackEl = document.querySelector<HTMLElement>('.posts-section .search-fallback');
+
+    allInputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        getSearchEngine(allPosts).catch(err => {
+          console.error('[search:engine]', err);
+        });
+      }, { signal });
+    });
+
+    async function ensureChunksLoaded(
+      controller: ReturnType<typeof requireController>,
+      matchedPaths: Set<string>,
+    ) {
+      if (!grid?.dataset.allPosts) return;
+
+      // Server always provides `data-chunk-size` (SITE.postsPerPage); fallback is defensive, kept manually in sync.
+      const chunkSize = parseInt(grid.dataset.chunkSize || '8', 10);
+      const currentChunk = parseInt(grid.dataset.currentChunk || '1', 10);
+
+      const chunksToLoad = new Set<number>();
+
+      allPosts.forEach((post, index) => {
+        const postChunk = Math.floor(index / chunkSize) + 1;
+        if (postChunk <= currentChunk) return;
+        if (matchedPaths.has(normalizePath(post.path))) chunksToLoad.add(postChunk);
+      });
+
+      if (chunksToLoad.size === 0) return;
+
+      await Promise.allSettled(
+        Array.from(chunksToLoad).map(chunkNum => controller.fetchSearchChunk(chunkNum))
+      );
+    }
+
+    async function handleSearch(query: string) {
+      allInputs.forEach(input => {
+        if (input.value !== query) input.value = query;
+      });
+
+      const controller = requireController();
+
+      if (!query) {
+        searchSeq++;
+        if (fallbackEl) fallbackEl.hidden = true;
+        controller.clearSearch();
+        return;
+      }
+
+      const currentSeq = ++searchSeq;
+
+      const engine = await getSearchEngine(allPosts);
+      if (currentSeq !== searchSeq) return;
+      if (fallbackEl) fallbackEl.hidden = engine.mode !== 'dom';
+
+      const rawLocale = allInputs[0]?.dataset.locale || allInputs[0]?.dataset.defaultLocale;
+      if (!rawLocale) throw new Error('Search locale metadata is missing');
+      const lang = rawLocale;
+      const personaId = allInputs[0]?.dataset.persona || undefined;
+
+      const paths = await engine.search(query, { lang, personaId });
+      if (currentSeq !== searchSeq) return;
+      if (fallbackEl) fallbackEl.hidden = engine.mode !== 'dom';
+
+      await ensureChunksLoaded(controller, new Set(paths));
+      if (currentSeq !== searchSeq) return;
+
+      controller.showSearchResults(paths);
+    }
+
+    allInputs.forEach(input => {
+      input.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          handleSearch(input.value.trim()).catch(err => {
+            console.error('[search]', err);
+          });
+        }, 150);
+      }, { signal });
+    });
+
+    signal.addEventListener('abort', () => {
+      clearTimeout(debounceTimer);
+    });
+  }
+
+  initSearch();
+  // Swup replaces <main> on every visit; re-init against the fresh content.
+  document.addEventListener('astro:page-load', initSearch);
+</script>
+
+<style>
+  .search-container {
+    width: 100%;
+  }
+
+  .search-title {
+    margin: 0 0 var(--space-search-title-gap) 0;
+    font-size: var(--post-card-font-title);
+    font-weight: 700;
+    color: var(--color-subtitle);
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-search-bar-gap);
+    width: var(--search-bar-width);
+    height: var(--search-bar-height);
+    padding: 0 var(--search-bar-padding-x);
+    background-color: var(--color-post-card-bg);
+    /* Same Chirpy boundary as post cards: the bg tint is not enough under
+       Samsung Internet forced dark, the shadow band keeps the edge. */
+    box-shadow: var(--color-card-shadow);
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+
+  .search-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--color-muted);
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    min-width: 0;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-muted);
+    opacity: 0.7;
+  }
+
+  .search-bar:focus-within {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+
+  .search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  @media (max-width: 1280px) {
+    .search-title {
+      display: none;
+    }
+
+    .search-bar {
+      width: 100%;
+    }
+  }
+
+</style>

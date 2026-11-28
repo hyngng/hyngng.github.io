@@ -1,0 +1,80 @@
+import type { Locale } from './index';
+
+const locale: Locale = {
+  description: 'Приветствую 🔥',
+  frame: {
+    lang: 'RU',
+    langAria: 'Выбор языка',
+    themeAria: 'Смена темы',
+    rssAria: 'RSS',
+  },
+  personas: {
+    persona: 'Персоны',
+    otherPersona: 'Другие персоны',
+    otherPersonaSuffix: (n: number) => `и ещё ${n} ${n === 1 ? 'персона' : n < 5 ? 'персоны' : 'персон'}`,
+    personaCount: (n: number) => `Смотреть ${n} персон${n === 1 ? 'у' : n >= 2 && n <= 4 ? 'ы' : ''}`,
+    otherPersonaCount: (n: number) => `Смотреть ${n} друг${n === 1 ? 'ую персону' : n >= 2 && n <= 4 ? 'ие персоны' : 'их персон'}`,
+    closeAria: 'Закрыть',
+  },
+  posts: {
+    title: 'Публикации',
+    empty: 'Постов нет.',
+    postNumber: (n: number) => `Публикация №${n}`,
+    notUpdated: 'Не обновлено',
+    loadMoreCount: (n: number) => `+ ${n} публикаций еще`,
+    loadMoreSub: (total: number, remaining: number) => `${remaining} из ${total} публикаций осталось`,
+    loadMoreHover: (title: string, n: number) => n > 1 ? `${title} и ещё ${n}` : title,
+    chunkPrev: '← Назад',
+    chunkHome: 'Главная',
+  },
+  relativeTime: {
+    today: 'Сегодня',
+    yesterday: 'Вчера',
+    daysAgo: (n: number) => `${n} дней назад`,
+    monthAgo: '1 месяц назад',
+    monthsAgo: (n: number) => `${n} месяцев назад`,
+    yearAgo: '1 год назад',
+    yearsAgo: (n: number) => `${n} лет назад`,
+    inFuture: 'Запланировано',
+  },
+  toc: {
+    title: 'Содержание',
+    aria: 'Содержание',
+  },
+  morePosts: {
+    title: 'Другие публикации',
+    aria: 'Другие публикации',
+  },
+  footnote: {
+    label: 'Сноски',
+    close: 'Закрыть',
+  },
+  footer: {
+    rights: 'Все права защищены',
+    poweredBy: (theme: string) => `На базе Astro с темой ${theme}`,
+  },
+  postFooter: {
+    license: 'Материалы этой страницы распространяются под лицензией <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.',
+    publishDate: 'Дата публикации',
+    lastUpdate: 'Последнее обновление',
+    characterCount: 'Количество символов',
+    characterUnit: 'симв.',
+    dateLocale: 'ru-RU',
+  },
+  search: {
+    title: 'Поиск',
+    placeholder: 'Искать публикации',
+    empty: 'Ничего не найдено.',
+    fallback: 'Индекс поиска недоступен; поиск по заголовкам и описаниям.',
+    aria: 'Поиск публикаций',
+  },
+  notFound: {
+    title: '404: Страница не найдена',
+    description: 'Запрошенный URL не существует.',
+  },
+  redirect: {
+    fallbackLink: 'Нажмите здесь, если вас не перенаправили автоматически.',
+  },
+};
+
+export default locale;

@@ -1,0 +1,21 @@
+---
+// Applies the theme before first paint to avoid a flash of the wrong color
+// scheme. Checks localStorage first, then falls back to OS preference.
+---
+
+<script is:inline>
+  (function() {
+    let stored = null;
+    try {
+      stored = localStorage.getItem('theme');
+    } catch {
+      // Storage may be unavailable in privacy modes.
+    }
+    const isDark = stored
+      ? stored === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const el = document.documentElement;
+    el.classList.toggle('dark', isDark);
+    el.classList.toggle('light', !isDark);
+  })();
+</script>

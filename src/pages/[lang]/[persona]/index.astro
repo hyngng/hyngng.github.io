@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ALL_PERSONAS, PERSONA_PREFIX, getPersona } from '../../../settings/personas.settings';
+import { getSiteMeta } from '../../../utils/pageContext';
+import { getPublishedPosts, getPersonaPath, localePath } from '../../../utils/posts';
+import { getLocale, availableLocales, defaultLocale } from '../../../locales';
+import PersonaPageContent from '../../../components/PersonaPageContent.astro';
+
+export async function getStaticPaths() {
+  const locales = availableLocales.map((l) => l.code).filter((code) => code !== defaultLocale);
+  return ALL_PERSONAS.flatMap((persona) =>
+    locales.map((code) => ({
+      params: { lang: localePath(code).slice(1), persona: persona.name },
+      props: { persona: getPersona(persona.name, code), lang: code },
+    }))
+  );
+}
+
+const { persona, lang } = Astro.props;
+const locale = getLocale(lang);
+const origin = Astro.url.origin;
+
+const sortedPosts = await getPublishedPosts({ lang, personaId: persona.name });
+const breadcrumbItems = [
+  { name: getSiteMeta(lang).title, url: new URL('/', origin).toString() },
+  { name: persona.name, url: new URL(getPersonaPath(persona.name, lang), origin).toString() },
+];
+---
+
+<BaseLayout lang={lang} personaId={persona.name} title={`${PERSONA_PREFIX}${persona.name}`} description={persona.description} breadcrumbItems={breadcrumbItems}>
+  <PersonaPageContent persona={persona} locale={locale} currentLocale={lang} posts={sortedPosts} />
+</BaseLayout>

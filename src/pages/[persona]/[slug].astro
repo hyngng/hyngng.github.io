@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getPostSlug, getPostLang } from '../../utils/posts';
+import { ALL_PERSONAS } from '../../settings/personas.settings';
+import { defaultLocale } from '../../locales';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts');
+  
+   return allPosts.filter(post => !post.data.draft && getPostLang(post) === defaultLocale).flatMap(post => {
+    const persona = ALL_PERSONAS.find(a => a.name === post.data.personas[0]);
+    if (!persona) return [];
+    return [{
+      params: {
+        persona: persona.name,
+        slug: getPostSlug(post.id),
+      },
+      props: { post },
+    }];
+  });
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<PostLayout post={post} headings={headings}>
+  <Content />
+</PostLayout>

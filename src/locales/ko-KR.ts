@@ -1,0 +1,82 @@
+import type { Locale } from './index';
+
+const locale: Locale = {
+  description: '반갑습니다 🔥',
+  frame: {
+    lang: 'KO',
+    langAria: '언어 선택',
+    themeAria: '테마 전환',
+    rssAria: 'RSS',
+  },
+  personas: {
+    persona: '페르소나',
+    otherPersona: '다른 페르소나',
+    otherPersonaSuffix: (n: number) => `및 다른 페르소나 ${n}개`,
+    personaCount: (n: number) => `${n}개 페르소나 보기`,
+    otherPersonaCount: (n: number) => `${n}개 다른 페르소나 보기`,
+    closeAria: '닫기',
+  },
+  posts: {
+    title: '포스트',
+    empty: '포스트가 없습니다.',
+    postNumber: (n: number) => `${n}번째 글`,
+    notUpdated: '업데이트되지 않음',
+    loadMoreCount: (n: number) => `+ ${n}개 포스트 더 보기`,
+    loadMoreSub: (total: number, remaining: number) => `전체 ${total}편 중 ${remaining}편 남음`,
+    loadMoreHover: (title: string, n: number) => n > 1 ? `${title} 외 ${n}건` : title,
+    chunkPrev: '← 이전',
+    chunkHome: '홈으로',
+  },
+  relativeTime: {
+    today: '오늘 작성',
+    yesterday: '어제 작성',
+    daysAgo: (n: number) => `${n}일 전 작성`,
+    monthAgo: '1개월 전 작성',
+    monthsAgo: (n: number) => `${n}개월 전 작성`,
+    yearAgo: '1년 전 작성',
+    yearsAgo: (n: number) => `${n}년 전 작성`,
+    inFuture: '게시 예정',
+  },
+  toc: {
+    title: '목차',
+    aria: '목차',
+  },
+  morePosts: {
+    title: '다른 글 더 보기',
+    aria: '다른 글 더 보기',
+  },
+  footnote: {
+    label: '각주',
+    close: '닫기',
+  },
+  footer: {
+    rights: '일부 권리 보유',
+    poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,
+  },
+  postFooter: {
+    license: '이 페이지의 저작물은 저작권자의 <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> 라이선스를 따릅니다.',
+    publishDate: '게시 날짜',
+    lastUpdate: '최종 업데이트',
+    characterCount: '글자 수',
+    characterUnit: '자',
+    dateLocale: 'ko-KR',
+  },
+  search: {
+    title: '검색',
+    placeholder: '포스트 검색',
+    empty: '검색 결과가 없습니다.',
+    fallback: '검색 인덱스를 불러오지 못해 제목과 설명으로 검색합니다.',
+    aria: '포스트 검색',
+  },
+  notFound: {
+    title: '404: 페이지를 찾을 수 없음',
+    description: '해당 URL은 존재하지 않습니다.',
+  },
+  redirect: {
+    fallbackLink: '이동이 자동으로 되지 않으면 여기를 클릭하세요.',
+  },
+};
+
+export default locale;
+
+

@@ -1,0 +1,65 @@
+.dark {
+  color-scheme: dark;
+  /* ── 기본 컬러 ── */
+  /* Page bg and card bg are borrowed from Chirpy's dark palette
+     (--main-bg / --card-bg); see docs/ai-docs/features/theme-toggle.md. */
+  --color-bg: #1b1b1e;
+  --color-bg-soft: #2a2a2e;
+  --color-text: #AFB0B1;
+  --color-heading: #CACACA;
+  --color-subtitle: var(--color-muted);
+  --color-accent: #E8873A;
+  --color-muted: #877575;
+  --color-line: #877575;
+  --color-blockquote-bar: #424242;
+  --color-blockquote-text: #868686;
+  --color-frame: #0a0a0a;
+
+  /* ── 코드 블록 & Shiki ── */
+  --color-post-inline-code-bg: var(--color-bg-soft);
+  --astro-code-background: var(--color-bg-soft);
+  --astro-code-foreground: #AFB0B1;
+
+  /* One Dark Pro 토큰 매핑 */
+  --astro-code-token-constant: #56b6c2;
+  --astro-code-token-string: #98c379;
+  --astro-code-token-comment: #7f848e;
+  --astro-code-token-keyword: #c678dd;
+  --astro-code-token-parameter: #d19a66;
+  --astro-code-token-function: #61afef;
+  --astro-code-token-string-expression: #98c379;
+  --astro-code-token-punctuation: #abb2bf;
+  --astro-code-token-link: #61afef;
+
+  /* ── 컴포넌트 ── */
+  --color-table-border: #333;
+  --color-table-head-bg: var(--color-bg-soft);
+  --color-post-card-bg: #1e1e1e; /* Chirpy --card-bg */
+  --persona-avatar-placeholder: var(--color-bg-soft);
+  --color-shimmer: #303030;
+  --color-shimmer-highlight: #424242;
+
+  /* ── 테마 토글 아이콘 ── */
+  #theme-icon-sun {
+    display: none;
+  }
+
+  #theme-icon-moon {
+    display: inline;
+  }
+
+  /* ── Border ── */
+  --color-border: #495057;
+  --color-border-translucent: rgba(255, 255, 255, 0.175);
+
+  /* ── Shadow ── */
+  --color-shadow: rgba(0, 0, 0, 0.35);
+
+  /* ── Post card boundary (borrowed from Chirpy's --card-shadow) ── */
+  --color-card-shadow:
+    rgb(21 21 21 / 72%) 0 6px 18px 0,
+    rgb(137 135 135 / 24%) 0 0 0 1px;
+
+  /* ── Admonitions ── */
+  --color-admonition-bg: var(--color-bg-soft);
+}

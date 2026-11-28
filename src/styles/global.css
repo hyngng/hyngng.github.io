@@ -1,0 +1,581 @@
+@import "./pretendard.css";
+@import "./themes/light.css";
+@import "./themes/dark.css";
+@import "./typography.css";
+@import url("/fonts/Reddit_Mono/redditmono.css");
+
+/* Swup content fade (Fuwari pattern, see astro.config.mjs). Swup adds
+   `is-changing` for the whole visit and `is-animating` while the outgoing
+   content animates; removing `is-animating` after the swap is what plays
+   the fade-in. Only <main> carries the animation class — the frame chrome
+   outside it stays fully live during the visit. */
+html.is-changing .transition-swup-fade {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+html.is-animating .transition-swup-fade {
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.is-changing .transition-swup-fade {
+    transition: none;
+  }
+}
+
+:root {
+  --font-pretendard: 'Pretendard';
+  /* ── Typography ───────────────────────── */
+  --font-size-base: 12px;
+  --font-size-action: 22px;
+  --font-size-hero-title: 40px;
+  /* Mobile sizes match the profile header scale of X/Bluesky
+     (display name 20px, bio/description 15px). */
+  --font-size-hero-title-mobile: 20px;
+  --font-size-hero-description: 18px;
+  --font-size-hero-description-mobile: 13px;
+  --font-family-base: var(--configured-font-family, var(--font-pretendard), Inter, system-ui, sans-serif);
+  --font-family-code: 'Reddit Mono', var(--font-pretendard), monospace;
+  --font-weight-hero-title: 700;
+  --line-height-hero-title: 48px;
+  --line-height-hero-title-mobile: 24px;
+  --line-height-hero-description: 22px;
+  --line-height-hero-description-mobile: 18px;
+  --font-size-post-h1: 2rem;
+  --font-size-post-h2: 1.8rem;
+  --font-size-post-h3: 1.6rem;
+  --font-size-post-h4: 1.4rem;
+  --font-size-post-h5: 1.2rem;
+  --font-size-post-h6: 1rem;
+  /* ── Layout ───────────────────────────── */
+  --content-width: 768px;
+  --avatar-size: 40px;
+  --avatar-stack-size: 24px;
+  --avatar-stack-overlap: 10px;
+  --hero-margin-top: 32px;
+  --hero-margin-top-mobile: 16px;
+  --post-margin-top: 32px;
+  --post-header-width: 736px;
+  --section-title-size: 22px;
+  --section-title-line-height: 28px;
+  --font-size-post-title: 40px;
+  --font-size-post-title-mobile: 32px;
+  --font-weight-post-title: 700;
+  --line-height-post-title: 48px;
+  --line-height-post-title-mobile: 36px;
+  --persona-name-size: 14px;
+  --persona-info-size: 12px;
+  --space-hero-title-description: 6px;
+  --space-section-title-content: 24px;
+  --space-persona-avatar-text: 6px;
+  --space-persona-name-info: 4px;
+  --space-post-title-meta: 24px;
+  --space-post-meta-list: 32px;
+  --space-post-meta-content: 64px;
+  --space-post-heading-body: 1.6rem;
+  --space-post-heading-body-h2: 2rem;
+  --space-post-heading-body-h2-bottom: 1rem;
+  --space-post-paragraph: 0.8rem;
+  --table-cell-padding-y: 0.4rem;
+  --table-cell-padding-x: 0.8rem;
+  --table-cell-max-width: 12rem;
+  --post-toc-width: 224px;
+  --space-post-toc-gap: 32px;
+  --space-post-toc-sticky-top: 2rem;
+  --toc-title-list-gap: var(--toc-item-gap);
+  --toc-item-gap: 10px;
+  --toc-heading-offset: 0.8rem;
+  --post-card-radius: 20px;
+  --code-block-radius: 10px;
+  --inline-code-radius: 3px;
+  --block-padding: 0.8rem 1rem;
+  --block-margin: 1.2rem 0;
+  --block-radius: var(--code-block-radius);
+  --post-card-gap: 16px;
+  --post-card-height-no-image: 112px;
+  --post-card-image-aspect-ratio: 40 / 21;
+  --post-card-image-radius: var(--post-card-radius) var(--post-card-radius) 0 0;
+  --posts-section-margin-top: 64px;
+  --frame-thickness: 12px;
+  --button-size: 56px;
+  --frame-radius: calc(var(--button-size) / 2);
+  --frame-radius-mobile: 28px;
+  --header-height: var(--button-size);
+  --scroll-target-offset: var(--frame-thickness);
+  --transition-duration: 0.1s;
+  --transition-easing: ease;
+  --layout-padding: 24px;
+  --layout-padding-mobile: 12px;
+
+  /* ── Border ── */
+  --border-width: 1px;
+  --border-style: solid;
+
+  /* ── Spacing Tokens (component-level) ── */
+  --space-search-sidebar-top: 32px;
+  --persona-modal-width: 400px;
+  --space-search-title-gap: 1.6rem;
+  --space-search-bar-gap: 0.6rem;
+  --search-bar-width: 200px;
+  --search-bar-height: 40px;
+  --search-bar-padding-x: 1rem;
+  --space-card-content-padding: 1.2rem;
+  --space-card-title-gap: 0.8rem;
+  --post-card-font-title: 1rem;
+  --post-card-line-title: 1.2rem;
+  --post-footer-margin-top: 7.2rem;
+  --post-footer-margin-bottom: 2rem;
+  --space-post-footer-meta-gap: 0.6rem;
+  --post-footer-meta-gap: 0.8rem;
+  --post-footer-font-size: 0.875rem;
+  --space-post-comments-margin-top: 3.2rem;
+  --qr-code-size: 64px;
+  --space-toc-depth-3: 0.8rem;
+  --space-toc-depth-4: 1.6rem;
+  --toc-link-font-size: 0.9rem;
+  --space-persona-name-line-height: 20px;
+  --space-persona-info-line-height: 16px;
+  --space-hero-caption-gap: 0.4rem;
+  --button-padding-x: 2rem;
+
+  /* ── Footnote Tooltip Tokens (Desktop) ── */
+  --footnote-tooltip-font-size: 0.875rem;
+  --footnote-tooltip-line-height: 1.6;
+  --footnote-tooltip-padding: 0.75rem 1rem;
+  --footnote-tooltip-min-width: 8rem;
+  --footnote-tooltip-max-width: min(24rem, 80vw);
+  --footnote-tooltip-max-height: min(20rem, 50vh);
+  --footnote-tooltip-radius: var(--code-block-radius);
+  --space-footnote-block: 0.4rem;
+
+  /* ── Component Tokens ── */
+  --footer-padding: 3.2rem;
+  --footer-gap: 0.4rem;
+  --button-padding-y: 0.9rem;
+  --color-button-text: #ffffff;
+  --space-caption-gap: 0.4rem;
+  --space-image-caption-margin: 2rem;
+  --space-image-grid-gap: 1rem;
+  --space-load-more-gap: 0.2rem;
+  --font-size-load-more-sub: 0.875em;
+  --opacity-load-more-sub: 0.8;
+
+  /* ── Chunk Page Tokens ── */
+  --chunk-nav-gap: 0.8rem;
+  --chunk-nav-padding: 0.8rem 1.2rem;
+  --chunk-nav-font-size: 0.7rem;
+  --chunk-grid-padding: 1.2rem;
+}
+
+html {
+  font-family: var(--font-family-base);
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--color-bg);
+  scroll-behavior: smooth;
+  word-break: break-all;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-frame);
+}
+
+@media (max-width: 960px) {
+  :root {
+    --frame-thickness: 0px;
+    --frame-radius: 0px;
+    --button-size: 44px;
+    --font-size-action: 18px;
+    --scroll-target-offset: var(--button-size);
+    --posts-section-margin-top: 40px;
+    --space-search-posts-gap: 16px;
+    --post-card-radius: 12px;
+    /* Tighter name → description gap on mobile, like an SNS profile header */
+    --space-hero-title-description: 4px;
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.content-shell {
+  width: min(100%, var(--content-width));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content-body-layout {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: min(100%, var(--content-width));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-mobile-wrapper {
+  display: none;
+}
+
+.search-sidebar {
+  position: absolute;
+  left: 100%;
+  top: var(--posts-section-margin-top);
+  bottom: 0;
+  width: var(--post-toc-width);
+  margin-left: var(--space-post-toc-gap);
+  padding-top: 0.45rem;
+}
+
+.search-sidebar>* {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-search-sidebar-top));
+}
+
+html.modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 1280px) {
+  .search-sidebar {
+    display: none;
+  }
+
+  .search-mobile-wrapper {
+    display: block;
+    width: 100%;
+    margin-top: var(--posts-section-margin-top);
+  }
+
+  .content-body-layout {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1280px) {
+  .search-mobile-wrapper {
+    position: absolute;
+    top: calc(var(--posts-section-margin-top) + (var(--section-title-line-height) - var(--search-bar-height)) / 2);
+    right: 0;
+    width: var(--search-bar-width);
+    margin-top: 0;
+  }
+}
+
+/* Mobile: keep the search bar right under the hero personas trigger,
+   like the pill buttons sitting under the follower row on X/Bluesky. */
+@media (max-width: 960px) {
+  .search-mobile-wrapper {
+    margin-top: 1rem;
+  }
+}
+
+.chunk-nav {
+  display: flex;
+  gap: var(--chunk-nav-gap);
+  padding: var(--chunk-nav-padding);
+}
+
+.chunk-nav a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--chunk-nav-font-size);
+}
+
+.chunk-nav a:hover {
+  color: var(--color-accent);
+}
+
+/* ── Post list layout: single-container grid masonry ──
+   Cards render in recency (DOM) order, so keyboard focus follows the
+   reading order. The stacked flow below is the no-JS / pre-span fallback;
+   the masonry grid activates once spans are assigned (data-masonry-js, set
+   inline before first paint — see PostColumns and features/post-list/masonry).
+   Auto-placement fills the earliest gap, which keeps "higher on the page =
+   more recent" while tabbing stays sequential. */
+.posts-columns {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--post-card-gap);
+  width: 100%;
+  min-width: 0;
+}
+
+.posts-columns[data-masonry-js] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 2px;
+  grid-auto-flow: row dense;
+  column-gap: var(--post-card-gap);
+  row-gap: 0;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .posts-columns[data-masonry-js] {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chunk-page .posts-columns {
+  padding: 0 var(--chunk-grid-padding);
+}
+
+/* ── Post card boundary (borrowed from Chirpy's --card-shadow) ──
+   Card separation relies on a bg tint (#F7F7F7 vs #EDEDED) that Samsung
+   Internet's forced dark mode compresses into one dark band, erasing the
+   boundary. Chirpy solves the same constraint without browser branching:
+   a near-invisible drop shadow plus a hairline ring in light, a soft glow
+   plus a light hairline in dark. Box-shadows map into the browser's
+   brighter shadow band in forced dark, so the boundary survives. Theme
+   colors stay untouched. See docs/ai-docs/features/theme-toggle.md. */
+.post-card,
+.load-more-card:not([hidden]) {
+  box-shadow: var(--color-card-shadow);
+}
+
+/* ── Post Card Image (shared: PostCard & LoadMoreCard) ──
+   LQIP placeholder on ::before, original img fades in on .loaded.
+   Hidden-until-loaded is gated behind html[data-js] (set in Head.astro):
+   without JS the image must show immediately. */
+
+.post-card-image {
+  position: relative;
+  aspect-ratio: var(--post-card-image-aspect-ratio);
+  background-color: var(--color-border);
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--post-card-image-radius);
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.post-card-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--lqip-url);
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.post-card-image:has(img.loaded)::before {
+  opacity: 0;
+}
+
+.post-card-image img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.35s ease;
+  border-radius: inherit;
+}
+
+html[data-js] .post-card-image img {
+  opacity: 0;
+}
+
+html[data-js] .post-card-image img.loaded {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card-image img {
+    transition: none;
+  }
+}
+
+/* ── Bootstrap-style Utility Classes ── */
+
+/* Sizing */
+.w-25 {
+  width: 25% !important;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.w-75 {
+  width: 75% !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.w-auto {
+  width: auto !important;
+}
+
+.mw-100 {
+  max-width: 100% !important;
+}
+
+/* Float */
+.float-start {
+  float: left !important;
+}
+
+.float-end {
+  float: right !important;
+}
+
+.float-none {
+  float: none !important;
+}
+
+/* Legacy image alignment (compat with existing markdown) */
+.left {
+  float: left !important;
+  margin-right: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.right {
+  float: right !important;
+  margin-left: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Border — base */
+.border {
+  border: var(--border-width, 1px) var(--border-style, solid) var(--color-border, #dee2e6) !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-top {
+  border-top: var(--border-width, 1px) var(--border-style, solid) var(--color-border, #dee2e6) !important;
+}
+
+.border-end {
+  border-right: var(--border-width, 1px) var(--border-style, solid) var(--color-border, #dee2e6) !important;
+}
+
+.border-bottom {
+  border-bottom: var(--border-width, 1px) var(--border-style, solid) var(--color-border, #dee2e6) !important;
+}
+
+.border-start {
+  border-left: var(--border-width, 1px) var(--border-style, solid) var(--color-border, #dee2e6) !important;
+}
+
+.border-top-0 {
+  border-top: 0 !important;
+}
+
+.border-end-0 {
+  border-right: 0 !important;
+}
+
+.border-bottom-0 {
+  border-bottom: 0 !important;
+}
+
+.border-start-0 {
+  border-left: 0 !important;
+}
+
+/* Shadow */
+.shadow {
+  box-shadow: 0 0.5rem 1rem var(--color-shadow) !important;
+}
+
+/* Border radius — Bootstrap 5 scale */
+.rounded {
+  border-radius: 0.3rem !important;
+}
+
+.rounded-0 {
+  border-radius: 0 !important;
+}
+
+.rounded-1 {
+  border-radius: 0.2rem !important;
+}
+
+.rounded-2 {
+  border-radius: 0.3rem !important;
+}
+
+.rounded-3 {
+  border-radius: 0.4rem !important;
+}
+
+.rounded-4 {
+  border-radius: 0.6rem !important;
+}
+
+.rounded-5 {
+  border-radius: 0.8rem !important;
+}
+
+.rounded-10 {
+  border-radius: 8px !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.rounded-pill {
+  border-radius: 40rem !important;
+}
+
+.rounded-top {
+  border-top-left-radius: 0.3rem !important;
+  border-top-right-radius: 0.3rem !important;
+}
+
+.rounded-end {
+  border-top-right-radius: 0.3rem !important;
+  border-bottom-right-radius: 0.3rem !important;
+}
+
+.rounded-bottom {
+  border-bottom-right-radius: 0.3rem !important;
+  border-bottom-left-radius: 0.3rem !important;
+}
+
+.rounded-start {
+  border-top-left-radius: 0.3rem !important;
+  border-bottom-left-radius: 0.3rem !important;
+}
+
+/* Visually hidden — for a11y-only labels (e.g. footnote-label) */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

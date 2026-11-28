@@ -1,0 +1,106 @@
+import type { CollectionEntry } from 'astro:content';
+import { getPublishedPosts, localePath } from './posts';
+import { SITE } from '../settings/site.settings';
+import { ALL_PERSONAS, type PersonaId } from '../settings/personas.settings';
+import { defaultLocale } from '../locales';
+
+interface ChunkProps {
+  posts: CollectionEntry<'posts'>[];
+  currentChunk: number;
+  totalChunks: number;
+  chunkBaseUrl: string;
+  totalPosts: number;
+}
+
+interface ChunkStaticPath {
+  params: { n: string };
+  props: ChunkProps;
+}
+
+/**
+ * Extra post fetched beyond `chunkSize` to serve as the preview seed
+ * for the next chunk's LoadMoreCard without requiring a separate request.
+ */
+export const PREVIEW_SEED_EXTRA = 1;
+
+export async function getChunkStaticPaths(
+  lang: string,
+  chunkBaseUrl: string,
+  personaId?: PersonaId,
+): Promise<ChunkStaticPath[]> {
+  const posts = await getPublishedPosts({ lang, personaId });
+  const chunkSize = SITE.postsPerPage;
+  const chunkCount = Math.ceil(posts.length / chunkSize);
+
+  return Array.from({ length: chunkCount }, (_, i) => ({
+    params: { n: String(i + 1) },
+    props: {
+      // Chunk payload holds `chunkSize + PREVIEW_SEED_EXTRA` posts:
+      // `chunkSize` items for display + 1 trailing post as the preview seed for the next chunk.
+      posts: posts.slice(i * chunkSize, Math.min((i + 1) * chunkSize + PREVIEW_SEED_EXTRA, posts.length)),
+      currentChunk: i + 1,
+      totalChunks: chunkCount,
+      chunkBaseUrl,
+      totalPosts: posts.length,
+    },
+  }));
+}
+
+export interface ChunkRoute {
+  params: Record<string, string>;
+  props: ChunkProps;
+}
+
+interface GetChunkRoutesOptions {
+  /** Non-default language codes to emit. Omit for default-language-only routes. */
+  langs?: string[];
+  /** Emit a route per persona (posts routes stay false). */
+  personas?: boolean;
+}
+
+/**
+ * Shared `getStaticPaths` builder for the four chunk routes:
+ * `/posts/chunk/[n]`, `/[lang]/posts/chunk/[n]`,
+ * `/[persona]/chunk/[n]`, `/[lang]/[persona]/chunk/[n]`.
+ */
+export async function getChunkRoutes(options: GetChunkRoutesOptions = {}): Promise<ChunkRoute[]> {
+  const { langs = [], personas = false } = options;
+  // Routes without a `[lang]` segment emit the default locale ('' -> defaultLocale);
+  // routes with `[lang]` emit only the non-default locales (default is unprefixed).
+  const langCodes = langs.length > 0 ? langs : [''];
+  const personaIds = personas ? ALL_PERSONAS.map((a) => a.name) : [''];
+
+  const routes: ChunkRoute[] = [];
+
+  for (const lang of langCodes) {
+    for (const personaId of personaIds) {
+      const shortLang = lang ? localePath(lang).slice(1) : '';
+      const chunkBaseUrl = personaId
+        ? shortLang
+          ? `/${shortLang}/${personaId}/chunk`
+          : `/${personaId}/chunk`
+        : shortLang
+          ? `/${shortLang}/posts/chunk`
+          : '/posts/chunk';
+
+      const chunkPaths = await getChunkStaticPaths(
+        lang || defaultLocale,
+        chunkBaseUrl,
+        personaId ? (personaId as PersonaId) : undefined,
+      );
+
+      for (const p of chunkPaths) {
+        routes.push({
+          params: {
+            ...(lang ? { lang: shortLang } : {}),
+            ...(personaId ? { persona: personaId } : {}),
+            n: p.params.n,
+          },
+          props: p.props,
+        });
+      }
+    }
+  }
+
+  return routes;
+}

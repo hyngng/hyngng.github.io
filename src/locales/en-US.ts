@@ -1,0 +1,82 @@
+import type { Locale } from './index';
+
+const locale: Locale = {
+  description: 'Greetings 🔥',
+  frame: {
+    lang: 'EN',
+    langAria: 'Select language',
+    themeAria: 'Toggle theme',
+    rssAria: 'RSS',
+  },
+  personas: {
+    persona: 'Personas',
+    otherPersona: 'Other Personas',
+    otherPersonaSuffix: (n: number) => `and ${n} more persona${n !== 1 ? 's' : ''}`,
+    personaCount: (n: number) => `View ${n} Persona${n !== 1 ? 's' : ''}`,
+    otherPersonaCount: (n: number) => `View ${n} Other Persona${n !== 1 ? 's' : ''}`,
+    closeAria: 'Close',
+  },
+  posts: {
+    title: 'Posts',
+    empty: 'No posts available.',
+    postNumber: (n: number) => `Post #${n}`,
+    notUpdated: 'Not updated',
+    loadMoreCount: (n: number) => `+ ${n} more posts`,
+    loadMoreSub: (total: number, remaining: number) => `${remaining} of ${total} posts remaining`,
+    loadMoreHover: (title: string, n: number) => n > 1 ? `${title} and ${n} more` : title,
+    chunkPrev: '← Previous',
+    chunkHome: 'Home',
+  },
+  relativeTime: {
+    today: 'Today',
+    yesterday: 'Yesterday',
+    daysAgo: (n: number) => `${n} days ago`,
+    monthAgo: '1 month ago',
+    monthsAgo: (n: number) => `${n} months ago`,
+    yearAgo: '1 year ago',
+    yearsAgo: (n: number) => `${n} years ago`,
+    inFuture: 'Scheduled',
+  },
+  toc: {
+    title: 'Contents',
+    aria: 'Contents',
+  },
+  morePosts: {
+    title: 'More Posts',
+    aria: 'More posts',
+  },
+  footnote: {
+    label: 'Footnotes',
+    close: 'Close',
+  },
+  footer: {
+    rights: 'Some rights reserved',
+    poweredBy: (theme: string) => `Powered by Astro with ${theme} theme`,
+  },
+  postFooter: {
+    license: 'The works on this page follow the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> license of the copyright holder.',
+    publishDate: 'Published',
+    lastUpdate: 'Last Updated',
+    characterCount: 'Character count',
+    characterUnit: ' chars',
+    dateLocale: 'en-US',
+  },
+  search: {
+    title: 'Search',
+    placeholder: 'Search posts',
+    empty: 'No results found.',
+    fallback: 'Search index unavailable; searching titles and descriptions.',
+    aria: 'Search posts',
+  },
+  notFound: {
+    title: '404: Page Not Found',
+    description: 'The requested URL does not exist.',
+  },
+  redirect: {
+    fallbackLink: 'Click here if you are not redirected automatically.',
+  },
+};
+
+export default locale;
+
+
